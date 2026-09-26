@@ -1,0 +1,55 @@
+{
+  "release": "0.4.0",
+  "verifiedDate": "2026-09-26",
+  "builds": [
+    "Prisma client generation",
+    "API TypeScript",
+    "Next.js production build"
+  ],
+  "passed": {
+    "unit": 12,
+    "httpScenarios": 5,
+    "browserScenarios": 5,
+    "recoveryAndConfigurationScenarios": 3,
+    "schemaMigrations": 7
+  },
+  "environment": {
+    "database": "PGlite WASM PostgreSQL socket bridge",
+    "redis": "native Redis 6.2",
+    "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
+    "renderer": "real FFmpeg/ffprobe 6.1.1",
+    "email": "local SMTP capture",
+    "textAI": "isolated compatible HTTP provider fixture",
+    "web": "production Next.js server"
+  },
+  "requirements": {
+    "headings": 161,
+    "labels": {
+      "Partial": 137,
+      "Missing": 24
+    },
+    "meaning": "traceability labels, not an implementation completion percentage"
+  },
+  "integrity": {
+    "masterSpecificationUnchanged": true,
+    "masterSha256": "8379fc4310db9d9225c8a192d7d8919ce708b493f34a486a1b48a40b175bb8b6",
+    "priorSixMigrationsUnchanged": true
+  },
+  "gatesNotVerified": [
+    "Native PostgreSQL concurrency and restore",
+    "Docker/MinIO execution",
+    "Live provider quality and charges",
+    "Actual SMTP inbox delivery",
+    "Native database plus private-media backup/restore",
+    "Deployed HTTPS/proxy",
+    "Full security/load/accessibility audits",
+    "Missing master-spec modules and full acceptance"
+  ],
+  "rawLogsOmitted": "Runtime logs and authentication data are not included in the release.",
+  "creditEvidence": {
+    "atomicGrantReservationSettlement": true,
+    "uncertainOutcomeReviewWithoutReplay": true,
+    "ledgerImmutabilityAndRestoreDirectPGlite": true,
+    "nativePrismaTriggerAndLocking": false
+  }
+}

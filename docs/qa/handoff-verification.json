@@ -1,0 +1,37 @@
+{
+  "checkpointRevision": "2026-09-26.1",
+  "applicationVersion": "0.4.0",
+  "verifiedDate": "2026-09-26",
+  "priorPackerVerification": {
+    "checkpointRevision": "2026-09-20.1",
+    "applicationVersion": "0.3.0",
+    "verifiedDate": "2026-09-20",
+    "checks": {
+      "freshExtractionAndManifest": true,
+      "archiveCrcAndEveryFileSha256": true,
+      "changedSourceDetected": true,
+      "privateEnvExcluded": true,
+      "knownSecretRejected": true,
+      "previousArchivePreservedWhenPackagingRejected": true,
+      "runtimeDependenciesMigrationsDeploymentByteUnchangedFromV03": true,
+      "all161RequirementsRetained": true
+    },
+    "limits": [
+      "Offline source checkpoint only; not user database/media backup",
+      "Known-secret guard is not a comprehensive secret scanner",
+      "Application test suites were not rerun for documentation/packer changes",
+      "No account login, repository connection or API quota is transferred"
+    ]
+  },
+  "currentArchive": {
+    "freshExtractionAndManifest": true,
+    "archiveCrcAndEveryFileSha256": true,
+    "privateEnvAndRuntimeExcluded": true,
+    "all161RequirementsRetained": true
+  },
+  "limits": [
+    "Portable source/context only; not a database/media backup",
+    "Known-secret guard is not a comprehensive secret scanner",
+    "Connections, credentials, provider quotas and running process state do not transfer"
+  ]
+}

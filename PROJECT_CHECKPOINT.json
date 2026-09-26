@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "project": "Organic Marketing OS",
+  "applicationVersion": "0.4.0",
+  "checkpointRevision": "2026-09-26.5",
+  "savedAtUtc": "2026-09-26T20:10:47.406469+00:00",
+  "currentMilestone": "Locally verified product credits, provider-health repair and S3 test dependency replacement",
+  "activeTaskId": "NATIVE-01",
+  "workInProgress": [
+    "Preparing first upload to the user-supplied NEW private shlokagrawal13/organic-marketing-os repository; native CI has not run yet."
+  ],
+  "nextTaskId": "BILLING-01",
+  "nextAction": "Upload the canonical verified source to the confirmed new private repository with independent history, then run and inspect the native PostgreSQL/Redis CI workflow. Repair concrete failures and save actual commit/run evidence. BILLING-01 remains next independent feature increment.",
+  "userIntent": [
+    "Build the full supplied V3 specification while preserving the existing architecture.",
+    "Do routine implementation and verification independently; do not assign routine testing to the user.",
+    "AI keys referred to product AI-provider access; none was supplied for live verification.",
+    "Keep enough saved context to continue in a new chat/account from the current source without re-explanation.",
+    "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
+  ],
+  "sourceOfTruth": {
+    "spec": "docs/MASTER_SPEC.md",
+    "requirements": "docs/REQUIREMENTS_MATRIX.md",
+    "status": "PROJECT_STATUS.md",
+    "handoff": "docs/HANDOFF.md",
+    "tasks": "docs/TASK_BOARD.md",
+    "access": "docs/ACCESS_REQUIREMENTS.md",
+    "evidence": "docs/VERIFICATION_REPORT.md",
+    "testCounts": "docs/qa/verification-summary.json"
+  },
+  "architecture": [
+    "Next.js UI",
+    "NestJS API",
+    "PostgreSQL/Prisma",
+    "Redis/BullMQ",
+    "Private S3-compatible storage",
+    "Dedicated FFmpeg render worker"
+  ],
+  "ai": {
+    "adapter": "OpenAI-compatible POST /chat/completions",
+    "defaultBaseUrl": "https://api.openai.com/v1",
+    "liveModelSelected": null,
+    "authorizedLiveProviderSupplied": false,
+    "runtimeMockFallback": false,
+    "lastTestProvider": "Isolated local HTTP fixture; no paid call"
+  },
+  "verification": {
+    "date": "2026-09-26",
+    "applicationSuites": {
+      "unit": 12,
+      "httpScenarios": 5,
+      "browserScenarios": 5,
+      "recoveryConfigurationScenarios": 3
+    },
+    "migrationsApplied": 7,
+    "database": "PGlite WASM PostgreSQL, serialized socket bridge",
+    "populatedUpgradeRestore": "Passed on PGlite including credit balances, immutable entries and restored SQL trigger",
+    "nativePostgresVerified": false,
+    "dockerMinioVerified": false,
+    "liveAiVerified": false,
+    "fullMasterAcceptanceVerified": false,
+    "productionAdvisories": 0,
+    "developmentAdvisories": 0,
+    "scopeWarning": "Dated evidence; do not apply automatically to modified code or a new environment.",
+    "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
+    "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified"
+  },
+  "accessState": {
+    "github": "User supplied new private shlokagrawal13/organic-marketing-os (canonical URL in repository.remote); verified ID 1389748509 and write access. Empty at verification. Terminal authentication unavailable; connected GitHub API authorized. Upload and native CI pending.",
+    "nativeExecution": "No Docker/native PostgreSQL binaries. apt-get update on 2026-09-26 failed on prohibited privilege operations. No native gate executed.",
+    "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
+    "paidTestSpend": "Not specified; no paid calls performed"
+  },
+  "repository": {
+    "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
+    "branch": "main",
+    "commit": null,
+    "status": "initial_upload_in_progress",
+    "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
+    "abandonedPreparation": {
+      "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
+      "localClone": "organic-marketing-os-github",
+      "remoteBranch": "codex/verified-os-v0.4",
+      "remoteBranchLastVerifiedCommit": "a79b20a7b8af5d3bd267ba26524dddb9e8500e3b",
+      "remoteSourcePublished": false,
+      "remoteBranchDeleted": false,
+      "reason": "User explicitly identified this as a different project. Do not reuse its Git ancestry or remote."
+    },
+    "visibility": "private",
+    "id": 1389748509
+  },
+  "credentialsIncluded": false,
+  "runtimeDatabaseOrMediaIncluded": false,
+  "remainingTasks": [
+    {
+      "id": "DEP-01",
+      "state": "completed",
+      "title": "Remove development dependency advisories"
+    },
+    {
+      "id": "NATIVE-01",
+      "state": "in_progress",
+      "title": "Native Postgres/Redis and actual Compose"
+    },
+    {
+      "id": "RECOVERY-01",
+      "state": "needs_execution_environment",
+      "title": "Native populated upgrade and cross-store recovery"
+    },
+    {
+      "id": "AI-LIVE-01",
+      "state": "needs_external_credentials",
+      "title": "Live text-model validation"
+    },
+    {
+      "id": "MODEL-01",
+      "state": "ready_for_local_work",
+      "title": "Full router capability/quality/cost policy"
+    },
+    {
+      "id": "AGENTS-01",
+      "state": "ready_for_local_work",
+      "title": "Full agent execution and context retrieval"
+    },
+    {
+      "id": "MEDIA-01",
+      "state": "ready_for_local_work",
+      "title": "Generated images, video and voice adapters"
+    },
+    {
+      "id": "EDITOR-01",
+      "state": "ready_for_local_work",
+      "title": "Advanced production editing"
+    },
+    {
+      "id": "RESEARCH-01",
+      "state": "ready_for_local_work",
+      "title": "Sourced research, trends, competitors, SEO/AEO and community"
+    },
+    {
+      "id": "SOCIAL-01",
+      "state": "ready_for_local_work",
+      "title": "Official social OAuth and publishing"
+    },
+    {
+      "id": "ANALYTICS-01",
+      "state": "pending_dependency",
+      "title": "External analytics, attribution and reporting"
+    },
+    {
+      "id": "GROWTH-01",
+      "state": "pending_dependency",
+      "title": "Experiments and controlled learning"
+    },
+    {
+      "id": "BILLING-01",
+      "state": "ready_for_local_work",
+      "title": "Plans, immutable credits and Stripe",
+      "completedIncrement": "Immutable product ledger, AI reservation/settlement/review and platform credit controls verified locally in 0.4; Stripe/plans/monthly grants/refunds/expiry remain."
+    },
+    {
+      "id": "ADMIN-01",
+      "state": "ready_for_local_work",
+      "title": "Platform administration and support",
+      "completedIncrement": "Verified platform credit authority and scoped adjustment/review forms; full platform management remains."
+    },
+    {
+      "id": "NOTIFY-01",
+      "state": "ready_for_local_work",
+      "title": "Notifications, realtime status and telemetry"
+    },
+    {
+      "id": "DATA-01",
+      "state": "ready_for_local_work",
+      "title": "Retention, deletion, complete account/media export"
+    },
+    {
+      "id": "UX-01",
+      "state": "ready_for_local_work",
+      "title": "Remaining collaboration and product UX"
+    },
+    {
+      "id": "POLICY-01",
+      "state": "ready_for_local_work",
+      "title": "Semantic quality and platform policy gates"
+    },
+    {
+      "id": "CLOUD-01",
+      "state": "needs_execution_environment",
+      "title": "Staging, real mail/storage and deployment"
+    },
+    {
+      "id": "SECURITY-01",
+      "state": "pending_dependency",
+      "title": "Production security and load verification"
+    },
+    {
+      "id": "A11Y-01",
+      "state": "ready_for_local_work",
+      "title": "Full accessibility and device/media QA"
+    },
+    {
+      "id": "MASTER-01",
+      "state": "pending_dependency",
+      "title": "Full master acceptance and production decision"
+    }
+  ],
+  "lastChanges": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "START_HERE.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/TASK_BOARD.md",
+    "docs/GITHUB_IMPORT.md",
+    "docs/HANDOFF.md",
+    "docs/SESSION_LOG.md",
+    "docs/CHANGELOG.md"
+  ],
+  "nextAgentProtocol": [
+    "Verify manifest or inspect changes before overwriting anything.",
+    "Read start/checkpoint/task files before asking about history.",
+    "Recheck authorized capabilities; local work should continue while external gates wait.",
+    "Update checkpoint and log after meaningful progress and before returning a deliverable.",
+    "Preserve user env/volumes and all applied migrations.",
+    "Provide a fresh checkpoint ZIP or confirmed repository commit."
+  ],
+  "protectedFiles": {
+    "docs/MASTER_SPEC.md": "8379fc4310db9d9225c8a192d7d8919ce708b493f34a486a1b48a40b175bb8b6",
+    "prisma/migrations/202609190001_foundation/migration.sql": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac",
+    "prisma/migrations/202609190002_brand/migration.sql": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1",
+    "prisma/migrations/202609190003_ai/migration.sql": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562",
+    "prisma/migrations/202609190004_content/migration.sql": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2",
+    "prisma/migrations/202609190005_media/migration.sql": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29",
+    "prisma/migrations/202609190006_recovery/migration.sql": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721",
+    "prisma/migrations/202609200001_credits/migration.sql": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+  },
+  "checkpointVerificationEvidence": "docs/qa/handoff-verification.json"
+}

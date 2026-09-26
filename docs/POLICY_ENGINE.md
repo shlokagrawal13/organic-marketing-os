@@ -1,0 +1,7 @@
+# Policy and quality checks
+
+Content checks cover required title/copy/voiceover, obvious guaranteed-results language, CTA warnings, scenes and unique scene IDs. These do not verify truth, grammar, copyright or current platform rules. Review requires no blocking structural failures; authorized approval requires explicit facts/rights/brand/platform acknowledgment. Edits invalidate it.
+
+Media checks cover actual container/type, dimensions/duration, tenant-owned attachments, supported render bounds, and output H.264/AAC/dimensions/duration. They do not judge aesthetics, intelligibility, licensing or misleading claims. Render approval requires a human acknowledgment that the video was watched and reviewed, and approved content at the exact saved revision. Any content edit or removal of content approval clears that render approval.
+
+A configurable database policy engine, per-platform constraints/disclosures, semantic media QA, duplicate-post detection and publication-frequency policies are missing. No protection from account bans or legal compliance is implied.
