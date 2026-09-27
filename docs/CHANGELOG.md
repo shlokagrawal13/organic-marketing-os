@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 verified private source publication — 2026-09-26.6
+
+- Uploaded all 150 checkpoint files to the user-supplied private repository with independent history and matched every Git blob hash/mode.
+- Recorded Actions startup_failure before any job; retry rejected. Native verification remains open pending the detailed startup diagnostic.
+- Updated continuation records only; no application/migration changes or new application-test results.
+
 ## 0.4.0 private repository initialization — 2026-09-26.5
 
 - Verified the NEW user-supplied private organic-marketing-os repository and write access. Preparing independent source history and native CI; results remain pending until remotely verified.

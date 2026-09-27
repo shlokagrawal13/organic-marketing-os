@@ -1,6 +1,6 @@
 # Start here — Organic Marketing OS
 
-Application version: **0.4.0**. Handoff revision: **2026-09-26.5**. This archive contains the current source, complete supplied master spec, completed-work evidence, remaining tasks and access requirements. Read these files instead of asking the user to retell the project.
+Application version: **0.4.0**. Handoff revision: **2026-09-26.6**. This archive contains the current source, complete supplied master spec, completed-work evidence, remaining tasks and access requirements. Read these files instead of asking the user to retell the project.
 
 ## Resume in another chat or account
 
@@ -21,7 +21,7 @@ The master spec is authoritative for intended scope; working code and dated test
 
 ## First useful action
 
-Approved repository: https://github.com/shlokagrawal13/organic-marketing-os (private). Initial source upload/native CI are in progress. Use only this target and independent project history; see PROJECT_CHECKPOINT.json and docs/GITHUB_IMPORT.md.
+Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. The v0.4 source import 0093dfa is uploaded and all files matched. Native Actions run 36269190288 failed at startup before jobs began; the diagnostic remains pending secure browser sign-in. Use the latest main/HEAD and PROJECT_CHECKPOINT.json; older ZIP files may be stale.
 
 Check the archive manifest, inspect the environment/connections, and continue **BILLING-01** (database plans/entitlements and the signed, idempotent test billing lifecycle). DEP-01 is closed for the dated npm advisory scope; immutable credits and AI reservations are implemented. This code task does not require AI keys. If a native execution environment has become available, run **NATIVE-01** alongside the ordered local work without treating either result as full product completion. Do not re-create the app from a template.
 

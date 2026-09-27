@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.4.0",
-  "checkpointRevision": "2026-09-26.5",
-  "savedAtUtc": "2026-09-26T20:10:47.406469+00:00",
+  "checkpointRevision": "2026-09-26.6",
+  "savedAtUtc": "2026-09-26T20:26:14.156337+00:00",
   "currentMilestone": "Locally verified product credits, provider-health repair and S3 test dependency replacement",
-  "activeTaskId": "NATIVE-01",
+  "activeTaskId": null,
   "workInProgress": [
-    "Preparing first upload to the user-supplied NEW private shlokagrawal13/organic-marketing-os repository; native CI has not run yet."
+    "Source upload succeeded and all 150 files match. Native CI startup_failure occurred before any job; diagnosis requires detailed GitHub run error unavailable through the current connector and a signed-in browser."
   ],
   "nextTaskId": "BILLING-01",
-  "nextAction": "Upload the canonical verified source to the confirmed new private repository with independent history, then run and inspect the native PostgreSQL/Redis CI workflow. Repair concrete failures and save actual commit/run evidence. BILLING-01 remains next independent feature increment.",
+  "nextAction": "Inspect the detailed startup failure for GitHub Actions run 36269190288 using secure authenticated browser access. No native jobs executed and retry was rejected. Fix only the reported cause and rerun the native workflow. Use the new private organic-marketing-os main branch; BILLING-01 remains the next independent feature task.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -63,10 +63,21 @@
     "developmentAdvisories": 0,
     "scopeWarning": "Dated evidence; do not apply automatically to modified code or a new environment.",
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
-    "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified"
+    "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
+    "githubActions": {
+      "runId": 36269190288,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36269190288",
+      "sourceCommit": "0093dfaa9fd0864a77f8680e51e7b506ea32f15d",
+      "status": "completed",
+      "conclusion": "startup_failure",
+      "jobsStarted": 0,
+      "nativeTestsExecuted": false,
+      "retry": "HTTP 403: This workflow run cannot be retried",
+      "rootCause": "unknown; detailed startup diagnostic requires authenticated browser access"
+    }
   },
   "accessState": {
-    "github": "User supplied new private shlokagrawal13/organic-marketing-os (canonical URL in repository.remote); verified ID 1389748509 and write access. Empty at verification. Terminal authentication unavailable; connected GitHub API authorized. Upload and native CI pending.",
+    "github": "New private shlokagrawal13/organic-marketing-os repository is populated, all 150 source files hash-verified at 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. Native Actions startup_failure, zero jobs, retry forbidden. Browser signed out; detailed diagnostic needs secure sign-in.",
     "nativeExecution": "No Docker/native PostgreSQL binaries. apt-get update on 2026-09-26 failed on prohibited privilege operations. No native gate executed.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "Not specified; no paid calls performed"
@@ -74,8 +85,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": null,
-    "status": "initial_upload_in_progress",
+    "commit": "0093dfaa9fd0864a77f8680e51e7b506ea32f15d",
+    "status": "source_uploaded_verified_ci_startup_blocked",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -87,7 +98,11 @@
       "reason": "User explicitly identified this as a different project. Do not reuse its Git ancestry or remote."
     },
     "visibility": "private",
-    "id": 1389748509
+    "id": 1389748509,
+    "sourceTree": "beb2d18a44759a3bf4afb8e70ea0717c89d54a20",
+    "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
+    "commitMeaning": "Last verified application source import; later documentation-only commits are resolved from main/HEAD.",
+    "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,
   "runtimeDatabaseOrMediaIncluded": false,
@@ -99,8 +114,9 @@
     },
     {
       "id": "NATIVE-01",
-      "state": "in_progress",
-      "title": "Native Postgres/Redis and actual Compose"
+      "state": "needs_execution_environment",
+      "title": "Native Postgres/Redis and actual Compose",
+      "currentBlocker": "GitHub native CI startup_failure before all jobs; detailed startup diagnostic pending browser sign-in."
     },
     {
       "id": "RECOVERY-01",
@@ -215,7 +231,8 @@
     "docs/GITHUB_IMPORT.md",
     "docs/HANDOFF.md",
     "docs/SESSION_LOG.md",
-    "docs/CHANGELOG.md"
+    "docs/CHANGELOG.md",
+    "docs/qa/github-publication.json"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
