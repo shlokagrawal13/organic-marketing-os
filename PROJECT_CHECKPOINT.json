@@ -7,7 +7,7 @@
   "currentMilestone": "Locally verified Stripe Checkout, Portal and signed webhook contracts",
   "activeTaskId": null,
   "workInProgress": [
-    "The v0.6 Stripe-contract increment is locally verified and ready for private-repository publication. Five native Actions runs ended startup_failure before creating jobs. Canonical workflow normalization produced the same result, narrowing the blocker to repository/account Actions startup rather than application tests."
+    "The v0.6 Stripe-contract increment is locally verified and published to the private repository with an exact local/remote tree match. Six native Actions runs ended startup_failure before creating jobs. Canonical workflow normalization produced the same result, narrowing the blocker to repository/account Actions startup rather than application tests."
   ],
   "nextTaskId": "BILLING-01",
   "nextAction": "Publish the verified v0.6 Stripe-contract increment. Continue BILLING-01 with invoice views and explicit refund/dispute/proration policy. Actual Stripe sandbox acceptance needs authorized test configuration. Inspect repository/account Actions settings or the authenticated run page for the pre-job startup blocker.",
@@ -67,9 +67,9 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36321113253,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36321113253",
-      "sourceCommit": "465fbab6fbc7267e62514643cb4145a2daccdc45",
+      "runId": 36321841234,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36321841234",
+      "sourceCommit": "48b11a82147e23fec8cf165a340e84ca22398219",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
@@ -80,12 +80,13 @@
         36269190288,
         36304124096,
         36305587276,
-        36305819079
+        36305819079,
+        36321113253
       ]
     }
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main is verified through v0.5 documentation checkpoint c7160d3278998913cd5a3b2005a91014a1f375b5; normalized CI workflow commit 465fbab6fbc7267e62514643cb4145a2daccdc45 is also remote. Five Actions runs ended startup_failure with zero jobs, including the normalized definition, so no native application test executed.",
+    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.6 source commit 48b11a82147e23fec8cf165a340e84ca22398219 with exact source tree 8b02a31e2395d9cee01d623b8391ba7c032565ea. Six Actions runs ended startup_failure with zero jobs, including the normalized definition, so no native application test executed.",
     "nativeExecution": "No Docker/native PostgreSQL binaries. apt-get update on 2026-09-26 failed on prohibited privilege operations. No native gate executed.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "Not specified; no paid calls performed"
@@ -93,8 +94,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "c7160d3278998913cd5a3b2005a91014a1f375b5",
-    "status": "v0.6_publication_pending",
+    "commit": "48b11a82147e23fec8cf165a340e84ca22398219",
+    "status": "v0.6_source_uploaded_verified_ci_startup_blocked",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -107,9 +108,9 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "20cb733ceee8fea9956ba3587eff88e7f3d378b5",
+    "sourceTree": "8b02a31e2395d9cee01d623b8391ba7c032565ea",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Latest verified remote v0.5 documentation checkpoint before the locally verified v0.6 Stripe-contract increment.",
+    "commitMeaning": "Verified v0.6 Stripe-contract application source and evidence; the remote Git tree exactly matches the locally verified tree.",
     "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,
@@ -124,7 +125,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Five GitHub native CI runs ended startup_failure before all jobs. Canonical workflow normalization did not change the result; repository/account Actions settings or the authenticated diagnostic must be inspected."
+      "currentBlocker": "Six GitHub native CI runs ended startup_failure before all jobs. Canonical workflow normalization did not change the result; repository/account Actions settings or the authenticated diagnostic must be inspected."
     },
     {
       "id": "RECOVERY-01",
