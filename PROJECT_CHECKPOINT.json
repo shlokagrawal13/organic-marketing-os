@@ -7,7 +7,7 @@
   "currentMilestone": "Locally verified Stripe Checkout, Portal and signed webhook contracts",
   "activeTaskId": null,
   "workInProgress": [
-    "The v0.6 Stripe-contract increment is locally verified and published to the private repository with an exact local/remote tree match. Six native Actions runs ended startup_failure before creating jobs. Canonical workflow normalization produced the same result, narrowing the blocker to repository/account Actions startup rather than application tests."
+    "The v0.6 Stripe-contract increment is locally verified and published to the private repository with an exact local/remote tree match. A dependency-free echo-only workflow also ended startup_failure with zero jobs, confirming the blocker is GitHub repository/account startup rather than application code, services or third-party actions."
   ],
   "nextTaskId": "BILLING-01",
   "nextAction": "Publish the verified v0.6 Stripe-contract increment. Continue BILLING-01 with invoice views and explicit refund/dispute/proration policy. Actual Stripe sandbox acceptance needs authorized test configuration. Inspect repository/account Actions settings or the authenticated run page for the pre-job startup blocker.",
@@ -67,26 +67,28 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36321841234,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36321841234",
-      "sourceCommit": "48b11a82147e23fec8cf165a340e84ca22398219",
+      "runId": 36322906289,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36322906289",
+      "sourceCommit": "c62293696bfbf36d6f142a3961770976ef5dcc7b",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
       "retry": "HTTP 403: This workflow run cannot be retried",
-      "rootCause": "repository/account Actions startup block; canonical expanded YAML still produced BuildFailed with zero jobs, while exact diagnostic remains visible only on the authenticated run page",
+      "rootCause": "repository/account Actions startup block; canonical full workflow and dependency-free echo-only workflow both produced BuildFailed with zero jobs. Exact annotation remains visible only on the authenticated run page",
       "priorRunIds": [
         36269190288,
         36304124096,
         36305587276,
         36305819079,
-        36321113253
+        36321113253,
+        36321841234,
+        36321972148
       ]
     }
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.6 source commit 48b11a82147e23fec8cf165a340e84ca22398219 with exact source tree 8b02a31e2395d9cee01d623b8391ba7c032565ea. Six Actions runs ended startup_failure with zero jobs, including the normalized definition, so no native application test executed.",
+    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.6 source plus a minimal startup diagnostic at commit c62293696bfbf36d6f142a3961770976ef5dcc7b. Full and dependency-free workflows both ended startup_failure with zero jobs, so no native application test executed. User screenshot shows the generic summary but not the lower Annotations error.",
     "nativeExecution": "No Docker/native PostgreSQL binaries. apt-get update on 2026-09-26 failed on prohibited privilege operations. No native gate executed.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "Not specified; no paid calls performed"
@@ -125,7 +127,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Six GitHub native CI runs ended startup_failure before all jobs. Canonical workflow normalization did not change the result; repository/account Actions settings or the authenticated diagnostic must be inspected."
+      "currentBlocker": "GitHub rejects even a dependency-free echo-only workflow before allocating a job. Scroll the authenticated run below the graph to Annotations (or open Workflow file) and capture the exact error; likely account/repository Actions policy or billing rather than application code."
     },
     {
       "id": "RECOVERY-01",
@@ -233,6 +235,7 @@
   "lastChanges": [
     ".env.example",
     ".github/workflows/ci.yml",
+    ".github/workflows/diagnostic.yml",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
