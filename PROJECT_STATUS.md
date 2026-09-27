@@ -22,7 +22,7 @@ The isolated environment used PGlite WASM PostgreSQL, native Redis 6.2, S3Proxy,
 
 ## Access and open gates
 
-The new private shlokagrawal13/organic-marketing-os repository now contains the verified v0.4 source at 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. Every source file matched. Native CI failed at startup before any job; detailed diagnostic access is pending. See docs/qa/github-publication.json and the publication section below.
+The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.5 source at `0281511e9113d4bd2470b38529bc30d4f5b14a60`. Its complete remote tree exactly matches the locally tested tree. Actions run 36305587276 failed at startup before any job, as did the two earlier runs; detailed diagnostic access remains unavailable. See `docs/qa/github-publication.json`.
 
 Docker/native PostgreSQL remain unavailable here; native package installation again failed on runtime privilege operations. PGlite serializes DB requests. Native locking/restore, actual Compose/MinIO, cloud storage/mail/TLS, live provider quality/cost, full security/load/accessibility and master acceptance remain open.
 
@@ -31,6 +31,10 @@ Pending implementation includes actual Stripe checkout/portal/invoices and sandb
 ## Continue
 
 Read START_HERE.md and PROJECT_CHECKPOINT.json. DEP-01 is complete for the dated npm advisory scope. BILLING-01 now has a verified plan/entitlement/event foundation; actual Stripe checkout/portal/invoice mapping and sandbox lifecycle remain. Useful local work can continue without keys while native CI and live-provider gates wait.
+
+## v0.5 private source publication — 2026-09-27.1
+
+Published verified source commit `0281511e9113d4bd2470b38529bc30d4f5b14a60` with tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` on private `main`. The remote tree equals the locally tested tree byte-for-byte at Git blob level. Actions run 36305587276 ended `startup_failure` with zero jobs, so no native test result is claimed.
 
 ## Private repository publication — 2026-09-26.6
 

@@ -21,7 +21,7 @@ The master spec is authoritative for intended scope; working code and dated test
 
 ## First useful action
 
-Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. The verified v0.5 billing increment is the newest work; use the exact commit in PROJECT_CHECKPOINT.json after publication. Two Native Actions runs failed at startup before jobs began; secure browser sign-in was declined, so no native result exists. Use latest main/HEAD and this checkpoint rather than an older ZIP.
+Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. Verified v0.5 source commit `0281511e9113d4bd2470b38529bc30d4f5b14a60` exactly matches the locally tested tree. Three native Actions runs, including 36305587276 for v0.5, failed at startup before jobs began; secure browser sign-in was declined, so no native result exists. Use latest main/HEAD and this checkpoint rather than an older ZIP.
 
 Check the archive manifest and continue **BILLING-01** with an official Stripe test-mode adapter, Checkout/Portal and product-price mapping on top of the verified provider-neutral inbox. Actual Stripe sandbox verification requires authorized test configuration later. If a native execution environment becomes available, run **NATIVE-01** alongside the ordered local work. Do not re-create the app from a template.
 

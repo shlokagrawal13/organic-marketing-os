@@ -1,5 +1,9 @@
 # GitHub repository and source publication
 
+## v0.5 verified source — 2026-09-27.1
+
+Published billing-foundation source commit `0281511e9113d4bd2470b38529bc30d4f5b14a60` to private `main`. Its complete tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` exactly matches the locally built and tested tree. GitHub Actions run 36305587276 ended `startup_failure` with zero jobs. No native test executed, and the detailed startup reason remains unavailable without authenticated browser access.
+
 ## Private repository publication — 2026-09-26.6
 
 Verified v0.4 source was uploaded to https://github.com/shlokagrawal13/organic-marketing-os, private repository ID 1389748509, branch main, source commit 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. All 150 uploaded paths, Git blob hashes and modes match the local checkpoint; tree beb2d18a44759a3bf4afb8e70ea0717c89d54a20. History starts at the independent README commit 40e552455688260db0c878b162535e41bb39bfb6. The unrelated OrganicMarketing project is excluded.

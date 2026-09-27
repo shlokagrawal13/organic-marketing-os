@@ -59,13 +59,17 @@ Next BILLING-01 work is the official Stripe adapter, Checkout/Portal/product-pri
 
 No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.5 billing-foundation increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
 
-The new private shlokagrawal13/organic-marketing-os repository now contains the verified v0.4 source at 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. Every source file matched. Native CI failed at startup before any job; detailed diagnostic access is pending. See docs/qa/github-publication.json and the publication section below.
+Private `shlokagrawal13/organic-marketing-os` main contains verified v0.5 source commit `0281511e9113d4bd2470b38529bc30d4f5b14a60`; remote tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` exactly matches the locally tested tree. Actions run 36305587276 ended `startup_failure` before jobs, so native CI remains open. See `docs/qa/github-publication.json`.
 
 ## Portability and limits
 
 Download/upload the newest complete source checkpoint or use the same private repository. Markdown carries intent and progress; JSON carries structured state; the manifest detects changed/missing/extra included files. None of these carries account login, live process state, provider billing, secrets or actual user database/media. Changing a ChatGPT account does not reconfigure the product's provider account or transfer its API allowance. Reauthorize required connections in the new environment and keep private runtime backups separate.
 
 Checkpointing reduces reliance on chat memory; it cannot recover changes that were never saved. Future agents must update files during work, before a context/usage interruption where possible, and at every delivered milestone.
+
+## v0.5 private source publication — 2026-09-27.1
+
+The verified billing-foundation source is published on private `main` at `0281511e9113d4bd2470b38529bc30d4f5b14a60`. Its tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` equals the local tested tree. The resulting Actions run 36305587276 completed with `startup_failure` and zero jobs; this is not a native PostgreSQL test result.
 
 ## Private repository publication — 2026-09-26.6
 
