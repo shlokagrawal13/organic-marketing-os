@@ -1,6 +1,6 @@
 # Continuation plan
 
-Current milestone: **0.4.0**. The core, private rendering, reliability fixes and workspace operations and product-credit accounting are locally verified. Full production OS acceptance remains open.
+Current milestone: **0.5.0**. The core, private rendering, reliability fixes, workspace operations, product-credit accounting and signed billing-event foundation are locally verified. Full production OS acceptance remains open.
 
 ## Completed in this increment
 
@@ -19,7 +19,7 @@ Current milestone: **0.4.0**. The core, private rendering, reliability fixes and
 3. Extend the existing durable product ledger with full capability/plan/credit policy, payment entitlements and provider-currency budgets. Configure authorized text/media providers later for staging quality/rate checks under agreed spend limits. Do not claim fixture outputs establish provider quality or actual charges.
 4. Implement an official social OAuth adapter end to end: encrypted token lifecycle, platform variants, scheduling, policy checks, idempotent publication and unknown-outcome recovery. Verify with an authorized test account when available, then extend platforms.
 5. Implement sourced research/trends/SEO/AEO, community intelligence, real platform analytics, evidence-backed insights, experiments and controlled learning.
-6. Implement Stripe test subscriptions/webhooks and database plan catalog, extending the existing reservations/ledger with monthly grants/refunds/expiry and reconciliation; exercise duplicate events and failures.
+6. Extend the verified plan/subscription/event inbox with an official Stripe test-mode adapter, Checkout/Portal, product-price mapping and invoice views; exercise the actual sandbox lifecycle, disputes/proration, duplicate events and failures.
 7. Extend operations with platform administration, telemetry/alerts, account export/deletion/retention, media/cache/orphan cleanup and executed cross-store recovery.
 8. Execute complete master acceptance, live-provider QA, accessibility/security/load checks and staging deployment verification. Evaluate production readiness only after these pass.
 

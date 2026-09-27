@@ -78,6 +78,7 @@ async function main() {
   const app = await NestFactory.create(AppModule, {
     logger: ["error", "warn", "log"],
     bodyParser: true,
+    rawBody: true,
   });
   const proxyHops = Number(process.env.TRUST_PROXY_HOPS || 0);
   if (!Number.isInteger(proxyHops) || proxyHops < 0 || proxyHops > 2)
@@ -91,7 +92,13 @@ async function main() {
   app.enableCors({
     origin: origin(),
     credentials: true,
-    allowedHeaders: ["Content-Type", "X-Requested-With", "Idempotency-Key"],
+    allowedHeaders: [
+      "Content-Type",
+      "X-Requested-With",
+      "Idempotency-Key",
+      "X-MOS-Billing-Timestamp",
+      "X-MOS-Billing-Signature",
+    ],
   });
   installSecurity(app, app.get(Cache));
   app.useGlobalFilters(new ApiErrors());

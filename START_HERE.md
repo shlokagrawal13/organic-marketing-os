@@ -1,6 +1,6 @@
 # Start here — Organic Marketing OS
 
-Application version: **0.4.0**. Handoff revision: **2026-09-26.6**. This archive contains the current source, complete supplied master spec, completed-work evidence, remaining tasks and access requirements. Read these files instead of asking the user to retell the project.
+Application version: **0.5.0**. Handoff revision: **2026-09-27.1**. This archive contains the current source, complete supplied master spec, completed-work evidence, remaining tasks and access requirements. Read these files instead of asking the user to retell the project.
 
 ## Resume in another chat or account
 
@@ -21,9 +21,9 @@ The master spec is authoritative for intended scope; working code and dated test
 
 ## First useful action
 
-Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. The v0.4 source import 0093dfa is uploaded and all files matched. Native Actions run 36269190288 failed at startup before jobs began; the diagnostic remains pending secure browser sign-in. Use the latest main/HEAD and PROJECT_CHECKPOINT.json; older ZIP files may be stale.
+Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. The verified v0.5 billing increment is the newest work; use the exact commit in PROJECT_CHECKPOINT.json after publication. Two Native Actions runs failed at startup before jobs began; secure browser sign-in was declined, so no native result exists. Use latest main/HEAD and this checkpoint rather than an older ZIP.
 
-Check the archive manifest, inspect the environment/connections, and continue **BILLING-01** (database plans/entitlements and the signed, idempotent test billing lifecycle). DEP-01 is closed for the dated npm advisory scope; immutable credits and AI reservations are implemented. This code task does not require AI keys. If a native execution environment has become available, run **NATIVE-01** alongside the ordered local work without treating either result as full product completion. Do not re-create the app from a template.
+Check the archive manifest and continue **BILLING-01** with an official Stripe test-mode adapter, Checkout/Portal and product-price mapping on top of the verified provider-neutral inbox. Actual Stripe sandbox verification requires authorized test configuration later. If a native execution environment becomes available, run **NATIVE-01** alongside the ordered local work. Do not re-create the app from a template.
 
 ```bash
 python scripts/package_handoff.py --check
@@ -33,12 +33,12 @@ Use `python3` on Linux/macOS or `py -3` on Windows if that is your Python 3.9+ c
 
 ## Facts that must not be lost
 
-- Architecture: Next.js frontend, NestJS API, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage, dedicated FFmpeg render worker. Seven additive migrations; the original six are preserved.
+- Architecture: Next.js frontend, NestJS API, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage, dedicated FFmpeg render worker. Eight additive migrations; the original seven are preserved.
 - Actual MP4 rendering uses uploaded media; voiceover text does not synthesize speech.
 - Text adapter is OpenAI-compatible `/chat/completions`, default OpenAI URL, blank key/model. No live paid model is verified.
-- Latest application evidence: 12 unit, 5 HTTP, 5 browser and 3 recovery/configuration scenarios; PGlite populated upgrade/restore. Native PostgreSQL/Docker/MinIO, live providers and full production acceptance remain open.
+- Latest application evidence: 12 unit, 6 HTTP, 5 browser and 3 recovery/configuration scenarios; PGlite populated upgrade/restore. Native PostgreSQL/Docker/MinIO, live providers and full production acceptance remain open.
 - Production and full npm audits were both 0 on 2026-09-26 after replacing S3rver with checksum-pinned S3Proxy. The Java tool is outside the npm scan. These are dated results, not permanent security guarantees.
-- All 161 master headings are mapped. Full agents, generated media/voice, research, publishing, external analytics, Stripe/plans/monthly grants/refunds/expiry and several operational capabilities still need implementation. The product-credit ledger is now implemented.
+- All 161 master headings are mapped (139 Partial, 22 Missing; not completion percentages). Full agents, generated media/voice, research, publishing, external analytics, real Stripe checkout/portal/invoices and several operational capabilities still need implementation.
 - The user does not want to be assigned routine testing. Continue local engineering/testing independently and state any genuine external blocker clearly.
 
 ## Before the next handoff

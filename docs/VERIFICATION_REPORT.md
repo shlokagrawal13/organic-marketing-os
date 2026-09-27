@@ -1,6 +1,6 @@
-# Verification report — Organic Marketing OS 0.4.0
+# Verification report — Organic Marketing OS 0.5.0
 
-Release verification: 2026-09-26. Scope: review and repair the existing core/media milestone, exercise it without user API keys, and add product-credit accounting and replace the vulnerable test-storage dependency. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
+Release verification: 2026-09-27. Scope: retain the verified core/media/credit milestone and add database plans/entitlements plus a signed idempotent billing-event lifecycle without claiming live Stripe connectivity. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
 
 ## Result
 
@@ -8,16 +8,16 @@ Release verification: 2026-09-26. Scope: review and repair the existing core/med
 |---|---|---|
 | API/frontend builds | Pass | TypeScript/Prisma generation and built Next.js application |
 | Unit suite | 12 passed | `tests/ai.test.ts`, `security.test.ts`, `media.test.ts` |
-| HTTP suite | 5 broad scenarios passed | `tests/integration/` |
+| HTTP suite | 6 broad scenarios passed | `tests/integration/`, including signed billing lifecycle |
 | Production browser suite | 5 scenarios passed | `tests/ui/`, `docs/qa/` screenshots and MP4 |
 | Configuration/fault suite | 3 scenarios passed | `tests/recovery/` |
-| Schema deployment | 7 migrations applied to fresh test database | Harness migration deployment |
+| Schema deployment | 8 migrations applied to fresh test database | Harness migration deployment |
 | Populated upgrade/restore | Pass on PGlite only | `scripts/verify-upgrade.mjs`, `docs/qa/upgrade-restore-evidence.json` |
 | Production dependency scan | 0 known advisories | `docs/qa/dependency-audit-summary.json` |
 | Full npm dependency scan | 0 known advisories | S3rver removed; S3Proxy Java dependency tree is outside npm scope |
-| Spec/migration integrity | 161 headings mapped; original master and first 6 migrations unchanged | `REQUIREMENTS_MATRIX.md`, `docs/qa/verification-summary.json` |
+| Spec/migration integrity | 161 headings mapped; original master and first 7 migrations unchanged | `REQUIREMENTS_MATRIX.md`, `docs/qa/verification-summary.json` |
 
-These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 137 Partial and 24 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
+These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 139 Partial and 22 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
 
 ## New 0.4 findings and behavior
 
@@ -90,6 +90,6 @@ No paid provider request, social publication, external email delivery or payment
 | Publish | No social publisher | Official OAuth, scheduling, variants, policy, idempotent publishing/recovery |
 | Measure | Internal job/storage/usage records | External analytics, attribution and reliable platform reporting |
 | Learn/improve | No full learning loop | Experiments, growth learning and controlled overrides |
-| Operate/commercialize | Sessions, roles, queues, private media, workspace health/export, immutable product credits and restricted credit administration | Stripe/plans/monthly grants/refunds/expiry, full platform administration, alerts, retention/deletion, native cross-store recovery and deployment assurance |
+| Operate/commercialize | Sessions, roles, queues, private media, workspace health/export, immutable product credits, database plan/entitlement/subscription records and signed test billing events | Actual Stripe checkout/portal/invoice adapter and sandbox acceptance, full platform administration, alerts, retention/deletion, native cross-store recovery and deployment assurance |
 
 Next implementation/acceptance steps are in `IMPLEMENTATION_PLAN.md`. Missing functions require code as well as later authorized credentials. The release is a verified local increment, not a claim that the planned platform is finished.

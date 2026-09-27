@@ -1,10 +1,10 @@
-# Project handoff — 2026-09-26.1
+# Project handoff — 2026-09-27.1
 
 ## User intent and working agreement
 
 Build the supplied AI Marketing OS V3 into a fully working product. The user wants autonomous implementation and verification, including browser inspection, rather than repeatedly being asked to test. The user clarified that unavailable API keys meant AI-provider keys for the product. They want a new chat/account to continue from saved files without retelling the project. Prefer concise Hinglish updates, exact evidence and honest missing-feature reporting.
 
-This is a source continuation checkpoint for version 0.4.0, not a claim of completed production software. The user connected GitHub and asked for continued autonomous real implementation/testing. The connection was verified; no dedicated project repository or live paid provider was established.
+This is a source continuation checkpoint for version 0.5.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
 
 ## Completed milestones
 
@@ -14,11 +14,12 @@ This is a source continuation checkpoint for version 0.4.0, not a claim of compl
 | 0.2 | Private validated assets; immutable uploaded-media render jobs; real MP4/audio/SRT/thumbnail; aspect/resolution controls; scene cache, cancel/retry and render approval; mobile/light/dark UI |
 | 0.3 | AI context freezing, request identity, queue-loss reconciliation and no replay of interrupted calls; fallback/accounting fixes; runtime dependency patches; workspace health and private paginated record export; expanded recovery/no-key/role/collaboration tests |
 | 0.4 | Immutable product-credit accounting, quote/reserve/settle/cancel/review, verified platform credit authority, Credits & usage UI, S3Proxy replacement and zero npm advisories; task-output provider-health fix |
+| 0.5 | Database plans/entitlements/subscriptions; signed raw-body event inbox; duplicate and out-of-order protection; one-time monthly grants and refund/expiry reversals; tenant plan API |
 | Continuity | Start/resume instructions, task board, access matrix, machine-readable state, source integrity packer and sanitized evidence |
 
 ## Actual verification boundary
 
-Latest app tests: 12 unit, 5 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios. Seven migrations applied; immutable credit entries/trigger survive restore. A populated v0.1 upgrade and fresh-database restore passed on PGlite. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
+Latest app tests: 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios. Eight migrations applied; immutable credit entries/trigger survive restore. A populated v0.1 upgrade and fresh-database restore passed on PGlite. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
 
 The test runtime used Node 24, PGlite socket bridge, native Redis 6.2, loopback S3Proxy 4.1.1 with random SigV4 credentials, real FFmpeg/ffprobe 6.1.1, local SMTP and HTTP text fixtures. It did not use a paid AI account. PGlite serializes database work; native lock/race results remain unverified. Render interruption coverage is running cancellation/SIGTERM/retry, not full host loss or SIGKILL orphan cleanup.
 
@@ -35,7 +36,7 @@ The user reported the original local frontend working on Windows. The agent did 
 | API/auth/tenancy/content/AI/assets/renders/operations | apps/api/src |
 | Text/render execution | apps/api/src/worker.ts; render-worker.ts |
 | Shared schemas/provider router/media/FFmpeg | packages/core |
-| Data schema and seven migrations | prisma |
+| Data schema and eight migrations | prisma |
 | Native CI and local Compose | .github/workflows/ci.yml; compose.yaml; compose.host.yaml |
 | Isolated verification and PGlite upgrade/restore | scripts/verify-local.mjs; verify-upgrade.mjs |
 | Scenarios and sanitized evidence | tests; docs/qa |
@@ -52,11 +53,11 @@ Default Compose does not bind host 5432/6379 because these conflicted on the use
 
 ## Open work and next action
 
-All 161 master headings remain tracked (137 Partial, 24 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
+All 161 master headings remain tracked (139 Partial, 22 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
 
-Next local task: BILLING-01, add database plans/entitlements and signed/idempotent test payment event processing, preserving the verified immutable ledger. Stripe sandbox access is needed only for actual sandbox lifecycle verification; do not claim fixture events are Stripe-connected. DEP-01 is complete for the dated npm advisory scope. If native execution becomes available, NATIVE-01 can close its own evidence gap. Continue useful local work even if external credentials remain unavailable.
+Next BILLING-01 work is the official Stripe adapter, Checkout/Portal/product-price mapping and actual sandbox lifecycle. The provider-neutral signed lifecycle is implemented and locally verified, but must never be described as Stripe-connected. DEP-01 is complete for the dated npm advisory scope. NATIVE-01 remains blocked because GitHub Actions fails before starting a job.
 
-No dirty implementation or running migration is intentionally left in this checkpoint. The application code is the verified 0.4 credit/tooling increment. No services need to remain running for a resume. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
+No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.5 billing-foundation increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
 
 The new private shlokagrawal13/organic-marketing-os repository now contains the verified v0.4 source at 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. Every source file matched. Native CI failed at startup before any job; detailed diagnostic access is pending. See docs/qa/github-publication.json and the publication section below.
 

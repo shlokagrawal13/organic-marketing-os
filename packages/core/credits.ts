@@ -136,6 +136,39 @@ export async function grantCredits(
     actorId,
   });
 }
+export async function applyBillingCredits(
+  tx: Tx,
+  organizationId: string,
+  amount: number,
+  operationKey: string,
+  reference: string,
+  reason: string,
+) {
+  if (
+    !Number.isSafeInteger(amount) ||
+    amount === 0 ||
+    Math.abs(amount) > 1_000_000
+  )
+    throw new CreditError(
+      400,
+      "Billing credit change must be a nonzero whole number up to 1000000.",
+    );
+  if (!/^[A-Za-z0-9_.:-]{1,200}$/.test(operationKey))
+    throw new CreditError(400, "Invalid billing operation key.");
+  if (reference.trim().length < 1 || reference.length > 500)
+    throw new CreditError(400, "Invalid billing reference.");
+  if (reason.trim().length < 10 || reason.length > 1000)
+    throw new CreditError(400, "Record why these billing credits changed.");
+  return append(tx, {
+    organizationId,
+    operationKey: `billing:${operationKey}`,
+    kind: amount > 0 ? "GRANT" : "ADJUSTMENT",
+    availableDelta: amount,
+    reservedDelta: 0,
+    reference,
+    reason,
+  });
+}
 export async function reserveCredits(
   tx: Tx,
   organizationId: string,

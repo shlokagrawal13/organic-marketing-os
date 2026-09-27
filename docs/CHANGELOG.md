@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 — 2026-09-27
+
+- Added database-backed plans, entitlements, subscriptions and a durable billing-event inbox in an eighth additive migration; preserved the original seven migrations.
+- Added raw-body HMAC/timestamp verification, exact event replay, changed-payload conflict rejection and deterministic out-of-order subscription protection for the isolated test billing provider.
+- Added signed one-time monthly plan grants plus refund/expiry ledger corrections without rewriting immutable credit rows or allowing negative balances.
+- Added tenant billing summary, strict role/cross-tenant checks, upgrade documentation and a sixth broad HTTP scenario. Stripe Checkout/Portal/invoices and real sandbox verification remain open.
+- Passed builds, 12 unit, 6 HTTP, 5 browser, 3 recovery/configuration scenarios, all eight migrations, PGlite populated restore and both npm audits with zero known advisories.
+
 ## 0.4.0 verified private source publication — 2026-09-26.6
 
 - Uploaded all 150 checkpoint files to the user-supplied private repository with independent history and matched every Git blob hash/mode.

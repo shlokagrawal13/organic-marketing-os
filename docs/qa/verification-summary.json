@@ -1,6 +1,6 @@
 {
-  "release": "0.4.0",
-  "verifiedDate": "2026-09-26",
+  "release": "0.5.0",
+  "verifiedDate": "2026-09-27",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
@@ -8,10 +8,10 @@
   ],
   "passed": {
     "unit": 12,
-    "httpScenarios": 5,
+    "httpScenarios": 6,
     "browserScenarios": 5,
     "recoveryAndConfigurationScenarios": 3,
-    "schemaMigrations": 7
+    "schemaMigrations": 8
   },
   "environment": {
     "database": "PGlite WASM PostgreSQL socket bridge",
@@ -25,15 +25,15 @@
   "requirements": {
     "headings": 161,
     "labels": {
-      "Partial": 137,
-      "Missing": 24
+      "Partial": 139,
+      "Missing": 22
     },
     "meaning": "traceability labels, not an implementation completion percentage"
   },
   "integrity": {
     "masterSpecificationUnchanged": true,
     "masterSha256": "8379fc4310db9d9225c8a192d7d8919ce708b493f34a486a1b48a40b175bb8b6",
-    "priorSixMigrationsUnchanged": true
+    "priorSevenMigrationsUnchanged": true
   },
   "gatesNotVerified": [
     "Native PostgreSQL concurrency and restore",
@@ -50,6 +50,10 @@
     "atomicGrantReservationSettlement": true,
     "uncertainOutcomeReviewWithoutReplay": true,
     "ledgerImmutabilityAndRestoreDirectPGlite": true,
-    "nativePrismaTriggerAndLocking": false
+    "nativePrismaTriggerAndLocking": false,
+    "signedBillingEventInbox": true,
+    "duplicateAndOutOfOrderBillingEvents": true,
+    "monthlyGrantRefundAndExpiry": true,
+    "liveStripeSandbox": false
   }
 }

@@ -1,5 +1,15 @@
 # Session log
 
+## 2026-09-27 — application 0.5.0 / handoff 2026-09-27.1
+
+The user supplied the correct new private repository `shlokagrawal13/organic-marketing-os`. The connector verified it was empty/private with write access, then uploaded the canonical checkpoint with independent history. Every one of 150 imported source paths matched its local Git blob hash and mode at commit `0093dfaa9fd0864a77f8680e51e7b506ea32f15d`; a documentation checkpoint followed at `aa416051ccbc1a7b29c348a21bc0f40bfd7d74da`. The unrelated public `OrganicMarketing` repository remains excluded.
+
+GitHub Actions runs 36269190288 and 36304124096 both ended `startup_failure` before creating a job. The connector exposed no diagnostic and rejected retry. Secure browser sign-in first reported incorrect credentials; the user declined the subsequent login-method chooser, so authentication was not retried. This is an external native-CI evidence blocker, not a test failure, and no native PostgreSQL result is claimed.
+
+Continued BILLING-01 locally. Added an eighth additive migration with plans, entitlements, subscriptions and an event inbox; a raw-body HMAC/timestamp verifier; strict provider-neutral test event schemas; exact replay and changed-payload conflict behavior; event-row locking; deterministic out-of-order subscription handling; one-time database-plan monthly grants; refund/expiry ledger corrections; and a tenant billing summary that omits external provider identifiers. Browser redirects and unsigned JSON never grant entitlement. Stripe Checkout/Portal/invoices and real sandbox verification remain unimplemented.
+
+Executed against isolated services: Prisma generation/validation; API TypeScript and Next production build; 12 unit tests; 6 broad HTTP scenarios including the new billing lifecycle; 5 production-browser scenarios; 3 recovery/configuration scenarios; all eight fresh migrations; populated v0.1 upgrade and fresh PGlite restore; production and full npm audits, both zero known advisories. Formatting checks passed for changed TypeScript and Prisma schema. Full harness command: `TEST_REDIS_BINARY=/workspace/scratch/619797c69e32/test-runtime/redislite/bin/redis-server npm run verify`. No paid API, Stripe account, actual money, social post or user data was used.
+
 ## 2026-09-26 — application 0.4.0 / handoff 2026-09-26.1
 
 User repeatedly requested continued autonomous implementation and verification, supplied no product AI-provider credentials, and connected GitHub with permission to establish the project repository. Kept the existing source and master specification; did not create a replacement app or use someone else's API keys.

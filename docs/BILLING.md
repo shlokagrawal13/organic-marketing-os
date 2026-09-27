@@ -1,6 +1,6 @@
-# Billing and credits — 0.4.0
+# Billing and credits — 0.5.0
 
-The app now has a real product-credit ledger and AI reservation lifecycle. Stripe checkout, subscriptions, invoices, refunds, plan purchases, monthly grants and expiry are not implemented. No money is collected by this release.
+The app has a real product-credit ledger, AI reservation lifecycle and a database-backed billing foundation. The implemented billing provider is a signed isolated test contract; Stripe checkout, customer portal, real invoices and money collection are not connected.
 
 ## Modes and pricing
 
@@ -33,8 +33,18 @@ Credits & usage shows actual available/reserved balances, open reservations and 
 
 Workspace export includes balances, ledger and reservation records while omitting operation keys/request hashes. Financial foreign keys prevent deleting a workspace that retains ledger data. Account deletion, financial retention and anonymization policy must be designed before enabling erasure; do not disable the immutable trigger as a cleanup shortcut.
 
+## Plans, entitlements and signed billing events
+
+The eighth migration adds `BillingPlan`, `BillingSubscription` and `BillingEvent`. Free, Starter and Growth plan records are seeded as configuration data; the active subscription stores the workspace entitlement source and current billing period. `GET /api/workspaces/:organizationId/billing` returns the current plan/entitlements to OWNER, ADMIN and ANALYST members without exposing provider identifiers.
+
+`POST /api/billing/webhooks/test` is public only at the session layer and is protected by a raw-body HMAC. Set a random `BILLING_WEBHOOK_SECRET` of at least 32 characters. Send Unix seconds in `X-MOS-Billing-Timestamp` and lowercase/uppercase hex HMAC-SHA256 in `X-MOS-Billing-Signature`, calculated over `<timestamp>.<exact raw JSON body>`. Timestamps outside five minutes, malformed headers and wrong signatures return 401. This endpoint is a deterministic integration contract, not a claim of Stripe compatibility.
+
+The inbox stores provider event ID, exact payload hash, source timestamp, processing state and workspace. An exact replay returns the stored result; the same event ID with a changed payload returns 409. Processing locks the event row. Subscription changes compare source timestamp and event ID, so a late older event is recorded but cannot overwrite newer state. A signed `invoice.paid` event grants the plan's database-configured monthly credits once and only for an ACTIVE/TRIALING subscription. Signed `credits.refunded` and `credits.expired` events append negative corrections; they never rewrite ledger rows or make balances negative. Insufficient unused credits leaves the event failed for operator review instead of silently changing reserved/spent usage.
+
+Supported test event types are `subscription.upserted`, `subscription.canceled`, `invoice.paid`, `credits.refunded` and `credits.expired`. Entitlement changes come from processed signed events, never a browser success redirect. Actual Stripe signature parsing, Checkout/Portal sessions, product/price mapping, invoice retrieval and sandbox acceptance remain BILLING-01 work.
+
 ## Verification and limits
 
-Local HTTP checks cover duplicate concurrent grants, changed-key conflicts, platform/tenant boundaries, quote rejection, reservation/settlement/cancellation, insufficient-credit contention and review resolution. Worker SIGKILL recovery preserves an unknown outcome in REVIEW without another accepted provider call. Direct PGlite SQL tests reject ledger edits/deletes and retain immutability after restore. Native Prisma-trigger and locking checks remain a CI gate; PGlite's socket bridge is not native PostgreSQL concurrency evidence.
+Local HTTP checks cover duplicate concurrent grants, changed-key conflicts, platform/tenant boundaries, quote rejection, reservation/settlement/cancellation, insufficient-credit contention, review resolution, invalid/stale billing signatures, event replay/payload conflict, out-of-order subscriptions, one-time monthly grants and idempotent refund/expiry reversals. Worker SIGKILL recovery preserves an unknown outcome in REVIEW without another accepted provider call. Direct PGlite SQL tests reject ledger edits/deletes and retain immutability after restore. Native Prisma-trigger and locking checks remain a CI gate; PGlite's socket bridge is not native PostgreSQL concurrency evidence.
 
-Next BILLING-01 increment: database-backed plans and entitlements, signed/idempotent Stripe event inbox, out-of-order subscription/invoice handling, monthly grants, refund/expiry rules, and sandbox checkout/portal verification. Never grant entitlement solely from a frontend success redirect.
+Next BILLING-01 increment: use the provider-neutral inbox guarantees for an official Stripe adapter, checkout/portal sessions, product/price mapping, invoice views, disputes/proration policy and an actual sandbox lifecycle. Never grant entitlement solely from a frontend success redirect.

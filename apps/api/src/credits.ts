@@ -5,6 +5,7 @@ import {
   Post,
   Param,
   Query,
+  Headers,
   Req,
   UseGuards,
   Module,
@@ -21,6 +22,7 @@ import {
   TenantGuard,
   AuthedRequest,
   Roles,
+  Public,
   parse,
   idSchema,
 } from "./common";
@@ -28,7 +30,13 @@ import {
   creditPolicy,
   grantCredits,
   settleCredits,
+  CreditError,
 } from "../../../packages/core/credits";
+import {
+  billingEventSchema,
+  processBillingEvent,
+  verifyBillingSignature,
+} from "../../../packages/core/billing";
 
 export function configuredPlatformAdmin(userId: string) {
   return (process.env.PLATFORM_ADMIN_USER_IDS || "")
@@ -125,6 +133,117 @@ class CreditController {
         .map(({ requestHash, operationKey, ...row }) => row),
       nextBefore: rows.length > 50 ? rows[49].sequence : null,
     };
+  }
+}
+@Controller("workspaces/:organizationId/billing")
+@UseGuards(TenantGuard)
+@Roles("OWNER", "ADMIN", "ANALYST")
+class BillingController {
+  constructor(private db: Db) {}
+  @Get() async summary(@Req() req: AuthedRequest) {
+    const subscription = await this.db.billingSubscription.findUnique({
+      where: { organizationId: req.organizationId },
+      include: { plan: true },
+    });
+    return {
+      mode: creditPolicy().mode,
+      subscription: subscription
+        ? {
+            id: subscription.id,
+            provider: subscription.provider,
+            status: subscription.status,
+            currentPeriodStart: subscription.currentPeriodStart,
+            currentPeriodEnd: subscription.currentPeriodEnd,
+            cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+            plan: {
+              id: subscription.plan.id,
+              name: subscription.plan.name,
+              monthlyCredits: subscription.plan.monthlyCredits,
+              entitlements: subscription.plan.entitlements,
+            },
+          }
+        : null,
+      checkoutConfigured: false,
+      portalConfigured: false,
+    };
+  }
+}
+@Controller("billing/webhooks")
+class BillingWebhookController {
+  constructor(private db: Db) {}
+  @Public()
+  @Post("test")
+  async receive(
+    @Req() req: AuthedRequest & { rawBody?: Buffer },
+    @Headers("x-mos-billing-timestamp") timestamp?: string,
+    @Headers("x-mos-billing-signature") signature?: string,
+    @Body() body?: unknown,
+  ) {
+    if (!req.rawBody)
+      throw new CreditError(400, "Billing webhook body is unavailable.");
+    const payloadHash = verifyBillingSignature(
+      req.rawBody,
+      timestamp,
+      signature,
+    );
+    const input = billingEventSchema.parse(body);
+    let event = await this.db.billingEvent.findUnique({
+      where: {
+        provider_externalId: { provider: "test", externalId: input.id },
+      },
+    });
+    if (event && event.payloadHash !== payloadHash)
+      throw new CreditError(
+        409,
+        "Billing event ID was already used for a different payload.",
+      );
+    if (!event) {
+      try {
+        event = await this.db.billingEvent.create({
+          data: {
+            provider: "test",
+            externalId: input.id,
+            type: input.type,
+            providerCreatedAt: new Date(input.created * 1000),
+            payload: input,
+            payloadHash,
+          },
+        });
+      } catch (error) {
+        if ((error as any)?.code !== "P2002") throw error;
+        event = await this.db.billingEvent.findUniqueOrThrow({
+          where: {
+            provider_externalId: { provider: "test", externalId: input.id },
+          },
+        });
+        if (event.payloadHash !== payloadHash)
+          throw new CreditError(
+            409,
+            "Billing event ID was already used for a different payload.",
+          );
+      }
+    }
+    try {
+      const result = await this.db.$transaction((tx) =>
+        processBillingEvent(tx, event!.id),
+      );
+      return {
+        received: true,
+        id: result.externalId,
+        status: result.status,
+        applied: result.applied,
+      };
+    } catch (error) {
+      const message =
+        error instanceof CreditError
+          ? error.message.slice(0, 500)
+          : "Billing event processing failed.";
+      await this.db.billingEvent.updateMany({
+        where: { id: event.id, status: { not: "PROCESSED" } },
+        data: { status: "FAILED", error: message },
+      });
+      throw error;
+    }
   }
 }
 @Controller("platform/credits")
@@ -245,6 +364,8 @@ class PlatformCreditController {
 @Module({
   controllers: [
     CreditController,
+    BillingController,
+    BillingWebhookController,
     PlatformAccessController,
     PlatformCreditController,
   ],

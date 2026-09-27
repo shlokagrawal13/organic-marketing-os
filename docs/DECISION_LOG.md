@@ -1,5 +1,13 @@
 # Decisions
 
+## 0.5.0 billing foundation decisions
+
+- Keep provider billing events separate from immutable product-credit entries. A processed signed event may append ledger corrections but cannot update or delete financial history.
+- Verify the exact raw request body with a dedicated HMAC secret and five-minute timestamp window. Never treat browser redirects or unsigned JSON as entitlement authority.
+- Store every provider/event ID with its payload hash. Exact replay is safe; reusing an ID for different content is a conflict. Lock event rows so business effects and processed state commit atomically.
+- Order subscription state by provider timestamp with event ID as a deterministic tie-breaker. Paid invoices grant only an ACTIVE/TRIALING plan's database-configured credits; refund/expiry cannot make available balance negative.
+- The test provider proves contracts only. Stripe requires official signature/event mapping and a real sandbox lifecycle before commercial claims.
+
 - Retain Next.js, NestJS, Prisma/PostgreSQL, Redis/BullMQ and server-side FFmpeg as requested.
 - Use a modular application with a separate worker process. Next.js only serves the frontend and proxies `/api` to NestJS.
 - Use high-entropy opaque sessions stored as hashes, HttpOnly cookies, explicit renewal, server-side revocation, and CSRF origin checks.

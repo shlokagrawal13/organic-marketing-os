@@ -168,7 +168,11 @@ export function installSecurity(app: any, cache: Cache) {
   app.use((req: AuthedRequest, res: Response, next: () => void) => {
     req.requestId = randomUUID();
     res.setHeader("X-Request-Id", req.requestId);
-    if (!["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+    const signedBillingWebhook = req.path === "/api/billing/webhooks/test";
+    if (
+      !signedBillingWebhook &&
+      !["GET", "HEAD", "OPTIONS"].includes(req.method)
+    ) {
       if (req.headers.origin && req.headers.origin !== origin())
         return res
           .status(403)

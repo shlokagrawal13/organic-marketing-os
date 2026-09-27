@@ -1,10 +1,12 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 enum Role {
   OWNER
   ADMIN
@@ -13,124 +15,141 @@ enum Role {
   ANALYST
   CLIENT
 }
+
 model User {
-  id           String @id @default(uuid())
-  email        String @unique
+  id           String       @id @default(uuid())
+  email        String       @unique
   name         String
   passwordHash String
   verifiedAt   DateTime?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime     @default(now())
   memberships  Membership[]
   sessions     Session[]
   tokens       AuthToken[]
 }
+
 model Session {
-  id        String @id @default(uuid())
-  tokenHash String @unique
+  id        String   @id @default(uuid())
+  tokenHash String   @unique
   userId    String
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
+
   @@index([userId])
 }
+
 model AuthToken {
-  id        String @id @default(uuid())
-  tokenHash String @unique
+  id        String   @id @default(uuid())
+  tokenHash String   @unique
   purpose   String
   userId    String
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
+
 model Organization {
-  id          String @id @default(uuid())
-  name        String
-  timezone    String @default("Asia/Kolkata")
-  createdAt   DateTime @default(now())
-  memberships Membership[]
-  invitations Invitation[]
-  audits      AuditLog[]
-  brand       BrandBrain?
-  brandVersions BrandVersion[]
-  jobs AIJob[]
-  aiUsage AIUsage[]
-  campaigns Campaign[]
-  content ContentItem[]
-  assets Asset[]
-  renders RenderJob[]
-  renderSegments RenderSegment[]
-  creditAccount CreditAccount?
-  creditEntries CreditEntry[]
-  creditReservations CreditReservation[]
+  id                  String               @id @default(uuid())
+  name                String
+  timezone            String               @default("Asia/Kolkata")
+  createdAt           DateTime             @default(now())
+  memberships         Membership[]
+  invitations         Invitation[]
+  audits              AuditLog[]
+  brand               BrandBrain?
+  brandVersions       BrandVersion[]
+  jobs                AIJob[]
+  aiUsage             AIUsage[]
+  campaigns           Campaign[]
+  content             ContentItem[]
+  assets              Asset[]
+  renders             RenderJob[]
+  renderSegments      RenderSegment[]
+  creditAccount       CreditAccount?
+  creditEntries       CreditEntry[]
+  creditReservations  CreditReservation[]
+  billingSubscription BillingSubscription?
+  billingEvents       BillingEvent[]
 }
+
 enum ContentStatus {
   DRAFT
   REVIEW
   APPROVED
   ARCHIVED
 }
+
 model Campaign {
-  id String @id @default(uuid())
+  id             String        @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  name String
-  goal String
-  audience String
-  description String @default("")
-  startsAt DateTime?
-  endsAt DateTime?
-  createdAt DateTime @default(now())
-  content ContentItem[]
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  goal           String
+  audience       String
+  description    String        @default("")
+  startsAt       DateTime?
+  endsAt         DateTime?
+  createdAt      DateTime      @default(now())
+  content        ContentItem[]
+
   @@index([organizationId])
 }
+
 model ContentItem {
-  id String @id @default(uuid())
+  id             String           @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  campaignId String?
-  campaign Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
-  title String
-  platform String
-  format String
-  hook String @default("")
-  body String @default("")
-  cta String @default("")
-  scenes Json @default("[]")
-  status ContentStatus @default(DRAFT)
-  revision Int @default(1)
-  plannedAt DateTime?
-  approvedAt DateTime?
-  approvedBy String?
-  createdBy String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  versions ContentVersion[]
-  comments ContentComment[]
-  renders RenderJob[]
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  campaignId     String?
+  campaign       Campaign?        @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  title          String
+  platform       String
+  format         String
+  hook           String           @default("")
+  body           String           @default("")
+  cta            String           @default("")
+  scenes         Json             @default("[]")
+  status         ContentStatus    @default(DRAFT)
+  revision       Int              @default(1)
+  plannedAt      DateTime?
+  approvedAt     DateTime?
+  approvedBy     String?
+  createdBy      String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  versions       ContentVersion[]
+  comments       ContentComment[]
+  renders        RenderJob[]
+
   @@index([organizationId, status])
   @@index([organizationId, plannedAt])
 }
+
 model ContentVersion {
-  id String @id @default(uuid())
+  id        String      @id @default(uuid())
   contentId String
-  content ContentItem @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  revision Int
-  snapshot Json
-  actorId String
-  createdAt DateTime @default(now())
+  content   ContentItem @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  revision  Int
+  snapshot  Json
+  actorId   String
+  createdAt DateTime    @default(now())
+
   @@unique([contentId, revision])
 }
+
 model ContentComment {
-  id String @id @default(uuid())
-  contentId String
-  content ContentItem @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  actorId String
+  id         String      @id @default(uuid())
+  contentId  String
+  content    ContentItem @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  actorId    String
   authorName String
-  text String
-  sceneId String?
-  createdAt DateTime @default(now())
+  text       String
+  sceneId    String?
+  createdAt  DateTime    @default(now())
+
   @@index([contentId, createdAt])
 }
+
 enum JobStatus {
   QUEUED
   RUNNING
@@ -138,99 +157,112 @@ enum JobStatus {
   FAILED
   CANCELED
 }
+
 model AIJob {
-  id String @id @default(uuid())
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  actorId String
-  requestKey String
-  task String
-  input Json
-  output Json?
-  brandContext Json?
-  creditReservationId String? @unique
-  creditReservation CreditReservation? @relation(fields: [creditReservationId], references: [id], onDelete: Restrict)
-  runToken String?
-  heartbeatAt DateTime?
-  status JobStatus @default(QUEUED)
-  attempts Int @default(0)
-  error String?
-  dispatchedAt DateTime?
-  startedAt DateTime?
-  completedAt DateTime?
-  createdAt DateTime @default(now())
-  usage AIUsage[]
+  id                  String             @id @default(uuid())
+  organizationId      String
+  organization        Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actorId             String
+  requestKey          String
+  task                String
+  input               Json
+  output              Json?
+  brandContext        Json?
+  creditReservationId String?            @unique
+  creditReservation   CreditReservation? @relation(fields: [creditReservationId], references: [id], onDelete: Restrict)
+  runToken            String?
+  heartbeatAt         DateTime?
+  status              JobStatus          @default(QUEUED)
+  attempts            Int                @default(0)
+  error               String?
+  dispatchedAt        DateTime?
+  startedAt           DateTime?
+  completedAt         DateTime?
+  createdAt           DateTime           @default(now())
+  usage               AIUsage[]
+
   @@unique([organizationId, requestKey])
   @@index([status, dispatchedAt])
   @@index([status, heartbeatAt])
   @@index([organizationId, createdAt])
 }
+
 model AIUsage {
-  id String @id @default(uuid())
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  jobId String
-  job AIJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  provider String
-  model String
-  inputTokens Int?
-  outputTokens Int?
+  id               String       @id @default(uuid())
+  organizationId   String
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobId            String
+  job              AIJob        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  provider         String
+  model            String
+  inputTokens      Int?
+  outputTokens     Int?
   estimatedCostUsd Float?
-  latencyMs Int
-  success Boolean
-  fallback Boolean @default(false)
-  createdAt DateTime @default(now())
+  latencyMs        Int
+  success          Boolean
+  fallback         Boolean      @default(false)
+  createdAt        DateTime     @default(now())
+
   @@index([organizationId, createdAt])
 }
+
 model BrandBrain {
-  organizationId String @id
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  profile Json
-  creativeDna Json
-  revision Int @default(1)
-  updatedAt DateTime @updatedAt
+  organizationId String       @id
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  profile        Json
+  creativeDna    Json
+  revision       Int          @default(1)
+  updatedAt      DateTime     @updatedAt
 }
+
 model BrandVersion {
-  id String @id @default(uuid())
+  id             String       @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  profile Json
-  creativeDna Json
-  revision Int
-  actorId String
-  createdAt DateTime @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  profile        Json
+  creativeDna    Json
+  revision       Int
+  actorId        String
+  createdAt      DateTime     @default(now())
+
   @@unique([organizationId, revision])
 }
+
 model Membership {
   userId         String
   organizationId String
-  role           Role @default(CREATOR)
-  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           Role         @default(CREATOR)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  createdAt      DateTime @default(now())
+  createdAt      DateTime     @default(now())
+
   @@id([userId, organizationId])
   @@index([organizationId])
 }
+
 model Invitation {
-  id             String @id @default(uuid())
+  id             String       @id @default(uuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   email          String
   role           Role
-  tokenHash      String @unique
+  tokenHash      String       @unique
   expiresAt      DateTime
-  createdAt      DateTime @default(now())
+  createdAt      DateTime     @default(now())
+
   @@unique([organizationId, email])
 }
+
 model AuditLog {
-  id             String @id @default(uuid())
+  id             String       @id @default(uuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   actorId        String
   action         String
   entityId       String?
-  detail         Json @default("{}")
-  createdAt      DateTime @default(now())
+  detail         Json         @default("{}")
+  createdAt      DateTime     @default(now())
+
   @@index([organizationId, createdAt])
 }
 
@@ -239,122 +271,187 @@ enum AssetKind {
   VIDEO
   AUDIO
 }
+
 model Asset {
-  id String @id @default(uuid())
+  id             String        @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  name String
-  kind AssetKind
-  mimeType String
-  bytes Int
-  sha256 String
-  objectKey String @unique
-  width Int?
-  height Int?
-  duration Float?
-  tags String[] @default([])
-  rightsNote String @default("")
-  createdBy String
-  createdAt DateTime @default(now())
-  archivedAt DateTime?
-  renderInputs RenderInput[]
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  kind           AssetKind
+  mimeType       String
+  bytes          Int
+  sha256         String
+  objectKey      String        @unique
+  width          Int?
+  height         Int?
+  duration       Float?
+  tags           String[]      @default([])
+  rightsNote     String        @default("")
+  createdBy      String
+  createdAt      DateTime      @default(now())
+  archivedAt     DateTime?
+  renderInputs   RenderInput[]
+
   @@unique([organizationId, sha256])
   @@index([organizationId, createdAt])
 }
+
 model RenderJob {
-  id String @id @default(uuid())
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  contentId String
-  content ContentItem @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  id              String        @id @default(uuid())
+  organizationId  String
+  organization    Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contentId       String
+  content         ContentItem   @relation(fields: [contentId], references: [id], onDelete: Cascade)
   contentRevision Int
-  actorId String
-  requestKey String
-  requestHash String
-  snapshot Json
-  options Json
-  status JobStatus @default(QUEUED)
-  progress Int @default(0)
-  stage String @default("Waiting for render worker")
-  reusedScenes Int @default(0)
-  totalScenes Int
-  runToken String?
-  heartbeatAt DateTime?
-  startedAt DateTime?
-  completedAt DateTime?
-  createdAt DateTime @default(now())
-  error String?
-  outputKey String?
-  thumbnailKey String?
-  captionsKey String?
-  outputBytes Int?
-  width Int?
-  height Int?
-  duration Float?
-  approvedAt DateTime?
-  approvedBy String?
-  inputs RenderInput[]
+  actorId         String
+  requestKey      String
+  requestHash     String
+  snapshot        Json
+  options         Json
+  status          JobStatus     @default(QUEUED)
+  progress        Int           @default(0)
+  stage           String        @default("Waiting for render worker")
+  reusedScenes    Int           @default(0)
+  totalScenes     Int
+  runToken        String?
+  heartbeatAt     DateTime?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  error           String?
+  outputKey       String?
+  thumbnailKey    String?
+  captionsKey     String?
+  outputBytes     Int?
+  width           Int?
+  height          Int?
+  duration        Float?
+  approvedAt      DateTime?
+  approvedBy      String?
+  inputs          RenderInput[]
+
   @@unique([organizationId, requestKey])
   @@index([organizationId, createdAt])
   @@index([status, heartbeatAt])
 }
+
 model RenderInput {
   renderId String
-  render RenderJob @relation(fields: [renderId], references: [id], onDelete: Cascade)
-  assetId String
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Restrict)
+  render   RenderJob @relation(fields: [renderId], references: [id], onDelete: Cascade)
+  assetId  String
+  asset    Asset     @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
   @@id([renderId, assetId])
 }
+
 model RenderSegment {
-  id String @id @default(uuid())
+  id             String       @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  cacheKey String
-  objectKey String
-  bytes Int
-  createdAt DateTime @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  cacheKey       String
+  objectKey      String
+  bytes          Int
+  createdAt      DateTime     @default(now())
+
   @@unique([organizationId, cacheKey])
 }
 
 model CreditAccount {
-  organizationId String @id
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  available Int @default(0)
-  reserved Int @default(0)
-  revision Int @default(0)
-  updatedAt DateTime @updatedAt
+  organizationId String       @id
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  available      Int          @default(0)
+  reserved       Int          @default(0)
+  revision       Int          @default(0)
+  updatedAt      DateTime     @updatedAt
 }
+
 model CreditEntry {
-  id String @id @default(uuid())
+  id             String       @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  operationKey String
-  requestHash String
-  kind String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  operationKey   String
+  requestHash    String
+  kind           String
   availableDelta Int
-  reservedDelta Int
+  reservedDelta  Int
   availableAfter Int
-  reservedAfter Int
-  sequence Int
-  reference String
-  reason String
-  actorId String?
-  createdAt DateTime @default(now())
+  reservedAfter  Int
+  sequence       Int
+  reference      String
+  reason         String
+  actorId        String?
+  createdAt      DateTime     @default(now())
+
   @@unique([organizationId, operationKey])
   @@unique([organizationId, sequence])
   @@index([organizationId, createdAt])
 }
+
 model CreditReservation {
-  id String @id @default(uuid())
+  id             String       @id @default(uuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  reference String
-  credits Int
-  consumed Int @default(0)
-  state String @default("RESERVED")
-  createdAt DateTime @default(now())
-  resolvedAt DateTime?
-  job AIJob?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  reference      String
+  credits        Int
+  consumed       Int          @default(0)
+  state          String       @default("RESERVED")
+  createdAt      DateTime     @default(now())
+  resolvedAt     DateTime?
+  job            AIJob?
+
   @@unique([organizationId, reference])
   @@index([organizationId, state])
+}
+
+model BillingPlan {
+  id             String                @id
+  name           String
+  active         Boolean               @default(true)
+  monthlyCredits Int                   @default(0)
+  entitlements   Json                  @default("{}")
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  subscriptions  BillingSubscription[]
+}
+
+model BillingSubscription {
+  id                     String       @id @default(uuid())
+  organizationId         String       @unique
+  organization           Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  planId                 String
+  plan                   BillingPlan  @relation(fields: [planId], references: [id], onDelete: Restrict)
+  provider               String
+  externalCustomerId     String?
+  externalSubscriptionId String?      @unique
+  status                 String
+  currentPeriodStart     DateTime?
+  currentPeriodEnd       DateTime?
+  cancelAtPeriodEnd      Boolean      @default(false)
+  lastEventCreatedAt     DateTime?
+  lastEventId            String?
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+
+  @@index([planId, status])
+}
+
+model BillingEvent {
+  id                String        @id @default(uuid())
+  provider          String
+  externalId        String
+  type              String
+  organizationId    String?
+  organization      Organization? @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  providerCreatedAt DateTime
+  payload           Json
+  payloadHash       String
+  status            String        @default("RECEIVED")
+  applied           Boolean       @default(false)
+  error             String?
+  receivedAt        DateTime      @default(now())
+  processedAt       DateTime?
+
+  @@unique([provider, externalId])
+  @@index([status, receivedAt])
+  @@index([organizationId, receivedAt])
 }

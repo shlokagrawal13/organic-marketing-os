@@ -1,15 +1,15 @@
-# Verification and remaining gates — 0.4.0
+# Verification and remaining gates — 0.5.0
 
 ## Executed locally
 
 | Suite | Result | Coverage |
 |---|---|---|
 | Unit | 12 passed | Password/session/roles, router schemas/fallback/accounting, abort/response bounds, content/media options, deterministic captions and actual child-process cancellation |
-| HTTP integration | 5 broad scenarios passed | Account/email/tenant/content/text; private uploads and real renders; collaboration/invitations/restore; all-role guards, concurrency requests, quotas, hostile multipart and full export; platform credit authority, quotes, duplicate reservations/settlement, cancellation and insufficient-credit contention |
+| HTTP integration | 6 broad scenarios passed | Account/email/tenant/content/text; private uploads and real renders; collaboration/invitations/restore; all-role guards, concurrency requests, quotas, hostile multipart and full export; platform credit authority/ledger lifecycle; signed idempotent billing events, ordered subscriptions, monthly grants and refund/expiry reversals |
 | Playwright | 5 scenarios passed | Core workflow, mobile registration, upload/render/play/download/approve, workspace health/export, credit balances/history, light/dark/mobile layouts |
 | Recovery/configuration | 3 scenarios passed | No-key manual MP4 and startup config; AI process kill/no replay/queue repair; running render cancellation, interruption and new-job retry |
-| Migrations | 7 applied | Original migrations retained; recovery and immutable credit models added |
-| Populated upgrade/restore | Passed on PGlite | v0.1 data retained through v0.4; immutable ledger restored; fresh database loaded from archive after deleting the original test workspace |
+| Migrations | 8 applied | Original seven migrations retained; billing plan/subscription/event models added |
+| Populated upgrade/restore | Passed on PGlite | v0.1 data retained through v0.5; immutable ledger restored; fresh database loaded from archive after deleting the original test workspace |
 | Builds | Passed | Prisma client generation, API TypeScript, Next.js production build |
 | Production dependency audit | 0 known advisories | Full npm tree also 0; S3Proxy Java dependencies outside npm scope |
 
@@ -19,7 +19,7 @@ Actual FFmpeg/ffprobe checks include H.264/AAC portrait 720×1280, landscape 192
 
 ## Environment and fault scope
 
-Node.js 24; PGlite WASM PostgreSQL socket bridge; native Redis 6.2; signed S3Proxy 4.1.1; actual FFmpeg 6.1.1; local SMTP capture; isolated compatible-text fixture. Compose uses native PostgreSQL 17, Redis 7 and private MinIO, which were not executable here. Application runtime does not fall back to these test fixtures.
+Node.js 24; PGlite WASM PostgreSQL socket bridge; native Redis 6.2; signed S3Proxy 4.1.1; actual FFmpeg 6.1.1; local SMTP capture; isolated compatible-text and signed-billing fixtures. Compose uses native PostgreSQL 17, Redis 7 and private MinIO, which were not executable here. Application runtime does not fall back to these test fixtures.
 
 PGlite uses `pgbouncer=true` to avoid multiplexed prepared-statement collisions and serializes database access. Concurrent HTTP requests exercise application guards but do not validate native lock races. The default application connection string does not use that test workaround.
 
@@ -50,7 +50,7 @@ For dedicated, disposable native PostgreSQL/Redis only:
 MOS_ALLOW_NATIVE_TESTS=isolated-test-services node scripts/verify-local.mjs --native --production-web
 ```
 
-Set isolated test-only `DATABASE_URL`/`REDIS_URL` first. Native mode migrates and mutates those services. Never aim it at an existing workspace. The supplied GitHub workflow sets this opt-in and runs the native gate; it has not been executed remotely here. Native mode still uses local signed S3Proxy 4.1.1 and text/SMTP fixtures.
+Set isolated test-only `DATABASE_URL`/`REDIS_URL` first. Native mode migrates and mutates those services. Never aim it at an existing workspace. The supplied GitHub workflow sets this opt-in, but two remote runs ended `startup_failure` before any job began; no native result exists. Native mode still uses local signed S3Proxy 4.1.1 and text/SMTP/billing fixtures.
 
 ## Open gates
 
