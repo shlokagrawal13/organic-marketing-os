@@ -1,0 +1,21 @@
+name: Actions startup diagnostic
+
+on:
+  push:
+    paths:
+      - .github/workflows/diagnostic.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    name: Verify GitHub-hosted runner startup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Confirm runner allocation
+        run: |
+          echo "GitHub-hosted runner started successfully"
+          uname -a
