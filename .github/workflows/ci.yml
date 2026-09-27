@@ -1,11 +1,19 @@
 name: Core and recovery verification
-on: [push, pull_request, workflow_dispatch]
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
   core:
+    name: Native application verification
     runs-on: ubuntu-latest
     timeout-minutes: 25
+
     services:
       postgres:
         image: postgres:17-alpine
@@ -13,44 +21,67 @@ jobs:
           POSTGRES_USER: marketing_test
           POSTGRES_PASSWORD: isolated_ci_only
           POSTGRES_DB: marketing_test
-        ports: ["5432:5432"]
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd "pg_isready -U marketing_test -d marketing_test"
-          --health-interval 5s --health-timeout 5s --health-retries 10
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
       redis:
         image: redis:7-alpine
-        ports: ["6379:6379"]
+        ports:
+          - 6379:6379
         options: >-
           --health-cmd "redis-cli ping"
-          --health-interval 5s --health-timeout 3s --health-retries 10
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
     env:
-      DATABASE_URL: postgresql://marketing_test:isolated_ci_only@localhost:5432/marketing_test?schema=public
-      REDIS_URL: redis://localhost:6379
-      WEB_ORIGIN: http://localhost:3000
+      DATABASE_URL: "postgresql://marketing_test:isolated_ci_only@localhost:5432/marketing_test?schema=public"
+      REDIS_URL: "redis://localhost:6379"
+      WEB_ORIGIN: "http://localhost:3000"
       COOKIE_SECURE: "false"
       NEXT_TELEMETRY_DISABLED: "1"
-      MOS_ALLOW_NATIVE_TESTS: isolated-test-services
+      MOS_ALLOW_NATIVE_TESTS: "isolated-test-services"
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - uses: actions/setup-java@v4
+      - name: Install dependencies
+        run: npm ci
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-      - run: python3 scripts/install_test_storage.py
-      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
-      - run: npm run build
-      - run: npm test
-      - run: npm audit --omit=dev --audit-level=moderate
-      - run: npm audit --audit-level=moderate
-      - run: npm run verify:upgrade
-      - run: node scripts/verify-local.mjs --native --production-web
-      - uses: actions/upload-artifact@v4
+      - name: Install test object storage
+        run: python3 scripts/install_test_storage.py
+      - name: Install media dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - name: Build
+        run: npm run build
+      - name: Run unit tests
+        run: npm test
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=moderate
+      - name: Audit all dependencies
+        run: npm audit --audit-level=moderate
+      - name: Verify populated upgrade
+        run: npm run verify:upgrade
+      - name: Verify native application flows
+        run: node scripts/verify-local.mjs --native --production-web
+      - name: Upload browser evidence
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: browser-evidence
           path: test-results/
