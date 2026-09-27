@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.5.0",
-  "checkpointRevision": "2026-09-27.1",
-  "savedAtUtc": "2026-09-27T08:15:27.306876+00:00",
-  "currentMilestone": "Locally verified plans, entitlements and signed billing-event lifecycle",
+  "applicationVersion": "0.6.0",
+  "checkpointRevision": "2026-09-27.2",
+  "savedAtUtc": "2026-09-27T08:38:02.859791+00:00",
+  "currentMilestone": "Locally verified Stripe Checkout, Portal and signed webhook contracts",
   "activeTaskId": null,
   "workInProgress": [
-    "Verified v0.5 billing source is published with an exact local/remote tree match. The resulting native Actions run also ended startup_failure before creating jobs; the detailed diagnostic is unavailable without authenticated GitHub browser access."
+    "The v0.6 Stripe-contract increment is locally verified and ready for private-repository publication. Five native Actions runs ended startup_failure before creating jobs. Canonical workflow normalization produced the same result, narrowing the blocker to repository/account Actions startup rather than application tests."
   ],
   "nextTaskId": "BILLING-01",
-  "nextAction": "Continue BILLING-01 with the official Stripe test adapter and Checkout/Portal contracts. Actual sandbox acceptance needs authorized Stripe test configuration. If authenticated GitHub browser access becomes available, inspect Actions run 36305587276 before changing the native workflow.",
+  "nextAction": "Publish the verified v0.6 Stripe-contract increment. Continue BILLING-01 with invoice views and explicit refund/dispute/proration policy. Actual Stripe sandbox acceptance needs authorized test configuration. Inspect repository/account Actions settings or the authenticated run page for the pre-job startup blocker.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -58,6 +58,8 @@
     "nativePostgresVerified": false,
     "dockerMinioVerified": false,
     "liveAiVerified": false,
+    "stripeContractFixtureVerified": true,
+    "liveStripeSandboxVerified": false,
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
@@ -65,23 +67,25 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36305587276,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36305587276",
-      "sourceCommit": "0281511e9113d4bd2470b38529bc30d4f5b14a60",
+      "runId": 36321113253,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36321113253",
+      "sourceCommit": "465fbab6fbc7267e62514643cb4145a2daccdc45",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
       "retry": "HTTP 403: This workflow run cannot be retried",
-      "rootCause": "unknown; detailed startup diagnostic requires authenticated browser access",
+      "rootCause": "repository/account Actions startup block; canonical expanded YAML still produced BuildFailed with zero jobs, while exact diagnostic remains visible only on the authenticated run page",
       "priorRunIds": [
         36269190288,
-        36304124096
+        36304124096,
+        36305587276,
+        36305819079
       ]
     }
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.5 source commit 0281511e9113d4bd2470b38529bc30d4f5b14a60 with exact tree 86454cb7e2aeda0db66f730bdd0b29e93d8aaf38. Actions runs 36269190288, 36304124096 and 36305587276 all ended startup_failure with zero jobs. After one incorrect credential result, the user declined the secure login-method chooser; do not retry authentication unless requested.",
+    "github": "Private shlokagrawal13/organic-marketing-os main is verified through v0.5 documentation checkpoint c7160d3278998913cd5a3b2005a91014a1f375b5; normalized CI workflow commit 465fbab6fbc7267e62514643cb4145a2daccdc45 is also remote. Five Actions runs ended startup_failure with zero jobs, including the normalized definition, so no native application test executed.",
     "nativeExecution": "No Docker/native PostgreSQL binaries. apt-get update on 2026-09-26 failed on prohibited privilege operations. No native gate executed.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "Not specified; no paid calls performed"
@@ -89,8 +93,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "0281511e9113d4bd2470b38529bc30d4f5b14a60",
-    "status": "v0.5_source_uploaded_verified_ci_startup_blocked",
+    "commit": "c7160d3278998913cd5a3b2005a91014a1f375b5",
+    "status": "v0.6_publication_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -103,9 +107,9 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "86454cb7e2aeda0db66f730bdd0b29e93d8aaf38",
+    "sourceTree": "20cb733ceee8fea9956ba3587eff88e7f3d378b5",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Verified v0.5 application source and evidence; every changed Git blob and the complete tree match local source.",
+    "commitMeaning": "Latest verified remote v0.5 documentation checkpoint before the locally verified v0.6 Stripe-contract increment.",
     "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,
@@ -120,7 +124,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Two GitHub native CI runs ended startup_failure before all jobs; detailed startup diagnostic is unavailable after secure browser authentication was declined."
+      "currentBlocker": "Five GitHub native CI runs ended startup_failure before all jobs. Canonical workflow normalization did not change the result; repository/account Actions settings or the authenticated diagnostic must be inspected."
     },
     {
       "id": "RECOVERY-01",
@@ -176,7 +180,7 @@
       "id": "BILLING-01",
       "state": "ready_for_local_work",
       "title": "Plans, immutable credits and Stripe",
-      "completedIncrement": "Immutable ledger plus database plans/entitlements/subscriptions, raw-body signed provider-neutral inbox, deterministic ordered events, monthly grants and refund/expiry corrections are verified locally in 0.5. Official Stripe signatures/events, Checkout/Portal, price mapping, invoice/dispute/proration behavior and sandbox acceptance remain."
+      "completedIncrement": "Immutable ledger, plans/subscriptions, provider-neutral inbox and official Stripe SDK Checkout/Portal/signature/subscription/paid-invoice contracts are locally verified through 0.6. Invoice views, refunds/disputes/fraud/proration policy and actual sandbox acceptance remain."
     },
     {
       "id": "ADMIN-01",
@@ -227,6 +231,7 @@
   ],
   "lastChanges": [
     ".env.example",
+    ".github/workflows/ci.yml",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
@@ -234,6 +239,7 @@
     "apps/api/src/common.ts",
     "apps/api/src/credits.ts",
     "apps/api/src/main.ts",
+    "apps/web/app/credits-workspace.tsx",
     "docs/API.md",
     "docs/BILLING.md",
     "docs/CHANGELOG.md",
@@ -245,7 +251,7 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/TEST_STRATEGY.md",
-    "docs/UPGRADE_0.5.md",
+    "docs/UPGRADE_0.6.md",
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/dependency-audit-summary.json",
     "docs/qa/handoff-verification.json",
@@ -254,9 +260,6 @@
     "package-lock.json",
     "package.json",
     "packages/core/billing.ts",
-    "packages/core/credits.ts",
-    "prisma/migrations/202609270001_billing_entitlements/migration.sql",
-    "prisma/schema.prisma",
     "tests/integration/billing.test.ts"
   ],
   "nextAgentProtocol": [

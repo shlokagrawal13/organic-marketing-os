@@ -11,7 +11,10 @@ export default function CreditsWorkspace({
   organizationId: string;
 }) {
   const adjustmentKey = useRef<string | null>(null);
+  const checkoutKeys = useRef<Record<string, string>>({});
+  const portalKey = useRef<string | null>(null);
   const [data, setData] = useState<any>(null),
+    [billing, setBilling] = useState<any>(null),
     [entries, setEntries] = useState<any[]>([]),
     [next, setNext] = useState<number | null>(null);
   const [admin, setAdmin] = useState(false),
@@ -26,12 +29,14 @@ export default function CreditsWorkspace({
     setBusy(true);
     setError("");
     try {
-      const [summary, history, access] = await Promise.all([
+      const [summary, billingSummary, history, access] = await Promise.all([
         api(base + "/credits"),
+        api(base + "/billing"),
         api(base + "/credits/entries"),
         api("/platform/access"),
       ]);
       setData(summary);
+      setBilling(billingSummary);
       setEntries(history.items);
       setNext(history.nextBefore);
       setAdmin(access.allowed);
@@ -96,6 +101,35 @@ export default function CreditsWorkspace({
       setBusy(false);
     }
   }
+  async function checkout(planId: "starter" | "growth") {
+    setBusy(true);
+    setError("");
+    try {
+      const session = await api(base + "/billing/checkout", "POST", {
+        planId,
+        requestKey: (checkoutKeys.current[planId] ||= crypto.randomUUID()),
+      });
+      checkoutKeys.current[planId] = "";
+      window.location.assign(session.url);
+    } catch (e) {
+      setError((e as Error).message);
+      setBusy(false);
+    }
+  }
+  async function portal() {
+    setBusy(true);
+    setError("");
+    try {
+      const session = await api(base + "/billing/portal", "POST", {
+        requestKey: (portalKey.current ||= crypto.randomUUID()),
+      });
+      portalKey.current = null;
+      window.location.assign(session.url);
+    } catch (e) {
+      setError((e as Error).message);
+      setBusy(false);
+    }
+  }
   return (
     <>
       <div className="page-heading">
@@ -121,7 +155,9 @@ export default function CreditsWorkspace({
             {data.mode === "credits"
               ? "AI jobs reserve the displayed credits before starting. Successful saved results consume that quote. Interrupted or failed provider calls stay reserved for review."
               : "Self-hosted mode: AI requests use your configured provider account directly. Product credits are not required; the provider may charge for usage."}{" "}
-            Payments and purchased plans are not connected.
+            {data.paymentsConfigured
+              ? " Stripe billing is configured. Plan access changes only after a verified webhook."
+              : " Payments and purchased plans are not connected."}
           </div>
           <div className="ops-grid">
             <section className="panel">
@@ -148,6 +184,56 @@ export default function CreditsWorkspace({
                 One quoted charge per saved result, including its configured
                 fallback attempt. Credits are product units, not provider
                 invoices or currency.
+              </p>
+            </section>
+          )}
+          {billing && (
+            <section className="panel">
+              <div className="section-top">
+                <div>
+                  <h2>Plan & billing</h2>
+                  <p className="small-copy">
+                    {billing.subscription
+                      ? `${billing.subscription.plan.name} · ${billing.subscription.status.toLowerCase().replaceAll("_", " ")}`
+                      : "No paid subscription is active."}
+                  </p>
+                </div>
+                {billing.portalConfigured && (
+                  <button className="button" disabled={busy} onClick={portal}>
+                    Manage billing
+                  </button>
+                )}
+              </div>
+              {billing.checkoutAvailable ? (
+                <div className="button-row">
+                  <button
+                    className="button"
+                    disabled={busy}
+                    onClick={() => checkout("starter")}
+                  >
+                    Choose Starter · 100 credits/month
+                  </button>
+                  <button
+                    className="button"
+                    disabled={busy}
+                    onClick={() => checkout("growth")}
+                  >
+                    Choose Growth · 500 credits/month
+                  </button>
+                </div>
+              ) : !billing.checkoutConfigured ? (
+                <p className="small-copy">
+                  Checkout is disabled until the deployment operator configures
+                  Stripe prices and webhook signing.
+                </p>
+              ) : (
+                <p className="small-copy">
+                  Use Manage billing to change the active Stripe subscription.
+                </p>
+              )}
+              <p className="small-copy">
+                A Checkout success redirect never grants plan access by itself.
+                Signed subscription and invoice events are the source of truth.
               </p>
             </section>
           )}

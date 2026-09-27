@@ -25,6 +25,7 @@ import {
   Public,
   parse,
   idSchema,
+  origin,
 } from "./common";
 import {
   creditPolicy,
@@ -35,8 +36,24 @@ import {
 import {
   billingEventSchema,
   processBillingEvent,
+  requireStripeBilling,
+  stripeBillingConfiguration,
   verifyBillingSignature,
+  verifyAndMapStripeBillingEvent,
 } from "../../../packages/core/billing";
+
+function stripeHostedUrl(value: string | null, hostname: string) {
+  if (!value) throw new CreditError(502, "Stripe did not return a hosted URL.");
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new CreditError(502, "Stripe returned an invalid hosted URL.");
+  }
+  if (parsed.protocol !== "https:" || parsed.hostname !== hostname)
+    throw new CreditError(502, "Stripe returned an unexpected hosted URL.");
+  return parsed.toString();
+}
 
 export function configuredPlatformAdmin(userId: string) {
   return (process.env.PLATFORM_ADMIN_USER_IDS || "")
@@ -89,6 +106,7 @@ class PlatformAccessController {
 class CreditController {
   constructor(private db: Db) {}
   @Get() async summary(@Req() req: AuthedRequest) {
+    const stripe = stripeBillingConfiguration();
     const [account, reservations] = await Promise.all([
       this.db.creditAccount.findUnique({
         where: { organizationId: req.organizationId },
@@ -107,8 +125,8 @@ class CreditController {
       available: account?.available || 0,
       reserved: account?.reserved || 0,
       reservations,
-      paymentsConfigured: false,
-      purchasedCreditsSupported: false,
+      paymentsConfigured: stripe.configured,
+      purchasedCreditsSupported: stripe.configured,
     };
   }
   @Get("entries") async entries(
@@ -145,6 +163,7 @@ class BillingController {
       where: { organizationId: req.organizationId },
       include: { plan: true },
     });
+    const stripe = stripeBillingConfiguration();
     return {
       mode: creditPolicy().mode,
       subscription: subscription
@@ -163,33 +182,130 @@ class BillingController {
             },
           }
         : null,
-      checkoutConfigured: false,
-      portalConfigured: false,
+      checkoutConfigured: stripe.configured,
+      checkoutAvailable:
+        stripe.configured &&
+        !(
+          subscription?.provider === "stripe" &&
+          ["ACTIVE", "TRIALING"].includes(subscription.status)
+        ),
+      portalConfigured: Boolean(
+        stripe.configured &&
+        subscription?.provider === "stripe" &&
+        subscription.externalCustomerId,
+      ),
     };
+  }
+  @Post("checkout")
+  @Roles("OWNER", "ADMIN")
+  async checkout(@Req() req: AuthedRequest, @Body() body: unknown) {
+    const data = parse(
+      z
+        .object({
+          planId: z.enum(["starter", "growth"]),
+          requestKey: z.string().uuid(),
+        })
+        .strict(),
+      body,
+    );
+    const configuration = requireStripeBilling();
+    const [plan, subscription, user] = await Promise.all([
+      this.db.billingPlan.findUnique({ where: { id: data.planId } }),
+      this.db.billingSubscription.findUnique({
+        where: { organizationId: req.organizationId },
+      }),
+      this.db.user.findUniqueOrThrow({
+        where: { id: req.userId },
+        select: { email: true },
+      }),
+    ]);
+    if (!plan?.active)
+      throw new CreditError(409, "The selected billing plan is unavailable.");
+    if (
+      subscription?.provider === "stripe" &&
+      ["ACTIVE", "TRIALING"].includes(subscription.status)
+    )
+      throw new CreditError(
+        409,
+        "Use the billing portal to change an active Stripe subscription.",
+      );
+    const metadata = {
+      marketingOsOrganizationId: req.organizationId,
+      marketingOsPlanId: data.planId,
+    };
+    try {
+      const session = await configuration.client.checkout.sessions.create(
+        {
+          mode: "subscription",
+          client_reference_id: req.organizationId,
+          line_items: [
+            { price: configuration.prices[data.planId], quantity: 1 },
+          ],
+          success_url: `${origin()}/?workspace=${req.organizationId}&billing=success&session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${origin()}/?workspace=${req.organizationId}&billing=canceled`,
+          metadata,
+          subscription_data: { metadata },
+          ...(subscription?.provider === "stripe" &&
+          subscription.externalCustomerId
+            ? { customer: subscription.externalCustomerId }
+            : { customer_email: user.email }),
+        },
+        { idempotencyKey: `checkout:${req.organizationId}:${data.requestKey}` },
+      );
+      return {
+        id: session.id,
+        url: stripeHostedUrl(session.url, "checkout.stripe.com"),
+        expiresAt: new Date(session.expires_at * 1000),
+      };
+    } catch (error) {
+      if (error instanceof CreditError) throw error;
+      throw new CreditError(502, "Stripe Checkout is temporarily unavailable.");
+    }
+  }
+  @Post("portal")
+  @Roles("OWNER", "ADMIN")
+  async portal(@Req() req: AuthedRequest, @Body() body: unknown) {
+    const data = parse(
+      z.object({ requestKey: z.string().uuid() }).strict(),
+      body,
+    );
+    const configuration = requireStripeBilling();
+    const subscription = await this.db.billingSubscription.findUnique({
+      where: { organizationId: req.organizationId },
+    });
+    if (subscription?.provider !== "stripe" || !subscription.externalCustomerId)
+      throw new CreditError(409, "A Stripe customer is required.");
+    try {
+      const session = await configuration.client.billingPortal.sessions.create(
+        {
+          customer: subscription.externalCustomerId,
+          return_url: `${origin()}/?workspace=${req.organizationId}&billing=portal-return`,
+        },
+        { idempotencyKey: `portal:${req.organizationId}:${data.requestKey}` },
+      );
+      return {
+        id: session.id,
+        url: stripeHostedUrl(session.url, "billing.stripe.com"),
+      };
+    } catch {
+      throw new CreditError(
+        502,
+        "Stripe billing portal is temporarily unavailable.",
+      );
+    }
   }
 }
 @Controller("billing/webhooks")
 class BillingWebhookController {
   constructor(private db: Db) {}
-  @Public()
-  @Post("test")
-  async receive(
-    @Req() req: AuthedRequest & { rawBody?: Buffer },
-    @Headers("x-mos-billing-timestamp") timestamp?: string,
-    @Headers("x-mos-billing-signature") signature?: string,
-    @Body() body?: unknown,
+  private async ingest(
+    provider: "test" | "stripe",
+    input: z.infer<typeof billingEventSchema>,
+    payloadHash: string,
   ) {
-    if (!req.rawBody)
-      throw new CreditError(400, "Billing webhook body is unavailable.");
-    const payloadHash = verifyBillingSignature(
-      req.rawBody,
-      timestamp,
-      signature,
-    );
-    const input = billingEventSchema.parse(body);
     let event = await this.db.billingEvent.findUnique({
       where: {
-        provider_externalId: { provider: "test", externalId: input.id },
+        provider_externalId: { provider, externalId: input.id },
       },
     });
     if (event && event.payloadHash !== payloadHash)
@@ -201,7 +317,7 @@ class BillingWebhookController {
       try {
         event = await this.db.billingEvent.create({
           data: {
-            provider: "test",
+            provider,
             externalId: input.id,
             type: input.type,
             providerCreatedAt: new Date(input.created * 1000),
@@ -213,7 +329,7 @@ class BillingWebhookController {
         if ((error as any)?.code !== "P2002") throw error;
         event = await this.db.billingEvent.findUniqueOrThrow({
           where: {
-            provider_externalId: { provider: "test", externalId: input.id },
+            provider_externalId: { provider, externalId: input.id },
           },
         });
         if (event.payloadHash !== payloadHash)
@@ -244,6 +360,42 @@ class BillingWebhookController {
       });
       throw error;
     }
+  }
+  @Public()
+  @Post("test")
+  async receive(
+    @Req() req: AuthedRequest & { rawBody?: Buffer },
+    @Headers("x-mos-billing-timestamp") timestamp?: string,
+    @Headers("x-mos-billing-signature") signature?: string,
+    @Body() body?: unknown,
+  ) {
+    if (!req.rawBody)
+      throw new CreditError(400, "Billing webhook body is unavailable.");
+    const payloadHash = verifyBillingSignature(
+      req.rawBody,
+      timestamp,
+      signature,
+    );
+    const input = billingEventSchema.parse(body);
+    return this.ingest("test", input, payloadHash);
+  }
+  @Public()
+  @Post("stripe")
+  async receiveStripe(
+    @Req() req: AuthedRequest & { rawBody?: Buffer },
+    @Headers("stripe-signature") signature?: string,
+  ) {
+    if (!req.rawBody)
+      throw new CreditError(400, "Billing webhook body is unavailable.");
+    const verified = verifyAndMapStripeBillingEvent(req.rawBody, signature);
+    if (!verified.input)
+      return {
+        received: true,
+        id: verified.event.id,
+        status: "IGNORED",
+        applied: false,
+      };
+    return this.ingest("stripe", verified.input, verified.payloadHash);
   }
 }
 @Controller("platform/credits")

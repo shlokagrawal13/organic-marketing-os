@@ -1,10 +1,10 @@
-# Project handoff — 2026-09-27.1
+# Project handoff — 2026-09-27.2
 
 ## User intent and working agreement
 
 Build the supplied AI Marketing OS V3 into a fully working product. The user wants autonomous implementation and verification, including browser inspection, rather than repeatedly being asked to test. The user clarified that unavailable API keys meant AI-provider keys for the product. They want a new chat/account to continue from saved files without retelling the project. Prefer concise Hinglish updates, exact evidence and honest missing-feature reporting.
 
-This is a source continuation checkpoint for version 0.5.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
+This is a source continuation checkpoint for version 0.6.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
 
 ## Completed milestones
 
@@ -15,13 +15,14 @@ This is a source continuation checkpoint for version 0.5.0, not a claim of compl
 | 0.3 | AI context freezing, request identity, queue-loss reconciliation and no replay of interrupted calls; fallback/accounting fixes; runtime dependency patches; workspace health and private paginated record export; expanded recovery/no-key/role/collaboration tests |
 | 0.4 | Immutable product-credit accounting, quote/reserve/settle/cancel/review, verified platform credit authority, Credits & usage UI, S3Proxy replacement and zero npm advisories; task-output provider-health fix |
 | 0.5 | Database plans/entitlements/subscriptions; signed raw-body event inbox; duplicate and out-of-order protection; one-time monthly grants and refund/expiry reversals; tenant plan API |
+| 0.6 | Official Stripe SDK configuration; hosted Checkout/Portal API and UI; plan-price mapping; raw Stripe signatures; subscription/paid-invoice mapping; test/live separation |
 | Continuity | Start/resume instructions, task board, access matrix, machine-readable state, source integrity packer and sanitized evidence |
 
 ## Actual verification boundary
 
 Latest app tests: 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios. Eight migrations applied; immutable credit entries/trigger survive restore. A populated v0.1 upgrade and fresh-database restore passed on PGlite. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
 
-The test runtime used Node 24, PGlite socket bridge, native Redis 6.2, loopback S3Proxy 4.1.1 with random SigV4 credentials, real FFmpeg/ffprobe 6.1.1, local SMTP and HTTP text fixtures. It did not use a paid AI account. PGlite serializes database work; native lock/race results remain unverified. Render interruption coverage is running cancellation/SIGTERM/retry, not full host loss or SIGKILL orphan cleanup.
+The test runtime used Node 24, PGlite socket bridge, native Redis 6.2, loopback S3Proxy 4.1.1 with random SigV4 credentials, real FFmpeg/ffprobe 6.1.1, local SMTP and HTTP text/Stripe fixtures. It did not use a paid AI or Stripe account. PGlite serializes database work; native lock/race results remain unverified. Render interruption coverage is running cancellation/SIGTERM/retry, not full host loss or SIGKILL orphan cleanup.
 
 The prior agent runtime had no Docker/native PostgreSQL. Native package installation failed due to runtime privilege restrictions. These facts describe that environment; recheck a new environment before assuming the same restriction. Do not bypass access controls. CI for native PostgreSQL 17/Redis 7 was triggered remotely but failed at startup before any test job ran. The normal Compose/MinIO stack also remains unexecuted by the agent.
 
@@ -53,13 +54,13 @@ Default Compose does not bind host 5432/6379 because these conflicted on the use
 
 ## Open work and next action
 
-All 161 master headings remain tracked (139 Partial, 22 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
+All 161 master headings remain tracked (140 Partial, 21 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
 
-Next BILLING-01 work is the official Stripe adapter, Checkout/Portal/product-price mapping and actual sandbox lifecycle. The provider-neutral signed lifecycle is implemented and locally verified, but must never be described as Stripe-connected. DEP-01 is complete for the dated npm advisory scope. NATIVE-01 remains blocked because GitHub Actions fails before starting a job.
+Next BILLING-01 local work is invoice views and refund/dispute/proration policy. Checkout/Portal and Stripe webhook contracts are implemented and fixture-verified, but must not be described as sandbox/live accepted. Actual sandbox lifecycle needs authorized test configuration. DEP-01 is complete for the dated npm advisory scope. NATIVE-01 remains blocked because GitHub Actions fails before starting a job.
 
-No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.5 billing-foundation increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
+No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.6 Stripe-contract increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
 
-Private `shlokagrawal13/organic-marketing-os` main contains verified v0.5 source commit `0281511e9113d4bd2470b38529bc30d4f5b14a60`; remote tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` exactly matches the locally tested tree. Actions run 36305587276 ended `startup_failure` before jobs, so native CI remains open. See `docs/qa/github-publication.json`.
+Private `shlokagrawal13/organic-marketing-os` main is verified through v0.5 documentation checkpoint `c7160d3278998913cd5a3b2005a91014a1f375b5`; locally verified v0.6 is pending publication. Four Actions runs ended `startup_failure` before jobs, so native CI remains open. See `docs/qa/github-publication.json`.
 
 ## Portability and limits
 

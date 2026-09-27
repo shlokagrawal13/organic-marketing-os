@@ -28,6 +28,7 @@ import { RendersModule } from "./renders";
 import { OperationsModule } from "./operations";
 import { CreditsModule } from "./credits";
 import { creditPolicy } from "../../../packages/core/credits";
+import { stripeBillingConfiguration } from "../../../packages/core/billing";
 
 @Controller("health")
 @Public()
@@ -67,6 +68,7 @@ class HealthController {
 export class AppModule {}
 async function main() {
   creditPolicy();
+  stripeBillingConfiguration();
   if (
     process.env.NODE_ENV === "production" &&
     (!process.env.WEB_ORIGIN?.startsWith("https://") ||
@@ -98,6 +100,7 @@ async function main() {
       "Idempotency-Key",
       "X-MOS-Billing-Timestamp",
       "X-MOS-Billing-Signature",
+      "Stripe-Signature",
     ],
   });
   installSecurity(app, app.get(Cache));

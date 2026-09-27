@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+import Stripe from "stripe";
 import { z } from "zod";
 import { applyBillingCredits, CreditError } from "./credits";
 
@@ -77,6 +78,214 @@ export const billingEventSchema = z.discriminatedUnion("type", [
     .strict(),
 ]);
 export type BillingEventInput = z.infer<typeof billingEventSchema>;
+
+type StripeBillingConfiguration =
+  | { mode: "disabled"; configured: false }
+  | {
+      mode: "test" | "live";
+      configured: true;
+      client: Stripe;
+      webhookSecret: string;
+      prices: Record<"starter" | "growth", string>;
+      plansByPrice: Map<string, "starter" | "growth">;
+    };
+
+export function stripeBillingConfiguration(): StripeBillingConfiguration {
+  const mode = process.env.STRIPE_MODE || "disabled";
+  if (mode === "disabled") return { mode, configured: false };
+  if (mode !== "test" && mode !== "live")
+    throw new Error("STRIPE_MODE must be disabled, test or live.");
+  const secretKey = process.env.STRIPE_SECRET_KEY || "";
+  if (!secretKey.startsWith(mode === "test" ? "sk_test_" : "sk_live_"))
+    throw new Error(`STRIPE_SECRET_KEY must be a ${mode}-mode secret key.`);
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
+  if (!/^whsec_[A-Za-z0-9_]{12,}$/.test(webhookSecret))
+    throw new Error("STRIPE_WEBHOOK_SECRET is invalid.");
+  const prices = {
+    starter: process.env.STRIPE_PRICE_STARTER || "",
+    growth: process.env.STRIPE_PRICE_GROWTH || "",
+  };
+  if (!Object.values(prices).every((id) => /^price_[A-Za-z0-9]+$/.test(id)))
+    throw new Error("Stripe Starter and Growth price IDs are required.");
+  if (prices.starter === prices.growth)
+    throw new Error("Stripe plan price IDs must be different.");
+  const options: Stripe.StripeConfig = {
+    maxNetworkRetries: 2,
+    timeout: 10_000,
+    telemetry: false,
+  };
+  const baseUrl = process.env.STRIPE_API_BASE_URL;
+  if (baseUrl) {
+    if (process.env.NODE_ENV === "production")
+      throw new Error(
+        "STRIPE_API_BASE_URL cannot be overridden in production.",
+      );
+    const parsed = new URL(baseUrl);
+    if (
+      !["127.0.0.1", "localhost", "::1"].includes(parsed.hostname) ||
+      !["http:", "https:"].includes(parsed.protocol) ||
+      parsed.pathname !== "/"
+    )
+      throw new Error("STRIPE_API_BASE_URL must be a loopback origin.");
+    options.host = parsed.hostname;
+    options.port = Number(
+      parsed.port || (parsed.protocol === "https:" ? 443 : 80),
+    );
+    options.protocol = parsed.protocol === "https:" ? "https" : "http";
+  }
+  return {
+    mode,
+    configured: true,
+    client: new Stripe(secretKey, options),
+    webhookSecret,
+    prices,
+    plansByPrice: new Map([
+      [prices.starter, "starter"],
+      [prices.growth, "growth"],
+    ]),
+  };
+}
+
+export function requireStripeBilling() {
+  const configuration = stripeBillingConfiguration();
+  if (!configuration.configured)
+    throw new CreditError(503, "Stripe billing is not configured.");
+  return configuration;
+}
+
+function stripeId(value: string | { id: string } | null) {
+  return typeof value === "string" ? value : value?.id || null;
+}
+
+function stripeSubscriptionStatus(status: Stripe.Subscription.Status) {
+  const mapped = {
+    active: "ACTIVE",
+    canceled: "CANCELED",
+    incomplete: "PAST_DUE",
+    incomplete_expired: "CANCELED",
+    past_due: "PAST_DUE",
+    paused: "PAUSED",
+    trialing: "TRIALING",
+    unpaid: "UNPAID",
+  } as const;
+  return mapped[status as keyof typeof mapped];
+}
+
+function organizationMetadata(metadata: Stripe.Metadata | null | undefined) {
+  const value = metadata?.marketingOsOrganizationId;
+  if (!value) return null;
+  const parsed = z.string().uuid().safeParse(value);
+  if (!parsed.success)
+    throw new CreditError(400, "Stripe organization metadata is invalid.");
+  return parsed.data;
+}
+
+export function mapStripeBillingEvent(
+  event: Stripe.Event,
+  configuration = requireStripeBilling(),
+): BillingEventInput | null {
+  if (
+    event.type === "customer.subscription.created" ||
+    event.type === "customer.subscription.updated" ||
+    event.type === "customer.subscription.deleted"
+  ) {
+    const subscription = event.data.object as Stripe.Subscription;
+    const organizationId = organizationMetadata(subscription.metadata);
+    if (!organizationId) return null;
+    if (event.type === "customer.subscription.deleted")
+      return {
+        id: event.id,
+        type: "subscription.canceled",
+        created: event.created,
+        data: { externalSubscriptionId: subscription.id },
+      };
+    const matching = subscription.items.data.filter((item) =>
+      configuration.plansByPrice.has(item.price.id),
+    );
+    if (subscription.items.data.length !== 1 || matching.length !== 1)
+      throw new CreditError(
+        409,
+        "Stripe subscription must contain exactly one configured plan price.",
+      );
+    const item = matching[0];
+    const planId = configuration.plansByPrice.get(item.price.id)!;
+    const status = stripeSubscriptionStatus(subscription.status);
+    if (!status)
+      throw new CreditError(409, "Stripe subscription status is unsupported.");
+    const customer = stripeId(subscription.customer);
+    if (!customer)
+      throw new CreditError(400, "Stripe subscription customer is missing.");
+    return {
+      id: event.id,
+      type: "subscription.upserted",
+      created: event.created,
+      data: {
+        organizationId,
+        externalCustomerId: customer,
+        externalSubscriptionId: subscription.id,
+        planId,
+        status,
+        currentPeriodStart: new Date(
+          item.current_period_start * 1000,
+        ).toISOString(),
+        currentPeriodEnd: new Date(
+          item.current_period_end * 1000,
+        ).toISOString(),
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      },
+    };
+  }
+  if (event.type === "invoice.paid") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const detail = invoice.parent?.subscription_details;
+    const organizationId = organizationMetadata(detail?.metadata);
+    if (!organizationId) return null;
+    const subscriptionId = stripeId(detail?.subscription || null);
+    if (!subscriptionId)
+      throw new CreditError(400, "Stripe invoice subscription is missing.");
+    return {
+      id: event.id,
+      type: "invoice.paid",
+      created: event.created,
+      data: {
+        externalSubscriptionId: subscriptionId,
+        periodStart: new Date(invoice.period_start * 1000).toISOString(),
+        periodEnd: new Date(invoice.period_end * 1000).toISOString(),
+      },
+    };
+  }
+  return null;
+}
+
+export function verifyAndMapStripeBillingEvent(
+  rawBody: Buffer,
+  signatureHeader: string | undefined,
+) {
+  const configuration = requireStripeBilling();
+  if (!signatureHeader)
+    throw new CreditError(401, "Stripe signature is missing.");
+  let event: Stripe.Event;
+  try {
+    event = configuration.client.webhooks.constructEvent(
+      rawBody,
+      signatureHeader,
+      configuration.webhookSecret,
+      300,
+    );
+  } catch {
+    throw new CreditError(401, "Invalid Stripe signature.");
+  }
+  if (event.livemode !== (configuration.mode === "live"))
+    throw new CreditError(
+      400,
+      "Stripe event mode does not match configuration.",
+    );
+  return {
+    event,
+    input: mapStripeBillingEvent(event, configuration),
+    payloadHash: createHash("sha256").update(rawBody).digest("hex"),
+  };
+}
 
 export function verifyBillingSignature(
   rawBody: Buffer,
@@ -172,7 +381,7 @@ export async function processBillingEvent(tx: Tx, eventRecordId: string) {
       return finish(tx, record.id, data.organizationId, false);
     const values = {
       planId: data.planId,
-      provider: "test",
+      provider: record.provider,
       externalCustomerId: data.externalCustomerId,
       externalSubscriptionId: data.externalSubscriptionId,
       status: data.status,
@@ -235,7 +444,7 @@ export async function processBillingEvent(tx: Tx, eventRecordId: string) {
         tx,
         subscription.organizationId,
         subscription.plan.monthlyCredits,
-        `test:${event.id}:monthly`,
+        `${record.provider}:${event.id}:monthly`,
         event.id,
         `Monthly ${subscription.plan.name} plan credit grant`,
       );
@@ -257,7 +466,7 @@ export async function processBillingEvent(tx: Tx, eventRecordId: string) {
     tx,
     event.data.organizationId,
     -event.data.credits,
-    `test:${event.id}:${event.type}`,
+    `${record.provider}:${event.id}:${event.type}`,
     event.data.reference,
     reason,
   );

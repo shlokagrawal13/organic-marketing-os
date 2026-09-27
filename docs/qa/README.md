@@ -1,6 +1,6 @@
-# Verification evidence — 0.5.0 / 2026-09-27
+# Verification evidence — 0.6.0 / 2026-09-27
 
-Captured from the built Next.js application, NestJS API, PGlite, native Redis, S3Proxy and actual FFmpeg. SMTP/text use isolated test fixtures; all five browser scenarios passed. Media and screenshots contain synthetic test workspaces and assets, not customer data, live AI generation or marketing-performance claims.
+Captured from the built Next.js application, NestJS API, PGlite, native Redis, S3Proxy and actual FFmpeg. SMTP/text/Stripe use isolated test fixtures; all five browser scenarios passed. Media and screenshots contain synthetic test workspaces and assets, not customer data, live AI generation, real payments or marketing-performance claims.
 
 | File | Evidence |
 |---|---|

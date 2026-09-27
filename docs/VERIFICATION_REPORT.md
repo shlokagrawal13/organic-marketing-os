@@ -1,6 +1,6 @@
-# Verification report — Organic Marketing OS 0.5.0
+# Verification report — Organic Marketing OS 0.6.0
 
-Release verification: 2026-09-27. Scope: retain the verified core/media/credit milestone and add database plans/entitlements plus a signed idempotent billing-event lifecycle without claiming live Stripe connectivity. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
+Release verification: 2026-09-27. Scope: retain the verified core/media/credit/billing foundation and add official Stripe SDK Checkout/Portal/webhook contracts without claiming a real Stripe sandbox or payment. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
 
 ## Result
 
@@ -17,7 +17,15 @@ Release verification: 2026-09-27. Scope: retain the verified core/media/credit m
 | Full npm dependency scan | 0 known advisories | S3rver removed; S3Proxy Java dependency tree is outside npm scope |
 | Spec/migration integrity | 161 headings mapped; original master and first 7 migrations unchanged | `REQUIREMENTS_MATRIX.md`, `docs/qa/verification-summary.json` |
 
-These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 139 Partial and 22 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
+These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 140 Partial and 21 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
+
+## New 0.6 findings and behavior
+
+- Added disabled/test/live Stripe configuration with test/live key and event-mode enforcement. Partial or invalid configuration refuses API startup; loopback API overrides are development-only.
+- Added idempotent hosted Checkout and Customer Portal session routes for OWNER/ADMIN, server-owned return URLs, workspace/plan metadata, strict two-price mapping and expected Stripe-host redirect validation.
+- Added official raw-body Stripe signature verification and durable mapping for subscription created/updated/deleted plus paid invoices. Events without this product's metadata are ignored; browser redirects never grant access.
+- Extended Credits & usage with current plan, configured Checkout choices and Portal access. The local fixture inspected request bodies, idempotency keys, roles, customer binding, duplicate webhook delivery and one-time grants.
+- No Stripe account, card, external request or money was used. Sandbox renewal/cancel/refund behavior, invoice views, disputes and proration remain unverified.
 
 ## New 0.4 findings and behavior
 
@@ -72,7 +80,7 @@ The upgrade exercise starts from the original four SQL migrations and creates a 
 
 ## Environment and limits
 
-This review ran the shared source in an isolated environment, not inside the user's Windows installation. Services were the production Next.js build, compiled NestJS API/workers, PGlite WASM PostgreSQL over a socket bridge, native Redis 6.2, loopback signed S3Proxy 4.1.1, real FFmpeg/ffprobe 6.1.1, local SMTP capture and isolated compatible-text fixtures. Node.js 24 was used. The runtime application has no mock provider fallback.
+This review ran the shared source in an isolated environment, not inside the user's Windows installation. Services were the production Next.js build, compiled NestJS API/workers, PGlite WASM PostgreSQL over a socket bridge, native Redis 6.2, loopback signed S3Proxy 4.1.1, real FFmpeg/ffprobe 6.1.1, local SMTP capture and isolated compatible-text/Stripe fixtures. Node.js 24 was used. The runtime application has no mock provider fallback.
 
 Native Docker/PostgreSQL tooling was absent. Attempts to install native packages were blocked by runtime privilege restrictions; no native gate is reported as passed. MinIO was not started. PGlite serializes requests, so concurrent HTTP tests exercise application behavior but cannot establish native row-lock/race correctness. CI is configured for PostgreSQL 17/Redis 7 and requires isolated test services, but that workflow has not executed remotely here.
 
@@ -90,6 +98,6 @@ No paid provider request, social publication, external email delivery or payment
 | Publish | No social publisher | Official OAuth, scheduling, variants, policy, idempotent publishing/recovery |
 | Measure | Internal job/storage/usage records | External analytics, attribution and reliable platform reporting |
 | Learn/improve | No full learning loop | Experiments, growth learning and controlled overrides |
-| Operate/commercialize | Sessions, roles, queues, private media, workspace health/export, immutable product credits, database plan/entitlement/subscription records and signed test billing events | Actual Stripe checkout/portal/invoice adapter and sandbox acceptance, full platform administration, alerts, retention/deletion, native cross-store recovery and deployment assurance |
+| Operate/commercialize | Sessions, roles, queues, private media, workspace health/export, immutable product credits, plans/subscriptions, signed test events and locally verified Stripe Checkout/Portal/webhook contracts | Actual Stripe sandbox/live acceptance, invoice/refund/dispute/proration workflows, full platform administration, alerts, retention/deletion, native cross-store recovery and deployment assurance |
 
 Next implementation/acceptance steps are in `IMPLEMENTATION_PLAN.md`. Missing functions require code as well as later authorized credentials. The release is a verified local increment, not a claim that the planned platform is finished.

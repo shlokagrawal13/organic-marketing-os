@@ -1,4 +1,4 @@
-# Project status — billing foundation milestone 0.5.0
+# Project status — Stripe contract milestone 0.6.0
 
 ## Current state
 
@@ -10,7 +10,7 @@ The architecture remains Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, priva
 
 Existing capabilities include accounts/sessions/email, organizations/six roles/invitations, Brand Brain/Creative DNA versions, drafts/campaigns/calendar/comments/search, human review and approval invalidation, queued compatible text generation with frozen brand context, private uploads and actual MP4/audio/captions/thumbnail rendering, scene caching/cancel/retry, worker recovery and private paginated workspace record export.
 
-The 0.4 ledger retains immutable entries, atomic reservations/settlement and platform credit controls. New in 0.5: database-backed plans, entitlements and subscriptions; a signed raw-body billing event inbox; duplicate/payload-conflict rejection; deterministic out-of-order subscription handling; monthly grants; and refund/expiry reversals. The verified provider is an isolated local billing fixture. Stripe checkout/portal and real payments remain unavailable.
+The 0.4 ledger retains immutable entries, atomic reservations/settlement and platform credit controls. Version 0.5 added plans, subscriptions and the durable billing inbox. New in 0.6: official Stripe SDK configuration, hosted Checkout/Portal APIs and UI, strict plan-price mapping, raw Stripe signature verification, subscription/paid-invoice mapping, mode enforcement and redirect-host validation. These contracts passed against an isolated Stripe-compatible fixture; no real Stripe account or payment was used.
 
 The vulnerable S3rver test chain was removed. Tests use pinned, checksum-verified S3Proxy 4.1.1 with random private credentials and SigV4; actual upload/render/range behavior passed. Invalid AI JSON/schema output now fails its own job without disabling the provider for unrelated jobs. Transport/service failures still cause cooldown.
 
@@ -22,15 +22,15 @@ The isolated environment used PGlite WASM PostgreSQL, native Redis 6.2, S3Proxy,
 
 ## Access and open gates
 
-The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.5 source at `0281511e9113d4bd2470b38529bc30d4f5b14a60`. Its complete remote tree exactly matches the locally tested tree. Actions run 36305587276 failed at startup before any job, as did the two earlier runs; detailed diagnostic access remains unavailable. See `docs/qa/github-publication.json`.
+The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.5 source/documentation checkpoint. The locally verified v0.6 Stripe-contract increment is pending publication. Four remote Actions runs failed at startup before any job; detailed diagnostic access remains unavailable. See `docs/qa/github-publication.json`.
 
 Docker/native PostgreSQL remain unavailable here; native package installation again failed on runtime privilege operations. PGlite serializes DB requests. Native locking/restore, actual Compose/MinIO, cloud storage/mail/TLS, live provider quality/cost, full security/load/accessibility and master acceptance remain open.
 
-Pending implementation includes actual Stripe checkout/portal/invoices and sandbox verification; task/quality/plan routing and the full agent graph; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
+Pending implementation includes actual Stripe sandbox/live acceptance, invoice views and refund/dispute/proration policy; task/quality/plan routing and the full agent graph; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
 
 ## Continue
 
-Read START_HERE.md and PROJECT_CHECKPOINT.json. DEP-01 is complete for the dated npm advisory scope. BILLING-01 now has a verified plan/entitlement/event foundation; actual Stripe checkout/portal/invoice mapping and sandbox lifecycle remain. Useful local work can continue without keys while native CI and live-provider gates wait.
+Read START_HERE.md and PROJECT_CHECKPOINT.json. DEP-01 is complete for the dated npm advisory scope. BILLING-01 now has locally verified Stripe Checkout/Portal/webhook contracts; invoice views and refund/dispute/proration policy can continue locally, while actual sandbox acceptance needs authorized Stripe test configuration. Native CI remains a separate blocked gate.
 
 ## v0.5 private source publication — 2026-09-27.1
 

@@ -1,5 +1,13 @@
 # Session log
 
+## 2026-09-27 — application 0.6.0 / handoff 2026-09-27.2
+
+Continued BILLING-01 without waiting for credentials. Added Stripe SDK 22.6.2 with disabled/test/live configuration, matching key/event-mode enforcement, strict Starter/Growth price mapping and a production ban on API-host overrides. Added OWNER/ADMIN hosted Checkout and Customer Portal session routes with stable idempotency keys, server-owned return URLs, workspace/plan metadata, customer binding and expected Stripe-host validation. Credits & usage now shows the current plan and conditionally offers Checkout/Portal actions.
+
+Added `/api/billing/webhooks/stripe` using the official raw-body signature verifier. Stripe subscription created/updated/deleted and paid-invoice events map into the existing durable inbox, ordered subscription state and one-time monthly grant. Events for unrelated Stripe products are ignored; test/live mismatch, invalid metadata, unknown/multiple plan prices and invalid signatures are rejected. A browser redirect never changes entitlement.
+
+Extended the billing HTTP scenario with a loopback Stripe-compatible server and official generated webhook signatures. It verifies role denial, exact Checkout/Portal form fields, idempotency keys, plan metadata, customer binding, signature rejection, replay and one-time paid-invoice credits. Fresh verification passed: builds, 12 unit, 6 HTTP, 5 browser, 3 recovery/configuration, eight migrations, populated PGlite upgrade/restore, and full/production npm audits with zero known advisories. No external Stripe request, account, card or money was used. Invoice views, refunds/disputes/proration policy and actual sandbox acceptance remain.
+
 ## 2026-09-27 — application 0.5.0 / handoff 2026-09-27.1
 
 The user supplied the correct new private repository `shlokagrawal13/organic-marketing-os`. The connector verified it was empty/private with write access, then uploaded the canonical checkpoint with independent history. Every one of 150 imported source paths matched its local Git blob hash and mode at commit `0093dfaa9fd0864a77f8680e51e7b506ea32f15d`; a documentation checkpoint followed at `aa416051ccbc1a7b29c348a21bc0f40bfd7d74da`. The unrelated public `OrganicMarketing` repository remains excluded.
@@ -76,3 +84,8 @@ Native CI was triggered by the source commit: https://github.com/shlokagrawal13/
 The connector cannot expose the relevant startup diagnostics through its supported endpoints. Browser inspection found GitHub signed out and the private run unavailable; secure sign-in is needed to inspect the detailed run error. Preserve the uploaded source and resume this diagnostic after authenticated access. Fix the concrete reported cause, rerun native tests and record real results. Do not mark native verification complete.
 
 This follow-up changes continuation records only. The last source commit above identifies the verified application import; resolve the latest documentation commit from the main ref or git rev-parse HEAD. Source is now maintained in this Git repository; older ZIP checkpoints may be stale. Local Git objects were reconstructed from remote metadata and verified by their exact SHA, and the uploaded tree was independently compared before setting the local main/upstream refs.
+## 2026-09-27 — v0.6 re-verification and CI startup isolation
+
+Resumed from the intact v0.6 Stripe-contract working tree and preserved all intervening edits. Freshly executed 12 unit tests, API/web production builds, production/full npm audits and the eight-migration populated upgrade/restore; all passed and both npm audits reported zero known advisories.
+
+Inspected GitHub Actions through the authorized connector. The latest runs had `path: BuildFailed`, `startup_failure` and zero jobs. Replaced compact workflow syntax with canonical expanded GitHub Actions YAML while preserving services and test commands. Commit `465fbab6fbc7267e62514643cb4145a2daccdc45` produced the same pre-job failure (run `36321113253`), ruling out the compact syntax and confirming no application test executed. The private run page remains unavailable in the signed-out browser; repository/account Actions settings or the authenticated diagnostic must provide the exact external cause.

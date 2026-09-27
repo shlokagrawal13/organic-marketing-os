@@ -1,5 +1,5 @@
 {
-  "release": "0.5.0",
+  "release": "0.6.0",
   "verifiedDate": "2026-09-27",
   "builds": [
     "Prisma client generation",
@@ -20,13 +20,14 @@
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
     "textAI": "isolated compatible HTTP provider fixture",
+    "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server"
   },
   "requirements": {
     "headings": 161,
     "labels": {
-      "Partial": 139,
-      "Missing": 22
+      "Partial": 140,
+      "Missing": 21
     },
     "meaning": "traceability labels, not an implementation completion percentage"
   },
@@ -39,6 +40,7 @@
     "Native PostgreSQL concurrency and restore",
     "Docker/MinIO execution",
     "Live provider quality and charges",
+    "Actual Stripe sandbox Checkout, Portal and webhook delivery",
     "Actual SMTP inbox delivery",
     "Native database plus private-media backup/restore",
     "Deployed HTTPS/proxy",
@@ -54,6 +56,7 @@
     "signedBillingEventInbox": true,
     "duplicateAndOutOfOrderBillingEvents": true,
     "monthlyGrantRefundAndExpiry": true,
+    "stripeSdkCheckoutPortalAndWebhookContract": true,
     "liveStripeSandbox": false
   }
 }

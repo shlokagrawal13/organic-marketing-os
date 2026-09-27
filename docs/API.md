@@ -50,7 +50,7 @@ Both routes require OWNER/ADMIN membership. `/operations/status` returns current
 
 `/operations/export` downloads `application/x-ndjson` with private/no-store headers. It reads all pages of the implemented workspace records, including archived content, in a RepeatableRead snapshot. Secrets and internal storage/worker keys are excluded; media has authenticated download paths. The final `complete` line contains counts and SHA-256 of all preceding lines including newlines. A private temporary file is built before headers; limits are 64 MiB, a 120-second transaction and one request/user/workspace/minute (429). Oversized exports fail with 413. There is no import/restore endpoint. See DATA_GOVERNANCE.md for exact coverage/exclusions.
 
-## Credit and billing API (0.5.0)
+## Credit and billing API (0.6.0)
 
 | Method and path | Authorization and behavior |
 |---|---|
@@ -59,7 +59,10 @@ Both routes require OWNER/ADMIN membership. `/operations/status` returns current
 | GET /platform/access | Authenticated session; whether verified deployment-allowlisted platform authority is present |
 | POST /platform/credits/:organizationId/adjust | Verified platform admin; UUID requestKey, nonzero integer amount within ±1000000, reason 10–1000 characters; idempotent and audited |
 | POST /platform/credits/reservations/:id/resolve | Verified platform admin; consumed 0–quote and reason; REVIEW only, terminal identical replay allowed; running/queued/conflicting resolution rejected |
-| GET /workspaces/:id/billing | OWNER/ADMIN/ANALYST; current test-provider subscription, plan, period and entitlements; provider customer/subscription identifiers omitted |
+| GET /workspaces/:id/billing | OWNER/ADMIN/ANALYST; current provider, plan, period, entitlements and Checkout/Portal availability; external customer/subscription identifiers omitted |
+| POST /workspaces/:id/billing/checkout | OWNER/ADMIN; Starter/Growth planId and UUID requestKey; creates an idempotent Stripe-hosted subscription Checkout session when configured |
+| POST /workspaces/:id/billing/portal | OWNER/ADMIN; UUID requestKey; creates an idempotent Stripe Portal session for the workspace's bound Stripe customer |
 | POST /billing/webhooks/test | No session; exact raw-body HMAC, timestamp within five minutes and strict event schema required; exact replay idempotent, changed payload conflict rejected |
+| POST /billing/webhooks/stripe | No session; official Stripe raw-body signature required; test/live mode must match configuration; recognized subscription and paid-invoice events enter the same durable inbox |
 
-AI status includes prices/balances. A new job in credit mode also requires integer maxCredits at least the current quote; rejected credit requests create no job. Same task/input/requestKey replays the original job without a new reservation even after a price change. The credit balance is not a provider-currency balance. Supported signed test events cover subscription upsert/cancel, paid-invoice monthly grant, refund and expiry. See BILLING.md for signature details, event ordering and remaining commercial features.
+AI status includes prices/balances. A new job in credit mode also requires integer maxCredits at least the current quote; rejected credit requests create no job. Same task/input/requestKey replays the original job without a new reservation even after a price change. The credit balance is not a provider-currency balance. Supported provider-neutral test events cover subscription upsert/cancel, paid-invoice monthly grant, refund and expiry. Stripe mapping covers created/updated/deleted subscriptions and paid invoices; unrelated account events are acknowledged without granting access. See BILLING.md for signature details, event ordering and remaining commercial features.

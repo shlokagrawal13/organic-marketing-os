@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0 — 2026-09-27
+
+- Added official Stripe SDK test/live configuration, hosted Checkout and Customer Portal routes with idempotency keys, strict Starter/Growth price mapping and server-owned return URLs.
+- Added raw Stripe signature verification, event-mode enforcement and durable mapping for subscription created/updated/deleted and paid invoices; browser redirects cannot grant access.
+- Added current-plan/Checkout/Portal controls to Credits & usage and verified roles, request payloads, metadata, customer binding, replay and one-time grants against an isolated Stripe-compatible fixture.
+- Added no migration. Actual Stripe sandbox/live acceptance, invoice views and refund/dispute/proration behavior remain open.
+
 ## 0.5.0 — 2026-09-27
 
 - Added database-backed plans, entitlements, subscriptions and a durable billing-event inbox in an eighth additive migration; preserved the original seven migrations.

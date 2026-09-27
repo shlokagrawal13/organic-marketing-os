@@ -1,5 +1,13 @@
 # Decisions
 
+## 0.6.0 Stripe contract decisions
+
+- Stripe is disabled by default. Test and live modes require matching key prefixes and event `livemode`; partial configuration fails startup.
+- Checkout/Portal sessions are server-created, role-gated and idempotent. Only expected Stripe-hosted redirect domains are returned to the browser.
+- Workspace/plan metadata and configured recurring price IDs are authoritative mapping inputs. A subscription must contain exactly one configured product price.
+- Entitlements and monthly credits change only through verified webhook processing, never through a Checkout success redirect.
+- Local fixture evidence validates the integration contract, not a real Stripe account, card, charge, invoice or sandbox lifecycle.
+
 ## 0.5.0 billing foundation decisions
 
 - Keep provider billing events separate from immutable product-credit entries. A processed signed event may append ledger corrections but cannot update or delete financial history.
