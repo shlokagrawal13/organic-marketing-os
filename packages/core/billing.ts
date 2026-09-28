@@ -11,6 +11,7 @@ const externalId = z
   .min(3)
   .max(200)
   .regex(/^[A-Za-z0-9_.:-]+$/);
+const invoiceUrl = z.string().trim().url().max(2000);
 const status = z.enum([
   "TRIALING",
   "ACTIVE",
@@ -55,9 +56,21 @@ export const billingEventSchema = z.discriminatedUnion("type", [
       created: z.number().int().positive(),
       data: z
         .object({
+          externalInvoiceId: externalId.optional(),
           externalSubscriptionId: externalId,
           periodStart: z.string().datetime({ offset: true }),
           periodEnd: z.string().datetime({ offset: true }),
+          status: z.string().trim().min(1).max(80).optional(),
+          currency: z
+            .string()
+            .trim()
+            .regex(/^[a-z]{3}$/i)
+            .transform((value) => value.toLowerCase())
+            .optional(),
+          amountDue: z.number().int().min(0).max(100_000_000).optional(),
+          amountPaid: z.number().int().min(0).max(100_000_000).optional(),
+          hostedInvoiceUrl: invoiceUrl.optional(),
+          invoicePdfUrl: invoiceUrl.optional(),
         })
         .strict(),
     })
@@ -78,6 +91,19 @@ export const billingEventSchema = z.discriminatedUnion("type", [
     .strict(),
 ]);
 export type BillingEventInput = z.infer<typeof billingEventSchema>;
+
+export function billingLifecyclePolicy() {
+  return {
+    refunds:
+      "Money refunds are initiated in the payment provider. The app only reverses unused product credits after a signed refund event; insufficient unused credits fail for operator review.",
+    disputes:
+      "Disputed or chargeback payments do not rewrite ledger history. Access changes require signed subscription events, and disputed credits should be reversed through signed provider or platform adjustments.",
+    fraud:
+      "Fraud warnings pause operational trust for the account until an operator reviews the provider record. No automatic credit grant is made from a browser redirect or unsigned notice.",
+    proration:
+      "Plan changes are made through the billing portal. The payment provider owns currency proration; Organic Marketing OS applies entitlements and monthly credits only from verified subscription and paid-invoice webhooks.",
+  };
+}
 
 type StripeBillingConfiguration =
   | { mode: "disabled"; configured: false }
@@ -248,9 +274,16 @@ export function mapStripeBillingEvent(
       type: "invoice.paid",
       created: event.created,
       data: {
+        externalInvoiceId: invoice.id,
         externalSubscriptionId: subscriptionId,
         periodStart: new Date(invoice.period_start * 1000).toISOString(),
         periodEnd: new Date(invoice.period_end * 1000).toISOString(),
+        status: invoice.status || undefined,
+        currency: invoice.currency || undefined,
+        amountDue: invoice.amount_due,
+        amountPaid: invoice.amount_paid,
+        hostedInvoiceUrl: invoice.hosted_invoice_url || undefined,
+        invoicePdfUrl: invoice.invoice_pdf || undefined,
       },
     };
   }
@@ -439,15 +472,49 @@ export async function processBillingEvent(tx: Tx, eventRecordId: string) {
       periodEnd = new Date(event.data.periodEnd);
     if (periodEnd <= periodStart)
       throw new CreditError(400, "Invalid billing period.");
-    if (subscription.plan.monthlyCredits > 0)
+    const creditsGranted = subscription.plan.monthlyCredits;
+    if (creditsGranted > 0)
       await applyBillingCredits(
         tx,
         subscription.organizationId,
-        subscription.plan.monthlyCredits,
+        creditsGranted,
         `${record.provider}:${event.id}:monthly`,
         event.id,
         `Monthly ${subscription.plan.name} plan credit grant`,
       );
+    await tx.billingInvoice.upsert({
+      where: { billingEventId: record.id },
+      create: {
+        organizationId: subscription.organizationId,
+        subscriptionId: subscription.id,
+        billingEventId: record.id,
+        provider: record.provider,
+        externalInvoiceId: event.data.externalInvoiceId || event.id,
+        externalSubscriptionId: event.data.externalSubscriptionId,
+        status: event.data.status || "paid",
+        currency: event.data.currency,
+        amountDue: event.data.amountDue,
+        amountPaid: event.data.amountPaid,
+        hostedInvoiceUrl: event.data.hostedInvoiceUrl,
+        invoicePdfUrl: event.data.invoicePdfUrl,
+        periodStart,
+        periodEnd,
+        creditsGranted,
+      },
+      update: {
+        subscriptionId: subscription.id,
+        externalSubscriptionId: event.data.externalSubscriptionId,
+        status: event.data.status || "paid",
+        currency: event.data.currency,
+        amountDue: event.data.amountDue,
+        amountPaid: event.data.amountPaid,
+        hostedInvoiceUrl: event.data.hostedInvoiceUrl,
+        invoicePdfUrl: event.data.invoicePdfUrl,
+        periodStart,
+        periodEnd,
+        creditsGranted,
+      },
+    });
     if (
       !subscription.currentPeriodEnd ||
       periodEnd > subscription.currentPeriodEnd

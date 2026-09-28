@@ -1,19 +1,20 @@
-# Verification and remaining gates — 0.6.0
+# Verification and remaining gates — 0.6.1
 
 ## Executed locally
 
 | Suite | Result | Coverage |
 |---|---|---|
+| 0.6.1 invoice increment | Passed | Prisma generation, API TypeScript build, direct web TypeScript, unit suite, direct PGlite/Prisma invoice processing and populated upgrade/restore through 9 migrations |
 | Unit | 12 passed | Password/session/roles, router schemas/fallback/accounting, abort/response bounds, content/media options, deterministic captions and actual child-process cancellation |
 | HTTP integration | 6 broad scenarios passed | Account/email/tenant/content/text; private uploads and real renders; collaboration/invitations/restore; all-role guards, concurrency requests, quotas, hostile multipart and full export; platform credit authority/ledger lifecycle; provider-neutral and official Stripe signature events, Checkout/Portal request contracts, ordered subscriptions and one-time grants |
 | Playwright | 5 scenarios passed | Core workflow, mobile registration, upload/render/play/download/approve, workspace health/export, credit balances/history, light/dark/mobile layouts |
 | Recovery/configuration | 3 scenarios passed | No-key manual MP4 and startup config; AI process kill/no replay/queue repair; running render cancellation, interruption and new-job retry |
-| Migrations | 8 applied | Original seven migrations retained; billing plan/subscription/event models added |
-| Populated upgrade/restore | Passed on PGlite | v0.1 data retained through v0.6; immutable ledger restored; fresh database loaded from archive after deleting the original test workspace |
-| Builds | Passed | Prisma client generation, API TypeScript, Next.js production build |
+| Migrations | 9 applied | Original eight migrations retained; billing invoice model added |
+| Populated upgrade/restore | Passed on PGlite | v0.1 data retained through v0.6.1; immutable ledger restored; fresh database loaded from archive after deleting the original test workspace |
+| Builds | Mixed | API TypeScript and direct web TypeScript passed for 0.6.1. Earlier 0.6 Next.js production build passed; current `next build` reached web compilation then failed in Next's internal TypeScript `--showConfig` parser. |
 | Production dependency audit | 0 known advisories | Full npm tree also 0; S3Proxy Java dependencies outside npm scope |
 
-The scenarios contain multiple assertions and are not a claim of exhaustive coverage. See `VERIFICATION_REPORT.md` for findings, evidence and open acceptance gates.
+The scenarios contain multiple assertions and are not a claim of exhaustive coverage. The 0.6.1 full verifier could not rerun here because this runtime lacks `redis-server` and local S3Proxy/listeners hit environment restrictions. See `VERIFICATION_REPORT.md` for findings, evidence and open acceptance gates.
 
 Actual FFmpeg/ffprobe checks include H.264/AAC portrait 720×1280, landscape 1920×1080 and square 720×720 output, durations, decoded non-silent audio, SRT timing, thumbnail generation and scene reuse. A browser upload above 10 MiB verifies the proxy path. Synthetic fixtures are generated and probed before upload tests. Automated signal/codec checks do not replace subjective media quality or broad font/device testing.
 

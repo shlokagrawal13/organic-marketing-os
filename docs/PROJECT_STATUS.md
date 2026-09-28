@@ -1,22 +1,24 @@
-# Project status — Stripe contract milestone 0.6.0
+# Project status — Billing invoice milestone 0.6.1
 
 ## Current state
 
-Account/brand/content/planning, private assets, actual uploaded-media video rendering, workspace health/export, text-job credit accounting and the signed billing-event foundation are implemented and locally verified. The full supplied V3 platform is **not finished or production-ready**. Missing modules require engineering as well as later live access.
+Account/brand/content/planning, private assets, actual uploaded-media video rendering, workspace health/export, text-job credit accounting, signed billing events, Stripe contract routes and durable billing invoice views are implemented and locally verified. The full supplied V3 platform is **not finished or production-ready**. Missing modules require engineering as well as later live access.
 
 ## Implemented
 
-The architecture remains Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage and a separate FFmpeg render worker. Eight additive migrations preserve the seven previous migrations and original master specification.
+The architecture remains Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage and a separate FFmpeg render worker. Nine additive migrations preserve the eight previous migrations and original master specification.
 
 Existing capabilities include accounts/sessions/email, organizations/six roles/invitations, Brand Brain/Creative DNA versions, drafts/campaigns/calendar/comments/search, human review and approval invalidation, queued compatible text generation with frozen brand context, private uploads and actual MP4/audio/captions/thumbnail rendering, scene caching/cancel/retry, worker recovery and private paginated workspace record export.
 
-The 0.4 ledger retains immutable entries, atomic reservations/settlement and platform credit controls. Version 0.5 added plans, subscriptions and the durable billing inbox. New in 0.6: official Stripe SDK configuration, hosted Checkout/Portal APIs and UI, strict plan-price mapping, raw Stripe signature verification, subscription/paid-invoice mapping, mode enforcement and redirect-host validation. These contracts passed against an isolated Stripe-compatible fixture; no real Stripe account or payment was used.
+The 0.4 ledger retains immutable entries, atomic reservations/settlement and platform credit controls. Version 0.5 added plans, subscriptions and the durable billing inbox. Version 0.6 added official Stripe SDK configuration, hosted Checkout/Portal APIs and UI, strict plan-price mapping, raw Stripe signature verification, subscription/paid-invoice mapping, mode enforcement and redirect-host validation. The latest local increment adds durable `BillingInvoice` records, invoice list/detail APIs, invoice visibility in Credits & usage and explicit refund/dispute/fraud/proration policy. Stripe contracts passed against an isolated fixture; no real Stripe account or payment was used.
 
 The vulnerable S3rver test chain was removed. Tests use pinned, checksum-verified S3Proxy 4.1.1 with random private credentials and SigV4; actual upload/render/range behavior passed. Invalid AI JSON/schema output now fails its own job without disabling the provider for unrelated jobs. Transport/service failures still cause cooldown.
 
 ## Executed evidence — 2026-09-27
 
-API/Next.js builds, Prisma generation/validation and formatting checks passed. **12 unit, 6 broad HTTP, 5 production-browser and 3 recovery/configuration scenarios passed**, with eight migrations applied. Populated upgrade/fresh PGlite restore preserved existing records and the immutable ledger. Runtime and full npm audits each report **0 known advisories**. This npm result does not audit the Java S3Proxy dependency tree or certify application security.
+2026-09-28 invoice increment checks: Prisma generation, API TypeScript build, direct web TypeScript, unit suite, direct PGlite/Prisma invoice processing and populated upgrade/fresh PGlite restore passed with nine migrations applied. The full local verifier could not rerun in this runtime because `redis-server` is unavailable and local S3Proxy/localhost listeners hit environment restrictions.
+
+Earlier 2026-09-27 evidence: API/Next.js builds, Prisma generation/validation and formatting checks passed. **12 unit, 6 broad HTTP, 5 production-browser and 3 recovery/configuration scenarios passed**, with eight migrations applied. Populated upgrade/fresh PGlite restore preserved existing records and the immutable ledger. Runtime and full npm audits each reported **0 known advisories**. This npm result does not audit the Java S3Proxy dependency tree or certify application security.
 
 The isolated environment used PGlite WASM PostgreSQL, native Redis 6.2, S3Proxy, real FFmpeg/ffprobe, local SMTP capture and HTTP text fixtures. No live AI output, social publication or payment was exercised. See VERIFICATION_REPORT.md and docs/qa for exact scope. The user's Windows installation was not inspected or upgraded remotely.
 
@@ -26,11 +28,11 @@ The private `shlokagrawal13/organic-marketing-os` main branch contains the verif
 
 Docker/native PostgreSQL remain unavailable here; native package installation again failed on runtime privilege operations. PGlite serializes DB requests. Native locking/restore, actual Compose/MinIO, cloud storage/mail/TLS, live provider quality/cost, full security/load/accessibility and master acceptance remain open.
 
-Pending implementation includes actual Stripe sandbox/live acceptance, invoice views and refund/dispute/proration policy; task/quality/plan routing and the full agent graph; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
+Pending implementation includes actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; task/quality/plan routing and the full agent graph; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
 
 ## Continue
 
-Read START_HERE.md and PROJECT_CHECKPOINT.json. DEP-01 is complete for the dated npm advisory scope. BILLING-01 now has locally verified Stripe Checkout/Portal/webhook contracts; invoice views and refund/dispute/proration policy can continue locally, while actual sandbox acceptance needs authorized Stripe test configuration. Native CI remains a separate blocked gate.
+Read START_HERE.md and PROJECT_CHECKPOINT.json. DEP-01 is complete for the dated npm advisory scope. BILLING-01 now has locally verified Stripe Checkout/Portal/webhook contracts plus durable invoice views and explicit refund/dispute/fraud/proration policy. Actual sandbox acceptance needs authorized Stripe test configuration. Native CI remains a separate blocked gate.
 
 ## v0.5 private source publication — 2026-09-27.1
 

@@ -1,17 +1,19 @@
 {
-  "release": "0.6.0",
-  "verifiedDate": "2026-09-27",
+  "release": "0.6.1",
+  "verifiedDate": "2026-09-28",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
-    "Next.js production build"
+    "Direct web TypeScript check",
+    "Earlier 0.6 Next.js production build"
   ],
   "passed": {
     "unit": 12,
     "httpScenarios": 6,
     "browserScenarios": 5,
     "recoveryAndConfigurationScenarios": 3,
-    "schemaMigrations": 8
+    "schemaMigrations": 9,
+    "directBillingInvoiceCheck": 1
   },
   "environment": {
     "database": "PGlite WASM PostgreSQL socket bridge",
@@ -34,13 +36,13 @@
   "integrity": {
     "masterSpecificationUnchanged": true,
     "masterSha256": "8379fc4310db9d9225c8a192d7d8919ce708b493f34a486a1b48a40b175bb8b6",
-    "priorSevenMigrationsUnchanged": true
+    "priorEightMigrationsUnchanged": true
   },
   "gatesNotVerified": [
     "Native PostgreSQL concurrency and restore",
     "Docker/MinIO execution",
     "Live provider quality and charges",
-    "Actual Stripe sandbox Checkout, Portal and webhook delivery",
+    "Actual Stripe sandbox Checkout, Portal, webhook delivery, refunds, disputes and fraud events",
     "Actual SMTP inbox delivery",
     "Native database plus private-media backup/restore",
     "Deployed HTTPS/proxy",
@@ -57,6 +59,41 @@
     "duplicateAndOutOfOrderBillingEvents": true,
     "monthlyGrantRefundAndExpiry": true,
     "stripeSdkCheckoutPortalAndWebhookContract": true,
-    "liveStripeSandbox": false
+    "liveStripeSandbox": false,
+    "billingInvoiceViewsAndPolicy": true
+  },
+  "latestIncrement": {
+    "scope": "Billing invoice persistence, tenant invoice views and explicit refund/dispute/fraud/proration policy",
+    "checks": [
+      "Prisma client generation",
+      "API TypeScript build",
+      "Direct web TypeScript check",
+      "Unit suite: 3 test files passed",
+      "Direct PGlite/Prisma invoice processing: all 9 migrations applied, subscription/invoice events idempotent, one invoice persisted, monthly credits granted",
+      "PGlite populated upgrade/restore through 9 migrations"
+    ],
+    "fullVerifierRerun": false,
+    "fullVerifierBlocker": "Current runtime lacks redis-server and S3Proxy/local listeners hit environment restrictions."
+  },
+  "priorFullSuite": {
+    "release": "0.6.0",
+    "verifiedDate": "2026-09-27",
+    "passed": {
+      "unit": 12,
+      "httpScenarios": 6,
+      "browserScenarios": 5,
+      "recoveryAndConfigurationScenarios": 3,
+      "schemaMigrations": 8
+    },
+    "environment": {
+      "database": "PGlite WASM PostgreSQL socket bridge",
+      "redis": "native Redis 6.2",
+      "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
+      "renderer": "real FFmpeg/ffprobe 6.1.1",
+      "email": "local SMTP capture",
+      "textAI": "isolated compatible HTTP provider fixture",
+      "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
+      "web": "production Next.js server"
+    }
   }
 }

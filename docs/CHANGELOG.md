@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.6.1 — 2026-09-28
+
+- Added durable `BillingInvoice` persistence, a ninth additive migration, tenant-scoped invoice list/detail API routes and invoice rows in Credits & usage.
+- Extended signed `invoice.paid` events with invoice ID, status, currency, paid/due amounts and provider invoice/PDF URLs; Stripe paid invoices map those fields when supplied.
+- Added explicit refund, dispute, fraud-warning and proration policy to the billing summary and UI without claiming real money movement.
+- Verified Prisma generation, API TypeScript build, direct web TypeScript, unit tests, direct PGlite invoice processing and populated upgrade/restore through all nine migrations.
+- Full local verification could not rerun in the current runtime because `redis-server` is unavailable and S3Proxy/localhost listeners hit environment limits. GitHub Actions remains blocked by the account payment authorization hold failure.
+
 ## 0.6.0 — 2026-09-27
 
 - Added official Stripe SDK test/live configuration, hosted Checkout and Customer Portal routes with idempotency keys, strict Starter/Growth price mapping and server-owned return URLs.
 - Added raw Stripe signature verification, event-mode enforcement and durable mapping for subscription created/updated/deleted and paid invoices; browser redirects cannot grant access.
 - Added current-plan/Checkout/Portal controls to Credits & usage and verified roles, request payloads, metadata, customer binding, replay and one-time grants against an isolated Stripe-compatible fixture.
-- Added no migration. Actual Stripe sandbox/live acceptance, invoice views and refund/dispute/proration behavior remain open.
+- Added no migration. Actual Stripe sandbox/live acceptance remained open; invoice views and explicit billing policy were added in 0.6.1.
 
 ## 0.5.0 — 2026-09-27
 

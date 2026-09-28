@@ -1,6 +1,6 @@
-# Billing and credits — 0.6.0
+# Billing and credits — 0.6.1
 
-The app has a real product-credit ledger, AI reservation lifecycle and database-backed subscriptions. Version 0.6 adds an official Stripe SDK adapter for hosted Checkout, Customer Portal and signed subscription/invoice webhooks. The contract is locally verified against an isolated Stripe-compatible server; no real Stripe account, card, charge or sandbox lifecycle was used.
+The app has a real product-credit ledger, AI reservation lifecycle, database-backed subscriptions and durable invoice views. Version 0.6 added an official Stripe SDK adapter for hosted Checkout, Customer Portal and signed subscription/invoice webhooks. The 0.6.1 local increment adds `BillingInvoice`, invoice list/detail APIs, invoice visibility in Credits & usage and explicit refund/dispute/fraud/proration policy. The contract is locally verified against isolated fixtures and direct PGlite processing; no real Stripe account, card, charge or sandbox lifecycle was used.
 
 ## Modes and pricing
 
@@ -41,7 +41,7 @@ The eighth migration adds `BillingPlan`, `BillingSubscription` and `BillingEvent
 
 The inbox stores provider event ID, exact payload hash, source timestamp, processing state and workspace. An exact replay returns the stored result; the same event ID with a changed payload returns 409. Processing locks the event row. Subscription changes compare source timestamp and event ID, so a late older event is recorded but cannot overwrite newer state. A signed `invoice.paid` event grants the plan's database-configured monthly credits once and only for an ACTIVE/TRIALING subscription. Signed `credits.refunded` and `credits.expired` events append negative corrections; they never rewrite ledger rows or make balances negative. Insufficient unused credits leaves the event failed for operator review instead of silently changing reserved/spent usage.
 
-Supported test event types are `subscription.upserted`, `subscription.canceled`, `invoice.paid`, `credits.refunded` and `credits.expired`. Entitlement changes come from processed signed events, never a browser success redirect.
+Supported test event types are `subscription.upserted`, `subscription.canceled`, `invoice.paid`, `credits.refunded` and `credits.expired`. Entitlement changes come from processed signed events, never a browser success redirect. `invoice.paid` may include `externalInvoiceId`, `status`, `currency`, `amountDue`, `amountPaid`, `hostedInvoiceUrl` and `invoicePdfUrl`; these values are stored for workspace invoice views and do not by themselves change entitlements beyond the verified paid-invoice event.
 
 ## Stripe Checkout, Portal and webhook mapping
 
@@ -49,12 +49,23 @@ Stripe is off by default. `STRIPE_MODE=test` accepts only `sk_test_` keys and te
 
 OWNER/ADMIN members can request idempotent hosted sessions with UUID request keys. Checkout sends one configured recurring price, workspace/plan metadata, the signed-in email or bound Stripe customer, and server-owned success/cancel URLs. Active Stripe subscriptions must be changed through Portal. Returned redirects are accepted only from `checkout.stripe.com` or `billing.stripe.com`. The UI shows plan actions only when configured.
 
-`POST /api/billing/webhooks/stripe` uses the official raw-body Stripe signature verifier with a five-minute tolerance and rejects test/live mismatches. `customer.subscription.created`, `.updated` and `.deleted` map into the durable ordered subscription inbox; exactly one configured plan price is required. `invoice.paid` maps to the existing one-time monthly grant. Events without this product's workspace metadata are acknowledged as ignored. Webhook state—not Checkout redirect state—controls entitlements and credits.
+`POST /api/billing/webhooks/stripe` uses the official raw-body Stripe signature verifier with a five-minute tolerance and rejects test/live mismatches. `customer.subscription.created`, `.updated` and `.deleted` map into the durable ordered subscription inbox; exactly one configured plan price is required. `invoice.paid` maps to the existing one-time monthly grant and persists invoice metadata such as amount, currency, period and hosted invoice/PDF URLs when Stripe supplies them. Events without this product's workspace metadata are acknowledged as ignored. Webhook state—not Checkout redirect state—controls entitlements and credits.
 
-Invoice list/detail views, refunds, disputes, fraud warnings, proration policy and actual Stripe sandbox/live acceptance remain open. The provider-neutral signed test endpoint remains for deterministic contract tests and refund/expiry ledger behavior.
+`GET /api/workspaces/:organizationId/billing/invoices` returns the latest verified invoices for OWNER, ADMIN and ANALYST members. `GET /api/workspaces/:organizationId/billing/invoices/:invoiceId` returns a tenant-scoped invoice detail with its source billing event and subscription snapshot. The Credits & usage UI lists invoice periods, status, granted credits, paid amount when known and provider invoice/PDF links when available.
+
+Refund/dispute/fraud/proration policy is explicit but deliberately conservative:
+
+| Area | Current behavior |
+|---|---|
+| Refunds | Money refunds are initiated in the payment provider. The app only reverses unused product credits after a signed refund event; insufficient unused credits fail for operator review. |
+| Disputes | Disputed or chargeback payments do not rewrite ledger history. Access changes require signed subscription events, and disputed credits should be reversed through signed provider or platform adjustments. |
+| Fraud warnings | Fraud warnings pause operational trust for the account until an operator reviews the provider record. No automatic credit grant is made from a browser redirect or unsigned notice. |
+| Proration | Plan changes are made through the billing portal. The payment provider owns currency proration; Organic Marketing OS applies entitlements and monthly credits only from verified subscription and paid-invoice webhooks. |
+
+Actual Stripe sandbox/live acceptance, provider-originated refund/dispute/fraud event mapping and real money movement remain open. The provider-neutral signed test endpoint remains for deterministic contract tests and refund/expiry ledger behavior.
 
 ## Verification and limits
 
-Local HTTP checks cover duplicate concurrent grants, changed-key conflicts, platform/tenant boundaries, quote rejection, reservation/settlement/cancellation, insufficient-credit contention, review resolution, invalid/stale provider-neutral and Stripe signatures, event replay/payload conflict, out-of-order subscriptions, one-time monthly grants and idempotent refund/expiry reversals. The Stripe fixture additionally inspects Checkout/Portal form fields, tenant metadata, role denial, idempotency keys, customer binding and paid-invoice mapping. Worker SIGKILL recovery preserves an unknown outcome in REVIEW without another accepted provider call. Direct PGlite SQL tests reject ledger edits/deletes and retain immutability after restore. Native Prisma-trigger and locking checks remain a CI gate; PGlite's socket bridge is not native PostgreSQL concurrency evidence.
+Local HTTP checks cover duplicate concurrent grants, changed-key conflicts, platform/tenant boundaries, quote rejection, reservation/settlement/cancellation, insufficient-credit contention, review resolution, invalid/stale provider-neutral and Stripe signatures, event replay/payload conflict, out-of-order subscriptions, one-time monthly grants and idempotent refund/expiry reversals. The Stripe fixture additionally inspects Checkout/Portal form fields, tenant metadata, role denial, idempotency keys, customer binding and paid-invoice mapping. The 0.6.1 direct PGlite verification applied all nine migrations, processed subscription and invoice events idempotently, persisted one invoice and verified the monthly credit grant. Worker SIGKILL recovery preserves an unknown outcome in REVIEW without another accepted provider call. Direct PGlite SQL tests reject ledger edits/deletes and retain immutability after restore. Native Prisma-trigger and locking checks remain a CI gate; PGlite's socket bridge is not native PostgreSQL concurrency evidence.
 
-Next BILLING-01 increment: invoice views plus explicit refund/dispute/proration policy, then an authorized Stripe sandbox Checkout/renewal/cancel/refund lifecycle. Never grant entitlement solely from a frontend success redirect.
+Next BILLING-01 gate: authorized Stripe sandbox Checkout/renewal/cancel/refund lifecycle plus provider-originated dispute/fraud/proration evidence. Never grant entitlement solely from a frontend success redirect.

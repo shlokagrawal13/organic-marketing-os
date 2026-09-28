@@ -1,21 +1,21 @@
-# Verification report — Organic Marketing OS 0.6.0
+# Verification report — Organic Marketing OS 0.6.1
 
-Release verification: 2026-09-27. Scope: retain the verified core/media/credit/billing foundation and add official Stripe SDK Checkout/Portal/webhook contracts without claiming a real Stripe sandbox or payment. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
+Latest verification update: 2026-09-28. Scope: retain the verified core/media/credit/billing foundation, add durable invoice views and explicit billing policy, and preserve the official Stripe SDK Checkout/Portal/webhook contracts without claiming a real Stripe sandbox or payment. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
 
 ## Result
 
 | Check | Executed result | Evidence |
 |---|---|---|
-| API/frontend builds | Pass | TypeScript/Prisma generation and built Next.js application |
-| Unit suite | 12 passed | `tests/ai.test.ts`, `security.test.ts`, `media.test.ts` |
-| HTTP suite | 6 broad scenarios passed | `tests/integration/`, including signed billing lifecycle |
-| Production browser suite | 5 scenarios passed | `tests/ui/`, `docs/qa/` screenshots and MP4 |
-| Configuration/fault suite | 3 scenarios passed | `tests/recovery/` |
-| Schema deployment | 8 migrations applied to fresh test database | Harness migration deployment |
-| Populated upgrade/restore | Pass on PGlite only | `scripts/verify-upgrade.mjs`, `docs/qa/upgrade-restore-evidence.json` |
+| API build | Pass | `npm run build:api` |
+| Frontend TypeScript | Pass | `node_modules/.bin/tsc -p apps/web/tsconfig.json --noEmit` |
+| Unit suite | 3 test files passed | `npm test` |
+| Direct billing invoice verification | Pass | Fresh PGlite/Prisma database, all 9 migrations, subscription + invoice events processed idempotently, one invoice persisted, 100 credits granted |
+| Schema deployment | 9 migrations applied to fresh test database | Direct PGlite/Prisma script |
+| Populated upgrade/restore | Pass on PGlite only | `scripts/verify-upgrade.mjs`, `.local/upgrade-restore-evidence.json` |
+| Earlier 0.6 full HTTP/browser/recovery evidence | Pass, dated 2026-09-27 | 12 unit, 6 HTTP, 5 production browser, 3 recovery/configuration scenarios with 8 migrations |
 | Production dependency scan | 0 known advisories | `docs/qa/dependency-audit-summary.json` |
 | Full npm dependency scan | 0 known advisories | S3rver removed; S3Proxy Java dependency tree is outside npm scope |
-| Spec/migration integrity | 161 headings mapped; original master and first 7 migrations unchanged | `REQUIREMENTS_MATRIX.md`, `docs/qa/verification-summary.json` |
+| Spec/migration integrity | 161 headings mapped; original master and first 8 migrations unchanged | `REQUIREMENTS_MATRIX.md`, `docs/qa/verification-summary.json` |
 
 These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 140 Partial and 21 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
 
@@ -25,7 +25,16 @@ These are scenario counts, not test-coverage percentages. Every one of the 161 m
 - Added idempotent hosted Checkout and Customer Portal session routes for OWNER/ADMIN, server-owned return URLs, workspace/plan metadata, strict two-price mapping and expected Stripe-host redirect validation.
 - Added official raw-body Stripe signature verification and durable mapping for subscription created/updated/deleted plus paid invoices. Events without this product's metadata are ignored; browser redirects never grant access.
 - Extended Credits & usage with current plan, configured Checkout choices and Portal access. The local fixture inspected request bodies, idempotency keys, roles, customer binding, duplicate webhook delivery and one-time grants.
-- No Stripe account, card, external request or money was used. Sandbox renewal/cancel/refund behavior, invoice views, disputes and proration remain unverified.
+- No Stripe account, card, external request or money was used. Before 0.6.1, sandbox renewal/cancel/refund behavior, invoice views, disputes and proration remained open.
+
+## New 0.6.1 findings and behavior
+
+- Added the ninth additive migration with `BillingInvoice`, linked to workspace, subscription and source billing event.
+- Extended signed `invoice.paid` payloads with invoice ID, status, currency, amount and invoice URL fields; Stripe invoice webhooks persist those fields when supplied.
+- Added tenant-scoped `GET /billing/invoices` and `GET /billing/invoices/:invoiceId` API views plus invoice rows in Credits & usage.
+- Added explicit refund, dispute, fraud-warning and proration policy to the billing API/UI. These policies prevent browser redirects or unsigned notices from changing entitlements or credits.
+- Direct PGlite/Prisma verification applied all nine migrations, processed subscription/invoice events twice to assert idempotency, stored one invoice and verified the monthly credit grant. This is local contract evidence, not live Stripe sandbox acceptance.
+- Full local verification could not rerun in this runtime: the environment lacks `redis-server`, and S3Proxy/localhost listener startup hit operation-permitted restrictions. Native CI is still blocked by the GitHub account payment authorization failure.
 
 ## New 0.4 findings and behavior
 
@@ -98,6 +107,6 @@ No paid provider request, social publication, external email delivery or payment
 | Publish | No social publisher | Official OAuth, scheduling, variants, policy, idempotent publishing/recovery |
 | Measure | Internal job/storage/usage records | External analytics, attribution and reliable platform reporting |
 | Learn/improve | No full learning loop | Experiments, growth learning and controlled overrides |
-| Operate/commercialize | Sessions, roles, queues, private media, workspace health/export, immutable product credits, plans/subscriptions, signed test events and locally verified Stripe Checkout/Portal/webhook contracts | Actual Stripe sandbox/live acceptance, invoice/refund/dispute/proration workflows, full platform administration, alerts, retention/deletion, native cross-store recovery and deployment assurance |
+| Operate/commercialize | Sessions, roles, queues, private media, workspace health/export, immutable product credits, plans/subscriptions, signed test events, invoice views, explicit billing policy and locally verified Stripe Checkout/Portal/webhook contracts | Actual Stripe sandbox/live acceptance, real refund/dispute/fraud provider evidence, full platform administration, alerts, retention/deletion, native cross-store recovery and deployment assurance |
 
 Next implementation/acceptance steps are in `IMPLEMENTATION_PLAN.md`. Missing functions require code as well as later authorized credentials. The release is a verified local increment, not a claim that the planned platform is finished.

@@ -35,6 +35,7 @@ import {
 } from "../../../packages/core/credits";
 import {
   billingEventSchema,
+  billingLifecyclePolicy,
   processBillingEvent,
   requireStripeBilling,
   stripeBillingConfiguration,
@@ -194,7 +195,81 @@ class BillingController {
         subscription?.provider === "stripe" &&
         subscription.externalCustomerId,
       ),
+      policy: billingLifecyclePolicy(),
     };
+  }
+  @Get("invoices")
+  async invoices(@Req() req: AuthedRequest, @Query("before") before?: string) {
+    const cursor =
+      before === undefined
+        ? undefined
+        : z.coerce.date().parse(before);
+    const rows = await this.db.billingInvoice.findMany({
+      where: {
+        organizationId: req.organizationId,
+        ...(cursor ? { periodEnd: { lt: cursor } } : {}),
+      },
+      orderBy: [{ periodEnd: "desc" }, { createdAt: "desc" }],
+      take: 51,
+      select: {
+        id: true,
+        provider: true,
+        externalInvoiceId: true,
+        status: true,
+        currency: true,
+        amountDue: true,
+        amountPaid: true,
+        periodStart: true,
+        periodEnd: true,
+        creditsGranted: true,
+        hostedInvoiceUrl: true,
+        invoicePdfUrl: true,
+        createdAt: true,
+      },
+    });
+    return {
+      items: rows.slice(0, 50),
+      nextBefore: rows.length > 50 ? rows[49].periodEnd : null,
+    };
+  }
+  @Get("invoices/:invoiceId")
+  async invoice(
+    @Req() req: AuthedRequest,
+    @Param("invoiceId") invoiceId: string,
+  ) {
+    const invoice = await this.db.billingInvoice.findFirst({
+      where: {
+        id: idSchema.parse(invoiceId),
+        organizationId: req.organizationId,
+      },
+      include: {
+        billingEvent: {
+          select: {
+            externalId: true,
+            type: true,
+            providerCreatedAt: true,
+            processedAt: true,
+            applied: true,
+          },
+        },
+        subscription: {
+          select: {
+            status: true,
+            currentPeriodStart: true,
+            currentPeriodEnd: true,
+            plan: {
+              select: {
+                id: true,
+                name: true,
+                monthlyCredits: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!invoice) throw new NotFoundException("Billing invoice not found.");
+    return invoice;
   }
   @Post("checkout")
   @Roles("OWNER", "ADMIN")

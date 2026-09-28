@@ -227,9 +227,14 @@ test(
       type: "invoice.paid",
       created: baseCreated + 40,
       data: {
+        externalInvoiceId: "inv_test_1",
         externalSubscriptionId: "sub_test_1",
         periodStart: new Date().toISOString(),
         periodEnd: new Date(Date.now() + 31 * 86400000).toISOString(),
+        status: "paid",
+        currency: "usd",
+        amountDue: 1900,
+        amountPaid: 1900,
       },
     };
     assert.equal((await webhook(invoice)).status, 201);
@@ -247,6 +252,21 @@ test(
         })
       ).available,
       100,
+    );
+    const invoiceList = await owner.call(`/workspaces/${org.id}/billing/invoices`);
+    assert.equal(invoiceList.status, 200);
+    assert.equal(invoiceList.body.items.length, 1);
+    assert.equal(invoiceList.body.items[0].externalInvoiceId, "inv_test_1");
+    assert.equal(invoiceList.body.items[0].creditsGranted, 100);
+    assert.equal(invoiceList.body.items[0].amountPaid, 1900);
+    const invoiceDetail = await owner.call(
+      `/workspaces/${org.id}/billing/invoices/${invoiceList.body.items[0].id}`,
+    );
+    assert.equal(invoiceDetail.status, 200);
+    assert.equal(invoiceDetail.body.billingEvent.externalId, "evt_invoice_paid_1");
+    assert.equal(
+      (await outsider.call(`/workspaces/${org.id}/billing/invoices`)).status,
+      404,
     );
 
     for (const event of [
@@ -304,6 +324,8 @@ test(
     assert.equal(beforeStripe.body.checkoutConfigured, true);
     assert.equal(beforeStripe.body.checkoutAvailable, true);
     assert.equal(beforeStripe.body.portalConfigured, false);
+    assert.match(beforeStripe.body.policy.refunds, /unused product credits/);
+    assert.match(beforeStripe.body.policy.proration, /billing portal/);
     assert.equal(
       (
         await stripeApiCall(
@@ -478,6 +500,12 @@ test(
           },
           period_start: stripeCreated,
           period_end: stripeCreated + 30 * 86400,
+          status: "paid",
+          currency: "usd",
+          amount_due: 4900,
+          amount_paid: 4900,
+          hosted_invoice_url: "https://pay.stripe.com/invoice/test_fixture",
+          invoice_pdf: "https://pay.stripe.com/invoice/test_fixture/pdf",
         },
       },
       livemode: false,
@@ -501,5 +529,17 @@ test(
       }),
       2,
     );
+    const stripeInvoices = await stripeApiCall(
+      owner,
+      `/workspaces/${org.id}/billing/invoices`,
+    );
+    assert.equal(stripeInvoices.status, 200);
+    assert.equal(stripeInvoices.body.items.length, 2);
+    const storedStripeInvoice = stripeInvoices.body.items.find(
+      (item: any) => item.externalInvoiceId === "in_stripe_fixture",
+    );
+    assert.ok(storedStripeInvoice);
+    assert.equal(storedStripeInvoice.hostedInvoiceUrl.includes("stripe"), true);
+    assert.equal(storedStripeInvoice.amountPaid, 4900);
   },
 );

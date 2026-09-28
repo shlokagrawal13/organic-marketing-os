@@ -71,6 +71,7 @@ model Organization {
   creditReservations  CreditReservation[]
   billingSubscription BillingSubscription?
   billingEvents       BillingEvent[]
+  billingInvoices     BillingInvoice[]
 }
 
 enum ContentStatus {
@@ -431,6 +432,7 @@ model BillingSubscription {
   lastEventId            String?
   createdAt              DateTime     @default(now())
   updatedAt              DateTime     @updatedAt
+  invoices               BillingInvoice[]
 
   @@index([planId, status])
 }
@@ -450,8 +452,37 @@ model BillingEvent {
   error             String?
   receivedAt        DateTime      @default(now())
   processedAt       DateTime?
+  invoice           BillingInvoice?
 
   @@unique([provider, externalId])
   @@index([status, receivedAt])
   @@index([organizationId, receivedAt])
+}
+
+model BillingInvoice {
+  id                     String               @id @default(uuid())
+  organizationId         String
+  organization           Organization         @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  subscriptionId         String?
+  subscription           BillingSubscription? @relation(fields: [subscriptionId], references: [id], onDelete: Restrict)
+  billingEventId         String               @unique
+  billingEvent           BillingEvent         @relation(fields: [billingEventId], references: [id], onDelete: Restrict)
+  provider               String
+  externalInvoiceId      String?
+  externalSubscriptionId String?
+  status                 String
+  currency               String?
+  amountDue              Int?
+  amountPaid             Int?
+  hostedInvoiceUrl       String?
+  invoicePdfUrl          String?
+  periodStart            DateTime
+  periodEnd              DateTime
+  creditsGranted         Int                  @default(0)
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  @@unique([provider, externalInvoiceId])
+  @@index([organizationId, periodEnd])
+  @@index([subscriptionId, periodEnd])
 }

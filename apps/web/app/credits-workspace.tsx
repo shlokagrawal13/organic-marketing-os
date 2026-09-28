@@ -16,7 +16,9 @@ export default function CreditsWorkspace({
   const [data, setData] = useState<any>(null),
     [billing, setBilling] = useState<any>(null),
     [entries, setEntries] = useState<any[]>([]),
-    [next, setNext] = useState<number | null>(null);
+    [next, setNext] = useState<number | null>(null),
+    [invoices, setInvoices] = useState<any[]>([]),
+    [nextInvoiceBefore, setNextInvoiceBefore] = useState<string | null>(null);
   const [admin, setAdmin] = useState(false),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -29,16 +31,20 @@ export default function CreditsWorkspace({
     setBusy(true);
     setError("");
     try {
-      const [summary, billingSummary, history, access] = await Promise.all([
+      const [summary, billingSummary, history, invoiceHistory, access] =
+        await Promise.all([
         api(base + "/credits"),
         api(base + "/billing"),
         api(base + "/credits/entries"),
+        api(base + "/billing/invoices"),
         api("/platform/access"),
       ]);
       setData(summary);
       setBilling(billingSummary);
       setEntries(history.items);
       setNext(history.nextBefore);
+      setInvoices(invoiceHistory.items);
+      setNextInvoiceBefore(invoiceHistory.nextBefore);
       setAdmin(access.allowed);
     } catch (e) {
       setError((e as Error).message);
@@ -100,6 +106,28 @@ export default function CreditsWorkspace({
     } finally {
       setBusy(false);
     }
+  }
+  async function moreInvoices() {
+    setBusy(true);
+    setError("");
+    try {
+      const history = await api(
+        `${base}/billing/invoices?before=${encodeURIComponent(nextInvoiceBefore || "")}`,
+      );
+      setInvoices((old) => [...old, ...history.items]);
+      setNextInvoiceBefore(history.nextBefore);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  function money(invoice: any) {
+    if (!invoice.currency || invoice.amountPaid == null) return "Provider total";
+    return new Intl.NumberFormat(undefined, {
+      style: "currency",
+      currency: invoice.currency.toUpperCase(),
+    }).format(invoice.amountPaid / 100);
   }
   async function checkout(planId: "starter" | "growth") {
     setBusy(true);
@@ -235,6 +263,83 @@ export default function CreditsWorkspace({
                 A Checkout success redirect never grants plan access by itself.
                 Signed subscription and invoice events are the source of truth.
               </p>
+              {billing.policy && (
+                <div className="content-table-wrap">
+                  <table className="content-table">
+                    <thead>
+                      <tr>
+                        <th>Policy</th>
+                        <th>Current behavior</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.entries(billing.policy).map(([name, text]) => (
+                        <tr key={name}>
+                          <td>{name}</td>
+                          <td>{text as string}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+          )}
+          {billing && (
+            <section className="panel">
+              <h2>Invoices</h2>
+              {!invoices.length ? (
+                <p className="small-copy">
+                  No verified billing invoices have been received yet.
+                </p>
+              ) : (
+                <div className="content-table-wrap">
+                  <table className="content-table">
+                    <thead>
+                      <tr>
+                        <th>Period</th>
+                        <th>Status</th>
+                        <th>Credits</th>
+                        <th>Amount paid</th>
+                        <th>Provider invoice</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {invoices.map((invoice) => (
+                        <tr key={invoice.id}>
+                          <td>
+                            {new Date(invoice.periodStart).toLocaleDateString()}{" "}
+                            – {new Date(invoice.periodEnd).toLocaleDateString()}
+                          </td>
+                          <td>{invoice.status}</td>
+                          <td>{invoice.creditsGranted}</td>
+                          <td>{money(invoice)}</td>
+                          <td>
+                            {invoice.hostedInvoiceUrl ? (
+                              <a href={invoice.hostedInvoiceUrl}>Open invoice</a>
+                            ) : invoice.invoicePdfUrl ? (
+                              <a href={invoice.invoicePdfUrl}>Open PDF</a>
+                            ) : (
+                              <span className="small-copy">
+                                {invoice.provider}:{invoice.externalInvoiceId}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {nextInvoiceBefore && (
+                <button
+                  className="button"
+                  disabled={busy}
+                  onClick={moreInvoices}
+                >
+                  Load older invoices
+                </button>
+              )}
             </section>
           )}
           <section className="panel">

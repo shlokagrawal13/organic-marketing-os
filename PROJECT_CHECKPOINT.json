@@ -1,16 +1,17 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.6.0",
-  "checkpointRevision": "2026-09-27.2",
-  "savedAtUtc": "2026-09-27T08:38:02.859791+00:00",
-  "currentMilestone": "Locally verified Stripe Checkout, Portal and signed webhook contracts",
+  "applicationVersion": "0.6.1",
+  "checkpointRevision": "2026-09-28.1",
+  "savedAtUtc": "2026-09-28T17:48:30.984Z",
+  "currentMilestone": "Locally verified billing invoice views and explicit refund/dispute/fraud/proration policy",
   "activeTaskId": null,
   "workInProgress": [
-    "The v0.6 Stripe-contract increment is locally verified and published to the private repository with an exact local/remote tree match. A dependency-free echo-only workflow also ended startup_failure with zero jobs, confirming the blocker is GitHub repository/account startup rather than application code, services or third-party actions."
+    "The local 0.6.1 BILLING-01 invoice/policy increment is implemented: BillingInvoice migration/model, invoice list/detail API, Credits & usage invoice table, and explicit refund/dispute/fraud/proration policy.",
+    "GitHub Actions remains externally blocked: account billing is locked after payment authorization hold failures. Retry failed authorization was attempted after user approval and returned the same failure."
   ],
-  "nextTaskId": "BILLING-01",
-  "nextAction": "Publish the verified v0.6 Stripe-contract increment. Continue BILLING-01 with invoice views and explicit refund/dispute/proration policy. Actual Stripe sandbox acceptance needs authorized test configuration. Inspect repository/account Actions settings or the authenticated run page for the pre-job startup blocker.",
+  "nextTaskId": "MODEL-01",
+  "nextAction": "Continue another ready local workstream such as MODEL-01 while Stripe sandbox acceptance waits for authorized test configuration and GitHub/native CI waits for a working payment authorization/execution environment.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -45,16 +46,16 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-09-27",
+    "date": "2026-09-28",
     "applicationSuites": {
       "unit": 12,
       "httpScenarios": 6,
       "browserScenarios": 5,
       "recoveryConfigurationScenarios": 3
     },
-    "migrationsApplied": 8,
+    "migrationsApplied": 9,
     "database": "PGlite WASM PostgreSQL, serialized socket bridge",
-    "populatedUpgradeRestore": "Passed on PGlite through all eight migrations including billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
+    "populatedUpgradeRestore": "Passed on PGlite through all nine migrations including durable billing invoices, billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
     "nativePostgresVerified": false,
     "dockerMinioVerified": false,
     "liveAiVerified": false,
@@ -75,7 +76,7 @@
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
       "retry": "HTTP 403: This workflow run cannot be retried",
-      "rootCause": "repository/account Actions startup block; canonical full workflow and dependency-free echo-only workflow both produced BuildFailed with zero jobs. Exact annotation remains visible only on the authenticated run page",
+      "rootCause": "GitHub account billing lock: authenticated repository Actions page states workflows cannot execute because billing is locked. Payment page shows card added but authorization hold failed after retry.",
       "priorRunIds": [
         36269190288,
         36304124096,
@@ -85,19 +86,31 @@
         36321841234,
         36321972148
       ]
-    }
+    },
+    "latestIncrement": {
+      "prismaGenerate": true,
+      "apiBuild": true,
+      "webTypeCheck": true,
+      "unitTestFilesPassed": 3,
+      "directBillingInvoiceVerification": true,
+      "populatedUpgradeRestore": true,
+      "migrationsApplied": 9,
+      "fullLocalVerifierRerun": false,
+      "fullLocalVerifierBlocker": "Current runtime lacks redis-server; S3Proxy/localhost listeners also hit operation-permitted restrictions before app verification."
+    },
+    "billingInvoiceViewsVerified": true
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.6 source plus a minimal startup diagnostic at commit c62293696bfbf36d6f142a3961770976ef5dcc7b. Full and dependency-free workflows both ended startup_failure with zero jobs, so no native application test executed. User screenshot shows the generic summary but not the lower Annotations error.",
-    "nativeExecution": "No Docker/native PostgreSQL binaries. apt-get update on 2026-09-26 failed on prohibited privilege operations. No native gate executed.",
+    "github": "Private shlokagrawal13/organic-marketing-os main has prior verified source, but Actions are blocked by account billing lock. Payment page shows Discover ending 6759 with authorization hold failed; retry was attempted after user approval and failed again.",
+    "nativeExecution": "Current runtime cannot complete full verifier: redis-server is unavailable, S3Proxy/local listeners hit operation-permitted restrictions under sandbox, and native GitHub CI is blocked before jobs.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
-    "paidTestSpend": "Not specified; no paid calls performed"
+    "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "48b11a82147e23fec8cf165a340e84ca22398219",
-    "status": "v0.6_source_uploaded_verified_ci_startup_blocked",
+    "status": "local_0.6.1_invoice_increment_verified_not_published_due_github_billing_lock",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -112,7 +125,7 @@
     "id": 1389748509,
     "sourceTree": "8b02a31e2395d9cee01d623b8391ba7c032565ea",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Verified v0.6 Stripe-contract application source and evidence; the remote Git tree exactly matches the locally verified tree.",
+    "commitMeaning": "Remote still identifies the latest previously published source. Local tree now contains verified 0.6.1 invoice/policy increment pending publication once GitHub billing/Actions unblock.",
     "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,
@@ -181,9 +194,9 @@
     },
     {
       "id": "BILLING-01",
-      "state": "ready_for_local_work",
+      "state": "needs_external_credentials",
       "title": "Plans, immutable credits and Stripe",
-      "completedIncrement": "Immutable ledger, plans/subscriptions, provider-neutral inbox and official Stripe SDK Checkout/Portal/signature/subscription/paid-invoice contracts are locally verified through 0.6. Invoice views, refunds/disputes/fraud/proration policy and actual sandbox acceptance remain."
+      "completedIncrement": "Immutable ledger, plans/subscriptions, provider-neutral inbox, official Stripe SDK Checkout/Portal/signature/subscription/paid-invoice contracts, durable invoice views and explicit refund/dispute/fraud/proration policy are locally verified through 0.6.1. Actual Stripe sandbox lifecycle and provider-originated refund/dispute/fraud evidence remain."
     },
     {
       "id": "ADMIN-01",
@@ -233,37 +246,25 @@
     }
   ],
   "lastChanges": [
-    ".env.example",
-    ".github/workflows/ci.yml",
-    ".github/workflows/diagnostic.yml",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
     "START_HERE.md",
-    "apps/api/src/common.ts",
     "apps/api/src/credits.ts",
-    "apps/api/src/main.ts",
     "apps/web/app/credits-workspace.tsx",
-    "docs/API.md",
     "docs/BILLING.md",
     "docs/CHANGELOG.md",
-    "docs/DECISION_LOG.md",
     "docs/HANDOFF.md",
     "docs/IMPLEMENTATION_PLAN.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/TEST_STRATEGY.md",
     "docs/UPGRADE_0.6.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/dependency-audit-summary.json",
-    "docs/qa/handoff-verification.json",
-    "docs/qa/upgrade-restore-evidence.json",
-    "docs/qa/verification-summary.json",
-    "package-lock.json",
-    "package.json",
     "packages/core/billing.ts",
+    "prisma/migrations/202609280001_billing_invoices/migration.sql",
+    "prisma/schema.prisma",
     "tests/integration/billing.test.ts"
   ],
   "nextAgentProtocol": [
