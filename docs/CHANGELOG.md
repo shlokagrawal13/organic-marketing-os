@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 — 2026-09-29
+
+- Added a versioned task-specific orchestration graph with explicit contracts covering all 18 master agent roles; roles are executable durable steps rather than names embedded in a prompt.
+- Added frozen retrieval of Brand Brain, Creative DNA and up to ten recent approved content examples at queue time. Research/community steps disclose absent external evidence instead of inventing it.
+- Added `AIAgentRun`/`AIAgentStep` persistence, dependency/state/output traceability, provider-usage linkage, stale-worker failure handling and tenant-scoped trace export.
+- Added post-generation compliance/orchestrator critique and a role-gated human approve/reject endpoint. Obvious blocked guarantees cannot be approved; generated results cannot enter the draft/scene workflow until approved.
+- Updated the creation UI with graph state, findings, review controls and downloadable traces.
+- Passed 19 unit tests, Prisma generation, API and Next.js production builds, populated PGlite upgrade/restore through 11 migrations, and production/full npm audits with zero advisories. Fresh full HTTP/browser/recovery execution remains blocked because this runner has no `redis-server`.
+
 ## 0.7.0 — 2026-09-29
 
 - Added task capability, declared quality, plan, provider priority, shared Redis health and request-cost policy to the centralized text model router.

@@ -21,6 +21,7 @@ import {
   Roles,
   parse,
   writerRoles,
+  approverRoles,
   idSchema,
 } from "./common";
 import { providersFromEnv, sceneSchema } from "../../../packages/core/ai";
@@ -38,6 +39,12 @@ const jobInput = z
     prompt: z.string().trim().min(10).max(4000),
     scene: sceneSchema.optional(),
     maxCredits: z.number().int().min(0).max(10000).optional(),
+  })
+  .strict();
+const agentReviewInput = z
+  .object({
+    decision: z.enum(["approve", "reject"]),
+    note: z.string().trim().max(2000).optional(),
   })
   .strict();
 const publicJob = (job: any) => {
@@ -89,8 +96,36 @@ export class AIController {
         where: { organizationId: req.organizationId },
         orderBy: { createdAt: "desc" },
         take: 50,
+        include: {
+          agentRun: {
+            select: {
+              id: true,
+              graphVersion: true,
+              state: true,
+              finalReview: true,
+              reviewedBy: true,
+              reviewNote: true,
+              reviewedAt: true,
+              _count: { select: { steps: true } },
+            },
+          },
+        },
       })
     ).map(publicJob);
+  }
+  @Get("jobs/:id/trace") async trace(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+  ) {
+    idSchema.parse(id);
+    const run = await this.db.aIAgentRun.findFirst({
+      where: { jobId: id, organizationId: req.organizationId },
+      include: {
+        steps: { orderBy: { sequence: "asc" }, include: { usage: true } },
+      },
+    });
+    if (!run) throw new NotFoundException("Agent trace not found.");
+    return run;
   }
   @Post("jobs") @Roles(...writerRoles) async create(
     @Req() req: AuthedRequest,
@@ -154,6 +189,25 @@ export class AIController {
         throw new BadRequestException(
           "Save your Brand Brain before creating with AI.",
         );
+      const approvedContent = await tx.contentItem.findMany({
+        where: {
+          organizationId: req.organizationId,
+          approvedAt: { not: null },
+        },
+        orderBy: { approvedAt: "desc" },
+        take: 10,
+        select: {
+          id: true,
+          title: true,
+          platform: true,
+          format: true,
+          hook: true,
+          body: true,
+          cta: true,
+          revision: true,
+          approvedAt: true,
+        },
+      });
       const count = await tx.aIJob.count({
         where: {
           organizationId: req.organizationId,
@@ -198,6 +252,7 @@ export class AIController {
             revision: brand.revision,
             profile: brand.profile,
             creativeDna: brand.creativeDna,
+            approvedContent,
           },
         },
       });
@@ -241,6 +296,64 @@ export class AIController {
           req.userId,
         );
       return { ok: true };
+    });
+  }
+  @Post("jobs/:id/review") @Roles(...approverRoles) async reviewAgentRun(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Body() body: unknown,
+  ) {
+    idSchema.parse(id);
+    const data = parse(agentReviewInput, body);
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${req.organizationId} FOR UPDATE`;
+      const job = await tx.aIJob.findFirst({
+        where: { id, organizationId: req.organizationId },
+        include: { agentRun: true },
+      });
+      if (!job?.agentRun) throw new NotFoundException("Agent run not found.");
+      if (job.agentRun.state !== "AWAITING_REVIEW")
+        throw new ConflictException("This agent run is not awaiting review.");
+      const finalReview = job.agentRun.finalReview as any;
+      if (data.decision === "approve" && finalReview?.passed === false)
+        throw new ConflictException(
+          "Blocked compliance findings must be corrected by a new generation before approval.",
+        );
+      const approved = data.decision === "approve";
+      const run = await tx.aIAgentRun.update({
+        where: { id: job.agentRun.id },
+        data: {
+          state: approved ? "APPROVED" : "REJECTED",
+          reviewedBy: req.userId,
+          reviewNote: data.note || null,
+          reviewedAt: new Date(),
+        },
+      });
+      await tx.aIAgentStep.update({
+        where: {
+          runId_key: { runId: job.agentRun.id, key: "human-review" },
+        },
+        data: {
+          state: approved ? "APPROVED" : "REJECTED",
+          output: {
+            decision: data.decision,
+            note: data.note || null,
+            reviewerId: req.userId,
+          },
+          startedAt: new Date(),
+          completedAt: new Date(),
+        },
+      });
+      await tx.auditLog.create({
+        data: {
+          organizationId: req.organizationId,
+          actorId: req.userId,
+          action: approved ? "ai.agent_run.approved" : "ai.agent_run.rejected",
+          entityId: job.agentRun.id,
+          detail: { jobId: job.id, note: data.note || null },
+        },
+      });
+      return run;
     });
   }
 }

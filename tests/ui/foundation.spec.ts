@@ -141,6 +141,10 @@ test("register, create a workspace, and sign out", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "Test-only generated draft" }),
   ).toBeVisible({ timeout: 20000 });
+  await page.getByRole("button", { name: "Approve agent result" }).click();
+  await expect(
+    page.getByText("Agent result approved.", { exact: true }),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Review as a draft" }).click();
   await expect(page.getByLabel("Content title", { exact: true })).toHaveValue(
     "Test-only generated draft",

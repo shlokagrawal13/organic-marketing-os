@@ -1,6 +1,6 @@
-# Verification report — Organic Marketing OS 0.7.0
+# Verification report — Organic Marketing OS 0.8.0
 
-Latest verification update: 2026-09-29. Scope: retain the verified core/media/credit/billing foundation and add policy-aware text routing with durable decision/failure evidence, without claiming live-model, native Redis or Stripe sandbox acceptance. The full V3 OS is not complete or production-ready. Passing these checks does not prove that no defect remains.
+Latest verification update: 2026-09-29. Scope: retain the verified core/media/credit/billing/router foundation and add durable agent orchestration, frozen approved-content retrieval, critique and human gates, without claiming live-model, native Redis or Stripe sandbox acceptance. The full V3 OS is not complete or production-ready. Passing these checks does not prove that no defect remains.
 
 ## Result
 
@@ -8,10 +8,11 @@ Latest verification update: 2026-09-29. Scope: retain the verified core/media/cr
 |---|---|---|
 | API build | Pass | `npm run build:api` |
 | Next.js production build | Pass | `npm run build:web`, Next.js 16.3.5 |
-| Unit suite | 16 tests passed | `npm test` |
+| Unit suite | 19 tests passed | `npm test` |
+| Agent graph contracts | Pass | 18 roles mapped; topological dependencies, frozen context, missing-evidence disclosure and blocked-guarantee critique |
 | Router policy contracts | Pass | Plan/capability/quality/cost filtering; comparable fallback; health selection; ambiguous outcome no duplicate call |
 | Direct billing invoice verification | Pass | Fresh PGlite/Prisma database, all 9 migrations, subscription + invoice events processed idempotently, one invoice persisted, 100 credits granted |
-| Schema deployment | 10 migrations applied to fresh test database | Populated upgrade/restore script |
+| Schema deployment | 11 migrations applied to fresh test database | Populated upgrade/restore script |
 | Populated upgrade/restore | Pass on PGlite only | `scripts/verify-upgrade.mjs`, `.local/upgrade-restore-evidence.json` |
 | Earlier 0.6 full HTTP/browser/recovery evidence | Pass, dated 2026-09-27 | 12 unit, 6 HTTP, 5 production browser, 3 recovery/configuration scenarios with 8 migrations |
 | Production dependency scan | 0 known advisories | `docs/qa/dependency-audit-summary.json` |
@@ -21,6 +22,15 @@ Latest verification update: 2026-09-29. Scope: retain the verified core/media/cr
 The full verifier was also attempted. It stopped before application scenarios because the runner has no `redis-server` binary (`spawn redis-server ENOENT`). This is an execution-environment gate, not a passed Redis/shared-health test.
 
 These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 140 Partial and 21 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
+
+## New 0.8 findings and behavior
+
+- Added versioned strategy/content/scene DAGs whose combined catalog maps every specified master agent role. Each node has an explicit responsibility, dependencies, state and output; a role name in a prompt is no longer treated as execution evidence.
+- Brand Brain, Creative DNA and up to ten recent approved content examples are captured at queue time. Later edits cannot alter the run's frozen context. Research/community steps explicitly mark external evidence as unavailable.
+- Added durable `AIAgentRun` and `AIAgentStep` records, provider usage linkage, stale-worker failure transitions and a tenant-scoped full-trace endpoint/export.
+- The one validated provider generation is owned by the task's strategy/script/editor node. Post-generation compliance and orchestrator critique persist findings, and the human gate remains waiting until OWNER/ADMIN/EDITOR approval or rejection.
+- Obvious guarantee violations are blocked and cannot be approved. Content-to-draft and scene-application UI actions remain disabled until the agent run is approved.
+- The eleventh migration is additive. Populated PGlite upgrade/restore preserved v0.1 records and the immutable ledger through all eleven migrations. Updated HTTP/browser scenarios assert trace and approval, but this runner could not execute them without Redis; no fresh full-system pass is claimed.
 
 ## New 0.7 findings and behavior
 
@@ -113,7 +123,7 @@ No paid provider request, social publication, external email delivery or payment
 |---|---|---|
 | Understand | Manual Brand Brain/Creative DNA with versions | Research ingestion, retrieval and ongoing learning |
 | Research | No live research engine | Sourced research, trends, competitors, SEO/AEO, community intelligence |
-| Strategize | Structured text strategy task, fixture verified | Live quality tests and full 18-agent orchestration |
+| Strategize | Structured text strategy task plus durable 18-role mapped orchestration/critique/human gate | Live model quality and external research evidence |
 | Create | Manual/text-fixture content, private uploads, actual uploaded-media MP4 | Generated image/video/voice, localization, advanced editing, word-aligned captions |
 | Review | Structural checks, rights acknowledgment and content/render human approval | Semantic/factual/platform policy automation |
 | Publish | No social publisher | Official OAuth, scheduling, variants, policy, idempotent publishing/recovery |

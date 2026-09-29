@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.7.0",
-  "checkpointRevision": "2026-09-29.1",
-  "savedAtUtc": "2026-09-29T19:19:49.000Z",
-  "currentMilestone": "Locally verified MODEL-01 policy-aware text routing",
+  "applicationVersion": "0.8.0",
+  "checkpointRevision": "2026-09-29.2",
+  "savedAtUtc": "2026-09-29T19:44:59.000Z",
+  "currentMilestone": "Locally verified AGENTS-01 durable agent orchestration",
   "activeTaskId": null,
   "workInProgress": [
-    "MODEL-01 local implementation is complete: capability/quality/plan/cost selection, comparable fallback, Redis-backed shared health integration, non-duplicating ambiguous failure contracts and durable route evidence passed local contract/build/upgrade checks.",
-    "The 0.6.1 BILLING-01 invoice/policy increment is implemented and published to private main: BillingInvoice migration/model, invoice list/detail API, Credits & usage invoice table, and explicit refund/dispute/fraud/proration policy.",
+    "AGENTS-01 local implementation is complete: all 18 roles are mapped across versioned task DAGs with frozen Brand Brain/approved-content retrieval, durable state/output traceability, compliance/orchestrator critique and a role-gated human approval step.",
+    "MODEL-01 local implementation is complete and the exact verified v0.7 tree is published to private main at d834aafd7701d43840abc0e528b256d83714417f.",
     "GitHub Actions remains externally blocked after publication: run 36462190503 ended startup_failure before jobs with GitHub annotation that recent account payments have failed or spending limit needs attention. Billing pages still show payment authorization failed."
   ],
-  "nextTaskId": "AGENTS-01",
-  "nextAction": "Implement the durable agent graph/state, explicit role execution, frozen context retrieval, critique and human gates for AGENTS-01; keep AI-LIVE-01 and NATIVE-01 open until authorized live/native execution exists.",
+  "nextTaskId": "MEDIA-01",
+  "nextAction": "Implement provider-neutral generated image/video/voice job contracts with provenance, costs, cancellation and unknown-outcome safety while preserving the verified uploaded-media path; keep live/native gates explicit.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -49,14 +49,14 @@
   "verification": {
     "date": "2026-09-29",
     "applicationSuites": {
-      "unit": 16,
+      "unit": 19,
       "httpScenarios": 6,
       "browserScenarios": 5,
       "recoveryConfigurationScenarios": 3
     },
-    "migrationsApplied": 10,
+    "migrationsApplied": 11,
     "database": "PGlite WASM PostgreSQL, serialized socket bridge",
-    "populatedUpgradeRestore": "Passed on PGlite through all ten migrations including durable route evidence columns, billing invoices, billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
+    "populatedUpgradeRestore": "Passed on PGlite through all eleven migrations including durable agent graph state, route evidence, billing invoices, billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
     "nativePostgresVerified": false,
     "dockerMinioVerified": false,
     "liveAiVerified": false,
@@ -87,13 +87,13 @@
       "prismaGenerate": true,
       "apiBuild": true,
       "webProductionBuild": true,
-      "unitTestsPassed": 16,
-      "modelRoutingContracts": true,
-      "comparableFallbackAndNoDuplicateAmbiguousCalls": true,
-      "redisSharedHealthCompiled": true,
-      "redisSharedHealthNativeExecuted": false,
+      "unitTestsPassed": 19,
+      "all18AgentRolesMapped": true,
+      "durableAgentGraphAndTrace": true,
+      "frozenApprovedContentRetrieval": true,
+      "critiqueAndHumanGateContracts": true,
       "populatedUpgradeRestore": true,
-      "migrationsApplied": 10,
+      "migrationsApplied": 11,
       "productionAndFullNpmAdvisories": 0,
       "fullLocalVerifierRerun": false,
       "fullLocalVerifierBlocker": "Attempted; stopped before application scenarios because redis-server is absent (spawn redis-server ENOENT)."
@@ -101,7 +101,7 @@
     "billingInvoiceViewsVerified": true
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main previously contains v0.6.1 at a4e6dfc2df7938b74836ac79ba3d883c1584faf2. Authenticated Actions page rechecked 2026-09-29 and still says workflows cannot execute because account billing is locked.",
+    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.7 commit d834aafd7701d43840abc0e528b256d83714417f with exact tree 0e0899f3b1b0d9933e439da0b54a36d87c35f559. Authenticated Actions page still says workflows cannot execute because account billing is locked.",
     "nativeExecution": "Current runtime cannot complete full verifier because redis-server is unavailable. Native GitHub CI remains blocked before jobs by the authenticated account billing lock.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -109,8 +109,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "a4e6dfc2df7938b74836ac79ba3d883c1584faf2",
-    "status": "locally_verified_0.7_model_router_publication_pending_native_ci_billing_locked",
+    "commit": "d834aafd7701d43840abc0e528b256d83714417f",
+    "status": "published_0.7_locally_verified_0.8_agent_orchestration_publication_pending_native_ci_billing_locked",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -123,9 +123,9 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "57b82d93e7d19a01ed499985df411c4f086ee28a",
+    "sourceTree": "0e0899f3b1b0d9933e439da0b54a36d87c35f559",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Recorded remote commit is the prior v0.6.1 source. This checkpoint contains locally verified v0.7 changes awaiting publication; update commit/tree after the remote write succeeds. Actions remain billing-locked.",
+    "commitMeaning": "Recorded remote commit/tree is the exact published v0.7 source. This checkpoint contains locally verified v0.8 agent-orchestration changes awaiting publication; Actions remain billing-locked.",
     "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,
@@ -159,7 +159,7 @@
     },
     {
       "id": "AGENTS-01",
-      "state": "ready_for_local_work",
+      "state": "completed",
       "title": "Full agent execution and context retrieval"
     },
     {
@@ -251,25 +251,24 @@
     "README.md",
     "START_HERE.md",
     "apps/api/src/ai.ts",
-    "apps/api/src/operations.ts",
     "apps/api/src/worker.ts",
     "apps/web/app/content-workspace.tsx",
-    "apps/web/app/operations-workspace.tsx",
     "docs/CHANGELOG.md",
+    "docs/AI_AGENTS.md",
     "docs/HANDOFF.md",
     "docs/IMPLEMENTATION_PLAN.md",
-    "docs/MODEL_ROUTER.md",
     "docs/PROJECT_STATUS.md",
-    "docs/PROVIDER_CATALOG.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/UPGRADE_0.7.md",
+    "docs/UPGRADE_0.8.md",
     "docs/VERIFICATION_REPORT.md",
-    "packages/core/ai.ts",
-    "prisma/migrations/202609290001_model_routing/migration.sql",
+    "packages/core/agents.ts",
+    "prisma/migrations/202609290002_agent_orchestration/migration.sql",
     "prisma/schema.prisma",
-    "tests/ai.test.ts"
+    "tests/agents.test.ts",
+    "tests/integration/foundation.test.ts",
+    "tests/ui/foundation.spec.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -289,7 +288,8 @@
     "prisma/migrations/202609190006_recovery/migration.sql": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721",
     "prisma/migrations/202609200001_credits/migration.sql": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c",
     "prisma/migrations/202609270001_billing_entitlements/migration.sql": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb",
-    "prisma/migrations/202609280001_billing_invoices/migration.sql": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+    "prisma/migrations/202609280001_billing_invoices/migration.sql": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4",
+    "prisma/migrations/202609290001_model_routing/migration.sql": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json"
 }

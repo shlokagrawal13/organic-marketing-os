@@ -398,6 +398,25 @@ test("real HTTP authentication, tenant isolation, roles, session rotation and pa
   }
   assert.equal(job.status, "SUCCEEDED", job.error);
   assert.equal(job.output.title, "Test-only generated draft");
+  assert.equal(job.agentRun.state, "AWAITING_REVIEW");
+  assert.ok(job.agentRun._count.steps >= 10);
+  const trace = await a.call(
+    `/workspaces/${oa.body.id}/ai/jobs/${j.body.id}/trace`,
+  );
+  assert.equal(trace.status, 200);
+  assert.ok(
+    trace.body.steps.some((step: any) => step.role === "compliance-safety"),
+  );
+  assert.equal(
+    (
+      await a.call(
+        `/workspaces/${oa.body.id}/ai/jobs/${j.body.id}/review`,
+        "POST",
+        { decision: "approve", note: "Fixture facts and rights reviewed." },
+      )
+    ).status,
+    201,
+  );
   const usage = (await a.call(`/workspaces/${oa.body.id}/ai/status`)).body
     .usage;
   assert.ok(usage.some((u: any) => u.success && u.fallback));

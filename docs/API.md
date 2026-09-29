@@ -14,12 +14,14 @@ Prefix: `/api`. JSON mutations use `X-Requested-With: MarketingOS`. Session cook
 | Content | GET/POST /workspaces/:id/content; GET/PUT /content/:contentId |
 | Review | POST /content/:id/review, /approve, /reject, /archive, /comments, /restore/:version |
 | Campaigns | GET/POST /workspaces/:id/campaigns |
-| AI | GET /workspaces/:id/ai/status, /ai/jobs; POST /ai/jobs, /ai/jobs/:id/cancel |
+| AI | GET /workspaces/:id/ai/status, /ai/jobs, /ai/jobs/:jobId/trace; POST /ai/jobs, /ai/jobs/:jobId/cancel, /ai/jobs/:jobId/review |
 | Operations (OWNER/ADMIN) | GET /workspaces/:id/operations/status, /operations/export |
 
 Abbreviated paths in a domain retain the shown workspace prefix. Content list accepts `q`, `status`, `skip`, and `take` (1–100) and returns `{items,total}`. SQL full text search indexes title/body/hook. Other collections use documented recent-record limits.
 
-Schemas are authoritative in `packages/core` and each controller. Brand/content mutations include the current `revision`. `factsAndRightsReviewed: true` is required for approval. AI creates include a UUID `requestKey`, task (`strategy`, `content`, `scene`), prompt and a valid scene only for `task=scene` (required for that task). The request key deduplicates within an organization: identical task/input returns the same job; changed task/input returns 409. New jobs capture brand context/revision at creation; later edits do not change that job. Public job data omits internal run tokens and full brand context, and exposes the captured brand revision. This is not yet a comprehensive OpenAPI specification.
+Schemas are authoritative in `packages/core` and each controller. Brand/content mutations include the current `revision`. `factsAndRightsReviewed: true` is required for approval. AI creates include a UUID `requestKey`, task (`strategy`, `content`, `scene`), prompt and a valid scene only for `task=scene` (required for that task). The request key deduplicates within an organization: identical task/input returns the same job; changed task/input returns 409. New jobs capture brand context/revision and up to ten recent approved content examples at creation; later edits do not change that job. Public job data omits internal run tokens and full frozen context, and exposes the captured brand revision plus an agent-run summary.
+
+`GET /ai/jobs/:jobId/trace` returns the tenant-scoped durable graph, step inputs/outputs/dependencies and linked usage. `POST /ai/jobs/:jobId/review` requires OWNER/ADMIN/EDITOR and `{decision:"approve"|"reject",note?}`. Only `AWAITING_REVIEW` runs are reviewable; a compliance-blocked result cannot be approved. This is not yet a comprehensive OpenAPI specification.
 
 ## Media API (0.2.0)
 

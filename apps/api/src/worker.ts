@@ -16,6 +16,12 @@ import {
   settleCredits,
   reviewCredits,
 } from "../../../packages/core/credits";
+import {
+  buildAgentPlan,
+  contextArtifact,
+  freezeAgentContext,
+  reviewAgentOutput,
+} from "../../../packages/core/agents";
 
 const db = new PrismaClient();
 const connection = new Redis(
@@ -61,6 +67,26 @@ async function dispatch() {
         });
         if (changed.count && row.creditReservationId)
           await reviewCredits(tx, row.organizationId, row.creditReservationId);
+        if (changed.count) {
+          const run = await tx.aIAgentRun.findUnique({
+            where: { jobId: row.id },
+            select: { id: true },
+          });
+          if (run) {
+            await tx.aIAgentStep.updateMany({
+              where: { runId: run.id, state: "RUNNING" },
+              data: {
+                state: "FAILED",
+                error: "Worker heartbeat expired.",
+                completedAt: new Date(),
+              },
+            });
+            await tx.aIAgentRun.updateMany({
+              where: { id: run.id, state: "RUNNING" },
+              data: { state: "FAILED", completedAt: new Date() },
+            });
+          }
+        }
       });
     // PostgreSQL is the source of truth even if Redis lost a dispatched queue entry.
     const rows = await db.aIJob.findMany({
@@ -137,6 +163,8 @@ const worker = new Worker(
     }, 1000);
     const deadline = setTimeout(() => abort.abort(), 210000);
     let providerStarted = false;
+    let agentRunId: string | undefined;
+    let generatorStepId: string | undefined;
     try {
       const brand =
         row.brandContext ||
@@ -144,6 +172,65 @@ const worker = new Worker(
           where: { organizationId: row.organizationId },
         }));
       if (!brand) throw new Error("Brand Brain is unavailable.");
+      const plan = buildAgentPlan(row.task as AITask);
+      const frozenContext = freezeAgentContext({
+        task: row.task,
+        input: row.input,
+        brand,
+        requestCreatedAt: row.createdAt.toISOString(),
+      });
+      const agentRun = await db.aIAgentRun.create({
+        data: {
+          organizationId: row.organizationId,
+          jobId: row.id,
+          graphVersion: plan.version,
+          task: row.task,
+          frozenContext: frozenContext as Prisma.InputJsonValue,
+          steps: {
+            create: plan.steps.map((node, sequence) => ({
+              key: node.id,
+              sequence,
+              role: node.role,
+              kind: node.kind,
+              responsibility: node.responsibility,
+              dependencies: node.dependsOn,
+              inputContext: {
+                brandRevision: (brand as any).revision ?? null,
+                requestTask: row.task,
+              },
+              state: node.kind === "human" ? "WAITING" : "PENDING",
+            })),
+          },
+        },
+        include: { steps: true },
+      });
+      agentRunId = agentRun.id;
+      for (const node of plan.steps.filter((item) => item.kind === "context")) {
+        const current = agentRun.steps.find((item) => item.key === node.id)!;
+        await db.aIAgentStep.update({
+          where: { id: current.id },
+          data: { state: "RUNNING", startedAt: new Date() },
+        });
+        await db.aIAgentStep.update({
+          where: { id: current.id },
+          data: {
+            state: "SUCCEEDED",
+            output: contextArtifact(
+              node,
+              frozenContext as Record<string, any>,
+            ) as Prisma.InputJsonValue,
+            completedAt: new Date(),
+          },
+        });
+      }
+      const generatorStep = agentRun.steps.find(
+        (item) => item.kind === "generate",
+      )!;
+      generatorStepId = generatorStep.id;
+      await db.aIAgentStep.update({
+        where: { id: generatorStep.id },
+        data: { state: "RUNNING", startedAt: new Date() },
+      });
       const subscription = await db.billingSubscription.findUnique({
         where: { organizationId: row.organizationId },
         select: { planId: true, status: true },
@@ -166,6 +253,7 @@ const worker = new Worker(
             data: {
               organizationId: row.organizationId,
               jobId: row.id,
+              agentStepId: generatorStep.id,
               ...record,
               routingMetadata: routingMetadata as Prisma.InputJsonValue,
             },
@@ -177,6 +265,7 @@ const worker = new Worker(
         },
         routingOptionsFromEnv(routePlan),
       );
+      const finalReview = reviewAgentOutput(row.task as AITask, output);
       await db.$transaction(async (tx) => {
         await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${row.organizationId} FOR UPDATE`;
         const changed = await tx.aIJob.updateMany({
@@ -184,6 +273,32 @@ const worker = new Worker(
           data: { status: "SUCCEEDED", output, completedAt: new Date() },
         });
         if (!changed.count) return;
+        await tx.aIAgentStep.update({
+          where: { id: generatorStep.id },
+          data: {
+            state: "SUCCEEDED",
+            output: output as Prisma.InputJsonValue,
+            completedAt: new Date(),
+          },
+        });
+        for (const key of ["compliance", "critique"])
+          await tx.aIAgentStep.update({
+            where: { runId_key: { runId: agentRun.id, key } },
+            data: {
+              state: finalReview.passed ? "SUCCEEDED" : "BLOCKED",
+              startedAt: new Date(),
+              completedAt: new Date(),
+              output: finalReview as Prisma.InputJsonValue,
+            },
+          });
+        await tx.aIAgentRun.update({
+          where: { id: agentRun.id },
+          data: {
+            state: "AWAITING_REVIEW",
+            finalReview: finalReview as Prisma.InputJsonValue,
+            completedAt: new Date(),
+          },
+        });
         if (row.creditReservationId) {
           const reservation = await tx.creditReservation.findUniqueOrThrow({
             where: { id: row.creditReservationId },
@@ -236,6 +351,21 @@ const worker = new Worker(
               "Generation stopped before any provider request",
               row.actorId,
             );
+        }
+        if (agentRunId) {
+          if (generatorStepId)
+            await tx.aIAgentStep.updateMany({
+              where: { id: generatorStepId, state: "RUNNING" },
+              data: {
+                state: "FAILED",
+                error: "Generation did not produce a reviewable result.",
+                completedAt: new Date(),
+              },
+            });
+          await tx.aIAgentRun.updateMany({
+            where: { id: agentRunId, state: "RUNNING" },
+            data: { state: "FAILED", completedAt: new Date() },
+          });
         }
       });
       throw new Error("AI job failed. See its recorded status.");

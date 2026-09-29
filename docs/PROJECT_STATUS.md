@@ -1,12 +1,12 @@
-# Project status — Policy-aware model routing milestone 0.7.0
+# Project status — Durable agent orchestration milestone 0.8.0
 
 ## Current state
 
-Account/brand/content/planning, private assets, actual uploaded-media video rendering, workspace health/export, policy-aware text routing, text-job credit accounting, signed billing events, Stripe contract routes and durable billing invoice views are implemented and locally verified. The full supplied V3 platform is **not finished or production-ready**. Missing modules require engineering as well as later live access.
+Account/brand/content/planning, private assets, actual uploaded-media video rendering, workspace health/export, policy-aware text routing, durable agent orchestration, text-job credit accounting, signed billing events, Stripe contract routes and durable billing invoice views are implemented and locally verified. The full supplied V3 platform is **not finished or production-ready**. Missing modules require engineering as well as later live access.
 
 ## Implemented
 
-The architecture remains Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage and a separate FFmpeg render worker. Ten additive migrations preserve the nine previous migrations and original master specification.
+The architecture remains Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage and a separate FFmpeg render worker. Eleven additive migrations preserve the ten previous migrations and original master specification.
 
 Existing capabilities include accounts/sessions/email, organizations/six roles/invitations, Brand Brain/Creative DNA versions, drafts/campaigns/calendar/comments/search, human review and approval invalidation, queued compatible text generation with frozen brand context, private uploads and actual MP4/audio/captions/thumbnail rendering, scene caching/cancel/retry, worker recovery and private paginated workspace record export.
 
@@ -14,9 +14,11 @@ The 0.4 ledger retains immutable entries, atomic reservations/settlement and pla
 
 Version 0.7 adds task capability, declared quality, workspace-plan and estimated-cost routing; strategy/scene require premium providers. Comparable fallback is allowed only after a definitive rejection. Ambiguous transport, invalid successful responses and schema-invalid output stop without a second potentially billable call. Redis-backed provider health is shared across workers, and route/retry/failure/request-ID metadata is durable and visible in usage history.
 
+Version 0.8 adds versioned strategy/content/scene DAGs covering all 18 specified agent roles. Deterministic context agents use the queue-time Brand Brain, Creative DNA and approved-content snapshot; one task owner performs the validated model call; compliance and orchestrator critique persist findings; an OWNER/ADMIN/EDITOR human gate controls downstream draft/scene use. Durable run/step states, outputs, dependencies and provider-usage linkage are inspectable and exportable. External research, publishing and performance roles explicitly remain unavailable rather than fabricating data.
+
 ## Executed evidence — 2026-09-29
 
-The 0.7 increment passed Prisma generation, **16 unit tests**, API TypeScript production compile, Next.js 16.3.5 production build, populated PGlite upgrade/restore through all ten migrations, and production/full npm audits with zero known advisories. The full verifier attempted to run but stopped before application scenarios because `redis-server` is absent (`spawn redis-server ENOENT`). Redis-backed shared-health integration is compiled but not claimed native-executed here.
+The 0.8 increment passed Prisma generation, **19 unit tests**, API TypeScript production compile, Next.js 16.3.5 production build, populated PGlite upgrade/restore through all eleven migrations, and production/full npm audits with zero known advisories. The full verifier remains unable to start application scenarios because `redis-server` is absent (`spawn redis-server ENOENT`). Fresh worker/API/browser execution of the new graph is therefore not claimed in this runtime; the updated integration/browser scenarios are retained for the native/full harness.
 
 2026-09-28 invoice increment checks: Prisma generation, API TypeScript build, direct web TypeScript, unit suite, direct PGlite/Prisma invoice processing and populated upgrade/fresh PGlite restore passed with nine migrations applied. The full local verifier could not rerun in this runtime because `redis-server` is unavailable and local S3Proxy/localhost listeners hit environment restrictions.
 
@@ -26,15 +28,15 @@ The isolated environment used PGlite WASM PostgreSQL, native Redis 6.2, S3Proxy,
 
 ## Access and open gates
 
-The private `shlokagrawal13/organic-marketing-os` main branch contains the locally verified v0.6.1 invoice/policy increment at application commit `a4e6dfc2df7938b74836ac79ba3d883c1584faf2`. The triggered Actions run `36462190503` still failed at startup before any job; GitHub's annotation says recent account payments have failed or the spending limit needs attention. See `docs/qa/github-publication.json`.
+The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.7 router increment at application commit `d834aafd7701d43840abc0e528b256d83714417f` with tree `0e0899f3b1b0d9933e439da0b54a36d87c35f559`. The authenticated Actions page still reports that account billing is locked, so jobs cannot start. See `docs/qa/github-publication.json`.
 
 Docker/native PostgreSQL remain unavailable here; native package installation again failed on runtime privilege operations. PGlite serializes DB requests. Native locking/restore, actual Compose/MinIO, cloud storage/mail/TLS, live provider quality/cost, full security/load/accessibility and master acceptance remain open.
 
-Pending implementation includes actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; the full agent graph; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
+Pending implementation includes actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
 
 ## Continue
 
-Read START_HERE.md and PROJECT_CHECKPOINT.json. Continue AGENTS-01 locally. MODEL-01 contract implementation is complete; actual live model quality/cost remains AI-LIVE-01 and native Redis/PostgreSQL remains NATIVE-01. Actual Stripe sandbox acceptance needs authorized test configuration.
+Read START_HERE.md and PROJECT_CHECKPOINT.json. Continue MEDIA-01 locally. AGENTS-01 and MODEL-01 local contracts are complete; actual live model quality/cost remains AI-LIVE-01 and native Redis/PostgreSQL remains NATIVE-01. Actual Stripe sandbox acceptance needs authorized test configuration.
 
 ## v0.5 private source publication — 2026-09-27.1
 

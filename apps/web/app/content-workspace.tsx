@@ -275,6 +275,25 @@ export default function ContentWorkspace({
       setJobs(await api(base + "/ai/jobs"));
     }, "Generation queued. You can keep working while it runs.");
   }
+  async function reviewAgentJob(job: Any, decision: "approve" | "reject") {
+    const note =
+      decision === "reject"
+        ? window.prompt("What should be corrected before generating again?")
+        : "Human review completed in the workspace.";
+    if (decision === "reject" && note === null) return;
+    await run(
+      async () => {
+        await api(base + `/ai/jobs/${job.id}/review`, "POST", {
+          decision,
+          note: note || undefined,
+        });
+        setJobs(await api(base + "/ai/jobs"));
+      },
+      decision === "approve"
+        ? "Agent result approved."
+        : "Agent result rejected.",
+    );
+  }
   const visible = items.filter(
     (i) =>
       (filter === "All" || i.status === filter) &&
@@ -704,6 +723,8 @@ export default function ContentWorkspace({
                               (j) =>
                                 j.task === "scene" &&
                                 j.status === "SUCCEEDED" &&
+                                (!j.agentRun ||
+                                  j.agentRun.state === "APPROVED") &&
                                 j.input.scene?.id === s.id,
                             )
                             .slice(0, 1)
@@ -1460,6 +1481,13 @@ export default function ContentWorkspace({
                         <Status value={j.status} />
                       </div>
                       <p>{j.input.prompt}</p>
+                      {j.agentRun && (
+                        <div className="field-help">
+                          Agent graph {j.agentRun.graphVersion} ·{" "}
+                          {j.agentRun._count.steps} durable steps ·{" "}
+                          <Status value={j.agentRun.state} />
+                        </div>
+                      )}
                       {j.error && <div className="alert error">{j.error}</div>}
                       {j.status === "QUEUED" && editable && (
                         <button
@@ -1480,6 +1508,22 @@ export default function ContentWorkspace({
                       )}
                       {j.output && (
                         <>
+                          {j.agentRun?.finalReview?.findings?.length > 0 && (
+                            <details>
+                              <summary>
+                                Agent critique and compliance findings
+                              </summary>
+                              <ul>
+                                {j.agentRun.finalReview.findings.map(
+                                  (finding: Any, index: number) => (
+                                    <li key={index}>
+                                      <b>{finding.severity}:</b> {finding.label}
+                                    </li>
+                                  ),
+                                )}
+                              </ul>
+                            </details>
+                          )}
                           {j.task === "strategy" ? (
                             <div className="strategy-result">
                               <p>{j.output.positioning}</p>
@@ -1555,12 +1599,53 @@ export default function ContentWorkspace({
                             {j.task === "content" && (
                               <button
                                 className="button primary"
-                                disabled={!editable}
+                                disabled={
+                                  !editable ||
+                                  (j.agentRun &&
+                                    j.agentRun.state !== "APPROVED")
+                                }
                                 onClick={() =>
                                   create({ ...emptyDraft, ...j.output })
                                 }
                               >
                                 Review as a draft <ArrowRight size={16} />
+                              </button>
+                            )}
+                            {j.agentRun?.state === "AWAITING_REVIEW" &&
+                              approver && (
+                                <>
+                                  <button
+                                    className="button primary"
+                                    disabled={
+                                      busy ||
+                                      j.agentRun.finalReview?.passed === false
+                                    }
+                                    onClick={() => reviewAgentJob(j, "approve")}
+                                  >
+                                    <Check size={16} /> Approve agent result
+                                  </button>
+                                  <button
+                                    className="button"
+                                    disabled={busy}
+                                    onClick={() => reviewAgentJob(j, "reject")}
+                                  >
+                                    <X size={16} /> Reject
+                                  </button>
+                                </>
+                              )}
+                            {j.agentRun && (
+                              <button
+                                className="button"
+                                onClick={() =>
+                                  run(async () => {
+                                    const trace = await api(
+                                      base + `/ai/jobs/${j.id}/trace`,
+                                    );
+                                    download(`agent-trace-${j.id}.json`, trace);
+                                  }, "Agent trace exported.")
+                                }
+                              >
+                                <Download size={16} /> Agent trace
                               </button>
                             )}
                             <button

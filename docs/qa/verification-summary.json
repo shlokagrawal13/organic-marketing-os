@@ -1,5 +1,5 @@
 {
-  "release": "0.7.0",
+  "release": "0.8.0",
   "verifiedDate": "2026-09-29",
   "builds": [
     "Prisma client generation",
@@ -7,11 +7,11 @@
     "Next.js 16.3.5 production build"
   ],
   "passed": {
-    "unit": 16,
+    "unit": 19,
     "httpScenarios": 6,
     "browserScenarios": 5,
     "recoveryAndConfigurationScenarios": 3,
-    "schemaMigrations": 10,
+    "schemaMigrations": 11,
     "directBillingInvoiceCheck": 1
   },
   "environment": {
@@ -71,16 +71,26 @@
     "durableRouteFailureMetadata": true,
     "liveProviderQualityCost": false
   },
+  "agentOrchestrationEvidence": {
+    "all18RolesMapped": true,
+    "versionedTaskGraphs": true,
+    "frozenBrandAndApprovedContentContext": true,
+    "missingExternalEvidenceDisclosed": true,
+    "durableRunStepOutputsAndUsageLink": true,
+    "complianceCritiqueAndHumanGate": true,
+    "blockedResultCannotBeApproved": true,
+    "freshFullHarnessExecution": false
+  },
   "latestIncrement": {
-    "scope": "Policy-aware text model routing with shared health and durable route/failure evidence",
+    "scope": "Durable 18-role mapped agent orchestration with frozen retrieval, critique and human gates",
     "checks": [
       "Prisma client generation",
       "API TypeScript build",
       "Next.js 16.3.5 production build",
-      "Unit suite: 16 tests passed",
-      "Capability, quality, plan and cost policy contracts",
-      "Comparable fallback and ambiguous-outcome no-duplicate-call contracts",
-      "PGlite populated upgrade/restore through 10 migrations",
+      "Unit suite: 19 tests passed",
+      "18-role graph mapping and dependency contracts",
+      "Frozen context, missing-evidence disclosure and blocked-guarantee critique",
+      "PGlite populated upgrade/restore through 11 migrations",
       "Production and full npm audits: 0 advisories"
     ],
     "fullVerifierRerun": false,

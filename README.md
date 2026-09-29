@@ -1,4 +1,4 @@
-# Organic Marketing OS — 0.7.0
+# Organic Marketing OS — 0.8.0
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 
@@ -21,7 +21,7 @@ Open http://localhost:3000 and create your own account. Development verification
 
 ## What works
 
-- NestJS API, PostgreSQL/Prisma with ten migrations, Redis/BullMQ and a Next.js frontend.
+- NestJS API, PostgreSQL/Prisma with eleven migrations, Redis/BullMQ and a Next.js frontend.
 - Accounts, HttpOnly sessions, rotation/revocation, email verification/recovery, organizations, roles, invitations and team access.
 - Persistent Brand Brain/Creative DNA, version history, optimistic revisions and restore.
 - Drafts, scene editing, comments, review/rejection/approval, approval invalidation, campaigns, editorial calendar, search and JSON exports.
@@ -49,11 +49,11 @@ AI generation is fixture-tested, not live-provider verified. The test fixture is
 
 ## Remaining work
 
-Generated images/video/voice; research/trends/SEO/AEO; the full agent graph; official social OAuth/publishing; external analytics and growth learning; actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; retention/deletion; production observability, native cross-store restore exercises and full master acceptance. These require implementation, not just credentials.
+Generated images/video/voice; live sourced research/trends/SEO/AEO; official social OAuth/publishing; external analytics and growth learning; actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; retention/deletion; production observability, native cross-store restore exercises and full master acceptance. These require implementation, not just credentials.
 
 ## Verification
 
-`npm run build:api`, `npm run build:web` and `npm test` pass. The 0.7 router increment has **16 passing unit tests**, both production builds, zero npm advisories and populated PGlite upgrade/restore through all **10 migrations**. Earlier full 0.6 evidence covered 12 unit tests, 6 broad HTTP scenarios, 5 browser scenarios and 3 recovery/configuration scenarios. Actual rendering/audio/playback, six-role access, invitations, restore/revisions, export pagination, worker interruption, operation without AI keys, hosted Stripe request contracts and both billing signature lifecycles are exercised in dated evidence. The current runtime lacks `redis-server`, so the full verifier stops before application scenarios at `spawn redis-server ENOENT`.
+`npm run build:api`, `npm run build:web` and `npm test` pass. The 0.8 orchestration increment has **19 passing unit tests**, both production builds, zero npm advisories and populated PGlite upgrade/restore through all **11 migrations**. Earlier full 0.6 evidence covered 12 unit tests, 6 broad HTTP scenarios, 5 browser scenarios and 3 recovery/configuration scenarios. Actual rendering/audio/playback, six-role access, invitations, restore/revisions, export pagination, worker interruption, operation without AI keys, hosted Stripe request contracts and both billing signature lifecycles are exercised in dated evidence. The current runtime lacks `redis-server`, so the fresh full verifier stops before application scenarios at `spawn redis-server ENOENT`.
 
 On 2026-09-26, production and full npm audits both reported 0 known advisories after removing S3rver. This does not audit the Java test tool or certify application security. Native PostgreSQL races/restore, Docker/MinIO, cloud providers and full master acceptance remain open gates.
 

@@ -61,6 +61,7 @@ model Organization {
   brandVersions       BrandVersion[]
   jobs                AIJob[]
   aiUsage             AIUsage[]
+  agentRuns           AIAgentRun[]
   campaigns           Campaign[]
   content             ContentItem[]
   assets              Asset[]
@@ -159,6 +160,25 @@ enum JobStatus {
   CANCELED
 }
 
+enum AgentRunStatus {
+  RUNNING
+  AWAITING_REVIEW
+  APPROVED
+  REJECTED
+  FAILED
+}
+
+enum AgentStepStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  BLOCKED
+  WAITING
+  APPROVED
+  REJECTED
+  FAILED
+}
+
 model AIJob {
   id                  String             @id @default(uuid())
   organizationId      String
@@ -181,6 +201,7 @@ model AIJob {
   completedAt         DateTime?
   createdAt           DateTime           @default(now())
   usage               AIUsage[]
+  agentRun            AIAgentRun?
 
   @@unique([organizationId, requestKey])
   @@index([status, dispatchedAt])
@@ -194,6 +215,8 @@ model AIUsage {
   organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   jobId             String
   job               AIJob        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  agentStepId       String?
+  agentStep         AIAgentStep? @relation(fields: [agentStepId], references: [id], onDelete: SetNull)
   provider          String
   model             String
   inputTokens       Int?
@@ -211,6 +234,52 @@ model AIUsage {
   createdAt         DateTime     @default(now())
 
   @@index([organizationId, createdAt])
+  @@index([agentStepId])
+}
+
+model AIAgentRun {
+  id             String         @id @default(uuid())
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobId          String         @unique
+  job            AIJob          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  graphVersion   String
+  task           String
+  frozenContext  Json
+  state          AgentRunStatus @default(RUNNING)
+  finalReview    Json?
+  reviewedBy     String?
+  reviewNote     String?
+  reviewedAt     DateTime?
+  createdAt      DateTime       @default(now())
+  completedAt    DateTime?
+  steps          AIAgentStep[]
+
+  @@index([organizationId, createdAt])
+  @@index([state, createdAt])
+}
+
+model AIAgentStep {
+  id             String          @id @default(uuid())
+  runId          String
+  run            AIAgentRun      @relation(fields: [runId], references: [id], onDelete: Cascade)
+  key            String
+  sequence       Int
+  role           String
+  kind           String
+  responsibility String
+  dependencies   Json
+  state          AgentStepStatus @default(PENDING)
+  inputContext   Json
+  output         Json?
+  error          String?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  usage          AIUsage[]
+
+  @@unique([runId, key])
+  @@index([runId, sequence])
+  @@index([state, startedAt])
 }
 
 model BrandBrain {

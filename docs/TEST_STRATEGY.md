@@ -1,10 +1,11 @@
-# Verification and remaining gates — 0.7.0
+# Verification and remaining gates — 0.8.0
 
 ## Executed locally
 
 | Suite | Result | Coverage |
 |---|---|---|
 | 0.7 model-router increment | Passed locally | 16 unit tests; capability/quality/plan/cost policy, comparable fallback, ambiguous-outcome no-replay, shared-health selection; API and Next.js production builds; 10-migration upgrade/restore |
+| 0.8 agent-orchestration increment | Passed locally | 19 unit tests total; all 18 roles mapped, DAG dependency checks, frozen context/retrieval, missing-evidence disclosure, critique/human-gate contracts; API and Next.js production builds; 11-migration upgrade/restore |
 | 0.6.1 invoice increment | Passed | Prisma generation, API TypeScript build, direct web TypeScript, unit suite, direct PGlite/Prisma invoice processing and populated upgrade/restore through 9 migrations |
 | Unit | 12 passed | Password/session/roles, router schemas/fallback/accounting, abort/response bounds, content/media options, deterministic captions and actual child-process cancellation |
 | HTTP integration | 6 broad scenarios passed | Account/email/tenant/content/text; private uploads and real renders; collaboration/invitations/restore; all-role guards, concurrency requests, quotas, hostile multipart and full export; platform credit authority/ledger lifecycle; provider-neutral and official Stripe signature events, Checkout/Portal request contracts, ordered subscriptions and one-time grants |

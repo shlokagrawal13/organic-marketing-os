@@ -1,10 +1,10 @@
-# Project handoff — 2026-09-29.1
+# Project handoff — 2026-09-29.2
 
 ## User intent and working agreement
 
 Build the supplied AI Marketing OS V3 into a fully working product. The user wants autonomous implementation and verification, including browser inspection, rather than repeatedly being asked to test. The user clarified that unavailable API keys meant AI-provider keys for the product. They want a new chat/account to continue from saved files without retelling the project. Prefer concise Hinglish updates, exact evidence and honest missing-feature reporting.
 
-This is a source continuation checkpoint for version 0.7.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
+This is a source continuation checkpoint for version 0.8.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
 
 ## Completed milestones
 
@@ -22,7 +22,7 @@ This is a source continuation checkpoint for version 0.7.0, not a claim of compl
 
 ## Actual verification boundary
 
-Latest 0.7 checks: Prisma generation, 16 unit tests, API and Next.js production builds, production/full npm audits with zero advisories, and populated PGlite upgrade/fresh restore with ten migrations. The full verifier was attempted but stopped before scenarios because `redis-server` is absent. Earlier full app evidence remains 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios with eight migrations. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
+Latest 0.8 checks: Prisma generation, 19 unit tests, API and Next.js production builds, production/full npm audits with zero advisories, and populated PGlite upgrade/fresh restore with eleven migrations. The full verifier cannot start scenarios because `redis-server` is absent. Earlier full app evidence remains 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios with eight migrations. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
 
 The test runtime used Node 24, PGlite socket bridge, native Redis 6.2, loopback S3Proxy 4.1.1 with random SigV4 credentials, real FFmpeg/ffprobe 6.1.1, local SMTP and HTTP text/Stripe fixtures. It did not use a paid AI or Stripe account. PGlite serializes database work; native lock/race results remain unverified. Render interruption coverage is running cancellation/SIGTERM/retry, not full host loss or SIGKILL orphan cleanup.
 
@@ -39,7 +39,8 @@ The user reported the original local frontend working on Windows. The agent did 
 | API/auth/tenancy/content/AI/assets/renders/operations | apps/api/src |
 | Text/render execution | apps/api/src/worker.ts; render-worker.ts |
 | Shared schemas/provider router/media/FFmpeg | packages/core |
-| Data schema and ten migrations | prisma |
+| Data schema and eleven migrations | prisma |
+| Durable 18-role task graph, critique and human gate | packages/core/agents.ts; apps/api/src/worker.ts; apps/api/src/ai.ts |
 | Native CI and local Compose | .github/workflows/ci.yml; compose.yaml; compose.host.yaml |
 | Isolated verification and PGlite upgrade/restore | scripts/verify-local.mjs; verify-upgrade.mjs |
 | Scenarios and sanitized evidence | tests; docs/qa |
@@ -58,11 +59,11 @@ Default Compose does not bind host 5432/6379 because these conflicted on the use
 
 All 161 master headings remain tracked (140 Partial, 21 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
 
-MODEL-01 local implementation is complete. Live quality/cost benchmarking and provider reconciliation remain AI-LIVE-01; native shared-health/Redis execution remains NATIVE-01. BILLING-01 Checkout/Portal and Stripe webhook contracts are fixture-verified but not sandbox/live accepted. Continue AGENTS-01 locally.
+MODEL-01 and AGENTS-01 local implementations are complete. Live quality/cost benchmarking and provider reconciliation remain AI-LIVE-01; native shared-health/Redis execution remains NATIVE-01. BILLING-01 Checkout/Portal and Stripe webhook contracts are fixture-verified but not sandbox/live accepted. Continue MEDIA-01 locally.
 
 No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.7 model-routing increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
 
-Private `shlokagrawal13/organic-marketing-os` main previously contained v0.6.1 at application commit `a4e6dfc2df7938b74836ac79ba3d883c1584faf2`. On 2026-09-29 the authenticated Actions page still displayed an account billing lock, so native CI remains open. See `docs/qa/github-publication.json` and resolve the latest main commit after publication.
+Private `shlokagrawal13/organic-marketing-os` main contains v0.7 at application commit `d834aafd7701d43840abc0e528b256d83714417f`, exact tree `0e0899f3b1b0d9933e439da0b54a36d87c35f559`. On 2026-09-29 the authenticated Actions page still displayed an account billing lock, so native CI remains open. See `docs/qa/github-publication.json`; publish this v0.8 checkpoint as the next fast-forward commit.
 
 ## Portability and limits
 
