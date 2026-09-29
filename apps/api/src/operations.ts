@@ -16,7 +16,10 @@ import { tmpdir } from "node:os";
 import { createHash } from "node:crypto";
 import { Db, Cache, TenantGuard, AuthedRequest, Roles } from "./common";
 import { AssetsModule, MediaStorage } from "./assets";
-import { providersFromEnv } from "../../../packages/core/ai";
+import {
+  providersFromEnv,
+  RedisProviderHealthStore,
+} from "../../../packages/core/ai";
 
 @Controller("workspaces/:organizationId/operations")
 @UseGuards(TenantGuard)
@@ -70,6 +73,34 @@ export class OperationsController {
         _count: true,
       }),
     ]);
+    const providerHealth = new RedisProviderHealthStore(this.cache.client);
+    const providers = await Promise.all(
+      providersFromEnv().map(
+        async ({ name, model, qualityTier, capabilities, allowedPlans }) => {
+          try {
+            return {
+              name,
+              model,
+              qualityTier,
+              capabilities,
+              allowedPlans,
+              state: "configured_not_live_verified",
+              health: await providerHealth.get(name),
+            };
+          } catch {
+            return {
+              name,
+              model,
+              qualityTier,
+              capabilities,
+              allowedPlans,
+              state: "health_store_unavailable",
+              health: null,
+            };
+          }
+        },
+      ),
+    );
     return {
       checkedAt: new Date().toISOString(),
       services: [
@@ -79,11 +110,7 @@ export class OperationsController {
         { name: "Text generation worker", ready: alive(3) },
         { name: "Video rendering worker", ready: alive(4) },
       ],
-      providers: providersFromEnv().map(({ name, model }) => ({
-        name,
-        model,
-        state: "configured_not_live_verified",
-      })),
+      providers,
       emailConfigured: Boolean(process.env.SMTP_HOST),
       storage: {
         assets: assets._count,

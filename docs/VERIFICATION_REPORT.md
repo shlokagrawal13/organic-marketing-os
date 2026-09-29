@@ -1,23 +1,35 @@
-# Verification report — Organic Marketing OS 0.6.1
+# Verification report — Organic Marketing OS 0.7.0
 
-Latest verification update: 2026-09-28. Scope: retain the verified core/media/credit/billing foundation, add durable invoice views and explicit billing policy, and preserve the official Stripe SDK Checkout/Portal/webhook contracts without claiming a real Stripe sandbox or payment. The full V3 OS is not complete or production-ready. Passing these scenarios does not prove that no defect remains.
+Latest verification update: 2026-09-29. Scope: retain the verified core/media/credit/billing foundation and add policy-aware text routing with durable decision/failure evidence, without claiming live-model, native Redis or Stripe sandbox acceptance. The full V3 OS is not complete or production-ready. Passing these checks does not prove that no defect remains.
 
 ## Result
 
 | Check | Executed result | Evidence |
 |---|---|---|
 | API build | Pass | `npm run build:api` |
-| Frontend TypeScript | Pass | `node_modules/.bin/tsc -p apps/web/tsconfig.json --noEmit` |
-| Unit suite | 3 test files passed | `npm test` |
+| Next.js production build | Pass | `npm run build:web`, Next.js 16.3.5 |
+| Unit suite | 16 tests passed | `npm test` |
+| Router policy contracts | Pass | Plan/capability/quality/cost filtering; comparable fallback; health selection; ambiguous outcome no duplicate call |
 | Direct billing invoice verification | Pass | Fresh PGlite/Prisma database, all 9 migrations, subscription + invoice events processed idempotently, one invoice persisted, 100 credits granted |
-| Schema deployment | 9 migrations applied to fresh test database | Direct PGlite/Prisma script |
+| Schema deployment | 10 migrations applied to fresh test database | Populated upgrade/restore script |
 | Populated upgrade/restore | Pass on PGlite only | `scripts/verify-upgrade.mjs`, `.local/upgrade-restore-evidence.json` |
 | Earlier 0.6 full HTTP/browser/recovery evidence | Pass, dated 2026-09-27 | 12 unit, 6 HTTP, 5 production browser, 3 recovery/configuration scenarios with 8 migrations |
 | Production dependency scan | 0 known advisories | `docs/qa/dependency-audit-summary.json` |
 | Full npm dependency scan | 0 known advisories | S3rver removed; S3Proxy Java dependency tree is outside npm scope |
 | Spec/migration integrity | 161 headings mapped; original master and first 8 migrations unchanged | `REQUIREMENTS_MATRIX.md`, `docs/qa/verification-summary.json` |
 
+The full verifier was also attempted. It stopped before application scenarios because the runner has no `redis-server` binary (`spawn redis-server ENOENT`). This is an execution-environment gate, not a passed Redis/shared-health test.
+
 These are scenario counts, not test-coverage percentages. Every one of the 161 master headings remains tracked: 140 Partial and 21 Missing. Partial includes areas with only supporting infrastructure or documentation; these numbers must not be presented as a percentage complete.
+
+## New 0.7 findings and behavior
+
+- Added explicit route policy for task complexity, capabilities, declared quality, active plan, provider priority, shared health and an optional estimated dollar cap. Strategy/scene require premium; ordinary content requires standard.
+- A fallback is eligible only when it meets the same capability/quality/plan/cost rules. Definitive HTTP rejection may fall back; transport ambiguity, invalid successful envelopes and schema-invalid output stop after one potentially billable call.
+- Added Redis-backed shared health with cooldown, attempts, failures, consecutive failures and rolling latency. Unit tests verify health-based selection using the store contract; actual Redis execution is not claimed because the local binary is missing.
+- Added durable retry count, quality tier, failure code, provider request ID, unknown-outcome flag and routing metadata to usage records and surfaced route context in Credits & usage.
+- Added subscription-plan-aware worker routing and safe configuration for capabilities, plans, priority, rates and request caps. Unknown cost under a configured cap rejects before `fetch` or accounting callbacks.
+- The tenth migration is additive. Populated PGlite upgrade/restore preserved v0.1 content and the immutable ledger through all ten migrations.
 
 ## New 0.6 findings and behavior
 

@@ -1,32 +1,42 @@
 {
-  "recordedAtUtc": "2026-09-27T08:15:27.306876+00:00",
+  "recordedAtUtc": "2026-09-29T19:19:49.000Z",
   "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
   "repositoryId": 1389748509,
   "visibility": "private",
   "branch": "main",
-  "sourceCommit": "0281511e9113d4bd2470b38529bc30d4f5b14a60",
-  "rootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-  "sourceTree": "86454cb7e2aeda0db66f730bdd0b29e93d8aaf38",
-  "sourceFilesVerified": 154,
-  "everyRemoteBlobHashAndModeMatchesLocal": true,
+  "applicationVersion": "0.6.1",
+  "applicationSourceCommit": "a4e6dfc2df7938b74836ac79ba3d883c1584faf2",
+  "applicationSourceTree": "57b82d93e7d19a01ed499985df411c4f086ee28a",
+  "publishMethod": "GitHub Git Data API via connected GitHub tool; terminal git push lacked credentials.",
+  "repositoryActionsSettings": {
+    "actionsPermissions": "Allow all actions and reusable workflows",
+    "workflowPermissions": "Read and write permissions"
+  },
   "nativeCi": {
-    "runId": 36305587276,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36305587276",
-    "sourceCommit": "0281511e9113d4bd2470b38529bc30d4f5b14a60",
+    "runId": 36462190503,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36462190503",
+    "sourceCommit": "a4e6dfc2df7938b74836ac79ba3d883c1584faf2",
     "status": "completed",
     "conclusion": "startup_failure",
     "jobsStarted": 0,
     "nativeTestsExecuted": false,
-    "retry": "HTTP 403: This workflow run cannot be retried",
-    "rootCause": "unknown; detailed startup diagnostic requires authenticated browser access",
-    "priorStartupFailureRunIds": [
-      36269190288,
-      36304124096
-    ]
+    "annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the Billing & plans section in your settings.",
+    "rootCause": "GitHub account billing/payment gate; payment information shows authorization hold failed."
+  },
+  "billingObservation": {
+    "paymentAuthorization": "failed",
+    "paymentMethodVisible": "Credit Card: Discover ending 6759 expiring 11/2029",
+    "billingCountry": "India",
+    "budgetsPage": "No explicit budget row was visible; included usage alerts were on."
+  },
+  "latestAuthenticatedRecheck": {
+    "date": "2026-09-29",
+    "actionsBanner": "GitHub Actions workflows can't be executed on this repository. Your account's billing is currently locked. Please update your payment information.",
+    "newNativeRunStarted": false
   },
   "limits": [
-    "Source integrity verification is not native/live application acceptance.",
-    "The source commit/tree identifiers are the exact locally tested v0.5 application tree; a later documentation-only commit records publication evidence.",
-    "No application tests were rerun for these documentation-only changes."
+    "Remote source publication is not native/live application acceptance.",
+    "The native CI workflow did not allocate any job, so no GitHub-hosted test result is claimed.",
+    "No payment retry or card edit was performed after the final publish check."
   ]
 }

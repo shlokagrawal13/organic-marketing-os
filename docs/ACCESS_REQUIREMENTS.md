@@ -2,7 +2,7 @@
 
 ## What AI was actually used
 
-The code implements an OpenAI-compatible text chat-completions adapter. `.env.example` defaults to `AI_PRIMARY_URL=https://api.openai.com/v1`; it leaves the key and model blank. The API calls `/chat/completions` with JSON-object output and `max_completion_tokens`. Strategy, content/script and one-scene rewrite are implemented contracts. Primary and fallback are roles, not model names.
+The code implements an OpenAI-compatible text chat-completions adapter. `.env.example` defaults to `AI_PRIMARY_URL=https://api.openai.com/v1`; it leaves the key, model and quality declaration blank. The API calls `/chat/completions` with JSON-object output and `max_completion_tokens`. Strategy, content/script and one-scene rewrite are implemented contracts. Primary and fallback are roles, not model names; fallback must independently meet route capability/quality/plan/cost policy.
 
 No live paid model was configured or called for the delivered tests. The harness supplies visibly test-only HTTP responses and forces primary failure to exercise fallback. Runtime has no such fallback. Native Gemini/Anthropic and generated image/video/voice integrations are not implemented. A compatible endpoint still needs actual compatibility/quality testing; a key alone does not add missing adapters.
 
@@ -36,9 +36,11 @@ The current text adapter needs:
 AI_PRIMARY_URL=https://api.openai.com/v1
 AI_PRIMARY_KEY=
 AI_PRIMARY_MODEL=
+AI_PRIMARY_QUALITY=
+AI_PRIMARY_CAPABILITIES=text,json,strategy,content,scene
 ```
 
-An optional second provider uses `AI_FALLBACK_URL`, `AI_FALLBACK_KEY`, `AI_FALLBACK_MODEL`. Estimated costs may use `AI_PRIMARY_INPUT_USD_PER_MILLION`, `AI_PRIMARY_OUTPUT_USD_PER_MILLION` and matching fallback names. Rates must be checked against the selected actual model; null/unknown cost must not be reported as zero. The app has product-credit reservations; these are not a cap on currency charged by the external provider.
+An optional second provider uses the matching `AI_FALLBACK_*` fields. Declare verified quality, capabilities, allowed plans and priority for both providers. Estimated costs use the per-million input/output rate fields; rates must be checked against the actual model. Set `AI_MAX_REQUEST_USD` only after both rates exist—unknown cost is rejected under a cap, never shown as zero. Product-credit reservations are not a cap on currency charged by the provider.
 
 Product credits use `BILLING_MODE`, `AI_STRATEGY_CREDITS`, `AI_CONTENT_CREDITS`, `AI_SCENE_CREDITS` and restricted `PLATFORM_ADMIN_USER_IDS`. See BILLING.md before enabling enforcement.
 

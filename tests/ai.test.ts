@@ -1,6 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { ModelRouter, draftSchema, Usage } from "../packages/core/ai";
+import {
+  MemoryProviderHealthStore,
+  ModelRouter,
+  ProviderConfig,
+  RedisProviderHealthStore,
+  draftSchema,
+  Usage,
+} from "../packages/core/ai";
 import { checkContent } from "../packages/core/content";
 const draft = {
   title: "Test draft",
@@ -106,7 +113,7 @@ test("invalid task output does not disable the provider for the next job, but an
     [false, false, true],
   );
   await assert.rejects(run(), /valid output/);
-  await assert.rejects(run(), /valid output/);
+  await assert.rejects(run(), /policy/);
   assert.equal(
     calls,
     4,
@@ -128,7 +135,7 @@ test("empty content and unsupported guarantees block approval; structural passes
 
 test("usage-record failure cannot trigger another paid provider request", async () => {
   let calls = 0;
-  const provider = {
+  const provider: ProviderConfig = {
     name: "primary",
     url: "https://example.test",
     key: "test",
@@ -172,7 +179,7 @@ test("usage-record failure cannot trigger another paid provider request", async 
 
 test("aborted jobs cannot start a fallback and oversized provider output is rejected", async () => {
   const abort = new AbortController();
-  const provider = {
+  const provider: ProviderConfig = {
     name: "primary",
     url: "https://example.test",
     key: "test",
@@ -199,4 +206,163 @@ test("aborted jobs cannot start a fallback and oversized provider output is reje
     large.run("content", {}, {}, async () => {}),
     /valid output/,
   );
+});
+
+test("critical routing never downgrades quality and ambiguous transport failures never duplicate a paid call", async () => {
+  const attempts: Usage[] = [];
+  let calls = 0;
+  const providers = [
+    {
+      name: "premium",
+      url: "https://premium.example/v1",
+      key: "test",
+      model: "premium-model",
+      qualityTier: "premium" as const,
+    },
+    {
+      name: "standard-fallback",
+      url: "https://standard.example/v1",
+      key: "test",
+      model: "standard-model",
+      qualityTier: "standard" as const,
+    },
+  ];
+  const router = new ModelRouter(providers, (async () => {
+    calls++;
+    throw new Error("connection ended after request write");
+  }) as typeof fetch);
+  await assert.rejects(
+    router.run("strategy", {}, {}, async (usage) => attempts.push(usage)),
+    /valid output/,
+  );
+  assert.equal(calls, 1);
+  assert.equal(attempts.length, 1);
+  assert.equal(attempts[0].qualityTier, "premium");
+  assert.equal(attempts[0].failureCode, "transport_unknown");
+  assert.equal(attempts[0].unknownOutcome, true);
+});
+
+test("routing enforces plan, capability and maximum estimated cost before calling a provider", async () => {
+  let calls = 0;
+  const provider: ProviderConfig = {
+    name: "restricted",
+    url: "https://provider.example/v1",
+    key: "test",
+    model: "test",
+    qualityTier: "premium" as const,
+    capabilities: ["text", "json", "strategy"],
+    allowedPlans: ["growth"],
+    inputPrice: 100,
+    outputPrice: 100,
+  };
+  const router = new ModelRouter([provider], (async () => {
+    calls++;
+    return Response.json({});
+  }) as typeof fetch);
+  await assert.rejects(
+    router.run("strategy", {}, {}, async () => {}, undefined, undefined, {
+      plan: "starter",
+    }),
+    /policy/,
+  );
+  await assert.rejects(
+    router.run("strategy", {}, {}, async () => {}, undefined, undefined, {
+      plan: "growth",
+      maxEstimatedCostUsd: 0.01,
+    }),
+    /policy/,
+  );
+  assert.equal(calls, 0);
+});
+
+test("shared health removes an unavailable provider from selection and records the configured fallback", async () => {
+  const health = new MemoryProviderHealthStore();
+  await health.recordFailure(
+    "primary",
+    50,
+    "provider_unavailable",
+    Date.now() + 30_000,
+  );
+  const attempts: Usage[] = [];
+  const providers = [
+    {
+      name: "primary",
+      url: "https://primary.example/v1",
+      key: "test",
+      model: "test",
+    },
+    {
+      name: "fallback",
+      url: "https://fallback.example/v1",
+      key: "test",
+      model: "test",
+    },
+  ];
+  const result = await new ModelRouter(
+    providers,
+    (async () =>
+      Response.json({
+        choices: [{ message: { content: JSON.stringify(draft) } }],
+      })) as typeof fetch,
+    health,
+  ).run("content", {}, {}, async (usage) => attempts.push(usage));
+  assert.equal(result.title, draft.title);
+  assert.equal(attempts.length, 1);
+  assert.equal(attempts[0].provider, "fallback");
+  assert.equal(attempts[0].fallback, true);
+  assert.equal(attempts[0].retryCount, 0);
+});
+
+test("Redis health adapter shares failure cooldown and clears it after success", async () => {
+  const hashes = new Map<string, Record<string, string>>();
+  const backend = {
+    async hgetall(key: string) {
+      return { ...(hashes.get(key) || {}) };
+    },
+    async eval(
+      _script: string,
+      _keys: number,
+      key: string,
+      success: string,
+      latency: string,
+      failureCode: string,
+      unavailableUntil: string,
+    ) {
+      const value = hashes.get(key) || {};
+      const attempts = Number(value.attempts || 0) + 1;
+      const oldLatency = Number(value.averageLatencyMs || latency);
+      value.attempts = String(attempts);
+      value.averageLatencyMs = String(
+        Math.floor((oldLatency * 4 + Number(latency)) / 5),
+      );
+      if (success === "1") {
+        value.consecutiveFailures = "0";
+        value.unavailableUntil = "0";
+        value.lastFailureCode = "";
+      } else {
+        value.failures = String(Number(value.failures || 0) + 1);
+        value.consecutiveFailures = String(
+          Number(value.consecutiveFailures || 0) + 1,
+        );
+        value.unavailableUntil = unavailableUntil;
+        value.lastFailureCode = failureCode;
+      }
+      hashes.set(key, value);
+      return 1;
+    },
+  };
+  const first = new RedisProviderHealthStore(backend);
+  const second = new RedisProviderHealthStore(backend);
+  const until = Date.now() + 30_000;
+  await first.recordFailure("shared", 100, "rate_limited", until);
+  const failed = await second.get("shared");
+  assert.equal(failed.attempts, 1);
+  assert.equal(failed.failures, 1);
+  assert.equal(failed.lastFailureCode, "rate_limited");
+  assert.equal(failed.unavailableUntil, until);
+  await second.recordSuccess("shared", 50);
+  const recovered = await first.get("shared");
+  assert.equal(recovered.attempts, 2);
+  assert.equal(recovered.consecutiveFailures, 0);
+  assert.equal(recovered.unavailableUntil, 0);
 });

@@ -260,9 +260,13 @@ try {
   process.env.AI_PRIMARY_URL = "http://127.0.0.1:4999/primary";
   process.env.AI_PRIMARY_KEY = "test-fixture";
   process.env.AI_PRIMARY_MODEL = "fixture";
+  process.env.AI_PRIMARY_QUALITY = "premium";
+  process.env.AI_PRIMARY_CAPABILITIES = "text,json,strategy,content,scene";
   process.env.AI_FALLBACK_URL = "http://127.0.0.1:4999/fallback";
   process.env.AI_FALLBACK_KEY = "test-fixture";
   process.env.AI_FALLBACK_MODEL = "fixture";
+  process.env.AI_FALLBACK_QUALITY = "premium";
+  process.env.AI_FALLBACK_CAPABILITIES = "text,json,strategy,content,scene";
   if (!native)
     start(
       process.env.TEST_REDIS_BINARY || "redis-server",

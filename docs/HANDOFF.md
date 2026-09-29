@@ -1,10 +1,10 @@
-# Project handoff — 2026-09-28.1
+# Project handoff — 2026-09-29.1
 
 ## User intent and working agreement
 
 Build the supplied AI Marketing OS V3 into a fully working product. The user wants autonomous implementation and verification, including browser inspection, rather than repeatedly being asked to test. The user clarified that unavailable API keys meant AI-provider keys for the product. They want a new chat/account to continue from saved files without retelling the project. Prefer concise Hinglish updates, exact evidence and honest missing-feature reporting.
 
-This is a source continuation checkpoint for version 0.6.1, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
+This is a source continuation checkpoint for version 0.7.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
 
 ## Completed milestones
 
@@ -17,11 +17,12 @@ This is a source continuation checkpoint for version 0.6.1, not a claim of compl
 | 0.5 | Database plans/entitlements/subscriptions; signed raw-body event inbox; duplicate and out-of-order protection; one-time monthly grants and refund/expiry reversals; tenant plan API |
 | 0.6 | Official Stripe SDK configuration; hosted Checkout/Portal API and UI; plan-price mapping; raw Stripe signatures; subscription/paid-invoice mapping; test/live separation |
 | 0.6.1 | Durable billing invoices, tenant invoice list/detail APIs, invoice UI and explicit refund/dispute/fraud/proration policy |
+| 0.7 | Capability/quality/plan/cost-aware text routing, shared Redis health integration, comparable fallback policy and durable route/failure evidence |
 | Continuity | Start/resume instructions, task board, access matrix, machine-readable state, source integrity packer and sanitized evidence |
 
 ## Actual verification boundary
 
-Latest invoice increment checks: Prisma generation, API TypeScript build, direct web TypeScript, unit suite, direct PGlite/Prisma invoice processing and populated upgrade/fresh restore with nine migrations. Earlier full app evidence remains 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios with eight migrations. Immutable credit entries/trigger survive restore. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
+Latest 0.7 checks: Prisma generation, 16 unit tests, API and Next.js production builds, production/full npm audits with zero advisories, and populated PGlite upgrade/fresh restore with ten migrations. The full verifier was attempted but stopped before scenarios because `redis-server` is absent. Earlier full app evidence remains 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios with eight migrations. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
 
 The test runtime used Node 24, PGlite socket bridge, native Redis 6.2, loopback S3Proxy 4.1.1 with random SigV4 credentials, real FFmpeg/ffprobe 6.1.1, local SMTP and HTTP text/Stripe fixtures. It did not use a paid AI or Stripe account. PGlite serializes database work; native lock/race results remain unverified. Render interruption coverage is running cancellation/SIGTERM/retry, not full host loss or SIGKILL orphan cleanup.
 
@@ -38,7 +39,7 @@ The user reported the original local frontend working on Windows. The agent did 
 | API/auth/tenancy/content/AI/assets/renders/operations | apps/api/src |
 | Text/render execution | apps/api/src/worker.ts; render-worker.ts |
 | Shared schemas/provider router/media/FFmpeg | packages/core |
-| Data schema and nine migrations | prisma |
+| Data schema and ten migrations | prisma |
 | Native CI and local Compose | .github/workflows/ci.yml; compose.yaml; compose.host.yaml |
 | Isolated verification and PGlite upgrade/restore | scripts/verify-local.mjs; verify-upgrade.mjs |
 | Scenarios and sanitized evidence | tests; docs/qa |
@@ -57,11 +58,11 @@ Default Compose does not bind host 5432/6379 because these conflicted on the use
 
 All 161 master headings remain tracked (140 Partial, 21 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
 
-BILLING-01 local invoice/policy work is implemented. Checkout/Portal and Stripe webhook contracts are implemented and fixture-verified, but must not be described as sandbox/live accepted. Actual sandbox lifecycle and provider-originated refund/dispute/fraud evidence need authorized Stripe test configuration. DEP-01 is complete for the dated npm advisory scope. NATIVE-01 remains blocked because GitHub Actions fails before starting a job.
+MODEL-01 local implementation is complete. Live quality/cost benchmarking and provider reconciliation remain AI-LIVE-01; native shared-health/Redis execution remains NATIVE-01. BILLING-01 Checkout/Portal and Stripe webhook contracts are fixture-verified but not sandbox/live accepted. Continue AGENTS-01 locally.
 
-No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.6 Stripe-contract increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
+No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.7 model-routing increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
 
-Private `shlokagrawal13/organic-marketing-os` main is verified through v0.5 documentation checkpoint `c7160d3278998913cd5a3b2005a91014a1f375b5`; locally verified v0.6 is pending publication. Four Actions runs ended `startup_failure` before jobs, so native CI remains open. See `docs/qa/github-publication.json`.
+Private `shlokagrawal13/organic-marketing-os` main previously contained v0.6.1 at application commit `a4e6dfc2df7938b74836ac79ba3d883c1584faf2`. On 2026-09-29 the authenticated Actions page still displayed an account billing lock, so native CI remains open. See `docs/qa/github-publication.json` and resolve the latest main commit after publication.
 
 ## Portability and limits
 

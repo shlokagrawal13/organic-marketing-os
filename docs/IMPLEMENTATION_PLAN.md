@@ -1,6 +1,6 @@
 # Continuation plan
 
-Current milestone: **0.6.1**. The core, private rendering, reliability fixes, workspace operations, product-credit accounting, signed billing inbox, Stripe test-mode contracts, durable invoice views and explicit billing policy are locally verified. Full production OS acceptance remains open.
+Current milestone: **0.7.0**. The core, private rendering, reliability fixes, workspace operations, product-credit accounting, signed billing inbox, Stripe test-mode contracts, durable invoice views, explicit billing policy and policy-aware text model router are locally verified. Full production OS acceptance remains open.
 
 ## Completed in this increment
 
@@ -13,12 +13,13 @@ Current milestone: **0.6.1**. The core, private rendering, reliability fixes, wo
 - Added immutable credits, atomic AI quote/reservation/settlement, cancellation release, uncertain-outcome review and restricted platform credit forms; fixed task-output provider-health leakage.
 - Added official Stripe SDK configuration, hosted Checkout/Portal routes and UI, strict price mapping, raw signature verification and subscription/paid-invoice mapping against an isolated fixture.
 - Added durable invoice records, tenant invoice list/detail APIs, invoice visibility in Credits & usage and explicit refund/dispute/fraud/proration policy.
+- Added capability/quality/plan/cost-aware text routing, shared Redis health, comparable fallback enforcement and durable route/failure evidence without duplicate calls after ambiguous provider outcomes.
 
 ## Next implementation and acceptance work
 
 1. Run native PostgreSQL/Redis CI and the actual Docker/MinIO stack when an executable environment is available. Repeat upgrade, concurrent locking, faults and database plus media backup/restore there. Retain fresh dependency scans; the previous S3rver npm chain is removed. Native/live gates are pending; local fixture success does not close them.
-2. Extend the existing asset/render boundary with generated image/video/voice contracts and adapters. Persist provider IDs and provenance, resolve unknown outcomes, add cost reservation/cancellation, and verify contract behavior with isolated fixtures before any authorized live calls. Add word-aligned captions and deliberate scene regeneration.
-3. Extend the existing durable product ledger with full capability/plan/credit policy and provider-currency budgets. Configure authorized text/media providers later for staging quality/rate checks under agreed spend limits. Do not claim fixture outputs establish provider quality or actual charges.
+2. Implement AGENTS-01: durable orchestration graph/state, explicit agent responsibilities, context retrieval, critique/human gates and traceability using local contracts before live-model validation.
+3. Extend the asset/render boundary with generated image/video/voice contracts and adapters. Persist provider IDs and provenance, resolve unknown outcomes, add cost reservation/cancellation, and verify contract behavior with isolated fixtures before authorized live calls. Add word-aligned captions and deliberate scene regeneration.
 4. Implement an official social OAuth adapter end to end: encrypted token lifecycle, platform variants, scheduling, policy checks, idempotent publication and unknown-outcome recovery. Verify with an authorized test account when available, then extend platforms.
 5. Implement sourced research/trends/SEO/AEO, community intelligence, real platform analytics, evidence-backed insights, experiments and controlled learning.
 6. Exercise the actual authorized Stripe sandbox Checkout/renewal/cancel/refund lifecycle, provider-originated dispute/fraud events and failure retries. The local invoice views and explicit refund/dispute/proration policy are already implemented.
@@ -29,4 +30,4 @@ Preserve the requested architecture and old migrations. Update status, matrix, c
 
 ## Continuity entry point
 
-Use START_HERE.md and PROJECT_CHECKPOINT.json at the project root, then TASK_BOARD.md for stable IDs and ACCESS_REQUIREMENTS.md for exact access. The next useful local continuation should move to another ready workstream such as MODEL-01 or AGENTS-01; actual Stripe sandbox acceptance waits for authorized test configuration. Native execution can unblock NATIVE-01. Keep recording progress without requiring the user to reconstruct chat history.
+Use START_HERE.md and PROJECT_CHECKPOINT.json at the project root, then TASK_BOARD.md for stable IDs and ACCESS_REQUIREMENTS.md for exact access. The next useful local continuation is AGENTS-01; MODEL-01 local contracts are complete. Actual Stripe sandbox acceptance waits for authorized test configuration, live model benchmarking remains AI-LIVE-01, and native execution can unblock NATIVE-01. Keep recording progress without requiring the user to reconstruct chat history.

@@ -60,7 +60,15 @@ export class AIController {
     });
     return {
       configured: providers.length > 0,
-      providers: providers.map(({ name, model }) => ({ name, model })),
+      providers: providers.map(
+        ({ name, model, qualityTier, capabilities, allowedPlans }) => ({
+          name,
+          model,
+          qualityTier,
+          capabilities,
+          allowedPlans,
+        }),
+      ),
       workerActive: !!heartbeat && Date.now() - Number(heartbeat) < 30000,
       limits: { dailyJobs: Number(process.env.AI_DAILY_JOB_LIMIT || 50) },
       credits: {

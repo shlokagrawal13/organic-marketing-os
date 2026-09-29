@@ -133,7 +133,15 @@ export default function OperationsWorkspace({ base }: { base: string }) {
                       {p.name}: {p.model}
                     </strong>
                     <span className="small-copy">
-                      Configured; live output not verified by this check.
+                      {p.qualityTier || "standard"} quality · {p.state}
+                      {p.health && (
+                        <>
+                          {" "}
+                          · {p.health.attempts} attempts · {p.health.failures}{" "}
+                          failures
+                        </>
+                      )}
+                      . Live output is not verified by this check.
                     </span>
                   </p>
                 ))

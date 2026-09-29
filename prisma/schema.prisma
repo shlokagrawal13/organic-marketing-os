@@ -189,20 +189,26 @@ model AIJob {
 }
 
 model AIUsage {
-  id               String       @id @default(uuid())
-  organizationId   String
-  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  jobId            String
-  job              AIJob        @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  provider         String
-  model            String
-  inputTokens      Int?
-  outputTokens     Int?
-  estimatedCostUsd Float?
-  latencyMs        Int
-  success          Boolean
-  fallback         Boolean      @default(false)
-  createdAt        DateTime     @default(now())
+  id                String       @id @default(uuid())
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobId             String
+  job               AIJob        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  provider          String
+  model             String
+  inputTokens       Int?
+  outputTokens      Int?
+  estimatedCostUsd  Float?
+  latencyMs         Int
+  success           Boolean
+  fallback          Boolean      @default(false)
+  retryCount        Int          @default(0)
+  qualityTier       String       @default("standard")
+  failureCode       String?
+  providerRequestId String?
+  unknownOutcome    Boolean      @default(false)
+  routingMetadata   Json         @default("{}")
+  createdAt         DateTime     @default(now())
 
   @@index([organizationId, createdAt])
 }
@@ -416,41 +422,41 @@ model BillingPlan {
 }
 
 model BillingSubscription {
-  id                     String       @id @default(uuid())
-  organizationId         String       @unique
-  organization           Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  id                     String           @id @default(uuid())
+  organizationId         String           @unique
+  organization           Organization     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   planId                 String
-  plan                   BillingPlan  @relation(fields: [planId], references: [id], onDelete: Restrict)
+  plan                   BillingPlan      @relation(fields: [planId], references: [id], onDelete: Restrict)
   provider               String
   externalCustomerId     String?
-  externalSubscriptionId String?      @unique
+  externalSubscriptionId String?          @unique
   status                 String
   currentPeriodStart     DateTime?
   currentPeriodEnd       DateTime?
-  cancelAtPeriodEnd      Boolean      @default(false)
+  cancelAtPeriodEnd      Boolean          @default(false)
   lastEventCreatedAt     DateTime?
   lastEventId            String?
-  createdAt              DateTime     @default(now())
-  updatedAt              DateTime     @updatedAt
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
   invoices               BillingInvoice[]
 
   @@index([planId, status])
 }
 
 model BillingEvent {
-  id                String        @id @default(uuid())
+  id                String          @id @default(uuid())
   provider          String
   externalId        String
   type              String
   organizationId    String?
-  organization      Organization? @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  organization      Organization?   @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   providerCreatedAt DateTime
   payload           Json
   payloadHash       String
-  status            String        @default("RECEIVED")
-  applied           Boolean       @default(false)
+  status            String          @default("RECEIVED")
+  applied           Boolean         @default(false)
   error             String?
-  receivedAt        DateTime      @default(now())
+  receivedAt        DateTime        @default(now())
   processedAt       DateTime?
   invoice           BillingInvoice?
 

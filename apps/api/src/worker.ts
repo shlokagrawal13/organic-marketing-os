@@ -7,6 +7,9 @@ import {
   ModelRouter,
   providersFromEnv,
   AITask,
+  AIPlan,
+  RedisProviderHealthStore,
+  routingOptionsFromEnv,
 } from "../../../packages/core/ai";
 import {
   creditPolicy,
@@ -20,8 +23,12 @@ const connection = new Redis(
   { maxRetriesPerRequest: null },
 );
 const queue = new Queue("marketing-ai", { connection: connection as any });
-const router = new ModelRouter(providersFromEnv());
-creditPolicy();
+const router = new ModelRouter(
+  providersFromEnv(),
+  fetch,
+  new RedisProviderHealthStore(connection),
+);
+const billingPolicy = creditPolicy();
 const active = new Set<AbortController>();
 let dispatching = false,
   closing = false;
@@ -137,16 +144,30 @@ const worker = new Worker(
           where: { organizationId: row.organizationId },
         }));
       if (!brand) throw new Error("Brand Brain is unavailable.");
+      const subscription = await db.billingSubscription.findUnique({
+        where: { organizationId: row.organizationId },
+        select: { planId: true, status: true },
+      });
+      const routePlan: AIPlan =
+        billingPolicy.mode === "self_hosted"
+          ? "self_hosted"
+          : subscription && ["ACTIVE", "TRIALING"].includes(subscription.status)
+            ? ((["free", "starter", "growth"].includes(subscription.planId)
+                ? subscription.planId
+                : "free") as AIPlan)
+            : "free";
       const output = await router.run(
         row.task as AITask,
         row.input,
         brand,
         async (usage) => {
+          const { routingMetadata, ...record } = usage;
           await db.aIUsage.create({
             data: {
               organizationId: row.organizationId,
               jobId: row.id,
-              ...usage,
+              ...record,
+              routingMetadata: routingMetadata as Prisma.InputJsonValue,
             },
           });
         },
@@ -154,6 +175,7 @@ const worker = new Worker(
         async () => {
           providerStarted = true;
         },
+        routingOptionsFromEnv(routePlan),
       );
       await db.$transaction(async (tx) => {
         await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${row.organizationId} FOR UPDATE`;

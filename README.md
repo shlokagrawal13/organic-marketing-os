@@ -1,4 +1,4 @@
-# Organic Marketing OS — 0.6.1
+# Organic Marketing OS — 0.7.0
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 
@@ -6,7 +6,7 @@ Continuing in a new chat/account or coding agent? Begin with **`START_HERE.md`**
 
 ## Upgrading an existing installation
 
-Follow **`docs/UPGRADE_0.6.md`**. If upgrading from 0.4 or older, apply `docs/UPGRADE_0.5.md` first. Preserve your existing `.env` and Docker volumes; do not run `docker compose down -v`.
+Follow **`docs/UPGRADE_0.7.md`** and the referenced earlier upgrade notes. Preserve your existing `.env` and Docker volumes; do not run `docker compose down -v`.
 
 ## First installation
 
@@ -21,11 +21,12 @@ Open http://localhost:3000 and create your own account. Development verification
 
 ## What works
 
-- NestJS API, PostgreSQL/Prisma with nine migrations, Redis/BullMQ and a Next.js frontend.
+- NestJS API, PostgreSQL/Prisma with ten migrations, Redis/BullMQ and a Next.js frontend.
 - Accounts, HttpOnly sessions, rotation/revocation, email verification/recovery, organizations, roles, invitations and team access.
 - Persistent Brand Brain/Creative DNA, version history, optimistic revisions and restore.
 - Drafts, scene editing, comments, review/rejection/approval, approval invalidation, campaigns, editorial calendar, search and JSON exports.
 - Queued text strategy/script/scene generation with compatible primary/fallback providers, validation and usage records.
+- **Policy-aware model routing:** task capability, plan, declared quality, shared Redis health, configured dollar caps and comparable-fallback enforcement; ambiguous provider outcomes never start a second paid call.
 - **Asset library:** private image/video/audio uploads, validation, previews, tags, search, deduplication, downloads, archive and restore.
 - **Video studio:** uploaded media attached to scenes, actual FFmpeg MP4 rendering, uploaded narration/background music, scene captions, portrait/landscape/square formats, progress/cancel/retry, reusable scene cache, preview and MP4/SRT/thumbnail downloads.
 - Separate approval for the exact rendered content revision, responsive light/dark UI.
@@ -38,7 +39,7 @@ To try the new workflow: **Asset library → upload media → Content library �
 
 ## AI configuration
 
-In `.env`, set `AI_PRIMARY_URL`, `AI_PRIMARY_KEY`, and `AI_PRIMARY_MODEL`. The provider must support compatible `/chat/completions`, JSON object responses and `max_completion_tokens`. Optional fallback uses `AI_FALLBACK_*`. Configure current per-million token rates for estimated usage costs, then recreate API/text-worker containers. Never commit `.env` or put credentials in frontend code.
+In `.env`, set `AI_PRIMARY_URL`, `AI_PRIMARY_KEY`, `AI_PRIMARY_MODEL`, and declare its verified `AI_PRIMARY_QUALITY`. The provider must support compatible `/chat/completions`, JSON object responses and `max_completion_tokens`. Optional fallback uses `AI_FALLBACK_*` and is used only when its capability, quality, plan, health and cost policy remains compatible. Configure current per-million token rates before setting `AI_MAX_REQUEST_USD`; unknown-cost routes are blocked when a dollar cap is active. Then recreate API/text-worker containers. Never commit `.env` or put credentials in frontend code.
 
 AI generation is fixture-tested, not live-provider verified. The test fixture is isolated in the verification harness and is never an application fallback. Rendering uploaded media needs no AI provider key.
 
@@ -52,7 +53,7 @@ Generated images/video/voice; research/trends/SEO/AEO; the full agent graph; off
 
 ## Verification
 
-`npm run build:api`, direct web TypeScript and `npm test` pass. Verification includes **3 unit files**, a direct PGlite/Prisma billing-invoice check with **9 applied migrations**, and populated upgrade/restore through all 9 migrations. Earlier full 0.6 evidence covered 12 unit tests, 6 broad HTTP scenarios, 5 browser scenarios, 3 recovery/configuration scenarios and 8 applied migrations. Actual rendering/audio/playback, six-role access, invitations, restore/revisions, export pagination, worker interruption, operation without AI keys, hosted Stripe request contracts and both billing signature lifecycles are exercised in dated evidence. The current runtime lacks `redis-server`, and local S3Proxy/localhost listeners hit environment limits, so the full verifier was not rerun after the invoice increment.
+`npm run build:api`, `npm run build:web` and `npm test` pass. The 0.7 router increment has **16 passing unit tests**, both production builds, zero npm advisories and populated PGlite upgrade/restore through all **10 migrations**. Earlier full 0.6 evidence covered 12 unit tests, 6 broad HTTP scenarios, 5 browser scenarios and 3 recovery/configuration scenarios. Actual rendering/audio/playback, six-role access, invitations, restore/revisions, export pagination, worker interruption, operation without AI keys, hosted Stripe request contracts and both billing signature lifecycles are exercised in dated evidence. The current runtime lacks `redis-server`, so the full verifier stops before application scenarios at `spawn redis-server ENOENT`.
 
 On 2026-09-26, production and full npm audits both reported 0 known advisories after removing S3rver. This does not audit the Java test tool or certify application security. Native PostgreSQL races/restore, Docker/MinIO, cloud providers and full master acceptance remain open gates.
 

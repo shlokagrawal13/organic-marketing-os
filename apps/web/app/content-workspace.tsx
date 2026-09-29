@@ -1670,7 +1670,8 @@ export default function ContentWorkspace({
                     <table className="content-table">
                       <thead>
                         <tr>
-                          <th>Model</th>
+                          <th>Provider / model</th>
+                          <th>Route policy</th>
                           <th>Tokens in / out</th>
                           <th>Result</th>
                           <th>Estimated cost</th>
@@ -1680,13 +1681,30 @@ export default function ContentWorkspace({
                         {aiStatus.usage.map((u: Any) => (
                           <tr key={u.id}>
                             <td>
-                              {u.model}
+                              {u.provider} / {u.model}
                               {u.fallback && <small> · fallback</small>}
+                            </td>
+                            <td>
+                              {u.qualityTier || "legacy"}
+                              {u.retryCount > 0 && (
+                                <small> · retry {u.retryCount}</small>
+                              )}
                             </td>
                             <td>
                               {u.inputTokens ?? "—"} / {u.outputTokens ?? "—"}
                             </td>
-                            <td>{u.success ? "Succeeded" : "Failed"}</td>
+                            <td>
+                              {u.success ? "Succeeded" : "Failed"}
+                              {u.failureCode && (
+                                <small> · {u.failureCode}</small>
+                              )}
+                              {u.unknownOutcome && (
+                                <small>
+                                  {" "}
+                                  · provider charge requires review
+                                </small>
+                              )}
+                            </td>
                             <td>
                               {u.estimatedCostUsd == null
                                 ? "Rates unavailable"

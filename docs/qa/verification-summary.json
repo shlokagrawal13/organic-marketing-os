@@ -1,18 +1,17 @@
 {
-  "release": "0.6.1",
-  "verifiedDate": "2026-09-28",
+  "release": "0.7.0",
+  "verifiedDate": "2026-09-29",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
-    "Direct web TypeScript check",
-    "Earlier 0.6 Next.js production build"
+    "Next.js 16.3.5 production build"
   ],
   "passed": {
-    "unit": 12,
+    "unit": 16,
     "httpScenarios": 6,
     "browserScenarios": 5,
     "recoveryAndConfigurationScenarios": 3,
-    "schemaMigrations": 9,
+    "schemaMigrations": 10,
     "directBillingInvoiceCheck": 1
   },
   "environment": {
@@ -62,18 +61,30 @@
     "liveStripeSandbox": false,
     "billingInvoiceViewsAndPolicy": true
   },
+  "modelRouterEvidence": {
+    "capabilityQualityPlanCostPolicy": true,
+    "comparableFallbackOnly": true,
+    "ambiguousOutcomeStopsWithoutFallback": true,
+    "sharedHealthSelectionContract": true,
+    "redisBackedStoreCompiled": true,
+    "nativeRedisExecution": false,
+    "durableRouteFailureMetadata": true,
+    "liveProviderQualityCost": false
+  },
   "latestIncrement": {
-    "scope": "Billing invoice persistence, tenant invoice views and explicit refund/dispute/fraud/proration policy",
+    "scope": "Policy-aware text model routing with shared health and durable route/failure evidence",
     "checks": [
       "Prisma client generation",
       "API TypeScript build",
-      "Direct web TypeScript check",
-      "Unit suite: 3 test files passed",
-      "Direct PGlite/Prisma invoice processing: all 9 migrations applied, subscription/invoice events idempotent, one invoice persisted, monthly credits granted",
-      "PGlite populated upgrade/restore through 9 migrations"
+      "Next.js 16.3.5 production build",
+      "Unit suite: 16 tests passed",
+      "Capability, quality, plan and cost policy contracts",
+      "Comparable fallback and ambiguous-outcome no-duplicate-call contracts",
+      "PGlite populated upgrade/restore through 10 migrations",
+      "Production and full npm audits: 0 advisories"
     ],
     "fullVerifierRerun": false,
-    "fullVerifierBlocker": "Current runtime lacks redis-server and S3Proxy/local listeners hit environment restrictions."
+    "fullVerifierBlocker": "Attempted; stopped before application scenarios because redis-server is absent (spawn redis-server ENOENT)."
   },
   "priorFullSuite": {
     "release": "0.6.0",

@@ -1,17 +1,18 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.6.1",
-  "checkpointRevision": "2026-09-28.1",
-  "savedAtUtc": "2026-09-28T17:48:30.984Z",
-  "currentMilestone": "Locally verified billing invoice views and explicit refund/dispute/fraud/proration policy",
+  "applicationVersion": "0.7.0",
+  "checkpointRevision": "2026-09-29.1",
+  "savedAtUtc": "2026-09-29T19:19:49.000Z",
+  "currentMilestone": "Locally verified MODEL-01 policy-aware text routing",
   "activeTaskId": null,
   "workInProgress": [
-    "The local 0.6.1 BILLING-01 invoice/policy increment is implemented: BillingInvoice migration/model, invoice list/detail API, Credits & usage invoice table, and explicit refund/dispute/fraud/proration policy.",
-    "GitHub Actions remains externally blocked: account billing is locked after payment authorization hold failures. Retry failed authorization was attempted after user approval and returned the same failure."
+    "MODEL-01 local implementation is complete: capability/quality/plan/cost selection, comparable fallback, Redis-backed shared health integration, non-duplicating ambiguous failure contracts and durable route evidence passed local contract/build/upgrade checks.",
+    "The 0.6.1 BILLING-01 invoice/policy increment is implemented and published to private main: BillingInvoice migration/model, invoice list/detail API, Credits & usage invoice table, and explicit refund/dispute/fraud/proration policy.",
+    "GitHub Actions remains externally blocked after publication: run 36462190503 ended startup_failure before jobs with GitHub annotation that recent account payments have failed or spending limit needs attention. Billing pages still show payment authorization failed."
   ],
-  "nextTaskId": "MODEL-01",
-  "nextAction": "Continue another ready local workstream such as MODEL-01 while Stripe sandbox acceptance waits for authorized test configuration and GitHub/native CI waits for a working payment authorization/execution environment.",
+  "nextTaskId": "AGENTS-01",
+  "nextAction": "Implement the durable agent graph/state, explicit role execution, frozen context retrieval, critique and human gates for AGENTS-01; keep AI-LIVE-01 and NATIVE-01 open until authorized live/native execution exists.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -46,16 +47,16 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-09-28",
+    "date": "2026-09-29",
     "applicationSuites": {
-      "unit": 12,
+      "unit": 16,
       "httpScenarios": 6,
       "browserScenarios": 5,
       "recoveryConfigurationScenarios": 3
     },
-    "migrationsApplied": 9,
+    "migrationsApplied": 10,
     "database": "PGlite WASM PostgreSQL, serialized socket bridge",
-    "populatedUpgradeRestore": "Passed on PGlite through all nine migrations including durable billing invoices, billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
+    "populatedUpgradeRestore": "Passed on PGlite through all ten migrations including durable route evidence columns, billing invoices, billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
     "nativePostgresVerified": false,
     "dockerMinioVerified": false,
     "liveAiVerified": false,
@@ -68,49 +69,48 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36322906289,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36322906289",
-      "sourceCommit": "c62293696bfbf36d6f142a3961770976ef5dcc7b",
+      "runId": 36462190503,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36462190503",
+      "sourceCommit": "a4e6dfc2df7938b74836ac79ba3d883c1584faf2",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
-      "retry": "HTTP 403: This workflow run cannot be retried",
-      "rootCause": "GitHub account billing lock: authenticated repository Actions page states workflows cannot execute because billing is locked. Payment page shows card added but authorization hold failed after retry.",
+      "retry": "Not retried after final publish; prior payment authorization retry failed after user approval.",
+      "rootCause": "GitHub account billing/payment gate: run annotation says the job was not started because recent account payments have failed or the spending limit needs to be increased. Payment information still shows authorization hold failed.",
       "priorRunIds": [
-        36269190288,
-        36304124096,
-        36305587276,
-        36305819079,
-        36321113253,
-        36321841234,
-        36321972148
+        36269190288, 36304124096, 36305587276, 36305819079, 36321113253,
+        36321841234, 36321972148, 36322906289
       ]
     },
     "latestIncrement": {
       "prismaGenerate": true,
       "apiBuild": true,
-      "webTypeCheck": true,
-      "unitTestFilesPassed": 3,
-      "directBillingInvoiceVerification": true,
+      "webProductionBuild": true,
+      "unitTestsPassed": 16,
+      "modelRoutingContracts": true,
+      "comparableFallbackAndNoDuplicateAmbiguousCalls": true,
+      "redisSharedHealthCompiled": true,
+      "redisSharedHealthNativeExecuted": false,
       "populatedUpgradeRestore": true,
-      "migrationsApplied": 9,
+      "migrationsApplied": 10,
+      "productionAndFullNpmAdvisories": 0,
       "fullLocalVerifierRerun": false,
-      "fullLocalVerifierBlocker": "Current runtime lacks redis-server; S3Proxy/localhost listeners also hit operation-permitted restrictions before app verification."
+      "fullLocalVerifierBlocker": "Attempted; stopped before application scenarios because redis-server is absent (spawn redis-server ENOENT)."
     },
     "billingInvoiceViewsVerified": true
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main has prior verified source, but Actions are blocked by account billing lock. Payment page shows Discover ending 6759 with authorization hold failed; retry was attempted after user approval and failed again.",
-    "nativeExecution": "Current runtime cannot complete full verifier: redis-server is unavailable, S3Proxy/local listeners hit operation-permitted restrictions under sandbox, and native GitHub CI is blocked before jobs.",
+    "github": "Private shlokagrawal13/organic-marketing-os main previously contains v0.6.1 at a4e6dfc2df7938b74836ac79ba3d883c1584faf2. Authenticated Actions page rechecked 2026-09-29 and still says workflows cannot execute because account billing is locked.",
+    "nativeExecution": "Current runtime cannot complete full verifier because redis-server is unavailable. Native GitHub CI remains blocked before jobs by the authenticated account billing lock.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "48b11a82147e23fec8cf165a340e84ca22398219",
-    "status": "local_0.6.1_invoice_increment_verified_not_published_due_github_billing_lock",
+    "commit": "a4e6dfc2df7938b74836ac79ba3d883c1584faf2",
+    "status": "locally_verified_0.7_model_router_publication_pending_native_ci_billing_locked",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -123,9 +123,9 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "8b02a31e2395d9cee01d623b8391ba7c032565ea",
+    "sourceTree": "57b82d93e7d19a01ed499985df411c4f086ee28a",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Remote still identifies the latest previously published source. Local tree now contains verified 0.6.1 invoice/policy increment pending publication once GitHub billing/Actions unblock.",
+    "commitMeaning": "Recorded remote commit is the prior v0.6.1 source. This checkpoint contains locally verified v0.7 changes awaiting publication; update commit/tree after the remote write succeeds. Actions remain billing-locked.",
     "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,
@@ -140,7 +140,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "GitHub rejects even a dependency-free echo-only workflow before allocating a job. Scroll the authenticated run below the graph to Annotations (or open Workflow file) and capture the exact error; likely account/repository Actions policy or billing rather than application code."
+      "currentBlocker": "GitHub Actions settings are correct, but run 36462190503 failed before any job. Authenticated annotation: The job was not started because recent account payments have failed or your spending limit needs to be increased. Resolve GitHub billing/payment authorization, then rerun native CI."
     },
     {
       "id": "RECOVERY-01",
@@ -154,7 +154,7 @@
     },
     {
       "id": "MODEL-01",
-      "state": "ready_for_local_work",
+      "state": "completed",
       "title": "Full router capability/quality/cost policy"
     },
     {
@@ -250,22 +250,26 @@
     "PROJECT_STATUS.md",
     "README.md",
     "START_HERE.md",
-    "apps/api/src/credits.ts",
-    "apps/web/app/credits-workspace.tsx",
-    "docs/BILLING.md",
+    "apps/api/src/ai.ts",
+    "apps/api/src/operations.ts",
+    "apps/api/src/worker.ts",
+    "apps/web/app/content-workspace.tsx",
+    "apps/web/app/operations-workspace.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/IMPLEMENTATION_PLAN.md",
+    "docs/MODEL_ROUTER.md",
     "docs/PROJECT_STATUS.md",
+    "docs/PROVIDER_CATALOG.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/UPGRADE_0.6.md",
+    "docs/UPGRADE_0.7.md",
     "docs/VERIFICATION_REPORT.md",
-    "packages/core/billing.ts",
-    "prisma/migrations/202609280001_billing_invoices/migration.sql",
+    "packages/core/ai.ts",
+    "prisma/migrations/202609290001_model_routing/migration.sql",
     "prisma/schema.prisma",
-    "tests/integration/billing.test.ts"
+    "tests/ai.test.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -284,7 +288,8 @@
     "prisma/migrations/202609190005_media/migration.sql": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29",
     "prisma/migrations/202609190006_recovery/migration.sql": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721",
     "prisma/migrations/202609200001_credits/migration.sql": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c",
-    "prisma/migrations/202609270001_billing_entitlements/migration.sql": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+    "prisma/migrations/202609270001_billing_entitlements/migration.sql": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb",
+    "prisma/migrations/202609280001_billing_invoices/migration.sql": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json"
 }

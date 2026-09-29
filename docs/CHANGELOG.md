@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 — 2026-09-29
+
+- Added task capability, declared quality, plan, provider priority, shared Redis health and request-cost policy to the centralized text model router.
+- Strategy and scene work require premium providers; fallbacks are prefiltered for comparable capabilities/quality and recorded explicitly. Unknown transport or invalid/charged output outcomes stop without a second potentially billable call.
+- Added durable route evidence to `AIUsage`: retry count, quality tier, failure code, provider request ID, unknown-outcome flag and routing metadata. Credits & usage now exposes route/result context.
+- Added a tenth additive migration, safe environment configuration, subscription-plan-aware worker routing and configurable per-request dollar caps that reject unknown costs before a call.
+- Passed 16 unit tests, Prisma generation, API and Next.js production builds, populated PGlite upgrade/restore through 10 migrations, and production/full npm audits with zero advisories. Full verifier remains blocked because this runner has no `redis-server`.
+
 ## 0.6.1 — 2026-09-28
 
 - Added durable `BillingInvoice` persistence, a ninth additive migration, tenant-scoped invoice list/detail API routes and invoice rows in Credits & usage.
