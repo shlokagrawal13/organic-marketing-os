@@ -28,7 +28,7 @@ The isolated environment used PGlite WASM PostgreSQL, native Redis 6.2, S3Proxy,
 
 ## Access and open gates
 
-The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.7 router increment at application commit `d834aafd7701d43840abc0e528b256d83714417f` with tree `0e0899f3b1b0d9933e439da0b54a36d87c35f559`. The authenticated Actions page still reports that account billing is locked, so jobs cannot start. See `docs/qa/github-publication.json`.
+The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.8 orchestration increment at application commit `bce6fc27daa6869d5464d160e2dda083a2ba4d2d` with tree `a6db020badb17a32617da54ccc6222afa0c35356`. Actions run `36622686659` ended `startup_failure` with zero jobs; its authenticated annotation says recent account payments have failed or the spending limit needs attention. See `docs/qa/github-publication.json`.
 
 Docker/native PostgreSQL remain unavailable here; native package installation again failed on runtime privilege operations. PGlite serializes DB requests. Native locking/restore, actual Compose/MinIO, cloud storage/mail/TLS, live provider quality/cost, full security/load/accessibility and master acceptance remain open.
 

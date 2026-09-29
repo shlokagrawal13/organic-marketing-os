@@ -63,7 +63,7 @@ MODEL-01 and AGENTS-01 local implementations are complete. Live quality/cost ben
 
 No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.7 model-routing increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
 
-Private `shlokagrawal13/organic-marketing-os` main contains v0.7 at application commit `d834aafd7701d43840abc0e528b256d83714417f`, exact tree `0e0899f3b1b0d9933e439da0b54a36d87c35f559`. On 2026-09-29 the authenticated Actions page still displayed an account billing lock, so native CI remains open. See `docs/qa/github-publication.json`; publish this v0.8 checkpoint as the next fast-forward commit.
+Private `shlokagrawal13/organic-marketing-os` main contains v0.8 at application commit `bce6fc27daa6869d5464d160e2dda083a2ba4d2d`, exact tree `a6db020badb17a32617da54ccc6222afa0c35356`. Actions run `36622686659` failed before jobs with the same authenticated billing annotation, so native CI remains open. See `docs/qa/github-publication.json`.
 
 ## Portability and limits
 

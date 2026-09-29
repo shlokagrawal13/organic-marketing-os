@@ -3,13 +3,13 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.8.0",
   "checkpointRevision": "2026-09-29.2",
-  "savedAtUtc": "2026-09-29T19:44:59.000Z",
+  "savedAtUtc": "2026-09-29T19:57:31.000Z",
   "currentMilestone": "Locally verified AGENTS-01 durable agent orchestration",
   "activeTaskId": null,
   "workInProgress": [
     "AGENTS-01 local implementation is complete: all 18 roles are mapped across versioned task DAGs with frozen Brand Brain/approved-content retrieval, durable state/output traceability, compliance/orchestrator critique and a role-gated human approval step.",
-    "MODEL-01 local implementation is complete and the exact verified v0.7 tree is published to private main at d834aafd7701d43840abc0e528b256d83714417f.",
-    "GitHub Actions remains externally blocked after publication: run 36462190503 ended startup_failure before jobs with GitHub annotation that recent account payments have failed or spending limit needs attention. Billing pages still show payment authorization failed."
+    "MODEL-01 and AGENTS-01 exact verified source is published to private main at v0.8 application commit bce6fc27daa6869d5464d160e2dda083a2ba4d2d.",
+    "GitHub Actions remains externally blocked after publication: run 36622686659 ended startup_failure before jobs with GitHub annotation that recent account payments have failed or spending limit needs attention."
   ],
   "nextTaskId": "MEDIA-01",
   "nextAction": "Implement provider-neutral generated image/video/voice job contracts with provenance, costs, cancellation and unknown-outcome safety while preserving the verified uploaded-media path; keep live/native gates explicit.",
@@ -69,9 +69,9 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36462190503,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36462190503",
-      "sourceCommit": "a4e6dfc2df7938b74836ac79ba3d883c1584faf2",
+      "runId": 36622686659,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36622686659",
+      "sourceCommit": "bce6fc27daa6869d5464d160e2dda083a2ba4d2d",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
@@ -80,7 +80,7 @@
       "rootCause": "GitHub account billing/payment gate: run annotation says the job was not started because recent account payments have failed or the spending limit needs to be increased. Payment information still shows authorization hold failed.",
       "priorRunIds": [
         36269190288, 36304124096, 36305587276, 36305819079, 36321113253,
-        36321841234, 36321972148, 36322906289
+        36321841234, 36321972148, 36322906289, 36462190503, 36620025901
       ]
     },
     "latestIncrement": {
@@ -101,7 +101,7 @@
     "billingInvoiceViewsVerified": true
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.7 commit d834aafd7701d43840abc0e528b256d83714417f with exact tree 0e0899f3b1b0d9933e439da0b54a36d87c35f559. Authenticated Actions page still says workflows cannot execute because account billing is locked.",
+    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.8 application commit bce6fc27daa6869d5464d160e2dda083a2ba4d2d with exact tree a6db020badb17a32617da54ccc6222afa0c35356. Authenticated run 36622686659 failed before jobs because account billing is locked.",
     "nativeExecution": "Current runtime cannot complete full verifier because redis-server is unavailable. Native GitHub CI remains blocked before jobs by the authenticated account billing lock.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -109,8 +109,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "d834aafd7701d43840abc0e528b256d83714417f",
-    "status": "published_0.7_locally_verified_0.8_agent_orchestration_publication_pending_native_ci_billing_locked",
+    "commit": "bce6fc27daa6869d5464d160e2dda083a2ba4d2d",
+    "status": "published_verified_0.8_agent_orchestration_native_ci_billing_locked",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -123,9 +123,9 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "0e0899f3b1b0d9933e439da0b54a36d87c35f559",
+    "sourceTree": "a6db020badb17a32617da54ccc6222afa0c35356",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Recorded remote commit/tree is the exact published v0.7 source. This checkpoint contains locally verified v0.8 agent-orchestration changes awaiting publication; Actions remain billing-locked.",
+    "commitMeaning": "Recorded remote commit/tree is the exact locally verified and published v0.8 application source. A small documentation-only publication record may follow it; Actions run 36622686659 remains billing-locked.",
     "latestHeadCommand": "git rev-parse HEAD"
   },
   "credentialsIncluded": false,

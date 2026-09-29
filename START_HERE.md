@@ -21,7 +21,7 @@ The master spec is authoritative for intended scope; working code and dated test
 
 ## First useful action
 
-Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. Published v0.7 application commit: `d834aafd7701d43840abc0e528b256d83714417f`, exact tree `0e0899f3b1b0d9933e439da0b54a36d87c35f559`; this checkpoint adds the locally verified v0.8 orchestration increment. On 2026-09-29 the authenticated Actions page still said account billing is locked, so native jobs cannot start. Use the latest repository source/checkpoint rather than an older ZIP or unrelated repository.
+Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. Published v0.8 application commit: `bce6fc27daa6869d5464d160e2dda083a2ba4d2d`, exact tree `a6db020badb17a32617da54ccc6222afa0c35356`. Actions run `36622686659` failed before jobs because the authenticated account remains billing-locked. Use the latest repository source/checkpoint rather than an older ZIP or unrelated repository.
 
 Check the archive manifest. MODEL-01 and AGENTS-01 local contracts are complete; live provider benchmarks remain AI-LIVE-01 and native Redis execution remains NATIVE-01. Continue **MEDIA-01** while external billing/native access is blocked. BILLING-01 actual Stripe sandbox verification still requires authorized test configuration. Do not re-create the app from a template.
 
