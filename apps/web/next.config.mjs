@@ -1,7 +1,10 @@
 const config = {
   poweredByHeader: false,
   // Allow the API's 25 MiB media limit plus multipart metadata through rewrites.
-  experimental: { proxyClientMaxBodySize: "27mb" },
+  experimental: {
+    proxyClientMaxBodySize: "27mb",
+    useTypeScriptCli: false,
+  },
   async rewrites() {
     return [
       {
