@@ -15,7 +15,7 @@ incrementally with independent implementation and verification.
 5. Record checks actually completed, update the continuity files together, and
    create a fresh source ZIP with `python3 scripts/package_handoff.py`.
 
-The latest source is published to the canonical private repository:
+The latest source is published to the canonical public repository:
 https://github.com/shlokagrawal13/organic-marketing-os. Version 0.9 application
 commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` has remote tree `a85c8a0384083167121e6fa34f46d9ac837fba8c`, verified against the local
 source with 182/182 blob paths, modes and SHAs matching. A prior automatic

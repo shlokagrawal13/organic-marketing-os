@@ -104,9 +104,9 @@ full security/load/accessibility and full master acceptance remain open. Fixed
 operator USD estimates are not provider-enforced spend caps. Automatic staging/
 orphan cleanup and UNKNOWN output reconciliation require further engineering.
 
-Remote publication was completed after explicit user approval. Private `main` now
-contains 0.9.1 source commit `0b9dce36c95027723ea0529e734316b2af039131`, and
+Remote publication was completed after explicit user approval. Public `main` now
+contains 0.9.2 source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`, and
 recursive verification matched 182/182 remote blob paths, modes and SHAs to the
-local checkpoint with zero mismatches. The push-created Actions run `37005496060`
-failed before jobs with `startup_failure`;
+local checkpoint with zero mismatches. The push-created Actions run `37022108731`
+created one job but failed before reported steps/application commands;
 prior authenticated evidence named a billing gate. No native CI success is claimed.

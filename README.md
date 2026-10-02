@@ -69,5 +69,4 @@ master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
 it is not a database/media restore backup. v0.9 source is published to the
-private main branch at source commit `0b9dce36c95027723ea0529e734316b2af039131` and was verified against the local checkpoint. GitHub Actions still
-failed before jobs, so no native CI pass is claimed.
+public main branch at source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a` and was verified against the local checkpoint. GitHub Actions now starts a job, but the latest job failed before reported steps/application commands, so no native CI pass is claimed.

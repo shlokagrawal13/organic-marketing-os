@@ -173,3 +173,5 @@ After the repository was made public, verified the GitHub repository visibility 
 
 Verification completed: `npm test` passed all 6 unit files and `npm run build:api` passed. `node scripts/verify-local.mjs` was retried; Redis 7.2.11 started, then S3Proxy exited before readiness with `Operation not permitted`, so no fresh HTTP/browser/recovery pass is claimed.
 
+Published 0.9.2 after explicit user approval for the public GitHub upload. Remote commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a` on public `shlokagrawal13/organic-marketing-os` main points to tree `e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8`. Recursive verification matched 182/182 remote blob paths, modes and SHAs to local HEAD with zero mismatches. Push-created Actions run `37022108731` created one `Native application verification` job and concluded failure before any reported steps/application commands; this is not a native CI pass.
+

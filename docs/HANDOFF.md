@@ -37,7 +37,7 @@ source-byte editing, option expansion and output reconciliation; MEDIA-LIVE-01
 requires authorized live model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 
-The source is published to private `shlokagrawal13/organic-marketing-os` main.
+The source is published to public `shlokagrawal13/organic-marketing-os` main.
 0.9.2 source commit `0b9dce36c95027723ea0529e734316b2af039131` points to tree
 `c1918f5b14059606dc39b239d5f7ffc7b854b061`, and recursive verification matched
 182/182 remote blob paths, modes and SHAs to the local checkpoint with zero
@@ -45,6 +45,6 @@ mismatches. The earlier automatic approval review rejection is a closed
 audit event after the user's explicit approval for this private upload. Never
 touch the unrelated `OrganicMarketing` repository.
 
-The latest observed Actions run `37005496060` remains `startup_failure` with zero
-jobs; earlier authenticated evidence named billing, but that UI was not rechecked.
+The latest observed Actions run `37022108731` started one job but failed before
+reported steps/application commands; earlier authenticated evidence named billing, but that UI was not rechecked.
 No CI pass, Windows deployment update or ChatGPT buffering root cause is claimed.

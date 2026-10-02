@@ -1,15 +1,15 @@
 {
-  "recordedAtUtc": "2026-10-02T12:15:05Z",
+  "recordedAtUtc": "2026-10-02T14:46:40Z",
   "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
   "repositoryId": 1389748509,
-  "visibility": "private",
+  "visibility": "public",
   "branch": "main",
-  "applicationVersion": "0.9.1",
-  "applicationSourceCommit": "0b9dce36c95027723ea0529e734316b2af039131",
-  "applicationSourceTree": "c1918f5b14059606dc39b239d5f7ffc7b854b061",
-  "baseCommit": "74d1a0b77af5bedf8af1c5c430c82f8b77d967fe",
+  "applicationVersion": "0.9.2",
+  "applicationSourceCommit": "b48b40b92b20bdd1f2aa1d3287ebfe70586b773a",
+  "applicationSourceTree": "e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8",
+  "baseCommit": "e5064bd5a6d2e63513d4a81766bfbef31d866427",
   "publishMethod": "GitHub Git Data API via connected GitHub tool; terminal git push lacked credentials.",
-  "userApproval": "Explicit approval on 2026-10-02 IST for private 0.9.1 upload to shlokagrawal13/organic-marketing-os main after auto-review identified the source payload and destination risk.",
+  "userApproval": "Explicit approval on 2026-10-02 IST for public 0.9.2 upload to shlokagrawal13/organic-marketing-os main after auto-review identified the source payload and public destination risk.",
   "remoteVerification": {
     "recursiveTreeChecked": true,
     "localBlobCount": 182,
@@ -23,16 +23,17 @@
     "settingsNotRecheckedAfterV09Publish": true
   },
   "nativeCi": {
-    "runId": 37005496060,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37005496060",
-    "sourceCommit": "0b9dce36c95027723ea0529e734316b2af039131",
+    "runId": 37022108731,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37022108731",
+    "sourceCommit": "b48b40b92b20bdd1f2aa1d3287ebfe70586b773a",
     "status": "completed",
-    "conclusion": "startup_failure",
-    "jobsStarted": 0,
+    "conclusion": "failure",
+    "jobsStarted": 1,
     "nativeTestsExecuted": false,
-    "path": "BuildFailed",
-    "combinedStatuses": [],
-    "rootCause": "GitHub created the push run but did not allocate jobs. Earlier authenticated evidence reported account billing/payment lock; no fresh billing UI edit was performed."
+    "path": ".github/workflows/ci.yml",
+    "jobName": "Native application verification",
+    "jobConclusion": "failure",
+    "rootCause": "Workflow job was created on the public repository, but no steps or runner name were reported and logs were unavailable through the connector; application commands did not execute."
   },
   "priorBillingObservation": {
     "paymentAuthorization": "failed",
@@ -42,11 +43,11 @@
     "observedOn": "2026-09-29"
   },
   "latestPublication": {
-    "message": "Add media plan routing and source reference gates",
+    "message": "Guard media credit review resolution",
     "remoteTreeMatchesLocalVerifiedTree": true,
     "commitFetchVerified": true,
     "actionsRunStarted": true,
-    "actionsRunId": 37005496060
+    "actionsRunId": 37022108731
   },
   "limits": [
     "Remote source publication is not native/live application acceptance.",
