@@ -4,7 +4,7 @@ This board groups remaining engineering and acceptance work. The complete 161-ro
 
 Status meanings: completed = the explicitly scoped task passed its dated checks; ready_for_local_work = useful code work can proceed without external keys, not that the task is complete; needs_execution_environment = an executable target is missing; needs_external_credentials = this live test needs configured authorization; pending_dependency = an earlier implementation/data dependency is needed.
 
-**Next local task: MEDIA-01D.** Durable media core and UI are locally verified. MEDIA-LIVE-01 retains actual provider acceptance. Continue local work while native/live/publication gates wait.
+**Next local task: MEDIA-01D.** Durable media core and UI are locally verified and v0.9 is published to the private main branch. MEDIA-LIVE-01 retains actual provider acceptance. Continue local work while native/live gates wait.
 
 | ID | State | Remaining work | Done when | External requirement | Start here |
 |---|---|---|---|---|---|
@@ -40,4 +40,4 @@ Status meanings: completed = the explicitly scoped task passed its dated checks;
 
 Keep these IDs stable. Split a large task into child IDs when implementing it, and record active work, exact next action, changed paths and test evidence in PROJECT_CHECKPOINT.json and SESSION_LOG.md. A configured endpoint, passing build, mocked response or future plan cannot close a native/live acceptance gate. Do not delete uncompleted requirements when reorganizing tasks.
 
-GitHub publication: last verified remote main is `446c832ee2da2b7584e5213db925d1ed075388c0`; v0.9 remains local. Automatic approval review rejected source export pending explicit authorization. Latest observed Actions run `36623211633` failed before jobs; earlier billing diagnostic is recorded, not freshly rechecked.
+GitHub publication: v0.9 application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` is published on private `main`; remote tree `a85c8a0384083167121e6fa34f46d9ac837fba8c` was recursively verified against local source with zero mismatches. Latest observed Actions run `37002434700` failed before jobs; earlier billing diagnostic is recorded, not freshly rechecked.

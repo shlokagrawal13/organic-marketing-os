@@ -68,5 +68,6 @@ security. Native PostgreSQL races/restore, Docker/MinIO, live providers and full
 master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
-it is not a database/media restore backup. v0.9 source publication is pending
-explicit GitHub upload authorization; see START_HERE.md.
+it is not a database/media restore backup. v0.9 source is published to the
+private main branch at application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b`; GitHub Actions still
+failed before jobs, so no native CI pass is claimed.

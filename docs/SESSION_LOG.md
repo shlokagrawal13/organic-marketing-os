@@ -152,3 +152,9 @@ MEDIA-01A adds provider-neutral image/video/voice lifecycle contracts: atomic su
 Native PostgreSQL locking/restore, Docker/MinIO, live AI/Stripe, social publication, sourced analytics and full master acceptance remain open. The latest observed GitHub Actions run `36623211633` for `446c832` still ended `startup_failure`; the earlier authenticated billing annotation remains the recorded cause, not a newly read billing-page result. Chat buffering itself cannot be diagnosed from these repository/test logs.
 
 **Next action: MEDIA-01B durable job and tenant API/worker/private-ingestion integration.** Do not restart the completed foundation or wait on GitHub billing for local engineering.
+
+## 2026-10-02 — v0.9 private publication completed
+
+The user explicitly approved the private upload after automatic approval review identified the changed source/PNG payload and destination. Published the verified v0.9 source to private `shlokagrawal13/organic-marketing-os` main as application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` on base `446c832ee2da2b7584e5213db925d1ed075388c0`. The created tree `a85c8a0384083167121e6fa34f46d9ac837fba8c` matched the local tested tree exactly, and a recursive post-publish check matched 182/182 blob paths, modes and SHAs with zero mismatches.
+
+GitHub Actions run `37002434700` was created by the push and completed with `startup_failure`, `path: BuildFailed`, zero jobs and no combined statuses. Earlier authenticated evidence reported a billing/payment gate; no native CI pass or fresh billing-page fix is claimed. The unrelated `OrganicMarketing` repository remains excluded.

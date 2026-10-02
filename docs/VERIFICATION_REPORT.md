@@ -72,7 +72,8 @@ full security/load/accessibility and full master acceptance remain open. Fixed
 operator USD estimates are not provider-enforced spend caps. Automatic staging/
 orphan cleanup and UNKNOWN output reconciliation require further engineering.
 
-Remote Actions was not rerun. Its last observed run `36623211633` failed before
-jobs; prior authenticated evidence named a billing gate. v0.9 upload was rejected
-by automatic approval review for missing explicit source-export authorization.
-No remote publication or native CI success is claimed.
+Remote publication was completed after explicit user approval. Private `main` now
+contains v0.9 application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b`, and recursive verification matched
+182/182 remote blob paths, modes and SHAs to the local source with zero mismatches.
+The push-created Actions run `37002434700` failed before jobs with `startup_failure`;
+prior authenticated evidence named a billing gate. No native CI success is claimed.

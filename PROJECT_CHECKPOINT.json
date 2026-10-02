@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.0",
-  "checkpointRevision": "2026-10-01.1",
-  "savedAtUtc": "2026-10-01T18:14:41.548884+00:00",
-  "currentMilestone": "Locally verified durable generated media and UI with private rendering",
+  "checkpointRevision": "2026-10-02.1",
+  "savedAtUtc": "2026-10-02T11:43:05Z",
+  "currentMilestone": "Published verified durable generated media and UI with private rendering",
   "activeTaskId": null,
   "workInProgress": [
     "No incomplete code edits in this release; MEDIA-01B and local MEDIA-01C are verified.",
     "MEDIA-01D extended media and MEDIA-LIVE-01 live quality/cost acceptance remain open.",
-    "v0.9 source is local only. Automatic approval review rejected GitHub source export; obtain explicit authorization for private shlokagrawal13/organic-marketing-os before uploading."
+    "v0.9 source is published to private shlokagrawal13/organic-marketing-os main at b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b; remote tree a85c8a0384083167121e6fa34f46d9ac837fba8c matches the local verified source exactly."
   ],
   "nextTaskId": "MEDIA-01D",
-  "nextAction": "Implement source-reference/editing contracts and plan-specific media routing, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01. Source upload requires explicit authorization after automatic approval-review rejection.",
+  "nextAction": "Implement source-reference/editing contracts and plan-specific media routing, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -69,15 +69,15 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36623211633,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36623211633",
-      "sourceCommit": "446c832ee2da2b7584e5213db925d1ed075388c0",
+      "runId": 37002434700,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37002434700",
+      "sourceCommit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
-      "retry": "Not retried after final publish; prior payment authorization retry failed after user approval.",
-      "rootCause": "Latest remote run still startup_failure. Earlier authenticated annotation reported billing/payment gate; billing UI was not re-read this turn.",
+      "retry": "Not retried after v0.9 publish; the push-created run failed before any job started.",
+      "rootCause": "GitHub returned path BuildFailed/startup_failure and an empty job list for the v0.9 commit. Earlier authenticated evidence reported a billing/payment gate; this run did not execute native tests.",
       "priorRunIds": [
         36269190288,
         36304124096,
@@ -88,7 +88,9 @@
         36321972148,
         36322906289,
         36462190503,
-        36620025901
+        36620025901,
+        36622686659,
+        36623211633
       ]
     },
     "latestIncrement": {
@@ -111,16 +113,16 @@
     "dependencyAuditDate": "2026-09-29; not rerun in 0.9; dependency versions unchanged"
   },
   "accessState": {
-    "github": "Read-only remote main verified at 446c832. 0.9 upload rejected by automatic approval review; no branch update succeeded.",
-    "nativeExecution": "Local Redis 7.2.11 recovered without root install; full PGlite/Redis/storage/browser/recovery verifier passes. Native PostgreSQL/Docker not verified; latest remote CI still startup_failure.",
+    "github": "Published v0.9 to private main at b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b; recursive remote tree verification found 182/182 blob paths, modes and SHAs matching local HEAD. GitHub Actions run 37002434700 ended startup_failure before jobs.",
+    "nativeExecution": "Local Redis 7.2.11 recovered without root install; full PGlite/Redis/storage/browser/recovery verifier passes. Native PostgreSQL/Docker not verified; latest remote CI still startup_failure before jobs.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "446c832ee2da2b7584e5213db925d1ed075388c0",
-    "status": "local_0.9_verified_not_uploaded_automatic_approval_review_gate",
+    "commit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
+    "status": "published_verified_remote_tree_matches_local_0.9",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -133,16 +135,30 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "e8ed6db6629f388016d89f29407f78fad251c195",
+    "sourceTree": "a85c8a0384083167121e6fa34f46d9ac837fba8c",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last verified remote main, not the current local implementation. Resolve local HEAD with git rev-parse HEAD; source archive is identified by CHECKPOINT_MANIFEST.json.",
-    "latestHeadCommand": "git rev-parse HEAD",
-    "lastLocalCheckpointCommit": "73359b0",
+    "commitMeaning": "Published v0.9 application commit on private main. A later documentation-only publication may advance main; compare source trees and read docs/qa/github-publication.json for the latest publication record.",
+    "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; app source commit is recorded explicitly here.",
+    "lastLocalCheckpointCommit": "8902e4c6d4b1740a68308d940fdced5303a8c966",
     "uploadGate": {
-      "rejectedAction": "Create Git tree containing changed source files",
-      "reason": "Automatic approval review required explicit authorization to export this private source payload to the repository",
+      "initialRejectedAction": "Create Git tree / upload PNG evidence blobs containing changed source files",
+      "initialReason": "Automatic approval review required explicit authorization to export this private source payload to the repository",
       "destination": "shlokagrawal13/organic-marketing-os main",
-      "bypassed": false
+      "userApproval": "User approved the informed private upload on 2026-10-02 IST with “meri taraf se kar do”.",
+      "bypassed": false,
+      "resolved": true
+    },
+    "publication": {
+      "publishedAtUtc": "2026-10-02T11:43:05Z",
+      "applicationCommit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
+      "applicationTree": "a85c8a0384083167121e6fa34f46d9ac837fba8c",
+      "baseCommit": "446c832ee2da2b7584e5213db925d1ed075388c0",
+      "remoteBlobCount": 182,
+      "localBlobCount": 182,
+      "mismatchCount": 0,
+      "actionsRunId": 37002434700,
+      "actionsConclusion": "startup_failure",
+      "actionsJobsStarted": 0
     }
   },
   "credentialsIncluded": false,
@@ -157,7 +173,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Local Redis blocker resolved. Native PostgreSQL/Compose unverified and GitHub Actions latest run 36623211633 remains startup_failure before jobs."
+      "currentBlocker": "Local Redis blocker resolved. Native PostgreSQL/Compose unverified and GitHub Actions latest run 37002434700 remains startup_failure before jobs."
     },
     {
       "id": "RECOVERY-01",
@@ -341,7 +357,8 @@
     "tests/recovery/configuration.test.ts",
     "tests/recovery/worker.test.ts",
     "tests/ui/generated-media.spec.ts",
-    "tests/ui/operations.spec.ts"
+    "tests/ui/operations.spec.ts",
+    "docs/qa/github-publication.json"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",

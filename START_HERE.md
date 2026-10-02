@@ -15,13 +15,12 @@ incrementally with independent implementation and verification.
 5. Record checks actually completed, update the continuity files together, and
    create a fresh source ZIP with `python3 scripts/package_handoff.py`.
 
-The latest source is the local checkpoint, **not yet the remote main branch**.
-Canonical private repo: https://github.com/shlokagrawal13/organic-marketing-os.
-Last verified remote: `446c832ee2da2b7584e5213db925d1ed075388c0`. The v0.9 upload
-was rejected by automatic approval review for missing explicit authorization to
-export the changed source to that destination. Do not bypass that rejection.
-Finish a concrete reviewable checkpoint and obtain upload authorization.
-Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
+The latest source is published to the canonical private repository:
+https://github.com/shlokagrawal13/organic-marketing-os. Version 0.9 application
+commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` has remote tree `a85c8a0384083167121e6fa34f46d9ac837fba8c`, verified against the local
+source with 182/182 blob paths, modes and SHAs matching. A prior automatic
+approval review rejection was resolved by explicit user approval for this private
+upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

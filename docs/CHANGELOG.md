@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0 verified private source publication — 2026-10-02
+
+- Published the exact verified v0.9 source to private `shlokagrawal13/organic-marketing-os` main as application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b`.
+- Verified remote tree `a85c8a0384083167121e6fa34f46d9ac837fba8c` recursively against local source: 182 blob paths, modes and SHAs matched with zero mismatches.
+- Recorded GitHub Actions run `37002434700` as `startup_failure` before any job; no native CI pass, live provider acceptance or billing fix is claimed.
+- Resolved the earlier automatic approval-review upload gate with explicit user approval for this private payload and destination; the unrelated `OrganicMarketing` repository remains excluded.
+
 ## 0.9.0 — 2026-10-01
 
 - Added twelfth migration and tenant-scoped durable generated-media API/worker for OpenAI image, voice and asynchronous video contracts.

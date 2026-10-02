@@ -36,14 +36,13 @@ media plan rules and output reconciliation; MEDIA-LIVE-01 requires authorized li
 model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 
-The source is local. Remote main was last verified at `446c832...` and does not
-contain v0.8.1/v0.9. Automatic approval review rejected a GitHub upload because it
-required explicit authorization to export these source changes to private
-`shlokagrawal13/organic-marketing-os`. Do not use another tool to bypass that
-rejection. Ask for concrete upload permission after packaging. Preserve the local
-commit/archive until publication succeeds, then compare remote content and record
-the actual commit. Never touch the unrelated `OrganicMarketing` repository.
+The source is published to private `shlokagrawal13/organic-marketing-os` main.
+Application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` points to tree `a85c8a0384083167121e6fa34f46d9ac837fba8c`, and recursive
+verification matched 182/182 remote blob paths, modes and SHAs to the local source
+with zero mismatches. The earlier automatic approval review rejection is a closed
+audit event after the user's explicit approval for this private upload. Never
+touch the unrelated `OrganicMarketing` repository.
 
-The latest observed Actions run remains `startup_failure` with zero jobs; earlier
-authenticated evidence named billing, but that UI was not rechecked. No CI pass,
-Windows deployment update or ChatGPT buffering root cause is claimed.
+The latest observed Actions run `37002434700` remains `startup_failure` with zero
+jobs; earlier authenticated evidence named billing, but that UI was not rechecked.
+No CI pass, Windows deployment update or ChatGPT buffering root cause is claimed.
