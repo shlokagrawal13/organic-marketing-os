@@ -145,7 +145,7 @@ test(
         request: { ...input.request, sourceAssetIds: [sourceAsset.id] },
       });
       assert.equal(sourceResponse.status, 400);
-      assert.match(sourceResponse.body.message, /source assets/i);
+      assert.match(sourceResponse.body.error.message, /source assets/i);
       const created = await Promise.all([
         call(path, "POST", input),
         call(path, "POST", input),
