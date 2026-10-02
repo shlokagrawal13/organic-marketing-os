@@ -1,4 +1,4 @@
-# Project handoff — 0.9.0 / 2026-10-01
+# Project handoff — 0.9.1 / 2026-10-02
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and
@@ -31,9 +31,10 @@ in. See GENERATED_MEDIA.md for exact presets, money semantics and remaining limi
 
 ## Continue
 
-Read the checkpoint and task board. MEDIA-01D retains reference/editing adapters,
-media plan rules and output reconciliation; MEDIA-LIVE-01 requires authorized live
-model access and spend. Advanced editing and other master modules remain pending.
+Read the checkpoint and task board. MEDIA-01D now has plan-specific model
+allowlists and tenant-owned source-reference gates. It still retains provider
+source-byte editing, option expansion and output reconciliation; MEDIA-LIVE-01
+requires authorized live model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 
 The source is published to private `shlokagrawal13/organic-marketing-os` main.

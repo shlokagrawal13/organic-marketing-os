@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1 MEDIA-01D plan/source gates — 2026-10-02
+
+- Added per-kind generated-media plan allowlists through `MEDIA_IMAGE_PLANS`, `MEDIA_VIDEO_PLANS` and `MEDIA_VOICE_PLANS`; status/create now resolve the workspace plan before exposing or queueing configured models.
+- Added source-reference ownership gates: source asset IDs must be unique active image assets in the same workspace before the current provider preset rejects unsupported source-byte editing.
+- Updated provider config/audit records to freeze allowed plans and source asset counts.
+- Verified `npm test` and `npm run build:api`; full local harness was attempted but S3Proxy exited before readiness with `Operation not permitted`, so no new integration/browser pass is claimed.
+
 ## 0.9.0 verified private source publication — 2026-10-02
 
 - Published the exact verified v0.9 source to private `shlokagrawal13/organic-marketing-os` main as application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b`.

@@ -158,3 +158,10 @@ Native PostgreSQL locking/restore, Docker/MinIO, live AI/Stripe, social publicat
 The user explicitly approved the private upload after automatic approval review identified the changed source/PNG payload and destination. Published the verified v0.9 source to private `shlokagrawal13/organic-marketing-os` main as application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` on base `446c832ee2da2b7584e5213db925d1ed075388c0`. The created tree `a85c8a0384083167121e6fa34f46d9ac837fba8c` matched the local tested tree exactly, and a recursive post-publish check matched 182/182 blob paths, modes and SHAs with zero mismatches.
 
 GitHub Actions run `37002434700` was created by the push and completed with `startup_failure`, `path: BuildFailed`, zero jobs and no combined statuses. Earlier authenticated evidence reported a billing/payment gate; no native CI pass or fresh billing-page fix is claimed. The unrelated `OrganicMarketing` repository remains excluded.
+
+## 2026-10-02 — MEDIA-01D plan/source gates
+
+Started MEDIA-01D after the v0.9 private publication. Implemented generated-media plan allowlists in `openai-media.ts` and the API create/status path, resolving workspace plan from billing mode/subscription before queueing. Added source-reference gates that require unique active same-tenant image assets before the current OpenAI preset rejects source-byte editing. This preserves no paid provider call for unsupported references.
+
+Verification completed: `npm test` passed all 6 unit files and `npm run build:api` passed. Direct integration execution was correctly blocked by `tests/support/isolated.ts` because integration tests must use the harness. A harness attempt with `node scripts/verify-local.mjs` reached Redis 7.2.11, then S3Proxy exited before readiness with `Operation not permitted`; no fresh HTTP/browser/recovery pass is claimed for this increment.
+

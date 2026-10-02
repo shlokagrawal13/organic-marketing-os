@@ -1,6 +1,6 @@
 {
-  "release": "0.9.0",
-  "verifiedDate": "2026-10-01",
+  "release": "0.9.1",
+  "verifiedDate": "2026-10-02",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
@@ -131,5 +131,16 @@
     "liveProviderVerified": false,
     "nativeConcurrencyVerified": false
   },
-  "dependencyAuditDate": "2026-09-29 (not rerun for 0.9)"
+  "dependencyAuditDate": "2026-09-29 (not rerun for 0.9)",
+  "media01dEvidence": {
+    "planSpecificMediaRouting": true,
+    "sourceReferenceOwnershipGate": true,
+    "providerSourceByteEditing": false,
+    "unknownOutputReconciliation": false,
+    "unitFilesPassed": 6,
+    "apiTypeScriptBuild": true,
+    "fullHarnessAttempted": true,
+    "fullHarnessResult": "blocked_before_integration",
+    "fullHarnessBlocker": "S3Proxy exited before readiness with Operation not permitted in .local/test-storage.log"
+  }
 }

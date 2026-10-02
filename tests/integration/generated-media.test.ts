@@ -127,6 +127,25 @@ test(
         ).status,
         400,
       );
+      const sourceAsset = await db.asset.create({
+        data: {
+          organizationId: org.id,
+          name: "Reference image fixture.png",
+          kind: "IMAGE",
+          mimeType: "image/png",
+          bytes: 128,
+          sha256: `reference-${randomUUID()}`,
+          objectKey: `${org.id}/reference/${randomUUID()}`,
+          rightsNote: "Synthetic owned reference fixture",
+          createdBy: owner.id,
+        },
+      });
+      const sourceResponse = await call(path, "POST", {
+        ...input,
+        request: { ...input.request, sourceAssetIds: [sourceAsset.id] },
+      });
+      assert.equal(sourceResponse.status, 400);
+      assert.match(sourceResponse.body.message, /source assets/i);
       const created = await Promise.all([
         call(path, "POST", input),
         call(path, "POST", input),

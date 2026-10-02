@@ -1,4 +1,4 @@
-# Verification report — Organic Marketing OS 0.9.0
+# Verification report — Organic Marketing OS 0.9.1
 
 Verified locally on 2026-10-01. The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.
@@ -18,6 +18,22 @@ The full local verifier reached its explicit final success message. A later
 selected browser rerun checks the final media layout/capture adjustments; its
 output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
+
+
+## MEDIA-01D local slice — 2026-10-02
+
+Added generated-media plan allowlists (`MEDIA_IMAGE_PLANS`, `MEDIA_VIDEO_PLANS`,
+`MEDIA_VOICE_PLANS`) and server-side workspace plan resolution before queueing.
+The status endpoint returns only models available to the current plan, and queued
+jobs freeze the allowed plan policy in their configuration/audit trail. Source
+asset IDs are now checked for uniqueness, same-tenant ownership and active image
+kind before the current OpenAI preset rejects unsupported source-byte editing.
+
+Checks completed: `npm test` passed all 6 unit files, including the updated media
+plan/source contracts, and `npm run build:api` passed TypeScript compilation. A
+full `node scripts/verify-local.mjs` attempt reached Redis 7.2.11 but S3Proxy
+exited before readiness with `Operation not permitted`, so no fresh HTTP/browser
+or recovery pass is claimed for this slice.
 
 ## Generated-media evidence
 

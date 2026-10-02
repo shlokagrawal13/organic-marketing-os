@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.9.0",
-  "checkpointRevision": "2026-10-02.1",
-  "savedAtUtc": "2026-10-02T11:43:05Z",
-  "currentMilestone": "Published verified durable generated media and UI with private rendering",
+  "applicationVersion": "0.9.1",
+  "checkpointRevision": "2026-10-02.2",
+  "savedAtUtc": "2026-10-02T12:06:25Z",
+  "currentMilestone": "MEDIA-01D plan-aware generated-media routing and source-reference gates",
   "activeTaskId": null,
   "workInProgress": [
-    "No incomplete code edits in this release; MEDIA-01B and local MEDIA-01C are verified.",
-    "MEDIA-01D extended media and MEDIA-LIVE-01 live quality/cost acceptance remain open.",
-    "v0.9 source is published to private shlokagrawal13/organic-marketing-os main at b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b; remote tree a85c8a0384083167121e6fa34f46d9ac837fba8c matches the local verified source exactly."
+    "MEDIA-01D first slice is implemented: media models can be allowlisted by workspace plan, and source asset IDs are tenant-checked before provider submission.",
+    "The current OpenAI preset still rejects source assets after validation; live reference editing/provider source-byte submission remains open.",
+    "v0.9 source is published to private shlokagrawal13/organic-marketing-os main at b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b; this 0.9.1 local increment is not yet published remotely."
   ],
   "nextTaskId": "MEDIA-01D",
-  "nextAction": "Implement source-reference/editing contracts and plan-specific media routing, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01.",
+  "nextAction": "Continue MEDIA-01D with safe UNKNOWN output reconciliation/orphan handling and provider option expansion, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -47,7 +47,7 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "applicationSuites": {
       "unit": 28,
       "httpScenarios": 7,
@@ -102,18 +102,20 @@
       "webProductionBuild": true,
       "migrationsApplied": 12,
       "populatedUpgradeRestore": true,
-      "fullLocalVerifierRerun": true,
-      "fullLocalVerifierBlocker": null,
+      "fullLocalVerifierRerun": false,
+      "fullLocalVerifierBlocker": "node scripts/verify-local.mjs reached Redis 7.2.11 but S3Proxy exited before readiness with Operation not permitted in .local/test-storage.log.",
       "generatedMediaRuntimeIntegrated": true,
       "generatedMediaUIVerified": true,
       "liveMediaVerified": false,
-      "finalMediaLayoutTargetedRerun": true
+      "finalMediaLayoutTargetedRerun": true,
+      "mediaPlanRoutingVerified": true,
+      "sourceReferenceGateVerified": true
     },
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-09-29; not rerun in 0.9; dependency versions unchanged"
   },
   "accessState": {
-    "github": "Published v0.9 to private main at b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b; recursive remote tree verification found 182/182 blob paths, modes and SHAs matching local HEAD. GitHub Actions run 37002434700 ended startup_failure before jobs.",
+    "github": "Private main remains at published v0.9 documentation commit 74d1a0b77af5bedf8af1c5c430c82f8b77d967fe; current MEDIA-01D local increment is not yet published.",
     "nativeExecution": "Local Redis 7.2.11 recovered without root install; full PGlite/Redis/storage/browser/recovery verifier passes. Native PostgreSQL/Docker not verified; latest remote CI still startup_failure before jobs.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -122,7 +124,7 @@
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
-    "status": "published_verified_remote_tree_matches_local_0.9",
+    "status": "local_0.9.1_media01d_plan_source_gates_not_uploaded",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -137,7 +139,7 @@
     "id": 1389748509,
     "sourceTree": "a85c8a0384083167121e6fa34f46d9ac837fba8c",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published v0.9 application commit on private main. A later documentation-only publication may advance main; compare source trees and read docs/qa/github-publication.json for the latest publication record.",
+    "commitMeaning": "Published v0.9 application/source record remains remote. Resolve the current local increment with git rev-parse HEAD after committing 0.9.1; publish and verify before treating remote main as current.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; app source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "8902e4c6d4b1740a68308d940fdced5303a8c966",
     "uploadGate": {
@@ -297,7 +299,8 @@
     {
       "id": "MEDIA-01D",
       "state": "ready_for_local_work",
-      "title": "Source editing, extended providers, media plan policy and output reconciliation"
+      "title": "Source editing, extended providers, media plan policy and output reconciliation",
+      "completedIncrement": "Plan-specific media model routing and source-reference ownership gates are locally implemented; provider source-byte editing, additional options/providers and UNKNOWN output reconciliation remain."
     },
     {
       "id": "MEDIA-LIVE-01",

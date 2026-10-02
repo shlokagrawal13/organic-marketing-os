@@ -1,4 +1,4 @@
-# Project status — Organic Marketing OS 0.9.0
+# Project status — Organic Marketing OS 0.9.1
 
 The existing Next.js/NestJS/PostgreSQL/Redis/private-storage architecture now includes
 an executable generated-media workflow. **The full V3 product is still incomplete.**
@@ -23,7 +23,10 @@ Provider fixtures and passing local tests do not certify production readiness.
   private output validation/provenance and explicit scene attachment.
 - Asset library → Generate with AI provides consent/cost gates, saved job history,
   previews/downloads and attachment controls. Workspace health and private record
-  export include the new workflow. See GENERATED_MEDIA.md and UPGRADE_0.9.md.
+  export include the new workflow. MEDIA-01D has started: media models can be
+  allowlisted by workspace plan, and source asset IDs are tenant-checked before
+  the current provider preset rejects unsupported source-byte editing. See
+  GENERATED_MEDIA.md and UPGRADE_0.9.md.
 
 ## Verification and limits
 
@@ -34,9 +37,9 @@ storage is private S3Proxy 4.1.1 and media validation/rendering uses real FFmpeg
 Provider/SMTP/Stripe responses come only from isolated test fixtures.
 
 Generated-media live quality, model access, actual charges and signed-redirect
-behavior remain unverified. Source-image editing, additional provider options,
-plan-specific media routing and automatic output/orphan reconciliation still need
-engineering. Media generation is opt-in with no default key, model or price. USD
+behavior remain unverified. Source-byte editing adapters, additional provider
+options and automatic output/orphan reconciliation still need engineering; the
+plan-routing and tenant-owned source-reference gates are local contracts only. Media generation is opt-in with no default key, model or price. USD
 estimates do not impose a provider spending limit. No paid AI request was made.
 
 Native PostgreSQL concurrency/restore, Docker/MinIO, cross-store recovery, live
@@ -61,7 +64,7 @@ account billing gate. These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue MEDIA-01D: source-image/editing contracts, plan-aware media routing and
+Continue MEDIA-01D: provider source-byte editing, provider-option expansion and
 safe provider-output reconciliation. MEDIA-LIVE-01 tracks authorized provider
 acceptance separately. Then continue advanced editing, sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and

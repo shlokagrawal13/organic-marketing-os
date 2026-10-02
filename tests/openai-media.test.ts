@@ -17,6 +17,7 @@ const config = {
   model: "operator-selected",
   estimatedCostUsd: 0.2,
   credits: 2,
+  allowedPlans: ["starter", "growth", "self_hosted"],
 };
 const request = generationRequestSchema.parse({
   kind: "image",
@@ -35,6 +36,8 @@ test("media configuration requires explicit prices; presets reject unsupported r
     mediaConfigurationSchema.parse({ ...config, credits: 0 }),
   );
   validateMediaPreset(request, config);
+  validateMediaPreset(request, config, "growth");
+  assert.throws(() => validateMediaPreset(request, config, "free"));
   assert.throws(() =>
     validateMediaPreset({ ...request, maxCostUsd: 0.1 }, config),
   );
@@ -72,6 +75,7 @@ test("provider adapter fixes request shape, disables redirects and refuses remot
       MEDIA_IMAGE_MODEL: config.model,
       MEDIA_IMAGE_ESTIMATE_USD: "0.2",
       MEDIA_IMAGE_CREDITS: "2",
+      MEDIA_IMAGE_PLANS: "starter,growth,self_hosted",
     });
     delete process.env.OPENAI_MEDIA_BASE_URL;
     let result: any = {

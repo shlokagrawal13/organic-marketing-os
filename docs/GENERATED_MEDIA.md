@@ -1,4 +1,4 @@
-# Generated media — 0.9.0
+# Generated media — 0.9.1
 
 Image, video and voice generation now have durable database jobs, tenant APIs,
 a BullMQ worker, private asset ingestion and an Asset library → Generate with AI
@@ -15,7 +15,11 @@ Set `MEDIA_GENERATION_ENABLED=true`, `OPENAI_MEDIA_API_KEY`, and each enabled
 kind's `MEDIA_IMAGE_*`, `MEDIA_VIDEO_*` or `MEDIA_VOICE_*` model, estimate in USD
 and credit price. Blank models stay unavailable. There is no implicit default
 model, price, runtime fixture, fallback provider or paid API test on startup.
-Do not expose the provider key to the frontend.
+Do not expose the provider key to the frontend. Each media kind may also set
+`MEDIA_IMAGE_PLANS`, `MEDIA_VIDEO_PLANS` or `MEDIA_VOICE_PLANS` to a comma-separated
+allowlist of `free`, `starter`, `growth` and `self_hosted`; blank means the model
+is available to all plans. The workspace plan is resolved before queueing and the
+saved provider policy is frozen with the job.
 
 Use a provider model compatible with these fixed presets:
 
@@ -72,6 +76,10 @@ and invalidates content/render approval. A stale revision returns 409 and preser
 the generated asset for manual use. Repeating an attachment returns its receipt
 without applying another content edit. All list/detail/create/cancel/attach routes
 check tenant membership; writes require OWNER, ADMIN, EDITOR or CREATOR.
+Reference asset IDs are now tenant-checked before queueing: IDs must be unique,
+active image assets in the same workspace. The current OpenAI preset still rejects
+source assets before provider submission, so this is a source/reference contract
+gate rather than live editing support.
 
 Workspace health includes the media worker and state counts. Private record
 exports include sanitized generation history, excluding private object keys and
@@ -89,9 +97,9 @@ attaches them, renders an MP4 and reloads durable history. These fixtures are
 synthetic, never customer outputs.
 
 Pending: authorized live image/video/voice acceptance and signed-redirect behavior;
-reference-image/editing adapters (source IDs are currently rejected); additional
-voices/options/providers and plan-specific media routing; native PostgreSQL/Compose
-concurrency and cross-store restore; automatic orphan/staging cleanup; provider
-billing reconciliation and output reconciliation after UNKNOWN. An ambiguous object
-write may leave a private orphan retained for investigation. No automatic paid retry
-or deletion tries to conceal that uncertainty. See MEDIA-01D and DATA-01.
+reference-image/editing adapters that actually send source bytes to a provider;
+additional voices/options/providers; native PostgreSQL/Compose concurrency and
+cross-store restore; automatic orphan/staging cleanup; provider billing
+reconciliation and output reconciliation after UNKNOWN. An ambiguous object write
+may leave a private orphan retained for investigation. No automatic paid retry or
+deletion tries to conceal that uncertainty. See MEDIA-01D and DATA-01.

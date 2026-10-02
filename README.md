@@ -1,4 +1,4 @@
-# Organic Marketing OS — 0.9.0
+# Organic Marketing OS — 0.9.1
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 
@@ -27,7 +27,7 @@ Open http://localhost:3000 and create your own account. Development verification
 - Drafts, scene editing, comments, review/rejection/approval, approval invalidation, campaigns, editorial calendar, search and JSON exports.
 - Queued text strategy/script/scene generation with compatible primary/fallback providers, validation and usage records.
 - **Policy-aware model routing:** task capability, plan, declared quality, shared Redis health, configured dollar caps and comparable-fallback enforcement; ambiguous provider outcomes never start a second paid call.
-- **Generated media:** saved image/voice/video jobs, rights and estimate acceptance, fixed credit reservations, private validated outputs, restart recovery and revision-checked scene attachment. Enabled explicitly by an administrator; no live provider acceptance claimed.
+- **Generated media:** saved image/voice/video jobs, rights and estimate acceptance, plan-aware model availability, tenant-checked source-reference gates, fixed credit reservations, private validated outputs, restart recovery and revision-checked scene attachment. Enabled explicitly by an administrator; no live provider acceptance claimed.
 - **Asset library:** private image/video/audio uploads, validation, previews, tags, search, deduplication, downloads, archive and restore.
 - **Video studio:** uploaded media attached to scenes, actual FFmpeg MP4 rendering, uploaded narration/background music, scene captions, portrait/landscape/square formats, progress/cancel/retry, reusable scene cache, preview and MP4/SRT/thumbnail downloads.
 - Separate approval for the exact rendered content revision, responsive light/dark UI.
@@ -69,5 +69,5 @@ master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
 it is not a database/media restore backup. v0.9 source is published to the
-private main branch at application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b`; GitHub Actions still
+private main branch; the 0.9.1 MEDIA-01D slice is locally verified in this checkpoint and still needs remote publication/CI verification. GitHub Actions still
 failed before jobs, so no native CI pass is claimed.

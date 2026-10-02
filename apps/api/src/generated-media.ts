@@ -29,6 +29,7 @@ import {
 import { AssetsModule, MediaStorage, assertSceneAssets } from "./assets";
 import { generationRequestSchema } from "../../../packages/core/generated-media";
 import {
+  MediaPlan,
   mediaConfiguration,
   mediaPreset,
   validateMediaPreset,
@@ -83,17 +84,48 @@ export class GeneratedMediaController {
     private store: MediaStorage,
     private cache: Cache,
   ) {}
-  @Get("status") async status() {
+  private async mediaPlan(org: string): Promise<MediaPlan> {
+    if (creditPolicy().mode === "self_hosted") return "self_hosted";
+    const subscription = await this.db.billingSubscription.findUnique({
+      where: { organizationId: org },
+      select: { planId: true, status: true },
+    });
+    if (!subscription || !["ACTIVE", "TRIALING"].includes(subscription.status))
+      return "free";
+    return z
+      .enum(["free", "starter", "growth"])
+      .catch("free")
+      .parse(subscription.planId);
+  }
+  private async assertSourceAssets(org: string, ids: string[]) {
+    if (!ids.length) return;
+    const unique = [...new Set(ids)];
+    if (unique.length !== ids.length)
+      throw new BadRequestException("Source assets must be unique.");
+    const rows = await this.db.asset.findMany({
+      where: { organizationId: org, id: { in: unique }, archivedAt: null },
+      select: { id: true, kind: true },
+    });
+    if (rows.length !== unique.length)
+      throw new BadRequestException("Source asset not found.");
+    if (rows.some((asset) => asset.kind !== "IMAGE"))
+      throw new BadRequestException(
+        "Only active image assets can be used as generation references.",
+      );
+  }
+  @Get("status") async status(@Req() req: AuthedRequest) {
+    const plan = await this.mediaPlan(req.organizationId);
     const models = (["image", "video", "voice"] as const).flatMap((kind) => {
       try {
         const config = mediaConfiguration(kind);
-        return config
+        return config && config.allowedPlans.includes(plan)
           ? [
               {
                 kind,
                 model: config.model,
                 estimatedCostUsd: config.estimatedCostUsd,
                 credits: creditPolicy().mode === "credits" ? config.credits : 0,
+                allowedPlans: config.allowedPlans,
                 preset: mediaPreset(kind),
               },
             ]
@@ -104,6 +136,7 @@ export class GeneratedMediaController {
     });
     return {
       models,
+      currentPlan: plan,
       workerOnline: Boolean(
         await this.cache.client.get("media-generation:heartbeat"),
       ),
@@ -112,6 +145,8 @@ export class GeneratedMediaController {
       costNotice:
         "USD estimates are configured by the operator and are not a provider-enforced spending cap. Actual provider cost may remain unknown.",
       sourceAssetsSupported: false,
+      sourceAssetPolicy:
+        "Reference IDs are tenant-checked image assets, but the current OpenAI preset does not send source assets yet.",
       inFlightCancellationSupported: false,
     };
   }
@@ -180,8 +215,10 @@ export class GeneratedMediaController {
       throw new ServiceUnavailableException(
         "This media provider is not configured.",
       );
+    const plan = await this.mediaPlan(org);
+    await this.assertSourceAssets(org, data.request.sourceAssetIds);
     try {
-      validateMediaPreset(data.request, config);
+      validateMediaPreset(data.request, config, plan);
     } catch (e) {
       throw new BadRequestException((e as Error).message);
     }
@@ -267,6 +304,9 @@ export class GeneratedMediaController {
             rightsConfirmed: true,
             estimatedCostUsd: config.estimatedCostUsd,
             credits,
+            plan,
+            allowedPlans: config.allowedPlans,
+            sourceAssetCount: data.request.sourceAssetIds.length,
           },
         },
       });

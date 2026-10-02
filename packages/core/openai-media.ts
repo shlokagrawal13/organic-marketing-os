@@ -2,6 +2,15 @@ import { z } from "zod";
 import { GenerationRequest } from "./generated-media";
 import { MAX_UPLOAD_BYTES } from "./media";
 
+export const mediaPlanSchema = z.enum([
+  "free",
+  "starter",
+  "growth",
+  "self_hosted",
+]);
+export type MediaPlan = z.infer<typeof mediaPlanSchema>;
+const defaultPlans: MediaPlan[] = ["free", "starter", "growth", "self_hosted"];
+
 // No model, price or live provider is enabled implicitly. Prices are operator
 // estimates for the fixed preset, not provider-enforced spending limits.
 export const mediaConfigurationSchema = z
@@ -13,9 +22,22 @@ export const mediaConfigurationSchema = z
     model: z.string().min(1).max(160),
     estimatedCostUsd: z.number().finite().positive().max(100),
     credits: z.number().int().min(1).max(10000),
+    allowedPlans: z.array(mediaPlanSchema).min(1).max(defaultPlans.length),
   })
   .strict();
 export type MediaConfiguration = z.infer<typeof mediaConfigurationSchema>;
+function parsePlans(value: string | undefined): MediaPlan[] {
+  if (!value) return defaultPlans;
+  const plans = [
+    ...new Set(
+      value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  ];
+  return z.array(mediaPlanSchema).min(1).max(defaultPlans.length).parse(plans);
+}
 export function mediaConfiguration(
   kind: GenerationRequest["kind"],
 ): MediaConfiguration | null {
@@ -38,6 +60,7 @@ export function mediaConfiguration(
     model,
     estimatedCostUsd: Number(process.env[`${prefix}_ESTIMATE_USD`]),
     credits: Number(process.env[`${prefix}_CREDITS`]),
+    allowedPlans: parsePlans(process.env[`${prefix}_PLANS`]),
   });
 }
 function assertMediaOrigin(baseUrl: string) {
@@ -52,6 +75,7 @@ function assertMediaOrigin(baseUrl: string) {
 export function validateMediaPreset(
   request: GenerationRequest,
   config: MediaConfiguration,
+  plan: MediaPlan = "self_hosted",
 ) {
   if (
     request.kind !== config.kind ||
@@ -59,6 +83,10 @@ export function validateMediaPreset(
     request.maxCostUsd < config.estimatedCostUsd
   )
     throw new Error("Choose a configured model and accept its estimated cost.");
+  if (!config.allowedPlans.includes(plan))
+    throw new Error(
+      "Configured media model is unavailable for this workspace plan.",
+    );
   if (request.sourceAssetIds.length)
     throw new Error("This provider preset does not support source assets yet.");
 }
