@@ -1,28 +1,28 @@
 {
-  "release": "0.8.0",
-  "verifiedDate": "2026-09-29",
+  "release": "0.9.0",
+  "verifiedDate": "2026-10-01",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
     "Next.js 16.3.5 production build"
   ],
   "passed": {
-    "unit": 19,
-    "httpScenarios": 6,
-    "browserScenarios": 5,
-    "recoveryAndConfigurationScenarios": 3,
-    "schemaMigrations": 11,
-    "directBillingInvoiceCheck": 1
+    "unit": 28,
+    "httpScenarios": 7,
+    "browserScenarios": 6,
+    "recoveryAndConfigurationScenarios": 4,
+    "schemaMigrations": 12
   },
   "environment": {
     "database": "PGlite WASM PostgreSQL socket bridge",
-    "redis": "native Redis 6.2",
+    "redis": "Native Redis 7.2.11; checksum-pinned local source build, no system service installation",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
     "textAI": "isolated compatible HTTP provider fixture",
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
-    "web": "production Next.js server"
+    "web": "production Next.js server",
+    "generatedMedia": "Isolated OpenAI-shape image/base64, WAV and asynchronous video HTTP fixture; no live provider"
   },
   "requirements": {
     "headings": 161,
@@ -35,7 +35,7 @@
   "integrity": {
     "masterSpecificationUnchanged": true,
     "masterSha256": "8379fc4310db9d9225c8a192d7d8919ce708b493f34a486a1b48a40b175bb8b6",
-    "priorEightMigrationsUnchanged": true
+    "priorElevenMigrationsUnchanged": true
   },
   "gatesNotVerified": [
     "Native PostgreSQL concurrency and restore",
@@ -67,7 +67,7 @@
     "ambiguousOutcomeStopsWithoutFallback": true,
     "sharedHealthSelectionContract": true,
     "redisBackedStoreCompiled": true,
-    "nativeRedisExecution": false,
+    "nativeRedisExecution": true,
     "durableRouteFailureMetadata": true,
     "liveProviderQualityCost": false
   },
@@ -79,22 +79,23 @@
     "durableRunStepOutputsAndUsageLink": true,
     "complianceCritiqueAndHumanGate": true,
     "blockedResultCannotBeApproved": true,
-    "freshFullHarnessExecution": false
+    "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "scope": "Durable 18-role mapped agent orchestration with frozen retrieval, critique and human gates",
-    "checks": [
-      "Prisma client generation",
-      "API TypeScript build",
-      "Next.js 16.3.5 production build",
-      "Unit suite: 19 tests passed",
-      "18-role graph mapping and dependency contracts",
-      "Frozen context, missing-evidence disclosure and blocked-guarantee critique",
-      "PGlite populated upgrade/restore through 11 migrations",
-      "Production and full npm audits: 0 advisories"
-    ],
-    "fullVerifierRerun": false,
-    "fullVerifierBlocker": "Attempted; stopped before application scenarios because redis-server is absent (spawn redis-server ENOENT)."
+    "unitTestsPassed": 28,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 4,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "populatedUpgradeRestore": true,
+    "fullLocalVerifierRerun": true,
+    "fullLocalVerifierBlocker": null,
+    "generatedMediaRuntimeIntegrated": true,
+    "generatedMediaUIVerified": true,
+    "liveMediaVerified": false,
+    "finalMediaLayoutTargetedRerun": true
   },
   "priorFullSuite": {
     "release": "0.6.0",
@@ -116,5 +117,19 @@
       "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
       "web": "production Next.js server"
     }
-  }
+  },
+  "generatedMediaEvidence": {
+    "tenantRoleAndRequestReplay": true,
+    "creditReserveSettleReviewAndQueuedRelease": true,
+    "unknownCostNotZero": true,
+    "privateBoundedValidatedIngestion": true,
+    "targetRevisionAndApprovalInvalidation": true,
+    "actualWorkerKillNoPaidReplay": true,
+    "providerReceiptAndPrivateOutputRecovery": true,
+    "generatedImageVoiceToMP4Browser": true,
+    "privateHistoryExport": true,
+    "liveProviderVerified": false,
+    "nativeConcurrencyVerified": false
+  },
+  "dependencyAuditDate": "2026-09-29 (not rerun for 0.9)"
 }

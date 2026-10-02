@@ -73,6 +73,7 @@ model Organization {
   billingSubscription BillingSubscription?
   billingEvents       BillingEvent[]
   billingInvoices     BillingInvoice[]
+  mediaGenerations    MediaGeneration[]
 }
 
 enum ContentStatus {
@@ -349,24 +350,25 @@ enum AssetKind {
 }
 
 model Asset {
-  id             String        @id @default(uuid())
+  id             String            @id @default(uuid())
   organizationId String
-  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   name           String
   kind           AssetKind
   mimeType       String
   bytes          Int
   sha256         String
-  objectKey      String        @unique
+  objectKey      String            @unique
   width          Int?
   height         Int?
   duration       Float?
-  tags           String[]      @default([])
-  rightsNote     String        @default("")
+  tags           String[]          @default([])
+  rightsNote     String            @default("")
   createdBy      String
-  createdAt      DateTime      @default(now())
+  createdAt      DateTime          @default(now())
   archivedAt     DateTime?
   renderInputs   RenderInput[]
+  generations    MediaGeneration[]
 
   @@unique([organizationId, sha256])
   @@index([organizationId, createdAt])
@@ -464,16 +466,17 @@ model CreditEntry {
 }
 
 model CreditReservation {
-  id             String       @id @default(uuid())
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  reference      String
-  credits        Int
-  consumed       Int          @default(0)
-  state          String       @default("RESERVED")
-  createdAt      DateTime     @default(now())
-  resolvedAt     DateTime?
-  job            AIJob?
+  id              String           @id @default(uuid())
+  organizationId  String
+  organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  reference       String
+  credits         Int
+  consumed        Int              @default(0)
+  state           String           @default("RESERVED")
+  createdAt       DateTime         @default(now())
+  resolvedAt      DateTime?
+  job             AIJob?
+  mediaGeneration MediaGeneration?
 
   @@unique([organizationId, reference])
   @@index([organizationId, state])
@@ -560,4 +563,52 @@ model BillingInvoice {
   @@unique([provider, externalInvoiceId])
   @@index([organizationId, periodEnd])
   @@index([subscriptionId, periodEnd])
+}
+
+enum MediaGenerationState {
+  QUEUED
+  SUBMITTING
+  PENDING
+  OUTPUT_READY
+  SUCCEEDED
+  FAILED
+  CANCELED
+  UNKNOWN
+}
+
+model MediaGeneration {
+  id                      String               @id @default(uuid())
+  organizationId          String
+  organization            Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actorId                 String
+  requestKey              String
+  requestHash             String
+  request                 Json
+  configuration           Json
+  state                   MediaGenerationState @default(QUEUED)
+  providerJobId           String?
+  providerRequestId       String?
+  outputKey               String?
+  assetId                 String?
+  asset                   Asset?               @relation(fields: [assetId], references: [id], onDelete: Restrict)
+  creditReservationId     String?              @unique
+  creditReservation       CreditReservation?   @relation(fields: [creditReservationId], references: [id], onDelete: Restrict)
+  quotedCostUsd           Float
+  quotedCredits           Int
+  actualCostUsd           Float?
+  runToken                String?
+  heartbeatAt             DateTime?
+  nextAttemptAt           DateTime             @default(now())
+  cancellationRequestedAt DateTime?
+  attachedRevision        Int?
+  error                   String?
+  startedAt               DateTime?
+  completedAt             DateTime?
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
+
+  @@unique([organizationId, requestKey])
+  @@index([organizationId, createdAt])
+  @@index([state, nextAttemptAt])
+  @@index([state, heartbeatAt])
 }

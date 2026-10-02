@@ -27,6 +27,7 @@ import { AssetsModule } from "./assets";
 import { RendersModule } from "./renders";
 import { OperationsModule } from "./operations";
 import { CreditsModule } from "./credits";
+import { GeneratedMediaModule } from "./generated-media";
 import { creditPolicy } from "../../../packages/core/credits";
 import { stripeBillingConfiguration } from "../../../packages/core/billing";
 
@@ -61,6 +62,7 @@ class HealthController {
     RendersModule,
     OperationsModule,
     CreditsModule,
+    GeneratedMediaModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: AuthGuard }],

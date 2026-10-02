@@ -33,12 +33,12 @@ export default function CreditsWorkspace({
     try {
       const [summary, billingSummary, history, invoiceHistory, access] =
         await Promise.all([
-        api(base + "/credits"),
-        api(base + "/billing"),
-        api(base + "/credits/entries"),
-        api(base + "/billing/invoices"),
-        api("/platform/access"),
-      ]);
+          api(base + "/credits"),
+          api(base + "/billing"),
+          api(base + "/credits/entries"),
+          api(base + "/billing/invoices"),
+          api("/platform/access"),
+        ]);
       setData(summary);
       setBilling(billingSummary);
       setEntries(history.items);
@@ -123,7 +123,8 @@ export default function CreditsWorkspace({
     }
   }
   function money(invoice: any) {
-    if (!invoice.currency || invoice.amountPaid == null) return "Provider total";
+    if (!invoice.currency || invoice.amountPaid == null)
+      return "Provider total";
     return new Intl.NumberFormat(undefined, {
       style: "currency",
       currency: invoice.currency.toUpperCase(),
@@ -265,7 +266,7 @@ export default function CreditsWorkspace({
               </p>
               {billing.policy && (
                 <div className="content-table-wrap">
-                  <table className="content-table">
+                  <table className="content-table" aria-label="Billing policy">
                     <thead>
                       <tr>
                         <th>Policy</th>
@@ -294,7 +295,10 @@ export default function CreditsWorkspace({
                 </p>
               ) : (
                 <div className="content-table-wrap">
-                  <table className="content-table">
+                  <table
+                    className="content-table"
+                    aria-label="Billing invoices"
+                  >
                     <thead>
                       <tr>
                         <th>Period</th>
@@ -316,7 +320,9 @@ export default function CreditsWorkspace({
                           <td>{money(invoice)}</td>
                           <td>
                             {invoice.hostedInvoiceUrl ? (
-                              <a href={invoice.hostedInvoiceUrl}>Open invoice</a>
+                              <a href={invoice.hostedInvoiceUrl}>
+                                Open invoice
+                              </a>
                             ) : invoice.invoicePdfUrl ? (
                               <a href={invoice.invoicePdfUrl}>Open PDF</a>
                             ) : (
@@ -426,7 +432,7 @@ export default function CreditsWorkspace({
               </p>
             ) : (
               <div className="content-table-wrap">
-                <table className="content-table">
+                <table className="content-table" aria-label="Credit history">
                   <thead>
                     <tr>
                       <th>Time</th>

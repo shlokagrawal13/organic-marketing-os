@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { api, uploadAsset } from "./api-client";
+import GeneratedMediaPanel from "./generated-media-panel";
 type Any = Record<string, any>;
 const canWrite = (role: string) =>
   ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role);
@@ -54,6 +55,7 @@ export default function MediaWorkspace({
   );
 }
 function AssetLibrary({ base, role }: { base: string; role: string }) {
+  const [showGeneration, setShowGeneration] = useState(false);
   const [items, setItems] = useState<Any[]>([]),
     [total, setTotal] = useState(0),
     [status, setStatus] = useState<Any | null>(null),
@@ -177,7 +179,26 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
           this page.
         </div>
       )}
-      {canWrite(role) && (
+      <div className="upload-action media-mode" aria-label="Add media">
+        <button
+          className={"button" + (!showGeneration ? " primary" : "")}
+          aria-pressed={!showGeneration}
+          onClick={() => setShowGeneration(false)}
+        >
+          Upload media
+        </button>
+        <button
+          className={"button" + (showGeneration ? " primary" : "")}
+          aria-pressed={showGeneration}
+          onClick={() => setShowGeneration(true)}
+        >
+          Generate with AI
+        </button>
+      </div>
+      {showGeneration && (
+        <GeneratedMediaPanel base={base} role={role} onAssetsChanged={load} />
+      )}
+      {canWrite(role) && !showGeneration && (
         <form className="panel asset-upload" onSubmit={upload}>
           <div className="upload-intro">
             <div className="empty-icon">

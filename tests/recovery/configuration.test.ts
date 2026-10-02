@@ -10,6 +10,8 @@ test(
     const env = {
       ...process.env,
       API_PORT: "4001",
+      OPENAI_MEDIA_API_KEY: "",
+      MEDIA_GENERATION_ENABLED: "false",
       AI_PRIMARY_KEY: "",
       AI_PRIMARY_MODEL: "",
       AI_PRIMARY_URL: "",
@@ -50,6 +52,31 @@ test(
         return { status: r.status, body: await r.json() };
       };
       assert.equal((await call("/ai/status")).body.configured, false);
+      assert.deepEqual(
+        (await call("/media-generations/status")).body.models,
+        [],
+      );
+      assert.equal(
+        (
+          await call("/media-generations", "POST", {
+            requestKey: randomUUID(),
+            maxCredits: 0,
+            request: {
+              kind: "image",
+              model: "unconfigured",
+              prompt: "Do not submit",
+              rightsConfirmed: true,
+              rightsNote: "Test-only rights",
+              maxCostUsd: 1,
+            },
+          })
+        ).status,
+        503,
+      );
+      assert.equal(
+        await db.mediaGeneration.count({ where: { organizationId: orgId } }),
+        0,
+      );
       assert.equal(
         (
           await call("/ai/jobs", "POST", {

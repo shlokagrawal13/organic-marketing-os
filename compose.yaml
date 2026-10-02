@@ -101,6 +101,23 @@ services:
     mem_limit: 1536m
     cpus: 2
     restart: unless-stopped
+  media-worker:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://marketing:${POSTGRES_PASSWORD}@postgres:5432/marketing?schema=public
+      REDIS_URL: redis://redis:6379
+      S3_ENDPOINT: http://storage:9000
+      S3_AUTO_CREATE_BUCKET: "true"
+    command: ["npm", "run", "start:media"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+      storage: { condition: service_started }
+    mem_limit: 1024m
+    cpus: 1
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   redis_data:

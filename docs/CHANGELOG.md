@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.9.0 — 2026-10-01
+
+- Added twelfth migration and tenant-scoped durable generated-media API/worker for OpenAI image, voice and asynchronous video contracts.
+- Added operator estimates, accepted fixed credit reservations, queued-cancel release and uncertain-outcome review without automatic paid replay.
+- Added bounded private ingestion, media validation/provenance, saved receipt/output recovery and revision-checked scene attachment with approval invalidation.
+- Added Asset library generation UI, previews/downloads/history, media worker health and sanitized record export.
+- Passed 28 unit, 7 HTTP, 6 browser and 4 recovery/configuration scenarios, production builds and 12-migration populated PGlite upgrade/restore. No live provider call or real payment.
+- Extended media providers/references/reconciliation and native/live acceptance remain open. GitHub upload was rejected by automatic approval review for missing explicit source-export authorization; v0.9 remains local.
+
+## 0.8.1 — 2026-09-29
+
+- Recovered and verified the latest private source checkpoint. Added an unprivileged checksum-pinned Redis test installer and explicit harness startup diagnostics.
+- Named billing/credit tables for assistive technology and scoped the credit-history browser assertion to its ledger table.
+- Added MEDIA-01A generated image/video/voice lifecycle contracts and six tests for duplicate submission, ambiguous acceptance, costs, cancel races, polling and targeted rights/tenant input. Runtime integration remains MEDIA-01B/C.
+- Fresh checks: 25 unit, 6 HTTP, 5 browser and 3 recovery/configuration scenarios pass; API/web builds, 11 migrations, populated PGlite upgrade/restore and both npm audits pass with zero advisories. Native PostgreSQL/Compose, live providers and master acceptance remain open.
+
 ## 0.8.0 — 2026-09-29
 
 - Added a versioned task-specific orchestration graph with explicit contracts covering all 18 master agent roles; roles are executable durable steps rather than names embedded in a prompt.

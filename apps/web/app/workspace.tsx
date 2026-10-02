@@ -1138,9 +1138,10 @@ export default function Workspace({
                     </div>
                   </div>
                   <div className="alert">
-                    AI providers are configured by your administrator. Social
-                    publishing, generated media and billing integrations are not
-                    available in this build.
+                    AI providers and billing are configured by your
+                    administrator. Generated media is available when its
+                    provider is enabled. Social publishing and external
+                    analytics are still pending.
                   </div>
                   <section className="panel connection-list">
                     <div>
@@ -1150,8 +1151,8 @@ export default function Workspace({
                       <div>
                         <h3>Media library & video rendering</h3>
                         <p>
-                          Upload your media, attach it to scenes, and render an
-                          MP4 for review and download.
+                          Upload or generate media, attach it to scenes, and
+                          render an MP4 for review and download.
                         </p>
                       </div>
                       <button className="button" onClick={() => go("assets")}>
@@ -1160,7 +1161,7 @@ export default function Workspace({
                     </div>
                     {[
                       "AI text generation",
-                      "Image & video generation",
+                      "Image, video & voice generation",
                       "Social publishing",
                       "Performance analytics",
                       "Stripe billing",
@@ -1180,13 +1181,19 @@ export default function Workspace({
                           <p>
                             {i === 0
                               ? "Text generation supports a primary and fallback provider; configure server credentials, model and rates."
-                              : i === 2
-                                ? "Requires official platform authorization and a publishing adapter."
-                                : "Not implemented in the current foundation."}
+                              : i === 1
+                                ? "Generate private media from the Asset library when your administrator enables a model and price."
+                                : i === 2
+                                  ? "Requires official platform authorization and a publishing adapter."
+                                  : i === 4
+                                    ? "Plans, credit history and invoices are available with configured billing credentials."
+                                    : "External analytics connectors are not implemented yet."}
                           </p>
                         </div>
                         <span className="pill">
-                          {i === 0 ? "Server configuration" : "Not available"}
+                          {[0, 1, 4].includes(i)
+                            ? "Server configuration"
+                            : "Not available"}
                         </span>
                       </div>
                     ))}

@@ -31,6 +31,7 @@ test("workspace health, complete export download and responsive operations UI", 
     "Available",
     "Available",
     "Available",
+    "Available",
   ]);
   await page.screenshot({
     path: "test-results/workspace-health-desktop.png",

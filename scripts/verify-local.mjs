@@ -7,10 +7,14 @@ import {
   createWriteStream,
   writeFileSync,
   appendFileSync,
+  existsSync,
 } from "node:fs";
+import { resolve } from "node:path";
 import { createServer } from "node:http";
 import { SMTPServer } from "smtp-server";
 import { startTestStorage } from "./test-storage.mjs";
+import { generationFixture } from "./test-generation-provider.mjs";
+const mediaFixture = generationFixture();
 try {
   process.loadEnvFile(".env");
 } catch {}
@@ -47,6 +51,7 @@ const smtp = new SMTPServer({
 });
 const processes = [];
 let storage;
+let processFailure;
 function start(cmd, args, log, env = process.env) {
   const child = spawn(cmd, args, {
     env,
@@ -56,6 +61,9 @@ function start(cmd, args, log, env = process.env) {
   child.stdout.pipe(file);
   child.stderr.pipe(file);
   processes.push(child);
+  child.on("error", (error) => {
+    processFailure = new Error(`Unable to start ${log}: ${error.message}`);
+  });
   return child;
 }
 function run(cmd, args) {
@@ -71,6 +79,12 @@ function run(cmd, args) {
   });
 }
 const native = process.argv.includes("--native");
+const uiOnly = process.argv.includes("--ui-only");
+const uiSpec = process.argv
+  .find((arg) => arg.startsWith("--ui-spec="))
+  ?.slice(10);
+if (uiSpec && !/^[a-z-]+\.spec\.ts$/.test(uiSpec))
+  throw new Error("Select a test filename such as generated-media.spec.ts.");
 process.env.MOS_TEST_DATABASE = native ? "native" : "pglite";
 if (native && process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
@@ -170,6 +184,19 @@ const fixtureServer = createServer(async (req, res) => {
 });
 let failed = false;
 try {
+  const localRedis = resolve(".local/test-tools/redis-7.2.11/src/redis-server");
+  const redisBinary =
+    process.env.TEST_REDIS_BINARY ||
+    (existsSync(localRedis) ? localRedis : "redis-server");
+  if (!native) {
+    try {
+      await run(redisBinary, ["--version"]);
+    } catch (error) {
+      throw new Error(
+        `Redis test runtime is unavailable: ${error.message}. Install redis-server, set TEST_REDIS_BINARY, or run python3 scripts/install_test_redis.py.`,
+      );
+    }
+  }
   storage = await startTestStorage();
   mkdirSync(".local/media-fixtures", { recursive: true });
   await run(process.env.FFMPEG_PATH || "ffmpeg", [
@@ -269,7 +296,7 @@ try {
   process.env.AI_FALLBACK_CAPABILITIES = "text,json,strategy,content,scene";
   if (!native)
     start(
-      process.env.TEST_REDIS_BINARY || "redis-server",
+      redisBinary,
       [
         "--bind",
         "127.0.0.1",
@@ -282,10 +309,27 @@ try {
       ],
       "redis",
     );
+  process.env.MOS_ISOLATED_TEST_HARNESS = "true";
+  await new Promise((r) => mediaFixture.listen(4998, "127.0.0.1", r));
+  process.env.MEDIA_GENERATION_ENABLED = "true";
+  process.env.OPENAI_MEDIA_API_KEY = "isolated-media-fixture";
+  process.env.OPENAI_MEDIA_BASE_URL = "http://127.0.0.1:4998/v1";
+  for (const kind of ["IMAGE", "VIDEO", "VOICE"]) {
+    process.env[`MEDIA_${kind}_MODEL`] = `fixture-${kind.toLowerCase()}`;
+    process.env[`MEDIA_${kind}_ESTIMATE_USD`] = "0.1";
+    process.env[`MEDIA_${kind}_CREDITS`] = "2";
+  }
   await run("node_modules/.bin/prisma", ["migrate", "deploy"]);
   start("node", ["dist/apps/api/src/main.js"], "api");
   process.env.TEST_AI_WORKER_PID = String(
     start("node", ["dist/apps/api/src/worker.js"], "worker").pid,
+  );
+  process.env.TEST_MEDIA_WORKER_PID = String(
+    start(
+      "node",
+      ["dist/apps/api/src/media-generation-worker.js"],
+      "media-worker",
+    ).pid,
   );
   process.env.TEST_RENDER_WORKER_PID = String(
     start("node", ["dist/apps/api/src/render-worker.js"], "render-worker").pid,
@@ -310,6 +354,7 @@ try {
   );
   async function ready(url) {
     for (let i = 0; i < 60; i++) {
+      if (processFailure) throw processFailure;
       try {
         if ((await fetch(url)).ok) return;
       } catch {}
@@ -319,13 +364,14 @@ try {
   }
   await ready("http://127.0.0.1:4000/api/health");
   await ready("http://localhost:3000");
-  await run("node", [
-    "--import",
-    "tsx",
-    "--test",
-    "--test-concurrency=1",
-    "tests/integration/*.test.ts",
-  ]);
+  if (!uiOnly)
+    await run("node", [
+      "--import",
+      "tsx",
+      "--test",
+      "--test-concurrency=1",
+      "tests/integration/*.test.ts",
+    ]);
   if (!process.argv.includes("--skip-ui")) {
     const { readFileSync, writeFileSync, chmodSync } = await import("node:fs");
     const { brotliDecompressSync } = await import("node:zlib");
@@ -337,19 +383,25 @@ try {
     );
     chmodSync(".local/chromium", 0o755);
     process.env.CHROMIUM_EXECUTABLE_PATH = process.cwd() + "/.local/chromium";
-    await run("node_modules/.bin/playwright", ["test"]);
+    await run("node_modules/.bin/playwright", [
+      "test",
+      ...(uiSpec ? [uiSpec] : []),
+    ]);
   }
-  await run("node", [
-    "--import",
-    "tsx",
-    "--test",
-    "--test-concurrency=1",
-    "tests/recovery/*.test.ts",
-  ]);
+  if (!uiOnly)
+    await run("node", [
+      "--import",
+      "tsx",
+      "--test",
+      "--test-concurrency=1",
+      "tests/recovery/*.test.ts",
+    ]);
   console.log(
-    native
-      ? "Verification passed against configured native PostgreSQL and Redis."
-      : "Local verification passed. Database: PGlite WASM PostgreSQL; Redis: native test binary.",
+    uiOnly
+      ? `Selected UI verification passed (${uiSpec || "all browser specs"}); HTTP/recovery suites skipped.`
+      : native
+        ? "Verification passed against configured native PostgreSQL and Redis."
+        : "Local verification passed. Database: PGlite WASM PostgreSQL; Redis: native test binary.",
   );
 } catch (e) {
   failed = true;
@@ -358,6 +410,8 @@ try {
   for (const p of processes) p.kill("SIGTERM");
   await new Promise((r) => setTimeout(r, 500));
   for (const p of processes) if (p.exitCode === null) p.kill("SIGKILL");
+  mediaFixture.closeAllConnections();
+  mediaFixture.close();
   fixtureServer.close();
   smtp.close();
   await storage?.close();

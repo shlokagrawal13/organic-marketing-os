@@ -1,53 +1,69 @@
-# Project status — Durable agent orchestration milestone 0.8.0
+# Project status — Organic Marketing OS 0.9.0
 
-## Current state
+The existing Next.js/NestJS/PostgreSQL/Redis/private-storage architecture now includes
+an executable generated-media workflow. **The full V3 product is still incomplete.**
+Provider fixtures and passing local tests do not certify production readiness.
 
-Account/brand/content/planning, private assets, actual uploaded-media video rendering, workspace health/export, policy-aware text routing, durable agent orchestration, text-job credit accounting, signed billing events, Stripe contract routes and durable billing invoice views are implemented and locally verified. The full supplied V3 platform is **not finished or production-ready**. Missing modules require engineering as well as later live access.
+## Current implementation
 
-## Implemented
+- Accounts/sessions/email, organizations/six roles/invitations, Brand Brain/Creative
+  DNA versions, drafts/campaigns/calendar/comments/search, human review and revision
+  protection remain implemented.
+- Text tasks use policy-aware routing and a durable graph mapping all 18 agent
+  roles. Research, publishing and performance roles disclose absent external data.
+- Private uploaded and generated image/video/audio assets feed real FFmpeg rendering,
+  narration, captions, thumbnails and scene caching. Render approval remains tied
+  to the exact content revision.
+- Immutable credits, plans/subscriptions, signed billing events, official Stripe
+  request/webhook contracts and invoice views remain locally implemented. Actual
+  Stripe sandbox acceptance is outstanding.
+- Version 0.9 adds an additive twelfth migration, scoped media-generation API,
+  dedicated worker, OpenAI image/speech/video HTTP adapters, accepted estimates,
+  fixed credit reservations, cancellation records, unknown-outcome review,
+  private output validation/provenance and explicit scene attachment.
+- Asset library → Generate with AI provides consent/cost gates, saved job history,
+  previews/downloads and attachment controls. Workspace health and private record
+  export include the new workflow. See GENERATED_MEDIA.md and UPGRADE_0.9.md.
 
-The architecture remains Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage and a separate FFmpeg render worker. Eleven additive migrations preserve the ten previous migrations and original master specification.
+## Verification and limits
 
-Existing capabilities include accounts/sessions/email, organizations/six roles/invitations, Brand Brain/Creative DNA versions, drafts/campaigns/calendar/comments/search, human review and approval invalidation, queued compatible text generation with frozen brand context, private uploads and actual MP4/audio/captions/thumbnail rendering, scene caching/cancel/retry, worker recovery and private paginated workspace record export.
+Current exact evidence is in `docs/qa/verification-summary.json` and
+`docs/VERIFICATION_REPORT.md`; unfinished test runs are not passes. The test database
+is PGlite WASM PostgreSQL with serialized requests, Redis is native 7.2.11, object
+storage is private S3Proxy 4.1.1 and media validation/rendering uses real FFmpeg.
+Provider/SMTP/Stripe responses come only from isolated test fixtures.
 
-The 0.4 ledger retains immutable entries, atomic reservations/settlement and platform credit controls. Version 0.5 added plans, subscriptions and the durable billing inbox. Version 0.6 added official Stripe SDK configuration, hosted Checkout/Portal APIs and UI, strict plan-price mapping, raw Stripe signature verification, subscription/paid-invoice mapping, mode enforcement and redirect-host validation. The latest local increment adds durable `BillingInvoice` records, invoice list/detail APIs, invoice visibility in Credits & usage and explicit refund/dispute/fraud/proration policy. Stripe contracts passed against an isolated fixture; no real Stripe account or payment was used.
+Generated-media live quality, model access, actual charges and signed-redirect
+behavior remain unverified. Source-image editing, additional provider options,
+plan-specific media routing and automatic output/orphan reconciliation still need
+engineering. Media generation is opt-in with no default key, model or price. USD
+estimates do not impose a provider spending limit. No paid AI request was made.
 
-Version 0.7 adds task capability, declared quality, workspace-plan and estimated-cost routing; strategy/scene require premium providers. Comparable fallback is allowed only after a definitive rejection. Ambiguous transport, invalid successful responses and schema-invalid output stop without a second potentially billable call. Redis-backed provider health is shared across workers, and route/retry/failure/request-ID metadata is durable and visible in usage history.
+Native PostgreSQL concurrency/restore, Docker/MinIO, cross-store recovery, live
+providers/payments, cloud mail/TLS, broader security/load/accessibility and full
+master acceptance remain open. The 161-row requirement matrix retains all scope;
+Partial labels are not completion percentages.
 
-Version 0.8 adds versioned strategy/content/scene DAGs covering all 18 specified agent roles. Deterministic context agents use the queue-time Brand Brain, Creative DNA and approved-content snapshot; one task owner performs the validated model call; compliance and orchestrator critique persist findings; an OWNER/ADMIN/EDITOR human gate controls downstream draft/scene use. Durable run/step states, outputs, dependencies and provider-usage linkage are inspectable and exportable. External research, publishing and performance roles explicitly remain unavailable rather than fabricating data.
+## Source and publication
 
-## Executed evidence — 2026-09-29
+Canonical private repository: `shlokagrawal13/organic-marketing-os`, branch `main`.
+Last verified remote head: `446c832ee2da2b7584e5213db925d1ed075388c0` (v0.8 plus
+publication records). The recovered v0.8.1 local checkpoint is commit
+`73359b0`; later work is identified by local `git rev-parse HEAD` and the manifest.
+**Version 0.9 has not been uploaded.** Automatic approval review rejected the
+GitHub source upload because it required explicit authorization for that payload
+and destination. Local implementation continued; the rejection was not bypassed.
+The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
-The 0.8 increment passed Prisma generation, **19 unit tests**, API TypeScript production compile, Next.js 16.3.5 production build, populated PGlite upgrade/restore through all eleven migrations, and production/full npm audits with zero known advisories. The full verifier remains unable to start application scenarios because `redis-server` is absent (`spawn redis-server ENOENT`). Fresh worker/API/browser execution of the new graph is therefore not claimed in this runtime; the updated integration/browser scenarios are retained for the native/full harness.
+The last observed remote Actions run, `36623211633`, failed before jobs started.
+Earlier authenticated diagnostics identified an account billing gate. Billing UI
+was not rechecked this turn. These records do not diagnose ChatGPT buffering.
 
-2026-09-28 invoice increment checks: Prisma generation, API TypeScript build, direct web TypeScript, unit suite, direct PGlite/Prisma invoice processing and populated upgrade/fresh PGlite restore passed with nine migrations applied. The full local verifier could not rerun in this runtime because `redis-server` is unavailable and local S3Proxy/localhost listeners hit environment restrictions.
+## Next work
 
-Earlier 2026-09-27 evidence: API/Next.js builds, Prisma generation/validation and formatting checks passed. **12 unit, 6 broad HTTP, 5 production-browser and 3 recovery/configuration scenarios passed**, with eight migrations applied. Populated upgrade/fresh PGlite restore preserved existing records and the immutable ledger. Runtime and full npm audits each reported **0 known advisories**. This npm result does not audit the Java S3Proxy dependency tree or certify application security.
-
-The isolated environment used PGlite WASM PostgreSQL, native Redis 6.2, S3Proxy, real FFmpeg/ffprobe, local SMTP capture and HTTP text fixtures. No live AI output, social publication or payment was exercised. See VERIFICATION_REPORT.md and docs/qa for exact scope. The user's Windows installation was not inspected or upgraded remotely.
-
-## Access and open gates
-
-The private `shlokagrawal13/organic-marketing-os` main branch contains the verified v0.8 orchestration increment at application commit `bce6fc27daa6869d5464d160e2dda083a2ba4d2d` with tree `a6db020badb17a32617da54ccc6222afa0c35356`. Actions run `36622686659` ended `startup_failure` with zero jobs; its authenticated annotation says recent account payments have failed or the spending limit needs attention. See `docs/qa/github-publication.json`.
-
-Docker/native PostgreSQL remain unavailable here; native package installation again failed on runtime privilege operations. PGlite serializes DB requests. Native locking/restore, actual Compose/MinIO, cloud storage/mail/TLS, live provider quality/cost, full security/load/accessibility and master acceptance remain open.
-
-Pending implementation includes actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; generated image/video/voice; advanced editing; sourced research/trends/competitors/SEO/community; official OAuth/publishing; external analytics/growth; full platform administration; notifications/telemetry; retention/deletion and broader collaboration UX. TASK_BOARD.md retains all groups and REQUIREMENTS_MATRIX.md all 161 headings.
-
-## Continue
-
-Read START_HERE.md and PROJECT_CHECKPOINT.json. Continue MEDIA-01 locally. AGENTS-01 and MODEL-01 local contracts are complete; actual live model quality/cost remains AI-LIVE-01 and native Redis/PostgreSQL remains NATIVE-01. Actual Stripe sandbox acceptance needs authorized test configuration.
-
-## v0.5 private source publication — 2026-09-27.1
-
-Published verified source commit `0281511e9113d4bd2470b38529bc30d4f5b14a60` with tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` on private `main`. The remote tree equals the locally tested tree byte-for-byte at Git blob level. Actions run 36305587276 ended `startup_failure` with zero jobs, so no native test result is claimed.
-
-## Private repository publication — 2026-09-26.6
-
-Verified v0.4 source was uploaded to https://github.com/shlokagrawal13/organic-marketing-os, private repository ID 1389748509, branch main, source commit 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. All 150 uploaded paths, Git blob hashes and modes match the local checkpoint; tree beb2d18a44759a3bf4afb8e70ea0717c89d54a20. History starts at the independent README commit 40e552455688260db0c878b162535e41bb39bfb6. The unrelated OrganicMarketing project is excluded.
-
-Native CI was triggered by the source commit: https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36269190288. GitHub returned completed/startup_failure with an empty job list, so no native tests ran. One retry request returned HTTP 403, "This workflow run cannot be retried." Generic local YAML parsing succeeded, but that does not verify GitHub's workflow validation or explain the startup failure. The specific startup reason is still unknown; do not assume a billing, permission or application defect.
-
-The connector cannot expose the relevant startup diagnostics through its supported endpoints. Browser inspection found GitHub signed out and the private run unavailable; secure sign-in is needed to inspect the detailed run error. Preserve the uploaded source and resume this diagnostic after authenticated access. Fix the concrete reported cause, rerun native tests and record real results. Do not mark native verification complete.
-
-This follow-up changes continuation records only. The last source commit above identifies the verified application import; resolve the latest documentation commit from the main ref or git rev-parse HEAD. Source is now maintained in this Git repository; older ZIP checkpoints may be stale. Local Git objects were reconstructed from remote metadata and verified by their exact SHA, and the uploaded tree was independently compared before setting the local main/upstream refs.
+Continue MEDIA-01D: source-image/editing contracts, plan-aware media routing and
+safe provider-output reconciliation. MEDIA-LIVE-01 tracks authorized provider
+acceptance separately. Then continue advanced editing, sourced research, official
+publishing, analytics/growth, administration, notifications, data lifecycle and
+broader collaboration UX from TASK_BOARD.md. Do routine local work independently;
+request only essential external access or concrete authorization.

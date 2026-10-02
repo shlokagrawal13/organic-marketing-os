@@ -108,6 +108,34 @@ try {
     db.query('DELETE FROM "CreditEntry" WHERE id=$1', [creditEntry]),
     /immutable/,
   );
+  const mediaJob = randomUUID();
+  const mediaRequest = {
+    kind: "video",
+    model: "restore-fixture",
+    prompt: "Preserved generated video request",
+    rightsConfirmed: true,
+    rightsNote: "Synthetic fixture",
+    maxCostUsd: 0.1,
+    sourceAssetIds: [],
+  };
+  await db.query(
+    'INSERT INTO "MediaGeneration" (id,"organizationId","actorId","requestKey","requestHash",request,configuration,state,"providerJobId","quotedCostUsd","quotedCredits","updatedAt") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,0.1,0,now())',
+    [
+      mediaJob,
+      creditOrg,
+      user,
+      randomUUID(),
+      "restore-media-hash",
+      JSON.stringify(mediaRequest),
+      JSON.stringify({
+        provider: "openai",
+        kind: "video",
+        model: "restore-fixture",
+      }),
+      "PENDING",
+      "video_restore_fixture",
+    ],
+  );
   const backup = await db.dumpDataDir();
   await db.query('DELETE FROM "Organization" WHERE id=$1', [org]);
   assert.equal(
@@ -157,6 +185,16 @@ try {
     (await restored.query('SELECT count(*)::int AS n FROM "AIJob"')).rows[0].n,
     1,
   );
+  const savedMedia = (
+    await restored.query(
+      'SELECT request,state,"providerJobId","actualCostUsd" FROM "MediaGeneration" WHERE id=$1',
+      [mediaJob],
+    )
+  ).rows[0];
+  assert.deepEqual(savedMedia.request, mediaRequest);
+  assert.equal(savedMedia.state, "PENDING");
+  assert.equal(savedMedia.providerJobId, "video_restore_fixture");
+  assert.equal(savedMedia.actualCostUsd, null);
   await mkdir(".local", { recursive: true });
   const result = {
     passed: true,
@@ -172,6 +210,7 @@ try {
       .digest("hex"),
     nativePostgresRestoreVerified: false,
     creditLedgerRestoreAndImmutabilityVerified: true,
+    generatedMediaRequestAndProviderReceiptRestored: true,
   };
   await writeFile(
     ".local/upgrade-restore-evidence.json",

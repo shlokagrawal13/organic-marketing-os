@@ -13,7 +13,7 @@ assert.equal(
 const children: ChildProcess[] = [];
 const users: string[] = [],
   orgs: string[] = [];
-function restart(kind: "worker" | "render-worker") {
+function restart(kind: "worker" | "render-worker" | "media-generation-worker") {
   const child = spawn(process.execPath, [`dist/apps/api/src/${kind}.js`], {
     env: process.env,
     stdio: ["ignore", "pipe", "pipe"],
@@ -267,5 +267,138 @@ test(
         .status,
       "FAILED",
     );
+  },
+);
+
+test(
+  "media worker restart preserves accepted video IDs and private outputs, and never replays ambiguous paid submissions",
+  { timeout: 70000 },
+  async () => {
+    await kill(Number(process.env.TEST_MEDIA_WORKER_PID), "SIGKILL");
+    const org = await db.organization.create({
+      data: { name: "Media recovery fixture" },
+    });
+    orgs.push(org.id);
+    const a = await actor(org.id);
+    users.push(a.id);
+    const root = `/workspaces/${org.id}/media-generations`;
+    const create = async (kind: string, prompt: string) =>
+      a.call(root, "POST", {
+        requestKey: randomUUID(),
+        maxCredits: 0,
+        request: {
+          kind,
+          model: `fixture-${kind}`,
+          prompt,
+          rightsConfirmed: true,
+          rightsNote: "Isolated recovery fixture",
+          maxCostUsd: 0.1,
+        },
+      });
+    const prompt = "HOLD: media worker killed after acceptance";
+    const queued = await create("image", prompt);
+    assert.equal(queued.status, 201);
+    const reservation = await db.$transaction(async (tx) => {
+      await grantCredits(
+        tx,
+        org.id,
+        5,
+        randomUUID(),
+        "Synthetic media recovery credit grant",
+        a.id,
+      );
+      const held = await reserveCredits(
+        tx,
+        org.id,
+        `media:${queued.body.id}`,
+        2,
+        a.id,
+      );
+      await tx.mediaGeneration.update({
+        where: { id: queued.body.id },
+        data: { creditReservationId: held.id, quotedCredits: 2 },
+      });
+      return held;
+    });
+    let running = restart("media-generation-worker");
+    await until(
+      async () => (await fetch("http://127.0.0.1:4998/stats")).json(),
+      (r) => r[prompt] === 1,
+    );
+    await kill(running.pid!, "SIGKILL");
+    await db.mediaGeneration.update({
+      where: { id: queued.body.id },
+      data: { heartbeatAt: new Date(Date.now() - 120000) },
+    });
+    running = restart("media-generation-worker");
+    const unknown = await until(
+      () =>
+        db.mediaGeneration.findUniqueOrThrow({ where: { id: queued.body.id } }),
+      (r) => r.state === "UNKNOWN",
+    );
+    assert.equal(unknown.assetId, null);
+    assert.equal(unknown.actualCostUsd, null);
+    assert.equal(
+      (
+        await db.creditReservation.findUniqueOrThrow({
+          where: { id: reservation.id },
+        })
+      ).state,
+      "REVIEW",
+    );
+    const video = await create("video", "Recovery video receipt");
+    assert.equal(video.status, 201);
+    const pending = await until(
+      () =>
+        db.mediaGeneration.findUniqueOrThrow({ where: { id: video.body.id } }),
+      (r) => r.state === "PENDING",
+    );
+    assert.ok(pending.providerJobId);
+    await kill(running.pid!, "SIGKILL");
+    // Expire any acquired poll lease after the actual kill.
+    await db.mediaGeneration.update({
+      where: { id: video.body.id },
+      data: { heartbeatAt: new Date(Date.now() - 120000) },
+    });
+    running = restart("media-generation-worker");
+    const complete = await until(
+      () =>
+        db.mediaGeneration.findUniqueOrThrow({ where: { id: video.body.id } }),
+      (r) => r.state === "SUCCEEDED",
+      25000,
+    );
+    assert.equal(complete.providerJobId, pending.providerJobId);
+    await kill(running.pid!, "SIGKILL");
+    const ready = await create("image", "Never submit saved private output");
+    assert.equal(ready.status, 201);
+    const { ObjectStore } = await import("../../packages/core/object-store");
+    const { readFile } = await import("node:fs/promises");
+    const store = new ObjectStore(),
+      key = `${org.id}/generated/${ready.body.id}/${randomUUID()}`;
+    await store.put(
+      key,
+      await readFile(".local/media-fixtures/product.png"),
+      "image/png",
+    );
+    await db.mediaGeneration.update({
+      where: { id: ready.body.id },
+      data: {
+        state: "OUTPUT_READY",
+        outputKey: key,
+        startedAt: new Date(),
+        runToken: randomUUID(),
+        heartbeatAt: new Date(Date.now() - 120000),
+      },
+    });
+    restart("media-generation-worker");
+    await until(
+      () =>
+        db.mediaGeneration.findUniqueOrThrow({ where: { id: ready.body.id } }),
+      (r) => r.state === "SUCCEEDED",
+    );
+    const stats = await (await fetch("http://127.0.0.1:4998/stats")).json();
+    assert.equal(stats[prompt], 1);
+    assert.equal(stats["Recovery video receipt"], 1);
+    assert.equal(stats["Never submit saved private output"], undefined);
   },
 );

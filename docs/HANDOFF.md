@@ -1,86 +1,49 @@
-# Project handoff — 2026-09-29.2
+# Project handoff — 0.9.0 / 2026-10-01
 
-## User intent and working agreement
+The user asked to continue the stopped Organic Marketing OS build without losing
+prior work. The exact private remote base was restored, v0.8.1 was verified and
+committed locally, and work progressed into durable generated media and its UI.
 
-Build the supplied AI Marketing OS V3 into a fully working product. The user wants autonomous implementation and verification, including browser inspection, rather than repeatedly being asked to test. The user clarified that unavailable API keys meant AI-provider keys for the product. They want a new chat/account to continue from saved files without retelling the project. Prefer concise Hinglish updates, exact evidence and honest missing-feature reporting.
+## Preserve
 
-This is a source continuation checkpoint for version 0.8.0, not a claim of completed production software. The user connected the new private project repository and asked for continued autonomous real implementation/testing. No live paid provider was supplied.
+- Architecture and full master spec; twelve additive migrations, all previous SQL
+  retained. User credentials, runtime database and media were not accessed.
+- Existing accounts/brand/content/review/campaigns/media/rendering, credits/billing,
+  model-routing and agent-graph functionality.
+- No invented marketing metrics. Synthetic provider outputs exist only in tests.
+- No automatic paid retry after UNKNOWN or an interrupted submit boundary.
+- Separate local fixture, native infrastructure, live-provider and full-product
+  acceptance claims. Exact results live in VERIFICATION_REPORT.md and qa JSON.
 
-## Completed milestones
+## Version 0.9 changes
 
-| Version | Implemented and locally exercised |
-|---|---|
-| 0.1 | Next/Nest/Postgres/Redis foundation; accounts/session/email; organizations/roles/team; brand/DNA revisions; drafts/campaigns/calendar/search/review/approval; queued compatible text tasks and usage records |
-| 0.2 | Private validated assets; immutable uploaded-media render jobs; real MP4/audio/SRT/thumbnail; aspect/resolution controls; scene cache, cancel/retry and render approval; mobile/light/dark UI |
-| 0.3 | AI context freezing, request identity, queue-loss reconciliation and no replay of interrupted calls; fallback/accounting fixes; runtime dependency patches; workspace health and private paginated record export; expanded recovery/no-key/role/collaboration tests |
-| 0.4 | Immutable product-credit accounting, quote/reserve/settle/cancel/review, verified platform credit authority, Credits & usage UI, S3Proxy replacement and zero npm advisories; task-output provider-health fix |
-| 0.5 | Database plans/entitlements/subscriptions; signed raw-body event inbox; duplicate and out-of-order protection; one-time monthly grants and refund/expiry reversals; tenant plan API |
-| 0.6 | Official Stripe SDK configuration; hosted Checkout/Portal API and UI; plan-price mapping; raw Stripe signatures; subscription/paid-invoice mapping; test/live separation |
-| 0.6.1 | Durable billing invoices, tenant invoice list/detail APIs, invoice UI and explicit refund/dispute/fraud/proration policy |
-| 0.7 | Capability/quality/plan/cost-aware text routing, shared Redis health integration, comparable fallback policy and durable route/failure evidence |
-| Continuity | Start/resume instructions, task board, access matrix, machine-readable state, source integrity packer and sanitized evidence |
+MediaGeneration persistence and OpenAI image/voice/video adapters now run through
+scoped APIs, fixed credit reservations, BullMQ dispatch and private ingestion.
+A saved provider ID permits video polling after restart; saved private bytes permit
+ingestion recovery. Submission ambiguity keeps credits for review. Byte/magic/
+ffprobe checks, quota and tenant dedup run before asset completion. Scene attachment
+is explicit and revision checked, preserves other scenes and resets approval.
 
-## Actual verification boundary
+The Asset library generation panel includes configuration availability, preset,
+rights note, estimate acceptance, durable history, private previews/downloads and
+attachment actions. Media worker health and sanitized generation exports are wired
+in. See GENERATED_MEDIA.md for exact presets, money semantics and remaining limits.
 
-Latest 0.8 checks: Prisma generation, 19 unit tests, API and Next.js production builds, production/full npm audits with zero advisories, and populated PGlite upgrade/fresh restore with eleven migrations. The full verifier cannot start scenarios because `redis-server` is absent. Earlier full app evidence remains 12 unit, 6 HTTP scenarios, 5 production-web browser scenarios and 3 recovery/configuration scenarios with eight migrations. See VERIFICATION_REPORT.md and qa/*.json, not just this summary.
+## Continue
 
-The test runtime used Node 24, PGlite socket bridge, native Redis 6.2, loopback S3Proxy 4.1.1 with random SigV4 credentials, real FFmpeg/ffprobe 6.1.1, local SMTP and HTTP text/Stripe fixtures. It did not use a paid AI or Stripe account. PGlite serializes database work; native lock/race results remain unverified. Render interruption coverage is running cancellation/SIGTERM/retry, not full host loss or SIGKILL orphan cleanup.
+Read the checkpoint and task board. MEDIA-01D retains reference/editing adapters,
+media plan rules and output reconciliation; MEDIA-LIVE-01 requires authorized live
+model access and spend. Advanced editing and other master modules remain pending.
+Do not reset all completed work to pending because native/live gates are open.
 
-The prior agent runtime had no Docker/native PostgreSQL. Native package installation failed due to runtime privilege restrictions. These facts describe that environment; recheck a new environment before assuming the same restriction. Do not bypass access controls. CI for native PostgreSQL 17/Redis 7 was triggered remotely but failed at startup before any test job ran. The normal Compose/MinIO stack also remains unexecuted by the agent.
+The source is local. Remote main was last verified at `446c832...` and does not
+contain v0.8.1/v0.9. Automatic approval review rejected a GitHub upload because it
+required explicit authorization to export these source changes to private
+`shlokagrawal13/organic-marketing-os`. Do not use another tool to bypass that
+rejection. Ask for concrete upload permission after packaging. Preserve the local
+commit/archive until publication succeeds, then compare remote content and record
+the actual commit. Never touch the unrelated `OrganicMarketing` repository.
 
-The user reported the original local frontend working on Windows. The agent did not remotely connect to their computer. Their currently installed release, current workspace content, database and storage state are unknown. Do not say the supplied 0.3 code is deployed on their machine.
-
-## File and code map
-
-| Need | Location |
-|---|---|
-| Exact product spec and traceability | MASTER_SPEC.md; REQUIREMENTS_MATRIX.md (in docs) |
-| UI and role-gated operations | apps/web/app; apps/web/AGENTS.md |
-| API/auth/tenancy/content/AI/assets/renders/operations | apps/api/src |
-| Text/render execution | apps/api/src/worker.ts; render-worker.ts |
-| Shared schemas/provider router/media/FFmpeg | packages/core |
-| Data schema and eleven migrations | prisma |
-| Durable 18-role task graph, critique and human gate | packages/core/agents.ts; apps/api/src/worker.ts; apps/api/src/ai.ts |
-| Native CI and local Compose | .github/workflows/ci.yml; compose.yaml; compose.host.yaml |
-| Isolated verification and PGlite upgrade/restore | scripts/verify-local.mjs; verify-upgrade.mjs |
-| Scenarios and sanitized evidence | tests; docs/qa |
-| Next-task state, task IDs and access | PROJECT_CHECKPOINT.json; docs/TASK_BOARD.md; ACCESS_REQUIREMENTS.md |
-| Source integrity and packaging | CHECKPOINT_MANIFEST.json; scripts/package_handoff.py |
-
-## Decisions to preserve
-
-Keep the prescribed architecture and immutable migration history. Organization is currently the workspace boundary. No fake analytics or runtime test fallback. Every tenant route validates membership; roles constrain writes/approvals. Content changes invalidate approvals, and render approval belongs to one immutable version. Current-session file routes keep the bucket private.
-
-New AI jobs capture brand context. Interrupted RUNNING calls fail without automatic provider replay because acceptance/charges may be unknown. Accounting failures cannot trigger a second paid fallback. Product credits now reserve/settle transactionally. Interrupted or attempted failed requests remain REVIEW, never assumed free. Fixed product quotes do not cap external provider-currency spend. Default self-hosted mode does not require product credits. Old queued jobs with no context snapshot use the current brand; keep that migration compatibility explicit.
-
-Default Compose does not bind host 5432/6379 because these conflicted on the user's Windows machine. Optional host-development ports are separate. Preserve `.env`, Compose project identity and named volumes during upgrades; never use volume deletion as a repair shortcut.
-
-## Open work and next action
-
-All 161 master headings remain tracked (140 Partial, 21 Missing; not a percentage of completeness). The task board groups the remaining engineering and environment gates without removing requirements from the master matrix.
-
-MODEL-01 and AGENTS-01 local implementations are complete. Live quality/cost benchmarking and provider reconciliation remain AI-LIVE-01; native shared-health/Redis execution remains NATIVE-01. BILLING-01 Checkout/Portal and Stripe webhook contracts are fixture-verified but not sandbox/live accepted. Continue MEDIA-01 locally.
-
-No running migration or service is intentionally left in this checkpoint. The application code is the verified 0.7 model-routing increment. The manifest records the exact included files. On resume, inspect any mismatch and preserve newer user work before proceeding.
-
-Private `shlokagrawal13/organic-marketing-os` main contains v0.8 at application commit `bce6fc27daa6869d5464d160e2dda083a2ba4d2d`, exact tree `a6db020badb17a32617da54ccc6222afa0c35356`. Actions run `36622686659` failed before jobs with the same authenticated billing annotation, so native CI remains open. See `docs/qa/github-publication.json`.
-
-## Portability and limits
-
-Download/upload the newest complete source checkpoint or use the same private repository. Markdown carries intent and progress; JSON carries structured state; the manifest detects changed/missing/extra included files. None of these carries account login, live process state, provider billing, secrets or actual user database/media. Changing a ChatGPT account does not reconfigure the product's provider account or transfer its API allowance. Reauthorize required connections in the new environment and keep private runtime backups separate.
-
-Checkpointing reduces reliance on chat memory; it cannot recover changes that were never saved. Future agents must update files during work, before a context/usage interruption where possible, and at every delivered milestone.
-
-## v0.5 private source publication — 2026-09-27.1
-
-The verified billing-foundation source is published on private `main` at `0281511e9113d4bd2470b38529bc30d4f5b14a60`. Its tree `86454cb7e2aeda0db66f730bdd0b29e93d8aaf38` equals the local tested tree. The resulting Actions run 36305587276 completed with `startup_failure` and zero jobs; this is not a native PostgreSQL test result.
-
-## Private repository publication — 2026-09-26.6
-
-Verified v0.4 source was uploaded to https://github.com/shlokagrawal13/organic-marketing-os, private repository ID 1389748509, branch main, source commit 0093dfaa9fd0864a77f8680e51e7b506ea32f15d. All 150 uploaded paths, Git blob hashes and modes match the local checkpoint; tree beb2d18a44759a3bf4afb8e70ea0717c89d54a20. History starts at the independent README commit 40e552455688260db0c878b162535e41bb39bfb6. The unrelated OrganicMarketing project is excluded.
-
-Native CI was triggered by the source commit: https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36269190288. GitHub returned completed/startup_failure with an empty job list, so no native tests ran. One retry request returned HTTP 403, "This workflow run cannot be retried." Generic local YAML parsing succeeded, but that does not verify GitHub's workflow validation or explain the startup failure. The specific startup reason is still unknown; do not assume a billing, permission or application defect.
-
-The connector cannot expose the relevant startup diagnostics through its supported endpoints. Browser inspection found GitHub signed out and the private run unavailable; secure sign-in is needed to inspect the detailed run error. Preserve the uploaded source and resume this diagnostic after authenticated access. Fix the concrete reported cause, rerun native tests and record real results. Do not mark native verification complete.
-
-This follow-up changes continuation records only. The last source commit above identifies the verified application import; resolve the latest documentation commit from the main ref or git rev-parse HEAD. Source is now maintained in this Git repository; older ZIP checkpoints may be stale. Local Git objects were reconstructed from remote metadata and verified by their exact SHA, and the uploaded tree was independently compared before setting the local main/upstream refs.
+The latest observed Actions run remains `startup_failure` with zero jobs; earlier
+authenticated evidence named billing, but that UI was not rechecked. No CI pass,
+Windows deployment update or ChatGPT buffering root cause is claimed.

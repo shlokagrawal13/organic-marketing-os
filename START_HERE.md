@@ -1,52 +1,34 @@
-# Start here — Organic Marketing OS
+# Start here — Organic Marketing OS 0.9.0
 
-Application version: **0.8.0**. Handoff revision: **2026-09-29.2**. This archive contains the current source, complete supplied master spec, completed-work evidence, remaining tasks and access requirements. Read these files instead of asking the user to retell the project.
+Resume the saved project; do not rebuild it from a template or ask the user to
+repeat its history. The user wants the full supplied V3 specification completed
+incrementally with independent implementation and verification.
 
-## Resume in another chat or account
+1. Read `AGENTS.md`, `PROJECT_CHECKPOINT.json`, `PROJECT_STATUS.md`,
+   `docs/TASK_BOARD.md` and the relevant domain document.
+2. Run `python3 scripts/package_handoff.py --check`. Preserve and inspect any drift
+   before editing. Do not overwrite user changes, `.env` or populated volumes.
+3. Use the recorded `nextTaskId`/`nextAction`. MEDIA-01B implements durable generated
+   media; MEDIA-01C adds its UI; MEDIA-01D and MEDIA-LIVE-01 retain follow-up scope.
+4. Keep Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3 and FFmpeg.
+   `docs/MASTER_SPEC.md` and all prior migrations are preserved.
+5. Record checks actually completed, update the continuity files together, and
+   create a fresh source ZIP with `python3 scripts/package_handoff.py`.
 
-Upload the latest checkpoint ZIP and send the text in `RESUME_PROMPT.txt`. A project folder opened in a coding agent uses the same files. For a connected private repository, use its latest agreed branch/commit instead of an older ZIP. Authorize required tools/connections in that environment; this file does not transfer an account login or execution permission.
+The latest source is the local checkpoint, **not yet the remote main branch**.
+Canonical private repo: https://github.com/shlokagrawal13/organic-marketing-os.
+Last verified remote: `446c832ee2da2b7584e5213db925d1ed075388c0`. The v0.9 upload
+was rejected by automatic approval review for missing explicit authorization to
+export the changed source to that destination. Do not bypass that rejection.
+Finish a concrete reviewable checkpoint and obtain upload authorization.
+Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
 
-Only the last saved checkpoint travels. A chat's unsaved work, running processes, secrets, and the user's local database/media do not appear in a source archive automatically. Keep the existing Windows `.env` and Docker volumes private and intact.
+Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
+provider outputs are isolated fixtures. The optional checksum-pinned Redis
+installer resolves the earlier missing-binary blocker. Native PostgreSQL/Compose,
+live AI/Stripe and full master acceptance are still open. No live provider key or
+paid test budget was supplied. Check current capabilities before repeating an
+old environment blocker. Chat buffering itself was not diagnosed from app logs.
 
-## Read in this order
-
-1. `AGENTS.md` — architecture, safety, testing and update rules.
-2. `PROJECT_CHECKPOINT.json` — current task state, next action, evidence and blockers.
-3. `PROJECT_STATUS.md` and `docs/HANDOFF.md` — implemented behavior and prior decisions.
-4. `docs/TASK_BOARD.md` — stable pending-task IDs with acceptance criteria.
-5. `docs/ACCESS_REQUIREMENTS.md` — access only when an actual test/integration needs it.
-6. Relevant domain documents/code, then the relevant numbered sections of `docs/MASTER_SPEC.md` and `docs/REQUIREMENTS_MATRIX.md`.
-
-The master spec is authoritative for intended scope; working code and dated test evidence establish actual behavior. Conflicts require inspection, not assuming a feature exists.
-
-## First useful action
-
-Canonical repository: https://github.com/shlokagrawal13/organic-marketing-os (private), main branch. Published v0.8 application commit: `bce6fc27daa6869d5464d160e2dda083a2ba4d2d`, exact tree `a6db020badb17a32617da54ccc6222afa0c35356`. Actions run `36622686659` failed before jobs because the authenticated account remains billing-locked. Use the latest repository source/checkpoint rather than an older ZIP or unrelated repository.
-
-Check the archive manifest. MODEL-01 and AGENTS-01 local contracts are complete; live provider benchmarks remain AI-LIVE-01 and native Redis execution remains NATIVE-01. Continue **MEDIA-01** while external billing/native access is blocked. BILLING-01 actual Stripe sandbox verification still requires authorized test configuration. Do not re-create the app from a template.
-
-```bash
-python scripts/package_handoff.py --check
-```
-
-Use `python3` on Linux/macOS or `py -3` on Windows if that is your Python 3.9+ command. This optional helper verifies a source snapshot; it does not execute the app or contact a service. See docs/TEST_STRATEGY.md for application tests.
-
-## Facts that must not be lost
-
-- Architecture: Next.js frontend, NestJS API, PostgreSQL/Prisma, Redis/BullMQ, private S3-compatible storage, dedicated FFmpeg render worker. Eleven additive migrations; the original ten are preserved.
-- Actual MP4 rendering uses uploaded media; voiceover text does not synthesize speech.
-- Text adapter is OpenAI-compatible `/chat/completions`, default OpenAI URL, blank key/model. No live paid model is verified.
-- Latest increment evidence: Prisma generation, 19 unit tests, API and Next.js production builds, both npm audits at 0 advisories and PGlite populated upgrade/restore through eleven migrations. The full verifier cannot start scenarios because `redis-server` is absent. Earlier 0.6 evidence: 12 unit, 6 HTTP, 5 browser and 3 recovery/configuration scenarios. Native PostgreSQL/Docker/MinIO, live providers and full production acceptance remain open.
-- Production and full npm audits were both 0 on 2026-09-26 after replacing S3rver with checksum-pinned S3Proxy. The Java tool is outside the npm scan. These are dated results, not permanent security guarantees.
-- All 161 master headings are mapped (140 Partial, 21 Missing in the last counted matrix; not completion percentages). Generated media/voice, live sourced research, publishing, external analytics, actual Stripe sandbox/refund/dispute/fraud workflows and several operational capabilities still need implementation.
-- The user does not want to be assigned routine testing. Continue local engineering/testing independently and state any genuine external blocker clearly.
-
-## Before the next handoff
-
-Follow the continuity contract in AGENTS.md. Update the checkpoint, task board and session log while work progresses, then run:
-
-```bash
-python scripts/package_handoff.py
-```
-
-This writes a new manifest and ZIP outside the project folder. It packages source/documentation/evidence and excludes runtime data, credentials and build caches. It does not infer what was completed; the agent must update that information accurately. Always provide the latest saved ZIP or successfully pushed repository commit.
+Read `docs/UPGRADE_0.9.md` before updating a populated installation. A source ZIP
+and the workspace NDJSON export are not database/private-media restore backups.

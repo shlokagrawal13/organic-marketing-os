@@ -1,0 +1,86 @@
+// Isolated HTTP contract fixture. Never imported by application runtime code.
+import { createServer } from "node:http";
+import { readFileSync } from "node:fs";
+export function generationFixture() {
+  const calls = {},
+    videos = new Map();
+  return createServer(async (req, res) => {
+    const json = (value) => {
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify(value));
+    };
+    if (req.url === "/stats") return json(calls);
+    if (req.headers.authorization !== "Bearer isolated-media-fixture") {
+      res.writeHead(401);
+      return res.end();
+    }
+    res.setHeader("x-request-id", "req_isolated_contract_fixture");
+    if (req.method === "POST") {
+      let raw = "";
+      for await (const part of req) raw += part;
+      let input;
+      try {
+        input =
+          req.url === "/v1/videos"
+            ? { prompt: /name="prompt"\r\n\r\n([^\r]*)/.exec(raw)?.[1] }
+            : JSON.parse(raw);
+      } catch {
+        res.writeHead(400);
+        return res.end();
+      }
+      const prompt = input.prompt || input.input;
+      calls[prompt] = (calls[prompt] || 0) + 1;
+      if (prompt.startsWith("DROP:")) return req.socket.destroy();
+      if (prompt.startsWith("HOLD:")) {
+        const timer = setTimeout(() => res.end("{}"), 90000);
+        res.on("close", () => clearTimeout(timer));
+        return;
+      }
+      if (req.url === "/v1/videos") {
+        const id = `video_fixture_${videos.size + 1}`;
+        videos.set(id, { prompt, polls: 0 });
+        return json({ id, status: "queued" });
+      }
+      if (req.url === "/v1/audio/speech") {
+        res.setHeader("Content-Type", "audio/wav");
+        return res.end(readFileSync(".local/media-fixtures/tone.wav"));
+      }
+      return json({
+        data: [
+          {
+            b64_json: prompt.startsWith("INVALID:")
+              ? Buffer.from("not an image").toString("base64")
+              : readFileSync(".local/media-fixtures/product.png").toString(
+                  "base64",
+                ),
+          },
+        ],
+      });
+    }
+    const match = /^\/v1\/videos\/(video_fixture_\d+)(\/content)?$/.exec(
+      req.url || "",
+    );
+    const item = match && videos.get(match[1]);
+    if (!item) {
+      res.writeHead(404);
+      return res.end();
+    }
+    if (match[2]) {
+      res.setHeader("Content-Type", "video/mp4");
+      return res.end(readFileSync(".local/media-fixtures/clip.mp4"));
+    }
+    item.polls++;
+    if (item.prompt.startsWith("POLL_ERROR:") && item.polls === 1) {
+      res.writeHead(503);
+      return res.end();
+    }
+    return json({
+      id: match[1],
+      status: item.prompt.startsWith("FAIL:")
+        ? "failed"
+        : item.polls < 2
+          ? "in_progress"
+          : "completed",
+    });
+  });
+}

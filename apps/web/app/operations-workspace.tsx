@@ -98,7 +98,8 @@ export default function OperationsWorkspace({ base }: { base: string }) {
             <section className="panel">
               <h2>Media storage</h2>
               <p className="small-copy">
-                {data.storage.assets} uploaded assets, including archived files.
+                {data.storage.assets} uploaded or generated assets, including
+                archived files.
               </p>
               <label className="ops-storage-label" htmlFor="source-usage">
                 Originals: {size(data.storage.sourceBytes)} of{" "}
@@ -162,6 +163,18 @@ export default function OperationsWorkspace({ base }: { base: string }) {
           </div>
           <section className="panel">
             <h2>Job history</h2>
+            <p className="small-copy">
+              Generated media:{" "}
+              {data.jobs.media?.length
+                ? data.jobs.media
+                    .map(
+                      (row: any) =>
+                        `${row.state.toLowerCase().replaceAll("_", " ")}: ${row._count}`,
+                    )
+                    .join(" · ")
+                : "no requests yet"}
+              . Review individual jobs in Asset library → Generate with AI.
+            </p>
             <div className="content-table-wrap">
               <table className="content-table">
                 <thead>

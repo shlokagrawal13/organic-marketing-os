@@ -70,3 +70,20 @@ Both routes require OWNER/ADMIN membership. `/operations/status` returns current
 | POST /billing/webhooks/stripe | No session; official Stripe raw-body signature required; test/live mode must match configuration; recognized subscription and paid-invoice events enter the same durable inbox |
 
 AI status includes prices/balances. A new job in credit mode also requires integer maxCredits at least the current quote; rejected credit requests create no job. Same task/input/requestKey replays the original job without a new reservation even after a price change. The credit balance is not a provider-currency balance. Supported provider-neutral test events cover subscription upsert/cancel, paid-invoice monthly grant, refund and expiry. Stripe mapping covers created/updated/deleted subscriptions and paid invoices; paid invoices persist invoice metadata when supplied. Unrelated account events are acknowledged without granting access. See BILLING.md for signature details, event ordering, invoice fields and remaining commercial features.
+
+
+## Generated media (0.9)
+
+All routes below are under `/api/workspaces/:organizationId/media-generations`
+and require current tenant membership. Writes require OWNER/ADMIN/EDITOR/CREATOR.
+
+| Method/path | Behavior |
+| --- | --- |
+| GET `/status` | Configured presets, explicit operator estimates, credit mode, worker/storage availability |
+| GET `/` | Tenant history, take 1–100 / nonnegative skip; private pointers and worker tokens excluded |
+| POST `/` | Strict requestKey UUID, request, maxCredits; rights/estimate validation, transactionally reserved credits and idempotent durable job |
+| GET `/:id` | Saved state, receipt IDs, asset link, cancellation and cost uncertainty |
+| POST `/:id/cancel` | Release before submission; otherwise record request without inventing provider cancellation/refund |
+| POST `/:id/attach` | Saved target/revision only; preserve other components, invalidate approval and save version; stale targets return 409 |
+
+See GENERATED_MEDIA.md for exact provider presets, recovery and live-verification limits.

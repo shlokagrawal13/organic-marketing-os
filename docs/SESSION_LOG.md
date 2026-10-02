@@ -1,5 +1,19 @@
 # Session log
 
+## 2026-10-01 — 0.9.0 durable generated media and UI
+
+- Continued the exact recovered private project; committed the completed 0.8.1 checkpoint locally as `73359b0`. Preserved the master specification and previous migrations. No user services/data/credentials were used as fixtures.
+- Added MediaGeneration persistence, tenant API, explicit provider configuration, OpenAI image/voice/video request contracts, BullMQ worker and Compose service. Added fixed-credit reservation/settlement, uncertain-outcome review, queued cancellation, bounded private ingestion/provenance, saved receipt/output recovery and revision-checked scene attachment.
+- Added Asset library generation UI, private previews/downloads, rights/estimate consent, durable history and attachment controls. Added media worker health/state counts and sanitized record export; corrected stale Connections copy.
+- Passed 28 unit tests, 7 HTTP scenarios, 6 production-browser scenarios and 4 recovery/configuration scenarios. Both builds and 12-migration fresh/populated PGlite upgrade/restore passed. Actual worker SIGKILL/restart verified no duplicate paid submission. Generated fixture image and voice rendered into an actual MP4 in the browser scenario.
+- Fixed test expectations for existing non-member 404 policy and the scene select's accessible name. Visual review corrected media CSS tokens and screenshot scrolling/mobile transition timing; the final selected browser rerun passed. No unfinished/failed run is counted as passing.
+- Tests use PGlite serialized SQL, native Redis 7.2.11, S3Proxy, FFmpeg and isolated provider fixtures. No native PostgreSQL/Compose or live AI/Stripe claim. Npm dependencies were unchanged; the previous 2026-09-29 zero-advisory audit was not rerun.
+- Split remaining media scope into MEDIA-01D (references/editing/providers/plan rules/reconciliation) and MEDIA-LIVE-01 (actual authorized outputs, quality/cost/download acceptance). Full master platform remains incomplete.
+- Automatic approval review rejected creating the remote Git tree: explicit authorization was required to export the changed private source to `shlokagrawal13/organic-marketing-os`. No workaround, push, publication or CI rerun was attempted after rejection. Ask for concrete upload authorization after this packaged checkpoint. Remote head remains last-verified `446c832...`; unrelated `OrganicMarketing` is excluded.
+
+Changed application/test paths: `.env.example`, `compose.yaml`, `package.json`, `package-lock.json`, `prisma/schema.prisma`, `prisma/migrations/202610010001_generated_media/migration.sql`, `apps/api/src/{main,generated-media,media-generation-worker,operations}.ts`, `packages/core/{openai-media,media-generation-runtime}.ts`, `apps/web/app/{generated-media-panel,media-workspace,operations-workspace,workspace}.tsx`, `apps/web/app/globals.css`, `scripts/{verify-local,verify-upgrade,test-generation-provider}.mjs`, `tests/openai-media.test.ts`, `tests/integration/generated-media.test.ts`, `tests/recovery/{configuration,worker}.test.ts`, `tests/ui/{generated-media,operations}.spec.ts`. Exact documentation/evidence changes are recorded in PROJECT_CHECKPOINT.json.lastChanges and the manifest.
+
+
 ## 2026-09-27 — application 0.6.0 / handoff 2026-09-27.2
 
 Continued BILLING-01 without waiting for credentials. Added Stripe SDK 22.6.2 with disabled/test/live configuration, matching key/event-mode enforcement, strict Starter/Growth price mapping and a production ban on API-host overrides. Added OWNER/ADMIN hosted Checkout and Customer Portal session routes with stable idempotency keys, server-owned return URLs, workspace/plan metadata, customer binding and expected Stripe-host validation. Credits & usage now shows the current plan and conditionally offers Checkout/Portal actions.
@@ -123,3 +137,18 @@ Completed AGENTS-01 local contracts. Added versioned strategy/content/scene DAGs
 Added the eleventh additive migration for `AIAgentRun`, `AIAgentStep` and optional usage linkage. Updated the foundation HTTP and production-browser scenarios to inspect the trace and approve a generated result. Fresh checks passed: Prisma generation, 19 unit tests, API TypeScript production compile, Next.js 16.3.5 production build, PGlite populated upgrade/restore through all eleven migrations, and both npm audits with zero advisories. The service-capable full verifier still cannot start here because `redis-server` is absent, so no fresh HTTP/browser/recovery execution is claimed. Next ready local task: MEDIA-01.
 
 Published the exact verified v0.8 tree to private `main` as application commit `bce6fc27daa6869d5464d160e2dda083a2ba4d2d`; remote tree `a6db020badb17a32617da54ccc6222afa0c35356` equals the local tested tree. GitHub created Actions run `36622686659`, but it ended `startup_failure` with zero jobs. Authenticated annotation: "The job was not started because recent account payments have failed or your spending limit needs to be increased." No native execution is claimed.
+
+
+## Continuation verification — 0.8.1 / 2026-09-29.3
+
+Recovered all 164 tracked files from private main commit `446c832ee2da2b7584e5213db925d1ed075388c0`; exact Git blob/tree/commit reconstruction and the original 163-file manifest passed. No user database, credentials or media were accessed.
+
+Resolved the missing Redis test runtime with an official checksum-pinned Redis 7.2.11 source build in `.local`; the installer needs no system service or root installation. The harness discovers this local binary, checks it before starting test services and captures child spawn errors. Added accessible names to Credits tables and scoped the browser ledger assertion: its first run incorrectly counted four new billing-policy rows alongside two ledger rows.
+
+Fresh verification passed: **25 unit tests, 6 HTTP scenarios, 5 production-browser scenarios and 3 recovery/configuration scenarios**, API/web builds, all eleven migrations and populated PGlite upgrade/fresh restore. Both npm audits report zero advisories. The first redirected rerun stopped without final suite evidence; the subsequent directly captured run reached the explicit final verification success message. Only that completed run closes local application evidence.
+
+MEDIA-01A adds provider-neutral image/video/voice lifecycle contracts: atomic submission claim, no automatic replay after an ambiguous paid boundary, polling, cancellation confirmation, unknown costs, rights/targeted-revision input and a private-output gate. **This contract is not yet wired into a database/API/worker/UI or live provider.** MEDIA-01B must implement durable persistence, tenant API, credit accounting and worker/ingestion; MEDIA-01C covers product/live acceptance. See GENERATED_MEDIA.md.
+
+Native PostgreSQL locking/restore, Docker/MinIO, live AI/Stripe, social publication, sourced analytics and full master acceptance remain open. The latest observed GitHub Actions run `36623211633` for `446c832` still ended `startup_failure`; the earlier authenticated billing annotation remains the recorded cause, not a newly read billing-page result. Chat buffering itself cannot be diagnosed from these repository/test logs.
+
+**Next action: MEDIA-01B durable job and tenant API/worker/private-ingestion integration.** Do not restart the completed foundation or wait on GitHub billing for local engineering.

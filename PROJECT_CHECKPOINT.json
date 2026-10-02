@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.8.0",
-  "checkpointRevision": "2026-09-29.2",
-  "savedAtUtc": "2026-09-29T19:57:31.000Z",
-  "currentMilestone": "Locally verified AGENTS-01 durable agent orchestration",
+  "applicationVersion": "0.9.0",
+  "checkpointRevision": "2026-10-01.1",
+  "savedAtUtc": "2026-10-01T18:14:41.548884+00:00",
+  "currentMilestone": "Locally verified durable generated media and UI with private rendering",
   "activeTaskId": null,
   "workInProgress": [
-    "AGENTS-01 local implementation is complete: all 18 roles are mapped across versioned task DAGs with frozen Brand Brain/approved-content retrieval, durable state/output traceability, compliance/orchestrator critique and a role-gated human approval step.",
-    "MODEL-01 and AGENTS-01 exact verified source is published to private main at v0.8 application commit bce6fc27daa6869d5464d160e2dda083a2ba4d2d.",
-    "GitHub Actions remains externally blocked after publication: run 36622686659 ended startup_failure before jobs with GitHub annotation that recent account payments have failed or spending limit needs attention."
+    "No incomplete code edits in this release; MEDIA-01B and local MEDIA-01C are verified.",
+    "MEDIA-01D extended media and MEDIA-LIVE-01 live quality/cost acceptance remain open.",
+    "v0.9 source is local only. Automatic approval review rejected GitHub source export; obtain explicit authorization for private shlokagrawal13/organic-marketing-os before uploading."
   ],
-  "nextTaskId": "MEDIA-01",
-  "nextAction": "Implement provider-neutral generated image/video/voice job contracts with provenance, costs, cancellation and unknown-outcome safety while preserving the verified uploaded-media path; keep live/native gates explicit.",
+  "nextTaskId": "MEDIA-01D",
+  "nextAction": "Implement source-reference/editing contracts and plan-specific media routing, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01. Source upload requires explicit authorization after automatic approval-review rejection.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -47,16 +47,16 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-09-29",
+    "date": "2026-10-01",
     "applicationSuites": {
-      "unit": 19,
-      "httpScenarios": 6,
-      "browserScenarios": 5,
-      "recoveryConfigurationScenarios": 3
+      "unit": 28,
+      "httpScenarios": 7,
+      "browserScenarios": 6,
+      "recoveryConfigurationScenarios": 4
     },
-    "migrationsApplied": 11,
+    "migrationsApplied": 12,
     "database": "PGlite WASM PostgreSQL, serialized socket bridge",
-    "populatedUpgradeRestore": "Passed on PGlite through all eleven migrations including durable agent graph state, route evidence, billing invoices, billing plans/subscriptions/events, credit balances, immutable entries and restored SQL trigger",
+    "populatedUpgradeRestore": "PGlite: original v0.1 user/membership/draft/queued AI job, immutable credit ledger and saved generated-video request/provider receipt preserved after fresh archive restore. Private object bytes and native Postgres restore not tested.",
     "nativePostgresVerified": false,
     "dockerMinioVerified": false,
     "liveAiVerified": false,
@@ -69,48 +69,58 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 36622686659,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36622686659",
-      "sourceCommit": "bce6fc27daa6869d5464d160e2dda083a2ba4d2d",
+      "runId": 36623211633,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/36623211633",
+      "sourceCommit": "446c832ee2da2b7584e5213db925d1ed075388c0",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
       "retry": "Not retried after final publish; prior payment authorization retry failed after user approval.",
-      "rootCause": "GitHub account billing/payment gate: run annotation says the job was not started because recent account payments have failed or the spending limit needs to be increased. Payment information still shows authorization hold failed.",
+      "rootCause": "Latest remote run still startup_failure. Earlier authenticated annotation reported billing/payment gate; billing UI was not re-read this turn.",
       "priorRunIds": [
-        36269190288, 36304124096, 36305587276, 36305819079, 36321113253,
-        36321841234, 36321972148, 36322906289, 36462190503, 36620025901
+        36269190288,
+        36304124096,
+        36305587276,
+        36305819079,
+        36321113253,
+        36321841234,
+        36321972148,
+        36322906289,
+        36462190503,
+        36620025901
       ]
     },
     "latestIncrement": {
-      "prismaGenerate": true,
+      "unitTestsPassed": 28,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 4,
       "apiBuild": true,
       "webProductionBuild": true,
-      "unitTestsPassed": 19,
-      "all18AgentRolesMapped": true,
-      "durableAgentGraphAndTrace": true,
-      "frozenApprovedContentRetrieval": true,
-      "critiqueAndHumanGateContracts": true,
+      "migrationsApplied": 12,
       "populatedUpgradeRestore": true,
-      "migrationsApplied": 11,
-      "productionAndFullNpmAdvisories": 0,
-      "fullLocalVerifierRerun": false,
-      "fullLocalVerifierBlocker": "Attempted; stopped before application scenarios because redis-server is absent (spawn redis-server ENOENT)."
+      "fullLocalVerifierRerun": true,
+      "fullLocalVerifierBlocker": null,
+      "generatedMediaRuntimeIntegrated": true,
+      "generatedMediaUIVerified": true,
+      "liveMediaVerified": false,
+      "finalMediaLayoutTargetedRerun": true
     },
-    "billingInvoiceViewsVerified": true
+    "billingInvoiceViewsVerified": true,
+    "dependencyAuditDate": "2026-09-29; not rerun in 0.9; dependency versions unchanged"
   },
   "accessState": {
-    "github": "Private shlokagrawal13/organic-marketing-os main contains verified v0.8 application commit bce6fc27daa6869d5464d160e2dda083a2ba4d2d with exact tree a6db020badb17a32617da54ccc6222afa0c35356. Authenticated run 36622686659 failed before jobs because account billing is locked.",
-    "nativeExecution": "Current runtime cannot complete full verifier because redis-server is unavailable. Native GitHub CI remains blocked before jobs by the authenticated account billing lock.",
+    "github": "Read-only remote main verified at 446c832. 0.9 upload rejected by automatic approval review; no branch update succeeded.",
+    "nativeExecution": "Local Redis 7.2.11 recovered without root install; full PGlite/Redis/storage/browser/recovery verifier passes. Native PostgreSQL/Docker not verified; latest remote CI still startup_failure.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "bce6fc27daa6869d5464d160e2dda083a2ba4d2d",
-    "status": "published_verified_0.8_agent_orchestration_native_ci_billing_locked",
+    "commit": "446c832ee2da2b7584e5213db925d1ed075388c0",
+    "status": "local_0.9_verified_not_uploaded_automatic_approval_review_gate",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -123,10 +133,17 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "a6db020badb17a32617da54ccc6222afa0c35356",
+    "sourceTree": "e8ed6db6629f388016d89f29407f78fad251c195",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Recorded remote commit/tree is the exact locally verified and published v0.8 application source. A small documentation-only publication record may follow it; Actions run 36622686659 remains billing-locked.",
-    "latestHeadCommand": "git rev-parse HEAD"
+    "commitMeaning": "Last verified remote main, not the current local implementation. Resolve local HEAD with git rev-parse HEAD; source archive is identified by CHECKPOINT_MANIFEST.json.",
+    "latestHeadCommand": "git rev-parse HEAD",
+    "lastLocalCheckpointCommit": "73359b0",
+    "uploadGate": {
+      "rejectedAction": "Create Git tree containing changed source files",
+      "reason": "Automatic approval review required explicit authorization to export this private source payload to the repository",
+      "destination": "shlokagrawal13/organic-marketing-os main",
+      "bypassed": false
+    }
   },
   "credentialsIncluded": false,
   "runtimeDatabaseOrMediaIncluded": false,
@@ -140,7 +157,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "GitHub Actions settings are correct, but run 36462190503 failed before any job. Authenticated annotation: The job was not started because recent account payments have failed or your spending limit needs to be increased. Resolve GitHub billing/payment authorization, then rerun native CI."
+      "currentBlocker": "Local Redis blocker resolved. Native PostgreSQL/Compose unverified and GitHub Actions latest run 36623211633 remains startup_failure before jobs."
     },
     {
       "id": "RECOVERY-01",
@@ -165,7 +182,8 @@
     {
       "id": "MEDIA-01",
       "state": "ready_for_local_work",
-      "title": "Generated images, video and voice adapters"
+      "title": "Generated images, video and voice adapters",
+      "completedIncrement": "MEDIA-01A contracts, MEDIA-01B durable core and local MEDIA-01C UI; extended media is MEDIA-01D and live acceptance is MEDIA-LIVE-01."
     },
     {
       "id": "EDITOR-01",
@@ -243,32 +261,87 @@
       "id": "MASTER-01",
       "state": "pending_dependency",
       "title": "Full master acceptance and production decision"
+    },
+    {
+      "id": "MEDIA-01A",
+      "state": "completed",
+      "title": "Generated-media provider-neutral lifecycle contracts only"
+    },
+    {
+      "id": "MEDIA-01B",
+      "state": "completed",
+      "title": "Durable generated-media API/worker/private ingestion"
+    },
+    {
+      "id": "MEDIA-01C",
+      "state": "completed",
+      "title": "Generated-media UI and local browser acceptance",
+      "liveAcceptanceMovedTo": "MEDIA-LIVE-01"
+    },
+    {
+      "id": "MEDIA-01D",
+      "state": "ready_for_local_work",
+      "title": "Source editing, extended providers, media plan policy and output reconciliation"
+    },
+    {
+      "id": "MEDIA-LIVE-01",
+      "state": "needs_external_credentials",
+      "title": "Authorized live generated-media quality and billing acceptance"
     }
   ],
   "lastChanges": [
+    ".env.example",
+    "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
     "START_HERE.md",
-    "apps/api/src/ai.ts",
-    "apps/api/src/worker.ts",
-    "apps/web/app/content-workspace.tsx",
+    "apps/api/src/generated-media.ts",
+    "apps/api/src/main.ts",
+    "apps/api/src/media-generation-worker.ts",
+    "apps/api/src/operations.ts",
+    "apps/web/app/generated-media-panel.tsx",
+    "apps/web/app/globals.css",
+    "apps/web/app/media-workspace.tsx",
+    "apps/web/app/operations-workspace.tsx",
+    "apps/web/app/workspace.tsx",
+    "compose.yaml",
+    "docs/ACCESS_REQUIREMENTS.md",
+    "docs/API.md",
+    "docs/ASSETS.md",
     "docs/CHANGELOG.md",
-    "docs/AI_AGENTS.md",
+    "docs/GENERATED_MEDIA.md",
     "docs/HANDOFF.md",
-    "docs/IMPLEMENTATION_PLAN.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/UPGRADE_0.8.md",
+    "docs/TEST_STRATEGY.md",
+    "docs/UPGRADE_0.9.md",
     "docs/VERIFICATION_REPORT.md",
-    "packages/core/agents.ts",
-    "prisma/migrations/202609290002_agent_orchestration/migration.sql",
+    "docs/VIDEO_PIPELINE.md",
+    "docs/qa/README.md",
+    "docs/qa/generated-media-dark.png",
+    "docs/qa/generated-media-desktop.png",
+    "docs/qa/generated-media-mobile.png",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/upgrade-restore-evidence.json",
+    "docs/qa/verification-summary.json",
+    "package-lock.json",
+    "package.json",
+    "packages/core/media-generation-runtime.ts",
+    "packages/core/openai-media.ts",
+    "prisma/migrations/202610010001_generated_media/migration.sql",
     "prisma/schema.prisma",
-    "tests/agents.test.ts",
-    "tests/integration/foundation.test.ts",
-    "tests/ui/foundation.spec.ts"
+    "scripts/test-generation-provider.mjs",
+    "scripts/verify-local.mjs",
+    "scripts/verify-upgrade.mjs",
+    "tests/integration/generated-media.test.ts",
+    "tests/openai-media.test.ts",
+    "tests/recovery/configuration.test.ts",
+    "tests/recovery/worker.test.ts",
+    "tests/ui/generated-media.spec.ts",
+    "tests/ui/operations.spec.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -289,7 +362,9 @@
     "prisma/migrations/202609200001_credits/migration.sql": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c",
     "prisma/migrations/202609270001_billing_entitlements/migration.sql": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb",
     "prisma/migrations/202609280001_billing_invoices/migration.sql": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4",
-    "prisma/migrations/202609290001_model_routing/migration.sql": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+    "prisma/migrations/202609290001_model_routing/migration.sql": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090",
+    "prisma/migrations/202609290002_agent_orchestration/migration.sql": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f",
+    "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json"
 }

@@ -57,7 +57,11 @@ test("credit history shows real ledger entries and stays usable on mobile", asyn
   ).toHaveCount(0);
   await expect(page.getByText(/Self-hosted mode:/)).toBeVisible();
   await page.getByRole("button", { name: "Refresh credits" }).click();
-  await expect(page.locator("tbody tr")).toHaveCount(2);
+  await expect(
+    page
+      .getByRole("table", { name: "Credit history", exact: true })
+      .locator("tbody tr"),
+  ).toHaveCount(2);
   await page.screenshot({
     path: "test-results/credits-desktop.png",
     fullPage: true,
@@ -65,7 +69,9 @@ test("credit history shows real ledger entries and stays usable on mobile", asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await expect
     .poll(() =>
-      page.locator(".sidebar").evaluate((el) => el.getBoundingClientRect().right),
+      page
+        .locator(".sidebar")
+        .evaluate((el) => el.getBoundingClientRect().right),
     )
     .toBeLessThanOrEqual(0);
   expect(

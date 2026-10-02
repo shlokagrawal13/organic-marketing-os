@@ -38,6 +38,7 @@ export class OperationsController {
       this.store.ready(),
       this.cache.client.get("worker:heartbeat"),
       this.cache.client.get("render:heartbeat"),
+      this.cache.client.get("media-generation:heartbeat"),
     ]);
     const available = (i: number) => checks[i].status === "fulfilled";
     const alive = (i: number) => {
@@ -48,7 +49,7 @@ export class OperationsController {
         Date.now() - Number(r.value) < 30000
       );
     };
-    const [assets, outputs, segments, ai, renders] = await Promise.all([
+    const [assets, outputs, segments, ai, renders, media] = await Promise.all([
       this.db.asset.aggregate({
         where: { organizationId: org },
         _sum: { bytes: true },
@@ -69,6 +70,11 @@ export class OperationsController {
       }),
       this.db.renderJob.groupBy({
         by: ["status"],
+        where: { organizationId: org },
+        _count: true,
+      }),
+      this.db.mediaGeneration.groupBy({
+        by: ["state"],
         where: { organizationId: org },
         _count: true,
       }),
@@ -109,6 +115,7 @@ export class OperationsController {
         { name: "Private media storage", ready: available(2) },
         { name: "Text generation worker", ready: alive(3) },
         { name: "Video rendering worker", ready: alive(4) },
+        { name: "Media generation worker", ready: alive(5) },
       ],
       providers,
       emailConfigured: Boolean(process.env.SMTP_HOST),
@@ -122,13 +129,8 @@ export class OperationsController {
         scope:
           "Database-tracked originals, MP4s and cached segments; excludes thumbnails, SRTs and orphan objects.",
       },
-      jobs: { ai, renders },
-      unavailable: [
-        "AI image/video/voice generation",
-        "Social connections and publishing",
-        "External analytics",
-        "Billing and credit ledger",
-      ],
+      jobs: { ai, renders, media },
+      unavailable: ["Social connections and publishing", "External analytics"],
     };
   }
   @Get("export") async export(@Req() req: AuthedRequest, @Res() res: Response) {
@@ -232,6 +234,19 @@ export class OperationsController {
                   ? `/api/workspaces/${org}/renders/${row.id}/file/video?download=1`
                   : null,
               }),
+            ],
+            [
+              "mediaGeneration",
+              tx.mediaGeneration,
+              own,
+              ({
+                outputKey,
+                runToken,
+                heartbeatAt,
+                requestHash,
+                configuration,
+                ...row
+              }) => ({ ...row, provider: "openai" }),
             ],
             ["aiJob", tx.aIJob, own, ({ runToken, ...row }) => row],
             ["aiUsage", tx.aIUsage, own],
