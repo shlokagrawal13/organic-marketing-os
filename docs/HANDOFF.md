@@ -38,12 +38,13 @@ requires authorized live model access and spend. Advanced editing and other mast
 Do not reset all completed work to pending because native/live gates are open.
 
 The source is published to private `shlokagrawal13/organic-marketing-os` main.
-Application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` points to tree `a85c8a0384083167121e6fa34f46d9ac837fba8c`, and recursive
-verification matched 182/182 remote blob paths, modes and SHAs to the local source
-with zero mismatches. The earlier automatic approval review rejection is a closed
+0.9.1 source commit `0b9dce36c95027723ea0529e734316b2af039131` points to tree
+`c1918f5b14059606dc39b239d5f7ffc7b854b061`, and recursive verification matched
+182/182 remote blob paths, modes and SHAs to the local checkpoint with zero
+mismatches. The earlier automatic approval review rejection is a closed
 audit event after the user's explicit approval for this private upload. Never
 touch the unrelated `OrganicMarketing` repository.
 
-The latest observed Actions run `37002434700` remains `startup_failure` with zero
+The latest observed Actions run `37005496060` remains `startup_failure` with zero
 jobs; earlier authenticated evidence named billing, but that UI was not rechecked.
 No CI pass, Windows deployment update or ChatGPT buffering root cause is claimed.

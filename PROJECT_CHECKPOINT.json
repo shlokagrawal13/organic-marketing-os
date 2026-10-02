@@ -3,13 +3,13 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.1",
   "checkpointRevision": "2026-10-02.2",
-  "savedAtUtc": "2026-10-02T12:06:25Z",
+  "savedAtUtc": "2026-10-02T12:15:05Z",
   "currentMilestone": "MEDIA-01D plan-aware generated-media routing and source-reference gates",
   "activeTaskId": null,
   "workInProgress": [
-    "MEDIA-01D first slice is implemented: media models can be allowlisted by workspace plan, and source asset IDs are tenant-checked before provider submission.",
+    "MEDIA-01D first slice is implemented and published: media models can be allowlisted by workspace plan, and source asset IDs are tenant-checked before provider submission.",
     "The current OpenAI preset still rejects source assets after validation; live reference editing/provider source-byte submission remains open.",
-    "v0.9 source is published to private shlokagrawal13/organic-marketing-os main at b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b; this 0.9.1 local increment is not yet published remotely."
+    "0.9.1 source is published to private shlokagrawal13/organic-marketing-os main at 0b9dce36c95027723ea0529e734316b2af039131; remote tree c1918f5b14059606dc39b239d5f7ffc7b854b061 matches the local checkpoint exactly."
   ],
   "nextTaskId": "MEDIA-01D",
   "nextAction": "Continue MEDIA-01D with safe UNKNOWN output reconciliation/orphan handling and provider option expansion, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01.",
@@ -69,15 +69,15 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 37002434700,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37002434700",
-      "sourceCommit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
+      "runId": 37005496060,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37005496060",
+      "sourceCommit": "0b9dce36c95027723ea0529e734316b2af039131",
       "status": "completed",
       "conclusion": "startup_failure",
       "jobsStarted": 0,
       "nativeTestsExecuted": false,
-      "retry": "Not retried after v0.9 publish; the push-created run failed before any job started.",
-      "rootCause": "GitHub returned path BuildFailed/startup_failure and an empty job list for the v0.9 commit. Earlier authenticated evidence reported a billing/payment gate; this run did not execute native tests.",
+      "retry": "Not retried after 0.9.1 publish; the push-created run failed before any job started.",
+      "rootCause": "GitHub returned path BuildFailed/startup_failure and an empty job list for the 0.9.1 commit. Earlier authenticated evidence reported a billing/payment gate; this run did not execute native tests.",
       "priorRunIds": [
         36269190288,
         36304124096,
@@ -90,7 +90,9 @@
         36462190503,
         36620025901,
         36622686659,
-        36623211633
+        36623211633,
+        37002434700,
+        37002814189
       ]
     },
     "latestIncrement": {
@@ -115,7 +117,7 @@
     "dependencyAuditDate": "2026-09-29; not rerun in 0.9; dependency versions unchanged"
   },
   "accessState": {
-    "github": "Private main remains at published v0.9 documentation commit 74d1a0b77af5bedf8af1c5c430c82f8b77d967fe; current MEDIA-01D local increment is not yet published.",
+    "github": "Published 0.9.1 to private main at 0b9dce36c95027723ea0529e734316b2af039131; recursive remote tree verification found 182/182 blob paths, modes and SHAs matching local HEAD. GitHub Actions run 37005496060 ended startup_failure before jobs.",
     "nativeExecution": "Local Redis 7.2.11 recovered without root install; full PGlite/Redis/storage/browser/recovery verifier passes. Native PostgreSQL/Docker not verified; latest remote CI still startup_failure before jobs.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -123,8 +125,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
-    "status": "local_0.9.1_media01d_plan_source_gates_not_uploaded",
+    "commit": "0b9dce36c95027723ea0529e734316b2af039131",
+    "status": "published_verified_remote_tree_matches_local_0.9.1",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -137,11 +139,11 @@
     },
     "visibility": "private",
     "id": 1389748509,
-    "sourceTree": "a85c8a0384083167121e6fa34f46d9ac837fba8c",
+    "sourceTree": "c1918f5b14059606dc39b239d5f7ffc7b854b061",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published v0.9 application/source record remains remote. Resolve the current local increment with git rev-parse HEAD after committing 0.9.1; publish and verify before treating remote main as current.",
-    "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; app source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "8902e4c6d4b1740a68308d940fdced5303a8c966",
+    "commitMeaning": "Published 0.9.1 source commit on private main. A later documentation-only publication may advance main; compare source trees and read docs/qa/github-publication.json for the latest publication record.",
+    "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; 0.9.1 source commit is recorded explicitly here.",
+    "lastLocalCheckpointCommit": "ebe54f78960ddd3528bb39554bc5ffa652a3df74",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree / upload PNG evidence blobs containing changed source files",
       "initialReason": "Automatic approval review required explicit authorization to export this private source payload to the repository",
@@ -151,14 +153,15 @@
       "resolved": true
     },
     "publication": {
-      "publishedAtUtc": "2026-10-02T11:43:05Z",
-      "applicationCommit": "b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b",
-      "applicationTree": "a85c8a0384083167121e6fa34f46d9ac837fba8c",
-      "baseCommit": "446c832ee2da2b7584e5213db925d1ed075388c0",
+      "publishedAtUtc": "2026-10-02T12:15:05Z",
+      "applicationCommit": "0b9dce36c95027723ea0529e734316b2af039131",
+      "applicationTree": "c1918f5b14059606dc39b239d5f7ffc7b854b061",
+      "localCommit": "ebe54f78960ddd3528bb39554bc5ffa652a3df74",
+      "baseCommit": "74d1a0b77af5bedf8af1c5c430c82f8b77d967fe",
       "remoteBlobCount": 182,
       "localBlobCount": 182,
       "mismatchCount": 0,
-      "actionsRunId": 37002434700,
+      "actionsRunId": 37005496060,
       "actionsConclusion": "startup_failure",
       "actionsJobsStarted": 0
     }
@@ -175,7 +178,7 @@
       "id": "NATIVE-01",
       "state": "needs_execution_environment",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Local Redis blocker resolved. Native PostgreSQL/Compose unverified and GitHub Actions latest run 37002434700 remains startup_failure before jobs."
+      "currentBlocker": "Local Redis blocker resolved. Native PostgreSQL/Compose unverified and GitHub Actions latest run 37005496060 remains startup_failure before jobs."
     },
     {
       "id": "RECOVERY-01",

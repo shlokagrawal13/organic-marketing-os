@@ -69,5 +69,5 @@ master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
 it is not a database/media restore backup. v0.9 source is published to the
-private main branch; the 0.9.1 MEDIA-01D slice is locally verified in this checkpoint and still needs remote publication/CI verification. GitHub Actions still
+private main branch at source commit `0b9dce36c95027723ea0529e734316b2af039131` and was verified against the local checkpoint. GitHub Actions still
 failed before jobs, so no native CI pass is claimed.

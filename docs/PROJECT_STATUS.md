@@ -50,16 +50,16 @@ Partial labels are not completion percentages.
 ## Source and publication
 
 Canonical private repository: `shlokagrawal13/organic-marketing-os`, branch `main`.
-Version 0.9 was published after explicit user approval to private `main` as
-application commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b`. The remote tree `a85c8a0384083167121e6fa34f46d9ac837fba8c` matches the local
-verified source exactly: 182/182 blob paths, modes and SHAs matched with zero
-mismatches. The prior automatic approval review rejection is retained only as an
-audit event; it was resolved by the user's explicit approval for this destination.
+Version 0.9.1 was published after explicit user approval to private `main` as
+source commit `0b9dce36c95027723ea0529e734316b2af039131`. The remote tree
+`c1918f5b14059606dc39b239d5f7ffc7b854b061` matches the local checkpoint exactly:
+182/182 blob paths, modes and SHAs matched with zero mismatches. Prior automatic
+approval review rejections are retained only as audit events; they were resolved
+by the user's explicit approvals for this destination.
 The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
-The push triggered GitHub Actions run `37002434700`, which completed with
-`startup_failure` before any job started; the jobs list was empty and combined
-status returned no statuses. Earlier authenticated diagnostics identified an
+The 0.9.1 push triggered GitHub Actions run `37005496060`, which completed with
+`startup_failure` before any job started; the jobs list was empty. Earlier authenticated diagnostics identified an
 account billing gate. These records do not diagnose ChatGPT buffering.
 
 ## Next work

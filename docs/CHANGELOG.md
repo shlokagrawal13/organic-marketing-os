@@ -5,6 +5,7 @@
 - Added per-kind generated-media plan allowlists through `MEDIA_IMAGE_PLANS`, `MEDIA_VIDEO_PLANS` and `MEDIA_VOICE_PLANS`; status/create now resolve the workspace plan before exposing or queueing configured models.
 - Added source-reference ownership gates: source asset IDs must be unique active image assets in the same workspace before the current provider preset rejects unsupported source-byte editing.
 - Updated provider config/audit records to freeze allowed plans and source asset counts.
+- Published to private `main` as source commit `0b9dce36c95027723ea0529e734316b2af039131`; remote tree `c1918f5b14059606dc39b239d5f7ffc7b854b061` matched 182/182 local blob paths/modes/SHAs. GitHub Actions run `37005496060` still failed before jobs.
 - Verified `npm test` and `npm run build:api`; full local harness was attempted but S3Proxy exited before readiness with `Operation not permitted`, so no new integration/browser pass is claimed.
 
 ## 0.9.0 verified private source publication — 2026-10-02
