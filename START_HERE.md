@@ -1,4 +1,4 @@
-# Start here — Organic Marketing OS 0.9.1
+# Start here — Organic Marketing OS 0.9.2
 
 Resume the saved project; do not rebuild it from a template or ask the user to
 repeat its history. The user wants the full supplied V3 specification completed

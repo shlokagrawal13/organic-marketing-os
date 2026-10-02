@@ -6,6 +6,7 @@ import { randomUUID } from "node:crypto";
 import { Queue } from "bullmq";
 import Redis from "ioredis";
 import { db, actor, until } from "../support/http";
+import { reserveCredits, reviewCredits } from "../../packages/core/credits";
 let server: ChildProcess | undefined;
 const redis = new Redis(process.env.REDIS_URL!, { maxRetriesPerRequest: null });
 const queue = new Queue("marketing-ai", { connection: redis as any });
@@ -225,11 +226,80 @@ test(
       ).status,
       409,
     );
-    const account = await db.creditAccount.findUniqueOrThrow({
+    let account = await db.creditAccount.findUniqueOrThrow({
       where: { organizationId: org.id },
     });
     assert.equal(account.available, 17);
     assert.equal(account.reserved, 0);
+    const activeMediaReservation = await db.$transaction(async (tx) => {
+      const held = await reserveCredits(
+        tx,
+        org.id,
+        "media:active-review",
+        2,
+        owner.id,
+      );
+      await tx.mediaGeneration.create({
+        data: {
+          organizationId: org.id,
+          actorId: owner.id,
+          requestKey: randomUUID(),
+          requestHash: "active-media-review",
+          request: {
+            kind: "image",
+            model: "fixture-image",
+            prompt: "Active media reconciliation fixture",
+            rightsConfirmed: true,
+            rightsNote: "Synthetic fixture",
+            sourceAssetIds: [],
+            maxCostUsd: 0.1,
+          },
+          configuration: {
+            version: 1,
+            provider: "openai",
+            baseUrl: "http://127.0.0.1:4998/v1",
+            kind: "image",
+            model: "fixture-image",
+            estimatedCostUsd: 0.1,
+            credits: 2,
+            allowedPlans: ["free", "starter", "growth", "self_hosted"],
+          },
+          state: "PENDING",
+          providerJobId: "video_active_media_review",
+          creditReservationId: held.id,
+          quotedCostUsd: 0.1,
+          quotedCredits: 2,
+        },
+      });
+      await reviewCredits(tx, org.id, held.id);
+      return held;
+    });
+    const mediaReview = `/platform/credits/reservations/${activeMediaReservation.id}/resolve`;
+    assert.equal(
+      (
+        await call(admin, mediaReview, "POST", {
+          consumed: 0,
+          reason: "Cannot resolve while generated media is still active",
+        })
+      ).status,
+      409,
+    );
+    await db.mediaGeneration.update({
+      where: { creditReservationId: activeMediaReservation.id },
+      data: { state: "UNKNOWN", completedAt: new Date() },
+    });
+    assert.equal(
+      (
+        await call(admin, mediaReview, "POST", {
+          consumed: 0,
+          reason: "Media provider evidence confirms no charge for fixture",
+        })
+      ).status,
+      201,
+    );
+    account = await db.creditAccount.findUniqueOrThrow({
+      where: { organizationId: org.id },
+    });
     const ledger = await db.creditEntry.findMany({
       where: { organizationId: org.id },
       orderBy: { sequence: "asc" },

@@ -1,4 +1,4 @@
-# Generated media — 0.9.1
+# Generated media — 0.9.2
 
 Image, video and voice generation now have durable database jobs, tenant APIs,
 a BullMQ worker, private asset ingestion and an Asset library → Generate with AI
@@ -47,6 +47,9 @@ provider-reported failure keeps credits in REVIEW for platform reconciliation.
 Self-hosted mode does not reserve product credits; the configured provider account
 can still be charged. In-flight cancellation is recorded as a request, without
 claiming that the provider stopped or refunded it; a completed result is retained.
+Credit review resolution also checks active media-generation state, so a platform
+administrator cannot release or consume a media reservation while the related
+job is still queued, submitting, pending or waiting for private ingestion.
 
 ## Persistence and recovery
 

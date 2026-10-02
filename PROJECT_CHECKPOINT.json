@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
-  "applicationVersion": "0.9.1",
-  "checkpointRevision": "2026-10-02.2",
-  "savedAtUtc": "2026-10-02T12:15:05Z",
-  "currentMilestone": "MEDIA-01D plan-aware generated-media routing and source-reference gates",
+  "applicationVersion": "0.9.2",
+  "checkpointRevision": "2026-10-02.3",
+  "savedAtUtc": "2026-10-02T14:46:10Z",
+  "currentMilestone": "MEDIA-01D active media credit reconciliation guard",
   "activeTaskId": null,
   "workInProgress": [
-    "MEDIA-01D first slice is implemented and published: media models can be allowlisted by workspace plan, and source asset IDs are tenant-checked before provider submission.",
-    "The current OpenAI preset still rejects source assets after validation; live reference editing/provider source-byte submission remains open.",
-    "0.9.1 source is published to private shlokagrawal13/organic-marketing-os main at 0b9dce36c95027723ea0529e734316b2af039131; remote tree c1918f5b14059606dc39b239d5f7ffc7b854b061 matches the local checkpoint exactly."
+    "MEDIA-01D second slice is implemented locally: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
+    "Plan-specific media routing and tenant-owned source-reference gates remain implemented from 0.9.1.",
+    "Provider source-byte editing, provider option expansion and UNKNOWN output/orphan reconciliation remain open; live acceptance is still MEDIA-LIVE-01."
   ],
   "nextTaskId": "MEDIA-01D",
-  "nextAction": "Continue MEDIA-01D with safe UNKNOWN output reconciliation/orphan handling and provider option expansion, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01.",
+  "nextAction": "Continue MEDIA-01D with explicit UNKNOWN output/orphan reconciliation and provider option expansion, preserving no-replay semantics. Live acceptance is MEDIA-LIVE-01.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -111,7 +111,8 @@
       "liveMediaVerified": false,
       "finalMediaLayoutTargetedRerun": true,
       "mediaPlanRoutingVerified": true,
-      "sourceReferenceGateVerified": true
+      "sourceReferenceGateVerified": true,
+      "activeMediaCreditResolutionGuard": true
     },
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-09-29; not rerun in 0.9; dependency versions unchanged"
@@ -126,7 +127,7 @@
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "0b9dce36c95027723ea0529e734316b2af039131",
-    "status": "published_verified_remote_tree_matches_local_0.9.1",
+    "status": "local_0.9.2_media01d_active_credit_guard_not_uploaded",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -141,7 +142,7 @@
     "id": 1389748509,
     "sourceTree": "c1918f5b14059606dc39b239d5f7ffc7b854b061",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published 0.9.1 source commit on private main. A later documentation-only publication may advance main; compare source trees and read docs/qa/github-publication.json for the latest publication record.",
+    "commitMeaning": "0.9.1 is published remotely. Resolve the current local 0.9.2 increment with git rev-parse HEAD after committing; publish and verify before treating remote main as current.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; 0.9.1 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "ebe54f78960ddd3528bb39554bc5ffa652a3df74",
     "uploadGate": {
@@ -303,7 +304,7 @@
       "id": "MEDIA-01D",
       "state": "ready_for_local_work",
       "title": "Source editing, extended providers, media plan policy and output reconciliation",
-      "completedIncrement": "Plan-specific media model routing and source-reference ownership gates are locally implemented; provider source-byte editing, additional options/providers and UNKNOWN output reconciliation remain."
+      "completedIncrement": "Plan-specific media model routing, source-reference ownership gates and active media credit-resolution guard are locally implemented; provider source-byte editing, additional options/providers and UNKNOWN output reconciliation remain."
     },
     {
       "id": "MEDIA-LIVE-01",
@@ -364,7 +365,9 @@
     "tests/recovery/worker.test.ts",
     "tests/ui/generated-media.spec.ts",
     "tests/ui/operations.spec.ts",
-    "docs/qa/github-publication.json"
+    "docs/qa/github-publication.json",
+    "apps/api/src/credits.ts",
+    "tests/integration/credits.test.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",

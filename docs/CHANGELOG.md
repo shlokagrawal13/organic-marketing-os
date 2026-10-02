@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.2 MEDIA-01D credit reconciliation guard — 2026-10-02
+
+- Blocked platform credit review resolution for reservations linked to active media generations until the media job is terminal.
+- Added integration coverage for a REVIEW media reservation that returns 409 while PENDING and can be released after UNKNOWN.
+- Verified `npm test` and `npm run build:api`; full local harness still stops before integration because S3Proxy exits with `Operation not permitted`.
+
 ## 0.9.1 MEDIA-01D plan/source gates — 2026-10-02
 
 - Added per-kind generated-media plan allowlists through `MEDIA_IMAGE_PLANS`, `MEDIA_VIDEO_PLANS` and `MEDIA_VOICE_PLANS`; status/create now resolve the workspace plan before exposing or queueing configured models.

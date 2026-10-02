@@ -1,4 +1,4 @@
-# Verification report — Organic Marketing OS 0.9.1
+# Verification report — Organic Marketing OS 0.9.2
 
 Verified locally on 2026-10-01. The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.
@@ -19,6 +19,22 @@ selected browser rerun checks the final media layout/capture adjustments; its
 output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
 
+
+
+## MEDIA-01D credit reconciliation guard — 2026-10-02
+
+Added a platform-credit resolver guard for media-generation reservations: REVIEW
+credits linked to a media job cannot be consumed or released while the generation
+is still QUEUED, SUBMITTING, PENDING or OUTPUT_READY. This prevents a platform
+operator from resolving credits before provider/output evidence reaches a terminal
+state. Integration coverage was extended to create a REVIEW media reservation,
+assert 409 while active, then allow release after the job becomes UNKNOWN.
+
+Checks completed: `npm test` passed all 6 unit files and `npm run build:api`
+passed TypeScript compilation. `node scripts/verify-local.mjs` was retried and
+again stopped before integration at S3Proxy readiness with `Operation not
+permitted`; Redis 7.2.11 was reachable. No fresh HTTP/browser/recovery pass is
+claimed for this slice.
 
 ## MEDIA-01D local slice — 2026-10-02
 

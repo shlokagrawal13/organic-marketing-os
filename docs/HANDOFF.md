@@ -1,4 +1,4 @@
-# Project handoff — 0.9.1 / 2026-10-02
+# Project handoff — 0.9.2 / 2026-10-02
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and
@@ -38,7 +38,7 @@ requires authorized live model access and spend. Advanced editing and other mast
 Do not reset all completed work to pending because native/live gates are open.
 
 The source is published to private `shlokagrawal13/organic-marketing-os` main.
-0.9.1 source commit `0b9dce36c95027723ea0529e734316b2af039131` points to tree
+0.9.2 source commit `0b9dce36c95027723ea0529e734316b2af039131` points to tree
 `c1918f5b14059606dc39b239d5f7ffc7b854b061`, and recursive verification matched
 182/182 remote blob paths, modes and SHAs to the local checkpoint with zero
 mismatches. The earlier automatic approval review rejection is a closed

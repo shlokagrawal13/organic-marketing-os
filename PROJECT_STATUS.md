@@ -1,4 +1,4 @@
-# Project status — Organic Marketing OS 0.9.1
+# Project status — Organic Marketing OS 0.9.2
 
 The existing Next.js/NestJS/PostgreSQL/Redis/private-storage architecture now includes
 an executable generated-media workflow. **The full V3 product is still incomplete.**
@@ -24,8 +24,9 @@ Provider fixtures and passing local tests do not certify production readiness.
 - Asset library → Generate with AI provides consent/cost gates, saved job history,
   previews/downloads and attachment controls. Workspace health and private record
   export include the new workflow. MEDIA-01D has started: media models can be
-  allowlisted by workspace plan, and source asset IDs are tenant-checked before
-  the current provider preset rejects unsupported source-byte editing. See
+  allowlisted by workspace plan, source asset IDs are tenant-checked before
+  the current provider preset rejects unsupported source-byte editing, and
+  platform credit review cannot resolve active media generations. See
   GENERATED_MEDIA.md and UPGRADE_0.9.md.
 
 ## Verification and limits
@@ -39,7 +40,8 @@ Provider/SMTP/Stripe responses come only from isolated test fixtures.
 Generated-media live quality, model access, actual charges and signed-redirect
 behavior remain unverified. Source-byte editing adapters, additional provider
 options and automatic output/orphan reconciliation still need engineering; the
-plan-routing and tenant-owned source-reference gates are local contracts only. Media generation is opt-in with no default key, model or price. USD
+plan-routing, tenant-owned source-reference and active-credit-resolution gates are
+local contracts only. Media generation is opt-in with no default key, model or price. USD
 estimates do not impose a provider spending limit. No paid AI request was made.
 
 Native PostgreSQL concurrency/restore, Docker/MinIO, cross-store recovery, live

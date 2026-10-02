@@ -167,3 +167,9 @@ Verification completed: `npm test` passed all 6 unit files and `npm run build:ap
 
 Published this 0.9.1 MEDIA-01D slice after explicit user approval for the private GitHub upload. Remote commit `0b9dce36c95027723ea0529e734316b2af039131` on `shlokagrawal13/organic-marketing-os` main points to tree `c1918f5b14059606dc39b239d5f7ffc7b854b061`. Recursive verification matched 182/182 remote blob paths, modes and SHAs to local HEAD with zero mismatches. Push-created Actions run `37005496060` ended `startup_failure` before jobs, so no native CI result is claimed.
 
+## 2026-10-02 — MEDIA-01D active media credit guard
+
+After the repository was made public, verified the GitHub repository visibility as public. Latest public Actions runs still showed `startup_failure` with zero jobs, so local work continued. Fixed the platform credit reservation resolver so REVIEW reservations linked to active media generations cannot be resolved while the generation is QUEUED, SUBMITTING, PENDING or OUTPUT_READY. Added integration coverage for active media reservation 409 and terminal UNKNOWN release.
+
+Verification completed: `npm test` passed all 6 unit files and `npm run build:api` passed. `node scripts/verify-local.mjs` was retried; Redis 7.2.11 started, then S3Proxy exited before readiness with `Operation not permitted`, so no fresh HTTP/browser/recovery pass is claimed.
+

@@ -1,4 +1,4 @@
-# Organic Marketing OS — 0.9.1
+# Organic Marketing OS — 0.9.2
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 

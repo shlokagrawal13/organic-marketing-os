@@ -201,9 +201,7 @@ class BillingController {
   @Get("invoices")
   async invoices(@Req() req: AuthedRequest, @Query("before") before?: string) {
     const cursor =
-      before === undefined
-        ? undefined
-        : z.coerce.date().parse(before);
+      before === undefined ? undefined : z.coerce.date().parse(before);
     const rows = await this.db.billingInvoice.findMany({
       where: {
         organizationId: req.organizationId,
@@ -556,12 +554,18 @@ class PlatformCreditController {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${reservation.organizationId} FOR UPDATE`;
       const current = await tx.creditReservation.findUniqueOrThrow({
         where: { id },
-        include: { job: { select: { status: true } } },
+        include: {
+          job: { select: { status: true } },
+          mediaGeneration: { select: { state: true } },
+        },
       });
       if (
         current.state === "RESERVED" ||
         current.job?.status === "QUEUED" ||
-        current.job?.status === "RUNNING"
+        current.job?.status === "RUNNING" ||
+        ["QUEUED", "SUBMITTING", "PENDING", "OUTPUT_READY"].includes(
+          current.mediaGeneration?.state || "",
+        )
       )
         throw new ConflictException(
           "Wait for the job to finish before resolving its credits.",
