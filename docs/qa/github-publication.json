@@ -1,5 +1,5 @@
 {
-  "recordedAtUtc": "2026-10-02T14:46:40Z",
+  "recordedAtUtc": "2026-10-02T14:54:20Z",
   "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
   "repositoryId": 1389748509,
   "visibility": "public",
@@ -23,8 +23,8 @@
     "settingsNotRecheckedAfterV09Publish": true
   },
   "nativeCi": {
-    "runId": 37022108731,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37022108731",
+    "runId": 37022495097,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37022495097",
     "sourceCommit": "b48b40b92b20bdd1f2aa1d3287ebfe70586b773a",
     "status": "completed",
     "conclusion": "failure",
@@ -33,7 +33,8 @@
     "path": ".github/workflows/ci.yml",
     "jobName": "Native application verification",
     "jobConclusion": "failure",
-    "rootCause": "Workflow job was created on the public repository, but no steps or runner name were reported and logs were unavailable through the connector; application commands did not execute."
+    "rootCause": "GitHub account billing lock prevented runner steps from starting, even on the public repository.",
+    "annotation": "The job was not started because your account is locked due to a billing issue."
   },
   "priorBillingObservation": {
     "paymentAuthorization": "failed",
@@ -52,7 +53,7 @@
   "limits": [
     "Remote source publication is not native/live application acceptance.",
     "The native CI workflow did not allocate any job, so no GitHub-hosted test result is claimed.",
-    "No payment retry or card edit was performed after the v0.9 publish check.",
-    "No live AI provider call, Stripe payment, user database or private media backup was performed."
+    "No live AI provider call, Stripe payment, user database or private media backup was performed.",
+    "GitHub Actions remains blocked by an account billing lock; code/workflow changes cannot clear that account-level gate."
   ]
 }

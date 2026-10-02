@@ -4,7 +4,7 @@
 
 - Blocked platform credit review resolution for reservations linked to active media generations until the media job is terminal.
 - Added integration coverage for a REVIEW media reservation that returns 409 while PENDING and can be released after UNKNOWN.
-- Published to public `main` as source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`; remote tree `e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8` matched 182/182 local blob paths/modes/SHAs. GitHub Actions run `37022108731` started a job but failed before reported steps/application commands.
+- Published to public `main` as source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`; remote tree `e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8` matched 182/182 local blob paths/modes/SHAs. Actions billing-lock annotation: "The job was not started because your account is locked due to a billing issue."
 - Verified `npm test` and `npm run build:api`; full local harness still stops before integration because S3Proxy exits with `Operation not permitted`.
 
 ## 0.9.1 MEDIA-01D plan/source gates — 2026-10-02

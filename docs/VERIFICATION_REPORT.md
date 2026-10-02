@@ -107,6 +107,5 @@ orphan cleanup and UNKNOWN output reconciliation require further engineering.
 Remote publication was completed after explicit user approval. Public `main` now
 contains 0.9.2 source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`, and
 recursive verification matched 182/182 remote blob paths, modes and SHAs to the
-local checkpoint with zero mismatches. The push-created Actions run `37022108731`
-created one job but failed before reported steps/application commands;
+local checkpoint with zero mismatches. The push-created Actions run `37022495097` reported an account billing lock before runner steps could start;
 prior authenticated evidence named a billing gate. No native CI success is claimed.

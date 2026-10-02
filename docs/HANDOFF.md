@@ -45,6 +45,5 @@ mismatches. The earlier automatic approval review rejection is a closed
 audit event after the user's explicit approval for this private upload. Never
 touch the unrelated `OrganicMarketing` repository.
 
-The latest observed Actions run `37022108731` started one job but failed before
-reported steps/application commands; earlier authenticated evidence named billing, but that UI was not rechecked.
+The latest observed Actions run `37022495097` reported that the account is locked due to a billing issue before runner steps could start; earlier authenticated evidence named billing, but that UI was not rechecked.
 No CI pass, Windows deployment update or ChatGPT buffering root cause is claimed.

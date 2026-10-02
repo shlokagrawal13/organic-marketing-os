@@ -175,3 +175,5 @@ Verification completed: `npm test` passed all 6 unit files and `npm run build:ap
 
 Published 0.9.2 after explicit user approval for the public GitHub upload. Remote commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a` on public `shlokagrawal13/organic-marketing-os` main points to tree `e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8`. Recursive verification matched 182/182 remote blob paths, modes and SHAs to local HEAD with zero mismatches. Push-created Actions run `37022108731` created one `Native application verification` job and concluded failure before any reported steps/application commands; this is not a native CI pass.
 
+Fetched the public GitHub check-run annotations for run `37022495097`. The exact failure annotation is: "The job was not started because your account is locked due to a billing issue.". This explains why the job has no runner name, no steps and no logs despite the repository being public. Code/workflow changes cannot clear this account-level billing lock; native CI remains externally blocked.
+

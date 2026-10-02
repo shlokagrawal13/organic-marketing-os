@@ -60,10 +60,10 @@ approval review rejections are retained only as audit events; they were resolved
 by the user's explicit approvals for this destination.
 The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
-The 0.9.2 public push triggered GitHub Actions run `37022108731`, which created
-one `Native application verification` job and failed before any reported steps or
-application commands. This is progress from the prior `startup_failure`, but it is
-still not a native CI pass. Earlier authenticated diagnostics identified an
+The latest public Actions diagnosis is explicit: run `37022495097` did not start
+runner steps because GitHub reports, "The job was not started because your account
+is locked due to a billing issue." This is an account-level GitHub gate, not an
+application-test failure, and no native CI pass is claimed. Earlier authenticated diagnostics identified an
 account billing gate. These records do not diagnose ChatGPT buffering.
 
 ## Next work
