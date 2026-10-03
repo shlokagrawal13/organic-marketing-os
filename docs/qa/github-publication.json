@@ -1,32 +1,32 @@
 {
-  "recordedAtUtc": "2026-10-03T08:20:49Z",
+  "recordedAtUtc": "2026-10-03T08:58:59Z",
   "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
   "repositoryId": 1389748509,
   "visibility": "public",
   "branch": "main",
   "applicationVersion": "0.9.2",
-  "applicationSourceCommit": "b2ac0ee74247ad8b9478bf82516161ea4211e69f",
-  "applicationSourceTree": null,
-  "applicationSourceTreeNote": "Previous remote tree was verified; update after the accumulated MEDIA-01D publication.",
-  "baseCommit": "e5064bd5a6d2e63513d4a81766bfbef31d866427",
+  "applicationSourceCommit": "12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4",
+  "applicationSourceTree": "fb1263c732cfe23d9f0b5053e3ab0531d13f1983",
+  "applicationSourceTreeNote": "The 26 changed paths uploaded for this MEDIA-01D increment matched the local Git blob SHAs with zero mismatches.",
+  "baseCommit": "b2ac0ee74247ad8b9478bf82516161ea4211e69f",
   "publishMethod": "GitHub Git Data API via connected GitHub tool; terminal git push lacked credentials.",
   "userApproval": "Explicit approval on 2026-10-02 IST for public 0.9.2 upload to shlokagrawal13/organic-marketing-os main after auto-review identified the source payload and public destination risk.",
   "remoteVerification": {
     "recursiveTreeChecked": true,
-    "localBlobCount": 182,
-    "remoteBlobCount": 182,
+    "localBlobCount": 26,
+    "remoteBlobCount": 26,
     "mismatchCount": 0,
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "repositoryActionsSettings": {
     "lastKnownActionsPermissions": "Allow all actions and reusable workflows",
     "lastKnownWorkflowPermissions": "Read and write permissions",
-    "settingsNotRecheckedAfterV09Publish": true
+    "settingsNotRecheckedAfterV09Publish": false
   },
   "nativeCi": {
-    "runId": 37049004398,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37049004398",
-    "sourceCommit": "b2ac0ee74247ad8b9478bf82516161ea4211e69f",
+    "runId": 37111278142,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37111278142",
+    "sourceCommit": "12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4",
     "status": "completed",
     "conclusion": "success",
     "jobsStarted": 1,
@@ -35,7 +35,7 @@
     "jobName": "Native application verification",
     "jobConclusion": "success",
     "rootCause": null,
-    "annotation": "Native application verification completed successfully after the earlier account-side Actions gate was cleared."
+    "annotation": "All workflow steps completed successfully, including build, 31 unit tests, both dependency audits, populated upgrade, native application flows and browser-evidence upload."
   },
   "priorActionsStartupObservation": {
     "summary": "Earlier authenticated diagnostics showed an account-side Actions startup gate. Private account-page details are intentionally not retained in public source.",
@@ -43,16 +43,16 @@
     "currentStatus": "cleared before run 37049004398"
   },
   "latestPublication": {
-    "message": "Fix generated media error assertion",
+    "message": "Complete MEDIA-01D source editing and options",
     "remoteTreeMatchesLocalVerifiedTree": true,
     "commitFetchVerified": true,
     "actionsRunStarted": true,
-    "actionsRunId": 37049004398,
-    "currentLocalSlicePendingPublication": "MEDIA-01D retained output reconciliation, separately quoted single-image editing and bounded image/voice options; prior automatic approval usage limit blocked the upload before branch update"
+    "actionsRunId": 37111278142,
+    "currentLocalSlicePendingPublication": null
   },
   "limits": [
     "Remote source publication is not native/live application acceptance.",
-    "The accumulated MEDIA-01D retained-output, source-edit and bounded-option slices still need publication and their own post-publication CI result.",
+    "The accumulated MEDIA-01D retained-output, source-edit and bounded-option slices are published and their post-publication CI run succeeded.",
     "No live AI provider call, Stripe payment, user database or private media backup was performed.",
     "Native PostgreSQL/Compose and live provider gates remain open even when GitHub CI passes."
   ]

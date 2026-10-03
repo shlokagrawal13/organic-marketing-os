@@ -68,9 +68,8 @@ security. Native PostgreSQL races/restore, Docker/MinIO, live providers and full
 master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
-it is not a database/media restore backup. v0.9 source is published to the
-public main branch and was verified against the local checkpoint. The earlier
-account-side Actions gate was cleared; public run `37049004398` for commit
-`b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed the native application
-verification workflow successfully. The current MEDIA-01D retained-output and image-edit slices
-must be published and checked again after this local update.
+it is not a database/media restore backup. The current v0.9.2 MEDIA-01D source is
+published on public `main` at commit
+`12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4`, and its 26 uploaded paths were
+verified against the local blobs. Public Actions run `37111278142` completed the
+native application verification workflow successfully.

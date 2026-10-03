@@ -2,20 +2,20 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-03.2",
-  "savedAtUtc": "2026-10-03T08:47:26Z",
+  "checkpointRevision": "2026-10-03.3",
+  "savedAtUtc": "2026-10-03T08:58:59Z",
   "currentMilestone": "MEDIA-01D bounded media options and source editing",
   "activeTaskId": null,
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
-    "MEDIA-01D retained-output reconciliation is implemented locally: provider bytes written to private storage before a lost database claim now become UNKNOWN review evidence with credits retained in REVIEW.",
-    "MEDIA-01D single-image editing is implemented and fixture-verified locally: an opt-in separate quote, tenant-owned source-byte integrity preflight and multipart edit adapter; no live provider acceptance is claimed.",
-    "MEDIA-01D bounded options are implemented and fixture-verified locally: image size/quality/background plus built-in voice, WAV/MP3 and speed are normalized, persisted and included in audit evidence.",
+    "MEDIA-01D retained-output reconciliation is published and CI-verified: provider bytes written to private storage before a lost database claim become UNKNOWN review evidence with credits retained in REVIEW.",
+    "MEDIA-01D single-image editing is published and fixture/CI-verified: an opt-in separate quote, tenant-owned source-byte integrity preflight and multipart edit adapter; no live provider acceptance is claimed.",
+    "MEDIA-01D bounded options are published and fixture/CI-verified: image size/quality/background plus built-in voice, WAV/MP3 and speed are normalized, persisted and included in audit evidence.",
     "Plan-specific media routing and tenant-owned source-reference gates remain implemented from 0.9.1.",
-    "Public Actions run 37049004398 for b2ac0ee74247ad8b9478bf82516161ea4211e69f completed successfully before these slices. GitHub publication of the accumulated changes is pending after the automatic approval usage limit blocked uploads before a branch update."
+    "Public main commit 12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4 and tree fb1263c732cfe23d9f0b5053e3ab0531d13f1983 contain the accumulated MEDIA-01D slices; all 26 uploaded paths matched locally, and Actions run 37111278142 completed successfully."
   ],
   "nextTaskId": "MEDIA-01D",
-  "nextAction": "Publish the accumulated MEDIA-01D retained-output, source-edit and bounded-option slices, verify the remote tree and new CI run, then continue the next ready module. Live media acceptance is MEDIA-LIVE-01.",
+  "nextAction": "Continue MEDIA-01D with multi-image references as the next provider-neutral local increment; keep another provider/custom voices dependent on a provider choice and live media acceptance under MEDIA-LIVE-01.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -72,9 +72,9 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 37049004398,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37049004398",
-      "sourceCommit": "b2ac0ee74247ad8b9478bf82516161ea4211e69f",
+      "runId": 37111278142,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37111278142",
+      "sourceCommit": "12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4",
       "status": "completed",
       "conclusion": "success",
       "jobsStarted": 1,
@@ -88,7 +88,7 @@
         36622686659, 36623211633, 37002434700, 37002814189, 37005496060,
         37005778625
       ],
-      "annotation": "Native application verification completed successfully after the earlier account-side Actions gate was cleared."
+      "annotation": "The published MEDIA-01D source completed every workflow step: build, 31 unit tests, dependency audits, populated upgrade, native application flows and browser-evidence upload."
     },
     "latestIncrement": {
       "unitTestsPassed": 31,
@@ -116,7 +116,7 @@
     "dependencyAuditDate": "2026-09-29; not rerun in 0.9; dependency versions unchanged"
   },
   "accessState": {
-    "github": "Public main was tree-verified before these slices; run 37049004398 completed successfully. Automatic approval usage limit blocked the accumulated MEDIA-01D upload before any branch update; publication and its CI check remain pending.",
+    "github": "Public main application commit 12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4 was verified against all 26 uploaded local paths; Actions run 37111278142 completed successfully.",
     "nativeExecution": "Local Redis 7.2.11 recovered without root install; full PGlite/Redis/storage/browser/recovery verifier passes with elevated local service permission. Native PostgreSQL/Docker not verified.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -124,8 +124,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "b2ac0ee74247ad8b9478bf82516161ea4211e69f",
-    "status": "published_public_base_verified_local_media01d_slices_pending",
+    "commit": "12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4",
+    "status": "published_public_media01d_verified_ci_success",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -138,7 +138,7 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8",
+    "sourceTree": "fb1263c732cfe23d9f0b5053e3ab0531d13f1983",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Published 0.9.2 source commit on public main. A later documentation-only publication may advance main; compare source trees and read docs/qa/github-publication.json for the latest publication record.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; 0.9.2 source commit is recorded explicitly here.",
@@ -152,16 +152,16 @@
       "resolved": true
     },
     "publication": {
-      "publishedAtUtc": "2026-10-02T14:46:40Z",
+      "publishedAtUtc": "2026-10-03T08:54:40Z",
       "visibility": "public",
-      "applicationCommit": "b48b40b92b20bdd1f2aa1d3287ebfe70586b773a",
-      "applicationTree": "e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8",
+      "applicationCommit": "12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4",
+      "applicationTree": "fb1263c732cfe23d9f0b5053e3ab0531d13f1983",
       "localCommit": "f514e1f22c879f3a5f0a47c4e387ba6f7ea07fd3",
-      "baseCommit": "e5064bd5a6d2e63513d4a81766bfbef31d866427",
-      "remoteBlobCount": 182,
-      "localBlobCount": 182,
+      "baseCommit": "b2ac0ee74247ad8b9478bf82516161ea4211e69f",
+      "remoteBlobCount": 26,
+      "localBlobCount": 26,
       "mismatchCount": 0,
-      "actionsRunId": 37049004398,
+      "actionsRunId": 37111278142,
       "actionsConclusion": "success",
       "actionsJobsStarted": 1,
       "nativeTestsExecuted": true

@@ -141,11 +141,13 @@ full security/load/accessibility and full master acceptance remain open. Fixed
 operator USD estimates are not provider-enforced spend caps. Automatic aged
 staging cleanup and provider billing reconciliation after UNKNOWN remain open.
 
-Remote publication was completed after explicit user approval. Public `main` now
-contains the 0.9.2 source, and recursive verification matched remote blob paths,
-modes and SHAs to the local checkpoint with zero mismatches. The earlier
-push-created Actions run `37022495097` reported an account-side startup gate before
-runner steps could start, but a later public run `37049004398` for commit
-`b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed the native application
-verification workflow successfully. The current retained-output and image-edit slices still
-needs its own publish and remote CI check.
+Remote publication was completed after explicit user approval. Public `main`
+application commit `12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4` points to tree
+`fb1263c732cfe23d9f0b5053e3ab0531d13f1983`; all 26 changed paths uploaded for
+the retained-output, source-edit and bounded-option increment matched the local
+Git blob SHAs. Public Actions run `37111278142` completed successfully. Its sole
+`Native application verification` job passed setup, service initialization,
+dependency installation, build, 31 unit tests, production/development dependency
+audits, populated upgrade verification, native application flows, browser-evidence
+upload and cleanup. This closes the current source-publication/CI gate, not the
+separate live-provider, native Compose/MinIO or full-product acceptance gates.

@@ -61,11 +61,11 @@ are retained only as audit events; they were resolved by the user's explicit
 approvals for this destination.
 The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
-The earlier public account-side Actions gate was cleared. Public run
-`37049004398` for commit `b2ac0ee74247ad8b9478bf82516161ea4211e69f`
-completed the native application verification workflow successfully. The current
-MEDIA-01D retained-output and source-image-edit slices still need publication
-and their own remote CI check.
+The earlier public account-side Actions gate is cleared. The accumulated
+MEDIA-01D source was published at commit
+`12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4`; all 26 uploaded paths matched the
+local blobs. Public run `37111278142` completed every native application
+verification step successfully, including browser-evidence upload.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work

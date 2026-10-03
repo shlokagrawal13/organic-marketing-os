@@ -44,8 +44,9 @@ The earlier automatic approval review rejection is a closed audit event after
 the user's explicit approval for this public upload. Never touch the unrelated
 `OrganicMarketing` repository.
 
-The previous account-side Actions gate was cleared: public run `37049004398`
-for commit `b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed native
-application verification successfully before the retained-output and image-edit slices. Publish
-the current slice, recursively verify the remote tree and watch the new CI run.
+The previous account-side Actions gate is cleared. Application commit
+`12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4` contains the accumulated
+retained-output, source-edit and bounded-option slices; all 26 uploaded paths
+matched locally. Public run `37111278142` completed every native verification
+step successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.
