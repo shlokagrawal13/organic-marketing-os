@@ -27,7 +27,7 @@ Open http://localhost:3000 and create your own account. Development verification
 - Drafts, scene editing, comments, review/rejection/approval, approval invalidation, campaigns, editorial calendar, search and JSON exports.
 - Queued text strategy/script/scene generation with compatible primary/fallback providers, validation and usage records.
 - **Policy-aware model routing:** task capability, plan, declared quality, shared Redis health, configured dollar caps and comparable-fallback enforcement; ambiguous provider outcomes never start a second paid call.
-- **Generated media:** saved image/voice/video jobs, rights and estimate acceptance, plan-aware model availability, tenant-checked source-reference gates, fixed credit reservations, private validated outputs, restart recovery and revision-checked scene attachment. Enabled explicitly by an administrator; no live provider acceptance claimed.
+- **Generated media:** saved image/voice/video jobs, rights and estimate acceptance, plan-aware models, bounded image/voice options, separately quoted single-image editing with verified private source bytes, fixed credit reservations, retained UNKNOWN output review, private validated outputs, restart recovery and revision-checked scene attachment. Enabled explicitly by an administrator; no live provider acceptance claimed.
 - **Asset library:** private image/video/audio uploads, validation, previews, tags, search, deduplication, downloads, archive and restore.
 - **Video studio:** uploaded media attached to scenes, actual FFmpeg MP4 rendering, uploaded narration/background music, scene captions, portrait/landscape/square formats, progress/cancel/retry, reusable scene cache, preview and MP4/SRT/thumbnail downloads.
 - Separate approval for the exact rendered content revision, responsive light/dark UI.
@@ -69,4 +69,8 @@ master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
 it is not a database/media restore backup. v0.9 source is published to the
-public main branch at source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a` and was verified against the local checkpoint. GitHub Actions now starts a job, but the latest job failed before reported steps/application commands, so no native CI pass is claimed.
+public main branch and was verified against the local checkpoint. The earlier
+account-side Actions gate was cleared; public run `37049004398` for commit
+`b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed the native application
+verification workflow successfully. The current MEDIA-01D retained-output and image-edit slices
+must be published and checked again after this local update.

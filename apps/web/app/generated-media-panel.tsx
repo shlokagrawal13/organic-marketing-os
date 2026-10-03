@@ -25,8 +25,16 @@ export default function GeneratedMediaPanel({
 }) {
   const [status, setStatus] = useState<RecordData | null>(null),
     [jobs, setJobs] = useState<RecordData[]>([]),
-    [content, setContent] = useState<RecordData[]>([]);
+    [content, setContent] = useState<RecordData[]>([]),
+    [images, setImages] = useState<RecordData[]>([]);
   const [kind, setKind] = useState("image"),
+    [sourceAssetId, setSourceAssetId] = useState(""),
+    [imageSize, setImageSize] = useState("1024x1024"),
+    [imageQuality, setImageQuality] = useState("medium"),
+    [imageBackground, setImageBackground] = useState("opaque"),
+    [voice, setVoice] = useState("alloy"),
+    [voiceFormat, setVoiceFormat] = useState("wav"),
+    [voiceSpeed, setVoiceSpeed] = useState(1),
     [prompt, setPrompt] = useState(""),
     [rightsNote, setRightsNote] = useState(""),
     [rights, setRights] = useState(false),
@@ -42,18 +50,21 @@ export default function GeneratedMediaPanel({
     seenAssets = useRef(new Set<string>());
   const canWrite = ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role);
   const model = status?.models.find((m: RecordData) => m.kind === kind);
+  const pricing = sourceAssetId && kind === "image" ? model?.imageEdit : model;
   const selectedContent = content.find((c) => c.id === contentId);
   const load = useCallback(async () => {
     try {
-      const [configuration, history, drafts] = await Promise.all([
+      const [configuration, history, drafts, assets] = await Promise.all([
         api(`${base}/media-generations/status`),
         api(`${base}/media-generations?take=50`),
         api(`${base}/content?take=100`),
+        api(`${base}/assets?kind=IMAGE&take=100`),
       ]);
       if (!mounted.current) return;
       setStatus(configuration);
       setJobs(history.items);
       setContent(drafts.items);
+      setImages(assets.items);
       const newAssets = history.items.filter(
         (j: RecordData) => j.assetId && !seenAssets.current.has(j.assetId),
       );
@@ -76,10 +87,16 @@ export default function GeneratedMediaPanel({
   }, [load]);
   useEffect(() => {
     setAcceptedCost(false);
-  }, [kind, model?.estimatedCostUsd, model?.credits, model?.model]);
+  }, [
+    kind,
+    sourceAssetId,
+    pricing?.estimatedCostUsd,
+    pricing?.credits,
+    model?.model,
+  ]);
   async function generate(event: React.FormEvent) {
     event.preventDefault();
-    if (lock.current || !model || !rights || !acceptedCost) return;
+    if (lock.current || !model || !pricing || !rights || !acceptedCost) return;
     lock.current = true;
     setBusy(true);
     setError("");
@@ -90,7 +107,31 @@ export default function GeneratedMediaPanel({
       prompt,
       rightsConfirmed: true,
       rightsNote,
-      maxCostUsd: model.estimatedCostUsd,
+      maxCostUsd: pricing.estimatedCostUsd,
+      ...(kind === "image"
+        ? {
+            options: {
+              image: {
+                size: imageSize,
+                quality: imageQuality,
+                background: imageBackground,
+              },
+            },
+          }
+        : kind === "voice"
+          ? {
+              options: {
+                voice: {
+                  voice,
+                  responseFormat: voiceFormat,
+                  speed: voiceSpeed,
+                },
+              },
+            }
+          : {}),
+      ...(sourceAssetId && kind === "image"
+        ? { sourceAssetIds: [sourceAssetId] }
+        : {}),
       ...(selectedContent && sceneId
         ? {
             target: {
@@ -102,7 +143,7 @@ export default function GeneratedMediaPanel({
           }
         : {}),
     };
-    const payload = JSON.stringify({ request, maxCredits: model.credits });
+    const payload = JSON.stringify({ request, maxCredits: pricing.credits });
     if (pending.current?.payload !== payload)
       pending.current = { payload, key: crypto.randomUUID() };
     try {
@@ -208,7 +249,10 @@ export default function GeneratedMediaPanel({
                   <select
                     value={kind}
                     disabled={busy}
-                    onChange={(e) => setKind(e.target.value)}
+                    onChange={(e) => {
+                      setKind(e.target.value);
+                      setSourceAssetId("");
+                    }}
                   >
                     <option
                       value="image"
@@ -249,13 +293,122 @@ export default function GeneratedMediaPanel({
                   </strong>
                   <span className="muted">
                     {kind === "image"
-                      ? "One 1024 × 1024 PNG · medium quality"
+                      ? `One ${imageSize.replace("x", " × ")} PNG · ${imageQuality} quality · ${imageBackground} background`
                       : kind === "video"
                         ? "One 4-second portrait clip · 720 × 1280"
-                        : "Alloy voice · WAV · label shared audio as AI-generated"}
+                        : `${voice} voice · ${voiceFormat.toUpperCase()} · ${voiceSpeed}× speed · label shared audio as AI-generated`}
                   </span>
                 </div>
               </div>
+              {kind === "image" && model?.options && (
+                <div className="form-grid">
+                  <label>
+                    Image size
+                    <select
+                      value={imageSize}
+                      onChange={(e) => setImageSize(e.target.value)}
+                      disabled={busy}
+                    >
+                      {model.options.sizes.map((value: string) => (
+                        <option key={value} value={value}>
+                          {value.replace("x", " × ")}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Quality
+                    <select
+                      value={imageQuality}
+                      onChange={(e) => setImageQuality(e.target.value)}
+                      disabled={busy}
+                    >
+                      {model.options.qualities.map((value: string) => (
+                        <option key={value} value={value}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Background
+                    <select
+                      value={imageBackground}
+                      onChange={(e) => setImageBackground(e.target.value)}
+                      disabled={busy}
+                    >
+                      {model.options.backgrounds.map((value: string) => (
+                        <option key={value} value={value}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+              )}
+              {kind === "voice" && model?.options && (
+                <div className="form-grid">
+                  <label>
+                    Voice
+                    <select
+                      value={voice}
+                      onChange={(e) => setVoice(e.target.value)}
+                      disabled={busy}
+                    >
+                      {model.options.voices.map((value: string) => (
+                        <option key={value} value={value}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Audio format
+                    <select
+                      value={voiceFormat}
+                      onChange={(e) => setVoiceFormat(e.target.value)}
+                      disabled={busy}
+                    >
+                      {model.options.responseFormats.map((value: string) => (
+                        <option key={value} value={value}>
+                          {value.toUpperCase()}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Speed ({voiceSpeed}×)
+                    <input
+                      type="range"
+                      min={model.options.speed.min}
+                      max={model.options.speed.max}
+                      step={model.options.speed.step}
+                      value={voiceSpeed}
+                      onChange={(e) => setVoiceSpeed(Number(e.target.value))}
+                      disabled={busy}
+                    />
+                  </label>
+                </div>
+              )}
+              {kind === "image" && model?.imageEdit && (
+                <label>
+                  Reference image (optional)
+                  <select
+                    value={sourceAssetId}
+                    onChange={(e) => setSourceAssetId(e.target.value)}
+                    disabled={busy}
+                  >
+                    <option value="">Create without a reference</option>
+                    {images
+                      .filter((asset) => asset.bytes <= 8 * 1024 * 1024)
+                      .map((asset) => (
+                        <option key={asset.id} value={asset.id}>
+                          {asset.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+              )}
               <label>
                 {kind === "voice" ? "Narration text" : "Describe your media"}
                 <textarea
@@ -341,15 +494,15 @@ export default function GeneratedMediaPanel({
                 />
                 I have the rights and consent needed for this generation.
               </label>
-              {model && (
+              {model && pricing && (
                 <div className="generation-cost">
                   <strong>
                     Estimated provider cost: $
-                    {model.estimatedCostUsd.toFixed(4)}
+                    {pricing.estimatedCostUsd.toFixed(4)}
                   </strong>
                   <p>
                     {status.billingMode === "credits"
-                      ? `${model.credits} credits reserved now; charged when validated media is delivered.`
+                      ? `${pricing.credits} credits reserved now; charged when validated media is delivered.`
                       : "Self-hosted: provider charges are billed to your configured provider account."}{" "}
                     USD estimates are set by your administrator and do not
                     enforce a provider spending cap.
@@ -376,6 +529,7 @@ export default function GeneratedMediaPanel({
                   disabled={
                     busy ||
                     !model ||
+                    !pricing ||
                     !rights ||
                     !acceptedCost ||
                     !prompt.trim() ||

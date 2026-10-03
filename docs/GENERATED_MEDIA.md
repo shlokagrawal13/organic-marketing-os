@@ -21,15 +21,36 @@ allowlist of `free`, `starter`, `growth` and `self_hosted`; blank means the mode
 is available to all plans. The workspace plan is resolved before queueing and the
 saved provider policy is frozen with the job.
 
-Use a provider model compatible with these fixed presets:
+Optional single-image editing uses the same configured GPT Image-compatible
+model and separate `MEDIA_IMAGE_EDIT_ESTIMATE_USD` and
+`MEDIA_IMAGE_EDIT_CREDITS` values. Set both or neither. The edit mode accepts
+one active, tenant-owned image of at most 8 MiB. The worker reads private bytes,
+checks object-key tenant prefix, length, SHA-256 and detected MIME before the
+paid submission boundary, then sends multipart bytes to `/v1/images/edits`.
+Archived, missing, altered or oversized sources fail without a provider call.
+The status API and asset-library UI show the separate estimate when a reference
+is selected. The estimate is still not a provider-enforced cost cap.
+
+Image and voice requests expose a bounded option catalog. The operator-configured
+estimate and credit quote must conservatively cover every selectable combination;
+the app does not infer provider pricing. The normalized selection is stored in
+the generation request, returned as its preset and copied into queue/completion
+audit evidence. Image output stays PNG so transparent backgrounds remain safe.
+Voice output is limited to WAV and MP3 because both pass the private media
+validation pipeline. The app supports the provider's built-in voices and speeds
+from 0.25x through 4x; custom voice IDs are outside this increment.
+
+Use a provider model compatible with these bounded presets:
 
 | Kind | Contract | Preset |
 | --- | --- | --- |
-| Image | POST `/v1/images/generations` | GPT Image-compatible; one 1024×1024 medium-quality PNG; base64 response |
-| Voice | POST `/v1/audio/speech` | Up to 4,000 characters, built-in Alloy voice, WAV; disclose AI-generated voice |
+| Image | POST `/v1/images/generations` | GPT Image-compatible; one PNG; 1024×1024, 1536×1024 or 1024×1536; low/medium/high; opaque/transparent |
+| Image edit | POST `/v1/images/edits` | One owned image reference; same bounded PNG options; multipart input, base64 output |
+| Voice | POST `/v1/audio/speech` | Up to 4,000 characters; built-in voice; WAV/MP3; 0.25x–4x; disclose AI-generated voice |
 | Video | POST `/v1/videos`, GET saved ID, GET saved ID/content | One four-second 720×1280 portrait clip; MP4 |
 
-Provider request formats were checked against the official [image reference](https://developers.openai.com/api/reference/resources/images/methods/generate),
+Provider request formats were checked against the official [image generation reference](https://developers.openai.com/api/reference/resources/images/methods/generate),
+[image edit reference](https://developers.openai.com/api/reference/resources/images/methods/edit),
 [speech reference](https://developers.openai.com/api/reference/resources/audio/subresources/speech/methods/create),
 and [video guide](https://developers.openai.com/api/docs/guides/video-generation).
 Model access, output quality and actual billing still require authorized live tests.
@@ -60,10 +81,13 @@ asset link, attachment revision, lease, cancellation request and timestamps.
 A database claim becomes SUBMITTING **before** the paid boundary. A submit error,
 lost acceptance response or expired submit lease becomes UNKNOWN and never
 resubmits automatically. A later worker can poll PENDING using its existing video
-ID, or resume OUTPUT_READY using saved private bytes. Redis queue entries are
-repaired from database records. Poll errors retry reads, not generation. Polling
-or ingestion beyond 24 hours requires manual reconciliation. Workers use a
-60-second stale lease and a three-minute per-attempt deadline.
+ID, or resume OUTPUT_READY using saved private bytes. If provider bytes were
+written to private storage but the worker lost its database claim before ingestion,
+the job is moved to UNKNOWN with the private output pointer retained for platform
+review and credits remain in REVIEW. Redis queue entries are repaired from
+database records. Poll errors retry reads, not generation. Polling or ingestion
+beyond 24 hours requires manual reconciliation. Workers use a 60-second stale
+lease and a three-minute per-attempt deadline.
 
 Output reads are bounded to 25 MiB. Arbitrary output URLs are never fetched;
 provider requests stay on the official origin and redirects fail closed. Only the
@@ -79,10 +103,11 @@ and invalidates content/render approval. A stale revision returns 409 and preser
 the generated asset for manual use. Repeating an attachment returns its receipt
 without applying another content edit. All list/detail/create/cancel/attach routes
 check tenant membership; writes require OWNER, ADMIN, EDITOR or CREATOR.
-Reference asset IDs are now tenant-checked before queueing: IDs must be unique,
-active image assets in the same workspace. The current OpenAI preset still rejects
-source assets before provider submission, so this is a source/reference contract
-gate rather than live editing support.
+Reference asset IDs are tenant-checked before queueing: IDs must be unique,
+active image assets in the same workspace. A separately enabled image-edit
+preset supports one image; other media kinds and multi-image references still
+fail before provider submission. The worker repeats source checks and verifies
+private bytes before submitting a paid edit.
 
 Workspace health includes the media worker and state counts. Private record
 exports include sanitized generation history, excluding private object keys and
@@ -100,9 +125,8 @@ attaches them, renders an MP4 and reloads durable history. These fixtures are
 synthetic, never customer outputs.
 
 Pending: authorized live image/video/voice acceptance and signed-redirect behavior;
-reference-image/editing adapters that actually send source bytes to a provider;
-additional voices/options/providers; native PostgreSQL/Compose concurrency and
-cross-store restore; automatic orphan/staging cleanup; provider billing
-reconciliation and output reconciliation after UNKNOWN. An ambiguous object write
-may leave a private orphan retained for investigation. No automatic paid retry or
-deletion tries to conceal that uncertainty. See MEDIA-01D and DATA-01.
+custom voices/additional providers and multi-image/video references; native PostgreSQL/Compose concurrency and
+cross-store restore; automatic aged staging cleanup and provider billing
+reconciliation after UNKNOWN. Ambiguous provider output is retained privately as
+structured review evidence instead of being retried or silently deleted. See
+MEDIA-01D and DATA-01.

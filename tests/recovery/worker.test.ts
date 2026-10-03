@@ -5,6 +5,7 @@ import { spawn, ChildProcess } from "node:child_process";
 import { createWriteStream } from "node:fs";
 import { db, actor, base, draft, scene, until } from "../support/http";
 import { grantCredits, reserveCredits } from "../../packages/core/credits";
+import { retainPrivateMediaOutputForReview } from "../../packages/core/media-generation-runtime";
 assert.equal(
   process.env.MOS_ISOLATED_TEST_HARNESS,
   "true",
@@ -400,5 +401,112 @@ test(
     assert.equal(stats[prompt], 1);
     assert.equal(stats["Recovery video receipt"], 1);
     assert.equal(stats["Never submit saved private output"], undefined);
+  },
+);
+
+test(
+  "media output reconciliation retains private bytes and marks credits for review",
+  { timeout: 20000 },
+  async () => {
+    const org = await db.organization.create({
+      data: { name: "Media output reconciliation QA" },
+    });
+    orgs.push(org.id);
+    const a = await actor(org.id);
+    users.push(a.id);
+    const { ObjectStore } = await import("../../packages/core/object-store");
+    const { readFile } = await import("node:fs/promises");
+    const token = randomUUID();
+    const store = new ObjectStore();
+    const generation = await db.$transaction(async (tx) => {
+      await grantCredits(
+        tx,
+        org.id,
+        5,
+        randomUUID(),
+        "Synthetic media output reconciliation grant",
+        a.id,
+      );
+      const reservation = await reserveCredits(
+        tx,
+        org.id,
+        `media:${token}`,
+        2,
+        a.id,
+      );
+      return tx.mediaGeneration.create({
+        data: {
+          organizationId: org.id,
+          actorId: a.id,
+          requestKey: randomUUID(),
+          requestHash: randomUUID(),
+          request: {
+            kind: "image",
+            model: "fixture-image",
+            prompt: "Retain provider output for reconciliation",
+            rightsConfirmed: true,
+            rightsNote: "Synthetic retained provider output fixture",
+            maxCostUsd: 0.1,
+            sourceAssetIds: [],
+          },
+          configuration: {
+            version: 1,
+            provider: "openai",
+            baseUrl: "http://127.0.0.1:4998/v1",
+            kind: "image",
+            model: "fixture-image",
+            estimatedCostUsd: 0.1,
+            credits: 2,
+            allowedPlans: ["free", "starter", "growth", "self_hosted"],
+          },
+          state: "SUBMITTING",
+          startedAt: new Date(),
+          runToken: token,
+          heartbeatAt: new Date(),
+          creditReservationId: reservation.id,
+          quotedCostUsd: 0.1,
+          quotedCredits: 2,
+        },
+      });
+    });
+    const key = `${org.id}/generated/${generation.id}/${token}`;
+    await store.put(
+      key,
+      await readFile(".local/media-fixtures/product.png"),
+      "image/png",
+    );
+    assert.equal(
+      await retainPrivateMediaOutputForReview(
+        db,
+        generation,
+        token,
+        key,
+        "req_reconcile_fixture",
+      ),
+      true,
+    );
+    const retained = await db.mediaGeneration.findUniqueOrThrow({
+      where: { id: generation.id },
+    });
+    assert.equal(retained.state, "UNKNOWN");
+    assert.equal(retained.outputKey, key);
+    assert.equal(retained.runToken, null);
+    assert.match(retained.error!, /private storage/i);
+    assert.equal(
+      (
+        await db.creditReservation.findUniqueOrThrow({
+          where: { id: retained.creditReservationId! },
+        })
+      ).state,
+      "REVIEW",
+    );
+    const audit = await db.auditLog.findFirstOrThrow({
+      where: {
+        organizationId: org.id,
+        entityId: generation.id,
+        action: "media_generation.output_reconciliation_needed",
+      },
+    });
+    assert.equal((audit.detail as any).outputRetained, true);
   },
 );

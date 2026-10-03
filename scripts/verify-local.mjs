@@ -319,6 +319,8 @@ try {
     process.env[`MEDIA_${kind}_ESTIMATE_USD`] = "0.1";
     process.env[`MEDIA_${kind}_CREDITS`] = "2";
   }
+  process.env.MEDIA_IMAGE_EDIT_ESTIMATE_USD = "0.2";
+  process.env.MEDIA_IMAGE_EDIT_CREDITS = "3";
   await run("node_modules/.bin/prisma", ["migrate", "deploy"]);
   start("node", ["dist/apps/api/src/main.js"], "api");
   process.env.TEST_AI_WORKER_PID = String(

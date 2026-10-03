@@ -2,6 +2,37 @@ import { z } from "zod";
 import { createHash } from "node:crypto";
 import { stableJson } from "./requests";
 
+export const imageGenerationOptionsSchema = z
+  .object({
+    size: z.enum(["1024x1024", "1536x1024", "1024x1536"]).default("1024x1024"),
+    quality: z.enum(["low", "medium", "high"]).default("medium"),
+    background: z.enum(["opaque", "transparent"]).default("opaque"),
+  })
+  .strict();
+export const voiceGenerationOptionsSchema = z
+  .object({
+    voice: z
+      .enum([
+        "alloy",
+        "ash",
+        "ballad",
+        "coral",
+        "echo",
+        "fable",
+        "onyx",
+        "nova",
+        "sage",
+        "shimmer",
+        "verse",
+        "marin",
+        "cedar",
+      ])
+      .default("alloy"),
+    responseFormat: z.enum(["wav", "mp3"]).default("wav"),
+    speed: z.number().min(0.25).max(4).default(1),
+  })
+  .strict();
+
 export const generationRequestSchema = z
   .object({
     kind: z.enum(["image", "video", "voice"]),
@@ -10,6 +41,13 @@ export const generationRequestSchema = z
     rightsConfirmed: z.literal(true),
     rightsNote: z.string().trim().min(1).max(1000),
     sourceAssetIds: z.array(z.string().uuid()).max(8).default([]),
+    options: z
+      .object({
+        image: imageGenerationOptionsSchema.optional(),
+        voice: voiceGenerationOptionsSchema.optional(),
+      })
+      .strict()
+      .default({}),
     target: z
       .object({
         contentId: z.string().uuid(),
@@ -30,6 +68,18 @@ export const generationRequestSchema = z
       context.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Voice replaces narration; image/video replaces a visual.",
+      });
+    if (request.options.image && request.kind !== "image")
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["options", "image"],
+        message: "Image options can only be used for image generation.",
+      });
+    if (request.options.voice && request.kind !== "voice")
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["options", "voice"],
+        message: "Voice options can only be used for voice generation.",
       });
   });
 export type GenerationRequest = z.infer<typeof generationRequestSchema>;

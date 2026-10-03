@@ -1,14 +1,14 @@
 # Verification report — Organic Marketing OS 0.9.2
 
-Verified locally on 2026-10-01. The generated-media implementation advances the
+Verified locally on 2026-10-03. The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.
 
 | Check | Completed result |
 | --- | --- |
-| Unit tests | 28 passed |
+| Unit tests | 31 passed across 6 test files |
 | HTTP integration | 7 broad scenarios passed |
 | Production-browser tests | 6 scenarios passed |
-| Recovery/configuration | 4 scenarios passed |
+| Recovery/configuration | 5 scenarios passed |
 | Prisma/API/Next.js | Client generation and both production builds passed |
 | Fresh migrations | All 12 applied through Prisma deploy in the isolated harness |
 | Populated upgrade/fresh restore | PGlite passed; old draft/user/membership/queued AI record, immutable credit ledger and saved media request/provider ID preserved |
@@ -20,6 +20,43 @@ output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
 
 
+
+## MEDIA-01D single-image editing — 2026-10-03
+
+An opt-in image-edit preset has its own USD estimate and credit quote. The
+tenant-scoped source must be active, at most 8 MiB, and match private bytes by
+length, SHA-256 and MIME before the worker submits. The adapter sends multipart
+image bytes to the fixed OpenAI edit endpoint; no arbitrary source URL is fetched.
+Unit tests cover pricing, plan gates, multipart shape and integrity failures.
+The HTTP fixture verifies the saved edit request, provider receipt, private
+ingestion and separate quote. `npm test`, API build and full `npm run verify`
+passed: 7 HTTP, 6 browser, 5 recovery scenarios and 12 migrations. The initial
+sandboxed verifier attempt could not start local S3Proxy; the elevated isolated
+rerun passed. Live model/billing acceptance and this slice's GitHub CI are open.
+
+The same dated verifier covers bounded option selection: image size, quality and
+opaque/transparent background; built-in voice, WAV/MP3 and speed. Unit contracts
+assert the exact provider payload and reject cross-kind or out-of-range options.
+The HTTP fixture verifies the option catalog and exact saved multipart edit
+preset. API and clean Next.js 16.3.8 production builds, 31 unit tests and the
+complete 7/6/5 local harness passed.
+
+## MEDIA-01D retained output reconciliation — 2026-10-02
+
+Added explicit reconciliation for the ambiguous case where provider bytes were
+written to private storage but the worker lost its database claim before private
+ingestion. The worker now retains the private output pointer on the generation,
+moves the job to UNKNOWN, keeps the credit reservation in REVIEW and records a
+`media_generation.output_reconciliation_needed` audit marker. This makes the
+paid-boundary uncertainty visible for platform review without automatically
+retrying or silently deleting the output.
+
+Checks completed: `npm run build:api`, `npm test` and the full
+`npm run verify` harness all passed. The full harness applied all 12 migrations,
+passed 7 HTTP scenarios, 6 production-browser scenarios and 5 recovery/
+configuration scenarios. The first sandboxed verifier attempt stopped at S3Proxy
+with `Operation not permitted`; the required elevated verifier rerun completed
+successfully.
 
 ## MEDIA-01D credit reconciliation guard — 2026-10-02
 
@@ -101,11 +138,14 @@ private-object backup. Java/S3Proxy dependencies are outside the npm audit.
 Native PostgreSQL/Compose/MinIO, live image/video/voice/text quality/cost, signed
 provider redirects, actual Stripe sandbox, real SMTP/cloud/TLS, media source edits,
 full security/load/accessibility and full master acceptance remain open. Fixed
-operator USD estimates are not provider-enforced spend caps. Automatic staging/
-orphan cleanup and UNKNOWN output reconciliation require further engineering.
+operator USD estimates are not provider-enforced spend caps. Automatic aged
+staging cleanup and provider billing reconciliation after UNKNOWN remain open.
 
 Remote publication was completed after explicit user approval. Public `main` now
-contains 0.9.2 source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`, and
-recursive verification matched 182/182 remote blob paths, modes and SHAs to the
-local checkpoint with zero mismatches. The push-created Actions run `37022495097` reported an account billing lock before runner steps could start;
-prior authenticated evidence named a billing gate. No native CI success is claimed.
+contains the 0.9.2 source, and recursive verification matched remote blob paths,
+modes and SHAs to the local checkpoint with zero mismatches. The earlier
+push-created Actions run `37022495097` reported an account-side startup gate before
+runner steps could start, but a later public run `37049004398` for commit
+`b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed the native application
+verification workflow successfully. The current retained-output and image-edit slices still
+needs its own publish and remote CI check.

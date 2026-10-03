@@ -16,11 +16,13 @@ incrementally with independent implementation and verification.
    create a fresh source ZIP with `python3 scripts/package_handoff.py`.
 
 The latest source is published to the canonical public repository:
-https://github.com/shlokagrawal13/organic-marketing-os. Version 0.9 application
-commit `b47c34fd9fd1fe9b24beea96aacb41a9a9dedf7b` has remote tree `a85c8a0384083167121e6fa34f46d9ac837fba8c`, verified against the local
-source with 182/182 blob paths, modes and SHAs matching. A prior automatic
-approval review rejection was resolved by explicit user approval for this private
+https://github.com/shlokagrawal13/organic-marketing-os. A prior automatic
+approval review rejection was resolved by explicit user approval for this public
 upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
+Public Actions run `37049004398` for commit
+`b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed native application
+verification successfully before the current retained-output and image-edit slices; publish and
+check the next run after local changes.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

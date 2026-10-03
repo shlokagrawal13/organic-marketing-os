@@ -24,10 +24,13 @@ Provider fixtures and passing local tests do not certify production readiness.
 - Asset library → Generate with AI provides consent/cost gates, saved job history,
   previews/downloads and attachment controls. Workspace health and private record
   export include the new workflow. MEDIA-01D has started: media models can be
-  allowlisted by workspace plan, source asset IDs are tenant-checked before
-  the current provider preset rejects unsupported source-byte editing, and
-  platform credit review cannot resolve active media generations. See
-  GENERATED_MEDIA.md and UPGRADE_0.9.md.
+  allowlisted by workspace plan, a separately quoted single-image edit preset
+  verifies tenant-owned source bytes before provider submission, bounded image
+  and voice options are saved with each request, and
+  platform credit review cannot resolve active media generations. UNKNOWN
+  provider output written to private storage is retained as structured
+  review evidence instead of becoming a hidden orphan. See GENERATED_MEDIA.md
+  and UPGRADE_0.9.md.
 
 ## Verification and limits
 
@@ -38,10 +41,10 @@ storage is private S3Proxy 4.1.1 and media validation/rendering uses real FFmpeg
 Provider/SMTP/Stripe responses come only from isolated test fixtures.
 
 Generated-media live quality, model access, actual charges and signed-redirect
-behavior remain unverified. Source-byte editing adapters, additional provider
-options and automatic output/orphan reconciliation still need engineering; the
-plan-routing, tenant-owned source-reference and active-credit-resolution gates are
-local contracts only. Media generation is opt-in with no default key, model or price. USD
+behavior remain unverified. Single-image editing and bounded image/voice options
+passed isolated provider fixtures, but multi-image/video references, custom voices and another provider still
+need engineering; plan routing, active-credit-resolution and retained UNKNOWN
+output gates are local contracts only. Media generation is opt-in with no default key, model or price. USD
 estimates do not impose a provider spending limit. No paid AI request was made.
 
 Native PostgreSQL concurrency/restore, Docker/MinIO, cross-store recovery, live
@@ -52,25 +55,24 @@ Partial labels are not completion percentages.
 ## Source and publication
 
 Canonical public repository: `shlokagrawal13/organic-marketing-os`, branch `main`.
-Version 0.9.2 was published after explicit user approval to public `main` as
-source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`. The remote tree
-`e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8` matches the local checkpoint exactly:
-182/182 blob paths, modes and SHAs matched with zero mismatches. Prior automatic
-approval review rejections are retained only as audit events; they were resolved
-by the user's explicit approvals for this destination.
+Version 0.9.2 was published after explicit user approval to public `main` and
+verified against the local checkpoint. Prior automatic approval review rejections
+are retained only as audit events; they were resolved by the user's explicit
+approvals for this destination.
 The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
-The latest public Actions diagnosis is explicit: run `37022495097` did not start
-runner steps because GitHub reports, "The job was not started because your account
-is locked due to a billing issue." This is an account-level GitHub gate, not an
-application-test failure, and no native CI pass is claimed. Earlier authenticated diagnostics identified an
-account billing gate. These records do not diagnose ChatGPT buffering.
+The earlier public account-side Actions gate was cleared. Public run
+`37049004398` for commit `b2ac0ee74247ad8b9478bf82516161ea4211e69f`
+completed the native application verification workflow successfully. The current
+MEDIA-01D retained-output and source-image-edit slices still need publication
+and their own remote CI check.
+These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue MEDIA-01D: provider source-byte editing, provider-option expansion and
-safe provider-output reconciliation. MEDIA-LIVE-01 tracks authorized provider
-acceptance separately. Then continue advanced editing, sourced research, official
+Continue MEDIA-01D with the remaining provider/reference modes, or move to the
+next ready module after recording a provider choice.
+MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue advanced editing, sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and
 broader collaboration UX from TASK_BOARD.md. Do routine local work independently;
 request only essential external access or concrete authorization.

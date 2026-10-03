@@ -1,10 +1,25 @@
 # Changelog
 
+## 0.9.2 MEDIA-01D single-image editing — 2026-10-03
+
+- Added an opt-in, separately priced single-image edit preset and asset-library reference picker. The worker verifies tenant ownership and private image bytes before multipart provider submission.
+- Added isolated HTTP/unit coverage for edit quotes, source integrity, multipart bytes and end-to-end asset ingestion. Full local verifier passed; live provider acceptance and remote CI for this slice remain pending.
+- Added bounded image size, quality and background selection plus built-in voice, WAV/MP3 and speed selection. Requests and audits freeze the normalized preset; provider adapters and the status/UI contracts use the same catalog.
+- Passed API and clean Next.js production builds, 31 unit tests, 7 HTTP scenarios, 6 browser scenarios, 5 recovery/configuration scenarios and all 12 migrations after the option expansion.
+
+## 0.9.2 MEDIA-01D retained output reconciliation — 2026-10-02
+
+- Retained provider bytes written to private storage when the worker loses its database claim before ingestion, moving the generation to UNKNOWN with a private output pointer for platform review.
+- Kept linked credit reservations in REVIEW and added `media_generation.output_reconciliation_needed` audit evidence without exposing private object keys through public/export responses.
+- Added recovery coverage for retained private output reconciliation.
+- Verified `npm run build:api`, `npm test` and full `npm run verify`: 7 HTTP scenarios, 6 browser scenarios and 5 recovery/configuration scenarios passed after the sandboxed S3Proxy attempt was rerun with local service permission.
+- The earlier public account-side Actions gate was cleared; public run `37049004398` for `b2ac0ee74247ad8b9478bf82516161ea4211e69f` passed before this slice. This slice still needs publish and remote CI evidence.
+
 ## 0.9.2 MEDIA-01D credit reconciliation guard — 2026-10-02
 
 - Blocked platform credit review resolution for reservations linked to active media generations until the media job is terminal.
 - Added integration coverage for a REVIEW media reservation that returns 409 while PENDING and can be released after UNKNOWN.
-- Published to public `main` as source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`; remote tree `e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8` matched 182/182 local blob paths/modes/SHAs. Actions billing-lock annotation: "The job was not started because your account is locked due to a billing issue."
+- Published to public `main` as source commit `b48b40b92b20bdd1f2aa1d3287ebfe70586b773a`; remote tree `e641e612e9fb6966a9e9a0fc2e5236bc43d62ee8` matched 182/182 local blob paths/modes/SHAs. The push-created Actions run still stopped at an account-side startup gate.
 - Verified `npm test` and `npm run build:api`; full local harness still stops before integration because S3Proxy exits with `Operation not permitted`.
 
 ## 0.9.1 MEDIA-01D plan/source gates — 2026-10-02
@@ -61,7 +76,7 @@
 - Extended signed `invoice.paid` events with invoice ID, status, currency, paid/due amounts and provider invoice/PDF URLs; Stripe paid invoices map those fields when supplied.
 - Added explicit refund, dispute, fraud-warning and proration policy to the billing summary and UI without claiming real money movement.
 - Verified Prisma generation, API TypeScript build, direct web TypeScript, unit tests, direct PGlite invoice processing and populated upgrade/restore through all nine migrations.
-- Full local verification could not rerun in the current runtime because `redis-server` is unavailable and S3Proxy/localhost listeners hit environment limits. GitHub Actions remains blocked by the account payment authorization hold failure.
+- Full local verification could not rerun in the current runtime because `redis-server` is unavailable and S3Proxy/localhost listeners hit environment limits. GitHub Actions remained blocked by a private account-side startup gate at that time.
 
 ## 0.6.0 — 2026-09-27
 

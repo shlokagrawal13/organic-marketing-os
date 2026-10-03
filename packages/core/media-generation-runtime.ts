@@ -4,7 +4,12 @@ import { mkdtemp, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { generationRequestSchema } from "./generated-media";
-import { mediaConfigurationSchema, OpenAIMediaProvider } from "./openai-media";
+import {
+  mediaConfigurationSchema,
+  mediaPreset,
+  OpenAIMediaProvider,
+  SourceImage,
+} from "./openai-media";
 import { ObjectStore } from "./object-store";
 import {
   MAX_UPLOAD_BYTES,
@@ -18,6 +23,47 @@ import { reviewCredits, settleCredits } from "./credits";
 const activeStates = ["SUBMITTING", "PENDING", "OUTPUT_READY"] as const;
 const LEASE_MS = 60000;
 class InvalidOutput extends Error {}
+const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
+export async function loadGenerationSourceImage(
+  db: PrismaClient,
+  store: ObjectStore,
+  job: MediaGeneration,
+): Promise<SourceImage | undefined> {
+  const request = generationRequestSchema.parse(job.request);
+  if (!request.sourceAssetIds.length) return;
+  if (request.kind !== "image" || request.sourceAssetIds.length !== 1)
+    throw new Error("Unsupported generation source.");
+  const asset = await db.asset.findFirst({
+    where: {
+      id: request.sourceAssetIds[0],
+      organizationId: job.organizationId,
+      archivedAt: null,
+      kind: "IMAGE",
+    },
+  });
+  if (
+    !asset ||
+    !asset.objectKey.startsWith(`${job.organizationId}/`) ||
+    asset.bytes > MAX_SOURCE_IMAGE_BYTES
+  )
+    throw new Error("The source image is unavailable or too large.");
+  const bytes = await store.read(asset.objectKey, MAX_SOURCE_IMAGE_BYTES);
+  const detected = sniffMedia(bytes);
+  if (
+    bytes.length !== asset.bytes ||
+    sha256(bytes) !== asset.sha256 ||
+    detected.kind !== "IMAGE" ||
+    detected.mimeType !== asset.mimeType
+  )
+    throw new Error("The source image failed private integrity validation.");
+  if (
+    detected.mimeType !== "image/png" &&
+    detected.mimeType !== "image/jpeg" &&
+    detected.mimeType !== "image/webp"
+  )
+    throw new Error("Unsupported source image type.");
+  return { bytes, mimeType: detected.mimeType };
+}
 async function lock(tx: Prisma.TransactionClient, org: string) {
   await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
 }
@@ -71,6 +117,78 @@ async function finish(
         },
       },
     });
+  });
+}
+export async function retainPrivateMediaOutputForReview(
+  db: PrismaClient,
+  job: MediaGeneration,
+  token: string,
+  outputKey: string,
+  providerRequestId?: string,
+) {
+  if (!outputKey.startsWith(`${job.organizationId}/generated/${job.id}/`))
+    throw new InvalidOutput("Private output reference is invalid.");
+  return db.$transaction(async (tx) => {
+    await lock(tx, job.organizationId);
+    const current = await tx.mediaGeneration.findFirst({
+      where: { id: job.id, organizationId: job.organizationId },
+    });
+    if (!current || current.assetId || current.outputKey) return false;
+    if (!activeStates.includes(current.state as (typeof activeStates)[number]))
+      return false;
+    if (
+      current.runToken &&
+      current.runToken !== token &&
+      current.heartbeatAt &&
+      current.heartbeatAt.getTime() >= Date.now() - LEASE_MS
+    )
+      return false;
+    const changed = await tx.mediaGeneration.updateMany({
+      where: {
+        id: job.id,
+        organizationId: job.organizationId,
+        state: { in: [...activeStates] },
+        outputKey: null,
+        assetId: null,
+        OR: [
+          { runToken: token },
+          { runToken: null },
+          { heartbeatAt: { lt: new Date(Date.now() - LEASE_MS) } },
+        ],
+      },
+      data: {
+        state: "UNKNOWN",
+        outputKey,
+        providerRequestId: providerRequestId || current.providerRequestId,
+        error:
+          "Provider output was written to private storage, but the worker lost the database claim before ingestion. Review the retained private output before resolving credits.",
+        runToken: null,
+        heartbeatAt: null,
+        completedAt: new Date(),
+      },
+    });
+    if (!changed.count) return false;
+    if (current.creditReservationId)
+      await reviewCredits(
+        tx,
+        current.organizationId,
+        current.creditReservationId,
+      );
+    await tx.auditLog.create({
+      data: {
+        organizationId: current.organizationId,
+        actorId: current.actorId,
+        action: "media_generation.output_reconciliation_needed",
+        entityId: current.id,
+        detail: {
+          providerJobId: current.providerJobId || job.providerJobId,
+          providerRequestId: providerRequestId || current.providerRequestId,
+          costStatus: "unknown",
+          outputRetained: true,
+        },
+      },
+    });
+    return true;
   });
 }
 export async function recoverMediaGenerations(db: PrismaClient) {
@@ -231,6 +349,7 @@ async function ingest(
           sha256: digest,
           provider: "openai",
           model: request.model,
+          preset: mediaPreset(request),
           providerJobId: job.providerJobId,
           providerRequestId: job.providerRequestId,
           rightsConfirmed: true,
@@ -271,19 +390,23 @@ export async function processMediaGeneration(
   // Preflight before crossing the paid boundary. A queued job never runs while
   // its frozen provider/model has been removed or private storage is unavailable.
   let provider: OpenAIMediaProvider | undefined;
+  let source: SourceImage | undefined;
   try {
     await store.ready();
-    if (job.state !== "OUTPUT_READY")
+    if (job.state !== "OUTPUT_READY") {
       provider = new OpenAIMediaProvider(
         mediaConfigurationSchema.parse(job.configuration),
       );
+      if (job.state === "QUEUED")
+        source = await loadGenerationSourceImage(db, store, job);
+    }
   } catch {
     if (job.state === "QUEUED")
       await finish(
         db,
         job,
         "FAILED",
-        "Media provider or private storage is unavailable. No provider request was made.",
+        "Media provider, source image or private storage is unavailable. No provider request was made.",
         true,
       );
     return;
@@ -319,6 +442,8 @@ export async function processMediaGeneration(
   shutdown?.addEventListener("abort", onShutdown, { once: true });
   if (shutdown?.aborted) abort.abort();
   const deadline = setTimeout(() => abort.abort(), 180000);
+  let stagedOutputKey: string | undefined;
+  let stagedRequestId: string | undefined;
   let monitoring = false;
   const timer = setInterval(async () => {
     if (monitoring) return;
@@ -352,6 +477,7 @@ export async function processMediaGeneration(
               generationRequestSchema.parse(job.request),
               `${job.organizationId}:${job.id}`,
               abort.signal,
+              source,
             )
           : await provider!.poll(job.providerJobId!, abort.signal);
       if (result.state === "failed") {
@@ -379,6 +505,8 @@ export async function processMediaGeneration(
       if (abort.signal.aborted) throw new Error("Worker lease lost.");
       const outputKey = `${job.organizationId}/generated/${id}/${token}`;
       await store.put(outputKey, result.bytes, "application/octet-stream");
+      stagedOutputKey = outputKey;
+      stagedRequestId = result.requestId;
       // Keep an ambiguous object write private for reconciliation; never delete
       // an object merely because the database response was lost after commit.
       const changed = await db.mediaGeneration.updateMany({
@@ -390,13 +518,36 @@ export async function processMediaGeneration(
           error: null,
         },
       });
-      if (!changed.count) return;
+      if (!changed.count) {
+        await retainPrivateMediaOutputForReview(
+          db,
+          job,
+          token,
+          outputKey,
+          result.requestId,
+        );
+        return;
+      }
       job = await db.mediaGeneration.findUniqueOrThrow({ where: { id } });
     }
     await ingest(db, store, job);
   } catch (e) {
     const current = await db.mediaGeneration.findUnique({ where: { id } });
     if (!current || current.runToken !== token) return;
+    if (
+      stagedOutputKey &&
+      !current.outputKey &&
+      current.state !== "OUTPUT_READY"
+    ) {
+      await retainPrivateMediaOutputForReview(
+        db,
+        current,
+        token,
+        stagedOutputKey,
+        stagedRequestId,
+      );
+      return;
+    }
     if (current.state === "SUBMITTING")
       await finish(
         db,

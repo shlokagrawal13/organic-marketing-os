@@ -31,7 +31,9 @@ import { generationRequestSchema } from "../../../packages/core/generated-media"
 import {
   MediaPlan,
   mediaConfiguration,
+  mediaOptionCatalog,
   mediaPreset,
+  mediaPricing,
   validateMediaPreset,
 } from "../../../packages/core/openai-media";
 import {
@@ -57,6 +59,7 @@ const activeStates = [
   "OUTPUT_READY",
 ] as const;
 export function publicGeneration(row: MediaGeneration) {
+  const request = generationRequestSchema.parse(row.request);
   const {
     outputKey,
     runToken,
@@ -68,7 +71,7 @@ export function publicGeneration(row: MediaGeneration) {
   return {
     ...safe,
     provider: "openai",
-    preset: mediaPreset(generationRequestSchema.parse(row.request).kind),
+    preset: mediaPreset(request),
     costStatus: row.actualCostUsd === null ? "unknown" : "reported",
     cancellationNotice:
       row.cancellationRequestedAt && row.state !== "CANCELED"
@@ -125,8 +128,24 @@ export class GeneratedMediaController {
                 model: config.model,
                 estimatedCostUsd: config.estimatedCostUsd,
                 credits: creditPolicy().mode === "credits" ? config.credits : 0,
+                imageEdit: config.imageEdit
+                  ? {
+                      estimatedCostUsd: config.imageEdit.estimatedCostUsd,
+                      credits:
+                        creditPolicy().mode === "credits"
+                          ? config.imageEdit.credits
+                          : 0,
+                      maxSourceImages: 1,
+                    }
+                  : null,
                 allowedPlans: config.allowedPlans,
                 preset: mediaPreset(kind),
+                options:
+                  kind === "image"
+                    ? mediaOptionCatalog.image
+                    : kind === "voice"
+                      ? mediaOptionCatalog.voice
+                      : null,
               },
             ]
           : [];
@@ -144,9 +163,11 @@ export class GeneratedMediaController {
       billingMode: creditPolicy().mode,
       costNotice:
         "USD estimates are configured by the operator and are not a provider-enforced spending cap. Actual provider cost may remain unknown.",
-      sourceAssetsSupported: false,
+      sourceAssetsSupported: models.some(
+        (model) => model.kind === "image" && model.imageEdit,
+      ),
       sourceAssetPolicy:
-        "Reference IDs are tenant-checked image assets, but the current OpenAI preset does not send source assets yet.",
+        "One active image in this workspace may be used as a reference when the separately quoted image-edit preset is enabled.",
       inFlightCancellationSupported: false,
     };
   }
@@ -222,7 +243,8 @@ export class GeneratedMediaController {
     } catch (e) {
       throw new BadRequestException((e as Error).message);
     }
-    const credits = creditPolicy().mode === "credits" ? config.credits : 0;
+    const pricing = mediaPricing(data.request, config);
+    const credits = creditPolicy().mode === "credits" ? pricing.credits : 0;
     if (credits > data.maxCredits)
       throw new ConflictException(
         "Accept the current credit quote before generation.",
@@ -287,7 +309,7 @@ export class GeneratedMediaController {
           requestHash: hash,
           request: data.request,
           configuration: config,
-          quotedCostUsd: config.estimatedCostUsd,
+          quotedCostUsd: pricing.estimatedCostUsd,
           quotedCredits: credits,
           creditReservationId: reservation?.id,
         },
@@ -302,11 +324,12 @@ export class GeneratedMediaController {
             kind: data.request.kind,
             model: data.request.model,
             rightsConfirmed: true,
-            estimatedCostUsd: config.estimatedCostUsd,
+            estimatedCostUsd: pricing.estimatedCostUsd,
             credits,
             plan,
             allowedPlans: config.allowedPlans,
             sourceAssetCount: data.request.sourceAssetIds.length,
+            preset: mediaPreset(data.request),
           },
         },
       });

@@ -32,18 +32,20 @@ in. See GENERATED_MEDIA.md for exact presets, money semantics and remaining limi
 ## Continue
 
 Read the checkpoint and task board. MEDIA-01D now has plan-specific model
-allowlists and tenant-owned source-reference gates. It still retains provider
-source-byte editing, option expansion and output reconciliation; MEDIA-LIVE-01
-requires authorized live model access and spend. Advanced editing and other master modules remain pending.
+allowlists, bounded image/voice options, separately quoted single-image editing
+with verified private bytes, active credit-resolution guards and retained UNKNOWN
+output reconciliation. Custom voices, another provider and multi-image/video
+reference modes remain; MEDIA-LIVE-01 requires authorized live
+model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
-0.9.2 source commit `0b9dce36c95027723ea0529e734316b2af039131` points to tree
-`c1918f5b14059606dc39b239d5f7ffc7b854b061`, and recursive verification matched
-182/182 remote blob paths, modes and SHAs to the local checkpoint with zero
-mismatches. The earlier automatic approval review rejection is a closed
-audit event after the user's explicit approval for this private upload. Never
-touch the unrelated `OrganicMarketing` repository.
+The earlier automatic approval review rejection is a closed audit event after
+the user's explicit approval for this public upload. Never touch the unrelated
+`OrganicMarketing` repository.
 
-The latest observed Actions run `37022495097` reported that the account is locked due to a billing issue before runner steps could start; earlier authenticated evidence named billing, but that UI was not rechecked.
-No CI pass, Windows deployment update or ChatGPT buffering root cause is claimed.
+The previous account-side Actions gate was cleared: public run `37049004398`
+for commit `b2ac0ee74247ad8b9478bf82516161ea4211e69f` completed native
+application verification successfully before the retained-output and image-edit slices. Publish
+the current slice, recursively verify the remote tree and watch the new CI run.
+No Windows deployment update or ChatGPT buffering root cause is claimed.

@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { GenerationRequest } from "./generated-media";
+import {
+  GenerationRequest,
+  imageGenerationOptionsSchema,
+  voiceGenerationOptionsSchema,
+} from "./generated-media";
 import { MAX_UPLOAD_BYTES } from "./media";
 
 export const mediaPlanSchema = z.enum([
@@ -23,9 +27,25 @@ export const mediaConfigurationSchema = z
     estimatedCostUsd: z.number().finite().positive().max(100),
     credits: z.number().int().min(1).max(10000),
     allowedPlans: z.array(mediaPlanSchema).min(1).max(defaultPlans.length),
+    imageEdit: z
+      .object({
+        estimatedCostUsd: z.number().finite().positive().max(100),
+        credits: z.number().int().min(1).max(10000),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 export type MediaConfiguration = z.infer<typeof mediaConfigurationSchema>;
+function imageEditModelSupported(model: string) {
+  return (
+    model.startsWith("gpt-image-") ||
+    model === "chatgpt-image-latest" ||
+    (process.env.MOS_ISOLATED_TEST_HARNESS === "true" &&
+      process.env.NODE_ENV !== "production" &&
+      model === "fixture-image")
+  );
+}
 function parsePlans(value: string | undefined): MediaPlan[] {
   if (!value) return defaultPlans;
   const plans = [
@@ -52,7 +72,7 @@ export function mediaConfiguration(
   const baseUrl =
     process.env.OPENAI_MEDIA_BASE_URL || "https://api.openai.com/v1";
   assertMediaOrigin(baseUrl);
-  return mediaConfigurationSchema.parse({
+  const config = mediaConfigurationSchema.parse({
     version: 1,
     provider: "openai",
     baseUrl,
@@ -61,7 +81,20 @@ export function mediaConfiguration(
     estimatedCostUsd: Number(process.env[`${prefix}_ESTIMATE_USD`]),
     credits: Number(process.env[`${prefix}_CREDITS`]),
     allowedPlans: parsePlans(process.env[`${prefix}_PLANS`]),
+    ...(kind === "image" &&
+    (process.env.MEDIA_IMAGE_EDIT_ESTIMATE_USD ||
+      process.env.MEDIA_IMAGE_EDIT_CREDITS)
+      ? {
+          imageEdit: {
+            estimatedCostUsd: Number(process.env.MEDIA_IMAGE_EDIT_ESTIMATE_USD),
+            credits: Number(process.env.MEDIA_IMAGE_EDIT_CREDITS),
+          },
+        }
+      : {}),
   });
+  if (config.imageEdit && !imageEditModelSupported(config.model))
+    throw new Error("Configured image model does not support image editing.");
+  return config;
 }
 function assertMediaOrigin(baseUrl: string) {
   const official = baseUrl === "https://api.openai.com/v1";
@@ -75,28 +108,78 @@ function assertMediaOrigin(baseUrl: string) {
 export function validateMediaPreset(
   request: GenerationRequest,
   config: MediaConfiguration,
-  plan: MediaPlan = "self_hosted",
+  plan: MediaPlan | null = null,
 ) {
+  const pricing = mediaPricing(request, config);
   if (
     request.kind !== config.kind ||
     request.model !== config.model ||
-    request.maxCostUsd < config.estimatedCostUsd
+    request.maxCostUsd < pricing.estimatedCostUsd
   )
     throw new Error("Choose a configured model and accept its estimated cost.");
-  if (!config.allowedPlans.includes(plan))
+  if (plan && !config.allowedPlans.includes(plan))
     throw new Error(
       "Configured media model is unavailable for this workspace plan.",
     );
-  if (request.sourceAssetIds.length)
-    throw new Error("This provider preset does not support source assets yet.");
 }
-export function mediaPreset(kind: GenerationRequest["kind"]) {
+export function mediaPricing(
+  request: GenerationRequest,
+  config: MediaConfiguration,
+) {
+  if (!request.sourceAssetIds.length) return config;
+  if (
+    request.kind !== "image" ||
+    request.sourceAssetIds.length !== 1 ||
+    !config.imageEdit ||
+    !imageEditModelSupported(config.model)
+  )
+    throw new Error("This provider preset does not support source assets.");
+  return config.imageEdit;
+}
+export const mediaOptionCatalog = {
+  image: {
+    sizes: ["1024x1024", "1536x1024", "1024x1536"],
+    qualities: ["low", "medium", "high"],
+    backgrounds: ["opaque", "transparent"],
+  },
+  voice: {
+    voices: [
+      "alloy",
+      "ash",
+      "ballad",
+      "coral",
+      "echo",
+      "fable",
+      "onyx",
+      "nova",
+      "sage",
+      "shimmer",
+      "verse",
+      "marin",
+      "cedar",
+    ],
+    responseFormats: ["wav", "mp3"],
+    speed: { min: 0.25, max: 4, step: 0.25 },
+  },
+} as const;
+export function mediaPreset(
+  input: GenerationRequest["kind"] | GenerationRequest,
+) {
+  const kind = typeof input === "string" ? input : input.kind;
+  const options = typeof input === "string" ? {} : input.options;
+  const image = imageGenerationOptionsSchema.parse(options.image || {});
+  const voice = voiceGenerationOptionsSchema.parse(options.voice || {});
   return kind === "image"
-    ? { size: "1024x1024", quality: "medium", output_format: "png", n: 1 }
+    ? {
+        ...image,
+        output_format: "png",
+        n: 1,
+      }
     : kind === "voice"
       ? {
-          voice: "alloy",
-          response_format: "wav",
+          voice: voice.voice,
+          response_format: voice.responseFormat,
+          speed: voice.speed,
           disclosure: "AI-generated voice",
         }
       : { size: "720x1280", seconds: "4" };
@@ -134,6 +217,10 @@ export type MediaResponse = { requestId?: string } & (
   | { state: "pending"; providerJobId: string }
   | { state: "failed" }
 );
+export type SourceImage = {
+  bytes: Buffer;
+  mimeType: "image/png" | "image/jpeg" | "image/webp";
+};
 export class OpenAIMediaProvider {
   private key: string;
   constructor(readonly config: MediaConfiguration) {
@@ -143,7 +230,8 @@ export class OpenAIMediaProvider {
     if (
       !active ||
       active.model !== config.model ||
-      active.baseUrl !== config.baseUrl
+      active.baseUrl !== config.baseUrl ||
+      (config.imageEdit && !active.imageEdit)
     )
       throw new Error("Saved media provider is no longer configured.");
     this.key = process.env.OPENAI_MEDIA_API_KEY!;
@@ -169,9 +257,44 @@ export class OpenAIMediaProvider {
     request: GenerationRequest,
     idempotencyKey: string,
     signal: AbortSignal,
+    source?: SourceImage,
   ): Promise<MediaResponse> {
     validateMediaPreset(request, this.config);
+    if (Boolean(request.sourceAssetIds.length) !== Boolean(source))
+      throw new Error("The saved image source is unavailable.");
     const headers = { "Idempotency-Key": idempotencyKey };
+    if (source) {
+      const preset = imageGenerationOptionsSchema.parse(
+        request.options.image || {},
+      );
+      const form = new FormData();
+      for (const [key, value] of Object.entries({
+        model: request.model,
+        prompt: request.prompt,
+        n: "1",
+        size: preset.size,
+        quality: preset.quality,
+        background: preset.background,
+        output_format: "png",
+      }))
+        form.set(key, value);
+      const extension = {
+        "image/png": "png",
+        "image/jpeg": "jpg",
+        "image/webp": "webp",
+      }[source.mimeType];
+      form.append(
+        "image[]",
+        new Blob([new Uint8Array(source.bytes)], { type: source.mimeType }),
+        `source.${extension}`,
+      );
+      const response = await this.call("/images/edits", signal, {
+        method: "POST",
+        body: form,
+        headers,
+      });
+      return this.imageResult(response);
+    }
     if (request.kind === "video") {
       const form = new FormData();
       for (const [key, value] of Object.entries({
@@ -198,20 +321,32 @@ export class OpenAIMediaProvider {
     }
     const payload =
       request.kind === "image"
-        ? {
-            model: request.model,
-            prompt: request.prompt,
-            n: 1,
-            size: "1024x1024",
-            quality: "medium",
-            output_format: "png",
-          }
-        : {
-            model: request.model,
-            input: request.prompt,
-            voice: "alloy",
-            response_format: "wav",
-          };
+        ? (() => {
+            const preset = imageGenerationOptionsSchema.parse(
+              request.options.image || {},
+            );
+            return {
+              model: request.model,
+              prompt: request.prompt,
+              n: 1,
+              size: preset.size,
+              quality: preset.quality,
+              background: preset.background,
+              output_format: "png",
+            };
+          })()
+        : (() => {
+            const preset = voiceGenerationOptionsSchema.parse(
+              request.options.voice || {},
+            );
+            return {
+              model: request.model,
+              input: request.prompt,
+              voice: preset.voice,
+              response_format: preset.responseFormat,
+              speed: preset.speed,
+            };
+          })();
     const response = await this.call(
       request.kind === "image" ? "/images/generations" : "/audio/speech",
       signal,
@@ -227,6 +362,9 @@ export class OpenAIMediaProvider {
         bytes: await boundedResponse(response, MAX_UPLOAD_BYTES),
         requestId: this.requestId(response),
       };
+    return this.imageResult(response);
+  }
+  private async imageResult(response: Response): Promise<MediaResponse> {
     const result = z
       .object({
         data: z

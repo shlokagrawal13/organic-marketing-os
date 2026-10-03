@@ -1,16 +1,16 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-02",
+  "verifiedDate": "2026-10-03",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
-    "Next.js 16.3.5 production build"
+    "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 28,
+    "unit": 31,
     "httpScenarios": 7,
     "browserScenarios": 6,
-    "recoveryAndConfigurationScenarios": 4,
+    "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 12
   },
   "environment": {
@@ -22,7 +22,7 @@
     "textAI": "isolated compatible HTTP provider fixture",
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
-    "generatedMedia": "Isolated OpenAI-shape image/base64, WAV and asynchronous video HTTP fixture; no live provider"
+    "generatedMedia": "Isolated OpenAI-shape image/base64, single-image multipart edit, bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider"
   },
   "requirements": {
     "headings": 161,
@@ -82,10 +82,10 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "unitTestsPassed": 28,
+    "unitTestsPassed": 31,
     "httpScenariosPassed": 7,
     "browserScenariosPassed": 6,
-    "recoveryConfigurationScenariosPassed": 4,
+    "recoveryConfigurationScenariosPassed": 5,
     "apiBuild": true,
     "webProductionBuild": true,
     "migrationsApplied": 12,
@@ -135,13 +135,15 @@
   "media01dEvidence": {
     "planSpecificMediaRouting": true,
     "sourceReferenceOwnershipGate": true,
-    "providerSourceByteEditing": false,
-    "unknownOutputReconciliation": false,
+    "providerSourceByteEditing": true,
+    "singleImageEditOnly": true,
+    "boundedImageAndVoiceOptions": true,
+    "unknownOutputReconciliation": true,
     "unitFilesPassed": 6,
     "apiTypeScriptBuild": true,
     "fullHarnessAttempted": true,
-    "fullHarnessResult": "blocked_before_integration",
-    "fullHarnessBlocker": "S3Proxy exited before readiness with Operation not permitted in .local/test-storage.log",
+    "fullHarnessResult": "passed_with_elevated_local_services",
+    "fullHarnessBlocker": null,
     "activeMediaCreditResolutionGuard": true
   }
 }

@@ -16,19 +16,36 @@ export function generationFixture() {
     }
     res.setHeader("x-request-id", "req_isolated_contract_fixture");
     if (req.method === "POST") {
-      let raw = "";
-      for await (const part of req) raw += part;
+      const parts = [];
+      for await (const part of req) parts.push(Buffer.from(part));
+      const body = Buffer.concat(parts);
+      const raw = body.toString("latin1");
       let input;
       try {
         input =
-          req.url === "/v1/videos"
+          req.url === "/v1/videos" || req.url === "/v1/images/edits"
             ? { prompt: /name="prompt"\r\n\r\n([^\r]*)/.exec(raw)?.[1] }
-            : JSON.parse(raw);
+            : JSON.parse(body.toString("utf8"));
       } catch {
         res.writeHead(400);
         return res.end();
       }
       const prompt = input.prompt || input.input;
+      if (req.url === "/v1/images/edits") {
+        const expected = readFileSync(".local/media-fixtures/product.png");
+        if (
+          !req.headers["content-type"]?.startsWith("multipart/form-data;") ||
+          !raw.includes('name="image[]"') ||
+          !body.includes(expected) ||
+          !raw.includes('name="model"') ||
+          !raw.includes('name="size"\r\n\r\n1024x1536') ||
+          !raw.includes('name="quality"\r\n\r\nlow') ||
+          !raw.includes('name="background"\r\n\r\ntransparent')
+        ) {
+          res.writeHead(400);
+          return res.end();
+        }
+      }
       calls[prompt] = (calls[prompt] || 0) + 1;
       if (prompt.startsWith("DROP:")) return req.socket.destroy();
       if (prompt.startsWith("HOLD:")) {

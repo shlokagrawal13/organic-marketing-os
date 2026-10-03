@@ -3,8 +3,11 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
 import { createWriteStream } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { actor, db, draft, scene, until } from "../support/http";
 import { grantCredits } from "../../packages/core/credits";
+import { ObjectStore } from "../../packages/core/object-store";
+import { sha256 } from "../../packages/core/media";
 
 test(
   "generated media: durable provider jobs, tenant controls, private ingestion, fixed credits and targeted revisions",
@@ -62,7 +65,19 @@ test(
           owner.id,
         ),
       );
-      assert.equal((await call(path + "/status")).body.models.length, 3);
+      const mediaStatus = (await call(path + "/status")).body;
+      assert.equal(mediaStatus.models.length, 3);
+      assert.equal(mediaStatus.sourceAssetsSupported, true);
+      assert.deepEqual(
+        mediaStatus.models.find((model: any) => model.kind === "image").options
+          .sizes,
+        ["1024x1024", "1536x1024", "1024x1536"],
+      );
+      assert.ok(
+        mediaStatus.models
+          .find((model: any) => model.kind === "voice")
+          .options.voices.includes("cedar"),
+      );
       const content = await call("/content", "POST", {
         ...draft,
         scenes: [
@@ -127,25 +142,55 @@ test(
         ).status,
         400,
       );
+      const sourceBytes = await readFile(".local/media-fixtures/product.png");
+      const sourceKey = `${org.id}/reference/${randomUUID()}`;
+      await new ObjectStore().put(sourceKey, sourceBytes, "image/png");
       const sourceAsset = await db.asset.create({
         data: {
           organizationId: org.id,
           name: "Reference image fixture.png",
           kind: "IMAGE",
           mimeType: "image/png",
-          bytes: 128,
-          sha256: `reference-${randomUUID()}`,
-          objectKey: `${org.id}/reference/${randomUUID()}`,
+          bytes: sourceBytes.length,
+          sha256: sha256(sourceBytes),
+          objectKey: sourceKey,
           rightsNote: "Synthetic owned reference fixture",
           createdBy: owner.id,
         },
       });
+      const editInput = envelope("image", "Synthetic reference edit");
       const sourceResponse = await call(path, "POST", {
-        ...input,
-        request: { ...input.request, sourceAssetIds: [sourceAsset.id] },
+        ...editInput,
+        maxCredits: 3,
+        request: {
+          ...editInput.request,
+          maxCostUsd: 0.2,
+          sourceAssetIds: [sourceAsset.id],
+          options: {
+            image: {
+              size: "1024x1536",
+              quality: "low",
+              background: "transparent",
+            },
+          },
+        },
       });
-      assert.equal(sourceResponse.status, 400);
-      assert.match(sourceResponse.body.error.message, /source assets/i);
+      assert.equal(sourceResponse.status, 201);
+      const edited = (
+        await until(
+          () => call(`${path}/${sourceResponse.body.id}`),
+          (r) => r.body.state === "SUCCEEDED",
+          45000,
+        )
+      ).body;
+      assert.ok(edited.assetId);
+      assert.equal(edited.quotedCostUsd, 0.2);
+      assert.equal(edited.quotedCredits, 3);
+      assert.deepEqual(edited.request.options.image, {
+        size: "1024x1536",
+        quality: "low",
+        background: "transparent",
+      });
       const created = await Promise.all([
         call(path, "POST", input),
         call(path, "POST", input),
@@ -345,6 +390,7 @@ test(
       const calls = await (await fetch("http://127.0.0.1:4998/stats")).json();
       for (const prompt of [
         "Synthetic image",
+        "Synthetic reference edit",
         "Synthetic stale image",
         "Synthetic voice",
         "POLL_ERROR: synthetic video",
@@ -354,7 +400,7 @@ test(
       assert.equal(calls["Must never reach provider"], undefined);
       assert.equal(
         await db.mediaGeneration.count({ where: { organizationId: org.id } }),
-        7,
+        8,
       );
       const exported = await fetch(
         `http://127.0.0.1:4003/api/workspaces/${org.id}/operations/export`,
@@ -367,7 +413,7 @@ test(
         .split("\n")
         .map((line) => JSON.parse(line))
         .filter((row) => row.type === "mediaGeneration");
-      assert.equal(mediaRecords.length, 7);
+      assert.equal(mediaRecords.length, 8);
       assert.equal(
         mediaRecords.find((row) => row.data.id === id).data.assetId,
         generated.assetId,
