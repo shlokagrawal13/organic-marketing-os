@@ -70,6 +70,6 @@ master acceptance remain open.
 The workspace NDJSON export includes records and authenticated media references;
 it is not a database/media restore backup. The current v0.9.2 MEDIA-01D source is
 published on public `main` at commit
-`12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4`, and its 26 uploaded paths were
-verified against the local blobs. Public Actions run `37111278142` completed the
+`74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b`, and its 21 uploaded paths were
+verified against the local blobs. Public Actions run `37112921768` completed the
 native application verification workflow successfully.

@@ -157,10 +157,10 @@ operator USD estimates are not provider-enforced spend caps. Automatic aged
 staging cleanup and provider billing reconciliation after UNKNOWN remain open.
 
 Remote publication was completed after explicit user approval. Public `main`
-application commit `12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4` points to tree
-`fb1263c732cfe23d9f0b5053e3ab0531d13f1983`; all 26 changed paths uploaded for
-the retained-output, source-edit and bounded-option increment matched the local
-Git blob SHAs. Public Actions run `37111278142` completed successfully. Its sole
+application commit `74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b` points to tree
+`25ea6806f2952ad87df18b186f7fc97660faf5b4`; all 21 changed paths uploaded for
+the ordered multi-image increment matched the local Git blob SHAs. Public
+Actions run `37112921768` completed successfully. Its sole
 `Native application verification` job passed setup, service initialization,
 dependency installation, build, 31 unit tests, production/development dependency
 audits, populated upgrade verification, native application flows, browser-evidence

@@ -63,8 +63,8 @@ The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
 The earlier public account-side Actions gate is cleared. The accumulated
 MEDIA-01D source was published at commit
-`12173f1e13b9f6210bd0f72ba9a17b28d3b6d9a4`; all 26 uploaded paths matched the
-local blobs. Public run `37111278142` completed every native application
+`74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b`; all 21 uploaded paths matched the
+local blobs. Public run `37112921768` completed every native application
 verification step successfully, including browser-evidence upload.
 These records do not diagnose ChatGPT buffering.
 
