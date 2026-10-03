@@ -65,14 +65,12 @@ are retained only as audit events; they were resolved by the user's explicit
 approvals for this destination.
 The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
-The earlier public account-side Actions gate is cleared. EDITOR-01A was published
-at commit `97381d1f620eb5f30ec095522c7057c99ac8c1c6`; its tree
-`dbf2bf8dca90b3b6612a72960d37b5d5b010702f` exactly matched the locally verified
-tree. Public run `37126029720` completed every native application
-verification step successfully, including browser-evidence upload.
-EDITOR-01B passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios locally,
-plus both production builds and the 12-migration populated PGlite upgrade/restore.
-Its own publication and CI are pending; earlier CI does not cover unpublished changes.
+EDITOR-01B is published at application commit `4611fb0170d4851be6bc6d805009c42a0ba5dd63`;
+its tree `54e29ec0a2d0fa15921be62ccd0282de9e135c07` exactly matches all 184 local
+blob paths, modes and SHAs. Public run `37143980421` completed every
+workflow step successfully, including native application flows and browser evidence.
+Local checks passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios,
+both production builds and the 12-migration populated PGlite upgrade/restore.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work

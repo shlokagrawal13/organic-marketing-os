@@ -4,7 +4,7 @@
 
 - Added up to 60 ordered, non-overlapping scene-relative manual caption cues, millisecond input precision, bounded text and schema/UI validation; old scenes retain full-scene captions.
 - Added cue editing, save/reload/reorder persistence, half-open FFmpeg burn-in, scene-offset SRT and cue-aware cache invalidation. Burn-off still exports SRT; this is not ASR or automatic word alignment.
-- Passed 33 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web builds and the 12-migration populated PGlite upgrade/restore. Real decoded frames verify visibility inside/outside/end of cues. Publication and this increment's CI are pending.
+- Passed 33 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web builds and the 12-migration populated PGlite upgrade/restore. Real decoded frames verify visibility inside/outside/end of cues. Published as `4611fb0170d4851be6bc6d805009c42a0ba5dd63`; Actions run `37143980421` passed every workflow step.
 
 ## 0.9.2 EDITOR-01A scene timeline editing — 2026-10-03
 

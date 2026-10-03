@@ -1,4 +1,4 @@
-# Project handoff — 0.9.2 / 2026-10-02
+# Project handoff — 0.9.2 / 2026-10-03
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and
@@ -43,7 +43,7 @@ EDITOR-01A is now published and CI-verified: deterministic cumulative scene timi
 and move, duplicate-with-new-ID and remove controls passed the full verifier,
 including save and real FFmpeg render in the browser. EDITOR-01B manual caption
 cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
-and populated PGlite upgrade/restore. Publish and verify its own CI, then continue
+and populated PGlite upgrade/restore. Its own publication and CI passed. Continue
 with bounded image fit/fill controls. Automatic speech alignment and broader
 EDITOR-01 completion remain open.
 
@@ -53,7 +53,7 @@ the user's explicit approval for this public upload. Never touch the unrelated
 `OrganicMarketing` repository.
 
 The previous account-side Actions gate is cleared. Application commit
-`97381d1f620eb5f30ec095522c7057c99ac8c1c6` contains EDITOR-01A on exact tree
-`dbf2bf8dca90b3b6612a72960d37b5d5b010702f`. Public run `37126029720` completed
+`4611fb0170d4851be6bc6d805009c42a0ba5dd63` contains EDITOR-01B on exact tree
+`54e29ec0a2d0fa15921be62ccd0282de9e135c07`. Public run `37143980421` completed
 every native verification step successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.

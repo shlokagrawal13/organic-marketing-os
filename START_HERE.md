@@ -19,19 +19,19 @@ The latest source is published to the canonical public repository:
 https://github.com/shlokagrawal13/organic-marketing-os. A prior automatic
 approval review rejection was resolved by explicit user approval for this public
 upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
-Public Actions run `37126029720` for application commit
-`97381d1f620eb5f30ec095522c7057c99ac8c1c6` completed native application
-verification successfully through EDITOR-01A scene timeline editing. Continue
-from the checkpoint's next provider-neutral editor action. EDITOR-01B manual
-timed captions are locally verified (33 unit, 7 HTTP, 6 browser, 5 recovery), but
-their own publication and CI are pending. Next engineering slice: image fit/fill.
+Public Actions run `37143980421` for application commit
+`4611fb0170d4851be6bc6d805009c42a0ba5dd63` completed native application
+verification successfully through EDITOR-01B manual timed captions. Local checks
+passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios. Continue from the
+checkpoint's next provider-neutral editor action: bounded image fit/fill controls.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis
 installer resolves the earlier missing-binary blocker. Native PostgreSQL/Compose,
 live AI/Stripe and full master acceptance are still open. No live provider key or
 paid test budget was supplied. Check current capabilities before repeating an
-old environment blocker. Chat buffering itself was not diagnosed from app logs.
+old environment blocker. GitHub CI covers the configured native PostgreSQL/Redis
+application harness; complete Compose/MinIO and native/cross-store restore remain open. Chat buffering itself was not diagnosed from app logs.
 
 Read `docs/UPGRADE_0.9.md` before updating a populated installation. A source ZIP
 and the workspace NDJSON export are not database/private-media restore backups.

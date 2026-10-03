@@ -12,7 +12,7 @@ supplied V3 specification; it does not complete or certify the entire product.
 | Prisma/API/Next.js              | Client generation and both production builds passed                                                                              |
 | Fresh migrations                | All 12 applied through Prisma deploy in the isolated harness                                                                     |
 | Populated upgrade/fresh restore | PGlite passed; old draft/user/membership/queued AI record, immutable credit ledger and saved media request/provider ID preserved |
-| Npm audit                       | Last audited 2026-09-29: production 0/full 0; not rerun for 0.9, dependency versions unchanged                                   |
+| Npm audit                       | 2026-10-03 CI: production/full moderate-severity gates passed; exact zero counts last recorded 2026-09-29                                   |
 
 The full local verifier reached its explicit final success message. A later
 selected browser rerun checks the final media layout/capture adjustments; its
@@ -42,8 +42,13 @@ Earlier attempts exposed an outdated fixture expectation for normalized
 textarea. The fixture now explicitly verifies preservation of nonempty cues;
 the browser assertion uses the textbox role and accessible name. The complete
 rerun passed; no failed attempt is counted as a pass. No live/paid provider was
-used. Publication/CI for this new source are pending; automatic transcription,
-word highlighting, full language/font QA and production acceptance remain open.
+used. Application commit `4611fb0170d4851be6bc6d805009c42a0ba5dd63` and tree
+`54e29ec0a2d0fa15921be62ccd0282de9e135c07` match all 184 local blob paths/modes/SHAs.
+Actions run `37143980421` passed every step, including PostgreSQL 17/Redis 7
+application flows and browser-evidence upload. A targeted browser screenshot
+rerun also passed and its desktop/mobile caption captures were inspected;
+it does not replace the earlier full run. Automatic transcription, word
+highlighting, full language/font QA and production acceptance remain open.
 
 ## EDITOR-01A scene timeline editing — 2026-10-03
 
