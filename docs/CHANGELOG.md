@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.2 MEDIA-01D ordered multi-image editing — 2026-10-03
+
+- Expanded the separately quoted edit preset from one to four ordered, unique tenant-owned image references.
+- Revalidate every private object by tenant prefix, 8 MiB per-image bound, saved length, SHA-256 and detected MIME before the paid boundary; any missing/corrupt reference prevents submission.
+- Added multi-select Asset library controls, a shared API capability limit and ordered repeated `image[]` multipart fields.
+- API and Next.js production builds, 31 unit tests and the full 7 HTTP / 6 browser / 5 recovery harness with all 12 migrations passed. The HTTP fixture uploaded two distinct references and verified a two-part provider edit request.
+
 ## 0.9.2 MEDIA-01D single-image editing — 2026-10-03
 
 - Added an opt-in, separately priced single-image edit preset and asset-library reference picker. The worker verifies tenant ownership and private image bytes before multipart provider submission.

@@ -129,7 +129,7 @@ export function mediaPricing(
   if (!request.sourceAssetIds.length) return config;
   if (
     request.kind !== "image" ||
-    request.sourceAssetIds.length !== 1 ||
+    request.sourceAssetIds.length > 4 ||
     !config.imageEdit ||
     !imageEditModelSupported(config.model)
   )
@@ -257,13 +257,13 @@ export class OpenAIMediaProvider {
     request: GenerationRequest,
     idempotencyKey: string,
     signal: AbortSignal,
-    source?: SourceImage,
+    sources?: SourceImage[],
   ): Promise<MediaResponse> {
     validateMediaPreset(request, this.config);
-    if (Boolean(request.sourceAssetIds.length) !== Boolean(source))
-      throw new Error("The saved image source is unavailable.");
+    if (request.sourceAssetIds.length !== (sources?.length || 0))
+      throw new Error("One or more saved image sources are unavailable.");
     const headers = { "Idempotency-Key": idempotencyKey };
-    if (source) {
+    if (sources?.length) {
       const preset = imageGenerationOptionsSchema.parse(
         request.options.image || {},
       );
@@ -278,16 +278,18 @@ export class OpenAIMediaProvider {
         output_format: "png",
       }))
         form.set(key, value);
-      const extension = {
-        "image/png": "png",
-        "image/jpeg": "jpg",
-        "image/webp": "webp",
-      }[source.mimeType];
-      form.append(
-        "image[]",
-        new Blob([new Uint8Array(source.bytes)], { type: source.mimeType }),
-        `source.${extension}`,
-      );
+      sources.forEach((source, index) => {
+        const extension = {
+          "image/png": "png",
+          "image/jpeg": "jpg",
+          "image/webp": "webp",
+        }[source.mimeType];
+        form.append(
+          "image[]",
+          new Blob([new Uint8Array(source.bytes)], { type: source.mimeType }),
+          `source-${index + 1}.${extension}`,
+        );
+      });
       const response = await this.call("/images/edits", signal, {
         method: "POST",
         body: form,

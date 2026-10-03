@@ -24,8 +24,8 @@ Provider fixtures and passing local tests do not certify production readiness.
 - Asset library → Generate with AI provides consent/cost gates, saved job history,
   previews/downloads and attachment controls. Workspace health and private record
   export include the new workflow. MEDIA-01D has started: media models can be
-  allowlisted by workspace plan, a separately quoted single-image edit preset
-  verifies tenant-owned source bytes before provider submission, bounded image
+  allowlisted by workspace plan, a separately quoted image-edit preset accepts
+  up to four ordered tenant-owned references verified before provider submission, bounded image
   and voice options are saved with each request, and
   platform credit review cannot resolve active media generations. UNKNOWN
   provider output written to private storage is retained as structured
@@ -42,7 +42,7 @@ Provider/SMTP/Stripe responses come only from isolated test fixtures.
 
 Generated-media live quality, model access, actual charges and signed-redirect
 behavior remain unverified. Single-image editing and bounded image/voice options
-passed isolated provider fixtures, but multi-image/video references, custom voices and another provider still
+passed isolated provider fixtures, but video references, custom voices and another provider still
 need engineering; plan routing, active-credit-resolution and retained UNKNOWN
 output gates are local contracts only. Media generation is opt-in with no default key, model or price. USD
 estimates do not impose a provider spending limit. No paid AI request was made.

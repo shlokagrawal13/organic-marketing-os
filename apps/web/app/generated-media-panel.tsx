@@ -28,7 +28,7 @@ export default function GeneratedMediaPanel({
     [content, setContent] = useState<RecordData[]>([]),
     [images, setImages] = useState<RecordData[]>([]);
   const [kind, setKind] = useState("image"),
-    [sourceAssetId, setSourceAssetId] = useState(""),
+    [sourceAssetIds, setSourceAssetIds] = useState<string[]>([]),
     [imageSize, setImageSize] = useState("1024x1024"),
     [imageQuality, setImageQuality] = useState("medium"),
     [imageBackground, setImageBackground] = useState("opaque"),
@@ -50,7 +50,7 @@ export default function GeneratedMediaPanel({
     seenAssets = useRef(new Set<string>());
   const canWrite = ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role);
   const model = status?.models.find((m: RecordData) => m.kind === kind);
-  const pricing = sourceAssetId && kind === "image" ? model?.imageEdit : model;
+  const pricing = sourceAssetIds.length && kind === "image" ? model?.imageEdit : model;
   const selectedContent = content.find((c) => c.id === contentId);
   const load = useCallback(async () => {
     try {
@@ -89,7 +89,7 @@ export default function GeneratedMediaPanel({
     setAcceptedCost(false);
   }, [
     kind,
-    sourceAssetId,
+    sourceAssetIds,
     pricing?.estimatedCostUsd,
     pricing?.credits,
     model?.model,
@@ -129,8 +129,8 @@ export default function GeneratedMediaPanel({
               },
             }
           : {}),
-      ...(sourceAssetId && kind === "image"
-        ? { sourceAssetIds: [sourceAssetId] }
+      ...(sourceAssetIds.length && kind === "image"
+        ? { sourceAssetIds }
         : {}),
       ...(selectedContent && sceneId
         ? {
@@ -251,7 +251,7 @@ export default function GeneratedMediaPanel({
                     disabled={busy}
                     onChange={(e) => {
                       setKind(e.target.value);
-                      setSourceAssetId("");
+                      setSourceAssetIds([]);
                     }}
                   >
                     <option
@@ -392,13 +392,21 @@ export default function GeneratedMediaPanel({
               )}
               {kind === "image" && model?.imageEdit && (
                 <label>
-                  Reference image (optional)
+                  Reference images (optional, up to {model.imageEdit.maxSourceImages})
                   <select
-                    value={sourceAssetId}
-                    onChange={(e) => setSourceAssetId(e.target.value)}
+                    multiple
+                    value={sourceAssetIds}
+                    size={Math.min(5, Math.max(2, images.length))}
+                    onChange={(e) => {
+                      const selected = Array.from(e.target.selectedOptions).map(
+                        (option) => option.value,
+                      );
+                      setSourceAssetIds(
+                        selected.slice(0, model.imageEdit.maxSourceImages),
+                      );
+                    }}
                     disabled={busy}
                   >
-                    <option value="">Create without a reference</option>
                     {images
                       .filter((asset) => asset.bytes <= 8 * 1024 * 1024)
                       .map((asset) => (
@@ -407,6 +415,10 @@ export default function GeneratedMediaPanel({
                         </option>
                       ))}
                   </select>
+                  <span className="field-help">
+                    Select none for text-only generation. Reference order is
+                    preserved in the provider request.
+                  </span>
                 </label>
               )}
               <label>

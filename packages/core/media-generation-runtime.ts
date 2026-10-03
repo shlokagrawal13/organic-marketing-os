@@ -24,45 +24,52 @@ const activeStates = ["SUBMITTING", "PENDING", "OUTPUT_READY"] as const;
 const LEASE_MS = 60000;
 class InvalidOutput extends Error {}
 const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
-export async function loadGenerationSourceImage(
+export async function loadGenerationSourceImages(
   db: PrismaClient,
   store: ObjectStore,
   job: MediaGeneration,
-): Promise<SourceImage | undefined> {
+): Promise<SourceImage[] | undefined> {
   const request = generationRequestSchema.parse(job.request);
   if (!request.sourceAssetIds.length) return;
-  if (request.kind !== "image" || request.sourceAssetIds.length !== 1)
+  if (request.kind !== "image" || request.sourceAssetIds.length > 4)
     throw new Error("Unsupported generation source.");
-  const asset = await db.asset.findFirst({
+  const assets = await db.asset.findMany({
     where: {
-      id: request.sourceAssetIds[0],
+      id: { in: request.sourceAssetIds },
       organizationId: job.organizationId,
       archivedAt: null,
       kind: "IMAGE",
     },
   });
-  if (
-    !asset ||
-    !asset.objectKey.startsWith(`${job.organizationId}/`) ||
-    asset.bytes > MAX_SOURCE_IMAGE_BYTES
-  )
-    throw new Error("The source image is unavailable or too large.");
-  const bytes = await store.read(asset.objectKey, MAX_SOURCE_IMAGE_BYTES);
-  const detected = sniffMedia(bytes);
-  if (
-    bytes.length !== asset.bytes ||
-    sha256(bytes) !== asset.sha256 ||
-    detected.kind !== "IMAGE" ||
-    detected.mimeType !== asset.mimeType
-  )
-    throw new Error("The source image failed private integrity validation.");
-  if (
-    detected.mimeType !== "image/png" &&
-    detected.mimeType !== "image/jpeg" &&
-    detected.mimeType !== "image/webp"
-  )
-    throw new Error("Unsupported source image type.");
-  return { bytes, mimeType: detected.mimeType };
+  const byId = new Map(assets.map((asset) => [asset.id, asset]));
+  if (assets.length !== request.sourceAssetIds.length)
+    throw new Error("One or more source images are unavailable.");
+  return Promise.all(
+    request.sourceAssetIds.map(async (id) => {
+      const asset = byId.get(id)!;
+      if (
+        !asset.objectKey.startsWith(`${job.organizationId}/`) ||
+        asset.bytes > MAX_SOURCE_IMAGE_BYTES
+      )
+        throw new Error("A source image is unavailable or too large.");
+      const bytes = await store.read(asset.objectKey, MAX_SOURCE_IMAGE_BYTES);
+      const detected = sniffMedia(bytes);
+      if (
+        bytes.length !== asset.bytes ||
+        sha256(bytes) !== asset.sha256 ||
+        detected.kind !== "IMAGE" ||
+        detected.mimeType !== asset.mimeType
+      )
+        throw new Error("A source image failed private integrity validation.");
+      if (
+        detected.mimeType !== "image/png" &&
+        detected.mimeType !== "image/jpeg" &&
+        detected.mimeType !== "image/webp"
+      )
+        throw new Error("Unsupported source image type.");
+      return { bytes, mimeType: detected.mimeType };
+    }),
+  );
 }
 async function lock(tx: Prisma.TransactionClient, org: string) {
   await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
@@ -390,7 +397,7 @@ export async function processMediaGeneration(
   // Preflight before crossing the paid boundary. A queued job never runs while
   // its frozen provider/model has been removed or private storage is unavailable.
   let provider: OpenAIMediaProvider | undefined;
-  let source: SourceImage | undefined;
+  let sources: SourceImage[] | undefined;
   try {
     await store.ready();
     if (job.state !== "OUTPUT_READY") {
@@ -398,7 +405,7 @@ export async function processMediaGeneration(
         mediaConfigurationSchema.parse(job.configuration),
       );
       if (job.state === "QUEUED")
-        source = await loadGenerationSourceImage(db, store, job);
+        sources = await loadGenerationSourceImages(db, store, job);
     }
   } catch {
     if (job.state === "QUEUED")
@@ -477,7 +484,7 @@ export async function processMediaGeneration(
               generationRequestSchema.parse(job.request),
               `${job.organizationId}:${job.id}`,
               abort.signal,
-              source,
+              sources,
             )
           : await provider!.poll(job.providerJobId!, abort.signal);
       if (result.state === "failed") {

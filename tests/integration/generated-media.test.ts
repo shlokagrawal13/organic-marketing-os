@@ -6,8 +6,6 @@ import { createWriteStream } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { actor, db, draft, scene, until } from "../support/http";
 import { grantCredits } from "../../packages/core/credits";
-import { ObjectStore } from "../../packages/core/object-store";
-import { sha256 } from "../../packages/core/media";
 
 test(
   "generated media: durable provider jobs, tenant controls, private ingestion, fixed credits and targeted revisions",
@@ -68,6 +66,11 @@ test(
       const mediaStatus = (await call(path + "/status")).body;
       assert.equal(mediaStatus.models.length, 3);
       assert.equal(mediaStatus.sourceAssetsSupported, true);
+      assert.equal(
+        mediaStatus.models.find((model: any) => model.kind === "image")
+          .imageEdit.maxSourceImages,
+        4,
+      );
       assert.deepEqual(
         mediaStatus.models.find((model: any) => model.kind === "image").options
           .sizes,
@@ -143,21 +146,27 @@ test(
         400,
       );
       const sourceBytes = await readFile(".local/media-fixtures/product.png");
-      const sourceKey = `${org.id}/reference/${randomUUID()}`;
-      await new ObjectStore().put(sourceKey, sourceBytes, "image/png");
-      const sourceAsset = await db.asset.create({
-        data: {
-          organizationId: org.id,
-          name: "Reference image fixture.png",
-          kind: "IMAGE",
-          mimeType: "image/png",
-          bytes: sourceBytes.length,
-          sha256: sha256(sourceBytes),
-          objectKey: sourceKey,
-          rightsNote: "Synthetic owned reference fixture",
-          createdBy: owner.id,
-        },
-      });
+      const uploadReference = async (name: string, bytes = sourceBytes) => {
+        const form = new FormData();
+        form.set(
+          "file",
+          new Blob([new Uint8Array(bytes)], { type: "image/png" }),
+          name,
+        );
+        form.set("rightsConfirmed", "true");
+        form.set("rightsNote", "Synthetic owned reference fixture");
+        const response = await fetch(
+          `http://127.0.0.1:4003/api/workspaces/${org.id}/assets`,
+          { method: "POST", headers: owner.headers, body: form },
+        );
+        assert.equal(response.status, 201);
+        return (await response.json()).asset.id as string;
+      };
+      const sourceAssetId = await uploadReference("Reference fixture.png");
+      const secondSourceAssetId = await uploadReference(
+        "Second reference fixture.png",
+        Buffer.concat([sourceBytes, Buffer.from("second-reference")]),
+      );
       const editInput = envelope("image", "Synthetic reference edit");
       const sourceResponse = await call(path, "POST", {
         ...editInput,
@@ -165,7 +174,7 @@ test(
         request: {
           ...editInput.request,
           maxCostUsd: 0.2,
-          sourceAssetIds: [sourceAsset.id],
+          sourceAssetIds: [sourceAssetId, secondSourceAssetId],
           options: {
             image: {
               size: "1024x1536",
@@ -175,7 +184,7 @@ test(
           },
         },
       });
-      assert.equal(sourceResponse.status, 201);
+      assert.equal(sourceResponse.status, 201, JSON.stringify(sourceResponse.body));
       const edited = (
         await until(
           () => call(`${path}/${sourceResponse.body.id}`),

@@ -8,7 +8,7 @@ import {
   OpenAIMediaProvider,
 } from "../packages/core/openai-media";
 import { generationRequestSchema } from "../packages/core/generated-media";
-import { loadGenerationSourceImage } from "../packages/core/media-generation-runtime";
+import { loadGenerationSourceImages } from "../packages/core/media-generation-runtime";
 import { sha256 } from "../packages/core/media";
 
 const config = {
@@ -85,7 +85,10 @@ test("image editing uses a separately quoted preset and sends owned bytes as mul
   const editRequest = {
     ...request,
     model: editConfig.model,
-    sourceAssetIds: ["8d1adcca-5c32-4467-a5bf-111111111111"],
+    sourceAssetIds: [
+      "8d1adcca-5c32-4467-a5bf-111111111111",
+      "b8fe2ce9-17c6-49ab-ae83-222222222222",
+    ],
     maxCostUsd: 0.4,
   };
   try {
@@ -113,10 +116,9 @@ test("image editing uses a separately quoted preset and sends owned bytes as mul
       validateMediaPreset(
         {
           ...editRequest,
-          sourceAssetIds: [
-            ...editRequest.sourceAssetIds,
-            "b8fe2ce9-17c6-49ab-ae83-222222222222",
-          ],
+          sourceAssetIds: Array.from({ length: 5 }, () =>
+            crypto.randomUUID(),
+          ),
         },
         editConfig,
       ),
@@ -134,11 +136,17 @@ test("image editing uses a separately quoted preset and sends owned bytes as mul
       assert.equal(form.get("model"), editConfig.model);
       assert.equal(form.get("prompt"), editRequest.prompt);
       assert.equal(form.get("quality"), "medium");
-      const file = form.get("image[]") as File;
-      assert.equal(file.type, "image/png");
+      const files = form.getAll("image[]") as File[];
+      assert.equal(files.length, 2);
+      assert.deepEqual(files.map((file) => file.name), [
+        "source-1.png",
+        "source-2.webp",
+      ]);
       assert.deepEqual(
-        Buffer.from(await file.arrayBuffer()),
-        Buffer.from("owned-image"),
+        await Promise.all(
+          files.map(async (file) => Buffer.from(await file.arrayBuffer()).toString()),
+        ),
+        ["owned-image", "second-image"],
       );
       return new Response(
         JSON.stringify({
@@ -155,10 +163,10 @@ test("image editing uses a separately quoted preset and sends owned bytes as mul
       editRequest,
       "edit-key",
       new AbortController().signal,
-      {
-        bytes: Buffer.from("owned-image"),
-        mimeType: "image/png",
-      },
+      [
+        { bytes: Buffer.from("owned-image"), mimeType: "image/png" },
+        { bytes: Buffer.from("second-image"), mimeType: "image/webp" },
+      ],
     );
     assert.equal(result.state, "output");
     assert.equal(calls, 1);
@@ -181,6 +189,7 @@ test("source preflight checks tenant ownership and private byte integrity before
     },
   } as any;
   const asset = {
+    id: job.request.sourceAssetIds[0],
     organizationId: org,
     objectKey: `${org}/assets/image`,
     bytes: bytes.length,
@@ -190,10 +199,10 @@ test("source preflight checks tenant ownership and private byte integrity before
   let found = true;
   const db = {
     asset: {
-      findFirst: async ({ where }: any) => {
+      findMany: async ({ where }: any) => {
         assert.equal(where.organizationId, org);
         assert.equal(where.archivedAt, null);
-        return found ? asset : null;
+        return found ? [asset] : [];
       },
     },
   } as any;
@@ -204,18 +213,17 @@ test("source preflight checks tenant ownership and private byte integrity before
       return bytes;
     },
   } as any;
-  assert.deepEqual(await loadGenerationSourceImage(db, store, job), {
-    bytes,
-    mimeType: "image/png",
-  });
+  assert.deepEqual(await loadGenerationSourceImages(db, store, job), [
+    { bytes, mimeType: "image/png" },
+  ]);
   found = false;
   await assert.rejects(
-    loadGenerationSourceImage(db, store, job),
+    loadGenerationSourceImages(db, store, job),
     /unavailable/,
   );
   found = true;
   await assert.rejects(
-    loadGenerationSourceImage(
+    loadGenerationSourceImages(
       db,
       { read: async () => Buffer.concat([bytes, Buffer.from("x")]) } as any,
       job,

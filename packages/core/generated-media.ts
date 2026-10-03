@@ -40,7 +40,7 @@ export const generationRequestSchema = z
     model: z.string().trim().min(1).max(160),
     rightsConfirmed: z.literal(true),
     rightsNote: z.string().trim().min(1).max(1000),
-    sourceAssetIds: z.array(z.string().uuid()).max(8).default([]),
+    sourceAssetIds: z.array(z.string().uuid()).max(4).default([]),
     options: z
       .object({
         image: imageGenerationOptionsSchema.optional(),

@@ -19,6 +19,21 @@ selected browser rerun checks the final media layout/capture adjustments; its
 output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
 
+## MEDIA-01D ordered multi-image editing — 2026-10-03
+
+The separately quoted image-edit path now accepts one to four ordered, unique
+tenant-owned image assets. Every private object is checked independently for
+tenant key prefix, an 8 MiB bound, saved length, SHA-256, image kind and PNG/JPEG/
+WebP MIME before SUBMITTING. The provider receives repeated `image[]` parts in
+the saved request order. A fifth, duplicate, missing, archived, cross-tenant or
+corrupt reference fails before the paid boundary.
+
+API and Next.js 16.3.8 production builds and 31 unit tests passed. Full
+`npm run verify` passed 7 HTTP, 6 production-browser and 5 recovery/configuration
+scenarios plus all 12 migrations. The HTTP flow uploaded two distinct image
+assets, saved their ordered IDs, sent two multipart fields, ingested the private
+result and preserved the separate edit quote. No live provider call was made.
+
 
 
 ## MEDIA-01D single-image editing — 2026-10-03

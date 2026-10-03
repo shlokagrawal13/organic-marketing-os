@@ -21,10 +21,10 @@ allowlist of `free`, `starter`, `growth` and `self_hosted`; blank means the mode
 is available to all plans. The workspace plan is resolved before queueing and the
 saved provider policy is frozen with the job.
 
-Optional single-image editing uses the same configured GPT Image-compatible
+Optional reference-image editing uses the same configured GPT Image-compatible
 model and separate `MEDIA_IMAGE_EDIT_ESTIMATE_USD` and
 `MEDIA_IMAGE_EDIT_CREDITS` values. Set both or neither. The edit mode accepts
-one active, tenant-owned image of at most 8 MiB. The worker reads private bytes,
+one to four ordered, active tenant-owned images of at most 8 MiB each. The worker reads private bytes,
 checks object-key tenant prefix, length, SHA-256 and detected MIME before the
 paid submission boundary, then sends multipart bytes to `/v1/images/edits`.
 Archived, missing, altered or oversized sources fail without a provider call.
@@ -45,7 +45,7 @@ Use a provider model compatible with these bounded presets:
 | Kind | Contract | Preset |
 | --- | --- | --- |
 | Image | POST `/v1/images/generations` | GPT Image-compatible; one PNG; 1024×1024, 1536×1024 or 1024×1536; low/medium/high; opaque/transparent |
-| Image edit | POST `/v1/images/edits` | One owned image reference; same bounded PNG options; multipart input, base64 output |
+| Image edit | POST `/v1/images/edits` | One to four ordered owned-image references; same bounded PNG options; multipart input, base64 output |
 | Voice | POST `/v1/audio/speech` | Up to 4,000 characters; built-in voice; WAV/MP3; 0.25x–4x; disclose AI-generated voice |
 | Video | POST `/v1/videos`, GET saved ID, GET saved ID/content | One four-second 720×1280 portrait clip; MP4 |
 
@@ -105,9 +105,9 @@ without applying another content edit. All list/detail/create/cancel/attach rout
 check tenant membership; writes require OWNER, ADMIN, EDITOR or CREATOR.
 Reference asset IDs are tenant-checked before queueing: IDs must be unique,
 active image assets in the same workspace. A separately enabled image-edit
-preset supports one image; other media kinds and multi-image references still
-fail before provider submission. The worker repeats source checks and verifies
-private bytes before submitting a paid edit.
+preset supports one to four ordered references; other media kinds and a fifth
+reference fail before provider submission. The worker repeats every source check
+and verifies every private object before submitting a paid edit.
 
 Workspace health includes the media worker and state counts. Private record
 exports include sanitized generation history, excluding private object keys and
@@ -125,7 +125,7 @@ attaches them, renders an MP4 and reloads durable history. These fixtures are
 synthetic, never customer outputs.
 
 Pending: authorized live image/video/voice acceptance and signed-redirect behavior;
-custom voices/additional providers and multi-image/video references; native PostgreSQL/Compose concurrency and
+custom voices/additional providers and video references; native PostgreSQL/Compose concurrency and
 cross-store restore; automatic aged staging cleanup and provider billing
 reconciliation after UNKNOWN. Ambiguous provider output is retained privately as
 structured review evidence instead of being retried or silently deleted. See

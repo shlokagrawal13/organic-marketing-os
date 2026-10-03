@@ -32,10 +32,10 @@ in. See GENERATED_MEDIA.md for exact presets, money semantics and remaining limi
 ## Continue
 
 Read the checkpoint and task board. MEDIA-01D now has plan-specific model
-allowlists, bounded image/voice options, separately quoted single-image editing
-with verified private bytes, active credit-resolution guards and retained UNKNOWN
-output reconciliation. Custom voices, another provider and multi-image/video
-reference modes remain; MEDIA-LIVE-01 requires authorized live
+allowlists, bounded image/voice options, separately quoted editing with one to
+four ordered verified private image references, active credit-resolution guards
+and retained UNKNOWN output reconciliation. Custom voices, another provider and
+video reference modes remain; MEDIA-LIVE-01 requires authorized live
 model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 

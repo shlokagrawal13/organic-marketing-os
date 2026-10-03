@@ -135,7 +135,7 @@ export class GeneratedMediaController {
                         creditPolicy().mode === "credits"
                           ? config.imageEdit.credits
                           : 0,
-                      maxSourceImages: 1,
+                      maxSourceImages: 4,
                     }
                   : null,
                 allowedPlans: config.allowedPlans,
@@ -167,7 +167,7 @@ export class GeneratedMediaController {
         (model) => model.kind === "image" && model.imageEdit,
       ),
       sourceAssetPolicy:
-        "One active image in this workspace may be used as a reference when the separately quoted image-edit preset is enabled.",
+        "Up to four active images in this workspace may be used as ordered references when the separately quoted image-edit preset is enabled.",
       inFlightCancellationSupported: false,
     };
   }

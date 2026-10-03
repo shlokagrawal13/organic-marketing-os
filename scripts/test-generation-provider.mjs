@@ -33,9 +33,10 @@ export function generationFixture() {
       const prompt = input.prompt || input.input;
       if (req.url === "/v1/images/edits") {
         const expected = readFileSync(".local/media-fixtures/product.png");
+        const imageParts = raw.match(/name="image\[\]"/g) || [];
         if (
           !req.headers["content-type"]?.startsWith("multipart/form-data;") ||
-          !raw.includes('name="image[]"') ||
+          imageParts.length !== 2 ||
           !body.includes(expected) ||
           !raw.includes('name="model"') ||
           !raw.includes('name="size"\r\n\r\n1024x1536') ||
