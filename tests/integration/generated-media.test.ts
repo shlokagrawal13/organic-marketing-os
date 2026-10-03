@@ -81,12 +81,17 @@ test(
           .find((model: any) => model.kind === "voice")
           .options.voices.includes("cedar"),
       );
+      const untouchedScene = {
+        ...scene,
+        id: "second",
+        onScreenText: "Preserve this scene",
+        captionCues: [
+          { start: 0.25, end: 1.5, text: "Preserve timed caption" },
+        ],
+      };
       const content = await call("/content", "POST", {
         ...draft,
-        scenes: [
-          scene,
-          { ...scene, id: "second", onScreenText: "Preserve this scene" },
-        ],
+        scenes: [scene, untouchedScene],
       });
       assert.equal(content.status, 201);
       await db.contentItem.update({
@@ -184,7 +189,11 @@ test(
           },
         },
       });
-      assert.equal(sourceResponse.status, 201, JSON.stringify(sourceResponse.body));
+      assert.equal(
+        sourceResponse.status,
+        201,
+        JSON.stringify(sourceResponse.body),
+      );
       const edited = (
         await until(
           () => call(`${path}/${sourceResponse.body.id}`),
@@ -275,11 +284,7 @@ test(
       assert.equal(updated.status, "DRAFT");
       assert.equal(updated.approvedAt, null);
       assert.equal((updated.scenes as any)[0].visualAssetId, generated.assetId);
-      assert.deepEqual((updated.scenes as any)[1], {
-        ...scene,
-        id: "second",
-        onScreenText: "Preserve this scene",
-      });
+      assert.deepEqual((updated.scenes as any)[1], untouchedScene);
       const stale = await call(
         path,
         "POST",

@@ -123,6 +123,31 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await scene
     .getByLabel("Caption", { exact: true })
     .fill("Bring your own brand to the story.");
+  await scene.getByText("Timed captions (0)", { exact: true }).click();
+  await scene
+    .getByRole("button", { name: "Add caption cue", exact: true })
+    .click();
+  const cue = scene.getByRole("group", { name: "Caption cue 1", exact: true });
+  await cue.getByLabel("Start (seconds)", { exact: true }).fill("0.25");
+  await cue.getByLabel("End (seconds)", { exact: true }).fill("1.75");
+  await cue
+    .getByLabel("Caption text", { exact: true })
+    .fill("Manually timed brand story");
+  await expect(scene.getByLabel("Caption", { exact: true })).toBeDisabled();
+  await expect(scene.locator(".caption-editor [role=alert]")).toHaveCount(0);
+  await scene.getByLabel("Duration (seconds)").fill("1");
+  await expect(scene.locator(".caption-editor [role=alert]")).toHaveText(
+    "Caption cues must stay within the scene duration.",
+  );
+  await scene.getByLabel("Duration (seconds)").fill("3");
+  await scene
+    .getByRole("button", { name: "Add caption cue", exact: true })
+    .click();
+  await expect(scene.locator(".caption-editor [role=alert]")).toBeVisible();
+  await scene
+    .getByRole("button", { name: "Remove caption cue 2", exact: true })
+    .click();
+  await expect(scene.locator(".caption-editor [role=alert]")).toHaveCount(0);
   await page.getByRole("button", { name: "Add scene", exact: true }).click();
   const secondScene = page.locator(".scene-card").nth(1);
   await secondScene
@@ -154,6 +179,43 @@ test("inspect workspace pages, upload private media, render and approve a playab
   );
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(page.getByText("Draft saved.", { exact: true })).toBeVisible();
+  // Reopen the saved record to prove server persistence after reordering.
+  await page
+    .getByRole("navigation")
+    .getByRole("button", { name: "Video studio", exact: true })
+    .click();
+  await page
+    .getByRole("navigation")
+    .getByRole("button", { name: "Content library", exact: true })
+    .click();
+  await page
+    .getByText("A brand story, ready to share", { exact: true })
+    .click();
+  const savedScene = page.locator(".scene-card").nth(1);
+  await savedScene.getByText("Timed captions (1)", { exact: true }).click();
+  await expect(
+    savedScene.getByLabel("Start (seconds)", { exact: true }),
+  ).toHaveValue("0.25");
+  await expect(
+    savedScene.getByRole("textbox", { name: "Caption text", exact: true }),
+  ).toHaveValue("Manually timed brand story");
+  await savedScene.locator(".caption-editor").screenshot({
+    path: "test-results/timed-caption-editor-desktop.png",
+    animations: "disabled",
+  });
+  const desktopViewport = page.viewportSize()!;
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(
+    savedScene.getByRole("textbox", { name: "Caption text", exact: true }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth),
+  ).toBeLessThanOrEqual(390);
+  await savedScene.locator(".caption-editor").screenshot({
+    path: "test-results/timed-caption-editor-mobile.png",
+    animations: "disabled",
+  });
+  await page.setViewportSize(desktopViewport);
   await page
     .getByRole("button", { name: "Request review", exact: true })
     .click();

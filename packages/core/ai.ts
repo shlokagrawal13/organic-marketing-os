@@ -1,4 +1,9 @@
 import { z } from "zod";
+import {
+  captionCueSchema,
+  captionTimingError,
+  MAX_CAPTION_CUES,
+} from "./captions";
 export const sceneSchema = z
   .object({
     id: z.string().max(100),
@@ -8,6 +13,7 @@ export const sceneSchema = z
     visual: z.string().max(2000),
     onScreenText: z.string().max(500),
     caption: z.string().max(2000),
+    captionCues: z.array(captionCueSchema).max(MAX_CAPTION_CUES).default([]),
     transition: z.string().max(200),
     music: z.string().max(300),
     sfx: z.string().max(300),
@@ -15,7 +21,16 @@ export const sceneSchema = z
     visualAssetId: z.string().uuid().nullable().default(null),
     audioAssetId: z.string().uuid().nullable().default(null),
   })
-  .strict();
+  .strict()
+  .superRefine((scene, ctx) => {
+    const message = captionTimingError(scene);
+    if (message)
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["captionCues"],
+        message,
+      });
+  });
 export const draftSchema = z
   .object({
     title: z.string().min(1).max(160),

@@ -41,9 +41,11 @@ Do not reset all completed work to pending because native/live gates are open.
 
 EDITOR-01A is now published and CI-verified: deterministic cumulative scene timing
 and move, duplicate-with-new-ID and remove controls passed the full verifier,
-including save and real FFmpeg render in the browser. Continue with word-aligned
-captions or another provider-neutral editor control; do not claim broader
-EDITOR-01 completion.
+including save and real FFmpeg render in the browser. EDITOR-01B manual caption
+cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
+and populated PGlite upgrade/restore. Publish and verify its own CI, then continue
+with bounded image fit/fill controls. Automatic speech alignment and broader
+EDITOR-01 completion remain open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
 The earlier automatic approval review rejection is a closed audit event after

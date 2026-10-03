@@ -2,6 +2,8 @@ import { z } from "zod";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { sceneSchema } from "./ai";
+import { sceneTimeline, sceneCaptionCues } from "./captions";
+export { sceneTimeline } from "./captions";
 
 export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 export const MAX_RENDER_BYTES = 100 * 1024 * 1024;
@@ -170,6 +172,7 @@ export function validateRenderScenes(scenes: Scene[]) {
   if (scenes.reduce((n, s) => n + s.duration, 0) > 180)
     throw new Error("A render can be at most 180 seconds long.");
   for (const s of scenes) {
+    sceneSchema.parse(s);
     if (s.onScreenText.length > 180 || s.caption.length > 300)
       throw new Error(
         "Keep each scene's on-screen text under 180 characters and its caption under 300 characters.",
@@ -180,14 +183,6 @@ export function validateRenderScenes(scenes: Scene[]) {
       );
   }
 }
-export function sceneTimeline(scenes: Scene[]) {
-  let elapsed = 0;
-  return scenes.map((scene, index) => {
-    const start = elapsed;
-    elapsed += scene.duration;
-    return { index, scene, start, end: elapsed };
-  });
-}
 export function captionSrt(scenes: Scene[]) {
   const time = (sec: number) => {
     const ms = Math.round(sec * 1000);
@@ -195,10 +190,10 @@ export function captionSrt(scenes: Scene[]) {
   };
   let index = 0;
   const lines: string[] = [];
-  for (const { scene, start, end } of sceneTimeline(scenes)) {
-    if (scene.caption.trim())
+  for (const { scene, start } of sceneTimeline(scenes)) {
+    for (const cue of sceneCaptionCues(scene))
       lines.push(
-        `${++index}\n${time(start)} --> ${time(end)}\n${scene.caption.replace(/\r/g, "").replace(/\n\s*\n/g, "\n")}\n`,
+        `${++index}\n${time(start + cue.start)} --> ${time(start + cue.end)}\n${cue.text.replace(/\r/g, "").replace(/\n\s*\n/g, "\n")}\n`,
       );
   }
   return lines.join("\n");

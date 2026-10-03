@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.2 EDITOR-01B manual timed captions — 2026-10-03
+
+- Added up to 60 ordered, non-overlapping scene-relative manual caption cues, millisecond input precision, bounded text and schema/UI validation; old scenes retain full-scene captions.
+- Added cue editing, save/reload/reorder persistence, half-open FFmpeg burn-in, scene-offset SRT and cue-aware cache invalidation. Burn-off still exports SRT; this is not ASR or automatic word alignment.
+- Passed 33 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web builds and the 12-migration populated PGlite upgrade/restore. Real decoded frames verify visibility inside/outside/end of cues. Publication and this increment's CI are pending.
+
 ## 0.9.2 EDITOR-01A scene timeline editing — 2026-10-03
 
 - Added deterministic cumulative scene start/end timing shared with SRT generation.

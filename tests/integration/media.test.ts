@@ -172,8 +172,28 @@ test(
     };
     const forged = await b.call(other + "/content", "POST", draft);
     assert.equal(forged.status, 400);
+    draft.scenes[0].captionCues = [
+      { start: 0.25, end: 1.5, text: "Manual cue" },
+    ];
+    for (const captionCues of [
+      [{ start: 1, end: 3, text: "Outside scene" }],
+      [
+        { start: 0, end: 1, text: "One" },
+        { start: 0.5, end: 2, text: "Overlap" },
+      ],
+    ]) {
+      const invalid = await a.call(root + "/content", "POST", {
+        ...draft,
+        scenes: [{ ...draft.scenes[0], captionCues }],
+      });
+      assert.equal(invalid.status, 400, "invalid cues rejected before saving");
+    }
     const created = await a.call(root + "/content", "POST", draft);
     assert.equal(created.status, 201);
+    assert.deepEqual(
+      created.body.scenes[0].captionCues,
+      draft.scenes[0].captionCues,
+    );
     const id = created.body.id;
     await a.call(`${root}/content/${id}/review`, "POST", { revision: 1 });
     await a.call(`${root}/content/${id}/approve`, "POST", {
@@ -262,6 +282,7 @@ test(
       await a.raw(`${root}/renders/${rendered.id}/file/captions`)
     ).text();
     assert.match(captions, /00:00:02,000 --> 00:00:04,000/);
+    assert.match(captions, /00:00:00,250 --> 00:00:01,500\nManual cue/);
     const seek = await a.raw(`${root}/renders/${rendered.id}/file/video`, {
       Range: "bytes=0-99",
     });
@@ -305,7 +326,9 @@ test(
     draft = {
       ...draft,
       scenes: draft.scenes.map((s: any, i: number) =>
-        i === 0 ? { ...s, onScreenText: "A new opening scene" } : s,
+        i === 0
+          ? { ...s, captionCues: [{ ...s.captionCues[0], start: 0.5 }] }
+          : s,
       ),
     };
     assert.equal(
@@ -334,7 +357,7 @@ test(
     assert.equal(
       rerendered.reusedScenes,
       1,
-      "unchanged second scene should be reused",
+      "caption timing edit invalidates only the first scene's cache",
     );
     const cancel = await a.call(root + "/renders", "POST", {
       ...payload,
@@ -383,6 +406,7 @@ test(
       scenes: [
         {
           ...draft.scenes[0],
+          captionCues: [],
           duration: 2,
           transition: "Fade",
           onScreenText:
@@ -416,6 +440,81 @@ test(
         `.local/render-${width}x${height}.jpg`,
         Buffer.from(await thumbnail.arrayBuffer()),
       );
+    }
+
+    // Real decoded frames prove the overlay appears only in the half-open cue
+    // interval, independently of the SRT and without invented speech alignment.
+    const cueContent = await a.call(root + "/content", "POST", {
+      ...draft,
+      title: "Caption timing pixels",
+      scenes: [
+        {
+          ...draft.scenes[0],
+          visualAssetId: null,
+          audioAssetId: null,
+          onScreenText: "",
+          caption: "Fallback must not appear",
+          captionCues: [{ start: 0.5, end: 1, text: "TIMED CAPTION" }],
+        },
+      ],
+    });
+    assert.equal(cueContent.status, 201);
+    for (const enabled of [true, false]) {
+      const queuedCue = await a.call(root + "/renders", "POST", {
+        contentId: cueContent.body.id,
+        revision: 1,
+        requestKey: randomUUID(),
+        options: { aspect: "1:1", captions: enabled, background: "#183c2b" },
+      });
+      assert.equal(queuedCue.status, 201, JSON.stringify(queuedCue.body));
+      const ready = await wait(queuedCue.body.id);
+      assert.equal(ready.status, "SUCCEEDED", JSON.stringify(ready));
+      const file = `.local/caption-timing-${enabled}.mp4`;
+      writeFileSync(
+        file,
+        Buffer.from(
+          await (
+            await a.raw(`${root}/renders/${ready.id}/file/video`)
+          ).arrayBuffer(),
+        ),
+      );
+      for (const at of [0.25, 0.75, 1, 1.5]) {
+        const frame = execFileSync(
+          process.env.FFMPEG_PATH || "ffmpeg",
+          [
+            "-v",
+            "error",
+            "-ss",
+            String(at),
+            "-i",
+            file,
+            "-frames:v",
+            "1",
+            "-vf",
+            "crop=720:216:0:504",
+            "-pix_fmt",
+            "gray",
+            "-f",
+            "rawvideo",
+            "-",
+          ],
+          { maxBuffer: 2 * 1024 * 1024 },
+        );
+        const white = frame.reduce(
+          (count, pixel) => count + (pixel > 200 ? 1 : 0),
+          0,
+        );
+        assert.equal(
+          white > 100,
+          enabled && at === 0.75,
+          `caption pixels at ${at}s, enabled=${enabled}`,
+        );
+      }
+      const exported = await (
+        await a.raw(`${root}/renders/${ready.id}/file/captions`)
+      ).text();
+      assert.match(exported, /00:00:00,500 --> 00:00:01,000\nTIMED CAPTION/);
+      assert.equal(exported.includes("Fallback"), false);
     }
   },
 );

@@ -732,8 +732,9 @@ export function RenderPanel({
                   Up to 12 scenes / 180 seconds. Uploaded clips loop or trim to
                   scene length and their original sound is muted. Attach a
                   narration asset to each scene; voiceover text is not spoken
-                  automatically. Captions use the whole scene's timing. Cut and
-                  Fade transitions are supported.
+                  automatically. Captions use manual cue timing when supplied,
+                  otherwise the whole scene. Cut and Fade transitions are
+                  supported.
                 </p>
                 {dirty && (
                   <div className="alert">

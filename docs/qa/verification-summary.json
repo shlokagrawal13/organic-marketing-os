@@ -7,7 +7,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 31,
+    "unit": 33,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -82,7 +82,7 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "unitTestsPassed": 31,
+    "unitTestsPassed": 33,
     "httpScenariosPassed": 7,
     "browserScenariosPassed": 6,
     "recoveryConfigurationScenariosPassed": 5,
@@ -98,7 +98,12 @@
     "finalMediaLayoutTargetedRerun": true,
     "editorSceneTimelineTiming": true,
     "editorSceneReorderDuplicateRemove": true,
-    "editorTimelineBrowserRenderVerified": true
+    "editorTimelineBrowserRenderVerified": true,
+    "manualTimedCaptionSchema": true,
+    "manualTimedCaptionSaveReload": true,
+    "captionDecodedFrameIntervals": true,
+    "captionCacheInvalidation": true,
+    "legacySceneCaptionFallback": true
   },
   "priorFullSuite": {
     "release": "0.6.0",
@@ -148,5 +153,15 @@
     "fullHarnessResult": "passed_with_elevated_local_services",
     "fullHarnessBlocker": null,
     "activeMediaCreditResolutionGuard": true
+  },
+  "editor01bEvidence": {
+    "manualNotAutomaticAlignment": true,
+    "maxCuesPerScene": 60,
+    "halfOpenIntervals": true,
+    "legacyFallback": true,
+    "captionBurnOffRetainsSrt": true,
+    "decodedFramesVerified": true,
+    "sceneCacheInvalidation": true,
+    "desktopAndMobileSaveReload": true
   }
 }

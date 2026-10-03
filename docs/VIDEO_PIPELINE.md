@@ -1,6 +1,6 @@
-# Video pipeline — 0.2.0
+# Video pipeline — 0.9.2
 
-Uploaded images, H.264 clips and recorded audio now produce a real MP4. This is an FFmpeg renderer; AI visual/voice generation is not implemented.
+Uploaded or privately ingested generated images, H.264 clips and audio produce a real MP4 through FFmpeg. Generated-media presets require explicit configuration and consent; see GENERATED_MEDIA.md. Live provider acceptance remains open.
 
 ## Flow and files
 
@@ -16,8 +16,16 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - Images/clips fit with letterboxing; clips loop if shorter than the scene. Missing visuals use a colour/text card.
 - Scene narration uses an uploaded audio asset, trimmed/padded to the scene. Uploaded video sound is muted. Voiceover/music/SFX descriptions remain script notes; only attached files produce audio. No automatic TTS or licensed music catalog.
 - Optional background audio loops across the video with a user-selected volume. Audio is limited to reduce clipping; subjective mix quality still needs review.
-- On-screen text and optional burned captions wrap into bounded areas. Captions and SRT span each complete scene; they are not word-aligned or speech-recognized. Other writing systems and complex font shaping need their own QA.
-- SHA-256 scene caching includes tenant, dimensions/settings, rendering text/duration, input hashes and font hash. Unchanged scenes can be reused after an edit; changed scenes render again. Original assets and completed renders are immutable.
+- On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
+- SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Original assets and completed renders are immutable.
+
+## Manual timed captions (EDITOR-01B)
+
+Each scene optionally stores `captionCues: [{ start: 0.25, end: 1.75, text: "A useful idea" }]` in its existing JSON. Times are seconds relative to the scene, with at most three decimal places. There are at most 60 cues per scene, each with 1–300 trimmed characters. Cues must be ordered, non-overlapping and within the scene; the end must exceed the start. Unknown fields, non-finite/negative times, excess precision and unsafe control characters are rejected. No database migration is required.
+
+The storyboard can add, edit and remove cues and shows local validation errors. Explicit cues replace the scene-wide `caption`, including blank gaps. Removing every cue restores the fallback caption. Saving uses the existing role/revision checks and invalidates content/render approval. Reordering and duplicating scenes preserve relative cues; applying an AI scene rewrite explicitly clears manual cues.
+
+FFmpeg uses half-open intervals `[start, end)`; output is sampled at 30 fps, so millisecond inputs do not imply millisecond frame precision and a very short cue may have no visible frame. SRT offsets each cue by cumulative scene start. Turning off burned captions affects the MP4 only, not the downloadable SRT. This is manual timing, not ASR, automatic speech alignment or karaoke highlighting.
 
 ## State and approval
 
@@ -29,7 +37,7 @@ Rendering a draft is allowed. Final approval requires an authorized approver, ex
 
 ## Verification and remaining scope
 
-Real FFmpeg, private upload/download, byte ranges, non-silent decoded audio, all three aspect ratios, SRT timing, thumbnails, unchanged-scene reuse, cancel/retry and approval invalidation are exercised. Playwright uploads, plays, downloads and approves an actual video. Storage is S3rver in local tests, not verified cloud S3/MinIO. See `TEST_STRATEGY.md`.
+Real FFmpeg, private upload/download, byte ranges, non-silent decoded audio, all three aspect ratios, SRT timing, thumbnails, unchanged-scene reuse, cancel/retry and approval invalidation are exercised. Timed-caption tests compare decoded frames inside/outside the cue and at its end, with captions both enabled and disabled. Playwright saves/reopens cues, uploads, plays, downloads and approves an actual video. Storage is S3Proxy 4.1.1 in local tests, not verified cloud S3/MinIO. See `TEST_STRATEGY.md` and the dated `VERIFICATION_REPORT.md`.
 
 Generated image/video/voice presets, private ingestion and explicit targeted attachment are implemented in 0.9; see GENERATED_MEDIA.md. Voiceover text never starts speech automatically.
 

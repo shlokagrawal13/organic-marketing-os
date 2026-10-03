@@ -15,6 +15,8 @@ Provider fixtures and passing local tests do not certify production readiness.
   narration, captions, thumbnails and scene caching. Render approval remains tied
   to the exact content revision. EDITOR-01A adds cumulative scene timing plus
   reorder, duplicate-with-new-ID and remove controls verified through a real render.
+  EDITOR-01B adds verified manual timed cues, legacy fallback and cue-aware SRT/cache.
+  Automatic transcription and speech alignment are not implemented.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
   Stripe sandbox acceptance is outstanding.
@@ -48,7 +50,8 @@ need engineering; plan routing, active-credit-resolution and retained UNKNOWN
 output gates are local contracts only. Media generation is opt-in with no default key, model or price. USD
 estimates do not impose a provider spending limit. No paid AI request was made.
 
-Native PostgreSQL concurrency/restore, Docker/MinIO, cross-store recovery, live
+The configured native PostgreSQL/Redis application harness has dated GitHub CI
+evidence. Broader native concurrency/restore, full Docker/MinIO, cross-store recovery, live
 providers/payments, cloud mail/TLS, broader security/load/accessibility and full
 master acceptance remain open. The 161-row requirement matrix retains all scope;
 Partial labels are not completion percentages.
@@ -67,12 +70,15 @@ at commit `97381d1f620eb5f30ec095522c7057c99ac8c1c6`; its tree
 `dbf2bf8dca90b3b6612a72960d37b5d5b010702f` exactly matched the locally verified
 tree. Public run `37126029720` completed every native application
 verification step successfully, including browser-evidence upload.
+EDITOR-01B passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios locally,
+plus both production builds and the 12-migration populated PGlite upgrade/restore.
+Its own publication and CI are pending; earlier CI does not cover unpublished changes.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue EDITOR-01 with word-aligned captions and the next provider-neutral
-editing control. MEDIA-01D remaining provider/reference modes still require a
+Continue EDITOR-01 with bounded per-scene image fit/fill controls. Automatic
+speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and
 broader collaboration UX from TASK_BOARD.md. Do routine local work independently;

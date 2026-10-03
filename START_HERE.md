@@ -22,7 +22,9 @@ upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different projec
 Public Actions run `37126029720` for application commit
 `97381d1f620eb5f30ec095522c7057c99ac8c1c6` completed native application
 verification successfully through EDITOR-01A scene timeline editing. Continue
-from the checkpoint's next provider-neutral editor action.
+from the checkpoint's next provider-neutral editor action. EDITOR-01B manual
+timed captions are locally verified (33 unit, 7 HTTP, 6 browser, 5 recovery), but
+their own publication and CI are pending. Next engineering slice: image fit/fill.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

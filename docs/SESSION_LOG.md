@@ -1,5 +1,13 @@
 # Session log
 
+## 2026-10-03 — EDITOR-01B manual timed captions
+
+Continued from documentation head `80549cad6ebc57eb6b46d7944e4e784f2b744a2a` after a clean 181-file checkpoint check and remote-main comparison. Added browser-safe shared timeline/caption contracts, up to 60 manual cues per scene, editor validation, half-open FFmpeg text intervals, relative-to-global SRT offsets and cue-aware scene caching. Legacy scenes retain the full-scene caption with no migration. Applying an AI scene rewrite clearly discloses that it clears manual cues.
+
+Fresh checks: 33 unit tests, API and Next.js production builds, 7 HTTP, 6 browser, 5 recovery/configuration scenarios and all 12 migrations passed. `npm run verify:upgrade` passed populated PGlite upgrade/fresh restore. Actual decoded video frames prove cue boundaries/gaps and captions-off behavior; HTTP coverage verifies SRT and changed-scene cache invalidation. Browser coverage saves/reopens reordered captions and checks invalid duration, add/remove and mobile overflow. Two initial harness attempts failed on test expectations/selectors (default empty cues and prefilled textarea label); both were corrected before the complete successful rerun. A later targeted screenshot rerun is recorded separately and does not substitute for full verification.
+
+No dependency, migration, paid provider, user database or runtime media was changed. Local service execution needed no escalation this turn. Canonical-public-repository publication and its own CI are next; the unrelated OrganicMarketing repository is excluded. Exact changed paths are recorded in PROJECT_CHECKPOINT.json.
+
 ## 2026-10-01 — 0.9.0 durable generated media and UI
 
 - Continued the exact recovered private project; committed the completed 0.8.1 checkpoint locally as `73359b0`. Preserved the master specification and previous migrations. No user services/data/credentials were used as fixtures.

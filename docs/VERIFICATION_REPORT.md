@@ -5,7 +5,7 @@ supplied V3 specification; it does not complete or certify the entire product.
 
 | Check                           | Completed result                                                                                                                 |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Unit tests                      | 31 passed across 6 test files                                                                                                    |
+| Unit tests                      | 33 passed across 6 test files                                                                                                    |
 | HTTP integration                | 7 broad scenarios passed                                                                                                         |
 | Production-browser tests        | 6 scenarios passed                                                                                                               |
 | Recovery/configuration          | 5 scenarios passed                                                                                                               |
@@ -18,6 +18,32 @@ The full local verifier reached its explicit final success message. A later
 selected browser rerun checks the final media layout/capture adjustments; its
 output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
+
+## EDITOR-01B manual timed captions — 2026-10-03
+
+Bounded scene-relative cues now replace the fallback caption, including blank
+gaps, and use half-open intervals. Legacy missing/empty cues retain the old
+full-scene caption. The scene JSON change needs no migration. SRT uses cumulative
+scene offsets regardless of whether burn-in is enabled; the cache uses effective
+cue timing/text only when captions are burned in.
+
+`npm test` passed 33 tests; API and Next.js 16.3.8 production builds passed.
+Full `npm run verify` passed 7 HTTP, 6 browser and 5 recovery/configuration
+scenarios with all 12 migrations. Tests reject invalid/out-of-bounds/overlapping
+cues, preserve a second scene's cues during generated-media attachment, reopen
+saved/reordered captions and exercise mobile validation without horizontal
+overflow. Real decoded frame bands at 0.25, 0.75, 1.0 and 1.5 seconds verify a
+0.5–1.0 cue appears only inside its interval; burn-off frames stay blank.
+Changing only cue timing invalidates that scene while reusing the other scene.
+`npm run verify:upgrade` passed the populated PGlite upgrade/fresh restore.
+
+Earlier attempts exposed an outdated fixture expectation for normalized
+`captionCues: []` and an exact-label selector that could not find a prefilled
+textarea. The fixture now explicitly verifies preservation of nonempty cues;
+the browser assertion uses the textbox role and accessible name. The complete
+rerun passed; no failed attempt is counted as a pass. No live/paid provider was
+used. Publication/CI for this new source are pending; automatic transcription,
+word highlighting, full language/font QA and production acceptance remain open.
 
 ## EDITOR-01A scene timeline editing — 2026-10-03
 

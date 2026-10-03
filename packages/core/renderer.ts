@@ -2,6 +2,7 @@ import { mkdtemp, writeFile, readFile, stat, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { ObjectStore } from "./object-store";
+import { sceneCaptionCues } from "./captions";
 import {
   RenderOptions,
   Scene,
@@ -132,12 +133,12 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-1",
+          version: "mos-render-2-timed-captions",
           font: sha256(font),
           width,
           height,
           background: options.background,
-          caption: options.captions ? scene.caption : "",
+          captions: options.captions ? sceneCaptionCues(scene) : [],
           text: scene.onScreenText,
           duration: scene.duration,
           transition: scene.transition.toLowerCase().trim(),
@@ -191,20 +192,25 @@ export async function renderVideo(ctx: RenderContext) {
           "fps=30",
           "format=yuv420p",
         ];
-        for (const [type, text, y, baseSize] of [
-          [
-            "title",
-            scene.onScreenText,
-            "h*0.10",
-            Math.round(Math.min(width, height) / 18),
-          ],
-          [
-            "caption",
-            options.captions ? scene.caption : "",
-            "h*0.91-th",
-            Math.round(Math.min(width, height) / 25),
-          ],
-        ] as const) {
+        const overlays = [
+          {
+            type: "title",
+            text: scene.onScreenText,
+            y: "h*0.10",
+            baseSize: Math.round(Math.min(width, height) / 18),
+            enable: "",
+          },
+          ...(options.captions
+            ? sceneCaptionCues(scene).map((cue, cueIndex) => ({
+                type: `caption-${cueIndex}`,
+                text: cue.text,
+                y: "h*0.91-th",
+                baseSize: Math.round(Math.min(width, height) / 25),
+                enable: `:enable='gte(t,${cue.start})*lt(t,${cue.end})'`,
+              }))
+            : []),
+        ];
+        for (const { type, text, y, baseSize, enable } of overlays) {
           if (!text.trim()) continue;
           const file = `${type}-${i}.txt`;
           let fontSize = Math.max(18, baseSize),
@@ -218,7 +224,7 @@ export async function renderVideo(ctx: RenderContext) {
           }
           await writeFile(join(dir, file), wrapped, "utf8");
           filters.push(
-            `drawtext=fontfile=font.ttf:textfile=${file}:expansion=none:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}`,
+            `drawtext=fontfile=font.ttf:textfile=${file}:expansion=none:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}${enable}`,
           );
         }
         if (scene.transition.toLowerCase().trim() === "fade")

@@ -29,6 +29,11 @@ import {
 } from "lucide-react";
 import { api, download } from "./api-client";
 import { RenderPanel } from "./media-workspace";
+import { CaptionEditor } from "./caption-editor";
+import {
+  sceneTimeline as timeline,
+  timelineTime,
+} from "../../../packages/core/captions";
 type Any = Record<string, any>;
 const draftFields = [
   "title",
@@ -99,18 +104,6 @@ const inputTime = (iso: string | null) => {
   return new Date(d.getTime() - d.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 16);
-};
-const timeline = (scenes: Any[]) => {
-  let elapsed = 0;
-  return scenes.map((scene, index) => {
-    const start = elapsed;
-    elapsed += Number(scene.duration) || 0;
-    return { scene, index, start, end: elapsed };
-  });
-};
-const timelineTime = (seconds: number) => {
-  const whole = Math.max(0, Math.round(seconds));
-  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
 };
 export default function ContentWorkspace({
   base,
@@ -503,7 +496,7 @@ export default function ContentWorkspace({
                       storyboard, then render your video below.
                     </p>
                     <div className="scene-timeline">
-                      {timeline(draft.scenes).map(
+                      {timeline<Any & { duration: number }>(draft.scenes).map(
                         ({ scene, index, start, end }) => (
                           <a href={`#scene-${scene.id}`} key={scene.id}>
                             <span>{String(index + 1).padStart(2, "0")}</span>
@@ -627,6 +620,7 @@ export default function ContentWorkspace({
                                 type="number"
                                 min={1}
                                 max={60}
+                                step="0.001"
                                 value={s.duration}
                                 onChange={(e) =>
                                   change("duration", Number(e.target.value))
@@ -746,12 +740,18 @@ export default function ContentWorkspace({
                               Caption
                               <input
                                 value={s.caption}
+                                disabled={Boolean(s.captionCues?.length)}
                                 onChange={(e) =>
                                   change("caption", e.target.value)
                                 }
                               />
                             </label>
                           </div>
+                          <CaptionEditor
+                            duration={s.duration}
+                            cues={s.captionCues || []}
+                            onChange={(cues) => change("captionCues", cues)}
+                          />
                           <details>
                             <summary>Transitions, music and scene CTA</summary>
                             <div className="form-grid">
@@ -829,13 +829,15 @@ export default function ContentWorkspace({
                                               old.visualAssetId || null,
                                             audioAssetId:
                                               old.audioAssetId || null,
+                                            captionCues: [],
                                           }
                                         : old,
                                     ),
                                   )
                                 }
                               >
-                                Apply latest scene rewrite
+                                Apply latest scene rewrite (clears timed
+                                captions)
                               </button>
                             ))}
                         </div>
