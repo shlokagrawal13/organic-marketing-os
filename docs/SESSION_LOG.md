@@ -13,7 +13,6 @@
 
 Changed application/test paths: `.env.example`, `compose.yaml`, `package.json`, `package-lock.json`, `prisma/schema.prisma`, `prisma/migrations/202610010001_generated_media/migration.sql`, `apps/api/src/{main,generated-media,media-generation-worker,operations}.ts`, `packages/core/{openai-media,media-generation-runtime}.ts`, `apps/web/app/{generated-media-panel,media-workspace,operations-workspace,workspace}.tsx`, `apps/web/app/globals.css`, `scripts/{verify-local,verify-upgrade,test-generation-provider}.mjs`, `tests/openai-media.test.ts`, `tests/integration/generated-media.test.ts`, `tests/recovery/{configuration,worker}.test.ts`, `tests/ui/{generated-media,operations}.spec.ts`. Exact documentation/evidence changes are recorded in PROJECT_CHECKPOINT.json.lastChanges and the manifest.
 
-
 ## 2026-09-27 — application 0.6.0 / handoff 2026-09-27.2
 
 Continued BILLING-01 without waiting for credentials. Added Stripe SDK 22.6.2 with disabled/test/live configuration, matching key/event-mode enforcement, strict Starter/Growth price mapping and a production ban on API-host overrides. Added OWNER/ADMIN hosted Checkout and Customer Portal session routes with stable idempotency keys, server-owned return URLs, workspace/plan metadata, customer binding and expected Stripe-host validation. Credits & usage now shows the current plan and conditionally offers Checkout/Portal actions.
@@ -49,7 +48,6 @@ Executed: Prisma client generation; API TypeScript and Next production builds; 1
 GitHub profile was rechecked as shlokagrawal13 and an installed-repository search for organic-marketing-os returned no result. No create-repository connector capability exists. A fresh GitHub/new browser navigation reached GitHub sign-in; browser credentials were not read or entered directly. Native Docker/PostgreSQL remain absent; apt-get update again failed on runtime setgroups/seteuid privilege operations. Did not bypass controls. No GitHub repository, push, remote CI, actual Compose/MinIO, live provider, social post or payment is claimed.
 
 Updated the requirements matrix without removing any of the 161 headings (137 Partial, 24 Missing; not a completion percentage), status copies, task/access/upgrade guides, domain/API/security documentation and sanitized QA evidence. PROJECT_CHECKPOINT.json lists exact changed paths and protected hashes. Next local task is BILLING-01: database plan/entitlement and signed/idempotent test billing events, then authorized Stripe sandbox verification. Native/GitHub access should be rechecked without holding unrelated local engineering work.
-
 
 ## 2026-09-20 — handoff 2026-09-20.1
 
@@ -98,6 +96,7 @@ Native CI was triggered by the source commit: https://github.com/shlokagrawal13/
 The connector cannot expose the relevant startup diagnostics through its supported endpoints. Browser inspection found GitHub signed out and the private run unavailable; secure sign-in is needed to inspect the detailed run error. Preserve the uploaded source and resume this diagnostic after authenticated access. Fix the concrete reported cause, rerun native tests and record real results. Do not mark native verification complete.
 
 This follow-up changes continuation records only. The last source commit above identifies the verified application import; resolve the latest documentation commit from the main ref or git rev-parse HEAD. Source is now maintained in this Git repository; older ZIP checkpoints may be stale. Local Git objects were reconstructed from remote metadata and verified by their exact SHA, and the uploaded tree was independently compared before setting the local main/upstream refs.
+
 ## 2026-09-27 — v0.6 re-verification and CI startup isolation
 
 Resumed from the intact v0.6 Stripe-contract working tree and preserved all intervening edits. Freshly executed 12 unit tests, API/web production builds, production/full npm audits and the eight-migration populated upgrade/restore; all passed and both npm audits reported zero known advisories.
@@ -137,7 +136,6 @@ Completed AGENTS-01 local contracts. Added versioned strategy/content/scene DAGs
 Added the eleventh additive migration for `AIAgentRun`, `AIAgentStep` and optional usage linkage. Updated the foundation HTTP and production-browser scenarios to inspect the trace and approve a generated result. Fresh checks passed: Prisma generation, 19 unit tests, API TypeScript production compile, Next.js 16.3.5 production build, PGlite populated upgrade/restore through all eleven migrations, and both npm audits with zero advisories. The service-capable full verifier still cannot start here because `redis-server` is absent, so no fresh HTTP/browser/recovery execution is claimed. Next ready local task: MEDIA-01.
 
 Published the exact verified v0.8 tree to private `main` as application commit `bce6fc27daa6869d5464d160e2dda083a2ba4d2d`; remote tree `a6db020badb17a32617da54ccc6222afa0c35356` equals the local tested tree. GitHub created Actions run `36622686659`, but it ended `startup_failure` with zero jobs due to the same private account-side startup gate. No native execution is claimed.
-
 
 ## Continuation verification — 0.8.1 / 2026-09-29.3
 
@@ -210,3 +208,9 @@ Continued with the next provider-neutral MEDIA-01D increment. Expanded the edit 
 API and Next.js production builds and 31 unit tests passed. Full `npm run verify` passed 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios with all 12 migrations. The first two harness attempts exposed test-fixture problems rather than application failures: direct Prisma writes raced the shared PGlite socket bridge, then upload dedup returned one ID for identical bytes. The final fixture uses the product upload API with two distinct valid image byte sequences and passed the complete two-reference provider flow. No paid or live provider request was made.
 
 Published this increment to public `main` as application commit `74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b`, tree `25ea6806f2952ad87df18b186f7fc97660faf5b4`. All 21 changed paths matched their local Git blob SHAs. Push-created Actions run `37112921768` completed every native verification step successfully, including browser-evidence upload.
+
+## 2026-10-03 — EDITOR-01A scene timeline editing
+
+Continued from the published MEDIA-01D checkpoint after confirming public `main` at documentation head `a28d96d9ac07d4212f22f5f0a98c9d43aefb6aa3` and application source `74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b`. Added deterministic cumulative scene start/end timing, shared it with SRT generation, and exposed accessible move-earlier, move-later, duplicate-with-new-ID and remove controls in the storyboard. A duplicated scene preserves its production fields and asset references while receiving a new ID.
+
+Fresh checks passed: 31 unit tests, API TypeScript build, Next.js 16.3.8 production build and full `npm run verify`. The full harness applied all 12 migrations and passed 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios. The browser scenario reordered two scenes, duplicated and removed a copy, saved the final order and completed real FFmpeg render/approval. No user data, paid provider or live service was used. Publication and new GitHub CI remain pending.

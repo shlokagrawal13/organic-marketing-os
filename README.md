@@ -24,12 +24,12 @@ Open http://localhost:3000 and create your own account. Development verification
 - NestJS API, PostgreSQL/Prisma with twelve migrations, Redis/BullMQ and a Next.js frontend.
 - Accounts, HttpOnly sessions, rotation/revocation, email verification/recovery, organizations, roles, invitations and team access.
 - Persistent Brand Brain/Creative DNA, version history, optimistic revisions and restore.
-- Drafts, scene editing, comments, review/rejection/approval, approval invalidation, campaigns, editorial calendar, search and JSON exports.
+- Drafts, cumulative scene timelines, reorder/duplicate scene editing, comments, review/rejection/approval, approval invalidation, campaigns, editorial calendar, search and JSON exports.
 - Queued text strategy/script/scene generation with compatible primary/fallback providers, validation and usage records.
 - **Policy-aware model routing:** task capability, plan, declared quality, shared Redis health, configured dollar caps and comparable-fallback enforcement; ambiguous provider outcomes never start a second paid call.
 - **Generated media:** saved image/voice/video jobs, rights and estimate acceptance, plan-aware models, bounded image/voice options, separately quoted editing with one to four verified private image references, fixed credit reservations, retained UNKNOWN output review, private validated outputs, restart recovery and revision-checked scene attachment. Enabled explicitly by an administrator; no live provider acceptance claimed.
 - **Asset library:** private image/video/audio uploads, validation, previews, tags, search, deduplication, downloads, archive and restore.
-- **Video studio:** uploaded media attached to scenes, actual FFmpeg MP4 rendering, uploaded narration/background music, scene captions, portrait/landscape/square formats, progress/cancel/retry, reusable scene cache, preview and MP4/SRT/thumbnail downloads.
+- **Video studio:** uploaded media attached to scenes, reorderable/duplicable timeline scenes, actual FFmpeg MP4 rendering, uploaded narration/background music, scene captions, portrait/landscape/square formats, progress/cancel/retry, reusable scene cache, preview and MP4/SRT/thumbnail downloads.
 - Separate approval for the exact rendered content revision, responsive light/dark UI.
 - **Workspace health:** actual database/queue/storage/worker checks, tenant job counts, tracked storage usage and private workspace data export for owners/admins.
 - **Credits & usage:** immutable history, accepted AI quotes, atomic reservations/settlement, queued-cancel release and review of uncertain provider outcomes. Restricted verified platform administrators can grant/correct/resolve credits. Self-hosted mode stays the default.
@@ -52,7 +52,7 @@ For image/voice/video presets, explicit opt-in and current operator estimates, f
 
 ## Remaining work
 
-Live generated-media acceptance, source-image editing and additional provider controls; live sourced research/trends/SEO/AEO; official social OAuth/publishing; external analytics and growth learning; actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; retention/deletion; production observability, native cross-store restore exercises and full master acceptance. These require implementation, not just credentials.
+Live generated-media acceptance and additional provider controls; word-aligned captions, motion/effects and platform variants; live sourced research/trends/SEO/AEO; official social OAuth/publishing; external analytics and growth learning; actual Stripe sandbox/live acceptance and money-moving refund/dispute lifecycle checks; retention/deletion; production observability, native cross-store restore exercises and full master acceptance. These require implementation, not just credentials.
 
 ## Verification
 

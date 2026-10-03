@@ -21,8 +21,9 @@ approval review rejection was resolved by explicit user approval for this public
 upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
 Public Actions run `37112921768` for application commit
 `74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b` completed native application
-verification successfully through ordered multi-image editing. Continue from
-the checkpoint's EDITOR-01 next action.
+verification successfully through ordered multi-image editing. EDITOR-01A scene
+timeline controls are fully verified locally and await publication/CI; continue
+from the checkpoint's next provider-neutral editor action.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

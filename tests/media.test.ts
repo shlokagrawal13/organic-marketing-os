@@ -5,6 +5,7 @@ import {
   renderOptions,
   dimensions,
   captionSrt,
+  sceneTimeline,
   validateRenderScenes,
 } from "../packages/core/media";
 import { sceneSchema } from "../packages/core/ai";
@@ -37,6 +38,15 @@ test("render bounds and scene captions have deterministic, accurate timing", () 
   assert.match(
     captionSrt([s, { ...s, id: "b", duration: 2, caption: "Second caption" }]),
     /00:00:01,250 --> 00:00:03,250/,
+  );
+  assert.deepEqual(
+    sceneTimeline([s, { ...s, id: "b", duration: 2 }]).map(
+      ({ index, scene, start, end }) => ({ index, id: scene.id, start, end }),
+    ),
+    [
+      { index: 0, id: "a", start: 0, end: 1.25 },
+      { index: 1, id: "b", start: 1.25, end: 3.25 },
+    ],
   );
   assert.throws(() => validateRenderScenes([s, { ...s }]));
   assert.throws(() =>

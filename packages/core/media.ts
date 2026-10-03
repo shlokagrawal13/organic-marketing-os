@@ -180,20 +180,25 @@ export function validateRenderScenes(scenes: Scene[]) {
       );
   }
 }
+export function sceneTimeline(scenes: Scene[]) {
+  let elapsed = 0;
+  return scenes.map((scene, index) => {
+    const start = elapsed;
+    elapsed += scene.duration;
+    return { index, scene, start, end: elapsed };
+  });
+}
 export function captionSrt(scenes: Scene[]) {
   const time = (sec: number) => {
     const ms = Math.round(sec * 1000);
     return `${String(Math.floor(ms / 3600000)).padStart(2, "0")}:${String(Math.floor(ms / 60000) % 60).padStart(2, "0")}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")},${String(ms % 1000).padStart(3, "0")}`;
   };
-  let elapsed = 0,
-    index = 0;
+  let index = 0;
   const lines: string[] = [];
-  for (const s of scenes) {
-    const start = elapsed;
-    elapsed += s.duration;
-    if (s.caption.trim())
+  for (const { scene, start, end } of sceneTimeline(scenes)) {
+    if (scene.caption.trim())
       lines.push(
-        `${++index}\n${time(start)} --> ${time(elapsed)}\n${s.caption.replace(/\r/g, "").replace(/\n\s*\n/g, "\n")}\n`,
+        `${++index}\n${time(start)} --> ${time(end)}\n${scene.caption.replace(/\r/g, "").replace(/\n\s*\n/g, "\n")}\n`,
       );
   }
   return lines.join("\n");

@@ -3,21 +3,36 @@
 Verified locally on 2026-10-03. The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.
 
-| Check | Completed result |
-| --- | --- |
-| Unit tests | 31 passed across 6 test files |
-| HTTP integration | 7 broad scenarios passed |
-| Production-browser tests | 6 scenarios passed |
-| Recovery/configuration | 5 scenarios passed |
-| Prisma/API/Next.js | Client generation and both production builds passed |
-| Fresh migrations | All 12 applied through Prisma deploy in the isolated harness |
+| Check                           | Completed result                                                                                                                 |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Unit tests                      | 31 passed across 6 test files                                                                                                    |
+| HTTP integration                | 7 broad scenarios passed                                                                                                         |
+| Production-browser tests        | 6 scenarios passed                                                                                                               |
+| Recovery/configuration          | 5 scenarios passed                                                                                                               |
+| Prisma/API/Next.js              | Client generation and both production builds passed                                                                              |
+| Fresh migrations                | All 12 applied through Prisma deploy in the isolated harness                                                                     |
 | Populated upgrade/fresh restore | PGlite passed; old draft/user/membership/queued AI record, immutable credit ledger and saved media request/provider ID preserved |
-| Npm audit | Last audited 2026-09-29: production 0/full 0; not rerun for 0.9, dependency versions unchanged |
+| Npm audit                       | Last audited 2026-09-29: production 0/full 0; not rerun for 0.9, dependency versions unchanged                                   |
 
 The full local verifier reached its explicit final success message. A later
 selected browser rerun checks the final media layout/capture adjustments; its
 output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
+
+## EDITOR-01A scene timeline editing — 2026-10-03
+
+The storyboard now exposes cumulative start/end timing and accessible controls to
+move a scene earlier or later, duplicate it with a fresh stable ID, or remove it.
+Scene content and uploaded/generated asset references move together. The same
+deterministic timeline function drives SRT scene boundaries, preventing UI/order
+calculations from changing the render contract.
+
+`npm test` passed 31 unit tests, including fractional cumulative timing. API and
+Next.js 16.3.8 production builds passed. Full `npm run verify` applied all 12
+migrations and passed 7 HTTP, 6 production-browser and 5 recovery/configuration
+scenarios. The browser flow reordered two scenes, duplicated and removed a copy,
+saved the resulting order, then produced and approved a real FFmpeg MP4. This is
+local evidence; publication and this slice's GitHub Actions result are pending.
 
 ## MEDIA-01D ordered multi-image editing — 2026-10-03
 
@@ -33,8 +48,6 @@ API and Next.js 16.3.8 production builds and 31 unit tests passed. Full
 scenarios plus all 12 migrations. The HTTP flow uploaded two distinct image
 assets, saved their ordered IDs, sent two multipart fields, ingested the private
 result and preserved the separate edit quote. No live provider call was made.
-
-
 
 ## MEDIA-01D single-image editing — 2026-10-03
 

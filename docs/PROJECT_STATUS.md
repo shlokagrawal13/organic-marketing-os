@@ -13,7 +13,8 @@ Provider fixtures and passing local tests do not certify production readiness.
   roles. Research, publishing and performance roles disclose absent external data.
 - Private uploaded and generated image/video/audio assets feed real FFmpeg rendering,
   narration, captions, thumbnails and scene caching. Render approval remains tied
-  to the exact content revision.
+  to the exact content revision. EDITOR-01A adds cumulative scene timing plus
+  reorder, duplicate-with-new-ID and remove controls verified through a real render.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
   Stripe sandbox acceptance is outstanding.
@@ -70,9 +71,9 @@ These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue MEDIA-01D with the remaining provider/reference modes, or move to the
-next ready module after recording a provider choice.
-MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue advanced editing, sourced research, official
+Continue EDITOR-01 with word-aligned captions and the next provider-neutral
+editing control. MEDIA-01D remaining provider/reference modes still require a
+provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and
 broader collaboration UX from TASK_BOARD.md. Do routine local work independently;
 request only essential external access or concrete authorization.

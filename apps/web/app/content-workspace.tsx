@@ -4,6 +4,9 @@ import {
   Plus,
   ArrowLeft,
   ArrowRight,
+  ArrowUp,
+  ArrowDown,
+  Copy,
   Sparkles,
   Search,
   Check,
@@ -96,6 +99,18 @@ const inputTime = (iso: string | null) => {
   return new Date(d.getTime() - d.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 16);
+};
+const timeline = (scenes: Any[]) => {
+  let elapsed = 0;
+  return scenes.map((scene, index) => {
+    const start = elapsed;
+    elapsed += Number(scene.duration) || 0;
+    return { scene, index, start, end: elapsed };
+  });
+};
+const timelineTime = (seconds: number) => {
+  const whole = Math.max(0, Math.round(seconds));
+  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
 };
 export default function ContentWorkspace({
   base,
@@ -488,12 +503,14 @@ export default function ContentWorkspace({
                       storyboard, then render your video below.
                     </p>
                     <div className="scene-timeline">
-                      {draft.scenes.map((s: Any, i: number) => (
-                        <a href={`#scene-${s.id}`} key={s.id}>
-                          <span>{String(i + 1).padStart(2, "0")}</span>
-                          {s.duration}s
-                        </a>
-                      ))}
+                      {timeline(draft.scenes).map(
+                        ({ scene, index, start, end }) => (
+                          <a href={`#scene-${scene.id}`} key={scene.id}>
+                            <span>{String(index + 1).padStart(2, "0")}</span>
+                            {timelineTime(start)}–{timelineTime(end)}
+                          </a>
+                        ),
+                      )}
                     </div>
                     {draft.scenes.map((s: Any, index: number) => {
                       const change = (k: string, v: any) =>
@@ -510,22 +527,89 @@ export default function ContentWorkspace({
                           key={s.id}
                         >
                           <div className="section-top">
-                            <h3>Scene {index + 1}</h3>
-                            <button
-                              type="button"
-                              className="icon-button"
-                              aria-label={`Remove scene ${index + 1}`}
-                              onClick={() =>
-                                edit(
-                                  "scenes",
-                                  draft.scenes.filter(
-                                    (_: any, i: number) => i !== index,
-                                  ),
-                                )
-                              }
-                            >
-                              <X size={16} />
-                            </button>
+                            <div>
+                              <h3>Scene {index + 1}</h3>
+                              <small>
+                                {timelineTime(
+                                  draft.scenes
+                                    .slice(0, index)
+                                    .reduce(
+                                      (total: number, scene: Any) =>
+                                        total + (Number(scene.duration) || 0),
+                                      0,
+                                    ),
+                                )}{" "}
+                                start
+                              </small>
+                            </div>
+                            <div className="scene-actions">
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Move scene ${index + 1} earlier`}
+                                disabled={index === 0}
+                                onClick={() => {
+                                  const scenes = [...draft.scenes];
+                                  [scenes[index - 1], scenes[index]] = [
+                                    scenes[index],
+                                    scenes[index - 1],
+                                  ];
+                                  edit("scenes", scenes);
+                                }}
+                              >
+                                <ArrowUp size={16} />
+                              </button>
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Move scene ${index + 1} later`}
+                                disabled={index === draft.scenes.length - 1}
+                                onClick={() => {
+                                  const scenes = [...draft.scenes];
+                                  [scenes[index], scenes[index + 1]] = [
+                                    scenes[index + 1],
+                                    scenes[index],
+                                  ];
+                                  edit("scenes", scenes);
+                                }}
+                              >
+                                <ArrowDown size={16} />
+                              </button>
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Duplicate scene ${index + 1}`}
+                                disabled={draft.scenes.length >= 12}
+                                onClick={() => {
+                                  const scenes = [...draft.scenes];
+                                  scenes.splice(index + 1, 0, {
+                                    ...s,
+                                    id: crypto.randomUUID(),
+                                    purpose: s.purpose
+                                      ? `${s.purpose} copy`
+                                      : "Scene copy",
+                                  });
+                                  edit("scenes", scenes);
+                                }}
+                              >
+                                <Copy size={16} />
+                              </button>
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Remove scene ${index + 1}`}
+                                onClick={() =>
+                                  edit(
+                                    "scenes",
+                                    draft.scenes.filter(
+                                      (_: any, i: number) => i !== index,
+                                    ),
+                                  )
+                                }
+                              >
+                                <X size={16} />
+                              </button>
+                            </div>
                           </div>
                           <div className="form-grid">
                             <label>

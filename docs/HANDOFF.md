@@ -39,6 +39,12 @@ video reference modes remain; MEDIA-LIVE-01 requires authorized live
 model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 
+EDITOR-01A is now locally complete: deterministic cumulative scene timing and
+move, duplicate-with-new-ID and remove controls passed the full local verifier,
+including save and real FFmpeg render in the browser. Continue with word-aligned
+captions or another provider-neutral editor control; do not claim broader
+EDITOR-01 completion.
+
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
 The earlier automatic approval review rejection is a closed audit event after
 the user's explicit approval for this public upload. Never touch the unrelated

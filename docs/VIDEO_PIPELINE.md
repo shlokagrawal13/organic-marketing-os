@@ -12,6 +12,7 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 
 - Portrait 9:16, landscape 16:9 and square 1:1; 720 or 1080 short-side resolution. H.264 video/AAC audio at 30 fps.
 - One to twelve scenes, at most 180 seconds total; output at most 100 MiB. Cut or a short fade through black is supported. This is not an overlapping crossfade editor.
+- The storyboard shows deterministic cumulative start/end times. Scenes can be moved earlier/later, duplicated with a new stable ID or removed before saving; attached assets and production fields move with the scene.
 - Images/clips fit with letterboxing; clips loop if shorter than the scene. Missing visuals use a colour/text card.
 - Scene narration uses an uploaded audio asset, trimmed/padded to the scene. Uploaded video sound is muted. Voiceover/music/SFX descriptions remain script notes; only attached files produce audio. No automatic TTS or licensed music catalog.
 - Optional background audio loops across the video with a user-selected volume. Audio is limited to reduce clipping; subjective mix quality still needs review.
@@ -32,4 +33,4 @@ Real FFmpeg, private upload/download, byte ranges, non-silent decoded audio, all
 
 Generated image/video/voice presets, private ingestion and explicit targeted attachment are implemented in 0.9; see GENERATED_MEDIA.md. Voiceover text never starts speech automatically.
 
-Missing: live generated-media acceptance, source-reference/editing adapters, ASR/word timing, camera motion, arbitrary transitions/effects/SFX tracks, scene timeline editing, platform variants, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.
+Missing: live generated-media acceptance, remaining provider-specific reference modes, ASR/word timing, camera motion, arbitrary transitions/effects/SFX tracks, drag/drop timeline editing, platform variants, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.

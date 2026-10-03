@@ -123,6 +123,35 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await scene
     .getByLabel("Caption", { exact: true })
     .fill("Bring your own brand to the story.");
+  await page.getByRole("button", { name: "Add scene", exact: true }).click();
+  const secondScene = page.locator(".scene-card").nth(1);
+  await secondScene
+    .getByLabel("Scene purpose", { exact: true })
+    .fill("Close with one clear action");
+  await secondScene.getByLabel("Duration (seconds)").fill("1");
+  await secondScene
+    .getByLabel("On-screen text", { exact: true })
+    .fill("Start one useful story");
+  await page
+    .getByRole("button", { name: "Move scene 2 earlier", exact: true })
+    .click();
+  await expect(
+    page.locator(".scene-card").first().getByLabel("Scene purpose"),
+  ).toHaveValue("Close with one clear action");
+  await page
+    .getByRole("button", { name: "Duplicate scene 1", exact: true })
+    .click();
+  await expect(page.locator(".scene-card")).toHaveCount(3);
+  await expect(
+    page.locator(".scene-card").nth(1).getByLabel("Scene purpose"),
+  ).toHaveValue("Close with one clear action copy");
+  await page
+    .getByRole("button", { name: "Remove scene 2", exact: true })
+    .click();
+  await expect(page.locator(".scene-card")).toHaveCount(2);
+  await expect(page.locator(".scene-timeline a").first()).toContainText(
+    "0:00–0:01",
+  );
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(page.getByText("Draft saved.", { exact: true })).toBeVisible();
   await page
