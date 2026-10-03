@@ -39,8 +39,8 @@ video reference modes remain; MEDIA-LIVE-01 requires authorized live
 model access and spend. Advanced editing and other master modules remain pending.
 Do not reset all completed work to pending because native/live gates are open.
 
-EDITOR-01A is now locally complete: deterministic cumulative scene timing and
-move, duplicate-with-new-ID and remove controls passed the full local verifier,
+EDITOR-01A is now published and CI-verified: deterministic cumulative scene timing
+and move, duplicate-with-new-ID and remove controls passed the full verifier,
 including save and real FFmpeg render in the browser. Continue with word-aligned
 captions or another provider-neutral editor control; do not claim broader
 EDITOR-01 completion.
@@ -51,8 +51,7 @@ the user's explicit approval for this public upload. Never touch the unrelated
 `OrganicMarketing` repository.
 
 The previous account-side Actions gate is cleared. Application commit
-`74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b` contains the accumulated
-MEDIA-01D work through ordered multi-image editing; all 21 changed paths matched
-locally. Public run `37112921768` completed every native verification step
-successfully.
+`97381d1f620eb5f30ec095522c7057c99ac8c1c6` contains EDITOR-01A on exact tree
+`dbf2bf8dca90b3b6612a72960d37b5d5b010702f`. Public run `37126029720` completed
+every native verification step successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.

@@ -5,7 +5,7 @@
 - Added deterministic cumulative scene start/end timing shared with SRT generation.
 - Added accessible move-earlier, move-later, duplicate-with-new-ID and remove controls while preserving each scene's attached media and production fields.
 - Extended the production-browser flow to reorder, duplicate, remove, save and render the edited storyboard.
-- API and Next.js production builds, 31 unit tests and the full 7 HTTP / 6 browser / 5 recovery harness with all 12 migrations passed locally. Public source/CI verification is pending.
+- API and Next.js production builds, 31 unit tests and the full 7 HTTP / 6 browser / 5 recovery harness with all 12 migrations passed locally and in public Actions run `37126029720` for commit `97381d1f620eb5f30ec095522c7057c99ac8c1c6`.
 
 ## 0.9.2 MEDIA-01D ordered multi-image editing — 2026-10-03
 

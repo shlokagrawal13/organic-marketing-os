@@ -32,7 +32,10 @@ Next.js 16.3.8 production builds passed. Full `npm run verify` applied all 12
 migrations and passed 7 HTTP, 6 production-browser and 5 recovery/configuration
 scenarios. The browser flow reordered two scenes, duplicated and removed a copy,
 saved the resulting order, then produced and approved a real FFmpeg MP4. This is
-local evidence; publication and this slice's GitHub Actions result are pending.
+local and public-CI evidence. Application commit
+`97381d1f620eb5f30ec095522c7057c99ac8c1c6` points to the exact verified tree
+`dbf2bf8dca90b3b6612a72960d37b5d5b010702f`; Actions run `37126029720` passed
+every workflow step, including native application flows and browser evidence.
 
 ## MEDIA-01D ordered multi-image editing — 2026-10-03
 
@@ -170,10 +173,9 @@ operator USD estimates are not provider-enforced spend caps. Automatic aged
 staging cleanup and provider billing reconciliation after UNKNOWN remain open.
 
 Remote publication was completed after explicit user approval. Public `main`
-application commit `74d47e6f0f8ab3873aa8b2f3935a77f7c057ea9b` points to tree
-`25ea6806f2952ad87df18b186f7fc97660faf5b4`; all 21 changed paths uploaded for
-the ordered multi-image increment matched the local Git blob SHAs. Public
-Actions run `37112921768` completed successfully. Its sole
+application commit `97381d1f620eb5f30ec095522c7057c99ac8c1c6` points to the exact
+locally verified tree `dbf2bf8dca90b3b6612a72960d37b5d5b010702f`. Public Actions run
+`37126029720` completed successfully. Its sole
 `Native application verification` job passed setup, service initialization,
 dependency installation, build, 31 unit tests, production/development dependency
 audits, populated upgrade verification, native application flows, browser-evidence
