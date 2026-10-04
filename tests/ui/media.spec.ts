@@ -114,6 +114,12 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await scene
     .getByRole("combobox", { name: "Visual asset", exact: true })
     .selectOption({ label: "product.png" });
+  await expect(
+    scene.getByRole("combobox", { name: "Visual framing", exact: true }),
+  ).toHaveValue("contain");
+  await scene
+    .getByRole("combobox", { name: "Visual framing", exact: true })
+    .selectOption("cover");
   await scene
     .getByRole("combobox", { name: "Narration audio", exact: true })
     .selectOption({ label: "tone.wav" });
@@ -192,6 +198,9 @@ test("inspect workspace pages, upload private media, render and approve a playab
     .getByText("A brand story, ready to share", { exact: true })
     .click();
   const savedScene = page.locator(".scene-card").nth(1);
+  await expect(
+    savedScene.getByRole("combobox", { name: "Visual framing", exact: true }),
+  ).toHaveValue("cover");
   await savedScene.getByText("Timed captions (1)", { exact: true }).click();
   await expect(
     savedScene.getByLabel("Start (seconds)", { exact: true }),

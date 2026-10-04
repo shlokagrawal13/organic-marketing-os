@@ -696,6 +696,29 @@ export default function ContentWorkspace({
                               </select>
                             </label>
                           </div>
+                          <label>
+                            Visual framing
+                            <select
+                              value={s.visualFit || "contain"}
+                              disabled={!s.visualAssetId}
+                              onChange={(e) =>
+                                change("visualFit", e.target.value)
+                              }
+                            >
+                              <option value="contain">
+                                Fit — show whole visual
+                              </option>
+                              <option value="cover">
+                                Fill — crop to frame
+                              </option>
+                            </select>
+                          </label>
+                          <p className="field-help">
+                            Fit keeps the whole image or video with background
+                            borders. Fill crops from the center to fill the
+                            frame. The preview below shows the original asset;
+                            render to check framing.
+                          </p>
                           {s.visualAssetId && (
                             <div className="scene-asset-preview">
                               {assets.find((a) => a.id === s.visualAssetId)
@@ -830,6 +853,8 @@ export default function ContentWorkspace({
                                             audioAssetId:
                                               old.audioAssetId || null,
                                             captionCues: [],
+                                            visualFit:
+                                              old.visualFit || "contain",
                                           }
                                         : old,
                                     ),

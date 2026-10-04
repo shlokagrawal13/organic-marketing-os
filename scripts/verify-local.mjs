@@ -264,6 +264,50 @@ try {
     "yuv420p",
     ".local/media-fixtures/clip.mp4",
   ]);
+  // Solid-color edge markers distinguish letterboxing from centered cropping
+  // in decoded output without relying on screenshots or filter-string mocks.
+  for (const [name, size, boxes, video] of [
+    ["framing-thin-wide.png", "8192x2", "null", false],
+    ["framing-thin-tall.png", "2x8192", "null", false],
+    [
+      "framing-wide.png",
+      "800x400",
+      "drawbox=x=0:y=0:w=200:h=400:color=red:t=fill,drawbox=x=600:y=0:w=200:h=400:color=blue:t=fill",
+      false,
+    ],
+    [
+      "framing-wide.mp4",
+      "800x400",
+      "drawbox=x=0:y=0:w=200:h=400:color=red:t=fill,drawbox=x=600:y=0:w=200:h=400:color=blue:t=fill",
+      true,
+    ],
+    [
+      "framing-tall.png",
+      "400x800",
+      "drawbox=x=0:y=0:w=400:h=200:color=red:t=fill,drawbox=x=0:y=600:w=400:h=200:color=blue:t=fill",
+      false,
+    ],
+  ]) {
+    await run(process.env.FFMPEG_PATH || "ffmpeg", [
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-nostdin",
+      "-f",
+      "lavfi",
+      "-i",
+      `color=c=0x00ff00:s=${size}:r=30:d=1`,
+      "-vf",
+      boxes,
+      "-threads",
+      "1",
+      ...(video
+        ? ["-c:v", "libx264", "-pix_fmt", "yuv420p"]
+        : ["-frames:v", "1"]),
+      `.local/media-fixtures/${name}`,
+    ]);
+  }
   // Check fixture integrity before testing uploads; a broken fixture is not
   // evidence of an application upload failure.
   const { probeMedia, validateProbe } =
@@ -273,6 +317,11 @@ try {
     ["tone.wav", "AUDIO"],
     ["large-audio.wav", "AUDIO"],
     ["clip.mp4", "VIDEO"],
+    ["framing-wide.png", "IMAGE"],
+    ["framing-wide.mp4", "VIDEO"],
+    ["framing-tall.png", "IMAGE"],
+    ["framing-thin-wide.png", "IMAGE"],
+    ["framing-thin-tall.png", "IMAGE"],
   ])
     validateProbe(await probeMedia(`.local/media-fixtures/${name}`), kind);
   if (server) await server.start();

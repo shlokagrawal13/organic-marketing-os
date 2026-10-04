@@ -1,11 +1,11 @@
 # Verification report — Organic Marketing OS 0.9.2
 
-Verified locally on 2026-10-03. The generated-media implementation advances the
+Verified locally on 2026-10-04 (Asia/Kolkata). The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.
 
 | Check                           | Completed result                                                                                                                 |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Unit tests                      | 33 passed across 6 test files                                                                                                    |
+| Unit tests                      | 34 passed across 6 test files                                                                                                    |
 | HTTP integration                | 7 broad scenarios passed                                                                                                         |
 | Production-browser tests        | 6 scenarios passed                                                                                                               |
 | Recovery/configuration          | 5 scenarios passed                                                                                                               |
@@ -18,6 +18,33 @@ The full local verifier reached its explicit final success message. A later
 selected browser rerun checks the final media layout/capture adjustments; its
 output explicitly says that HTTP/recovery suites were skipped. It is not counted
 as an additional full-suite pass.
+
+## EDITOR-01C visual fit/fill — 2026-10-04 (IST)
+
+`visualFit` accepts only `contain` (default) or `cover` in the existing scene JSON.
+The editor exposes Fit/Fill for attached visuals and explains that its source
+preview is unchanged. Center cropping precedes scaling to avoid huge intermediate
+frames for extreme aspect ratios. The cache records the effective mode only for
+attached visuals; the mode survives applying a scene rewrite.
+
+`npm test` passed all six unit files; an explicit `node --import tsx --test
+--test-isolation=none tests/*.test.ts` run reported all 34 cases passing.
+API and Next.js 16.3.8 production builds passed. Final full `npm run verify`
+passed 7 HTTP, 6 browser and 5 recovery/configuration scenarios with 12 migrations.
+Decoded RGB samples distinguish preserved red/blue edges and black borders in
+Fit from centered green crops in Fill, for wide still/video and tall still
+fixtures. Valid 8192×2 and 2×8192 images also render successfully in Fill.
+Mode-only edits reuse exactly the other scene. Browser coverage changes framing,
+reorders, saves/reopens and renders the selected mode; existing mobile overflow,
+caption, approval, cross-tenant and recovery checks pass.
+
+The first sandboxed harness could not bind S3Proxy (`Operation not permitted`).
+The authorized isolated rerun passed. A code review then identified potentially
+unbounded pre-crop scaling; the guard and extreme-aspect fixtures were added and
+the full verifier passed again on that final source. `npm run verify:upgrade`
+also passed populated PGlite upgrade/fresh restore. No dependency, migration,
+paid provider, user database or originals changed. Publication/CI are pending;
+custom focal points, camera motion and full language/asset QA remain open.
 
 ## EDITOR-01B manual timed captions — 2026-10-03
 

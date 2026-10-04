@@ -11,6 +11,7 @@ export const sceneSchema = z
     duration: z.number().min(1).max(60),
     voiceover: z.string().max(2000),
     visual: z.string().max(2000),
+    visualFit: z.enum(["contain", "cover"]).default("contain"),
     onScreenText: z.string().max(500),
     caption: z.string().max(2000),
     captionCues: z.array(captionCueSchema).max(MAX_CAPTION_CUES).default([]),

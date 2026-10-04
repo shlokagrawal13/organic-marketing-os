@@ -85,6 +85,7 @@ test(
         ...scene,
         id: "second",
         onScreenText: "Preserve this scene",
+        visualFit: "cover",
         captionCues: [
           { start: 0.25, end: 1.5, text: "Preserve timed caption" },
         ],

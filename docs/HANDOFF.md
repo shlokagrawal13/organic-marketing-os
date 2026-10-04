@@ -1,4 +1,4 @@
-# Project handoff — 0.9.2 / 2026-10-03
+# Project handoff — 0.9.2 / 2026-10-04 (IST)
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and
@@ -44,8 +44,10 @@ and move, duplicate-with-new-ID and remove controls passed the full verifier,
 including save and real FFmpeg render in the browser. EDITOR-01B manual caption
 cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
 and populated PGlite upgrade/restore. Its own publication and CI passed. Continue
-with bounded image fit/fill controls. Automatic speech alignment and broader
-EDITOR-01 completion remain open.
+with the new EDITOR-01C Fit/Fill framing slice: 34 unit, 7 HTTP, 6 browser and
+5 recovery scenarios, builds and populated upgrade/restore passed locally.
+Publish and verify its CI, then add bounded image-only camera motion. Automatic
+speech alignment and broader EDITOR-01 completion remain open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
 The earlier automatic approval review rejection is a closed audit event after

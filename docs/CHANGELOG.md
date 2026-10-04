@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.2 EDITOR-01C visual fit/fill — 2026-10-04 (IST)
+
+- Added per-scene Fit/Fill for attached images/video with the legacy Fit default; stored mode survives reorder, save/reload, duplication and AI scene rewrite.
+- Fill crops centrally before upscaling to bound intermediate frames, then preserves aspect ratio and removes edge rounding. No arbitrary filter, source mutation or migration.
+- Verified actual pixels for wide images/video, tall images and extreme 8192×2/2×8192 inputs, plus mode-only cache reuse. Passed 34 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds and 12-migration populated PGlite upgrade/restore. Publication/CI for this slice are pending.
+
 ## 0.9.2 EDITOR-01B manual timed captions — 2026-10-03
 
 - Added up to 60 ordered, non-overlapping scene-relative manual caption cues, millisecond input precision, bounded text and schema/UI validation; old scenes retain full-scene captions.

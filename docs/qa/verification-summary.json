@@ -1,13 +1,13 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-03",
+  "verifiedDate": "2026-10-04",
   "builds": [
     "Prisma client generation",
     "API TypeScript",
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 33,
+    "unit": 34,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -82,7 +82,7 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "unitTestsPassed": 33,
+    "unitTestsPassed": 34,
     "httpScenariosPassed": 7,
     "browserScenariosPassed": 6,
     "recoveryConfigurationScenariosPassed": 5,
@@ -103,7 +103,12 @@
     "manualTimedCaptionSaveReload": true,
     "captionDecodedFrameIntervals": true,
     "captionCacheInvalidation": true,
-    "legacySceneCaptionFallback": true
+    "legacySceneCaptionFallback": true,
+    "visualFitFillSchema": true,
+    "visualFitFillSaveReload": true,
+    "visualFitFillDecodedFrames": true,
+    "visualFitFillCacheReuse": true,
+    "extremeAspectRatioFill": true
   },
   "priorFullSuite": {
     "release": "0.6.0",
@@ -198,5 +203,16 @@
       37126029720
     ],
     "annotation": "The published EDITOR-01B source completed every workflow step: build, 33 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload."
+  },
+  "verifiedDateTimezone": "Asia/Kolkata",
+  "editor01cEvidence": {
+    "legacyContainDefault": true,
+    "boundedContainCoverModes": true,
+    "wideStillAndVideoPixels": true,
+    "tallStillPixels": true,
+    "extreme8192By2And2By8192": true,
+    "unchangedSceneCacheReuse": true,
+    "browserSaveReloadAndRender": true,
+    "liveProviderUsed": false
   }
 }

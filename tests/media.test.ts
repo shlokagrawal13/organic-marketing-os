@@ -28,6 +28,25 @@ const fixtureScene = {
   cta: "",
 };
 
+test("scene framing defaults legacy inputs to fit and accepts only bounded modes", () => {
+  assert.equal(sceneSchema.parse(fixtureScene).visualFit, "contain");
+  assert.equal(
+    sceneSchema.parse({ ...fixtureScene, visualFit: "cover" }).visualFit,
+    "cover",
+  );
+  for (const visualFit of [
+    null,
+    "",
+    "stretch",
+    "cover,crop=1:1",
+    { mode: "cover" },
+  ])
+    assert.equal(
+      sceneSchema.safeParse({ ...fixtureScene, visualFit }).success,
+      false,
+    );
+});
+
 test("caption cues preserve legacy scenes and export exact ordered scene-relative timing", () => {
   const legacy = sceneSchema.parse({ ...fixtureScene, duration: 1.25 });
   assert.deepEqual(legacy.captionCues, []);

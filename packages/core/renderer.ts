@@ -133,7 +133,7 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-2-timed-captions",
+          version: "mos-render-3-visual-framing",
           font: sha256(font),
           width,
           height,
@@ -143,6 +143,7 @@ export async function renderVideo(ctx: RenderContext) {
           duration: scene.duration,
           transition: scene.transition.toLowerCase().trim(),
           visual: visual?.asset.sha256 || null,
+          visualFit: visual ? scene.visualFit || "contain" : null,
           audio: audio?.asset.sha256 || null,
         }),
       );
@@ -186,8 +187,19 @@ export async function renderVideo(ctx: RenderContext) {
             "anullsrc=channel_layout=stereo:sample_rate=48000",
           );
         const filters = [
-          `scale=${width}:${height}:force_original_aspect_ratio=decrease`,
-          `pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2:color=${options.background}`,
+          ...(visual && scene.visualFit === "cover"
+            ? [
+                // Crop before scaling so extreme source aspect ratios cannot
+                // create enormous intermediate frames. Final crop absorbs
+                // source-pixel rounding without stretching the visual.
+                `crop=w='min(iw,max(1,ih*${width}/${height}))':h='min(ih,max(1,iw*${height}/${width}))':x=(iw-ow)/2:y=(ih-oh)/2:exact=1`,
+                `scale=${width}:${height}:force_original_aspect_ratio=increase:force_divisible_by=2`,
+                `crop=${width}:${height}:(iw-ow)/2:(ih-oh)/2`,
+              ]
+            : [
+                `scale=${width}:${height}:force_original_aspect_ratio=decrease`,
+                `pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2:color=${options.background}`,
+              ]),
           "setsar=1",
           "fps=30",
           "format=yuv420p",

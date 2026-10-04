@@ -190,6 +190,16 @@ test(
     }
     const created = await a.call(root + "/content", "POST", draft);
     assert.equal(created.status, 201);
+    assert.equal(created.body.scenes[0].visualFit, "contain");
+    assert.equal(
+      (
+        await a.call(root + "/content", "POST", {
+          ...draft,
+          scenes: [{ ...draft.scenes[0], visualFit: "cover,crop=1:1" }],
+        })
+      ).status,
+      400,
+    );
     assert.deepEqual(
       created.body.scenes[0].captionCues,
       draft.scenes[0].captionCues,
@@ -516,5 +526,166 @@ test(
       assert.match(exported, /00:00:00,500 --> 00:00:01,000\nTIMED CAPTION/);
       assert.equal(exported.includes("Fallback"), false);
     }
+
+    const frameAssets: string[] = [];
+    for (const [name, mime] of [
+      ["framing-wide.png", "image/png"],
+      ["framing-wide.mp4", "video/mp4"],
+      ["framing-tall.png", "image/png"],
+    ]) {
+      const result = await a.upload(
+        org,
+        readFileSync(`.local/media-fixtures/${name}`),
+        name,
+        mime,
+      );
+      assert.equal(result.status, 201, JSON.stringify(result.body));
+      frameAssets.push(result.body.asset.id);
+    }
+    const frameScene = (id: string, visualAssetId: string) => ({
+      ...scene(id, visualAssetId),
+      duration: 1,
+      onScreenText: "",
+      caption: "",
+      captionCues: [],
+      audioAssetId: null,
+    });
+    const framingDraft = {
+      ...draft,
+      title: "Framing pixels",
+      scenes: [
+        frameScene("still", frameAssets[0]),
+        frameScene("clip", frameAssets[1]),
+      ],
+    };
+    const framing = await a.call(root + "/content", "POST", framingDraft);
+    assert.equal(framing.status, 201);
+    const renderFraming = async (contentId: string, revision: number) => {
+      const job = await a.call(root + "/renders", "POST", {
+        contentId,
+        revision,
+        requestKey: randomUUID(),
+        options: {
+          aspect: "1:1",
+          resolution: "720",
+          captions: false,
+          background: "#000000",
+        },
+      });
+      assert.equal(job.status, 201, JSON.stringify(job.body));
+      const ready = await wait(job.body.id);
+      assert.equal(ready.status, "SUCCEEDED", JSON.stringify(ready));
+      const file = `.local/framing-${ready.id}.mp4`;
+      writeFileSync(
+        file,
+        Buffer.from(
+          await (
+            await a.raw(`${root}/renders/${ready.id}/file/video`)
+          ).arrayBuffer(),
+        ),
+      );
+      return { ...ready, file };
+    };
+    const checkFraming = (
+      file: string,
+      at: number,
+      mode: string,
+      tall = false,
+    ) => {
+      const frame = execFileSync(
+        process.env.FFMPEG_PATH || "ffmpeg",
+        [
+          "-v",
+          "error",
+          "-ss",
+          String(at),
+          "-i",
+          file,
+          "-frames:v",
+          "1",
+          "-pix_fmt",
+          "rgb24",
+          "-f",
+          "rawvideo",
+          "-",
+        ],
+        { maxBuffer: 2 * 1024 * 1024 },
+      );
+      assert.equal(frame.length, 720 * 720 * 3);
+      const pixel = (x: number, y: number, expected: number[]) => {
+        if (tall) [x, y] = [y, x];
+        const offset = (y * 720 + x) * 3;
+        assert.ok(
+          expected.every((v, i) => Math.abs(frame[offset + i] - v) < 30),
+          `${mode} at ${at}s pixel ${x},${y}: ${[...frame.subarray(offset, offset + 3)]}`,
+        );
+      };
+      pixel(360, 360, [0, 255, 0]);
+      pixel(360, 50, mode === "cover" ? [0, 255, 0] : [0, 0, 0]);
+      pixel(360, 670, mode === "cover" ? [0, 255, 0] : [0, 0, 0]);
+      pixel(50, 360, mode === "cover" ? [0, 255, 0] : [255, 0, 0]);
+      pixel(670, 360, mode === "cover" ? [0, 255, 0] : [0, 0, 255]);
+    };
+    const fit = await renderFraming(framing.body.id, 1);
+    checkFraming(fit.file, 0.5, "contain");
+    checkFraming(fit.file, 1.5, "contain");
+    for (let index = 0; index < 2; index++) {
+      const scenes = framingDraft.scenes.map((s, i) => ({
+        ...s,
+        visualFit: i <= index ? "cover" : "contain",
+      }));
+      const saved = await a.call(`${root}/content/${framing.body.id}`, "PUT", {
+        ...framingDraft,
+        scenes,
+        revision: index + 1,
+      });
+      assert.equal(saved.status, 200);
+      assert.equal(saved.body.scenes[index].visualFit, "cover");
+      const changed = await renderFraming(framing.body.id, index + 2);
+      assert.equal(
+        changed.reusedScenes,
+        1,
+        "framing-only change must reuse the unchanged scene",
+      );
+      checkFraming(changed.file, 0.5, "cover");
+      checkFraming(changed.file, 1.5, index === 0 ? "contain" : "cover");
+    }
+    const tall = await a.call(root + "/content", "POST", {
+      ...draft,
+      title: "Portrait image framing",
+      scenes: [
+        { ...frameScene("fit", frameAssets[2]), visualFit: "contain" },
+        { ...frameScene("fill", frameAssets[2]), visualFit: "cover" },
+      ],
+    });
+    assert.equal(tall.status, 201);
+    const tallRender = await renderFraming(tall.body.id, 1);
+    checkFraming(tallRender.file, 0.5, "contain", true);
+    checkFraming(tallRender.file, 1.5, "cover", true);
+    // Valid but extreme aspect ratios must not require multi-million-pixel
+    // intermediate dimensions before the final center crop.
+    const thinScenes = [];
+    for (const name of ["framing-thin-wide.png", "framing-thin-tall.png"]) {
+      const uploaded = await a.upload(
+        org,
+        readFileSync(`.local/media-fixtures/${name}`),
+        name,
+        "image/png",
+      );
+      assert.equal(uploaded.status, 201);
+      thinScenes.push({
+        ...frameScene(name, uploaded.body.asset.id),
+        visualFit: "cover",
+      });
+    }
+    const thin = await a.call(root + "/content", "POST", {
+      ...draft,
+      title: "Extreme visual framing",
+      scenes: thinScenes,
+    });
+    assert.equal(thin.status, 201);
+    const thinRender = await renderFraming(thin.body.id, 1);
+    checkFraming(thinRender.file, 0.5, "cover");
+    checkFraming(thinRender.file, 1.5, "cover");
   },
 );

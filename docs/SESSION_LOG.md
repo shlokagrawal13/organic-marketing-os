@@ -1,5 +1,13 @@
 # Session log
 
+## 2026-10-04 (IST) — EDITOR-01C visual fit/fill
+
+Resumed from clean documentation head `387157fabfffe276f9b73b01cbd738e827c7500f`; all 183 manifest files matched and public main was unchanged. Added `visualFit` contain/cover with a backward-compatible contain default, a role-inherited editor control, mode preservation during AI scene rewrite, center crop and mode-aware scene cache. Framing uses the existing JSON/revision/approval paths and applies to both uploaded and generated image/video assets.
+
+Checks passed: 34 detailed unit cases (six files), API/web builds, 7 HTTP, 6 production-browser and 5 recovery scenarios, all 12 migrations and populated PGlite upgrade/fresh restore. The first sandboxed harness hit S3Proxy `Operation not permitted`; the authorized isolated rerun passed. Review found that scale-before-crop could allocate huge frames for extreme valid aspect ratios, so a source crop guard plus 8192×2/2×8192 fixtures were added, then the entire verifier passed again. RGB pixel checks independently prove Fit borders/preserved edges and Fill center crops for wide still/video and tall still inputs; mode-only edits reuse the unchanged scene. Browser save/reload/reorder/render and existing mobile checks passed.
+
+No user services/data, paid provider, dependency, applied migration or master specification changed. Exact changed paths are in PROJECT_CHECKPOINT.json. Publish to canonical organic-marketing-os main and verify this slice's own CI next. Never use the unrelated OrganicMarketing repository.
+
 ## 2026-10-03 — EDITOR-01B manual timed captions
 
 Continued from documentation head `80549cad6ebc57eb6b46d7944e4e784f2b744a2a` after a clean 181-file checkpoint check and remote-main comparison. Added browser-safe shared timeline/caption contracts, up to 60 manual cues per scene, editor validation, half-open FFmpeg text intervals, relative-to-global SRT offsets and cue-aware scene caching. Legacy scenes retain the full-scene caption with no migration. Applying an AI scene rewrite clearly discloses that it clears manual cues.
