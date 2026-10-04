@@ -5,6 +5,7 @@
 - Added Static / Slow zoom in for images, with a legacy static default and a center zoom capped at 8% over the scene. Fit/Fill normalization bounds frame allocations; overlays remain stationary.
 - Image motion survives save/reload, reorder, duplication, generated asset attachment and AI scene rewrite. Videos and text cards ignore the stored preference and reuse their cached segments.
 - Added decoded-frame motion/border/bounds checks, extreme-aspect motion coverage, strict preset validation and browser persistence/render coverage. No dependency, migration or paid provider call.
+- Published to public `main` as `9334411055f63f33333044b2b4ce079420fa2596`; remote tree `8be7bfe6976d21a7db3411627548ebd8af7bd8c4` matched 184/184 local blobs and Actions run `37191164246` passed every workflow step.
 
 ## 0.9.2 EDITOR-01C visual fit/fill — 2026-10-04 (IST)
 

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-04.2",
-  "savedAtUtc": "2026-10-04T09:00:02.692713+00:00",
+  "checkpointRevision": "2026-10-04.3",
+  "savedAtUtc": "2026-10-04T09:12:05Z",
   "currentMilestone": "EDITOR-01D bounded image camera motion",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
@@ -17,7 +17,7 @@
     "Public main application commit 4611fb0170d4851be6bc6d805009c42a0ba5dd63 and tree 54e29ec0a2d0fa15921be62ccd0282de9e135c07 contain EDITOR-01B; Actions run 37143980421 completed successfully.",
     "EDITOR-01B is published and CI-verified: bounded manual caption cues persist through save/reorder, control half-open FFmpeg burn-in and scene-offset SRT, and invalidate only the changed caption-enabled scene cache. No ASR or automatic speech alignment.",
     "EDITOR-01C is published and CI-verified: Fit/Fill framing for attached images/video, legacy contain default, bounded crop-before-scale for extreme aspect ratios, mode-aware caching and save/reload.",
-    "EDITOR-01D is locally verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays and effective-mode caching. Publication pending. Automatic approval review blocked public export because prior approval covered EDITOR-01C only; no remote commit/ref was created."
+    "EDITOR-01D is published and CI-verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays, effective-mode caching and browser render coverage. Public main application commit 9334411055f63f33333044b2b4ce079420fa2596 matches local tree 8be7bfe6976d21a7db3411627548ebd8af7bd8c4 exactly; Actions run 37191164246 passed."
   ],
   "nextTaskId": "EDITOR-01",
   "nextAction": "Continue EDITOR-01 with named platform/aspect render presets using the existing immutable render snapshot; preserve source drafts, revision/approval rules, framing/motion/captions and verify browser selection plus output dimensions.",
@@ -77,9 +77,9 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "npm only; Java/S3Proxy dependencies and full application security not certified",
     "githubActions": {
-      "runId": 37189446835,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37189446835",
-      "sourceCommit": "177936421b896737ed6ea424f7520c32651ee596",
+      "runId": 37191164246,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37191164246",
+      "sourceCommit": "9334411055f63f33333044b2b4ce079420fa2596",
       "status": "completed",
       "conclusion": "success",
       "jobsStarted": 1,
@@ -105,9 +105,10 @@
         37005496060,
         37005778625,
         37126029720,
-        37143980421
+        37143980421,
+        37189446835
       ],
-      "annotation": "The published EDITOR-01C source completed every workflow step: build, 34 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload."
+      "annotation": "The published EDITOR-01D source completed every workflow step: build, 35 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload."
     },
     "latestIncrement": {
       "unitTestsPassed": 35,
@@ -171,12 +172,21 @@
       "browserScenariosPassed": 6,
       "recoveryConfigurationScenariosPassed": 5,
       "populatedUpgradeRestore": true,
-      "publicationStatus": "blocked_pending_explicit_current_slice_approval",
-      "liveProviderUsed": false
+      "publicationStatus": "published_ci_verified",
+      "liveProviderUsed": false,
+      "publicationCommit": "9334411055f63f33333044b2b4ce079420fa2596",
+      "publicationTree": "8be7bfe6976d21a7db3411627548ebd8af7bd8c4",
+      "actionsRunId": 37191164246,
+      "actionsConclusion": "success",
+      "remoteTreeMatchesLocalVerifiedTree": true,
+      "remoteBlobCount": 184,
+      "localBlobCount": 184,
+      "mismatchCount": 0,
+      "publishedAtUtc": "2026-10-04T09:12:05Z"
     }
   },
   "accessState": {
-    "github": "Public main application commit 177936421b896737ed6ea424f7520c32651ee596 points to the exact locally verified tree aa368ff82aaca7d29fef10da26dcc4c12ccee51b; all 184 remote blob paths/modes/SHAs match. Actions run 37189446835 completed successfully.",
+    "github": "Public main application commit 9334411055f63f33333044b2b4ce079420fa2596 points to the exact locally verified tree 8be7bfe6976d21a7db3411627548ebd8af7bd8c4; all 184 remote blob paths/modes/SHAs match. Actions run 37191164246 completed successfully.",
     "nativeExecution": "Full isolated local PGlite/Redis 7.2.11/S3Proxy/FFmpeg/browser/recovery verifier passed with authorized loopback service permission after S3Proxy was initially blocked. Native application CI is separate; complete Compose and native/cross-store restore remain open.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -184,8 +194,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "177936421b896737ed6ea424f7520c32651ee596",
-    "status": "editor01d_verified_publication_awaiting_explicit_approval",
+    "commit": "9334411055f63f33333044b2b4ce079420fa2596",
+    "status": "editor01d_published_ci_verified",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -198,11 +208,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "aa368ff82aaca7d29fef10da26dcc4c12ccee51b",
+    "sourceTree": "8be7bfe6976d21a7db3411627548ebd8af7bd8c4",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published EDITOR-01C source; Fit/Fill framing passed local verification and its own public GitHub CI.",
+    "commitMeaning": "Published EDITOR-01D source; bounded image camera motion passed local verification and its own public GitHub CI.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "57604c460236ce0d9a5773db0b4eb572687c16b1",
+    "lastLocalCheckpointCommit": "084c75e7369a4b72e102597857cbb8ed177e5bb6",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01C source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -212,17 +222,17 @@
       "resolved": true
     },
     "publication": {
-      "publishedAtUtc": "2026-10-04T08:42:32Z",
+      "publishedAtUtc": "2026-10-04T09:12:05Z",
       "visibility": "public",
-      "applicationCommit": "177936421b896737ed6ea424f7520c32651ee596",
-      "applicationTree": "aa368ff82aaca7d29fef10da26dcc4c12ccee51b",
-      "localCommit": "a0850228b62209836dbc9f4f1676947af6ed305f",
-      "baseCommit": "387157fabfffe276f9b73b01cbd738e827c7500f",
+      "applicationCommit": "9334411055f63f33333044b2b4ce079420fa2596",
+      "applicationTree": "8be7bfe6976d21a7db3411627548ebd8af7bd8c4",
+      "localCommit": "084c75e7369a4b72e102597857cbb8ed177e5bb6",
+      "baseCommit": "529115552c02afe51c3a2eb242c34a0aa3a07ffa",
       "uploadedChangedBlobCount": 23,
       "remoteBlobCount": 184,
       "localBlobCount": 184,
       "mismatchCount": 0,
-      "actionsRunId": 37189446835,
+      "actionsRunId": 37191164246,
       "actionsConclusion": "success",
       "actionsJobsStarted": 1,
       "nativeTestsExecuted": true
@@ -230,12 +240,16 @@
     "currentUploadGate": {
       "action": "Create Git tree for 23 verified EDITOR-01D source/docs files",
       "destination": "public shlokagrawal13/organic-marketing-os main",
-      "rejected": true,
-      "resolved": false,
+      "initialRejected": true,
+      "resolved": true,
       "bypassed": false,
-      "reason": "Automatic approval review says prior explicit approval covered EDITOR-01C only; current EDITOR-01D public source export needs explicit approval.",
-      "localSourceCommit": "60ad656",
-      "pendingUserApproval": true
+      "reason": "Automatic approval review initially required explicit current-slice authorization; the user supplied exact approval for EDITOR-01D public main publication.",
+      "localSourceCommit": "084c75e7369a4b72e102597857cbb8ed177e5bb6",
+      "remoteCommitCreated": true,
+      "remoteCommit": "9334411055f63f33333044b2b4ce079420fa2596",
+      "remoteTree": "8be7bfe6976d21a7db3411627548ebd8af7bd8c4",
+      "actionsRunId": 37191164246,
+      "actionsConclusion": "success"
     }
   },
   "credentialsIncluded": false,

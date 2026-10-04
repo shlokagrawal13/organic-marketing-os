@@ -4,7 +4,7 @@
 
 `npm test`: 35 passed. API and Next.js production builds passed. The full isolated verifier passed 7 HTTP, 6 browser and 5 recovery/configuration scenarios with all 12 migrations. `node scripts/verify-upgrade.mjs` passed populated upgrade/fresh restore.
 
-Real FFmpeg decoded frames show centered image enlargement from 1× to at most 1.08×, stationary static output and expected Fit border movement. Motion-only edits reuse video and no-asset scenes. Browser editing saves/reopens/reorders the preset and renders it alongside timed captions. Generated attachment preserves the preset; extreme aspect inputs remain bounded. No live provider was used. Publication was blocked by automatic approval review pending explicit permission to publish this current 23-file payload to public main. No current-slice CI ran; the prior GitHub CI applies to EDITOR-01C.
+Real FFmpeg decoded frames show centered image enlargement from 1× to at most 1.08×, stationary static output and expected Fit border movement. Motion-only edits reuse video and no-asset scenes. Browser editing saves/reopens/reorders the preset and renders it alongside timed captions. Generated attachment preserves the preset; extreme aspect inputs remain bounded. No live provider was used. Published to public main as application commit `9334411055f63f33333044b2b4ce079420fa2596`; tree `8be7bfe6976d21a7db3411627548ebd8af7bd8c4` matched 184/184 local blobs. Actions run `37191164246` completed successfully.
 
 Verified locally on 2026-10-04 (Asia/Kolkata). The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.

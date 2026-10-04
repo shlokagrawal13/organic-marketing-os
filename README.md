@@ -2,7 +2,7 @@
 
 ### Latest local editor increment
 
-EDITOR-01D adds image-only Static / Slow zoom in with an 8% limit, preserved Fit/Fill and fixed overlays. Passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds and populated upgrade/restore. Publication pending; published EDITOR-01C CI remains historical evidence.
+EDITOR-01D adds image-only Static / Slow zoom in with an 8% limit, preserved Fit/Fill and fixed overlays. Passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds and populated upgrade/restore. Published to public main as `9334411055f63f33333044b2b4ce079420fa2596`; Actions run `37191164246` passed.
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 

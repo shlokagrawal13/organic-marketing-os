@@ -65,8 +65,8 @@ Partial labels are not completion percentages.
 Canonical public repository: `shlokagrawal13/organic-marketing-os`, branch `main`.
 Version 0.9.2 was published after explicit user approval to public `main` and
 verified against the local checkpoint. Prior automatic approval review rejections
-are retained only as audit events; they were resolved by the user's explicit
-approvals for this destination.
+are retained only as audit events; EDITOR-01C and EDITOR-01D both have their own
+current-slice approvals and successful Actions evidence for this destination.
 The unrelated `shlokagrawal13/OrganicMarketing` project remains excluded.
 
 EDITOR-01B is published at application commit `4611fb0170d4851be6bc6d805009c42a0ba5dd63`;
@@ -81,11 +81,12 @@ Public run `37189446835` completed every workflow step successfully, including n
 application flows and browser evidence. Local checks passed 34 unit, 7 HTTP,
 6 browser and 5 recovery scenarios, both production builds and the 12-migration
 populated PGlite upgrade/restore.
-EDITOR-01D local checks passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios,
-both production builds and the 12-migration populated PGlite upgrade/restore.
-Its publication and CI are pending: automatic approval review requires explicit
-approval for exporting the 23 EDITOR-01D source/docs files to public main. Prior
-approval covered EDITOR-01C only. The prior CI evidence above applies to EDITOR-01C.
+EDITOR-01D is published at application commit `9334411055f63f33333044b2b4ce079420fa2596`;
+its tree `8be7bfe6976d21a7db3411627548ebd8af7bd8c4` exactly matches all 184 local
+blob paths, modes and SHAs. Public run `37191164246` completed every workflow step
+successfully, including native application flows and browser evidence. Local checks
+passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios, both production builds
+and the 12-migration populated PGlite upgrade/restore.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work

@@ -45,16 +45,16 @@ including save and real FFmpeg render in the browser. EDITOR-01B manual caption
 cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
 and populated PGlite upgrade/restore. Its own publication and CI passed. EDITOR-01C Fit/Fill framing passed 34 unit, 7 HTTP, 6 browser and
 5 recovery scenarios, builds and populated upgrade/restore locally, then was
-published and CI-verified. EDITOR-01D bounded image motion is locally verified with 35 unit, 7 HTTP, 6 browser and 5 recovery cases plus builds/upgrade; publication pending. Continue with named platform/aspect render presets. Automatic
+published and CI-verified. EDITOR-01D bounded image motion is also published and CI-verified with 35 unit, 7 HTTP, 6 browser and 5 recovery cases plus builds/upgrade; public application commit `9334411055f63f33333044b2b4ce079420fa2596`, tree `8be7bfe6976d21a7db3411627548ebd8af7bd8c4`, Actions run `37191164246` success. Continue with named platform/aspect render presets. Automatic
 speech alignment and broader EDITOR-01 completion remain open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
-The earlier automatic approval review rejection is a closed audit event after
+The earlier EDITOR-01D automatic approval review rejection is a closed audit event after
 the user's explicit approval for this public upload. Never touch the unrelated
 `OrganicMarketing` repository.
 
 The previous account-side Actions gate is cleared. Application commit
-`177936421b896737ed6ea424f7520c32651ee596` contains EDITOR-01C on exact tree
-`aa368ff82aaca7d29fef10da26dcc4c12ccee51b`. Public run `37189446835` completed every native verification step
+`9334411055f63f33333044b2b4ce079420fa2596` contains EDITOR-01D on exact tree
+`8be7bfe6976d21a7db3411627548ebd8af7bd8c4`. Public run `37191164246` completed every native verification step
 successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.
