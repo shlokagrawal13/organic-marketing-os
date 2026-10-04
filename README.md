@@ -2,7 +2,7 @@
 
 ### Latest local editor increment
 
-EDITOR-01D adds image-only Static / Slow zoom in with an 8% limit, preserved Fit/Fill and fixed overlays. Passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds and populated upgrade/restore. Published to public main as `9334411055f63f33333044b2b4ce079420fa2596`; Actions run `37191164246` passed.
+EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches. Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 

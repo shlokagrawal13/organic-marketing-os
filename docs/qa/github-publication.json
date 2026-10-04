@@ -72,16 +72,40 @@
     "actionsRunStarted": true,
     "actionsRunId": 37191164246,
     "actionsConclusion": "success",
-    "currentLocalSlicePendingPublication": null,
+    "currentLocalSlicePendingPublication": "EDITOR-01E named render presets",
     "currentSliceStatus": "EDITOR-01D published to public main and CI-verified"
   },
   "limits": [
     "Remote publication and CI verify the scoped increment, not full V3 production acceptance.",
-    "EDITOR-01D bounded image motion is published and CI-verified; automatic speech transcription/alignment, named platform/aspect presets, custom effects and broader editor QA remain open.",
+    "EDITOR-01D bounded image motion is published and CI-verified; automatic speech transcription/alignment, custom effects and broader editor QA remain open.",
     "No live AI request, Stripe payment, user database or private-media backup was performed.",
     "The configured native PostgreSQL/Redis application harness passed; full Compose/MinIO, native/cross-store restore and live-provider gates remain open."
   ],
   "currentUploadGate": {
+    "slice": "EDITOR-01E",
+    "initialRejected": true,
+    "resolved": false,
+    "destination": "public shlokagrawal13/organic-marketing-os main",
+    "changedFiles": 21,
+    "reason": "Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering \"hn kar do\" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted.",
+    "recordedAtUtc": "2026-10-04T13:48:11.513747+00:00",
+    "bypassed": false,
+    "remoteCommitCreated": false,
+    "remoteRefUpdated": false,
+    "localVerifiedSourceCommit": "3f5a4e744c3db281af7be1c0cf8714d78c84370d",
+    "verifiedRemoteHead": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae"
+  },
+  "localPendingPublication": {
+    "slice": "EDITOR-01E",
+    "status": "auto_review_rejected_waiting_exact_editor01e_approval",
+    "destination": "public shlokagrawal13/organic-marketing-os main",
+    "verifiedRemoteHead": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae",
+    "baseTree": "14f572199878556b4215cc2c3799d08706821ff3",
+    "remoteWriteAttempted": true,
+    "reason": "Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering \"hn kar do\" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted.",
+    "changedFiles": 21
+  },
+  "previousUploadGate": {
     "initialRejected": true,
     "resolved": true,
     "reason": "The first EDITOR-01D Git tree attempt was rejected until explicit current-slice public-export approval was supplied.",

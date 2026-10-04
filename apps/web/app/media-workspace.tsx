@@ -17,6 +17,12 @@ import {
 } from "lucide-react";
 import { api, uploadAsset } from "./api-client";
 import GeneratedMediaPanel from "./generated-media-panel";
+import {
+  RENDER_PRESETS,
+  renderPreset,
+  renderDimensions,
+  type RenderPresetId,
+} from "../../../packages/core/render-presets";
 type Any = Record<string, any>;
 const canWrite = (role: string) =>
   ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role);
@@ -516,6 +522,7 @@ export function RenderPanel({
     [notice, setNotice] = useState(""),
     [reviewed, setReviewed] = useState(false);
   const [options, setOptions] = useState({
+    preset: undefined as RenderPresetId | undefined,
     aspect: "9:16",
     resolution: "720",
     captions: true,
@@ -586,7 +593,21 @@ export function RenderPanel({
     }
   }
   function option(key: string, value: any) {
-    setOptions((o) => ({ ...o, [key]: value }));
+    setOptions((o) => ({
+      ...o,
+      [key]: value,
+      ...(["aspect", "resolution"].includes(key) ? { preset: undefined } : {}),
+    }));
+  }
+  function selectPreset(id: string) {
+    const preset = renderPreset(id);
+    setOptions((o) => ({
+      ...o,
+      preset: preset?.id,
+      ...(preset
+        ? { aspect: preset.aspect, resolution: preset.resolution }
+        : {}),
+    }));
   }
   return (
     <section className="video-studio" aria-label="Video rendering">
@@ -647,6 +668,20 @@ export function RenderPanel({
               <>
                 <div className="render-options">
                   <label>
+                    Export preset
+                    <select
+                      value={options.preset || ""}
+                      onChange={(e) => selectPreset(e.target.value)}
+                    >
+                      <option value="">Custom</option>
+                      {RENDER_PRESETS.map((preset) => (
+                        <option key={preset.id} value={preset.id}>
+                          {preset.label} · {preset.aspect}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
                     Aspect ratio
                     <select
                       value={options.aspect}
@@ -667,6 +702,11 @@ export function RenderPanel({
                       <option value="1080">1080p</option>
                     </select>
                   </label>
+                  <p className="field-help" role="status">
+                    Export size: {renderDimensions(options).join(" × ")} px.
+                    Presets set the export size. Review framing and platform
+                    requirements before publishing.
+                  </p>
                   <label>
                     Background colour
                     <input
@@ -796,9 +836,11 @@ export function RenderPanel({
               <>
                 <h3>{active.snapshot?.title || active.content?.title}</h3>
                 <p className="field-help">
-                  Revision {active.contentRevision} · {active.options.aspect} ·{" "}
-                  {active.options.resolution}p · {active.reusedScenes}/
-                  {active.totalScenes} scenes reused
+                  Revision {active.contentRevision} ·{" "}
+                  {renderPreset(active.options.preset)?.label || "Custom"} ·{" "}
+                  {active.options.aspect} ·{" "}
+                  {renderDimensions(active.options).join(" × ")} px ·{" "}
+                  {active.reusedScenes}/{active.totalScenes} scenes reused
                 </p>
                 {active.stale && (
                   <div className="alert">
@@ -985,6 +1027,10 @@ export function RenderPanel({
                   <small>
                     Revision {j.contentRevision} ·{" "}
                     {new Date(j.createdAt).toLocaleString()}
+                  </small>
+                  <small>
+                    {renderPreset(j.options.preset)?.label || "Custom"} ·{" "}
+                    {renderDimensions(j.options).join(" × ")} px
                   </small>
                   <span className={`status status-${j.status.toLowerCase()}`}>
                     {j.approvedAt ? "approved" : j.status.toLowerCase()}

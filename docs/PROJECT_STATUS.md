@@ -18,8 +18,10 @@ Provider fixtures and passing local tests do not certify production readiness.
   EDITOR-01B adds verified manual timed cues, legacy fallback and cue-aware SRT/cache.
   EDITOR-01C adds verified Fit/Fill framing for images/video, centered cropping,
   mode-aware caching and a guard against oversized intermediate frames.
-  EDITOR-01D adds locally verified image-only Static / Slow zoom in, capped at 8%,
-  with stationary overlays and effective-motion scene caching. Publication pending.
+  EDITOR-01D adds published, CI-verified image-only Static / Slow zoom in, capped at 8%,
+  with stationary overlays and effective-motion scene caching.
+  EDITOR-01E adds locally verified named export presets, immutable job geometry, Custom
+  reset and saved history labels. Its public publication remains pending.
   Automatic transcription and speech alignment are not implemented.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -87,11 +89,12 @@ blob paths, modes and SHAs. Public run `37191164246` completed every workflow st
 successfully, including native application flows and browser evidence. Local checks
 passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios, both production builds
 and the 12-migration populated PGlite upgrade/restore.
+EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches. Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. EDITOR-01E is local only; prior GitHub CI applies to EDITOR-01D.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue EDITOR-01 with named platform/aspect render presets.
+Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering. EDITOR-01E public publication remains pending current-slice authorization.
 Automatic
 speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official

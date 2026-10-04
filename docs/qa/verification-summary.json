@@ -7,7 +7,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 35,
+    "unit": 36,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -82,7 +82,7 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "unitTestsPassed": 35,
+    "unitTestsPassed": 36,
     "httpScenariosPassed": 7,
     "browserScenariosPassed": 6,
     "recoveryConfigurationScenariosPassed": 5,
@@ -109,7 +109,8 @@
     "visualFitFillDecodedFrames": true,
     "visualFitFillCacheReuse": true,
     "extremeAspectRatioFill": true,
-    "boundedImageMotion": true
+    "boundedImageMotion": true,
+    "namedRenderPresets": true
   },
   "priorFullSuite": {
     "release": "0.6.0",
@@ -254,5 +255,49 @@
     "localBlobCount": 184,
     "mismatchCount": 0,
     "publishedAtUtc": "2026-10-04T09:12:05Z"
+  },
+  "editor01eEvidence": {
+    "presetIds": [
+      "vertical-social-v1",
+      "landscape-video-v1",
+      "square-feed-v1"
+    ],
+    "outputDimensions": [
+      [
+        1080,
+        1920
+      ],
+      [
+        1920,
+        1080
+      ],
+      [
+        1080,
+        1080
+      ]
+    ],
+    "strictPresetAndDimensionValidation": true,
+    "legacySerializedOptionsUnchanged": true,
+    "normalizedIdempotentReplay": true,
+    "savedSnapshotPreserved": true,
+    "sourceDraftAndApprovalUnchanged": true,
+    "tenantRoleAndRevisionGuards": true,
+    "customGeometryCacheReuse": true,
+    "browserSelectionCustomResetAndSavedHistory": true,
+    "browserDecodedDimensions": [
+      1080,
+      1080
+    ],
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "unitTestsPassed": 36,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "populatedUpgradeRestore": true,
+    "publicationStatus": "local_verified_publication_rejected",
+    "liveProviderUsed": false,
+    "knownFailures": [],
+    "verificationNote": "Initial new integration assertion used content response.scenes instead of response.item.scenes; corrected the test. A later session lost its temporary final log; one resumed harness stalled at migrations. The preset browser test used exact label text including nested options, so its locator was corrected to the accessible combobox name. The full verifier was then rerun successfully with workspace-local logs."
   }
 }

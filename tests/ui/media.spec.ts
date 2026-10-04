@@ -249,6 +249,30 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await expect(
     page.getByText("Content approved.", { exact: true }),
   ).toBeVisible();
+  const preset = page.getByRole("combobox", {
+    name: "Export preset",
+    exact: true,
+  });
+  await expect(preset).toHaveValue("");
+  await preset.selectOption("vertical-social-v1");
+  await expect(page.getByText(/Export size: 1080 × 1920 px/)).toBeVisible();
+  await page
+    .getByRole("combobox", { name: "Resolution", exact: true })
+    .selectOption("720");
+  await expect(preset).toHaveValue("");
+  await preset.selectOption("landscape-video-v1");
+  await expect(
+    page.getByRole("combobox", { name: "Aspect ratio", exact: true }),
+  ).toHaveValue("16:9");
+  await page
+    .getByRole("combobox", { name: "Aspect ratio", exact: true })
+    .selectOption("9:16");
+  await expect(preset).toHaveValue("");
+  await preset.selectOption("square-feed-v1");
+  await expect(
+    page.getByRole("combobox", { name: "Resolution", exact: true }),
+  ).toHaveValue("1080");
+  await expect(page.getByText(/Export size: 1080 × 1080 px/)).toBeVisible();
   await page.getByRole("button", { name: "Render video", exact: true }).click();
   await expect(
     page.getByRole("link", { name: "Download MP4", exact: true }),
@@ -259,6 +283,17 @@ test("inspect workspace pages, upload private media, render and approve a playab
       timeout: 15000,
     })
     .toBeGreaterThanOrEqual(1);
+  expect(
+    await video.evaluate((v: HTMLVideoElement) => [
+      v.videoWidth,
+      v.videoHeight,
+    ]),
+  ).toEqual([1080, 1080]);
+  // Composer changes must not relabel or modify the saved render.
+  await preset.selectOption("landscape-video-v1");
+  await expect(page.locator(".render-history-item").first()).toContainText(
+    "Square feed · 1080 × 1080 px",
+  );
   await video.evaluate(async (v: HTMLVideoElement) => {
     v.muted = true;
     await v.play();

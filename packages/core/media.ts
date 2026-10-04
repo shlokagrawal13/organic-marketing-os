@@ -3,11 +3,13 @@ import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { sceneSchema } from "./ai";
 import { sceneTimeline, sceneCaptionCues } from "./captions";
+import { RENDER_PRESET_IDS, renderPreset } from "./render-presets";
+export { renderDimensions as dimensions } from "./render-presets";
 export { sceneTimeline } from "./captions";
 
 export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 export const MAX_RENDER_BYTES = 100 * 1024 * 1024;
-export const renderOptions = z
+const normalizedRenderOptions = z
   .object({
     aspect: z.enum(["9:16", "16:9", "1:1"]).default("9:16"),
     resolution: z.enum(["720", "1080"]).default("720"),
@@ -18,21 +20,37 @@ export const renderOptions = z
       .string()
       .regex(/^#[0-9a-fA-F]{6}$/)
       .default("#183c2b"),
+    preset: z.enum(RENDER_PRESET_IDS).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((options, ctx) => {
+    const preset = renderPreset(options.preset);
+    if (
+      preset &&
+      (options.aspect !== preset.aspect ||
+        options.resolution !== preset.resolution)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["preset"],
+        message:
+          "Preset dimensions do not match. Use custom settings or the preset's aspect and resolution.",
+      });
+    }
+  });
+export const renderOptions = z.preprocess((input) => {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return input;
+  const preset = renderPreset((input as Record<string, unknown>).preset);
+  // Expand preset-only requests, but keep explicit fields so contradictions
+  // are rejected. Legacy options retain their exact serialized hash shape.
+  return preset
+    ? { aspect: preset.aspect, resolution: preset.resolution, ...input }
+    : input;
+}, normalizedRenderOptions);
 export type RenderOptions = z.infer<typeof renderOptions>;
 export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
-export function dimensions(o: RenderOptions) {
-  const short = Number(o.resolution),
-    long = o.resolution === "720" ? 1280 : 1920;
-  return o.aspect === "9:16"
-    ? [short, long]
-    : o.aspect === "16:9"
-      ? [long, short]
-      : [short, short];
-}
 export function sniffMedia(b: Buffer) {
   if (b.length < 12) throw new Error("The file is empty or not supported.");
   if (b.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])))

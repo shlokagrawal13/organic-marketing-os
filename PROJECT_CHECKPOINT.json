@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-04.3",
-  "savedAtUtc": "2026-10-04T09:12:05Z",
-  "currentMilestone": "EDITOR-01D bounded image camera motion",
+  "checkpointRevision": "2026-10-04.4",
+  "savedAtUtc": "2026-10-04T13:48:11.513747+00:00",
+  "currentMilestone": "EDITOR-01E named render presets",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -17,10 +17,11 @@
     "Public main application commit 4611fb0170d4851be6bc6d805009c42a0ba5dd63 and tree 54e29ec0a2d0fa15921be62ccd0282de9e135c07 contain EDITOR-01B; Actions run 37143980421 completed successfully.",
     "EDITOR-01B is published and CI-verified: bounded manual caption cues persist through save/reorder, control half-open FFmpeg burn-in and scene-offset SRT, and invalidate only the changed caption-enabled scene cache. No ASR or automatic speech alignment.",
     "EDITOR-01C is published and CI-verified: Fit/Fill framing for attached images/video, legacy contain default, bounded crop-before-scale for extreme aspect ratios, mode-aware caching and save/reload.",
-    "EDITOR-01D is published and CI-verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays, effective-mode caching and browser render coverage. Public main application commit 9334411055f63f33333044b2b4ce079420fa2596 matches local tree 8be7bfe6976d21a7db3411627548ebd8af7bd8c4 exactly; Actions run 37191164246 passed."
+    "EDITOR-01D is published and CI-verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays, effective-mode caching and browser render coverage. Public main application commit 9334411055f63f33333044b2b4ce079420fa2596 matches local tree 8be7bfe6976d21a7db3411627548ebd8af7bd8c4 exactly; Actions run 37191164246 passed.",
+    "EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches. Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. Local only; publication pending."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Continue EDITOR-01 with named platform/aspect render presets using the existing immutable render snapshot; preserve source drafts, revision/approval rules, framing/motion/captions and verify browser selection plus output dimensions.",
+  "nextAction": "Resolve the automatic public-export approval gate with exact EDITOR-01E authorization, publish the 21 verified source/docs files to canonical public main, compare remote tree and run CI; then continue language/font/audio QA.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -57,7 +58,7 @@
   "verification": {
     "date": "2026-10-04",
     "applicationSuites": {
-      "unit": 35,
+      "unit": 36,
       "httpScenarios": 7,
       "browserScenarios": 6,
       "recoveryConfigurationScenarios": 5
@@ -111,7 +112,7 @@
       "annotation": "The published EDITOR-01D source completed every workflow step: build, 35 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload."
     },
     "latestIncrement": {
-      "unitTestsPassed": 35,
+      "unitTestsPassed": 36,
       "httpScenariosPassed": 7,
       "browserScenariosPassed": 6,
       "recoveryConfigurationScenariosPassed": 5,
@@ -145,7 +146,8 @@
       "visualFitFillDecodedFrames": true,
       "visualFitFillCacheReuse": true,
       "extremeAspectRatioFill": true,
-      "boundedImageMotion": true
+      "boundedImageMotion": true,
+      "namedRenderPresets": true
     },
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-04 GitHub Actions: production/full moderate-severity gates passed; advisory-count fields retain the separately recorded 2026-09-29 zero-count audit.",
@@ -183,6 +185,50 @@
       "localBlobCount": 184,
       "mismatchCount": 0,
       "publishedAtUtc": "2026-10-04T09:12:05Z"
+    },
+    "editor01eEvidence": {
+      "presetIds": [
+        "vertical-social-v1",
+        "landscape-video-v1",
+        "square-feed-v1"
+      ],
+      "outputDimensions": [
+        [
+          1080,
+          1920
+        ],
+        [
+          1920,
+          1080
+        ],
+        [
+          1080,
+          1080
+        ]
+      ],
+      "strictPresetAndDimensionValidation": true,
+      "legacySerializedOptionsUnchanged": true,
+      "normalizedIdempotentReplay": true,
+      "savedSnapshotPreserved": true,
+      "sourceDraftAndApprovalUnchanged": true,
+      "tenantRoleAndRevisionGuards": true,
+      "customGeometryCacheReuse": true,
+      "browserSelectionCustomResetAndSavedHistory": true,
+      "browserDecodedDimensions": [
+        1080,
+        1080
+      ],
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "unitTestsPassed": 36,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 5,
+      "populatedUpgradeRestore": true,
+      "publicationStatus": "local_verified_publication_rejected",
+      "liveProviderUsed": false,
+      "knownFailures": [],
+      "verificationNote": "Initial new integration assertion used content response.scenes instead of response.item.scenes; corrected the test. A later session lost its temporary final log; one resumed harness stalled at migrations. The preset browser test used exact label text including nested options, so its locator was corrected to the accessible combobox name. The full verifier was then rerun successfully with workspace-local logs."
     }
   },
   "accessState": {
@@ -195,7 +241,7 @@
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "9334411055f63f33333044b2b4ce079420fa2596",
-    "status": "editor01d_published_ci_verified",
+    "status": "editor01e_local_verified_publication_rejected",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -212,7 +258,7 @@
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Published EDITOR-01D source; bounded image camera motion passed local verification and its own public GitHub CI.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "084c75e7369a4b72e102597857cbb8ed177e5bb6",
+    "lastLocalCheckpointCommit": "3f5a4e744c3db281af7be1c0cf8714d78c84370d",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01C source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -238,6 +284,30 @@
       "nativeTestsExecuted": true
     },
     "currentUploadGate": {
+      "slice": "EDITOR-01E",
+      "initialRejected": true,
+      "resolved": false,
+      "destination": "public shlokagrawal13/organic-marketing-os main",
+      "changedFiles": 21,
+      "reason": "Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering \"hn kar do\" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted.",
+      "recordedAtUtc": "2026-10-04T13:48:11.513747+00:00",
+      "bypassed": false,
+      "remoteCommitCreated": false,
+      "remoteRefUpdated": false,
+      "localVerifiedSourceCommit": "3f5a4e744c3db281af7be1c0cf8714d78c84370d",
+      "verifiedRemoteHead": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae"
+    },
+    "publicationPreparation": {
+      "slice": "EDITOR-01E",
+      "status": "auto_review_rejected_waiting_exact_editor01e_approval",
+      "destination": "public shlokagrawal13/organic-marketing-os main",
+      "verifiedRemoteHead": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae",
+      "baseTree": "14f572199878556b4215cc2c3799d08706821ff3",
+      "remoteWriteAttempted": true,
+      "reason": "Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering \"hn kar do\" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted.",
+      "changedFiles": 21
+    },
+    "previousUploadGate": {
       "action": "Create Git tree for 23 verified EDITOR-01D source/docs files",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "initialRejected": true,
@@ -296,7 +366,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "EDITOR-01A timeline, EDITOR-01B captions and EDITOR-01C Fit/Fill are published and CI-verified. EDITOR-01D bounded image motion is locally verified; platform presets, automatic speech alignment, custom effects and broader QA remain."
+      "completedIncrement": "EDITOR-01A/B/C/D are published and CI-verified. EDITOR-01E named render geometry presets are locally verified; public publication, automatic speech alignment, custom effects, platform-specific text/composition and broader language/font/audio QA remain."
     },
     {
       "id": "RESEARCH-01",
@@ -404,7 +474,7 @@
     "PROJECT_STATUS.md",
     "README.md",
     "START_HERE.md",
-    "apps/web/app/content-workspace.tsx",
+    "apps/web/app/media-workspace.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -415,10 +485,8 @@
     "docs/VIDEO_PIPELINE.md",
     "docs/qa/github-publication.json",
     "docs/qa/verification-summary.json",
-    "packages/core/ai.ts",
-    "packages/core/renderer.ts",
-    "scripts/verify-local.mjs",
-    "tests/integration/generated-media.test.ts",
+    "packages/core/media.ts",
+    "packages/core/render-presets.ts",
     "tests/integration/media.test.ts",
     "tests/media.test.ts",
     "tests/ui/media.spec.ts"

@@ -9,6 +9,7 @@ import {
   validateRenderScenes,
 } from "../packages/core/media";
 import { sceneSchema } from "../packages/core/ai";
+import { RENDER_PRESETS } from "../packages/core/render-presets";
 import {
   MAX_CAPTION_CUES,
   sceneCaptionCues,
@@ -27,6 +28,57 @@ const fixtureScene = {
   sfx: "",
   cta: "",
 };
+
+test("named render presets normalize geometry, reject conflicts and preserve legacy hashes", () => {
+  assert.equal(
+    JSON.stringify(renderOptions.parse({})),
+    '{"aspect":"9:16","resolution":"720","captions":true,"musicAssetId":null,"musicVolume":0.12,"background":"#183c2b"}',
+  );
+  const expected = [
+    [1080, 1920],
+    [1920, 1080],
+    [1080, 1080],
+  ];
+  for (const [i, preset] of RENDER_PRESETS.entries()) {
+    const options = renderOptions.parse({
+      preset: preset.id,
+      captions: false,
+      background: "#123456",
+      musicVolume: 0.25,
+    });
+    assert.deepEqual(dimensions(options), expected[i]);
+    assert.equal(options.preset, preset.id);
+    assert.equal(options.captions, false);
+    assert.equal(options.background, "#123456");
+    assert.equal(options.musicVolume, 0.25);
+    assert.deepEqual(
+      renderOptions.parse(options),
+      options,
+      "saved snapshots parse identically",
+    );
+    assert.throws(() =>
+      renderOptions.parse({ preset: preset.id, resolution: "720" }),
+    );
+    assert.throws(() =>
+      renderOptions.parse({
+        preset: preset.id,
+        aspect: preset.aspect === "1:1" ? "9:16" : "1:1",
+      }),
+    );
+  }
+  for (const preset of [
+    "unknown",
+    "__proto__",
+    null,
+    {},
+    "vertical-social-v2",
+  ]) {
+    assert.throws(() => renderOptions.parse({ preset }));
+  }
+  assert.throws(() =>
+    renderOptions.parse({ preset: RENDER_PRESETS[0].id, filter: "crop=1:1" }),
+  );
+});
 
 test("scene motion defaults to static and accepts only bounded presets", () => {
   assert.equal(sceneSchema.parse(fixtureScene).cameraMotion, "static");

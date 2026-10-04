@@ -428,21 +428,105 @@ test(
     };
     const alternateContent = await a.call(root + "/content", "POST", alternate);
     assert.equal(alternateContent.status, 201);
-    for (const [aspect, resolution, width, height] of [
-      ["16:9", "1080", 1920, 1080],
-      ["1:1", "720", 720, 720],
+    await a.call(`${root}/content/${alternateContent.body.id}/review`, "POST", {
+      revision: 1,
+    });
+    await a.call(
+      `${root}/content/${alternateContent.body.id}/approve`,
+      "POST",
+      { revision: 1, factsAndRightsReviewed: true },
+    );
+    const beforePresets = (
+      await a.call(`${root}/content/${alternateContent.body.id}`)
+    ).body;
+    assert.equal(beforePresets.item.status, "APPROVED");
+    const presetPayload = {
+      contentId: alternateContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { preset: "vertical-social-v1" },
+    };
+    assert.equal(
+      (
+        await a.call(root + "/renders", "POST", {
+          ...presetPayload,
+          revision: 2,
+        })
+      ).status,
+      409,
+    );
+    assert.equal(
+      (await b.call(root + "/renders", "POST", presetPayload)).status,
+      403,
+    );
+    assert.equal(
+      (await b.call(other + "/renders", "POST", presetPayload)).status,
+      404,
+    );
+    for (const options of [
+      { preset: "unknown" },
+      { preset: "vertical-social-v1", aspect: "1:1" },
+      { preset: "square-feed-v1", resolution: "720" },
+    ]) {
+      assert.equal(
+        (
+          await a.call(root + "/renders", "POST", {
+            contentId: alternateContent.body.id,
+            revision: 1,
+            requestKey: randomUUID(),
+            options,
+          })
+        ).status,
+        400,
+      );
+    }
+    for (const [preset, width, height] of [
+      ["vertical-social-v1", 1080, 1920],
+      ["landscape-video-v1", 1920, 1080],
+      ["square-feed-v1", 1080, 1080],
     ] as const) {
       const alt = await a.call(root + "/renders", "POST", {
         contentId: alternateContent.body.id,
         revision: 1,
         requestKey: randomUUID(),
-        options: { aspect, resolution },
+        options: { preset },
       });
       assert.equal(alt.status, 201, JSON.stringify(alt.body));
       const ready = await wait(alt.body.id);
       assert.equal(ready.status, "SUCCEEDED");
       assert.equal(ready.width, width);
       assert.equal(ready.height, height);
+      assert.equal(ready.options.preset, preset);
+      assert.deepEqual(ready.snapshot.scenes, beforePresets.item.scenes);
+      assert.equal(ready.contentRevision, beforePresets.item.revision);
+      assert.equal(ready.approvedAt, null);
+      const replay = await a.call(root + "/renders", "POST", {
+        contentId: alternateContent.body.id,
+        revision: 1,
+        requestKey: alt.body.requestKey,
+        options: ready.options,
+      });
+      assert.equal(
+        replay.body.id,
+        ready.id,
+        "expanded options keep the same idempotency hash",
+      );
+      const custom = await a.call(root + "/renders", "POST", {
+        contentId: alternateContent.body.id,
+        revision: 1,
+        requestKey: randomUUID(),
+        options: {
+          aspect: ready.options.aspect,
+          resolution: ready.options.resolution,
+        },
+      });
+      const customReady = await wait(custom.body.id);
+      assert.equal(customReady.status, "SUCCEEDED");
+      assert.equal(
+        customReady.reusedScenes,
+        1,
+        "preset labels do not invalidate identical scene geometry",
+      );
       const thumbnail = await a.raw(
         `${root}/renders/${ready.id}/file/thumbnail`,
       );
@@ -451,6 +535,15 @@ test(
         Buffer.from(await thumbnail.arrayBuffer()),
       );
     }
+
+    const afterPresets = (
+      await a.call(`${root}/content/${alternateContent.body.id}`)
+    ).body;
+    assert.deepEqual(
+      afterPresets,
+      beforePresets,
+      "variants leave the source draft unchanged",
+    );
 
     // Real decoded frames prove the overlay appears only in the half-open cue
     // interval, independently of the SRT and without invented speech alignment.

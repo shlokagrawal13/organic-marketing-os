@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.2 EDITOR-01E named export presets — 2026-10-04 (IST)
+
+- EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches.
+- Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore.
+- Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
+
 ## 0.9.2 EDITOR-01D bounded image motion — 2026-10-04 (IST)
 
 - Added Static / Slow zoom in for images, with a legacy static default and a center zoom capped at 8% over the scene. Fit/Fill normalization bounds frame allocations; overlays remain stationary.

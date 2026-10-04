@@ -1,5 +1,15 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01E named export presets — 2026-10-04 (IST)
+
+EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches.
+
+Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. Real FFmpeg outputs passed dimension probes for every preset, and equivalent Custom jobs reused the cached scene. HTTP coverage verifies normalized replay, rejected mismatches/unknown IDs, tenant/role/revision denial and unchanged source approval. Browser coverage selects every preset, checks Custom reset, renders 1080×1080, and preserves saved history labels after changing the composer.
+
+Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
+
+Initial new HTTP assertion read the content wrapper incorrectly; fixed to use `body.item`. The new browser test also needed an accessible-role locator for nested select options. The completed full rerun passed. Upgrade archive SHA-256: `88d02061556908c3ac7f7c4d26ac69102c91418c2c6a112e2d08ebdb0bc7ccde` (4865653 bytes); this is isolated PGlite restore evidence, not a user backup.
+
 ## EDITOR-01D bounded image motion — 2026-10-04 (IST)
 
 `npm test`: 35 passed. API and Next.js production builds passed. The full isolated verifier passed 7 HTTP, 6 browser and 5 recovery/configuration scenarios with all 12 migrations. `node scripts/verify-upgrade.mjs` passed populated upgrade/fresh restore.
@@ -11,7 +21,7 @@ supplied V3 specification; it does not complete or certify the entire product.
 
 | Check                           | Completed result                                                                                                                 |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Unit tests                      | 35 passed across 6 test files                                                                                                    |
+| Unit tests                      | 36 passed across 6 test files                                                                                                    |
 | HTTP integration                | 7 broad scenarios passed                                                                                                         |
 | Production-browser tests        | 6 scenarios passed                                                                                                               |
 | Recovery/configuration          | 5 scenarios passed                                                                                                               |

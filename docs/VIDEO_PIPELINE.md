@@ -19,6 +19,36 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
+## Named export presets (EDITOR-01E)
+
+The render composer offers three versioned geometry presets plus Custom:
+
+| Preset | Saved ID | Aspect | Output pixels |
+| --- | --- | --- | --- |
+| Reels / Shorts | `vertical-social-v1` | 9:16 | 1080 × 1920 |
+| Landscape video | `landscape-video-v1` | 16:9 | 1920 × 1080 |
+| Square feed | `square-feed-v1` | 1:1 | 1080 × 1080 |
+
+Selecting a preset sets aspect and resolution while retaining captions, music,
+volume and background. Manually changing aspect or resolution selects Custom.
+The composer shows exact output dimensions; preview/history show the settings
+saved with that job, independently of the current composer selection.
+
+`POST /renders` accepts `options: { preset: "square-feed-v1" }` and expands the
+geometry before hashing and saving immutable job options. Explicit contradictory
+dimensions and unknown preset IDs are rejected. Legacy requests retain their
+defaults and serialized hash shape. Saved jobs and retries retain the preset ID
+and resolved geometry; preset IDs must never be remapped. No migration is needed.
+Scene caching continues to use dimensions and effective rendering settings, so
+Custom and named renders with identical settings reuse the same scenes.
+
+Create each variant as a separate render from the saved content revision. This
+does not rewrite the source draft, platform field, captions, framing or motion,
+or transfer approval between renders. Existing tenant, role, revision, quota,
+cancel/retry and approval gates apply. Presets describe export geometry only:
+they do not validate a platform's upload policies or safe areas, publish content,
+or automatically rewrite text and scene composition for different platforms.
+
 ## Image camera motion (EDITOR-01D)
 
 Scenes store `cameraMotion: "static" | "slow-zoom"`, defaulting to `static`
@@ -67,4 +97,4 @@ Real FFmpeg, private upload/download, byte ranges, non-silent decoded audio, all
 
 Generated image/video/voice presets, private ingestion and explicit targeted attachment are implemented in 0.9; see GENERATED_MEDIA.md. Voiceover text never starts speech automatically.
 
-Missing: live generated-media acceptance, remaining provider-specific reference modes, ASR/word timing, camera panning/custom motion, arbitrary transitions/effects/SFX tracks, drag/drop timeline editing, platform variants, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.
+Missing: live generated-media acceptance, remaining provider-specific reference modes, ASR/word timing, camera panning/custom motion, arbitrary transitions/effects/SFX tracks, drag/drop timeline editing, automatic platform-specific composition/text variants and policy validation, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.

@@ -1,5 +1,19 @@
 # Session log
 
+## 2026-10-04 (IST) — EDITOR-01E public export gate
+
+Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering "hn kar do" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted. Remote main was rechecked at `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; the exact diff was 21 source/docs files with no deletion. Local source commit `3f5a4e7` and its successful verification remain preserved. The branch was not updated, so no EDITOR-01E CI run exists. Exact current-slice approval is requested before retrying.
+
+## 2026-10-04 (IST) — EDITOR-01E named export presets
+
+Resumed the clean 183-file checkpoint at local head `81cd8cc`. EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches. No dependency, migration or master-spec changes.
+
+Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. The first new HTTP assertion incorrectly read the content response wrapper; corrected to `body.item`. An interrupted session lost temporary final logs, so builds/unit/full verifier/upgrade were rerun with workspace-local logs. A resumed harness stalled at migrations, and the new browser locator needed the accessible combobox name. The completed full rerun is the evidence for this increment.
+
+Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open. Earlier automatic approval review required current-slice public-export consent; the exact existing consent covers EDITOR-01D. No EDITOR-01E remote mutation was attempted. Changed paths are recorded in `PROJECT_CHECKPOINT.json`.
+
+Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering. EDITOR-01E public publication remains pending current-slice authorization.
+
 ## 2026-10-04 (IST) — EDITOR-01D bounded image motion
 
 Resumed from a clean checkpoint: 183 manifest entries matched; canonical public main remained `529115552c02afe51c3a2eb242c34a0aa3a07ffa`. Added image-only Static / Slow zoom in, capped at 8% over scene duration after bounded Fit/Fill normalization. Overlays remain fixed; video/card motion is ignored in rendering and caching. Defaults, rewrite/attachment preservation, save/reload/reorder and strict values are covered.
