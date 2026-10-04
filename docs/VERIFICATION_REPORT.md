@@ -1,5 +1,32 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01F rendered-text preflight - 2026-10-05 (IST)
+
+Local verification passed on the final application source:
+
+- `node --import tsx --test --test-isolation=none tests/*.test.ts`: 37 cases.
+- `npm run build:api` and `npm run build:web`: passed.
+- `NODE_OPTIONS=--test-isolation=none npm run verify`: 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios; 12 migrations; explicit final success. The local-service permission escalation was approved.
+- `npm run verify:upgrade`: populated PGlite upgrade/fresh restore passed; archive 4865777 bytes, SHA-256 `2ac1129f79474a4d98d13e4ae2554d9a9cfc39282ec2decd017e6f641f0d9b4d`.
+
+New unit cases exercise named unsupported scripts, unknown scripts, emoji, controls,
+common punctuation, composed/decomposed accents, explicit cue overrides and
+captions-off behavior. HTTP coverage rejects unsupported titles before job creation,
+rejects Hindi burned captions, then successfully renders the same caption as
+SRT-only text and downloads the intact Unicode SRT. Existing real FFmpeg frame,
+audio, caching, tenant/role/revision and browser/recovery checks pass.
+
+The first default runner invocation reported test files rather than cases; only
+explicit case-level reruns support the 37 count. Initial S3Proxy startup was
+blocked by local-service permission. The first authorized full run found a
+middle-dot punctuation regression; the policy/test were corrected and the full
+run repeated successfully. No known failing check remains for this increment.
+
+No live/paid provider or native PostgreSQL restore was exercised. This is a
+conservative script/character policy, not actual font glyph coverage, multilingual
+shaping or decoded multilingual readability certification. Local source only;
+EDITOR-01F publication and remote CI remain pending.
+
 ## EDITOR-01E named export presets — 2026-10-04 (IST)
 
 EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches.

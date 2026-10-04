@@ -23,7 +23,10 @@ Public Actions run `37207895511` for application commit
 `06e5da96ec4e811b0a95510247db25c3d54ac669` completed native application verification successfully through
 EDITOR-01E named render presets. Local checks passed 36 unit, 7 HTTP, 6 browser and
 5 recovery scenarios plus builds/upgrade.
-Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering.
+EDITOR-01F adds local rendered-text script preflight with scene/cue errors and
+preserves captions-off Unicode SRT. Continue with actual configured-font glyph
+coverage and multilingual shaping QA; script preflight is not a coverage guarantee.
+EDITOR-01F public publication requires its own current-payload authorization.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

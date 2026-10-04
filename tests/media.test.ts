@@ -7,6 +7,7 @@ import {
   captionSrt,
   sceneTimeline,
   validateRenderScenes,
+  renderTextSupportIssue,
 } from "../packages/core/media";
 import { sceneSchema } from "../packages/core/ai";
 import { RENDER_PRESETS } from "../packages/core/render-presets";
@@ -230,6 +231,79 @@ test("render bounds and scene captions have deterministic, accurate timing", () 
         duration: 60,
       })),
     ),
+  );
+});
+
+test("render text preflight reports unsupported font and shaping cases", () => {
+  const latin = sceneSchema.parse({
+    ...fixtureScene,
+    id: "latin",
+    onScreenText:
+      "Caf\u00e9 launch: cre\u0300me bru\u0302le\u0301e, 50% off\r\nToday",
+    caption: "Greek α and Cyrillic Ж remain in the supported QA set.",
+  });
+  assert.equal(renderTextSupportIssue(latin.onScreenText), null);
+  assert.equal(
+    renderTextSupportIssue(
+      "Plan smarter \u00b7 100% your brand \u00a9 \u00a3 \u20ac \u20b9",
+    ),
+    null,
+  );
+  assert.doesNotThrow(() => validateRenderScenes([latin]));
+  for (const [field, text, pattern] of [
+    ["onScreenText", "Launch 🚀", /emoji/i],
+    ["caption", "नमस्ते", /Devanagari/],
+    ["caption", "مرحبا", /Arabic/],
+    ["caption", "新品上市", /CJK/],
+    ["caption", "bad\x00text", /control characters/],
+    ["caption", "hidden\u202etext", /control characters/],
+    ["caption", "\u0531", /outside the current render policy/],
+    ["caption", "\u{10400}", /outside the current render policy/],
+  ] as const) {
+    assert.throws(
+      () =>
+        validateRenderScenes([
+          sceneSchema.parse({
+            ...fixtureScene,
+            id: field,
+            [field]: text,
+          }),
+        ]),
+      pattern,
+    );
+  }
+  const srtOnly = sceneSchema.parse({ ...fixtureScene, caption: "नमस्ते" });
+  assert.doesNotThrow(() =>
+    validateRenderScenes([srtOnly], { captions: false }),
+  );
+  assert.match(captionSrt([srtOnly]), /नमस्ते/);
+  assert.throws(() => validateRenderScenes([srtOnly]), /Devanagari/);
+  assert.throws(
+    () =>
+      validateRenderScenes(
+        [sceneSchema.parse({ ...fixtureScene, onScreenText: "नमस्ते" })],
+        { captions: false },
+      ),
+    /Devanagari/,
+  );
+  assert.throws(
+    () =>
+      validateRenderScenes([
+        sceneSchema.parse({
+          ...fixtureScene,
+          captionCues: [{ start: 0, end: 1, text: "नमस्ते" }],
+        }),
+      ]),
+    /caption cue 1.*Devanagari/,
+  );
+  assert.doesNotThrow(() =>
+    validateRenderScenes([
+      sceneSchema.parse({
+        ...fixtureScene,
+        caption: "नमस्ते fallback not rendered",
+        captionCues: [{ start: 0, end: 1, text: "Rendered Latin cue" }],
+      }),
+    ]),
   );
 });
 

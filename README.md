@@ -2,6 +2,15 @@
 
 ### Latest local editor increment
 
+EDITOR-01F adds conservative rendered-text script preflight before queueing and
+in the worker. Scene/cue errors explain unsupported text; captions-off Unicode
+SRT and unused fallback captions are preserved. Passed 37 unit, 7 HTTP, 6 browser
+and 5 recovery scenarios, API/web builds and populated PGlite upgrade/restore.
+Local only; public publication awaits current-payload approval. This does not
+implement multilingual shaping or configured-font glyph coverage.
+
+### Latest published editor increment
+
 EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches. Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. Published to public main as application commit `06e5da96ec4e811b0a95510247db25c3d54ac669`; remote tree `092b502cca399cfe732d9743202f310b0c80d994` matched the local 185-blob tree exactly, and Actions run `37207895511` completed successfully. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.

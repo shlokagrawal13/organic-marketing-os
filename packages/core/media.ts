@@ -51,6 +51,45 @@ export type RenderOptions = z.infer<typeof renderOptions>;
 export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
+const unsupportedRenderScripts: Array<[RegExp, string]> = [
+  [/\p{Script=Arabic}/u, "Arabic"],
+  [/\p{Script=Hebrew}/u, "Hebrew"],
+  [/\p{Script=Devanagari}/u, "Devanagari"],
+  [/\p{Script=Bengali}/u, "Bengali"],
+  [/\p{Script=Gurmukhi}/u, "Gurmukhi"],
+  [/\p{Script=Gujarati}/u, "Gujarati"],
+  [/\p{Script=Oriya}/u, "Odia"],
+  [/\p{Script=Tamil}/u, "Tamil"],
+  [/\p{Script=Telugu}/u, "Telugu"],
+  [/\p{Script=Kannada}/u, "Kannada"],
+  [/\p{Script=Malayalam}/u, "Malayalam"],
+  [/\p{Script=Sinhala}/u, "Sinhala"],
+  [/\p{Script=Thai}/u, "Thai"],
+  [/\p{Script=Lao}/u, "Lao"],
+  [/\p{Script=Khmer}/u, "Khmer"],
+  [/\p{Script=Myanmar}/u, "Myanmar"],
+  [/\p{Script=Tibetan}/u, "Tibetan"],
+  [/\p{Script=Han}/u, "CJK"],
+  [/\p{Script=Hiragana}/u, "Japanese"],
+  [/\p{Script=Katakana}/u, "Japanese"],
+  [/\p{Script=Hangul}/u, "Korean"],
+];
+const emojiOrSymbol = /[\u{1f000}-\u{1faff}\u{2600}-\u{27bf}\ufe0f]/u;
+// Script preflight, not a font cmap guarantee. Keep common punctuation explicit.
+const supportedRenderCharacters =
+  /^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}]*$/u;
+export function renderTextSupportIssue(text: string, label = "Rendered text") {
+  if (/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(text))
+    return `${label} contains control characters. Remove them before rendering.`;
+  if (emojiOrSymbol.test(text))
+    return `${label} contains emoji or symbol glyphs that the current video font cannot guarantee. Remove them or attach that text as an image.`;
+  for (const [pattern, name] of unsupportedRenderScripts)
+    if (pattern.test(text))
+      return `${label} contains ${name} text outside the current Latin, Greek and Cyrillic render policy. Attach this text as an image or wait for multilingual font/shaping support.`;
+  if (!supportedRenderCharacters.test(text))
+    return `${label} contains characters outside the current render policy. Use Latin, Greek or Cyrillic text with common punctuation, or attach the text as an image.`;
+  return null;
+}
 export function sniffMedia(b: Buffer) {
   if (b.length < 12) throw new Error("The file is empty or not supported.");
   if (b.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])))
@@ -182,7 +221,10 @@ export function validateProbe(probe: any, kind: "IMAGE" | "VIDEO" | "AUDIO") {
     duration: kind !== "IMAGE" ? duration : null,
   };
 }
-export function validateRenderScenes(scenes: Scene[]) {
+export function validateRenderScenes(
+  scenes: Scene[],
+  options: Pick<RenderOptions, "captions"> = { captions: true },
+) {
   if (!scenes.length || scenes.length > 12)
     throw new Error("Use between 1 and 12 scenes for a render.");
   if (new Set(scenes.map((s) => s.id)).size !== scenes.length)
@@ -195,6 +237,19 @@ export function validateRenderScenes(scenes: Scene[]) {
       throw new Error(
         "Keep each scene's on-screen text under 180 characters and its caption under 300 characters.",
       );
+    const renderedText: Array<[string, string]> = [
+      [s.onScreenText, `Scene ${s.id} on-screen text`],
+      ...(options.captions ? sceneCaptionCues(s) : []).map(
+        (cue, index): [string, string] => [
+          cue.text,
+          `Scene ${s.id} caption cue ${index + 1}`,
+        ],
+      ),
+    ];
+    for (const [value, label] of renderedText) {
+      const issue = renderTextSupportIssue(value, label);
+      if (issue) throw new Error(issue);
+    }
     if (!["", "cut", "fade"].includes(s.transition.toLowerCase().trim()))
       throw new Error(
         "Choose Cut or Fade for each scene transition before rendering.",

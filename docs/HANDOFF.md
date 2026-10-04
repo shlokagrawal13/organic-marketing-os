@@ -1,8 +1,15 @@
-# Project handoff — 0.9.2 / 2026-10-04 (IST)
+# Project handoff — 0.9.2 / 2026-10-05 (IST)
+
+Latest local increment: EDITOR-01F rendered-text script preflight. Shared API and
+worker validation reports unsupported title/burned-caption text by scene/cue;
+captions-off Unicode SRT and unused fallback captions are preserved. Passed 37
+unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds, 12 migrations
+and populated PGlite upgrade/restore. Exact commands and corrected failures are
+in VERIFICATION_REPORT.md. No current-slice public authorization or CI yet.
 
 Publication update: EDITOR-01E is published to canonical public `main` after exact current-slice approval. Application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` points to tree `092b502cca399cfe732d9743202f310b0c80d994`; recursive verification matched 185/185 remote blob paths, modes and SHAs. Actions run `37207895511` completed successfully.
 
-Follow-up docs-only evidence publication has exact approval for the 13 continuity/evidence docs. The earlier automatic approval review rejection is retained as an audit event and was not bypassed.
+Follow-up EDITOR-01E docs-only evidence publication completed at `3348ee27b4338c6403ac7a70234d56cd94e9b354`, tree `ef47a192649746b0257dfc44c8d52a8d2c48b7c2`, after exact approval for the 13 continuity/evidence docs. The earlier automatic approval review rejection is retained as an audit event and was not bypassed.
 
 ## Latest published increment: EDITOR-01E
 
@@ -12,7 +19,8 @@ Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration 
 
 Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering.
+Next: configured-font glyph coverage and multilingual shaping/decoded-text QA.
+EDITOR-01F script preflight is not proof of font coverage or multilingual support.
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and

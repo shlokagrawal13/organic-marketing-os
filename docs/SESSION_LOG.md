@@ -1,5 +1,15 @@
 # Session log
 
+## 2026-10-05 (IST) - EDITOR-01F rendered-text script preflight
+
+Resumed the three pending source/test edits over local head `34a6c84`; manifest drift matched those known edits and was preserved. Added shared API/worker preflight for unsupported scripts, emoji, controls and characters outside a conservative Latin/Greek/Cyrillic/common-punctuation policy. Review closed two gaps: unknown scripts no longer escape a finite denylist, and captions-off Unicode SRT is not subjected to burned-text font policy. Explicit cues replace unused fallback captions.
+
+Passed 37 individually reported unit tests, API/web production builds, 7 HTTP, 6 browser and 5 recovery/configuration scenarios with 12 migrations; populated PGlite upgrade/fresh restore also passed. The default Node 24.19.0/tsx runner reported file-level results; explicit `--test-isolation=none` produced case-level evidence, and the full harness inherited that option through `NODE_OPTIONS`. Initial S3Proxy startup hit `Operation not permitted`; the authorized isolated rerun exposed a missing middle-dot allowance. Added common Latin punctuation and a regression assertion, then reran unit/API/full verification successfully. No open observed failure remains in this slice.
+
+HTTP checks prove unsupported text returns 400 without creating a job; Hindi captions with burn-in disabled produce a successful real MP4 and intact SRT. Existing tenant/revision/role, cache, approval, responsive browser and recovery coverage passed. No live provider, user data, migration, dependency or master specification changed. Exact changed paths are in `PROJECT_CHECKPOINT.json.lastChanges`.
+
+Local only; EDITOR-01F has no publication authorization or remote CI yet. The previously approved EDITOR-01E docs publication completed at `3348ee27b4338c6403ac7a70234d56cd94e9b354` (tree `ef47a192649746b0257dfc44c8d52a8d2c48b7c2`). Next: actual configured-font glyph coverage and multilingual shaping/decoded-text QA. Script preflight is not a font coverage guarantee.
+
 ## 2026-10-04 (IST) — EDITOR-01E public publication completed
 
 After the user supplied exact current-slice approval, published EDITOR-01E to public `shlokagrawal13/organic-marketing-os` main as application commit `06e5da96ec4e811b0a95510247db25c3d54ac669`, tree `092b502cca399cfe732d9743202f310b0c80d994`. The publish used the GitHub Git Data API on parent `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae` and base tree `14f572199878556b4215cc2c3799d08706821ff3`; the exact 21 changed source/docs files produced a 185-blob public tree. Recursive verification matched every remote blob path, mode and SHA to the local checkpoint with zero mismatches.

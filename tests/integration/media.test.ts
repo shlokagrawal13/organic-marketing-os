@@ -480,6 +480,80 @@ test(
         400,
       );
     }
+    const unsupportedText = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Unsupported render text preflight",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "नमस्ते",
+          caption:
+            "The API must explain unsupported rendered text before queueing.",
+        },
+      ],
+    });
+    assert.equal(unsupportedText.status, 201);
+    const beforeUnsupported = await db.renderJob.count({
+      where: { organizationId: org },
+    });
+    const unsupportedRender = await a.call(root + "/renders", "POST", {
+      contentId: unsupportedText.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { preset: "square-feed-v1" },
+    });
+    assert.equal(unsupportedRender.status, 400);
+    assert.match(JSON.stringify(unsupportedRender.body), /Devanagari/);
+    assert.equal(
+      await db.renderJob.count({ where: { organizationId: org } }),
+      beforeUnsupported,
+      "unsupported render text is rejected before a job is queued",
+    );
+    const srtOnlyContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Unburned multilingual SRT",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "Supported title",
+          caption: "नमस्ते",
+        },
+      ],
+    });
+    assert.equal(srtOnlyContent.status, 201);
+    const srtOnlyPayload = {
+      contentId: srtOnlyContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { captions: true },
+    };
+    const burnedUnsupported = await a.call(
+      root + "/renders",
+      "POST",
+      srtOnlyPayload,
+    );
+    assert.equal(burnedUnsupported.status, 400);
+    assert.match(
+      JSON.stringify(burnedUnsupported.body),
+      /caption cue 1.*Devanagari/,
+    );
+    const srtOnlyRender = await a.call(root + "/renders", "POST", {
+      ...srtOnlyPayload,
+      options: { captions: false },
+    });
+    assert.equal(srtOnlyRender.status, 201, JSON.stringify(srtOnlyRender.body));
+    const srtOnlyReady = await wait(srtOnlyRender.body.id);
+    assert.equal(
+      srtOnlyReady.status,
+      "SUCCEEDED",
+      JSON.stringify(srtOnlyReady),
+    );
+    assert.match(
+      await (
+        await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
+      ).text(),
+      /नमस्ते/,
+    );
     for (const [preset, width, height] of [
       ["vertical-social-v1", 1080, 1920],
       ["landscape-video-v1", 1920, 1080],

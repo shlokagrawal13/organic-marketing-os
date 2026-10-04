@@ -65,7 +65,7 @@ function wrap(text: string, width: number) {
 }
 export async function renderVideo(ctx: RenderContext) {
   const { store, signal, options, scenes } = ctx;
-  validateRenderScenes(scenes);
+  validateRenderScenes(scenes, options);
   const [width, height] = dimensions(options),
     duration = scenes.reduce((sum, s) => sum + s.duration, 0);
   const dir = await mkdtemp(join(tmpdir(), "mos-render-"));

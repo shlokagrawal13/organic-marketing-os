@@ -183,7 +183,7 @@ export class RendersController {
           "Choose Video as the content format first.",
         );
       try {
-        validateRenderScenes(snapshot.scenes);
+        validateRenderScenes(snapshot.scenes, data.options);
       } catch (e) {
         throw new BadRequestException((e as Error).message);
       }

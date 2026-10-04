@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.2 EDITOR-01F rendered-text preflight - 2026-10-05 (IST)
+
+- Added shared API/worker script and character policy for titles and effective burned captions, with scene/cue-specific errors before a new job is created.
+- Preserve common punctuation, accents, captions-off Unicode SRT and unused fallback captions. Drafts/voiceover notes remain unchanged. No new migration, dependency or paid call.
+- Passed 37 unit, 7 HTTP, 6 production-browser and 5 recovery scenarios, API/web builds, 12 migrations and populated PGlite upgrade/restore. Local only; current-slice publication approval remains pending.
+- This conservative check is not font glyph inspection or multilingual shaping support; those and wider language/audio QA remain open.
+
 ## 0.9.2 EDITOR-01E named export presets — 2026-10-04 (IST)
 
 - EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches.

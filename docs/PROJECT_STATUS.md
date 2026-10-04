@@ -22,6 +22,9 @@ Provider fixtures and passing local tests do not certify production readiness.
   with stationary overlays and effective-motion scene caching.
   EDITOR-01E adds published, CI-verified named export presets, immutable job geometry,
   Custom reset and saved history labels.
+  EDITOR-01F adds conservative script/character preflight before queueing and in
+  the worker, with scene/cue-specific errors. Captions-off Unicode SRT and unused
+  fallback captions remain supported. Actual font glyph coverage is still open.
   Automatic transcription and speech alignment are not implemented.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -42,6 +45,11 @@ Provider fixtures and passing local tests do not certify production readiness.
   and UPGRADE_0.9.md.
 
 ## Verification and limits
+
+EDITOR-01F is locally verified only: 37 unit, 7 HTTP, 6 production-browser and 5
+recovery/configuration scenarios passed, with API/web builds, 12 migrations and
+populated PGlite upgrade/fresh restore. Its public publication and remote CI are
+pending current-payload authorization. No live/paid provider was used.
 
 Current exact evidence is in `docs/qa/verification-summary.json` and
 `docs/VERIFICATION_REPORT.md`; unfinished test runs are not passes. The test database
@@ -102,7 +110,8 @@ These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering. Automatic
+Continue EDITOR-01 language/font/audio QA with actual configured-font glyph coverage,
+multilingual shaping and decoded-text fixtures after EDITOR-01F script preflight. Automatic
 speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and
