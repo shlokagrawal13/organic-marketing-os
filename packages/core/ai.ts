@@ -12,6 +12,7 @@ export const sceneSchema = z
     voiceover: z.string().max(2000),
     visual: z.string().max(2000),
     visualFit: z.enum(["contain", "cover"]).default("contain"),
+    cameraMotion: z.enum(["static", "slow-zoom"]).default("static"),
     onScreenText: z.string().max(500),
     caption: z.string().max(2000),
     captionCues: z.array(captionCueSchema).max(MAX_CAPTION_CUES).default([]),

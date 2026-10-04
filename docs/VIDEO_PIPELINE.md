@@ -19,6 +19,24 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
+## Image camera motion (EDITOR-01D)
+
+Scenes store `cameraMotion: "static" | "slow-zoom"`, defaulting to `static`
+for legacy drafts and render snapshots. The editor enables this control only
+for attached images. A saved motion preference is preserved when replacing an
+asset, but video clips and color/text cards ignore it, including in their cache
+keys. Reordering, duplication, generated-media attachment and AI scene rewrites
+preserve the preference. Existing revision, tenant and approval gates apply.
+
+Slow zoom starts at 1× and reaches at most 1.08× over the scene's 30 fps frames.
+Fit/Fill normalizes the image first, so intermediate frames remain bounded even
+for extreme aspect ratios. The centered zoom includes Fit's background borders;
+Fill continues to cover the frame. Titles and timed captions are drawn afterward
+and remain stationary. Source previews show the original; render to review motion.
+Cache version 4 includes the effective image motion. Changing motion invalidates
+only affected image scenes. There are no arbitrary filter expressions, speed
+controls, panning or migration in this increment.
+
 ## Visual framing (EDITOR-01C)
 
 Scenes store `visualFit: "contain" | "cover"` in their existing JSON. Missing values default to `contain`, including old render snapshots. No database migration or arbitrary filter expression is introduced. The editor calls these options Fit and Fill and disables the control when no visual is attached. This applies to uploaded and generated images/video; originals are never modified.
@@ -49,4 +67,4 @@ Real FFmpeg, private upload/download, byte ranges, non-silent decoded audio, all
 
 Generated image/video/voice presets, private ingestion and explicit targeted attachment are implemented in 0.9; see GENERATED_MEDIA.md. Voiceover text never starts speech automatically.
 
-Missing: live generated-media acceptance, remaining provider-specific reference modes, ASR/word timing, camera motion, arbitrary transitions/effects/SFX tracks, drag/drop timeline editing, platform variants, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.
+Missing: live generated-media acceptance, remaining provider-specific reference modes, ASR/word timing, camera panning/custom motion, arbitrary transitions/effects/SFX tracks, drag/drop timeline editing, platform variants, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.

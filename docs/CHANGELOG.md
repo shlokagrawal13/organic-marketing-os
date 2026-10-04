@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.2 EDITOR-01D bounded image motion — 2026-10-04 (IST)
+
+- Added Static / Slow zoom in for images, with a legacy static default and a center zoom capped at 8% over the scene. Fit/Fill normalization bounds frame allocations; overlays remain stationary.
+- Image motion survives save/reload, reorder, duplication, generated asset attachment and AI scene rewrite. Videos and text cards ignore the stored preference and reuse their cached segments.
+- Added decoded-frame motion/border/bounds checks, extreme-aspect motion coverage, strict preset validation and browser persistence/render coverage. No dependency, migration or paid provider call.
+
 ## 0.9.2 EDITOR-01C visual fit/fill — 2026-10-04 (IST)
 
 - Added per-scene Fit/Fill for attached images/video with the legacy Fit default; stored mode survives reorder, save/reload, duplication and AI scene rewrite.

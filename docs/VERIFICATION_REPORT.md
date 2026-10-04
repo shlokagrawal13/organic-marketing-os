@@ -1,11 +1,17 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01D bounded image motion — 2026-10-04 (IST)
+
+`npm test`: 35 passed. API and Next.js production builds passed. The full isolated verifier passed 7 HTTP, 6 browser and 5 recovery/configuration scenarios with all 12 migrations. `node scripts/verify-upgrade.mjs` passed populated upgrade/fresh restore.
+
+Real FFmpeg decoded frames show centered image enlargement from 1× to at most 1.08×, stationary static output and expected Fit border movement. Motion-only edits reuse video and no-asset scenes. Browser editing saves/reopens/reorders the preset and renders it alongside timed captions. Generated attachment preserves the preset; extreme aspect inputs remain bounded. No live provider was used. Publication was blocked by automatic approval review pending explicit permission to publish this current 23-file payload to public main. No current-slice CI ran; the prior GitHub CI applies to EDITOR-01C.
+
 Verified locally on 2026-10-04 (Asia/Kolkata). The generated-media implementation advances the
 supplied V3 specification; it does not complete or certify the entire product.
 
 | Check                           | Completed result                                                                                                                 |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Unit tests                      | 34 passed across 6 test files                                                                                                    |
+| Unit tests                      | 35 passed across 6 test files                                                                                                    |
 | HTTP integration                | 7 broad scenarios passed                                                                                                         |
 | Production-browser tests        | 6 scenarios passed                                                                                                               |
 | Recovery/configuration          | 5 scenarios passed                                                                                                               |

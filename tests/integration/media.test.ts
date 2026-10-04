@@ -662,6 +662,100 @@ test(
     const tallRender = await renderFraming(tall.body.id, 1);
     checkFraming(tallRender.file, 0.5, "contain", true);
     checkFraming(tallRender.file, 1.5, "cover", true);
+    const motionAsset = await a.upload(
+      org,
+      readFileSync(".local/media-fixtures/motion-square.png"),
+      "motion-square.png",
+      "image/png",
+    );
+    assert.equal(motionAsset.status, 201);
+    const motionDraft = {
+      ...draft,
+      title: "Bounded image motion",
+      scenes: [
+        { ...frameScene("fit-motion", frameAssets[0]), visualFit: "contain" },
+        {
+          ...frameScene("fill-motion", motionAsset.body.asset.id),
+          visualFit: "cover",
+        },
+        frameScene("video-static", frameAssets[1]),
+        { ...frameScene("card-static", frameAssets[0]), visualAssetId: null },
+      ],
+    };
+    const motion = await a.call(root + "/content", "POST", motionDraft);
+    assert.equal(motion.status, 201);
+    const staticMotion = await renderFraming(motion.body.id, 1);
+    const savedMotion = await a.call(
+      `${root}/content/${motion.body.id}`,
+      "PUT",
+      {
+        ...motionDraft,
+        revision: 1,
+        scenes: motionDraft.scenes.map((s) => ({
+          ...s,
+          cameraMotion: "slow-zoom",
+        })),
+      },
+    );
+    assert.equal(savedMotion.status, 200);
+    assert.equal(savedMotion.body.scenes[0].cameraMotion, "slow-zoom");
+    const zoomed = await renderFraming(motion.body.id, 2);
+    assert.equal(
+      zoomed.reusedScenes,
+      2,
+      "video and no-asset scenes ignore camera motion",
+    );
+    const decode = (file: string, at: number) =>
+      execFileSync(
+        process.env.FFMPEG_PATH || "ffmpeg",
+        [
+          "-v",
+          "error",
+          "-ss",
+          String(at),
+          "-i",
+          file,
+          "-frames:v",
+          "1",
+          "-pix_fmt",
+          "rgb24",
+          "-f",
+          "rawvideo",
+          "-",
+        ],
+        { maxBuffer: 2 * 1024 * 1024 },
+      );
+    const redWidth = (frame: Buffer) => {
+      assert.equal(frame.length, 720 * 720 * 3);
+      let count = 0;
+      for (let x = 0; x < 720; x++) {
+        const i = (360 * 720 + x) * 3;
+        if (frame[i] > 180 && frame[i + 1] < 60) count++;
+      }
+      return count;
+    };
+    const early = redWidth(decode(zoomed.file, 1));
+    const late = redWidth(decode(zoomed.file, 1.9));
+    assert.ok(Math.abs(early - 360) < 5, `initial framing: ${early}`);
+    assert.ok(
+      late > early + 20 && late <= early * 1.09,
+      `bounded zoom: ${early} -> ${late}`,
+    );
+    assert.ok(Math.abs(redWidth(decode(staticMotion.file, 1.9)) - early) < 5);
+    const greenAt = (frame: Buffer, x: number, y: number) =>
+      frame[(y * 720 + x) * 3 + 1];
+    assert.ok(
+      greenAt(decode(zoomed.file, 0), 360, 175) < 20,
+      "Fit starts with original border",
+    );
+    assert.ok(
+      greenAt(decode(zoomed.file, 0.9), 360, 175) > 200,
+      "Fit canvas zooms inward",
+    );
+    assert.ok(
+      greenAt(decode(staticMotion.file, 0.9), 360, 175) < 20,
+      "Static Fit remains unchanged",
+    );
     // Valid but extreme aspect ratios must not require multi-million-pixel
     // intermediate dimensions before the final center crop.
     const thinScenes = [];
@@ -676,6 +770,7 @@ test(
       thinScenes.push({
         ...frameScene(name, uploaded.body.asset.id),
         visualFit: "cover",
+        cameraMotion: "slow-zoom",
       });
     }
     const thin = await a.call(root + "/content", "POST", {

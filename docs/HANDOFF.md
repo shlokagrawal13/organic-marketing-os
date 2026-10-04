@@ -45,7 +45,7 @@ including save and real FFmpeg render in the browser. EDITOR-01B manual caption
 cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
 and populated PGlite upgrade/restore. Its own publication and CI passed. EDITOR-01C Fit/Fill framing passed 34 unit, 7 HTTP, 6 browser and
 5 recovery scenarios, builds and populated upgrade/restore locally, then was
-published and CI-verified. Continue with bounded image-only camera motion. Automatic
+published and CI-verified. EDITOR-01D bounded image motion is locally verified with 35 unit, 7 HTTP, 6 browser and 5 recovery cases plus builds/upgrade; publication pending. Continue with named platform/aspect render presets. Automatic
 speech alignment and broader EDITOR-01 completion remain open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.

@@ -71,13 +71,21 @@
     "actionsRunStarted": true,
     "actionsRunId": 37189446835,
     "actionsConclusion": "success",
-    "currentLocalSlicePendingPublication": null,
-    "currentSliceStatus": "EDITOR-01C published and CI-verified"
+    "currentLocalSlicePendingPublication": "EDITOR-01D bounded image camera motion",
+    "currentSliceStatus": "EDITOR-01D locally verified; automatic review blocked publication pending explicit current-slice public-export approval"
   },
   "limits": [
     "Remote publication and CI verify the scoped increment, not full V3 production acceptance.",
     "EDITOR-01C Fit/Fill framing is published and CI-verified; automatic speech transcription/alignment, camera motion and broader editor QA remain open.",
     "No live AI request, Stripe payment, user database or private-media backup was performed.",
     "The configured native PostgreSQL/Redis application harness passed; full Compose/MinIO, native/cross-store restore and live-provider gates remain open."
-  ]
+  ],
+  "currentUploadGate": {
+    "rejected": true,
+    "reason": "Prior explicit approval covered EDITOR-01C only; EDITOR-01D source/docs export to the public repository needs explicit approval.",
+    "destination": "shlokagrawal13/organic-marketing-os main",
+    "changedFiles": 23,
+    "bypassed": false,
+    "remoteCommitCreated": false
+  }
 }

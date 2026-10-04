@@ -267,6 +267,12 @@ try {
   // Solid-color edge markers distinguish letterboxing from centered cropping
   // in decoded output without relying on screenshots or filter-string mocks.
   for (const [name, size, boxes, video] of [
+    [
+      "motion-square.png",
+      "800x800",
+      "drawbox=x=200:y=200:w=400:h=400:color=red:t=fill",
+      false,
+    ],
     ["framing-thin-wide.png", "8192x2", "null", false],
     ["framing-thin-tall.png", "2x8192", "null", false],
     [

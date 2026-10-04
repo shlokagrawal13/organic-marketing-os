@@ -133,7 +133,7 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-3-visual-framing",
+          version: "mos-render-4-image-motion",
           font: sha256(font),
           width,
           height,
@@ -144,6 +144,10 @@ export async function renderVideo(ctx: RenderContext) {
           transition: scene.transition.toLowerCase().trim(),
           visual: visual?.asset.sha256 || null,
           visualFit: visual ? scene.visualFit || "contain" : null,
+          cameraMotion:
+            visual?.asset.kind === "IMAGE"
+              ? scene.cameraMotion || "static"
+              : null,
           audio: audio?.asset.sha256 || null,
         }),
       );
@@ -204,6 +208,17 @@ export async function renderVideo(ctx: RenderContext) {
           "fps=30",
           "format=yuv420p",
         ];
+        if (
+          visual?.asset.kind === "IMAGE" &&
+          scene.cameraMotion === "slow-zoom"
+        ) {
+          // Normalize Fit/Fill first to bound allocations. Zoom the framed
+          // canvas by at most 8%; overlays are added afterward and stay fixed.
+          const lastFrame = Math.max(1, Math.ceil(scene.duration * 30) - 1);
+          filters.push(
+            `zoompan=z='1+0.08*min(on/${lastFrame},1)':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s=${width}x${height}:fps=30`,
+          );
+        }
         const overlays = [
           {
             type: "title",

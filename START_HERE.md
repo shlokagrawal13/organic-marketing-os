@@ -23,7 +23,11 @@ Public Actions run `37189446835` for application commit
 `177936421b896737ed6ea424f7520c32651ee596` completed native application verification successfully through
 EDITOR-01C Fit/Fill framing. Local checks passed 34 unit, 7 HTTP, 6 browser and
 5 recovery scenarios. Continue from the checkpoint's next provider-neutral editor
-action: bounded image-only camera motion.
+action: named platform/aspect render presets. EDITOR-01D bounded image motion
+is locally verified (35 unit, 7 HTTP, 6 browser, 5 recovery); publication is blocked
+by automatic review pending explicit public-export approval for the 23 current
+files. Preserve the verified local source and do not repeat the blocked export
+until approval is supplied.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

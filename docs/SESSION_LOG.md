@@ -1,5 +1,11 @@
 # Session log
 
+## 2026-10-04 (IST) — EDITOR-01D bounded image motion
+
+Resumed from a clean checkpoint: 183 manifest entries matched; canonical public main remained `529115552c02afe51c3a2eb242c34a0aa3a07ffa`. Added image-only Static / Slow zoom in, capped at 8% over scene duration after bounded Fit/Fill normalization. Overlays remain fixed; video/card motion is ignored in rendering and caching. Defaults, rewrite/attachment preservation, save/reload/reorder and strict values are covered.
+
+Passed 35 unit, 7 HTTP, 6 production-browser and 5 recovery scenarios, API/web builds, all 12 migrations and populated PGlite upgrade/fresh restore. Decoded pixels verify initial framing, growth bounded by 8% plus codec tolerance, Fit border movement and unchanged static output; changing motion reused both non-image scenes. Extreme aspect inputs render with zoom. No user data, dependency, migration, master specification or provider credentials changed; no paid call. Exact paths are in PROJECT_CHECKPOINT.json. Local source commit `60ad656` preserves the verified changes. Public Git tree creation was rejected by automatic approval review: the prior explicit approval covered EDITOR-01C, not the 23 EDITOR-01D files. No remote commit/ref was created and no alternate export was attempted. Current-slice public export requires user approval. Prior CI is not evidence for this increment.
+
 ## 2026-10-04 (IST) — EDITOR-01C visual fit/fill
 
 Resumed from clean documentation head `387157fabfffe276f9b73b01cbd738e827c7500f`; all 183 manifest files matched and public main was unchanged. Added `visualFit` contain/cover with a backward-compatible contain default, a role-inherited editor control, mode preservation during AI scene rewrite, center crop and mode-aware scene cache. Framing uses the existing JSON/revision/approval paths and applies to both uploaded and generated image/video assets.

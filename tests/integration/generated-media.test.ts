@@ -86,6 +86,7 @@ test(
         id: "second",
         onScreenText: "Preserve this scene",
         visualFit: "cover",
+        cameraMotion: "slow-zoom",
         captionCues: [
           { start: 0.25, end: 1.5, text: "Preserve timed caption" },
         ],

@@ -104,6 +104,9 @@ test("inspect workspace pages, upload private media, render and approve a playab
     .fill("Start with one useful story.");
   await page.getByRole("button", { name: "Add scene", exact: true }).click();
   const scene = page.locator(".scene-card").first();
+  await expect(
+    scene.getByRole("combobox", { name: "Camera motion", exact: true }),
+  ).toBeDisabled();
   await scene
     .getByLabel("Scene purpose", { exact: true })
     .fill("Introduce the brand");
@@ -120,6 +123,12 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await scene
     .getByRole("combobox", { name: "Visual framing", exact: true })
     .selectOption("cover");
+  await expect(
+    scene.getByRole("combobox", { name: "Camera motion", exact: true }),
+  ).toHaveValue("static");
+  await scene
+    .getByRole("combobox", { name: "Camera motion", exact: true })
+    .selectOption("slow-zoom");
   await scene
     .getByRole("combobox", { name: "Narration audio", exact: true })
     .selectOption({ label: "tone.wav" });
@@ -198,6 +207,9 @@ test("inspect workspace pages, upload private media, render and approve a playab
     .getByText("A brand story, ready to share", { exact: true })
     .click();
   const savedScene = page.locator(".scene-card").nth(1);
+  await expect(
+    savedScene.getByRole("combobox", { name: "Camera motion", exact: true }),
+  ).toHaveValue("slow-zoom");
   await expect(
     savedScene.getByRole("combobox", { name: "Visual framing", exact: true }),
   ).toHaveValue("cover");

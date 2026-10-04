@@ -719,6 +719,27 @@ export default function ContentWorkspace({
                             frame. The preview below shows the original asset;
                             render to check framing.
                           </p>
+                          <label>
+                            Camera motion
+                            <select
+                              value={s.cameraMotion || "static"}
+                              disabled={
+                                assets.find((a) => a.id === s.visualAssetId)
+                                  ?.kind !== "IMAGE"
+                              }
+                              onChange={(e) =>
+                                change("cameraMotion", e.target.value)
+                              }
+                            >
+                              <option value="static">Static</option>
+                              <option value="slow-zoom">Slow zoom in</option>
+                            </select>
+                          </label>
+                          <p className="field-help">
+                            Images only. Slow zoom enlarges the framed image
+                            from the center by up to 8%, including Fit borders.
+                            Text stays fixed. Render to preview the motion.
+                          </p>
                           {s.visualAssetId && (
                             <div className="scene-asset-preview">
                               {assets.find((a) => a.id === s.visualAssetId)
@@ -855,6 +876,8 @@ export default function ContentWorkspace({
                                             captionCues: [],
                                             visualFit:
                                               old.visualFit || "contain",
+                                            cameraMotion:
+                                              old.cameraMotion || "static",
                                           }
                                         : old,
                                     ),

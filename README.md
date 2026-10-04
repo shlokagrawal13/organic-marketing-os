@@ -1,5 +1,9 @@
 # Organic Marketing OS — 0.9.2
 
+### Latest local editor increment
+
+EDITOR-01D adds image-only Static / Slow zoom in with an 8% limit, preserved Fit/Fill and fixed overlays. Passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds and populated upgrade/restore. Publication pending; published EDITOR-01C CI remains historical evidence.
+
 A working account, brand, content, media, workspace-operations and AI-credit milestone of the supplied AI Marketing OS V3 specification. **The full product is not finished or production-ready.** See `docs/PROJECT_STATUS.md` and the 161-row `docs/REQUIREMENTS_MATRIX.md` for the exact state.
 
 Continuing in a new chat/account or coding agent? Begin with **`START_HERE.md`**. The source includes a current checkpoint, stable task IDs, verification evidence, access requirements and a one-message resume prompt. Generate/verify portable source checkpoints with `scripts/package_handoff.py` (optional Python 3 utility; no new application dependency).

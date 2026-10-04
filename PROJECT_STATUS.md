@@ -18,6 +18,8 @@ Provider fixtures and passing local tests do not certify production readiness.
   EDITOR-01B adds verified manual timed cues, legacy fallback and cue-aware SRT/cache.
   EDITOR-01C adds verified Fit/Fill framing for images/video, centered cropping,
   mode-aware caching and a guard against oversized intermediate frames.
+  EDITOR-01D adds locally verified image-only Static / Slow zoom in, capped at 8%,
+  with stationary overlays and effective-motion scene caching. Publication pending.
   Automatic transcription and speech alignment are not implemented.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -79,11 +81,16 @@ Public run `37189446835` completed every workflow step successfully, including n
 application flows and browser evidence. Local checks passed 34 unit, 7 HTTP,
 6 browser and 5 recovery scenarios, both production builds and the 12-migration
 populated PGlite upgrade/restore.
+EDITOR-01D local checks passed 35 unit, 7 HTTP, 6 browser and 5 recovery scenarios,
+both production builds and the 12-migration populated PGlite upgrade/restore.
+Its publication and CI are pending: automatic approval review requires explicit
+approval for exporting the 23 EDITOR-01D source/docs files to public main. Prior
+approval covered EDITOR-01C only. The prior CI evidence above applies to EDITOR-01C.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue EDITOR-01 with bounded image-only camera motion.
+Continue EDITOR-01 with named platform/aspect render presets.
 Automatic
 speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official

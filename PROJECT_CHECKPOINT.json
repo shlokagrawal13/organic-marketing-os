@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-04.1",
-  "savedAtUtc": "2026-10-04T08:42:32Z",
-  "currentMilestone": "EDITOR-01C visual fit/fill",
+  "checkpointRevision": "2026-10-04.2",
+  "savedAtUtc": "2026-10-04T09:00:02.692713+00:00",
+  "currentMilestone": "EDITOR-01D bounded image camera motion",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -16,10 +16,11 @@
     "Plan-specific media routing and tenant-owned source-reference gates remain implemented from 0.9.1.",
     "Public main application commit 4611fb0170d4851be6bc6d805009c42a0ba5dd63 and tree 54e29ec0a2d0fa15921be62ccd0282de9e135c07 contain EDITOR-01B; Actions run 37143980421 completed successfully.",
     "EDITOR-01B is published and CI-verified: bounded manual caption cues persist through save/reorder, control half-open FFmpeg burn-in and scene-offset SRT, and invalidate only the changed caption-enabled scene cache. No ASR or automatic speech alignment.",
-    "EDITOR-01C is published and CI-verified: Fit/Fill framing for attached images/video, legacy contain default, bounded crop-before-scale for extreme aspect ratios, mode-aware caching and save/reload."
+    "EDITOR-01C is published and CI-verified: Fit/Fill framing for attached images/video, legacy contain default, bounded crop-before-scale for extreme aspect ratios, mode-aware caching and save/reload.",
+    "EDITOR-01D is locally verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays and effective-mode caching. Publication pending. Automatic approval review blocked public export because prior approval covered EDITOR-01C only; no remote commit/ref was created."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Continue EDITOR-01 with a bounded image-only camera-motion preset (static or slow zoom), preserving default static framing, Fit/Fill framing, captions, tenant/revision checks and cache reuse; verify decoded frames and browser editing without a live provider.",
+  "nextAction": "Continue EDITOR-01 with named platform/aspect render presets using the existing immutable render snapshot; preserve source drafts, revision/approval rules, framing/motion/captions and verify browser selection plus output dimensions.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -56,7 +57,7 @@
   "verification": {
     "date": "2026-10-04",
     "applicationSuites": {
-      "unit": 34,
+      "unit": 35,
       "httpScenarios": 7,
       "browserScenarios": 6,
       "recoveryConfigurationScenarios": 5
@@ -109,7 +110,7 @@
       "annotation": "The published EDITOR-01C source completed every workflow step: build, 34 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload."
     },
     "latestIncrement": {
-      "unitTestsPassed": 34,
+      "unitTestsPassed": 35,
       "httpScenariosPassed": 7,
       "browserScenariosPassed": 6,
       "recoveryConfigurationScenariosPassed": 5,
@@ -142,14 +143,37 @@
       "visualFitFillSaveReload": true,
       "visualFitFillDecodedFrames": true,
       "visualFitFillCacheReuse": true,
-      "extremeAspectRatioFill": true
+      "extremeAspectRatioFill": true,
+      "boundedImageMotion": true
     },
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-04 GitHub Actions: production/full moderate-severity gates passed; advisory-count fields retain the separately recorded 2026-09-29 zero-count audit.",
     "nativePostgresVerifiedMeaning": "Local database remains PGlite. Separate dated GitHub Actions evidence covers the configured PostgreSQL 17/Redis 7 application harness, not complete Compose/MinIO, native restore or production concurrency acceptance.",
     "nativeApplicationHarnessVerified": true,
     "advisoryCountsRecordedAt": "2026-09-29",
-    "dateTimezone": "Asia/Kolkata"
+    "dateTimezone": "Asia/Kolkata",
+    "editor01dEvidence": {
+      "staticLegacyDefault": true,
+      "strictBoundedPresets": true,
+      "imageOnlyEffectiveCacheKey": true,
+      "centerZoomMaximum": 1.08,
+      "decodedFitBorderMotion": true,
+      "decodedFillZoomBounds": true,
+      "staticFramesUnchanged": true,
+      "videoAndCardCacheReuse": true,
+      "extremeAspectMotion": true,
+      "browserSaveReloadReorderRender": true,
+      "generatedAttachmentPreservesMotion": true,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "unitTestsPassed": 35,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 5,
+      "populatedUpgradeRestore": true,
+      "publicationStatus": "blocked_pending_explicit_current_slice_approval",
+      "liveProviderUsed": false
+    }
   },
   "accessState": {
     "github": "Public main application commit 177936421b896737ed6ea424f7520c32651ee596 points to the exact locally verified tree aa368ff82aaca7d29fef10da26dcc4c12ccee51b; all 184 remote blob paths/modes/SHAs match. Actions run 37189446835 completed successfully.",
@@ -161,7 +185,7 @@
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "177936421b896737ed6ea424f7520c32651ee596",
-    "status": "published_editor01c_ci_success",
+    "status": "editor01d_verified_publication_awaiting_explicit_approval",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -202,6 +226,16 @@
       "actionsConclusion": "success",
       "actionsJobsStarted": 1,
       "nativeTestsExecuted": true
+    },
+    "currentUploadGate": {
+      "action": "Create Git tree for 23 verified EDITOR-01D source/docs files",
+      "destination": "public shlokagrawal13/organic-marketing-os main",
+      "rejected": true,
+      "resolved": false,
+      "bypassed": false,
+      "reason": "Automatic approval review says prior explicit approval covered EDITOR-01C only; current EDITOR-01D public source export needs explicit approval.",
+      "localSourceCommit": "60ad656",
+      "pendingUserApproval": true
     }
   },
   "credentialsIncluded": false,
@@ -248,7 +282,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "EDITOR-01A timeline, EDITOR-01B manual caption cues and EDITOR-01C Fit/Fill framing are published and CI-verified; automatic speech alignment, camera motion/effects, variants and broader quality acceptance remain."
+      "completedIncrement": "EDITOR-01A timeline, EDITOR-01B captions and EDITOR-01C Fit/Fill are published and CI-verified. EDITOR-01D bounded image motion is locally verified; platform presets, automatic speech alignment, custom effects and broader QA remain."
     },
     {
       "id": "RESEARCH-01",

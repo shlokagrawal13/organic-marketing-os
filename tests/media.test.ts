@@ -28,6 +28,20 @@ const fixtureScene = {
   cta: "",
 };
 
+test("scene motion defaults to static and accepts only bounded presets", () => {
+  assert.equal(sceneSchema.parse(fixtureScene).cameraMotion, "static");
+  assert.equal(
+    sceneSchema.parse({ ...fixtureScene, cameraMotion: "slow-zoom" })
+      .cameraMotion,
+    "slow-zoom",
+  );
+  for (const cameraMotion of [null, "", "pan", "zoompan=z=100", 8, {}])
+    assert.equal(
+      sceneSchema.safeParse({ ...fixtureScene, cameraMotion }).success,
+      false,
+    );
+});
+
 test("scene framing defaults legacy inputs to fit and accepts only bounded modes", () => {
   assert.equal(sceneSchema.parse(fixtureScene).visualFit, "contain");
   assert.equal(
