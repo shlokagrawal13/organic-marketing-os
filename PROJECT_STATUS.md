@@ -73,14 +73,17 @@ blob paths, modes and SHAs. Public run `37143980421` completed every
 workflow step successfully, including native application flows and browser evidence.
 Local checks passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios,
 both production builds and the 12-migration populated PGlite upgrade/restore.
-EDITOR-01C passed 34 unit, 7 HTTP, 6 browser and 5 recovery scenarios locally,
-plus builds and populated upgrade/restore. Its own publication/CI are pending;
-the earlier CI above applies to EDITOR-01B.
+EDITOR-01C is published at application commit `177936421b896737ed6ea424f7520c32651ee596`;
+its tree `aa368ff82aaca7d29fef10da26dcc4c12ccee51b` exactly matches all 184 local blob paths, modes and SHAs.
+Public run `37189446835` completed every workflow step successfully, including native
+application flows and browser evidence. Local checks passed 34 unit, 7 HTTP,
+6 browser and 5 recovery scenarios, both production builds and the 12-migration
+populated PGlite upgrade/restore.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Publish EDITOR-01C, then continue EDITOR-01 with bounded image-only camera motion.
+Continue EDITOR-01 with bounded image-only camera motion.
 Automatic
 speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official

@@ -6,7 +6,7 @@ Resumed from clean documentation head `387157fabfffe276f9b73b01cbd738e827c7500f`
 
 Checks passed: 34 detailed unit cases (six files), API/web builds, 7 HTTP, 6 production-browser and 5 recovery scenarios, all 12 migrations and populated PGlite upgrade/fresh restore. The first sandboxed harness hit S3Proxy `Operation not permitted`; the authorized isolated rerun passed. Review found that scale-before-crop could allocate huge frames for extreme valid aspect ratios, so a source crop guard plus 8192×2/2×8192 fixtures were added, then the entire verifier passed again. RGB pixel checks independently prove Fit borders/preserved edges and Fill center crops for wide still/video and tall still inputs; mode-only edits reuse the unchanged scene. Browser save/reload/reorder/render and existing mobile checks passed.
 
-No user services/data, paid provider, dependency, applied migration or master specification changed. Exact changed paths are in PROJECT_CHECKPOINT.json. Publish to canonical organic-marketing-os main and verify this slice's own CI next. Never use the unrelated OrganicMarketing repository.
+No user services/data, paid provider, dependency, applied migration or master specification changed. Exact changed paths are in PROJECT_CHECKPOINT.json. Published to canonical organic-marketing-os main as application commit `177936421b896737ed6ea424f7520c32651ee596`, tree `aa368ff82aaca7d29fef10da26dcc4c12ccee51b`. All 184 remote blobs match local paths/modes/SHAs. Actions run `37189446835` completed every step successfully, including native application flows and browser evidence. Never use the unrelated OrganicMarketing repository.
 
 ## 2026-10-03 — EDITOR-01B manual timed captions
 

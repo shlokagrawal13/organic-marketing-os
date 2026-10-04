@@ -19,13 +19,11 @@ The latest source is published to the canonical public repository:
 https://github.com/shlokagrawal13/organic-marketing-os. A prior automatic
 approval review rejection was resolved by explicit user approval for this public
 upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
-Public Actions run `37143980421` for application commit
-`4611fb0170d4851be6bc6d805009c42a0ba5dd63` completed native application
-verification successfully through EDITOR-01B manual timed captions. Local checks
-passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios. Continue from the
-checkpoint's next provider-neutral editor action. EDITOR-01C Fit/Fill framing is
-locally verified with 34 unit, 7 HTTP, 6 browser and 5 recovery scenarios; publish
-it and verify its own CI next, then continue bounded image-only camera motion.
+Public Actions run `37189446835` for application commit
+`177936421b896737ed6ea424f7520c32651ee596` completed native application verification successfully through
+EDITOR-01C Fit/Fill framing. Local checks passed 34 unit, 7 HTTP, 6 browser and
+5 recovery scenarios. Continue from the checkpoint's next provider-neutral editor
+action: bounded image-only camera motion.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis

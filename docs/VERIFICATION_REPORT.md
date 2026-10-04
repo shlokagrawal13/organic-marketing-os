@@ -12,7 +12,7 @@ supplied V3 specification; it does not complete or certify the entire product.
 | Prisma/API/Next.js              | Client generation and both production builds passed                                                                              |
 | Fresh migrations                | All 12 applied through Prisma deploy in the isolated harness                                                                     |
 | Populated upgrade/fresh restore | PGlite passed; old draft/user/membership/queued AI record, immutable credit ledger and saved media request/provider ID preserved |
-| Npm audit                       | 2026-10-03 CI: production/full moderate-severity gates passed; exact zero counts last recorded 2026-09-29                                   |
+| Npm audit                       | 2026-10-04 CI: production/full moderate-severity gates passed; exact zero counts last recorded 2026-09-29                                   |
 
 The full local verifier reached its explicit final success message. A later
 selected browser rerun checks the final media layout/capture adjustments; its
@@ -43,8 +43,8 @@ The authorized isolated rerun passed. A code review then identified potentially
 unbounded pre-crop scaling; the guard and extreme-aspect fixtures were added and
 the full verifier passed again on that final source. `npm run verify:upgrade`
 also passed populated PGlite upgrade/fresh restore. No dependency, migration,
-paid provider, user database or originals changed. Publication/CI are pending;
-custom focal points, camera motion and full language/asset QA remain open.
+paid provider, user database or originals changed. Published as application commit `177936421b896737ed6ea424f7520c32651ee596` and tree
+`aa368ff82aaca7d29fef10da26dcc4c12ccee51b`; Actions run `37189446835` passed every workflow step. Custom focal points, camera motion and full language/asset QA remain open.
 
 ## EDITOR-01B manual timed captions — 2026-10-03
 

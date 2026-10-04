@@ -43,10 +43,9 @@ EDITOR-01A is now published and CI-verified: deterministic cumulative scene timi
 and move, duplicate-with-new-ID and remove controls passed the full verifier,
 including save and real FFmpeg render in the browser. EDITOR-01B manual caption
 cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
-and populated PGlite upgrade/restore. Its own publication and CI passed. Continue
-with the new EDITOR-01C Fit/Fill framing slice: 34 unit, 7 HTTP, 6 browser and
-5 recovery scenarios, builds and populated upgrade/restore passed locally.
-Publish and verify its CI, then add bounded image-only camera motion. Automatic
+and populated PGlite upgrade/restore. Its own publication and CI passed. EDITOR-01C Fit/Fill framing passed 34 unit, 7 HTTP, 6 browser and
+5 recovery scenarios, builds and populated upgrade/restore locally, then was
+published and CI-verified. Continue with bounded image-only camera motion. Automatic
 speech alignment and broader EDITOR-01 completion remain open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
@@ -55,7 +54,7 @@ the user's explicit approval for this public upload. Never touch the unrelated
 `OrganicMarketing` repository.
 
 The previous account-side Actions gate is cleared. Application commit
-`4611fb0170d4851be6bc6d805009c42a0ba5dd63` contains EDITOR-01B on exact tree
-`54e29ec0a2d0fa15921be62ccd0282de9e135c07`. Public run `37143980421` completed
-every native verification step successfully.
+`177936421b896737ed6ea424f7520c32651ee596` contains EDITOR-01C on exact tree
+`aa368ff82aaca7d29fef10da26dcc4c12ccee51b`. Public run `37189446835` completed every native verification step
+successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.
