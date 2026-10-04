@@ -6,7 +6,7 @@ EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) 
 
 Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. Real FFmpeg outputs passed dimension probes for every preset, and equivalent Custom jobs reused the cached scene. HTTP coverage verifies normalized replay, rejected mismatches/unknown IDs, tenant/role/revision denial and unchanged source approval. Browser coverage selects every preset, checks Custom reset, renders 1080×1080, and preserves saved history labels after changing the composer.
 
-Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
+Published to public main as application commit `06e5da96ec4e811b0a95510247db25c3d54ac669`; tree `092b502cca399cfe732d9743202f310b0c80d994` matched 185/185 local blobs. Actions run `37207895511` completed successfully. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
 Initial new HTTP assertion read the content wrapper incorrectly; fixed to use `body.item`. The new browser test also needed an accessible-role locator for nested select options. The completed full rerun passed. Upgrade archive SHA-256: `88d02061556908c3ac7f7c4d26ac69102c91418c2c6a112e2d08ebdb0bc7ccde` (4865653 bytes); this is isolated PGlite restore evidence, not a user backup.
 

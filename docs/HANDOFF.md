@@ -1,16 +1,18 @@
 # Project handoff — 0.9.2 / 2026-10-04 (IST)
 
-Publication update: Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering "hn kar do" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted. The 21-file EDITOR-01E payload is locally verified and ready; canonical public main remains on EDITOR-01D. Exact current-slice approval is needed before retrying.
+Publication update: EDITOR-01E is published to canonical public `main` after exact current-slice approval. Application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` points to tree `092b502cca399cfe732d9743202f310b0c80d994`; recursive verification matched 185/185 remote blob paths, modes and SHAs. Actions run `37207895511` completed successfully.
 
-## Latest local increment: EDITOR-01E
+Follow-up docs-only evidence publication has exact approval for the 13 continuity/evidence docs. The earlier automatic approval review rejection is retained as an audit event and was not bypassed.
+
+## Latest published increment: EDITOR-01E
 
 EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches.
 
 Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore.
 
-Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
+Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering. EDITOR-01E public publication remains pending current-slice authorization.
+Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering.
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and
@@ -57,16 +59,16 @@ including save and real FFmpeg render in the browser. EDITOR-01B manual caption
 cues passed 33 unit, 7 HTTP, 6 browser and 5 recovery scenarios, production builds
 and populated PGlite upgrade/restore. Its own publication and CI passed. EDITOR-01C Fit/Fill framing passed 34 unit, 7 HTTP, 6 browser and
 5 recovery scenarios, builds and populated upgrade/restore locally, then was
-published and CI-verified. EDITOR-01D bounded image motion is also published and CI-verified with 35 unit, 7 HTTP, 6 browser and 5 recovery cases plus builds/upgrade; public application commit `9334411055f63f33333044b2b4ce079420fa2596`, tree `8be7bfe6976d21a7db3411627548ebd8af7bd8c4`, Actions run `37191164246` success. Named platform/aspect render presets are now locally verified in EDITOR-01E; see the latest increment above. Automatic
+published and CI-verified. EDITOR-01D bounded image motion is also published and CI-verified with 35 unit, 7 HTTP, 6 browser and 5 recovery cases plus builds/upgrade; public application commit `9334411055f63f33333044b2b4ce079420fa2596`, tree `8be7bfe6976d21a7db3411627548ebd8af7bd8c4`, Actions run `37191164246` success. EDITOR-01E named platform/aspect render presets are published and CI-verified; see the latest increment above. Automatic
 speech alignment and broader EDITOR-01 completion remain open.
 
 The source is published to public `shlokagrawal13/organic-marketing-os` main.
-The earlier EDITOR-01D automatic approval review rejection is a closed audit event after
-the user's explicit approval for this public upload. Never touch the unrelated
+The earlier EDITOR-01D and EDITOR-01E automatic approval review rejections are closed audit events after
+the user's explicit approvals for those public uploads. Never touch the unrelated
 `OrganicMarketing` repository.
 
 The previous account-side Actions gate is cleared. Application commit
-`9334411055f63f33333044b2b4ce079420fa2596` contains EDITOR-01D on exact tree
-`8be7bfe6976d21a7db3411627548ebd8af7bd8c4`. Public run `37191164246` completed every native verification step
+`06e5da96ec4e811b0a95510247db25c3d54ac669` contains EDITOR-01E on exact tree
+`092b502cca399cfe732d9743202f310b0c80d994`. Public run `37207895511` completed every native verification step
 successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.

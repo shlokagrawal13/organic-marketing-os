@@ -1,8 +1,18 @@
 # Session log
 
+## 2026-10-04 (IST) — EDITOR-01E public publication completed
+
+After the user supplied exact current-slice approval, published EDITOR-01E to public `shlokagrawal13/organic-marketing-os` main as application commit `06e5da96ec4e811b0a95510247db25c3d54ac669`, tree `092b502cca399cfe732d9743202f310b0c80d994`. The publish used the GitHub Git Data API on parent `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae` and base tree `14f572199878556b4215cc2c3799d08706821ff3`; the exact 21 changed source/docs files produced a 185-blob public tree. Recursive verification matched every remote blob path, mode and SHA to the local checkpoint with zero mismatches.
+
+GitHub Actions run `37207895511` completed successfully for commit `06e5da96ec4e811b0a95510247db25c3d54ac669`. The single `Native application verification` job passed build, 36 unit tests, both dependency-audit gates, populated upgrade, native application flows, browser evidence upload and cleanup. The earlier automatic approval review rejection is retained as an audit event; it was not bypassed.
+
+The follow-up docs-only evidence commit was created locally, but automatic approval review rejected its public Git tree because the exact user approval covered the earlier 21-file EDITOR-01E payload, not the subsequent 13-file continuity/evidence docs. No workaround or repeated write was attempted. The user later supplied exact approval for the 13 publication evidence/continuity docs, resolving that gate.
+
+Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering.
+
 ## 2026-10-04 (IST) — EDITOR-01E public export gate
 
-Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering "hn kar do" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted. Remote main was rechecked at `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; the exact diff was 21 source/docs files with no deletion. Local source commit `3f5a4e7` and its successful verification remain preserved. The branch was not updated, so no EDITOR-01E CI run exists. Exact current-slice approval is requested before retrying.
+Automatic approval review rejected creation of a public Git tree for EDITOR-01E: it recognized only the earlier EDITOR-01D 23-file authorization, despite the user answering "hn kar do" to the explicit EDITOR-01E 21-file publication question. No workaround or repeated write was attempted. Remote main was rechecked at `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; the exact diff was 21 source/docs files with no deletion. Local source commit `3f5a4e7` and its successful verification remain preserved. The branch was not updated at that time. The user later supplied exact current-slice approval and the publication was completed in the entry above.
 
 ## 2026-10-04 (IST) — EDITOR-01E named export presets
 
@@ -10,9 +20,9 @@ Resumed the clean 183-file checkpoint at local head `81cd8cc`. EDITOR-01E adds n
 
 Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. The first new HTTP assertion incorrectly read the content response wrapper; corrected to `body.item`. An interrupted session lost temporary final logs, so builds/unit/full verifier/upgrade were rerun with workspace-local logs. A resumed harness stalled at migrations, and the new browser locator needed the accessible combobox name. The completed full rerun is the evidence for this increment.
 
-Locally verified; not yet published. Public main remains at EDITOR-01D evidence commit `c90f9117063cab026fc63dcd7b5a5fa11b83a6ae`; its CI evidence does not cover EDITOR-01E. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open. Earlier automatic approval review required current-slice public-export consent; the exact existing consent covers EDITOR-01D. No EDITOR-01E remote mutation was attempted. Changed paths are recorded in `PROJECT_CHECKPOINT.json`.
+Published later as application commit `06e5da96ec4e811b0a95510247db25c3d54ac669`, tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open. Changed paths are recorded in `PROJECT_CHECKPOINT.json`.
 
-Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering. EDITOR-01E public publication remains pending current-slice authorization.
+Next: Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering.
 
 ## 2026-10-04 (IST) — EDITOR-01D bounded image motion
 

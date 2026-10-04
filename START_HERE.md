@@ -15,17 +15,15 @@ incrementally with independent implementation and verification.
 5. Record checks actually completed, update the continuity files together, and
    create a fresh source ZIP with `python3 scripts/package_handoff.py`.
 
-The source through EDITOR-01D is published to the canonical public repository;
-EDITOR-01E is now locally verified and pending publication:
+The source through EDITOR-01E is published to the canonical public repository:
 https://github.com/shlokagrawal13/organic-marketing-os. A prior automatic
 approval review rejection was resolved by explicit user approval for this public
 upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.
-Public Actions run `37191164246` for application commit
-`9334411055f63f33333044b2b4ce079420fa2596` completed native application verification successfully through
-EDITOR-01D bounded image motion. Local checks passed 35 unit, 7 HTTP, 6 browser and
-5 recovery scenarios for EDITOR-01D. The new local EDITOR-01E presets passed
-36 unit, 7 HTTP, 6 browser and 5 recovery scenarios plus builds/upgrade.
-Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering. EDITOR-01E public publication remains pending current-slice authorization.
+Public Actions run `37207895511` for application commit
+`06e5da96ec4e811b0a95510247db25c3d54ac669` completed native application verification successfully through
+EDITOR-01E named render presets. Local checks passed 36 unit, 7 HTTP, 6 browser and
+5 recovery scenarios plus builds/upgrade.
+Continue EDITOR-01 language/font/audio QA, starting with font coverage checks and explicit unsupported-text feedback before rendering.
 
 Local verification uses PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg;
 provider outputs are isolated fixtures. The optional checksum-pinned Redis
