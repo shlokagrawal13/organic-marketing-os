@@ -19,6 +19,27 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
+## Font-aware bounded text layout (EDITOR-01J)
+
+Titles and burned caption cues now wrap using metrics from their selected primary
+or fallback font instead of an average character-width estimate. Word boundaries
+are preferred; overlong words split only at Unicode grapheme boundaries so a base
+letter and its combining accents stay together. Whitespace remains collapsed.
+
+Layout conservatively accounts for shaped and unpositioned glyph bounds and pixel
+rounding. Text is limited to 84% of frame width and 28% of frame height per overlay,
+with separate title/caption areas and the existing background box. Font size can
+shrink to 16 pixels; text that still cannot fit fails with a bounded scene/cue
+message before temporary output, storage access or cache work. Shorten that text
+or split it into scenes/cues. Draft text and downloadable SRT are not truncated or
+rewrapped. Captions-off and explicit-cue overrides retain their existing behavior.
+
+Scene cache version 6 prevents reuse of segments made with the earlier layout.
+The font/script policy is unchanged. QA exercises 720 and 1080 short-side output
+in all three aspect ratios, including wide Latin, combining marks, Greek/Cyrillic
+and Arabic/Hebrew fallback text. Pixel bounds do not certify OCR-level meaning,
+every custom font, actual mobile-device legibility or Indic/CJK shaping.
+
 ## RTL text shaping (EDITOR-01H)
 
 Arabic and Hebrew rendered titles and burned captions are accepted when the

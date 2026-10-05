@@ -1,5 +1,46 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01J font-aware bounded text layout - 2026-10-05 (IST)
+
+- `node --import tsx --test --test-isolation=none tests/render-layout.test.ts`: 3 focused cases passed.
+- `node --import tsx --test --test-isolation=none tests/*.test.ts`: 47 cases passed; the CI entrypoint `npm test` also passed 47 cases.
+- Clean `npm run build`: Prisma client, API TypeScript and Next.js 16.3.8 production build passed.
+- `NODE_OPTIONS=--test-isolation=none npm run verify`: 7 HTTP, 6 production-browser and 5 recovery/configuration cases passed, with 12 migrations and explicit final success.
+- `git diff --check`: clean. Dependencies, master specification and migration files unchanged.
+
+The old 720px title layout allowed 25 letters at 40px using a 600px estimate;
+DejaVu Serif's actual advance for 25 W glyphs is about 1028px. Selected-font
+metrics now bound shaped/unpositioned widths, overhangs and rounding; wrapping
+uses word and grapheme boundaries. Overfull titles/cues fail at the 16px minimum
+before storage/cache/media work. Cache version 6 separates earlier layouts.
+
+The matrix renders wide Latin, composed/decomposed accents, Greek/Cyrillic and
+Arabic/Hebrew fallback text at 720/1080 in portrait, landscape and square output.
+Eighteen real decoded frames verify title and caption presence independently,
+horizontal margins and separate vertical bands. Representative portrait mixed,
+landscape RTL and square wide-glyph frames were visually inspected. HTTP coverage
+confirms safe overflow errors in FAILED history, null output and no new segment;
+unit rendering preserves unburned SRT and explicit-cue overrides. Existing timing,
+audio, cache, tenant, role, revision, browser and worker recovery checks pass.
+
+Resolved attempts: the initial overflow fixture exceeded the existing 300-character
+render limit; corrected it to a valid 300-W caption. After a session interruption,
+Turbopack's generated cache was truncated; preserved it outside the source and
+rebuilt cleanly. The Redis release installer returned 403, so disposable Redis
+7.2.11 was built from its official GitHub tag d4c381df7a729c06a5207c4f18d804febe956dc4;
+downloaded archive SHA-256: 95f9d5c0d44e1f21599a300f6a950fc9d128dfb12066e92886da9cd67c299d7b.
+The cached S3Proxy file failed its pinned checksum and was replaced using the
+unchanged official installer; the pinned checksum then passed. An escalation
+request was rejected by the current execution policy, but the installer succeeded
+under normal permissions. One verifier stalled at migrations and was stopped;
+the final foreground run passed completely. Failed/incomplete runs are not passes.
+
+No new dependencies, migrations, paid/live calls or user data changes. Populated
+upgrade and npm audit were not rerun for unchanged schema/dependencies; dated
+EDITOR-01I CI evidence remains separate. Physical-device testing, OCR-level
+readability, every custom font and Indic/CJK support remain open. EDITOR-01J is
+local only; publication and its own CI require the exact 18-file payload approval.
+
 ## EDITOR-01I CI portability follow-up - 2026-10-05 (IST)
 
 - `node --import tsx --test --test-isolation=none tests/render-font.test.ts`: 7 focused font/readability cases passed.
@@ -17,8 +58,14 @@ The follow-up test fixture now uses CI-installed DejaVu fonts only:
 `DejaVuSerif.ttf` as the intentionally limited primary font and `DejaVuSans.ttf`
 as the fallback. This preserves the same primary-miss/fallback-hit Arabic/Hebrew
 coverage without adding packages or weakening the renderer behavior. No runtime
-code, schema, dependency or product behavior changed in this follow-up. Public
-publication and remote CI for this one-file fix are pending exact approval.
+code, schema, dependency or product behavior changed in this follow-up.
+
+After exact approval, the follow-up was published as
+`56702de088f2e8d2198e3ea858dd96efe6b9d200`, with tree
+`d4e6cf0c0d93defb64e391a0a1496dae5d5f1534` matching the verified local tree.
+GitHub Actions run `37317283904` completed successfully: build, unit tests,
+production/development audits, populated upgrade, native application flows and
+artifact cleanup passed.
 
 ## EDITOR-01I fallback font/readability QA - 2026-10-05 (IST)
 

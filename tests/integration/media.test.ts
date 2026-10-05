@@ -577,7 +577,9 @@ test(
     assert.equal(rtlReady.status, "SUCCEEDED", JSON.stringify(rtlReady));
     assert.ok(rtlReady.outputBytes > 0);
     assert.match(
-      await (await a.raw(`${root}/renders/${rtlReady.id}/file/captions`)).text(),
+      await (
+        await a.raw(`${root}/renders/${rtlReady.id}/file/captions`)
+      ).text(),
       /שלום עולם/,
     );
     const missingGlyphContent = await a.call(root + "/content", "POST", {
@@ -610,6 +612,37 @@ test(
     );
     assert.doesNotMatch(missingGlyphResult.error, /\/usr\/|\.ttf|node_modules/);
     assert.equal(missingGlyphResult.outputBytes, null);
+    assert.equal(
+      await db.renderSegment.count({ where: { organizationId: org } }),
+      beforeFontSegments,
+    );
+    const overfullContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Bounded caption layout",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "Short title",
+          caption: "W".repeat(300),
+        },
+      ],
+    });
+    assert.equal(overfullContent.status, 201);
+    const overfullJob = await a.call(root + "/renders", "POST", {
+      contentId: overfullContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { aspect: "1:1", resolution: "720" },
+    });
+    assert.equal(overfullJob.status, 201);
+    const overfullResult = await wait(overfullJob.body.id);
+    assert.equal(overfullResult.status, "FAILED");
+    assert.match(
+      overfullResult.error,
+      /caption cue 1.*minimum readable font size/,
+    );
+    assert.doesNotMatch(overfullResult.error, /\/usr\/|\.ttf|node_modules/);
+    assert.equal(overfullResult.outputBytes, null);
     assert.equal(
       await db.renderSegment.count({ where: { organizationId: org } }),
       beforeFontSegments,

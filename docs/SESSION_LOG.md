@@ -1,5 +1,27 @@
 # Session log
 
+## 2026-10-05 (IST) - EDITOR-01J bounded font-aware layout
+
+Resumed from local evidence commit `6f77564c037ec7bf88c71d4f2a19c3565a291af4`;
+the initial handoff check verified 186 files with no drift. Public main was read
+again and remains `56702de088f2e8d2198e3ea858dd96efe6b9d200`; its EDITOR-01I run
+`37317283904` remains successful. No public write was attempted for this increment.
+
+Fixed character-count text wrapping that could clip wide glyphs. Added selected-
+font metrics, grapheme-safe splitting, bounded title/caption areas, safe overflow
+errors before storage and scene cache version 6. Preserved script policy, fallback
+font selection, SRT, cue timing and architecture. Passed 47 unit, 7 HTTP, 6 browser,
+5 recovery, production builds and 12 migrations. Eighteen decoded frames cover
+720/1080 across all aspects; representative frames were visually reviewed.
+
+Environment recovery and corrected test attempts are recorded in VERIFICATION_REPORT.md.
+No live/paid provider, schema, dependency or user data changed. Updated status,
+requirements, handoff and machine-readable evidence together. Exact changed paths
+are recorded in PROJECT_CHECKPOINT.json lastChanges and repository.nextPublication.
+The 18-file public payload includes the prior 10-file EDITOR-01I post-CI evidence.
+Next: obtain exact payload approval, publish, verify remote tree and the new CI;
+then continue broader EDITOR-01 audio/language/device QA or speech alignment.
+
 ## 2026-10-05 (IST) - EDITOR-01I publication and CI portability fix
 
 The user explicitly approved publishing EDITOR-01I's verified source/docs payload
@@ -25,8 +47,17 @@ primary-miss/fallback-hit coverage.
 Verification for the follow-up: `node --import tsx --test --test-isolation=none
 tests/render-font.test.ts` passed 7 focused cases, and `npm test` passed the same
 unit-test entrypoint CI runs. No runtime code, dependency, schema, migration or
-product behavior changed. Publication of this one-file test fix and fresh remote
-CI still require exact approval.
+product behavior changed.
+
+After exact approval for the 11-file CI portability/source-docs payload, the
+follow-up was published to public `main` as
+`56702de088f2e8d2198e3ea858dd96efe6b9d200` with tree
+`d4e6cf0c0d93defb64e391a0a1496dae5d5f1534`, matching the verified local tree.
+Actions run `37317283904` completed successfully; the unit-test regression was
+cleared and build, audits, populated upgrade and native application flows all
+passed. Local `main` was aligned to `origin/main`, and
+`python3 scripts/package_handoff.py --check` reported no included-file drift
+before this post-CI evidence update.
 
 ## 2026-10-05 (IST) - EDITOR-01I fallback font/readability QA
 

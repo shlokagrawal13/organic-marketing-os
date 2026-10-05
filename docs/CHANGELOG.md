@@ -1,12 +1,20 @@
 # Changelog
 
+## 0.9.2 EDITOR-01J font-aware bounded text layout - 2026-10-05 (IST)
+
+- Replace character-count wrapping with selected-font metrics and grapheme-safe word splitting; preserve accents, fallback font selection and explicit RTL shaping.
+- Bound titles/cues in separate areas with a 16px minimum font size. Overfull text fails with a safe scene/cue message before storage/cache work; SRT and saved drafts remain intact.
+- Advance scene cache version to 6 so prior-layout segments cannot be reused.
+- Add six output-geometry combinations with 18 decoded frames checking titles and captions independently, plus overfull-caption history and captions-off/cue-override coverage. Final checks and publication state are recorded in VERIFICATION_REPORT.md.
+- No dependency, schema/migration, architecture or live/paid-provider change.
+
 ## 0.9.2 EDITOR-01I fallback font/readability QA - 2026-10-05 (IST)
 
 - Added trusted worker-side fallback fonts through `RENDER_FONT_FALLBACK_PATHS`; `RENDER_FONT_PATH` remains primary and configured paths are deduplicated.
 - Require each title or burned caption cue to be fully covered by one configured TTF/OTF, pass the selected controlled font file to FFmpeg and include all configured font hashes in the scene cache key.
 - Added a real decoded-frame readability smoke check for Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and the fallback supplies them.
 - Passed 44 unit cases, API/web production builds and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios. No migration, dependency version or live/paid provider change.
-- Published to public `main` through `27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified local tree. Actions run `37315707338` failed unit tests because the fallback-font fixture used a local-only URW/Nimbus font. A one-file local follow-up switches the fixture to CI-installed DejaVu Serif/Sans and passes the focused suite plus `npm test`; publication/CI for that fix remain pending.
+- Published to public `main` through `27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified local tree. Actions run `37315707338` failed unit tests because the fallback-font fixture used a local-only URW/Nimbus font. The approved follow-up switches the fixture to CI-installed DejaVu Serif/Sans and is published as `56702de088f2e8d2198e3ea858dd96efe6b9d200`; tree `d4e6cf0c0d93defb64e391a0a1496dae5d5f1534` matched locally and Actions run `37317283904` passed.
 
 ## 0.9.2 EDITOR-01H RTL text shaping - 2026-10-05 (IST)
 

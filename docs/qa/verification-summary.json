@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 44,
+    "unit": 47,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -14,7 +14,7 @@
   },
   "environment": {
     "database": "PGlite WASM PostgreSQL socket bridge",
-    "redis": "Native Redis 7.2.11; checksum-pinned local source build, no system service installation",
+    "redis": "Native Redis 7.2.11 built from official GitHub tag d4c381df7a729c06a5207c4f18d804febe956dc4; disposable local service",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01I trusted fallback fonts and decoded readability smoke coverage, locally verified; publication pending",
+  "latestIncrement": "EDITOR-01J font-aware bounded text layout, locally verified; public approval and CI pending",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -144,13 +144,14 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "latestRunId": 37277131959,
-    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37277131959",
-    "latestSourceCommit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
+    "latestRunId": 37317283904,
+    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37317283904",
+    "latestSourceCommit": "56702de088f2e8d2198e3ea858dd96efe6b9d200",
     "latestConclusion": "success",
     "latestJobName": "Native application verification",
-    "latestIncrement": "EDITOR-01G",
-    "nativeTestsExecuted": true
+    "latestIncrement": "EDITOR-01I",
+    "nativeTestsExecuted": true,
+    "scopeWarning": "Does not verify local EDITOR-01J; new publication/CI pending."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -447,20 +448,65 @@
     "webProductionBuild": true,
     "migrationsApplied": 12,
     "fullLocalVerifierRerun": true,
-    "publicationStatus": "published_ci_failed_test_fixture_fix_local",
-    "publicationCommit": "27aaf5cd752ad3fb83c5127523eff01416ace53a",
-    "publicationTree": "59cc372fec1f759f2955985b0e84dfdb608b591b",
-    "actionsRunId": 37315707338,
-    "actionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37315707338",
-    "actionsConclusion": "failure",
-    "actionsFailureStep": "Run unit tests",
-    "actionsFailureRootCause": "Fallback-font tests referenced a local URW/Nimbus font path not installed by the CI workflow.",
+    "publicationStatus": "published_ci_verified",
+    "publicationCommit": "56702de088f2e8d2198e3ea858dd96efe6b9d200",
+    "publicationTree": "d4e6cf0c0d93defb64e391a0a1496dae5d5f1534",
+    "initialPublicationCommit": "27aaf5cd752ad3fb83c5127523eff01416ace53a",
+    "initialPublicationTree": "59cc372fec1f759f2955985b0e84dfdb608b591b",
+    "previousFailedActionsRunId": 37315707338,
+    "previousFailedActionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37315707338",
+    "previousFailureStep": "Run unit tests",
+    "previousFailureRootCause": "Fallback-font tests referenced a local URW/Nimbus font path not installed by the CI workflow.",
+    "actionsRunId": 37317283904,
+    "actionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37317283904",
+    "actionsConclusion": "success",
     "ciPortabilityFixLocal": true,
-    "ciPortabilityFixPublished": false,
+    "ciPortabilityFixPublished": true,
     "ciPortabilityFixFocusedTestsPassed": 7,
     "ciPortabilityFixNpmTestPassed": true,
+    "nativeCiVerified": true,
     "liveProviderUsed": false,
     "knownFailures": [],
-    "verificationNote": "Focused test initially used execFileSync for FFmpeg decode and hit sandbox EPERM despite output; switched to project runProcess helper. npm ci required network escalation. Redis installer download returned HTTP 403 after escalation, so an existing checksum-pinned Redis 7.2.11 build from prior scratch was used. S3Proxy artifact was copied from prior scratch and verified by checksum. Full verifier needed elevated local-service permissions after sandbox S3Proxy readiness failure. After publication, CI unit tests failed because three fallback-font tests used a local-only URW/Nimbus primary font. The local follow-up uses CI-installed DejaVu Serif as the intentionally limited primary and DejaVu Sans as fallback; focused render-font tests and npm test pass."
+    "verificationNote": "Focused test initially used execFileSync for FFmpeg decode and hit sandbox EPERM despite output; switched to project runProcess helper. npm ci required network escalation. Redis installer download returned HTTP 403 after escalation, so an existing checksum-pinned Redis 7.2.11 build from prior scratch was used. S3Proxy artifact was copied from prior scratch and verified by checksum. Full verifier needed elevated local-service permissions after sandbox S3Proxy readiness failure. After initial publication, CI unit tests failed because three fallback-font tests used a local-only URW/Nimbus primary font. The approved follow-up uses CI-installed DejaVu Serif as the intentionally limited primary and DejaVu Sans as fallback; focused render-font tests and npm test passed locally, and Actions run 37317283904 passed build, unit tests, audits, populated upgrade and native application flows."
+  },
+  "editor01jEvidence": {
+    "scope": "Font-aware bounded title/caption layout and multilingual geometry QA",
+    "selectedFontMetrics": true,
+    "graphemeSafeWrapping": true,
+    "minimumFontSize": 16,
+    "maxTextWidthFraction": 0.84,
+    "maxTextHeightFraction": 0.28,
+    "overflowBeforeStorageCacheMedia": true,
+    "safeHistoryOverflowErrors": true,
+    "captionsOffSrtAndCueOverridesPreserved": true,
+    "cacheVersion": "mos-render-6-font-layout",
+    "aspects": [
+      "9:16",
+      "16:9",
+      "1:1"
+    ],
+    "resolutions": [
+      "720",
+      "1080"
+    ],
+    "decodedFrames": 18,
+    "decodedTitleAndCaptionBandsVerified": true,
+    "representativeFramesVisuallyReviewed": true,
+    "unitTestsPassed": 47,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "fullLocalVerifierRerun": true,
+    "npmTestEntrypointPassed": true,
+    "populatedUpgradeRestoreRerun": false,
+    "npmFullAuditRerun": false,
+    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "liveProviderUsed": false,
+    "nativeCiVerified": false,
+    "knownFailures": [],
+    "verificationNote": "Initial overflow fixture corrected to the existing 300-character render limit. Rebuilt after interrupted Turbopack cache corruption. Restored missing Redis from official GitHub 7.2.11 tag and checksum-verified S3Proxy with the unchanged installer. One verifier stalled at migrations and was stopped; final foreground run passed 7/6/5. Prior EDITOR-01I CI does not verify this source."
   }
 }

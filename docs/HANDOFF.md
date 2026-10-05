@@ -1,6 +1,19 @@
 # Project handoff — 0.9.2 / 2026-10-05 (IST)
 
-Latest local increment: EDITOR-01I fallback font/readability QA. The render worker
+Latest local increment: EDITOR-01J font-aware bounded text layout, locally verified.
+Selected-font metrics replace average character-count wrapping. Word splits keep
+graphemes intact, including combining accents; title/caption areas stay separate.
+Overfull text at the 16px minimum fails with a safe scene/cue error before storage
+or cache work. Draft text and SRT remain intact; cache version 6 invalidates old
+layouts. Passed 47 unit, 7 HTTP, 6 browser and 5 recovery cases, production builds
+and all 12 migrations. Eighteen decoded frames cover three aspects at 720/1080.
+Review VERIFICATION_REPORT.md for the actual checks and resolved environment issues.
+Next: exact approval/publication of the 18-file source/docs payload, including
+the prior EDITOR-01I post-CI evidence, then verify EDITOR-01J's own Actions run.
+No public write was attempted for EDITOR-01J. Broader language/audio/device QA,
+Indic/CJK shaping and automatic speech alignment remain open.
+
+Latest published increment: EDITOR-01I fallback font/readability QA. The render worker
 loads trusted fallback fonts from `RENDER_FONT_FALLBACK_PATHS`, requires each title
 or burned caption cue to be fully covered by one configured TTF/OTF, passes the
 selected controlled font file to FFmpeg and includes the configured font-set hashes
@@ -11,10 +24,12 @@ API/web builds. EDITOR-01I source/docs were published to public `main` through
 `27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified
 local tree. CI run `37315707338` failed only because three fallback-font tests used
 a local URW/Nimbus font absent from the workflow. A one-file local test fix now
-uses CI-installed DejaVu Serif/Sans and passes the focused suite plus `npm test`;
-publication and fresh remote CI for that fix remain pending.
+uses CI-installed DejaVu Serif/Sans and passes the focused suite plus `npm test`.
+The approved follow-up was published as `56702de088f2e8d2198e3ea858dd96efe6b9d200`
+with tree `d4e6cf0c0d93defb64e391a0a1496dae5d5f1534`; Actions run
+`37317283904` completed successfully.
 
-Latest published increment: EDITOR-01H RTL text shaping at
+Previous published increment: EDITOR-01H RTL text shaping at
 `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`. Arabic/Hebrew titles and burned
 captions are accepted when the configured font covers them; FFmpeg drawtext uses
 explicit `text_shaping=1`. Passed 42 unit, 7 HTTP, 6 browser and 5 recovery/
@@ -57,11 +72,10 @@ Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration 
 
 Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: publish the one-file EDITOR-01I CI-portability test fix after exact approval,
-confirm fresh Actions, then continue broader EDITOR-01 language/audio QA, including
-Indic/CJK shaping/readability or automatic speech alignment. Arabic/Hebrew shaping
-and fallback-font smoke coverage are verified within their bounded scope; this is
-still not OCR-level readability, font licensing review or universal complex-script
+Next: continue broader EDITOR-01 language/audio QA, including Indic/CJK
+shaping/readability or automatic speech alignment. Arabic/Hebrew shaping and
+fallback-font smoke coverage are verified within their bounded scope; this is still
+not OCR-level readability, font licensing review or universal complex-script
 support.
 
 The user asked to continue the stopped Organic Marketing OS build without losing

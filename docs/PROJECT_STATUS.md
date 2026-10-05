@@ -28,10 +28,9 @@ Provider fixtures and passing local tests do not certify production readiness.
   EDITOR-01G adds actual configured-font glyph mapping checks before worker
   storage/cache/media work and safe scene/cue/codepoint errors in render history.
   EDITOR-01H verifies Arabic/Hebrew rendered titles and burned captions
-  with explicit FFmpeg text shaping. EDITOR-01I adds trusted fallback fonts and
-  decoded readability smoke coverage for allowed rendered text; the published
-  source needs a one-file CI-portability test fix before remote CI can pass.
-  Broader Indic/CJK shaping,
+  with explicit FFmpeg text shaping. EDITOR-01I adds published, CI-verified
+  trusted fallback fonts and decoded readability smoke coverage for allowed
+  rendered text. Broader Indic/CJK shaping,
   automatic transcription and speech alignment remain open.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -53,14 +52,24 @@ Provider fixtures and passing local tests do not certify production readiness.
 
 ## Verification and limits
 
-EDITOR-01I source/docs are published on public `main` through
-`27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified
-local EDITOR-01I tree. CI run `37315707338` failed only in unit tests because
-fallback-font tests referenced a local URW/Nimbus font not installed by the
-workflow. A one-file local follow-up changes those tests to CI-installed DejaVu
-fonts and passes `node --import tsx --test --test-isolation=none
-tests/render-font.test.ts` plus `npm test`; publication of that fix and fresh
-remote CI are pending approval.
+EDITOR-01J is locally verified and awaiting exact public-payload approval. Titles
+and burned cues use selected-font metrics, grapheme-safe wrapping and bounded
+separate text areas. Text that cannot fit at 16px fails with a safe scene/cue error
+before storage/cache work; drafts and SRT stay intact. Cache version 6 prevents
+reuse of old layouts. Passed 47 unit, 7 HTTP, 6 production-browser and 5 recovery
+cases, both production builds and 12 fresh migrations. Eighteen decoded frames
+cover wide Latin, accents, Greek/Cyrillic and Arabic/Hebrew fallback across all
+three aspects at 720/1080. This does not certify Indic/CJK, every font, OCR or
+physical-device readability. Architecture, dependencies and migrations are unchanged.
+
+EDITOR-01I is published and CI-verified on public `main` at
+`56702de088f2e8d2198e3ea858dd96efe6b9d200`; tree
+`d4e6cf0c0d93defb64e391a0a1496dae5d5f1534` matched the verified local follow-up
+tree. The initial EDITOR-01I publish at `27aaf5cd752ad3fb83c5127523eff01416ace53a`
+failed Actions run `37315707338` only because fallback-font tests referenced a
+local URW/Nimbus font not installed by the workflow. The approved follow-up uses
+CI-installed DejaVu fonts, and Actions run `37317283904` passed build, unit tests,
+audits, populated upgrade and native application verification.
 
 EDITOR-01H is published at `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`. It adds explicit Arabic/Hebrew RTL text shaping while keeping unsupported scripts blocked. Passed 42 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases after rebuilding dist.
 
@@ -143,6 +152,10 @@ dimensions are rejected.
 These records do not diagnose ChatGPT buffering.
 
 ## Next work
+
+Publish the reviewed EDITOR-01J source/docs payload after exact authorization and
+verify its own GitHub Actions run. Prior EDITOR-01I post-CI evidence travels in the
+same payload; its successful CI must not be attributed to EDITOR-01J.
 
 Continue EDITOR-01 language/font/audio QA with broader Indic/CJK shaping, device/font
 matrix and audio QA after EDITOR-01I fallback-font/readability smoke coverage. Automatic

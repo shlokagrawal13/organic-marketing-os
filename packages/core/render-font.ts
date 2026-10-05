@@ -1,7 +1,7 @@
 import { open } from "node:fs/promises";
 import { delimiter } from "node:path";
 import { createHash } from "node:crypto";
-import { create } from "fontkit";
+import { create, type Font } from "fontkit";
 import { renderedSceneText, type RenderOptions, type Scene } from "./media";
 
 export const MAX_RENDER_FONT_BYTES = 16 * 1024 * 1024;
@@ -10,10 +10,7 @@ export const DEFAULT_RENDER_FONT_PATH =
 
 // Only these controlled messages may be exposed in render history.
 export class RenderFontError extends Error {}
-type FontFace = ReturnType<typeof create> & {
-  hasGlyphForCodePoint: (codePoint: number) => boolean;
-  numGlyphs: number;
-};
+type FontFace = Font;
 type InspectedFont = {
   bytes: Buffer;
   face: FontFace;
@@ -23,6 +20,13 @@ export type RenderFontPlan = {
   fonts: Buffer[];
   fontHashes: string[];
   selectFontIndex: (text: string) => number;
+  measureText: (
+    text: string,
+    fontIndex: number,
+  ) => {
+    width: number;
+    height: number;
+  };
 };
 const sha256 = (value: Buffer) =>
   createHash("sha256").update(value).digest("hex");
@@ -158,6 +162,46 @@ export function createRenderFontPlan(
       fonts: bytes,
       fontHashes: bytes.map(sha256),
       selectFontIndex: (text: string) => selections.get(textKey(text)) ?? 0,
+      measureText: (text: string, fontIndex: number) => {
+        try {
+          const { face } = fonts[fontIndex];
+          const run = face.layout(text);
+          let advance = 0,
+            left = 0,
+            right = 0;
+          let top = face.ascent,
+            bottom = face.descent;
+          // Older FFmpeg builds do not apply all OpenType positioning. Bound
+          // both the shaped run and unpositioned glyphs, including overhangs.
+          for (const glyph of face.glyphsForString(text)) {
+            const box = glyph.bbox;
+            if (Number.isFinite(box.minX)) {
+              left = Math.min(left, advance + box.minX);
+              right = Math.max(right, advance + box.maxX);
+              top = Math.max(top, box.maxY);
+              bottom = Math.min(bottom, box.minY);
+            }
+            advance += glyph.advanceWidth;
+          }
+          const width =
+            Math.max(advance, right - left, run.advanceWidth, run.bbox.width) /
+            face.unitsPerEm;
+          const height =
+            Math.max(top - bottom, run.bbox.height) / face.unitsPerEm;
+          if (
+            !Number.isFinite(width) ||
+            !Number.isFinite(height) ||
+            width < 0 ||
+            height <= 0
+          )
+            throw new Error("Invalid font metrics");
+          return { width, height };
+        } catch {
+          throw new RenderFontError(
+            "The configured render font could not be measured. Ask an administrator to configure a valid TrueType or OpenType font.",
+          );
+        }
+      },
     };
   } catch (error) {
     if (error instanceof RenderFontError) throw error;

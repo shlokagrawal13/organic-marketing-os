@@ -5,6 +5,10 @@ import { ObjectStore } from "./object-store";
 import { sceneCaptionCues } from "./captions";
 import { readRenderFonts, createRenderFontPlan } from "./render-font";
 import {
+  layoutRenderText,
+  RENDER_TEXT_LINE_SPACING,
+} from "./render-text-layout";
+import {
   RenderOptions,
   Scene,
   dimensions,
@@ -38,32 +42,6 @@ type RenderContext = {
   cachePut: (key: string, entry: CacheEntry) => Promise<void>;
 };
 const ffmpeg = () => process.env.FFMPEG_PATH || "ffmpeg";
-function wrap(text: string, width: number) {
-  const words = text
-      .replace(/[\x00-\x08\x0b-\x1f\x7f]/g, "")
-      .split(/\s+/)
-      .filter(Boolean),
-    lines: string[] = [];
-  let line = "";
-  for (const raw of words) {
-    const chunks = Array.from(raw);
-    while (chunks.length > width) {
-      if (line) {
-        lines.push(line);
-        line = "";
-      }
-      lines.push(chunks.splice(0, width).join(""));
-    }
-    const word = chunks.join("");
-    if (!word) continue;
-    if (Array.from(line + " " + word).length > width && line) {
-      lines.push(line);
-      line = word;
-    } else line += `${line ? " " : ""}${word}`;
-  }
-  if (line) lines.push(line);
-  return lines.join("\n");
-}
 export async function renderVideo(ctx: RenderContext) {
   const { store, signal, options, scenes } = ctx;
   validateRenderScenes(scenes, options);
@@ -74,6 +52,40 @@ export async function renderVideo(ctx: RenderContext) {
   );
   const [width, height] = dimensions(options),
     duration = scenes.reduce((sum, s) => sum + s.duration, 0);
+  const sceneOverlays = scenes.map((scene) =>
+    [
+      {
+        type: "title",
+        text: scene.onScreenText,
+        label: `Scene ${scene.id} on-screen text`,
+        y: "h*0.10",
+        baseSize: Math.round(Math.min(width, height) / 18),
+        enable: "",
+      },
+      ...(options.captions
+        ? sceneCaptionCues(scene).map((cue, index) => ({
+            type: `caption-${index}`,
+            text: cue.text,
+            label: `Scene ${scene.id} caption cue ${index + 1}`,
+            y: "h*0.91-th",
+            baseSize: Math.round(Math.min(width, height) / 25),
+            enable: `:enable='gte(t,${cue.start})*lt(t,${cue.end})'`,
+          }))
+        : []),
+    ]
+      .filter(({ text }) => text.trim())
+      .map((overlay) => ({
+        ...overlay,
+        ...layoutRenderText(
+          overlay.text,
+          overlay.label,
+          fontPlan,
+          width,
+          height,
+          overlay.baseSize,
+        ),
+      })),
+  );
   const dir = await mkdtemp(join(tmpdir(), "mos-render-"));
   const outputKey = `${ctx.organizationId}/renders/${ctx.id}/video.mp4`,
     thumbnailKey = `${ctx.organizationId}/renders/${ctx.id}/thumbnail.jpg`,
@@ -136,7 +148,7 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-5-font-fallback",
+          version: "mos-render-6-font-layout",
           fonts: fontPlan.fontHashes,
           width,
           height,
@@ -222,40 +234,18 @@ export async function renderVideo(ctx: RenderContext) {
             `zoompan=z='1+0.08*min(on/${lastFrame},1)':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s=${width}x${height}:fps=30`,
           );
         }
-        const overlays = [
-          {
-            type: "title",
-            text: scene.onScreenText,
-            y: "h*0.10",
-            baseSize: Math.round(Math.min(width, height) / 18),
-            enable: "",
-          },
-          ...(options.captions
-            ? sceneCaptionCues(scene).map((cue, cueIndex) => ({
-                type: `caption-${cueIndex}`,
-                text: cue.text,
-                y: "h*0.91-th",
-                baseSize: Math.round(Math.min(width, height) / 25),
-                enable: `:enable='gte(t,${cue.start})*lt(t,${cue.end})'`,
-              }))
-            : []),
-        ];
-        for (const { type, text, y, baseSize, enable } of overlays) {
-          if (!text.trim()) continue;
+        for (const {
+          type,
+          text,
+          y,
+          fontSize,
+          fontIndex,
+          enable,
+        } of sceneOverlays[i]) {
           const file = `${type}-${i}.txt`;
-          let fontSize = Math.max(18, baseSize),
-            wrapped = wrap(text, Math.floor((width * 0.84) / (fontSize * 0.6)));
-          while (
-            fontSize > 16 &&
-            wrapped.split("\n").length * (fontSize + 6) > height * 0.28
-          ) {
-            fontSize--;
-            wrapped = wrap(text, Math.floor((width * 0.84) / (fontSize * 0.6)));
-          }
-          await writeFile(join(dir, file), wrapped, "utf8");
-          const fontIndex = fontPlan.selectFontIndex(text);
+          await writeFile(join(dir, file), text, "utf8");
           filters.push(
-            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}${enable}`,
+            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=${RENDER_TEXT_LINE_SPACING}:x=(w-tw)/2:y=${y}${enable}`,
           );
         }
         if (scene.transition.toLowerCase().trim() === "fade")
