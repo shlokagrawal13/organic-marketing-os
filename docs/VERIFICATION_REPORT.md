@@ -1,5 +1,25 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01I CI portability follow-up - 2026-10-05 (IST)
+
+- `node --import tsx --test --test-isolation=none tests/render-font.test.ts`: 7 focused font/readability cases passed.
+- `npm test`: passed the CI unit-test entrypoint.
+
+EDITOR-01I was published to public `main` as split commits ending at
+`27aaf5cd752ad3fb83c5127523eff01416ace53a`; the resulting tree matched the
+verified local tree `59cc372fec1f759f2955985b0e84dfdb608b591b`. GitHub Actions
+run `37315707338` then failed only at unit tests because three new fallback-font
+tests used `/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf`, which
+exists in the local workspace but is not installed by the CI workflow. The build
+step had passed before the unit failure.
+
+The follow-up test fixture now uses CI-installed DejaVu fonts only:
+`DejaVuSerif.ttf` as the intentionally limited primary font and `DejaVuSans.ttf`
+as the fallback. This preserves the same primary-miss/fallback-hit Arabic/Hebrew
+coverage without adding packages or weakening the renderer behavior. No runtime
+code, schema, dependency or product behavior changed in this follow-up. Public
+publication and remote CI for this one-file fix are pending exact approval.
+
 ## EDITOR-01I fallback font/readability QA - 2026-10-05 (IST)
 
 - `node --import tsx --test --test-isolation=none tests/render-font.test.ts`: 7 focused font/readability cases passed.

@@ -35,6 +35,8 @@ const fixture = sceneSchema.parse({
   cta: "",
 });
 const missingLatin = "\u{1df00}";
+const TEST_PRIMARY_FONT_PATH =
+  "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf";
 
 test("configured font maps real Latin, Greek, Cyrillic, accents and normalized whitespace", async () => {
   const bytes = await readRenderFont(DEFAULT_RENDER_FONT_PATH);
@@ -94,9 +96,7 @@ test("font coverage rejects missing glyphs in effective titles/cues, preserving 
 });
 
 test("configured fallback fonts cover allowed multilingual text missing from the primary font", async () => {
-  const primary = await readRenderFont(
-    "/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf",
-  );
+  const primary = await readRenderFont(TEST_PRIMARY_FONT_PATH);
   const fallback = await readRenderFont(DEFAULT_RENDER_FONT_PATH);
   const scene = { ...fixture, onScreenText: "مرحبا", caption: "שלום" };
   assert.doesNotThrow(() => validateRenderScenes([scene]));
@@ -114,8 +114,7 @@ test("configured fallback fonts cover allowed multilingual text missing from the
 test("readRenderFonts loads unique primary and fallback font paths from configuration", async () => {
   const previousPrimary = process.env.RENDER_FONT_PATH;
   const previousFallbacks = process.env.RENDER_FONT_FALLBACK_PATHS;
-  process.env.RENDER_FONT_PATH =
-    "/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf";
+  process.env.RENDER_FONT_PATH = TEST_PRIMARY_FONT_PATH;
   process.env.RENDER_FONT_FALLBACK_PATHS = [
     DEFAULT_RENDER_FONT_PATH,
     DEFAULT_RENDER_FONT_PATH,
@@ -213,8 +212,7 @@ test("renderer checks the configured font before storage, cache or media work", 
 test("renderer uses explicit text shaping and fallback fonts for readable Arabic and Hebrew text", async () => {
   const previous = process.env.RENDER_FONT_PATH;
   const previousFallbacks = process.env.RENDER_FONT_FALLBACK_PATHS;
-  process.env.RENDER_FONT_PATH =
-    "/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf";
+  process.env.RENDER_FONT_PATH = TEST_PRIMARY_FONT_PATH;
   process.env.RENDER_FONT_FALLBACK_PATHS = DEFAULT_RENDER_FONT_PATH;
   const stored: string[] = [];
   let output: Buffer | null = null;

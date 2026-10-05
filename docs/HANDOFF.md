@@ -7,7 +7,12 @@ selected controlled font file to FFmpeg and includes the configured font-set has
 in scene cache keys. A real FFmpeg frame decode verifies visible Arabic/Hebrew
 overlay pixels when the primary font lacks those glyphs and the fallback supplies
 them. Passed 44 unit, 7 HTTP, 6 browser and 5 recovery/configuration cases plus
-API/web builds. Local only; publication and remote CI await current-payload approval.
+API/web builds. EDITOR-01I source/docs were published to public `main` through
+`27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified
+local tree. CI run `37315707338` failed only because three fallback-font tests used
+a local URW/Nimbus font absent from the workflow. A one-file local test fix now
+uses CI-installed DejaVu Serif/Sans and passes the focused suite plus `npm test`;
+publication and fresh remote CI for that fix remain pending.
 
 Latest published increment: EDITOR-01H RTL text shaping at
 `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`. Arabic/Hebrew titles and burned
@@ -52,11 +57,12 @@ Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration 
 
 Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: publish EDITOR-01I after exact approval, then continue broader EDITOR-01
-language/audio QA, including Indic/CJK shaping/readability or automatic speech
-alignment. Arabic/Hebrew shaping and fallback-font smoke coverage are verified
-within their bounded scope; this is still not OCR-level readability, font licensing
-review or universal complex-script support.
+Next: publish the one-file EDITOR-01I CI-portability test fix after exact approval,
+confirm fresh Actions, then continue broader EDITOR-01 language/audio QA, including
+Indic/CJK shaping/readability or automatic speech alignment. Arabic/Hebrew shaping
+and fallback-font smoke coverage are verified within their bounded scope; this is
+still not OCR-level readability, font licensing review or universal complex-script
+support.
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and

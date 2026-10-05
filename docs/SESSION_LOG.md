@@ -1,5 +1,33 @@
 # Session log
 
+## 2026-10-05 (IST) - EDITOR-01I publication and CI portability fix
+
+The user explicitly approved publishing EDITOR-01I's verified source/docs payload
+to public `shlokagrawal13/organic-marketing-os` main. Terminal `git push` had no
+credentials, so publication used the GitHub connector. The first connector write
+published `packages/core/render-font.ts` as commit
+`3b1cbfef89a549660570be8ef04a5ca0880064bc`; after exact approval for the
+remaining 14 files, Git Data published commit
+`27aaf5cd752ad3fb83c5127523eff01416ace53a`. Its tree
+`59cc372fec1f759f2955985b0e84dfdb608b591b` matched the verified local EDITOR-01I
+tree, and local `main` was aligned to `origin/main`.
+
+GitHub Actions run `37315707338` failed only in the unit-test step after the build
+passed. The failing tests were the three new fallback-font/readability cases; they
+used `/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf`, which existed
+locally but was not installed by the workflow. The workflow installs
+`fonts-dejavu-core`, so the local follow-up changes the fallback-font tests to use
+`/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf` as the intentionally limited
+primary and the existing DejaVu Sans default as fallback. A probe confirmed DejaVu
+Serif misses Arabic/Hebrew while DejaVu Sans covers them, preserving the intended
+primary-miss/fallback-hit coverage.
+
+Verification for the follow-up: `node --import tsx --test --test-isolation=none
+tests/render-font.test.ts` passed 7 focused cases, and `npm test` passed the same
+unit-test entrypoint CI runs. No runtime code, dependency, schema, migration or
+product behavior changed. Publication of this one-file test fix and fresh remote
+CI still require exact approval.
+
 ## 2026-10-05 (IST) - EDITOR-01I fallback font/readability QA
 
 Continued from public `main` at `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`; the handoff manifest initially matched 186 included files with no drift. The checkpoint text still described EDITOR-01H as awaiting publication, while the repository head already contained it publicly; continuity records were reconciled to treat EDITOR-01H as published and this slice as local.

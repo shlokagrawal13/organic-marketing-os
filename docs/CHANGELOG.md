@@ -5,7 +5,8 @@
 - Added trusted worker-side fallback fonts through `RENDER_FONT_FALLBACK_PATHS`; `RENDER_FONT_PATH` remains primary and configured paths are deduplicated.
 - Require each title or burned caption cue to be fully covered by one configured TTF/OTF, pass the selected controlled font file to FFmpeg and include all configured font hashes in the scene cache key.
 - Added a real decoded-frame readability smoke check for Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and the fallback supplies them.
-- Passed 44 unit cases, API/web production builds and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios. No migration, dependency version or live/paid provider change. Local only; publication/CI pending.
+- Passed 44 unit cases, API/web production builds and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios. No migration, dependency version or live/paid provider change.
+- Published to public `main` through `27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified local tree. Actions run `37315707338` failed unit tests because the fallback-font fixture used a local-only URW/Nimbus font. A one-file local follow-up switches the fixture to CI-installed DejaVu Serif/Sans and passes the focused suite plus `npm test`; publication/CI for that fix remain pending.
 
 ## 0.9.2 EDITOR-01H RTL text shaping - 2026-10-05 (IST)
 

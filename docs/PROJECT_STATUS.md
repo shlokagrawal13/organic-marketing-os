@@ -28,8 +28,10 @@ Provider fixtures and passing local tests do not certify production readiness.
   EDITOR-01G adds actual configured-font glyph mapping checks before worker
   storage/cache/media work and safe scene/cue/codepoint errors in render history.
   EDITOR-01H verifies Arabic/Hebrew rendered titles and burned captions
-  with explicit FFmpeg text shaping. EDITOR-01I locally verifies trusted fallback
-  fonts and decoded readability smoke coverage for allowed rendered text. Broader Indic/CJK shaping,
+  with explicit FFmpeg text shaping. EDITOR-01I adds trusted fallback fonts and
+  decoded readability smoke coverage for allowed rendered text; the published
+  source needs a one-file CI-portability test fix before remote CI can pass.
+  Broader Indic/CJK shaping,
   automatic transcription and speech alignment remain open.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -51,11 +53,14 @@ Provider fixtures and passing local tests do not certify production readiness.
 
 ## Verification and limits
 
-EDITOR-01I is locally verified only. It adds trusted `RENDER_FONT_FALLBACK_PATHS`
-support, per-overlay font selection, font-set cache keys and decoded Arabic/Hebrew
-readability smoke coverage while keeping unsupported scripts blocked. Passed 44
-unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases. Public
-publication and remote CI await current-payload approval.
+EDITOR-01I source/docs are published on public `main` through
+`27aaf5cd752ad3fb83c5127523eff01416ace53a`; the remote tree matched the verified
+local EDITOR-01I tree. CI run `37315707338` failed only in unit tests because
+fallback-font tests referenced a local URW/Nimbus font not installed by the
+workflow. A one-file local follow-up changes those tests to CI-installed DejaVu
+fonts and passes `node --import tsx --test --test-isolation=none
+tests/render-font.test.ts` plus `npm test`; publication of that fix and fresh
+remote CI are pending approval.
 
 EDITOR-01H is published at `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`. It adds explicit Arabic/Hebrew RTL text shaping while keeping unsupported scripts blocked. Passed 42 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases after rebuilding dist.
 
