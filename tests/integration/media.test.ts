@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { probeMedia, validateRenderedProbe } from "../../packages/core/media";
 const db = new PrismaClient(),
   orgs: string[] = [],
   users: string[] = [];
@@ -255,6 +256,12 @@ test(
     writeFileSync(
       ".local/render-preview.mp4",
       Buffer.from(await video.arrayBuffer()),
+    );
+    validateRenderedProbe(
+      await probeMedia(".local/render-preview.mp4"),
+      rendered.width,
+      rendered.height,
+      rendered.duration,
     );
     const pcm = execFileSync(
       process.env.FFMPEG_PATH || "ffmpeg",

@@ -19,6 +19,27 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
+## Audio output QA (EDITOR-01K)
+
+Every newly rendered segment, cached segment and final MP4 must have H.264 video
+at the requested dimensions and stereo 48 kHz AAC. Container, video and audio
+stream durations must be finite, positive and within 0.2 seconds of the requested
+length. Audio start time must be finite and within 0.05 seconds of zero. An
+incompatible cached segment is rebuilt; a failed new/final output is not published.
+The encoding settings and scene cache key stay the same because this increment
+strengthens validation rather than changing the mix.
+
+Real exported AAC is decoded to PCM in isolated tests. Different tone frequencies
+identify short narration padded with silence, long narration trimmed at the scene
+boundary, the next scene's narration, muted embedded video sound, silent scenes,
+short music looping across the full timeline and zero/selected music volume.
+Input fixtures exercise mono/stereo at 32, 44.1 and 48 kHz. A deliberately mono
+44.1 kHz cache entry is rebuilt; music-only changes retain valid scene caches.
+
+These tests do not certify subjective speech intelligibility, loudness targets,
+true-peak clipping, arbitrary channel layouts/codecs, ASR alignment or playback
+on physical devices. Those acceptance items remain open.
+
 ## Font-aware bounded text layout (EDITOR-01J)
 
 Titles and burned caption cues now wrap using metrics from their selected primary

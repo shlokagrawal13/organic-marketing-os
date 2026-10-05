@@ -52,7 +52,14 @@ Provider fixtures and passing local tests do not certify production readiness.
 
 ## Verification and limits
 
-EDITOR-01J is locally verified and awaiting exact public-payload approval. Titles
+EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.
+
+Subjective speech quality, loudness/true-peak targets, arbitrary codecs/channel layouts, physical-device playback, Indic/CJK shaping and automatic speech alignment remain open. No new dependency, schema/migration, live/paid provider or user runtime data change.
+EDITOR-01K source/docs are local; public publication and its own CI remain pending.
+
+EDITOR-01J is published at `ffb398d34279898074765141048cb6955e198c53` with matching tree `97fe4253f2e63dabd545a95481768210ea1009a2`. Actions run `37353516609` completed successfully: build, unit tests, dependency audits, populated upgrade and native application flows passed.
+
+Titles
 and burned cues use selected-font metrics, grapheme-safe wrapping and bounded
 separate text areas. Text that cannot fit at 16px fails with a safe scene/cue error
 before storage/cache work; drafts and SRT stay intact. Cache version 6 prevents

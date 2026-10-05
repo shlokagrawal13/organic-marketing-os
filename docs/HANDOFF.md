@@ -1,19 +1,15 @@
 # Project handoff — 0.9.2 / 2026-10-05 (IST)
 
-Latest local increment: EDITOR-01J font-aware bounded text layout, locally verified.
-Selected-font metrics replace average character-count wrapping. Word splits keep
-graphemes intact, including combining accents; title/caption areas stay separate.
-Overfull text at the 16px minimum fails with a safe scene/cue error before storage
-or cache work. Draft text and SRT remain intact; cache version 6 invalidates old
-layouts. Passed 47 unit, 7 HTTP, 6 browser and 5 recovery cases, production builds
-and all 12 migrations. Eighteen decoded frames cover three aspects at 720/1080.
-Review VERIFICATION_REPORT.md for the actual checks and resolved environment issues.
-Next: exact approval/publication of the 18-file source/docs payload, including
-the prior EDITOR-01I post-CI evidence, then verify EDITOR-01J's own Actions run.
-No public write was attempted for EDITOR-01J. Broader language/audio/device QA,
-Indic/CJK shaping and automatic speech alignment remain open.
+EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.
 
-Latest published increment: EDITOR-01I fallback font/readability QA. The render worker
+Next: publish the reviewed EDITOR-01K source/docs payload after exact approval,
+verify its own tree/CI, then continue broader language/device/audio acceptance
+or automatic speech alignment. Subjective speech quality, loudness/true-peak targets, arbitrary codecs/channel layouts, physical-device playback, Indic/CJK shaping and automatic speech alignment remain open. No new dependency, schema/migration, live/paid provider or user runtime data change.
+
+EDITOR-01J is published at `ffb398d34279898074765141048cb6955e198c53` with matching tree `97fe4253f2e63dabd545a95481768210ea1009a2`. Actions run `37353516609` completed successfully: build, unit tests, dependency audits, populated upgrade and native application flows passed.
+Broader language/device QA, Indic/CJK shaping and automatic speech alignment remain open.
+
+Previous published increment: EDITOR-01I fallback font/readability QA. The render worker
 loads trusted fallback fonts from `RENDER_FONT_FALLBACK_PATHS`, requires each title
 or burned caption cue to be fully covered by one configured TTF/OTF, passes the
 selected controlled font file to FFmpeg and includes the configured font-set hashes

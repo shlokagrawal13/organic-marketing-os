@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.9.2 EDITOR-01K audio output QA - 2026-10-05 (IST)
+
+- Require stereo 48 kHz AAC, finite audio/video/container duration and aligned audio start on new/cached segments and final MP4; incompatible caches rebuild.
+- Decode exported AAC to PCM to verify narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and cache reuse.
+- Passed 49 unit, 7 HTTP, 6 browser, 5 recovery cases, production builds and 12 fresh migrations. No encoding/cache-key, dependency or schema change; no live/paid provider used.
+- Local source/docs only; publication and this increment’s own CI remain pending. Broader language/device/subjective audio acceptance remains open.
+
 ## 0.9.2 EDITOR-01J font-aware bounded text layout - 2026-10-05 (IST)
 
 - Replace character-count wrapping with selected-font metrics and grapheme-safe word splitting; preserve accents, fallback font selection and explicit RTL shaping.
 - Bound titles/cues in separate areas with a 16px minimum font size. Overfull text fails with a safe scene/cue message before storage/cache work; SRT and saved drafts remain intact.
 - Advance scene cache version to 6 so prior-layout segments cannot be reused.
 - Add six output-geometry combinations with 18 decoded frames checking titles and captions independently, plus overfull-caption history and captions-off/cue-override coverage. Final checks and publication state are recorded in VERIFICATION_REPORT.md.
+- Published as `ffb398d34279898074765141048cb6955e198c53` with matching tree; Actions run `37353516609` passed.
 - No dependency, schema/migration, architecture or live/paid-provider change.
 
 ## 0.9.2 EDITOR-01I fallback font/readability QA - 2026-10-05 (IST)

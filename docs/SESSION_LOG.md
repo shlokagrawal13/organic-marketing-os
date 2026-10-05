@@ -1,5 +1,14 @@
 # Session log
 
+## 2026-10-05 (IST) - EDITOR-01J publication closure and EDITOR-01K audio QA
+
+Resumed clean canonical `main` at `ffb398d34279898074765141048cb6955e198c53`; handoff check verified 188 included files. Recorded J publication tree `97fe4253f2e63dabd545a95481768210ea1009a2` and successful Actions run `37353516609`. Updated stale publication-pending continuity records.
+
+EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.
+
+Subjective speech quality, loudness/true-peak targets, arbitrary codecs/channel layouts, physical-device playback, Indic/CJK shaping and automatic speech alignment remain open. No new dependency, schema/migration, live/paid provider or user runtime data change.
+The initial audio fixture used non-UUID asset IDs and was corrected before focused success. First redirected full verifier stalled at the first migration and was stopped; the foreground rerun passed. Raw logs and generated fixtures remain outside the source checkpoint. New payload is local pending exact public publication approval; prior J approval covers the already published J payload.
+
 ## 2026-10-05 (IST) - EDITOR-01J bounded font-aware layout
 
 Resumed from local evidence commit `6f77564c037ec7bf88c71d4f2a19c3565a291af4`;

@@ -1,5 +1,35 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01K audio output QA - 2026-10-05 (IST)
+
+- `node --import tsx --test tests/render-audio.test.ts`: initial two focused cases passed after correcting test asset IDs to valid UUIDs. The final embedded-video-sound fixture also passed in `npm test`.
+- `npm test`: 49 cases passed (two new audio tests).
+- `npm run build:api` and `npm run build:web`: production builds passed.
+- `NODE_OPTIONS=--test-isolation=none npm run verify`: 7 HTTP, 6 production-browser and 5 recovery/configuration cases passed; all 12 fresh migrations applied and final success was printed.
+- `python3 scripts/package_handoff.py --check`: 189 included source/context/evidence files matched the refreshed manifest; `git diff --check` clean.
+- The first redirected verifier stayed at the first migration and was stopped. It is not a pass; the foreground rerun completed. Local environment uses disposable PGlite, native Redis 7.2.11, S3Proxy and real FFmpeg.
+
+Output validation now rejects nonfinite/missing/short stream durations, mono or
+non-48-kHz AAC and displaced/nonfinite audio start times. These checks apply to
+segments, cache reads and final MP4. A bad cached segment is rebuilt. No encoding
+or cache-key change was required.
+
+Real AAC output is decoded to PCM. 440/880 Hz tones separate short/long narration
+and prove padding/trimming across three one-second scenes. A visual clip's 660 Hz
+sound stays muted in the silent scene. A 0.2-second 220 Hz music fixture loops
+across the timeline; zero music gain stays silent and selected gain stays bounded.
+Inputs exercise mono/stereo and 32/44.1/48 kHz. A deliberately mono/44.1-kHz cache
+entry is rebuilt while other scenes are reused; music-only edits reuse valid
+segments. The authenticated HTTP export also passes the strict probe validation.
+
+Subjective speech intelligibility, loudness/true-peak clipping, every input format,
+ASR and physical-device playback are not certified. Indic/CJK/device/font QA stays
+open. Schema, dependencies and architecture are unchanged; no paid/live provider
+used. Populated restore and dependency audits were not rerun for this unchanged
+schema/dependency set. Latest public CI is EDITOR-01J run `37353516609`; it does
+not verify local EDITOR-01K. New source/docs publication needs current-payload
+approval, followed by its own CI.
+
 ## EDITOR-01J font-aware bounded text layout - 2026-10-05 (IST)
 
 - `node --import tsx --test --test-isolation=none tests/render-layout.test.ts`: 3 focused cases passed.
@@ -38,8 +68,11 @@ the final foreground run passed completely. Failed/incomplete runs are not passe
 No new dependencies, migrations, paid/live calls or user data changes. Populated
 upgrade and npm audit were not rerun for unchanged schema/dependencies; dated
 EDITOR-01I CI evidence remains separate. Physical-device testing, OCR-level
-readability, every custom font and Indic/CJK support remain open. EDITOR-01J is
-local only; publication and its own CI require the exact 18-file payload approval.
+readability, every custom font and Indic/CJK support remain open. EDITOR-01J was subsequently published after exact 18-file approval as
+`ffb398d34279898074765141048cb6955e198c53`; tree
+`97fe4253f2e63dabd545a95481768210ea1009a2` matched the local verified tree.
+Actions run `37353516609` completed success for build, unit tests, audits,
+populated upgrade and native application flows.
 
 ## EDITOR-01I CI portability follow-up - 2026-10-05 (IST)
 

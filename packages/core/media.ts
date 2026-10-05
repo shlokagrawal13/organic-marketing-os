@@ -188,6 +188,41 @@ export async function probeMedia(path: string, signal?: AbortSignal) {
     ),
   );
 }
+export function validateRenderedProbe(
+  probe: any,
+  width: number,
+  height: number,
+  expectedDuration: number,
+) {
+  const video = probe.streams?.find((s: any) => s.codec_type === "video"),
+    audio = probe.streams?.find((s: any) => s.codec_type === "audio");
+  const matchesDuration = (value: unknown) => {
+    const duration = Number(value);
+    return (
+      Number.isFinite(duration) &&
+      duration > 0 &&
+      Math.abs(duration - expectedDuration) <= 0.2
+    );
+  };
+  const audioStart = Number(audio?.start_time);
+  if (
+    video?.codec_name !== "h264" ||
+    video.width !== width ||
+    video.height !== height ||
+    audio?.codec_name !== "aac" ||
+    Number(audio.sample_rate) !== 48000 ||
+    audio.channels !== 2 ||
+    !Number.isFinite(audioStart) ||
+    Math.abs(audioStart) > 0.05 ||
+    !matchesDuration(probe.format?.duration) ||
+    !matchesDuration(video.duration) ||
+    !matchesDuration(audio.duration)
+  )
+    throw new Error(
+      "The rendered media did not pass codec, dimension, audio format or duration checks.",
+    );
+}
+
 export function validateProbe(probe: any, kind: "IMAGE" | "VIDEO" | "AUDIO") {
   const video = probe.streams?.find((s: any) => s.codec_type === "video"),
     audio = probe.streams?.find((s: any) => s.codec_type === "audio");

@@ -19,6 +19,7 @@ import {
   MAX_UPLOAD_BYTES,
   MAX_RENDER_BYTES,
   validateRenderScenes,
+  validateRenderedProbe,
 } from "./media";
 
 type AssetInput = {
@@ -440,17 +441,10 @@ async function checkOutput(
   duration: number,
   signal: AbortSignal,
 ) {
-  const result = await probeMedia(path, signal),
-    v = result.streams?.find((s: any) => s.codec_type === "video"),
-    a = result.streams?.find((s: any) => s.codec_type === "audio");
-  if (
-    v?.codec_name !== "h264" ||
-    v.width !== width ||
-    v.height !== height ||
-    a?.codec_name !== "aac" ||
-    Math.abs(Number(result.format?.duration) - duration) > 0.2
-  )
-    throw new Error(
-      "The rendered media did not pass codec, dimension or duration checks.",
-    );
+  validateRenderedProbe(
+    await probeMedia(path, signal),
+    width,
+    height,
+    duration,
+  );
 }

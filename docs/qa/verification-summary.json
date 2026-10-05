@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 47,
+    "unit": 49,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01J font-aware bounded text layout, locally verified; public approval and CI pending",
+  "latestIncrement": "EDITOR-01K audio output QA locally verified; public publication/CI pending",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -144,14 +144,13 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "latestRunId": 37317283904,
-    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37317283904",
-    "latestSourceCommit": "56702de088f2e8d2198e3ea858dd96efe6b9d200",
+    "latestRunId": 37353516609,
+    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37353516609",
+    "latestSourceCommit": "ffb398d34279898074765141048cb6955e198c53",
     "latestConclusion": "success",
-    "latestJobName": "Native application verification",
-    "latestIncrement": "EDITOR-01I",
+    "latestIncrement": "EDITOR-01J",
     "nativeTestsExecuted": true,
-    "scopeWarning": "Does not verify local EDITOR-01J; new publication/CI pending."
+    "scopeWarning": "Does not verify local EDITOR-01K."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -503,10 +502,53 @@
     "npmTestEntrypointPassed": true,
     "populatedUpgradeRestoreRerun": false,
     "npmFullAuditRerun": false,
-    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "publicationStatus": "published_ci_verified",
     "liveProviderUsed": false,
-    "nativeCiVerified": false,
+    "nativeCiVerified": true,
     "knownFailures": [],
-    "verificationNote": "Initial overflow fixture corrected to the existing 300-character render limit. Rebuilt after interrupted Turbopack cache corruption. Restored missing Redis from official GitHub 7.2.11 tag and checksum-verified S3Proxy with the unchanged installer. One verifier stalled at migrations and was stopped; final foreground run passed 7/6/5. Prior EDITOR-01I CI does not verify this source."
+    "verificationNote": "Initial overflow fixture corrected to the existing 300-character render limit. Rebuilt after interrupted Turbopack cache corruption. Restored missing Redis from official GitHub 7.2.11 tag and checksum-verified S3Proxy with the unchanged installer. One verifier stalled at migrations and was stopped; final foreground run passed 7/6/5. Prior EDITOR-01I CI does not verify this source. J publication subsequently completed with matching tree and successful Actions run 37353516609.",
+    "publicCommit": "ffb398d34279898074765141048cb6955e198c53",
+    "publicTree": "97fe4253f2e63dabd545a95481768210ea1009a2",
+    "actionsRunId": 37353516609,
+    "actionsConclusion": "success"
+  },
+  "editor01kEvidence": {
+    "scope": "Decoded exported AAC audio QA and strict cached/final media probe checks",
+    "stereo48000HzAacRequired": true,
+    "finiteContainerVideoAudioDurationsRequired": true,
+    "durationToleranceSeconds": 0.2,
+    "audioStartToleranceSeconds": 0.05,
+    "decodedPcmVerified": true,
+    "narrationPaddingTrimmingAndSceneBoundaries": true,
+    "embeddedVideoAudioMuted": true,
+    "musicLoopingAndZeroSelectedVolume": true,
+    "invalidMono44100CacheRebuilt": true,
+    "validCacheAndMusicOnlyReuse": true,
+    "inputSampleRates": [
+      32000,
+      44100,
+      48000
+    ],
+    "inputChannels": [
+      1,
+      2
+    ],
+    "unitTestsPassed": 49,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "fullLocalVerifierRerun": true,
+    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "nativeCiVerified": false,
+    "liveProviderUsed": false,
+    "populatedUpgradeRestoreRerun": false,
+    "npmFullAuditRerun": false,
+    "verificationNote": "Initial invalid UUID fixture corrected. First redirected verifier stalled at first migration and stopped; foreground rerun passed 7/6/5. No subjective loudness/true-peak, ASR or physical-device claim. Encoding/cache key unchanged.",
+    "handoffCheckPassed": true,
+    "includedFilesVerified": 189,
+    "diffCheckPassed": true
   }
 }
