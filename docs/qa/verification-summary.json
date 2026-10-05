@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 37,
+    "unit": 41,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01F rendered-text script preflight, locally verified; publication pending",
+  "latestIncrement": "EDITOR-01G configured-font glyph coverage, locally verified; publication pending",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -275,10 +275,15 @@
     "populatedUpgradeRestore": true,
     "configuredFontGlyphCoverageVerified": false,
     "multilingualShapingVerified": false,
-    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "publicationStatus": "published_ci_verified",
     "liveProviderUsed": false,
     "knownFailures": [],
-    "verificationNote": "Used Node 24.19.0 --test-isolation=none for individually reported cases, inherited via NODE_OPTIONS in full harness. Initial S3Proxy permission blocker resolved by approved escalation. Middle-dot policy regression fixed, then unit/API/full harness rerun passed."
+    "verificationNote": "Used Node 24.19.0 --test-isolation=none for individually reported cases, inherited via NODE_OPTIONS in full harness. Initial S3Proxy permission blocker resolved by approved escalation. Middle-dot policy regression fixed, then unit/API/full harness rerun passed.",
+    "publicationCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+    "publicationTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+    "actionsRunId": 37228966502,
+    "actionsConclusion": "success",
+    "nativeTestsExecuted": true
   },
   "editor01fCommands": [
     "node --import tsx --test --test-isolation=none tests/*.test.ts",
@@ -291,5 +296,68 @@
     "archiveBytes": 4865777,
     "sha256": "2ac1129f79474a4d98d13e4ae2554d9a9cfc39282ec2decd017e6f641f0d9b4d",
     "nativePostgresRestoreVerified": false
+  },
+  "editor01fPublication": {
+    "publishedAtUtc": "2026-10-04T19:36:44Z",
+    "visibility": "public",
+    "applicationCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+    "applicationTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+    "localCommit": "83c3b01631891f6a274fe65e81a59feba55c3e16",
+    "baseCommit": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
+    "baseTree": "ef47a192649746b0257dfc44c8d52a8d2c48b7c2",
+    "uploadedChangedBlobCount": 19,
+    "remoteBlobCount": 185,
+    "localBlobCount": 185,
+    "mismatchCount": 0,
+    "actionsRunId": 37228966502,
+    "actionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37228966502",
+    "actionsConclusion": "success",
+    "actionsCompletedAtUtc": "2026-10-04T19:41:34Z",
+    "actionsJobsStarted": 1,
+    "nativeTestsExecuted": true
+  },
+  "editor01gEvidence": {
+    "scope": "Configured-font glyph mappings in exact FFmpeg font bytes; worker-side, not a queue-time API check",
+    "configuredFontGlyphCoverageVerified": true,
+    "exactInspectedFontBytesUsedForFfmpegAndCache": true,
+    "beforeStorageCacheAndAssetDownloads": true,
+    "boundedFontRead": true,
+    "maxFontBytes": 16777216,
+    "singleTtfOtfOnly": true,
+    "safeFontErrorMessagesInHistory": true,
+    "missingSupplementaryLatinGlyphFailsJob": true,
+    "missingGlyphCreatesNoOutputOrCacheSegment": true,
+    "effectiveCaptionsAndSrtPreserved": true,
+    "latinGreekCyrillicAndAccentsRealFontVerified": true,
+    "malformedMissingOversizedAndCollectionFontsRejected": true,
+    "scriptPolicyUnchanged": true,
+    "multilingualShapingVerified": false,
+    "unitTestsPassed": 41,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "fullLocalVerifierRerun": true,
+    "fullLocalVerifierBlocker": null,
+    "populatedUpgradeRestoreRerun": false,
+    "priorUpgradeEvidence": "EDITOR-01F populated PGlite upgrade/fresh restore passed; no migration/schema change in EDITOR-01G",
+    "npmFullAuditAdvisories": 0,
+    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "liveProviderUsed": false,
+    "knownFailures": [],
+    "verificationNote": "Resumed known 10-file work-in-progress drift without overwriting it. Final full harness completed successfully without escalation on 2026-10-05. Unit cases explicitly reported using --test-isolation=none."
+  },
+  "editor01gCommands": [
+    "node --import tsx --test --test-isolation=none tests/*.test.ts",
+    "npm run build:api",
+    "npm run build:web",
+    "npm audit --json",
+    "NODE_OPTIONS=--test-isolation=none npm run verify"
+  ],
+  "editor01gDependencies": {
+    "fontkit": "2.0.4",
+    "@types/fontkit": "2.0.9"
   }
 }

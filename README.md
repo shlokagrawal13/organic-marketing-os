@@ -2,14 +2,26 @@
 
 ### Latest local editor increment
 
+EDITOR-01G inspects the exact configured TTF/OTF glyph mappings before worker
+storage/cache/media work. Missing glyphs produce safe scene/cue/codepoint errors
+in render history; captions-off Unicode SRT stays supported. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
+API/web production builds, 12 fresh migrations and a full npm audit with zero
+advisories. No live/paid provider was used. Local only; public publication and
+remote CI await current-payload approval.
+Multilingual shaping remains open; see `docs/VIDEO_PIPELINE.md` for font setup.
+
+### Latest published editor increment
+
 EDITOR-01F adds conservative rendered-text script preflight before queueing and
 in the worker. Scene/cue errors explain unsupported text; captions-off Unicode
 SRT and unused fallback captions are preserved. Passed 37 unit, 7 HTTP, 6 browser
 and 5 recovery scenarios, API/web builds and populated PGlite upgrade/restore.
-Local only; public publication awaits current-payload approval. This does not
-implement multilingual shaping or configured-font glyph coverage.
+Published EDITOR-01F to public `main` as `72b796d6d93ae5f5da475e3c33d021858131df1e`;
+tree `97e227fa6352de563f6e3d018704960f8e34264d` matched all 185 local blob paths,
+modes and SHAs. Actions run `37228966502` completed successfully.
+This does not implement multilingual shaping or configured-font glyph coverage.
 
-### Latest published editor increment
+### Earlier named export presets
 
 EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches. Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios, API/web production builds, all 12 migrations and populated PGlite upgrade/fresh restore. Published to public main as application commit `06e5da96ec4e811b0a95510247db25c3d54ac669`; remote tree `092b502cca399cfe732d9743202f310b0c80d994` matched the local 185-blob tree exactly, and Actions run `37207895511` completed successfully. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 

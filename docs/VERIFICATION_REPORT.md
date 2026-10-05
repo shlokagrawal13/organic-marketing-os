@@ -1,5 +1,32 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01G configured-font glyph coverage - 2026-10-05 (IST)
+
+- `node --import tsx --test --test-isolation=none tests/*.test.ts`: 41 cases passed.
+- `npm run build:api` and `npm run build:web`: passed.
+- `npm audit --json`: zero advisories across all npm dependencies after adding pinned Fontkit 2.0.4 and types 2.0.9.
+- `NODE_OPTIONS=--test-isolation=none npm run verify`: 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios passed, with all 12 migrations and explicit final success. No escalation needed in this completed run.
+
+Unit checks use actual installed DejaVu Sans to cover Latin/Greek/Cyrillic,
+composed/decomposed accents, whitespace and a script-policy-accepted character
+(U+1DF00) missing from that font. They reject missing burned glyphs while allowing
+captions-off SRT and unused fallback text; malformed/unsupported/oversized/missing
+font files fail with controlled messages. A renderer test proves rejection occurs
+before storage, cache or media work.
+
+The HTTP/worker test queues a missing-glyph render and verifies FAILED history
+with a useful U+1DF00 message, no server font paths, no output and no new cached
+segment. The real successful media flow includes accented Latin, Greek and
+Cyrillic titles. Existing frame/audio/cache, tenant/role/revision, browser and
+recovery scenarios all pass. No new browser UI was introduced.
+
+No schema/migration change; populated upgrade/fresh restore was not rerun and its
+prior EDITOR-01F evidence remains below. Font mapping coverage does not prove
+correct complex shaping or decoded multilingual readability. Full Compose/MinIO,
+native/cross-store restore, live providers and master acceptance remain open.
+EDITOR-01G public publication and native remote CI are pending current-payload
+approval. No paid provider or user runtime data was used.
+
 ## EDITOR-01F rendered-text preflight - 2026-10-05 (IST)
 
 Local verification passed on the final application source:
@@ -24,8 +51,12 @@ run repeated successfully. No known failing check remains for this increment.
 
 No live/paid provider or native PostgreSQL restore was exercised. This is a
 conservative script/character policy, not actual font glyph coverage, multilingual
-shaping or decoded multilingual readability certification. Local source only;
-EDITOR-01F publication and remote CI remain pending.
+shaping or decoded multilingual readability certification. Published EDITOR-01F to public `main` as `72b796d6d93ae5f5da475e3c33d021858131df1e`;
+tree `97e227fa6352de563f6e3d018704960f8e34264d` matched all 185 local blob paths,
+modes and SHAs. Actions run `37228966502` completed successfully.
+Decoded CI job logs independently confirm 37 unit, 7 HTTP, 6 browser and 5 recovery
+cases and native PostgreSQL/Redis verification. All build/audit/upgrade/artifact
+steps passed. These post-publication records are local evidence.
 
 ## EDITOR-01E named export presets — 2026-10-04 (IST)
 

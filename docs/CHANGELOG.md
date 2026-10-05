@@ -1,10 +1,17 @@
 # Changelog
 
+## 0.9.2 EDITOR-01G configured-font coverage - 2026-10-05 (IST)
+
+- Inspect exact configured TTF/OTF bytes with pinned Fontkit 2.0.4 before worker storage/cache/media work. Font hash and copied FFmpeg bytes stay identical.
+- Add bounded font loading (16 MiB), explicit invalid/missing/unsupported-font failures and safe scene/cue/codepoint errors in render history. Script policy, effective cues and captions-off Unicode SRT remain unchanged.
+- Passed 41 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web builds, 12 fresh migrations and zero-advisory npm audit. No live/paid provider or schema/migration change. Local only; publication/CI pending.
+- Glyph mappings do not certify complex shaping or readability. Those remain next work; populated upgrade/restore evidence remains from EDITOR-01F.
+
 ## 0.9.2 EDITOR-01F rendered-text preflight - 2026-10-05 (IST)
 
 - Added shared API/worker script and character policy for titles and effective burned captions, with scene/cue-specific errors before a new job is created.
 - Preserve common punctuation, accents, captions-off Unicode SRT and unused fallback captions. Drafts/voiceover notes remain unchanged. No new migration, dependency or paid call.
-- Passed 37 unit, 7 HTTP, 6 production-browser and 5 recovery scenarios, API/web builds, 12 migrations and populated PGlite upgrade/restore. Local only; current-slice publication approval remains pending.
+- Passed 37 unit, 7 HTTP, 6 production-browser and 5 recovery scenarios, API/web builds, 12 migrations and populated PGlite upgrade/restore. Published at `72b796d6d93ae5f5da475e3c33d021858131df1e`; tree `97e227fa6352de563f6e3d018704960f8e34264d` matches 185/185 local blobs, and Actions run `37228966502` passed every step.
 - This conservative check is not font glyph inspection or multilingual shaping support; those and wider language/audio QA remain open.
 
 ## 0.9.2 EDITOR-01E named export presets — 2026-10-04 (IST)

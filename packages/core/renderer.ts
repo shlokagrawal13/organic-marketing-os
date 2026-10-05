@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { ObjectStore } from "./object-store";
 import { sceneCaptionCues } from "./captions";
+import { readRenderFont, assertRenderFontCoverage } from "./render-font";
 import {
   RenderOptions,
   Scene,
@@ -66,6 +67,8 @@ function wrap(text: string, width: number) {
 export async function renderVideo(ctx: RenderContext) {
   const { store, signal, options, scenes } = ctx;
   validateRenderScenes(scenes, options);
+  const font = await readRenderFont();
+  assertRenderFontCoverage(font, scenes, options);
   const [width, height] = dimensions(options),
     duration = scenes.reduce((sum, s) => sum + s.duration, 0);
   const dir = await mkdtemp(join(tmpdir(), "mos-render-"));
@@ -97,10 +100,6 @@ export async function renderVideo(ctx: RenderContext) {
   try {
     await store.ready();
     // Copy only a trusted server-configured font to a controlled filter path.
-    const font = await readFile(
-      process.env.RENDER_FONT_PATH ||
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    );
     await writeFile(join(dir, "font.ttf"), font);
     for (let i = 0; i < ctx.assets.length; i++) {
       abort();

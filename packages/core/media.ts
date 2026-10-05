@@ -221,6 +221,19 @@ export function validateProbe(probe: any, kind: "IMAGE" | "VIDEO" | "AUDIO") {
     duration: kind !== "IMAGE" ? duration : null,
   };
 }
+export function renderedSceneText(
+  scene: Scene,
+  options: Pick<RenderOptions, "captions">,
+) {
+  return [
+    { text: scene.onScreenText, label: `Scene ${scene.id} on-screen text` },
+    ...(options.captions ? sceneCaptionCues(scene) : []).map((cue, index) => ({
+      text: cue.text,
+      label: `Scene ${scene.id} caption cue ${index + 1}`,
+    })),
+  ];
+}
+
 export function validateRenderScenes(
   scenes: Scene[],
   options: Pick<RenderOptions, "captions"> = { captions: true },
@@ -237,17 +250,8 @@ export function validateRenderScenes(
       throw new Error(
         "Keep each scene's on-screen text under 180 characters and its caption under 300 characters.",
       );
-    const renderedText: Array<[string, string]> = [
-      [s.onScreenText, `Scene ${s.id} on-screen text`],
-      ...(options.captions ? sceneCaptionCues(s) : []).map(
-        (cue, index): [string, string] => [
-          cue.text,
-          `Scene ${s.id} caption cue ${index + 1}`,
-        ],
-      ),
-    ];
-    for (const [value, label] of renderedText) {
-      const issue = renderTextSupportIssue(value, label);
+    for (const { text, label } of renderedSceneText(s, options)) {
+      const issue = renderTextSupportIssue(text, label);
       if (issue) throw new Error(issue);
     }
     if (!["", "cut", "fade"].includes(s.transition.toLowerCase().trim()))

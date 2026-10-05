@@ -1,19 +1,19 @@
 {
-  "recordedAtUtc": "2026-10-04T14:08:27Z",
+  "recordedAtUtc": "2026-10-04T19:41:34Z",
   "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
   "repositoryId": 1389748509,
   "visibility": "public",
   "branch": "main",
   "applicationVersion": "0.9.2",
-  "applicationSourceCommit": "06e5da96ec4e811b0a95510247db25c3d54ac669",
-  "applicationSourceTree": "092b502cca399cfe732d9743202f310b0c80d994",
-  "applicationSourceTreeNote": "21 EDITOR-01E changed paths uploaded; the full 185-blob recursive remote tree matched local paths/modes/SHAs with zero mismatches.",
-  "baseCommit": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae",
+  "applicationSourceCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+  "applicationSourceTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+  "applicationSourceTreeNote": "19 EDITOR-01F changed paths uploaded; full 185-blob tree matched local paths/modes/SHAs with zero mismatches.",
+  "baseCommit": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
   "publishMethod": "GitHub Git Data API via connected GitHub tool; terminal git push lacked credentials.",
-  "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
+  "userApproval": "I explicitly approve publishing EDITOR-01F’s 19 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main",
   "remoteVerification": {
     "recursiveTreeChecked": true,
-    "uploadedChangedBlobCount": 21,
+    "uploadedChangedBlobCount": 19,
     "localBlobCount": 185,
     "remoteBlobCount": 185,
     "mismatchCount": 0,
@@ -22,12 +22,13 @@
   "repositoryActionsSettings": {
     "lastKnownActionsPermissions": "Allow all actions and reusable workflows",
     "lastKnownWorkflowPermissions": "Read and write permissions",
-    "settingsNotRecheckedAfterV09Publish": false
+    "settingsNotRecheckedAfterV09Publish": false,
+    "settingsRecheckedForEditor01f": false
   },
   "nativeCi": {
-    "runId": 37207895511,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37207895511",
-    "sourceCommit": "06e5da96ec4e811b0a95510247db25c3d54ac669",
+    "runId": 37228966502,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37228966502",
+    "sourceCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
     "status": "completed",
     "conclusion": "success",
     "jobsStarted": 1,
@@ -35,6 +36,9 @@
     "jobName": "Native application verification",
     "failureMode": null,
     "rootCause": null,
+    "annotation": "All steps passed. Decoded job logs confirm 37 unit, 7 HTTP, 6 browser and 5 recovery cases, builds, dependency-audit gates, populated upgrade and native PostgreSQL/Redis application verification.",
+    "path": ".github/workflows/ci.yml",
+    "jobConclusion": "success",
     "priorRunIds": [
       36269190288,
       36304124096,
@@ -55,11 +59,9 @@
       37126029720,
       37143980421,
       37189446835,
-      37191164246
-    ],
-    "annotation": "The published EDITOR-01E source completed every workflow step: build, 36 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload.",
-    "path": ".github/workflows/ci.yml",
-    "jobConclusion": "success"
+      37191164246,
+      37207895511
+    ]
   },
   "priorActionsStartupObservation": {
     "summary": "Earlier authenticated diagnostics showed an account-side Actions startup gate. Private account-page details are intentionally not retained in public source.",
@@ -67,21 +69,40 @@
     "currentStatus": "cleared before run 37049004398"
   },
   "latestPublication": {
-    "message": "Add EDITOR-01E named video export presets",
+    "message": "Add EDITOR-01F rendered-text script preflight",
     "remoteTreeMatchesLocalVerifiedTree": true,
     "commitFetchVerified": true,
     "actionsRunStarted": true,
-    "actionsRunId": 37207895511,
+    "actionsRunId": 37228966502,
     "actionsConclusion": "success",
-    "currentSliceStatus": "EDITOR-01E published to public main and CI-verified"
+    "currentSliceStatus": "EDITOR-01F published to public main and CI-verified",
+    "evidenceDocumentUploadStatus": "local_only"
   },
   "limits": [
     "Remote publication and CI verify the scoped increment, not full V3 production acceptance.",
-    "EDITOR-01E named render presets are published and CI-verified; automatic speech transcription/alignment, custom effects and broader editor QA remain open.",
+    "EDITOR-01F script preflight is published and CI-verified; actual configured-font coverage, multilingual shaping, speech alignment and broader editor QA remain open.",
     "No live AI request, Stripe payment, user database or private-media backup was performed.",
     "The configured native PostgreSQL/Redis application harness passed; full Compose/MinIO, native/cross-store restore and live-provider gates remain open."
   ],
   "currentUploadGate": {
+    "slice": "EDITOR-01F",
+    "initialRejected": false,
+    "resolved": true,
+    "destination": "public shlokagrawal13/organic-marketing-os main",
+    "changedFiles": 19,
+    "reason": "Exact current-payload user approval supplied before publication.",
+    "bypassed": false,
+    "remoteCommitCreated": true,
+    "remoteCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+    "remoteTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+    "remoteRefUpdated": true,
+    "localVerifiedSourceCommit": "83c3b01631891f6a274fe65e81a59feba55c3e16",
+    "verifiedRemoteParent": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
+    "actionsRunId": 37228966502,
+    "actionsConclusion": "success",
+    "userApproval": "I explicitly approve publishing EDITOR-01F’s 19 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main"
+  },
+  "previousUploadGate": {
     "slice": "EDITOR-01E",
     "initialRejected": true,
     "resolved": true,
@@ -102,19 +123,6 @@
     "actionsConclusion": "success",
     "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
   },
-  "previousUploadGate": {
-    "initialRejected": true,
-    "resolved": true,
-    "reason": "The first EDITOR-01D Git tree attempt was rejected until explicit current-slice public-export approval was supplied.",
-    "destination": "shlokagrawal13/organic-marketing-os main",
-    "changedFiles": 23,
-    "bypassed": false,
-    "remoteCommitCreated": true,
-    "remoteCommit": "9334411055f63f33333044b2b4ce079420fa2596",
-    "remoteTree": "8be7bfe6976d21a7db3411627548ebd8af7bd8c4",
-    "actionsRunId": 37191164246,
-    "actionsConclusion": "success"
-  },
   "docsEvidencePublicationGate": {
     "slice": "EDITOR-01E",
     "payload": "13 publication evidence/continuity docs after successful app source publication",
@@ -131,5 +139,46 @@
     "verifiedRemoteParent": "06e5da96ec4e811b0a95510247db25c3d54ac669",
     "verifiedRemoteParentTree": "092b502cca399cfe732d9743202f310b0c80d994",
     "userApproval": "User explicitly approved publishing EDITOR-01E’s 13 publication evidence/continuity docs to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+  },
+  "previousApplicationPublication": {
+    "commit": "06e5da96ec4e811b0a95510247db25c3d54ac669",
+    "tree": "092b502cca399cfe732d9743202f310b0c80d994",
+    "nativeCi": {
+      "runId": 37207895511,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37207895511",
+      "sourceCommit": "06e5da96ec4e811b0a95510247db25c3d54ac669",
+      "status": "completed",
+      "conclusion": "success",
+      "jobsStarted": 1,
+      "nativeTestsExecuted": true,
+      "jobName": "Native application verification",
+      "failureMode": null,
+      "rootCause": null,
+      "priorRunIds": [
+        36269190288,
+        36304124096,
+        36305587276,
+        36305819079,
+        36321113253,
+        36321841234,
+        36321972148,
+        36322906289,
+        36462190503,
+        36620025901,
+        36622686659,
+        36623211633,
+        37002434700,
+        37002814189,
+        37005496060,
+        37005778625,
+        37126029720,
+        37143980421,
+        37189446835,
+        37191164246
+      ],
+      "annotation": "The published EDITOR-01E source completed every workflow step: build, 36 unit tests, both configured dependency-audit gates, populated upgrade, PostgreSQL 17/Redis 7 application flows and browser-evidence upload.",
+      "path": ".github/workflows/ci.yml",
+      "jobConclusion": "success"
+    }
   }
 }

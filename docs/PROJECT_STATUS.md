@@ -24,7 +24,10 @@ Provider fixtures and passing local tests do not certify production readiness.
   Custom reset and saved history labels.
   EDITOR-01F adds conservative script/character preflight before queueing and in
   the worker, with scene/cue-specific errors. Captions-off Unicode SRT and unused
-  fallback captions remain supported. Actual font glyph coverage is still open.
+  fallback captions remain supported.
+  EDITOR-01G adds actual configured-font glyph mapping checks before worker
+  storage/cache/media work and safe scene/cue/codepoint errors in render history.
+  It preserves script restrictions; multilingual shaping/readability remain open.
   Automatic transcription and speech alignment are not implemented.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -46,10 +49,21 @@ Provider fixtures and passing local tests do not certify production readiness.
 
 ## Verification and limits
 
-EDITOR-01F is locally verified only: 37 unit, 7 HTTP, 6 production-browser and 5
-recovery/configuration scenarios passed, with API/web builds, 12 migrations and
-populated PGlite upgrade/fresh restore. Its public publication and remote CI are
-pending current-payload authorization. No live/paid provider was used.
+EDITOR-01G is locally verified only. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
+API/web production builds, 12 fresh migrations and a full npm audit with zero
+advisories. No live/paid provider was used. Local only; public publication and
+remote CI await current-payload approval.
+Populated upgrade/fresh restore was last rerun for EDITOR-01F; no schema/migration
+changed in this increment.
+
+EDITOR-01F is published and CI-verified: 37 unit, 7 HTTP, 6 production-browser and
+5 recovery/configuration scenarios passed, with API/web builds, 12 migrations
+and populated PGlite upgrade/fresh restore. Public Actions also passed the native
+PostgreSQL/Redis application harness. No live/paid provider was used.
+
+Published EDITOR-01F to public `main` as `72b796d6d93ae5f5da475e3c33d021858131df1e`;
+tree `97e227fa6352de563f6e3d018704960f8e34264d` matched all 185 local blob paths,
+modes and SHAs. Actions run `37228966502` completed successfully.
 
 Current exact evidence is in `docs/qa/verification-summary.json` and
 `docs/VERIFICATION_REPORT.md`; unfinished test runs are not passes. The test database
@@ -110,8 +124,8 @@ These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue EDITOR-01 language/font/audio QA with actual configured-font glyph coverage,
-multilingual shaping and decoded-text fixtures after EDITOR-01F script preflight. Automatic
+Continue EDITOR-01 language/font/audio QA with multilingual shaping and decoded-text
+readability after EDITOR-01G configured-font glyph checks. Automatic
 speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and

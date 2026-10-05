@@ -19,6 +19,39 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
+## Configured-font coverage (EDITOR-01G)
+
+The worker checks glyph mappings in the exact font bytes it will copy for FFmpeg,
+before creating temporary output, contacting storage, downloading media or using
+scene caches. It uses pinned Fontkit 2.0.4, not a hand-written font parser. The
+font bytes also remain part of the existing scene cache hash. Each job reloads
+the configured file, so font replacement cannot retain stale coverage results.
+
+`RENDER_FONT_PATH` is an optional trusted worker-side file path; blank uses
+`/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf`. Use a single TTF/OTF file up to
+16 MiB. Collections, WOFF/WOFF2, oversized/unreadable files and inspection errors
+fail explicitly. When containerized, mount the file and set its in-container path
+on the render worker. Browser font uploads or font-family fallback are not added.
+
+Glyph inspection follows the same effective titles and burned cues as script
+validation; ignored fallback captions and captions-off Unicode SRT are preserved.
+Whitespace is collapsed for coverage checks, matching rendering layout. Missing
+characters produce bounded scene/cue and Unicode-codepoint messages in render
+history. Controlled font errors are exposed; codec errors and filesystem paths
+remain private. The API still applies script policy before queueing; actual font
+coverage is worker-side, so it needs no API-side font installation. A missing
+glyph fails the queued job before expensive media work; it is not an API 400.
+
+This checks glyph mappings, not visual readability, ligatures, complex shaping,
+font licensing or comprehensive font-file sanitization. Font configuration is
+trusted administration input. Existing Latin/Greek/Cyrillic script restrictions
+remain even if a custom font contains other scripts. Multilingual shaping and
+decoded-text readability QA remain separate work. Unit fixtures require system
+DejaVu Sans, which the Docker image and CI media setup already install.
+
+Parser reference: https://github.com/foliojs/fontkit (buffer creation and
+`hasGlyphForCodePoint` API).
+
 ## Rendered-text preflight (EDITOR-01F)
 
 The API rejects unsupported on-screen text before creating a render job, with
@@ -32,8 +65,8 @@ scripts, emoji/symbols outside the policy, unsafe controls and invisible format
 characters. Common unsupported scripts receive a named explanation. Use an image
 asset containing the text where needed. This is script/character preflight, not
 inspection of the configured font's glyph table or proof of shaping/readability.
-Custom fonts do not expand the policy automatically. Full font coverage and
-multilingual shaping remain unverified.
+Custom fonts do not expand the policy automatically. EDITOR-01G adds the separate
+worker glyph-mapping check above; multilingual shaping remains unverified.
 
 Only effective burned caption cues are checked. Explicit cues replace an unused
 fallback caption; with burned captions off, Unicode SRT text remains exportable.

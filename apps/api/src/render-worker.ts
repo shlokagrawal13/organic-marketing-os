@@ -7,6 +7,7 @@ import { ObjectStore } from "../../../packages/core/object-store";
 import { draftSchema } from "../../../packages/core/ai";
 import { renderOptions, runProcess } from "../../../packages/core/media";
 import { renderVideo } from "../../../packages/core/renderer";
+import { RenderFontError } from "../../../packages/core/render-font";
 const db = new PrismaClient(),
   store = new ObjectStore();
 const connection = new Redis(
@@ -198,7 +199,9 @@ const worker = new Worker(
           status: "FAILED",
           error: abort.signal.aborted
             ? "The render was interrupted or exceeded 10 minutes. Retry to reuse completed scenes."
-            : "Media processing failed. Check the selected files and render-worker logs, then retry.",
+            : error instanceof RenderFontError
+              ? error.message.slice(0, 500)
+              : "Media processing failed. Check the selected files and render-worker logs, then retry.",
           stage: "Render failed",
           completedAt: new Date(),
         },

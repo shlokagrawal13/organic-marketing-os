@@ -1,17 +1,34 @@
 # Project handoff — 0.9.2 / 2026-10-05 (IST)
 
-Latest local increment: EDITOR-01F rendered-text script preflight. Shared API and
+Latest local increment: EDITOR-01G configured-font glyph coverage. The worker
+inspects exact TTF/OTF bytes before storage/cache/media work and records bounded
+safe missing-glyph/configuration errors in render history. Glyph mappings use
+pinned Fontkit 2.0.4; configuration is trusted administration input. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
+API/web production builds, 12 fresh migrations and a full npm audit with zero
+advisories. No live/paid provider was used. Local only; public publication and
+remote CI await current-payload approval.
+Existing EDITOR-01F script restrictions and captions-off Unicode SRT behavior
+are preserved. Populated restore was not rerun because schema/migrations did not
+change; prior EDITOR-01F evidence remains dated separately.
+
+Latest published increment: EDITOR-01F rendered-text script preflight. Shared API and
 worker validation reports unsupported title/burned-caption text by scene/cue;
 captions-off Unicode SRT and unused fallback captions are preserved. Passed 37
 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds, 12 migrations
 and populated PGlite upgrade/restore. Exact commands and corrected failures are
-in VERIFICATION_REPORT.md. No current-slice public authorization or CI yet.
+in VERIFICATION_REPORT.md.
+
+Published EDITOR-01F to public `main` as `72b796d6d93ae5f5da475e3c33d021858131df1e`;
+tree `97e227fa6352de563f6e3d018704960f8e34264d` matched all 185 local blob paths,
+modes and SHAs. Actions run `37228966502` completed successfully.
+These post-publication continuity updates are local only and can accompany the
+next authorized source payload; the exact approved 19 files are already public.
 
 Publication update: EDITOR-01E is published to canonical public `main` after exact current-slice approval. Application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` points to tree `092b502cca399cfe732d9743202f310b0c80d994`; recursive verification matched 185/185 remote blob paths, modes and SHAs. Actions run `37207895511` completed successfully.
 
 Follow-up EDITOR-01E docs-only evidence publication completed at `3348ee27b4338c6403ac7a70234d56cd94e9b354`, tree `ef47a192649746b0257dfc44c8d52a8d2c48b7c2`, after exact approval for the 13 continuity/evidence docs. The earlier automatic approval review rejection is retained as an audit event and was not bypassed.
 
-## Latest published increment: EDITOR-01E
+## Earlier published increment: EDITOR-01E
 
 EDITOR-01E adds named Reels / Shorts (1080×1920), Landscape video (1920×1080) and Square feed (1080×1080) export presets plus Custom. Preset-only requests normalize into immutable job options; conflicting dimensions are rejected. Source drafts/approval stay unchanged; history shows saved settings and identical geometry reuses scene caches.
 
@@ -19,8 +36,8 @@ Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration 
 
 Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: configured-font glyph coverage and multilingual shaping/decoded-text QA.
-EDITOR-01F script preflight is not proof of font coverage or multilingual support.
+Next: multilingual shaping and decoded-text readability QA after EDITOR-01G.
+Glyph mapping coverage is not proof of correct multilingual shaping.
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and

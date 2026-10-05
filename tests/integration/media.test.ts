@@ -150,7 +150,7 @@ test(
       duration: 2,
       voiceover: "Test-only narration placeholder",
       visual: "Uploaded fixture",
-      onScreenText: "Plan smarter · 100% your brand",
+      onScreenText: "Plan smarter · Caf\u00e9 \u03b1 \u0416",
       caption: "Test-only timed caption",
       transition: "Cut",
       music: "",
@@ -553,6 +553,40 @@ test(
         await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
       ).text(),
       /नमस्ते/,
+    );
+    const missingGlyphContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Configured font missing glyph",
+      scenes: [
+        { ...alternate.scenes[0], onScreenText: "\u{1df00}", caption: "" },
+      ],
+    });
+    assert.equal(missingGlyphContent.status, 201);
+    const beforeFontSegments = await db.renderSegment.count({
+      where: { organizationId: org },
+    });
+    const missingGlyphJob = await a.call(root + "/renders", "POST", {
+      contentId: missingGlyphContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: {},
+    });
+    assert.equal(
+      missingGlyphJob.status,
+      201,
+      JSON.stringify(missingGlyphJob.body),
+    );
+    const missingGlyphResult = await wait(missingGlyphJob.body.id);
+    assert.equal(missingGlyphResult.status, "FAILED");
+    assert.match(
+      missingGlyphResult.error,
+      /on-screen text.*configured render font.*U\+1DF00/,
+    );
+    assert.doesNotMatch(missingGlyphResult.error, /\/usr\/|\.ttf|node_modules/);
+    assert.equal(missingGlyphResult.outputBytes, null);
+    assert.equal(
+      await db.renderSegment.count({ where: { organizationId: org } }),
+      beforeFontSegments,
     );
     for (const [preset, width, height] of [
       ["vertical-social-v1", 1080, 1920],
