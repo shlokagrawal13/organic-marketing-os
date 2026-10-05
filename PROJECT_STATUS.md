@@ -27,8 +27,9 @@ Provider fixtures and passing local tests do not certify production readiness.
   fallback captions remain supported.
   EDITOR-01G adds actual configured-font glyph mapping checks before worker
   storage/cache/media work and safe scene/cue/codepoint errors in render history.
-  EDITOR-01H locally verifies Arabic/Hebrew rendered titles and burned captions
-  with explicit FFmpeg text shaping. Broader multilingual fallback/readability,
+  EDITOR-01H verifies Arabic/Hebrew rendered titles and burned captions
+  with explicit FFmpeg text shaping. EDITOR-01I locally verifies trusted fallback
+  fonts and decoded readability smoke coverage for allowed rendered text. Broader Indic/CJK shaping,
   automatic transcription and speech alignment remain open.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
@@ -50,7 +51,13 @@ Provider fixtures and passing local tests do not certify production readiness.
 
 ## Verification and limits
 
-EDITOR-01H is locally verified only. It adds explicit Arabic/Hebrew RTL text shaping while keeping unsupported scripts blocked. Passed 42 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases after rebuilding dist. Public publication and remote CI await current-payload approval.
+EDITOR-01I is locally verified only. It adds trusted `RENDER_FONT_FALLBACK_PATHS`
+support, per-overlay font selection, font-set cache keys and decoded Arabic/Hebrew
+readability smoke coverage while keeping unsupported scripts blocked. Passed 44
+unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases. Public
+publication and remote CI await current-payload approval.
+
+EDITOR-01H is published at `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`. It adds explicit Arabic/Hebrew RTL text shaping while keeping unsupported scripts blocked. Passed 42 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases after rebuilding dist.
 
 EDITOR-01G is published and CI-verified. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
 API/web production builds, 12 fresh migrations and a full npm audit with zero
@@ -132,8 +139,8 @@ These records do not diagnose ChatGPT buffering.
 
 ## Next work
 
-Continue EDITOR-01 language/font/audio QA with multilingual shaping and decoded-text
-readability after EDITOR-01G configured-font glyph checks. Automatic
+Continue EDITOR-01 language/font/audio QA with broader Indic/CJK shaping, device/font
+matrix and audio QA after EDITOR-01I fallback-font/readability smoke coverage. Automatic
 speech alignment remains open. MEDIA-01D remaining provider/reference modes still require a
 provider choice, and MEDIA-LIVE-01 tracks authorized provider acceptance separately. Then continue sourced research, official
 publishing, analytics/growth, administration, notifications, data lifecycle and

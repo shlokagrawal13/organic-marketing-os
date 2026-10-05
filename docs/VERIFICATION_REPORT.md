@@ -1,5 +1,37 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01I fallback font/readability QA - 2026-10-05 (IST)
+
+- `node --import tsx --test --test-isolation=none tests/render-font.test.ts`: 7 focused font/readability cases passed.
+- `node --import tsx --test --test-isolation=none tests/*.test.ts`: 44 cases passed.
+- `npm run build:api`: API TypeScript build passed.
+- `npm run build:web`: Next.js 16.3.8 production build passed.
+- `NODE_OPTIONS=--test-isolation=none npm run verify`: 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios passed, with all 12 migrations and explicit final success.
+
+The new coverage adds trusted worker-side fallback font configuration through
+`RENDER_FONT_FALLBACK_PATHS`. Each title or burned caption cue must be fully
+covered by one configured single-face TTF/OTF. The renderer copies the selected
+controlled font file into the FFmpeg workspace, preserves explicit
+`text_shaping=1`, and includes the full configured font-set hashes in the scene
+cache key. Tests verify an Arabic/Hebrew render where the primary font lacks
+those glyphs and the fallback supplies them, then decode a real frame and assert
+visible overlay pixels.
+
+Initial focused readability coverage used `execFileSync` for FFmpeg frame decode
+and hit sandbox `EPERM` despite output; the test was switched to the project
+`runProcess` helper and rerun successfully. Fresh dependency install required
+network escalation. The Redis installer download later returned HTTP 403 even
+after escalation, so the verifier used an existing checksum-pinned Redis 7.2.11
+build from a prior scratch workspace. The S3Proxy artifact was copied from prior
+scratch and verified by `scripts/install_test_storage.py`. A sandboxed full
+verifier attempt reached S3Proxy startup but exited before readiness; the
+elevated rerun passed. No live/paid provider, schema/migration or user runtime
+data changed.
+
+This is fallback/readability smoke coverage for already-allowed scripts, not
+browser font uploads, per-glyph mixed-font fallback, OCR-level readability,
+font licensing review, Indic/CJK support or universal complex shaping.
+
 ## EDITOR-01H RTL text shaping - 2026-10-05 (IST)
 
 - `node --import tsx --test --test-isolation=none tests/*.test.ts`: 42 cases passed.

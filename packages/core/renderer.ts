@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { ObjectStore } from "./object-store";
 import { sceneCaptionCues } from "./captions";
-import { readRenderFont, assertRenderFontCoverage } from "./render-font";
+import { readRenderFonts, createRenderFontPlan } from "./render-font";
 import {
   RenderOptions,
   Scene,
@@ -67,8 +67,11 @@ function wrap(text: string, width: number) {
 export async function renderVideo(ctx: RenderContext) {
   const { store, signal, options, scenes } = ctx;
   validateRenderScenes(scenes, options);
-  const font = await readRenderFont();
-  assertRenderFontCoverage(font, scenes, options);
+  const fontPlan = createRenderFontPlan(
+    await readRenderFonts(),
+    scenes,
+    options,
+  );
   const [width, height] = dimensions(options),
     duration = scenes.reduce((sum, s) => sum + s.duration, 0);
   const dir = await mkdtemp(join(tmpdir(), "mos-render-"));
@@ -99,8 +102,9 @@ export async function renderVideo(ctx: RenderContext) {
   const inputs = new Map<string, { asset: AssetInput; path: string }>();
   try {
     await store.ready();
-    // Copy only a trusted server-configured font to a controlled filter path.
-    await writeFile(join(dir, "font.ttf"), font);
+    // Copy only trusted server-configured fonts to controlled filter paths.
+    for (const [index, font] of fontPlan.fonts.entries())
+      await writeFile(join(dir, `font-${index}.ttf`), font);
     for (let i = 0; i < ctx.assets.length; i++) {
       abort();
       const asset = ctx.assets[i],
@@ -132,8 +136,8 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-4-image-motion",
-          font: sha256(font),
+          version: "mos-render-5-font-fallback",
+          fonts: fontPlan.fontHashes,
           width,
           height,
           background: options.background,
@@ -249,8 +253,9 @@ export async function renderVideo(ctx: RenderContext) {
             wrapped = wrap(text, Math.floor((width * 0.84) / (fontSize * 0.6)));
           }
           await writeFile(join(dir, file), wrapped, "utf8");
+          const fontIndex = fontPlan.selectFontIndex(text);
           filters.push(
-            `drawtext=fontfile=font.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}${enable}`,
+            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}${enable}`,
           );
         }
         if (scene.transition.toLowerCase().trim() === "fade")

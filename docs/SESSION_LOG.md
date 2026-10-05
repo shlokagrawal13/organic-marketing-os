@@ -1,5 +1,17 @@
 # Session log
 
+## 2026-10-05 (IST) - EDITOR-01I fallback font/readability QA
+
+Continued from public `main` at `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`; the handoff manifest initially matched 186 included files with no drift. The checkpoint text still described EDITOR-01H as awaiting publication, while the repository head already contained it publicly; continuity records were reconciled to treat EDITOR-01H as published and this slice as local.
+
+Added trusted fallback-font support for the render worker through `RENDER_FONT_FALLBACK_PATHS`. `RENDER_FONT_PATH` remains the primary font; fallback paths use the platform delimiter and are deduplicated. Every rendered title or burned caption cue must be fully covered by one configured single-face TTF/OTF. The renderer passes the selected controlled font file to FFmpeg, preserves `text_shaping=1`, and includes all configured font hashes in the scene cache key. This does not add browser font uploads, remote font URLs or policy expansion for Indic/CJK scripts.
+
+Expanded font tests to cover fallback loading, Arabic/Hebrew primary-miss/fallback-hit selection and a real decoded-frame readability smoke check for visible overlay pixels. The first focused version used `execFileSync` for FFmpeg decode and hit sandbox `EPERM` despite output; switched to the project `runProcess` helper and reran successfully.
+
+Fresh checks passed: 44 unit cases, API TypeScript build, Next.js production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios plus all 12 migrations. `npm ci` required network escalation. The Redis installer download returned HTTP 403 after escalation, so the verifier used an existing checksum-pinned Redis 7.2.11 build from prior scratch. S3Proxy was copied from prior scratch and verified by checksum. The sandboxed full verifier stopped at S3Proxy readiness; elevated rerun passed. No live/paid provider, schema/migration, dependency version or user runtime data changed.
+
+Changed source/test paths: `packages/core/render-font.ts`, `packages/core/renderer.ts`, `tests/render-font.test.ts`. Continuity/evidence paths updated together: `PROJECT_CHECKPOINT.json`, `PROJECT_STATUS.md`, `docs/PROJECT_STATUS.md`, `docs/HANDOFF.md`, `docs/TASK_BOARD.md`, `docs/VERIFICATION_REPORT.md`, `docs/VIDEO_PIPELINE.md`, `docs/qa/verification-summary.json`, and this log. Next: publish EDITOR-01I after exact approval, then continue broader EDITOR-01 language/audio QA or automatic speech alignment.
+
 ## 2026-10-05 (IST) - EDITOR-01H RTL text shaping
 
 Added explicit `text_shaping=1` to FFmpeg drawtext overlays and expanded the render policy from Latin/Greek/Cyrillic to include Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and unsupported symbols remain blocked with named errors; captions-off Unicode SRT remains supported.

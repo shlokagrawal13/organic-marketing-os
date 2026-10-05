@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-05.5",
-  "savedAtUtc": "2026-10-05T07:40:02Z",
-  "currentMilestone": "EDITOR-01H local RTL text shaping",
+  "checkpointRevision": "2026-10-05.6",
+  "savedAtUtc": "2026-10-05T08:18:48Z",
+  "currentMilestone": "EDITOR-01I fallback font/readability QA",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -21,10 +21,11 @@
     "EDITOR-01E named export geometry presets are published at 06e5da96ec4e811b0a95510247db25c3d54ac669 and CI-verified by Actions run 37207895511; its approved continuity/docs publication completed at 3348ee27b4338c6403ac7a70234d56cd94e9b354.",
     "EDITOR-01F rendered-text script preflight is published and CI-verified. Commit 72b796d6d93ae5f5da475e3c33d021858131df1e points to tree 97e227fa6352de563f6e3d018704960f8e34264d; all 185 remote blob paths/modes/SHAs matched the verified local source. Actions run 37228966502 passed every step, with logs confirming 37 unit, 7 HTTP, 6 browser and 5 recovery cases. No live/paid provider used. Actual font glyph coverage, multilingual shaping and wider language/audio QA remain open.",
     "EDITOR-01G checks glyph mappings in the exact configured TTF/OTF bytes before worker storage/cache/media work. Missing glyphs and invalid font configuration produce bounded safe render-history errors; captions-off Unicode SRT and unused fallback captions remain supported. Pinned Fontkit 2.0.4 and types 2.0.9. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery cases, API/web builds, all 12 fresh migrations and zero-advisory full npm audit. Published to public main as d9a205799e69725bd4642014f8aaeeea710e1b3f; tree 79c3d129f6c824e12163ef66b22c705d1ecfc0c3 matched 187/187 local blobs. Actions run 37277131959 completed successfully with configured native PostgreSQL/Redis application verification. Multilingual shaping/readability remains open; no live or paid provider used.",
-    "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. No live/paid provider or schema/migration change."
+    "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. Published to public main at 2e33a2cc230ab99bed6d28a18a35853e4ab9c313.",
+    "EDITOR-01I adds trusted worker-side fallback font configuration via RENDER_FONT_FALLBACK_PATHS. Each rendered title/caption cue must be fully covered by one configured TTF/OTF; the selected font is copied to FFmpeg and all configured font hashes are part of the scene cache key. A decoded-frame smoke check verifies visible Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and the fallback supplies them. Passed 44 unit cases, API/web production builds and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios. No live/paid provider, schema/migration or runtime data changed."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Publish the verified EDITOR-01H payload after exact current-payload public approval. Continue broader multilingual fallback-font/readability QA after Arabic/Hebrew RTL support.",
+  "nextAction": "Publish the verified EDITOR-01I fallback-font/readability payload after exact current-payload public approval, then continue EDITOR-01 with broader language/device QA or automatic speech alignment.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -61,7 +62,7 @@
   "verification": {
     "date": "2026-10-05",
     "applicationSuites": {
-      "unit": 42,
+      "unit": 44,
       "httpScenarios": 7,
       "browserScenarios": 6,
       "recoveryConfigurationScenarios": 5
@@ -121,17 +122,21 @@
       ]
     },
     "latestIncrement": {
-      "scope": "Arabic/Hebrew RTL rendered text support through explicit FFmpeg text shaping; broader multilingual fallback remains open",
+      "scope": "Trusted fallback font configuration and decoded readability smoke coverage for allowed rendered text",
       "explicitDrawtextShaping": true,
       "arabicPolicyAllowed": true,
       "hebrewPolicyAllowed": true,
       "configuredFontGlyphGateStillApplies": true,
+      "fallbackFontPathsSupported": true,
+      "perOverlayFontSelection": true,
+      "fontSetCacheKey": true,
+      "decodedReadableRtlPixelsVerified": true,
       "devanagariStillRejectedByPolicy": true,
       "cjkStillRejectedByPolicy": true,
       "captionsOffUnicodeSrtPreserved": true,
       "rtlApiWorkerRenderVerified": true,
       "rendererSmokeVerified": true,
-      "unitTestsPassed": 42,
+      "unitTestsPassed": 44,
       "httpScenariosPassed": 7,
       "browserScenariosPassed": 6,
       "recoveryConfigurationScenariosPassed": 5,
@@ -140,7 +145,7 @@
       "migrationsApplied": 12,
       "fullLocalVerifierRerun": true,
       "fullLocalVerifierBlocker": null,
-      "fullLocalVerifierNotes": "Direct integration invocation was intentionally blocked by the isolated-test guard. First full verifier attempt failed at S3Proxy readiness in sandbox; elevated rerun exposed stale dist, then npm run build refreshed dist and the final elevated verifier passed.",
+      "fullLocalVerifierNotes": "Fresh clone needed npm ci and local test services. Redis installer download was blocked by HTTP 403 after escalation, so an existing checksum-pinned Redis 7.2.11 build from a prior scratch workspace was used. S3Proxy artifact was copied from prior scratch and verified by the installer. Sandbox verifier stopped at S3Proxy readiness; elevated rerun passed.",
       "populatedUpgradeRestoreRerun": false,
       "npmFullAuditRerun": false,
       "publicationStatus": "local_verified_awaiting_current_payload_approval",
@@ -347,13 +352,42 @@
       "fullLocalVerifierNotes": "Direct integration invocation was intentionally blocked by the isolated-test guard. First full verifier attempt failed at S3Proxy readiness in sandbox; elevated rerun exposed stale dist, then npm run build refreshed dist and the final elevated verifier passed.",
       "populatedUpgradeRestoreRerun": false,
       "npmFullAuditRerun": false,
-      "publicationStatus": "local_verified_awaiting_current_payload_approval",
+      "publicationStatus": "published",
+      "publicationCommit": "2e33a2cc230ab99bed6d28a18a35853e4ab9c313",
       "liveProviderUsed": false,
       "knownFailures": []
+    },
+    "editor01iEvidence": {
+      "scope": "Trusted fallback-font configuration plus decoded readability smoke coverage for allowed rendered text",
+      "fallbackFontPathsSupported": true,
+      "fallbackEnvVar": "RENDER_FONT_FALLBACK_PATHS",
+      "uniqueConfiguredFontsLoaded": true,
+      "singleFontMustCoverEachOverlay": true,
+      "selectedFontPassedToFfmpeg": true,
+      "allConfiguredFontHashesInSceneCacheKey": true,
+      "explicitTextShapingPreserved": true,
+      "arabicHebrewPrimaryMissFallbackHitVerified": true,
+      "decodedReadableRtlPixelsVerified": true,
+      "scriptPolicyUnchanged": true,
+      "devanagariStillRejectedByPolicy": true,
+      "cjkStillRejectedByPolicy": true,
+      "liveProviderUsed": false,
+      "unitTestsPassed": 44,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 5,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "migrationsApplied": 12,
+      "fullLocalVerifierRerun": true,
+      "fullLocalVerifierBlocker": null,
+      "knownFailures": [],
+      "publicationStatus": "local_verified_awaiting_current_payload_approval",
+      "verificationNote": "Initial focused test used execFileSync for FFmpeg frame decode and hit sandbox EPERM despite output; switched to the project runProcess helper and reran successfully. npm ci required network escalation. Redis download was blocked by HTTP 403, so an existing checksum-pinned Redis 7.2.11 build from prior scratch was used. S3Proxy artifact was copied from prior scratch and verified by checksum. Full verifier needed elevated local-service permissions after sandbox S3Proxy readiness failure."
     }
   },
   "accessState": {
-    "github": "Public main is CI-verified through EDITOR-01G. EDITOR-01H is locally verified only and awaits exact approval before public publication.",
+    "github": "Public main includes EDITOR-01H at 2e33a2cc230ab99bed6d28a18a35853e4ab9c313. EDITOR-01I fallback-font/readability is locally verified only and awaits exact approval before public publication.",
     "nativeExecution": "Full isolated local PGlite/Redis 7.2.11/S3Proxy/FFmpeg/browser/recovery verifier passed with authorized loopback service permission after S3Proxy was initially blocked. Native application CI is separate; complete Compose and native/cross-store restore remain open.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -361,8 +395,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
-    "status": "editor01h_local_verified_awaiting_public_approval",
+    "commit": "2e33a2cc230ab99bed6d28a18a35853e4ab9c313",
+    "status": "editor01i_local_verified_awaiting_public_approval",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -375,9 +409,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "79c3d129f6c824e12163ef66b22c705d1ecfc0c3",
+    "sourceTree": "6fc1119740974ed415ffeb730414bed136326a67",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published EDITOR-01G source; EDITOR-01H is local and verified.",
+    "commitMeaning": "Published EDITOR-01H source; EDITOR-01I fallback-font/readability is local and verified.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "102722eb30e005b465e61051bed8598b53d8b5d9",
     "uploadGate": {
@@ -460,7 +494,7 @@
       "initialRejected": true,
       "resolved": true,
       "destination": "public shlokagrawal13/organic-marketing-os main",
-      "changedFiles": 13,
+      "changedFiles": 15,
       "reason": "Automatic approval review initially rejected the docs-only public Git tree because the earlier exact approval covered only the 21-file app/source payload. The user then supplied exact approval for these 13 publication evidence/continuity docs.",
       "approvedAtLocalDate": "2026-10-04 IST",
       "bypassed": false,
@@ -476,18 +510,16 @@
       "mismatchCount": 0
     },
     "nextPublication": {
-      "slice": "EDITOR-01H",
+      "slice": "EDITOR-01I",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "awaiting_current_payload_approval",
-      "changedFiles": 19,
-      "includes": "Arabic/Hebrew RTL shaping support, tests and continuity docs",
+      "changedFiles": 13,
+      "includes": "Trusted fallback font support, decoded readability smoke coverage, tests and continuity docs",
       "remoteWriteAttempted": false,
       "paths": [
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
-        "README.md",
-        "START_HERE.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -497,10 +529,8 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/VIDEO_PIPELINE.md",
         "docs/qa/verification-summary.json",
-        "packages/core/media.ts",
+        "packages/core/render-font.ts",
         "packages/core/renderer.ts",
-        "tests/integration/media.test.ts",
-        "tests/media.test.ts",
         "tests/render-font.test.ts"
       ]
     },
@@ -572,7 +602,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "EDITOR-01A/B/C/D/E/F/G are published and CI-verified. EDITOR-01H Arabic/Hebrew RTL shaping is locally verified. Broader multilingual fallback/readability, automatic speech alignment, custom effects and platform text/composition remain."
+      "completedIncrement": "EDITOR-01A/B/C/D/E/F/G are published and CI-verified. EDITOR-01H Arabic/Hebrew RTL shaping is published. EDITOR-01I trusted fallback-font/readability smoke coverage is locally verified. Broader Indic/CJK shaping, automatic speech alignment, custom effects and platform text/composition remain."
     },
     {
       "id": "RESEARCH-01",
@@ -678,8 +708,6 @@
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
-    "README.md",
-    "START_HERE.md",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -689,10 +717,8 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/VIDEO_PIPELINE.md",
     "docs/qa/verification-summary.json",
-    "packages/core/media.ts",
+    "packages/core/render-font.ts",
     "packages/core/renderer.ts",
-    "tests/integration/media.test.ts",
-    "tests/media.test.ts",
     "tests/render-font.test.ts"
   ],
   "nextAgentProtocol": [
@@ -719,5 +745,5 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. No live/paid provider or schema/migration change."
+  "latestStatus": "EDITOR-01I adds trusted RENDER_FONT_FALLBACK_PATHS support for worker-side rendered text. Each title/caption cue must be covered by one configured TTF/OTF, FFmpeg uses the selected font file, and scene caches include the configured font-set hashes. A decoded-frame smoke check verifies visible Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and a fallback supplies them. Passed 44 unit cases, API/web production builds and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios. No live/paid provider or schema/migration change."
 }

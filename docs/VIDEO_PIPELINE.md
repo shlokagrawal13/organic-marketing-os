@@ -31,6 +31,27 @@ other Indic scripts, CJK, emoji and unsupported symbols still fail with named
 policy errors unless a future increment adds appropriate fonts, fallback and
 readability QA. Captions-off Unicode SRT behavior remains unchanged.
 
+## Fallback font/readability QA (EDITOR-01I)
+
+The render worker can load trusted fallback fonts from `RENDER_FONT_FALLBACK_PATHS`
+using the platform path delimiter. `RENDER_FONT_PATH` remains the primary font.
+Every configured file must still be a single TTF/OTF up to 16 MiB. Browser font
+uploads, remote font URLs and user-selected font families are not added.
+
+For each rendered title or burned caption cue, the worker chooses the first
+configured font that fully covers that overlay's glyphs. If no single configured
+font covers the whole overlay, the job fails with the existing bounded missing-
+glyph message. FFmpeg receives the selected controlled `fontfile` for that
+overlay, and the scene cache key includes the hashes of the full configured font
+set so changing fallback configuration cannot reuse stale segments.
+
+Local QA verifies an Arabic/Hebrew render where the primary font lacks those
+glyphs and the fallback supplies them, then decodes a real frame and checks that
+visible text pixels exist. This is a readability smoke test, not OCR, typography
+review, font licensing review or universal complex-script support. Devanagari,
+other Indic scripts and CJK remain blocked by the render policy until a dedicated
+language/font/shaping increment supports them.
+
 ## Configured-font coverage (EDITOR-01G)
 
 The worker checks glyph mappings in the exact font bytes it will copy for FFmpeg,

@@ -1,10 +1,17 @@
 # Changelog
 
+## 0.9.2 EDITOR-01I fallback font/readability QA - 2026-10-05 (IST)
+
+- Added trusted worker-side fallback fonts through `RENDER_FONT_FALLBACK_PATHS`; `RENDER_FONT_PATH` remains primary and configured paths are deduplicated.
+- Require each title or burned caption cue to be fully covered by one configured TTF/OTF, pass the selected controlled font file to FFmpeg and include all configured font hashes in the scene cache key.
+- Added a real decoded-frame readability smoke check for Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and the fallback supplies them.
+- Passed 44 unit cases, API/web production builds and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios. No migration, dependency version or live/paid provider change. Local only; publication/CI pending.
+
 ## 0.9.2 EDITOR-01H RTL text shaping - 2026-10-05 (IST)
 
 - Enabled Arabic/Hebrew rendered titles and burned captions when the configured font covers them; FFmpeg `drawtext` now explicitly sets `text_shaping=1`.
 - Kept Devanagari/Indic/CJK, emoji and unsupported symbols blocked with named errors; captions-off Unicode SRT remains supported.
-- Passed 42 unit cases, API/web production build and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios after rebuilding dist. No migration, dependency or live/paid provider change. Local only; publication/CI pending.
+- Passed 42 unit cases, API/web production build and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios after rebuilding dist. No migration, dependency or live/paid provider change. Published to public main at `2e33a2cc230ab99bed6d28a18a35853e4ab9c313`.
 
 ## 0.9.2 EDITOR-01G configured-font coverage - 2026-10-05 (IST)
 

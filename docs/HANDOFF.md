@@ -1,8 +1,21 @@
 # Project handoff — 0.9.2 / 2026-10-05 (IST)
 
-Latest local increment: EDITOR-01H RTL text shaping. Arabic/Hebrew titles and burned captions are accepted when the configured font covers them; FFmpeg drawtext uses explicit `text_shaping=1`. Passed 42 unit, 7 HTTP, 6 browser and 5 recovery/configuration cases plus API/web builds. Local only; publication and remote CI await current-payload approval.
+Latest local increment: EDITOR-01I fallback font/readability QA. The render worker
+loads trusted fallback fonts from `RENDER_FONT_FALLBACK_PATHS`, requires each title
+or burned caption cue to be fully covered by one configured TTF/OTF, passes the
+selected controlled font file to FFmpeg and includes the configured font-set hashes
+in scene cache keys. A real FFmpeg frame decode verifies visible Arabic/Hebrew
+overlay pixels when the primary font lacks those glyphs and the fallback supplies
+them. Passed 44 unit, 7 HTTP, 6 browser and 5 recovery/configuration cases plus
+API/web builds. Local only; publication and remote CI await current-payload approval.
 
-Latest published increment: EDITOR-01G configured-font glyph coverage. The worker
+Latest published increment: EDITOR-01H RTL text shaping at
+`2e33a2cc230ab99bed6d28a18a35853e4ab9c313`. Arabic/Hebrew titles and burned
+captions are accepted when the configured font covers them; FFmpeg drawtext uses
+explicit `text_shaping=1`. Passed 42 unit, 7 HTTP, 6 browser and 5 recovery/
+configuration cases plus API/web builds.
+
+Previous published increment: EDITOR-01G configured-font glyph coverage. The worker
 inspects exact TTF/OTF bytes before storage/cache/media work and records bounded
 safe missing-glyph/configuration errors in render history. Glyph mappings use
 pinned Fontkit 2.0.4; configuration is trusted administration input. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
@@ -39,7 +52,11 @@ Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration 
 
 Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: publish EDITOR-01H after exact approval, then continue broader multilingual fallback-font/readability QA. Arabic/Hebrew is now locally verified; glyph mapping coverage is not proof of all complex shaping.
+Next: publish EDITOR-01I after exact approval, then continue broader EDITOR-01
+language/audio QA, including Indic/CJK shaping/readability or automatic speech
+alignment. Arabic/Hebrew shaping and fallback-font smoke coverage are verified
+within their bounded scope; this is still not OCR-level readability, font licensing
+review or universal complex-script support.
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and

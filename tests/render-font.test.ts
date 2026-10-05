@@ -1,14 +1,20 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, open, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, open, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { sceneSchema } from "../packages/core/ai";
-import { renderOptions, validateRenderScenes } from "../packages/core/media";
+import {
+  renderOptions,
+  runProcess,
+  validateRenderScenes,
+} from "../packages/core/media";
 import {
   assertRenderFontCoverage,
+  createRenderFontPlan,
   DEFAULT_RENDER_FONT_PATH,
   MAX_RENDER_FONT_BYTES,
+  readRenderFonts,
   readRenderFont,
   RenderFontError,
 } from "../packages/core/render-font";
@@ -87,6 +93,47 @@ test("font coverage rejects missing glyphs in effective titles/cues, preserving 
   );
 });
 
+test("configured fallback fonts cover allowed multilingual text missing from the primary font", async () => {
+  const primary = await readRenderFont(
+    "/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf",
+  );
+  const fallback = await readRenderFont(DEFAULT_RENDER_FONT_PATH);
+  const scene = { ...fixture, onScreenText: "مرحبا", caption: "שלום" };
+  assert.doesNotThrow(() => validateRenderScenes([scene]));
+  assert.throws(
+    () => assertRenderFontCoverage(primary, [scene], { captions: true }),
+    /Scene font-qa on-screen text.*U\+0645/,
+  );
+  const plan = createRenderFontPlan([primary, fallback], [scene], {
+    captions: true,
+  });
+  assert.equal(plan.selectFontIndex(scene.onScreenText), 1);
+  assert.equal(plan.selectFontIndex(scene.caption), 1);
+});
+
+test("readRenderFonts loads unique primary and fallback font paths from configuration", async () => {
+  const previousPrimary = process.env.RENDER_FONT_PATH;
+  const previousFallbacks = process.env.RENDER_FONT_FALLBACK_PATHS;
+  process.env.RENDER_FONT_PATH =
+    "/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf";
+  process.env.RENDER_FONT_FALLBACK_PATHS = [
+    DEFAULT_RENDER_FONT_PATH,
+    DEFAULT_RENDER_FONT_PATH,
+  ].join(":");
+  try {
+    const fonts = await readRenderFonts();
+    assert.equal(fonts.length, 2);
+    assert.ok(fonts[0].length > 12);
+    assert.ok(fonts[1].length > 12);
+  } finally {
+    if (previousPrimary === undefined) delete process.env.RENDER_FONT_PATH;
+    else process.env.RENDER_FONT_PATH = previousPrimary;
+    if (previousFallbacks === undefined)
+      delete process.env.RENDER_FONT_FALLBACK_PATHS;
+    else process.env.RENDER_FONT_FALLBACK_PATHS = previousFallbacks;
+  }
+});
+
 test("font inspection rejects malformed, collection, web, oversized and unreadable files without exposing paths", async () => {
   for (const bytes of [
     Buffer.alloc(0),
@@ -163,10 +210,15 @@ test("renderer checks the configured font before storage, cache or media work", 
   }
 });
 
-test("renderer uses explicit text shaping for configured Arabic and Hebrew text", async () => {
+test("renderer uses explicit text shaping and fallback fonts for readable Arabic and Hebrew text", async () => {
   const previous = process.env.RENDER_FONT_PATH;
-  process.env.RENDER_FONT_PATH = DEFAULT_RENDER_FONT_PATH;
+  const previousFallbacks = process.env.RENDER_FONT_FALLBACK_PATHS;
+  process.env.RENDER_FONT_PATH =
+    "/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf";
+  process.env.RENDER_FONT_FALLBACK_PATHS = DEFAULT_RENDER_FONT_PATH;
   const stored: string[] = [];
+  let output: Buffer | null = null;
+  const dir = await mkdtemp(join(tmpdir(), "mos-font-readable-"));
   try {
     const result = await renderVideo({
       organizationId: "font-test",
@@ -183,8 +235,9 @@ test("renderer uses explicit text shaping for configured Arabic and Hebrew text"
       signal: new AbortController().signal,
       store: {
         ready: async () => {},
-        putFile: async (key: string) => {
+        putFile: async (key: string, path: string) => {
           stored.push(key);
+          if (key.endsWith("/video.mp4")) output = await readFile(path);
         },
         remove: async () => {},
       } as unknown as ObjectStore,
@@ -199,8 +252,46 @@ test("renderer uses explicit text shaping for configured Arabic and Hebrew text"
     assert.ok(stored.includes("font-test/renders/rtl-job/thumbnail.jpg"));
     assert.ok(stored.includes("font-test/renders/rtl-job/captions.srt"));
     assert.ok(stored.some((key) => key.startsWith("font-test/segments/")));
+    assert.ok(output);
+    const video = join(dir, "rtl.mp4");
+    await writeFile(video, output);
+    const framePath = join(dir, "rtl.raw");
+    await runProcess(
+      process.env.FFMPEG_PATH || "ffmpeg",
+      [
+        "-v",
+        "error",
+        "-ss",
+        "0.5",
+        "-i",
+        video,
+        "-frames:v",
+        "1",
+        "-vf",
+        "crop=720:900:0:80",
+        "-pix_fmt",
+        "gray",
+        "-f",
+        "rawvideo",
+        framePath,
+      ],
+      { timeout: 15000 },
+    );
+    const frame = await readFile(framePath);
+    const brightPixels = frame.reduce(
+      (count, pixel) => count + (pixel > 210 ? 1 : 0),
+      0,
+    );
+    assert.ok(
+      brightPixels > 150,
+      `expected readable overlay pixels, got ${brightPixels}`,
+    );
   } finally {
     if (previous === undefined) delete process.env.RENDER_FONT_PATH;
     else process.env.RENDER_FONT_PATH = previous;
+    if (previousFallbacks === undefined)
+      delete process.env.RENDER_FONT_FALLBACK_PATHS;
+    else process.env.RENDER_FONT_FALLBACK_PATHS = previousFallbacks;
+    await rm(dir, { recursive: true, force: true });
   }
 });

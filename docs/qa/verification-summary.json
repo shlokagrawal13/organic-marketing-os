@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 42,
+    "unit": 44,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01H Arabic/Hebrew RTL text shaping, locally verified; publication pending",
+  "latestIncrement": "EDITOR-01I trusted fallback fonts and decoded readability smoke coverage, locally verified; publication pending",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -420,8 +420,36 @@
     "fullLocalVerifierNotes": "Direct integration invocation was intentionally blocked by the isolated-test guard. First full verifier attempt failed at S3Proxy readiness in sandbox; elevated rerun exposed stale dist, then npm run build refreshed dist and the final elevated verifier passed.",
     "populatedUpgradeRestoreRerun": false,
     "npmFullAuditRerun": false,
-    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "publicationStatus": "published",
+    "publicationCommit": "2e33a2cc230ab99bed6d28a18a35853e4ab9c313",
     "liveProviderUsed": false,
     "knownFailures": []
+  },
+  "editor01iEvidence": {
+    "scope": "Trusted worker-side fallback fonts and decoded readability smoke coverage for allowed rendered text",
+    "fallbackFontPathsSupported": true,
+    "fallbackEnvVar": "RENDER_FONT_FALLBACK_PATHS",
+    "uniqueConfiguredFontsLoaded": true,
+    "singleFontMustCoverEachOverlay": true,
+    "selectedFontPassedToFfmpeg": true,
+    "allConfiguredFontHashesInSceneCacheKey": true,
+    "explicitTextShapingPreserved": true,
+    "arabicHebrewPrimaryMissFallbackHitVerified": true,
+    "decodedReadableRtlPixelsVerified": true,
+    "scriptPolicyUnchanged": true,
+    "devanagariStillRejectedByPolicy": true,
+    "cjkStillRejectedByPolicy": true,
+    "unitTestsPassed": 44,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "fullLocalVerifierRerun": true,
+    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "liveProviderUsed": false,
+    "knownFailures": [],
+    "verificationNote": "Focused test initially used execFileSync for FFmpeg decode and hit sandbox EPERM despite output; switched to project runProcess helper. npm ci required network escalation. Redis installer download returned HTTP 403 after escalation, so an existing checksum-pinned Redis 7.2.11 build from prior scratch was used. S3Proxy artifact was copied from prior scratch and verified by checksum. Full verifier needed elevated local-service permissions after sandbox S3Proxy readiness failure."
   }
 }
