@@ -2,15 +2,21 @@
 
 ### Latest local editor increment
 
+EDITOR-01H enables Arabic/Hebrew rendered titles and burned captions when the configured font covers them. FFmpeg drawtext now pins `text_shaping=1`; Devanagari/Indic/CJK remain blocked with named errors until broader font/shaping support exists. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 browser and 5 recovery scenarios. Local only; public publication and remote CI await current-payload approval.
+
+### Latest published editor increment
+
 EDITOR-01G inspects the exact configured TTF/OTF glyph mappings before worker
 storage/cache/media work. Missing glyphs produce safe scene/cue/codepoint errors
 in render history; captions-off Unicode SRT stays supported. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
 API/web production builds, 12 fresh migrations and a full npm audit with zero
-advisories. No live/paid provider was used. Local only; public publication and
-remote CI await current-payload approval.
+advisories. Published to public main as `d9a205799e69725bd4642014f8aaeeea710e1b3f`;
+tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched 187/187 blobs. Actions
+run `37277131959` completed successfully with configured native PostgreSQL/Redis
+application verification. No live/paid provider was used.
 Multilingual shaping remains open; see `docs/VIDEO_PIPELINE.md` for font setup.
 
-### Latest published editor increment
+### Previous published editor increment
 
 EDITOR-01F adds conservative rendered-text script preflight before queueing and
 in the worker. Scene/cue errors explain unsupported text; captions-off Unicode
@@ -87,14 +93,14 @@ Run `npm run build`, `npm test`, `npm run verify:upgrade` and the isolated
 actually completed. The earlier missing Redis binary was resolved with the
 optional checksum-pinned installer. Test fixtures never become runtime fallbacks.
 
-The latest npm audit (2026-09-29) reported zero known advisories; dependency versions
-have not changed in 0.9. This dated result excludes Java/S3Proxy and application
-security. Native PostgreSQL races/restore, Docker/MinIO, live providers and full
-master acceptance remain open.
+The latest npm audit (2026-10-05) reported zero known npm advisories after the
+EDITOR-01G Fontkit dependency update. This dated result excludes Java/S3Proxy and
+application security. Native PostgreSQL races/restore, Docker/MinIO, live
+providers and full master acceptance remain open.
 
 The workspace NDJSON export includes records and authenticated media references;
-it is not a database/media restore backup. The current v0.9.2 EDITOR-01E source is
+it is not a database/media restore backup. The current v0.9.2 EDITOR-01G source is
 published on public `main` at commit
-`06e5da96ec4e811b0a95510247db25c3d54ac669`, and all 185 remote blob paths/modes/SHAs were verified against
-the local source. Public Actions run `37207895511` completed the native application
-verification workflow successfully.
+`d9a205799e69725bd4642014f8aaeeea710e1b3f`, and all 187 remote blob paths/modes/SHAs
+were verified against the local source. Public Actions run `37277131959` completed
+the native application verification workflow successfully.

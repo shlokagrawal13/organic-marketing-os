@@ -1,28 +1,31 @@
 # Project handoff — 0.9.2 / 2026-10-05 (IST)
 
-Latest local increment: EDITOR-01G configured-font glyph coverage. The worker
+Latest local increment: EDITOR-01H RTL text shaping. Arabic/Hebrew titles and burned captions are accepted when the configured font covers them; FFmpeg drawtext uses explicit `text_shaping=1`. Passed 42 unit, 7 HTTP, 6 browser and 5 recovery/configuration cases plus API/web builds. Local only; publication and remote CI await current-payload approval.
+
+Latest published increment: EDITOR-01G configured-font glyph coverage. The worker
 inspects exact TTF/OTF bytes before storage/cache/media work and records bounded
 safe missing-glyph/configuration errors in render history. Glyph mappings use
 pinned Fontkit 2.0.4; configuration is trusted administration input. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
 API/web production builds, 12 fresh migrations and a full npm audit with zero
-advisories. No live/paid provider was used. Local only; public publication and
-remote CI await current-payload approval.
+advisories. Published to public main as `d9a205799e69725bd4642014f8aaeeea710e1b3f`;
+tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched 187/187 blobs. Actions
+run `37277131959` completed successfully with configured native PostgreSQL/Redis
+application verification. No live/paid provider was used.
 Existing EDITOR-01F script restrictions and captions-off Unicode SRT behavior
 are preserved. Populated restore was not rerun because schema/migrations did not
 change; prior EDITOR-01F evidence remains dated separately.
 
-Latest published increment: EDITOR-01F rendered-text script preflight. Shared API and
+Previous published increment: EDITOR-01F rendered-text script preflight. Shared API and
 worker validation reports unsupported title/burned-caption text by scene/cue;
 captions-off Unicode SRT and unused fallback captions are preserved. Passed 37
 unit, 7 HTTP, 6 browser and 5 recovery scenarios, API/web builds, 12 migrations
 and populated PGlite upgrade/restore. Exact commands and corrected failures are
 in VERIFICATION_REPORT.md.
 
-Published EDITOR-01F to public `main` as `72b796d6d93ae5f5da475e3c33d021858131df1e`;
-tree `97e227fa6352de563f6e3d018704960f8e34264d` matched all 185 local blob paths,
-modes and SHAs. Actions run `37228966502` completed successfully.
-These post-publication continuity updates are local only and can accompany the
-next authorized source payload; the exact approved 19 files are already public.
+Published EDITOR-01G to public `main` as `d9a205799e69725bd4642014f8aaeeea710e1b3f`;
+tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched all 187 local blob paths,
+modes and SHAs. Actions run `37277131959` completed successfully.
+Post-publication continuity updates are local evidence and can accompany the next source payload.
 
 Publication update: EDITOR-01E is published to canonical public `main` after exact current-slice approval. Application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` points to tree `092b502cca399cfe732d9743202f310b0c80d994`; recursive verification matched 185/185 remote blob paths, modes and SHAs. Actions run `37207895511` completed successfully.
 
@@ -36,8 +39,7 @@ Passed 36 unit tests, 7 HTTP, 6 production-browser and 5 recovery/configuration 
 
 Published and CI-verified. Public main application commit `06e5da96ec4e811b0a95510247db25c3d54ac669` has tree `092b502cca399cfe732d9743202f310b0c80d994`; Actions run `37207895511` passed. No live/paid provider was used. Presets cover geometry only; automatic platform text/composition changes, policy/safe-area validation and publishing remain open.
 
-Next: multilingual shaping and decoded-text readability QA after EDITOR-01G.
-Glyph mapping coverage is not proof of correct multilingual shaping.
+Next: publish EDITOR-01H after exact approval, then continue broader multilingual fallback-font/readability QA. Arabic/Hebrew is now locally verified; glyph mapping coverage is not proof of all complex shaping.
 
 The user asked to continue the stopped Organic Marketing OS build without losing
 prior work. The exact private remote base was restored, v0.8.1 was verified and

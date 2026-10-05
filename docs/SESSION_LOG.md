@@ -1,5 +1,19 @@
 # Session log
 
+## 2026-10-05 (IST) - EDITOR-01H RTL text shaping
+
+Added explicit `text_shaping=1` to FFmpeg drawtext overlays and expanded the render policy from Latin/Greek/Cyrillic to include Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and unsupported symbols remain blocked with named errors; captions-off Unicode SRT remains supported.
+
+Verification: 42 unit cases passed. `npm run build` refreshed API/web dist. The final `NODE_OPTIONS=--test-isolation=none npm run verify` passed 7 HTTP, 6 browser and 5 recovery/configuration scenarios with all 12 migrations. The direct integration command was intentionally rejected by the isolated-test guard. A first verifier attempt hit S3Proxy readiness under sandbox, and the first elevated run exposed stale dist; rebuilding before the final elevated run resolved it. No live/paid provider, dependency, migration or user runtime data changed.
+
+Local only; public publication and remote CI await exact current-payload approval. Continue broader multilingual fallback-font/readability QA after this bounded Arabic/Hebrew slice.
+
+## 2026-10-05 (IST) - EDITOR-01G public publication completed
+
+The user explicitly approved the exact 25 verified source/docs/evidence files for public `shlokagrawal13/organic-marketing-os` main. Remote parent `72b796d6d93ae5f5da475e3c33d021858131df1e` had exactly the approved 25-path diff. Git Data API created commit `d9a205799e69725bd4642014f8aaeeea710e1b3f` with tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3`, then fast-forwarded main without force. Recursive verification matched 187/187 blob paths, modes and SHAs.
+
+Actions run `37277131959` completed successfully at `2026-10-05T07:24:09Z`. Decoded logs confirm build/audit gates, fresh migrations and configured native PostgreSQL/Redis application verification. Local pre-publication evidence remains 41 unit, 7 HTTP, 6 browser and 5 recovery/configuration cases. No live/paid provider or user runtime data was used.
+
 ## 2026-10-05 (IST) - EDITOR-01G configured-font glyph coverage
 
 Continued from local `60bcc40ab4d0a7959f9ee21805e64ccd8a4f9208`, which records the completed EDITOR-01F publication. The later resume found exactly the ten known in-progress source/dependency/checkpoint paths; retained and inspected them. Added pinned Fontkit 2.0.4 plus types 2.0.9 to inspect glyph mappings in the exact font bytes copied for FFmpeg and hashed for cache identity. Worker validation runs before storage/cache/asset work; API script validation remains unchanged, avoiding an API-side font requirement. Fonts must be trusted single TTF/OTF files up to 16 MiB.
@@ -8,7 +22,7 @@ Missing glyphs produce bounded scene/cue/codepoint messages in history; malforme
 
 Final checks passed: 41 individually reported unit cases, API/web production builds, zero advisories from full `npm audit --json`, and full isolated verifier (7 HTTP, 6 production-browser, 5 recovery/configuration scenarios, all 12 migrations and explicit final success). This final full run needed no escalation. No observed failing check remains. Populated upgrade/restore was not rerun: schema/migrations are unchanged and prior EDITOR-01F evidence remains separate. No live/paid provider, user runtime data or master specification changed.
 
-Exact changed paths are in PROJECT_CHECKPOINT.json.lastChanges. EDITOR-01G is local only; a public payload will also carry saved EDITOR-01F publication evidence. Continue multilingual shaping and decoded-text readability QA. Glyph mapping coverage is not proof of shaping, readability, font licensing or comprehensive font sanitization.
+Exact changed paths are in PROJECT_CHECKPOINT.json.lastChanges. Publication completed in the entry above, carrying the saved EDITOR-01F publication evidence with the EDITOR-01G payload. Continue multilingual shaping and decoded-text readability QA. Glyph mapping coverage is not proof of shaping, readability, font licensing or comprehensive font sanitization.
 
 ## 2026-10-05 (IST) - EDITOR-01F public publication completed
 

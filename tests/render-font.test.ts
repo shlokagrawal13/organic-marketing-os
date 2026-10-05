@@ -162,3 +162,45 @@ test("renderer checks the configured font before storage, cache or media work", 
     else process.env.RENDER_FONT_PATH = previous;
   }
 });
+
+test("renderer uses explicit text shaping for configured Arabic and Hebrew text", async () => {
+  const previous = process.env.RENDER_FONT_PATH;
+  process.env.RENDER_FONT_PATH = DEFAULT_RENDER_FONT_PATH;
+  const stored: string[] = [];
+  try {
+    const result = await renderVideo({
+      organizationId: "font-test",
+      id: "rtl-job",
+      scenes: [
+        {
+          ...fixture,
+          onScreenText: "مرحبا بالعالم",
+          caption: "שלום עולם",
+        },
+      ],
+      options: renderOptions.parse({ captions: true, resolution: "720" }),
+      assets: [],
+      signal: new AbortController().signal,
+      store: {
+        ready: async () => {},
+        putFile: async (key: string) => {
+          stored.push(key);
+        },
+        remove: async () => {},
+      } as unknown as ObjectStore,
+      progress: async () => {},
+      cacheGet: async () => null,
+      cachePut: async () => {},
+    });
+    assert.equal(result.width, 720);
+    assert.equal(result.height, 1280);
+    assert.ok(result.outputBytes > 0);
+    assert.ok(stored.includes("font-test/renders/rtl-job/video.mp4"));
+    assert.ok(stored.includes("font-test/renders/rtl-job/thumbnail.jpg"));
+    assert.ok(stored.includes("font-test/renders/rtl-job/captions.srt"));
+    assert.ok(stored.some((key) => key.startsWith("font-test/segments/")));
+  } finally {
+    if (previous === undefined) delete process.env.RENDER_FONT_PATH;
+    else process.env.RENDER_FONT_PATH = previous;
+  }
+});

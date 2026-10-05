@@ -19,6 +19,18 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
+## RTL text shaping (EDITOR-01H)
+
+Arabic and Hebrew rendered titles and burned captions are accepted when the
+configured font contains the needed glyphs. FFmpeg `drawtext` is invoked with
+`text_shaping=1` so the worker does not depend on the build default. The same
+API and worker validation remains in force before queueing or rendering.
+
+This is a bounded RTL slice, not universal multilingual support. Devanagari,
+other Indic scripts, CJK, emoji and unsupported symbols still fail with named
+policy errors unless a future increment adds appropriate fonts, fallback and
+readability QA. Captions-off Unicode SRT behavior remains unchanged.
+
 ## Configured-font coverage (EDITOR-01G)
 
 The worker checks glyph mappings in the exact font bytes it will copy for FFmpeg,
@@ -59,8 +71,8 @@ the scene ID and caption cue number in the error. The worker uses the same
 validation, including for older saved snapshots. Draft storage and voiceover
 notes are unchanged; this check neither translates text nor starts speech.
 
-The conservative policy allows Latin, Greek and Cyrillic scripts, basic combining
-accents and an explicit set of common punctuation/whitespace. It rejects other
+The conservative policy allows Latin, Greek, Cyrillic, Arabic and Hebrew scripts,
+basic combining accents and an explicit set of common punctuation/whitespace. It rejects other
 scripts, emoji/symbols outside the policy, unsafe controls and invisible format
 characters. Common unsupported scripts receive a named explanation. Use an image
 asset containing the text where needed. This is script/character preflight, not

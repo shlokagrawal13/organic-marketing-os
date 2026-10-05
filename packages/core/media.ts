@@ -52,8 +52,6 @@ export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
 const unsupportedRenderScripts: Array<[RegExp, string]> = [
-  [/\p{Script=Arabic}/u, "Arabic"],
-  [/\p{Script=Hebrew}/u, "Hebrew"],
   [/\p{Script=Devanagari}/u, "Devanagari"],
   [/\p{Script=Bengali}/u, "Bengali"],
   [/\p{Script=Gurmukhi}/u, "Gurmukhi"],
@@ -77,7 +75,7 @@ const unsupportedRenderScripts: Array<[RegExp, string]> = [
 const emojiOrSymbol = /[\u{1f000}-\u{1faff}\u{2600}-\u{27bf}\ufe0f]/u;
 // Script preflight, not a font cmap guarantee. Keep common punctuation explicit.
 const supportedRenderCharacters =
-  /^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}]*$/u;
+  /^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}]*$/u;
 export function renderTextSupportIssue(text: string, label = "Rendered text") {
   if (/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(text))
     return `${label} contains control characters. Remove them before rendering.`;
@@ -85,9 +83,9 @@ export function renderTextSupportIssue(text: string, label = "Rendered text") {
     return `${label} contains emoji or symbol glyphs that the current video font cannot guarantee. Remove them or attach that text as an image.`;
   for (const [pattern, name] of unsupportedRenderScripts)
     if (pattern.test(text))
-      return `${label} contains ${name} text outside the current Latin, Greek and Cyrillic render policy. Attach this text as an image or wait for multilingual font/shaping support.`;
+      return `${label} contains ${name} text outside the current Latin, Greek, Cyrillic, Arabic and Hebrew render policy. Attach this text as an image or wait for broader multilingual font/shaping support.`;
   if (!supportedRenderCharacters.test(text))
-    return `${label} contains characters outside the current render policy. Use Latin, Greek or Cyrillic text with common punctuation, or attach the text as an image.`;
+    return `${label} contains characters outside the current render policy. Use Latin, Greek, Cyrillic, Arabic or Hebrew text with common punctuation, or attach the text as an image.`;
   return null;
 }
 export function sniffMedia(b: Buffer) {

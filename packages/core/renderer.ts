@@ -250,7 +250,7 @@ export async function renderVideo(ctx: RenderContext) {
           }
           await writeFile(join(dir, file), wrapped, "utf8");
           filters.push(
-            `drawtext=fontfile=font.ttf:textfile=${file}:expansion=none:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}${enable}`,
+            `drawtext=fontfile=font.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=6:x=(w-tw)/2:y=${y}${enable}`,
           );
         }
         if (scene.transition.toLowerCase().trim() === "fade")

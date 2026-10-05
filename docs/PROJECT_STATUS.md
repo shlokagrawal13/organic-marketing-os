@@ -27,8 +27,9 @@ Provider fixtures and passing local tests do not certify production readiness.
   fallback captions remain supported.
   EDITOR-01G adds actual configured-font glyph mapping checks before worker
   storage/cache/media work and safe scene/cue/codepoint errors in render history.
-  It preserves script restrictions; multilingual shaping/readability remain open.
-  Automatic transcription and speech alignment are not implemented.
+  EDITOR-01H locally verifies Arabic/Hebrew rendered titles and burned captions
+  with explicit FFmpeg text shaping. Broader multilingual fallback/readability,
+  automatic transcription and speech alignment remain open.
 - Immutable credits, plans/subscriptions, signed billing events, official Stripe
   request/webhook contracts and invoice views remain locally implemented. Actual
   Stripe sandbox acceptance is outstanding.
@@ -49,10 +50,14 @@ Provider fixtures and passing local tests do not certify production readiness.
 
 ## Verification and limits
 
-EDITOR-01G is locally verified only. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
+EDITOR-01H is locally verified only. It adds explicit Arabic/Hebrew RTL text shaping while keeping unsupported scripts blocked. Passed 42 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases after rebuilding dist. Public publication and remote CI await current-payload approval.
+
+EDITOR-01G is published and CI-verified. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases,
 API/web production builds, 12 fresh migrations and a full npm audit with zero
-advisories. No live/paid provider was used. Local only; public publication and
-remote CI await current-payload approval.
+advisories. Published to public main as `d9a205799e69725bd4642014f8aaeeea710e1b3f`;
+tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched 187/187 blobs. Actions
+run `37277131959` completed successfully with configured native PostgreSQL/Redis
+application verification. No live/paid provider was used.
 Populated upgrade/fresh restore was last rerun for EDITOR-01F; no schema/migration
 changed in this increment.
 
@@ -61,9 +66,12 @@ EDITOR-01F is published and CI-verified: 37 unit, 7 HTTP, 6 production-browser a
 and populated PGlite upgrade/fresh restore. Public Actions also passed the native
 PostgreSQL/Redis application harness. No live/paid provider was used.
 
-Published EDITOR-01F to public `main` as `72b796d6d93ae5f5da475e3c33d021858131df1e`;
-tree `97e227fa6352de563f6e3d018704960f8e34264d` matched all 185 local blob paths,
-modes and SHAs. Actions run `37228966502` completed successfully.
+Published EDITOR-01G to public `main` as `d9a205799e69725bd4642014f8aaeeea710e1b3f`;
+tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched all 187 local blob paths,
+modes and SHAs. Actions run `37277131959` completed successfully.
+
+EDITOR-01F remains published and CI-verified at `72b796d6d93ae5f5da475e3c33d021858131df1e`;
+tree `97e227fa6352de563f6e3d018704960f8e34264d`, Actions run `37228966502`.
 
 Current exact evidence is in `docs/qa/verification-summary.json` and
 `docs/VERIFICATION_REPORT.md`; unfinished test runs are not passes. The test database

@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-05.3",
-  "savedAtUtc": "2026-10-05T05:58:37.772Z",
-  "currentMilestone": "EDITOR-01G configured-font glyph coverage",
+  "checkpointRevision": "2026-10-05.5",
+  "savedAtUtc": "2026-10-05T07:40:02Z",
+  "currentMilestone": "EDITOR-01H local RTL text shaping",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -20,10 +20,11 @@
     "EDITOR-01D is published and CI-verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays, effective-mode caching and browser render coverage. Public main application commit 9334411055f63f33333044b2b4ce079420fa2596 matches local tree 8be7bfe6976d21a7db3411627548ebd8af7bd8c4 exactly; Actions run 37191164246 passed.",
     "EDITOR-01E named export geometry presets are published at 06e5da96ec4e811b0a95510247db25c3d54ac669 and CI-verified by Actions run 37207895511; its approved continuity/docs publication completed at 3348ee27b4338c6403ac7a70234d56cd94e9b354.",
     "EDITOR-01F rendered-text script preflight is published and CI-verified. Commit 72b796d6d93ae5f5da475e3c33d021858131df1e points to tree 97e227fa6352de563f6e3d018704960f8e34264d; all 185 remote blob paths/modes/SHAs matched the verified local source. Actions run 37228966502 passed every step, with logs confirming 37 unit, 7 HTTP, 6 browser and 5 recovery cases. No live/paid provider used. Actual font glyph coverage, multilingual shaping and wider language/audio QA remain open.",
-    "EDITOR-01G checks glyph mappings in the exact configured TTF/OTF bytes before worker storage/cache/media work. Missing glyphs and invalid font configuration produce bounded safe render-history errors; captions-off Unicode SRT and unused fallback captions remain supported. Pinned Fontkit 2.0.4 and types 2.0.9. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery cases, API/web builds, all 12 fresh migrations and zero-advisory full npm audit. Local only; publication approval and remote CI pending. Multilingual shaping/readability remains open; no live or paid provider used."
+    "EDITOR-01G checks glyph mappings in the exact configured TTF/OTF bytes before worker storage/cache/media work. Missing glyphs and invalid font configuration produce bounded safe render-history errors; captions-off Unicode SRT and unused fallback captions remain supported. Pinned Fontkit 2.0.4 and types 2.0.9. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery cases, API/web builds, all 12 fresh migrations and zero-advisory full npm audit. Published to public main as d9a205799e69725bd4642014f8aaeeea710e1b3f; tree 79c3d129f6c824e12163ef66b22c705d1ecfc0c3 matched 187/187 local blobs. Actions run 37277131959 completed successfully with configured native PostgreSQL/Redis application verification. Multilingual shaping/readability remains open; no live or paid provider used.",
+    "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. No live/paid provider or schema/migration change."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Publish the verified EDITOR-01G payload after exact current-payload public approval. Continue multilingual shaping and decoded-text readability QA; keep glyph coverage distinct from correct shaping.",
+  "nextAction": "Publish the verified EDITOR-01H payload after exact current-payload public approval. Continue broader multilingual fallback-font/readability QA after Arabic/Hebrew RTL support.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -60,7 +61,7 @@
   "verification": {
     "date": "2026-10-05",
     "applicationSuites": {
-      "unit": 41,
+      "unit": 42,
       "httpScenarios": 7,
       "browserScenarios": 6,
       "recoveryConfigurationScenarios": 5
@@ -80,17 +81,18 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "2026-10-05 npm audit --json: zero advisories in all dependencies; Java/S3Proxy and full application security excluded.",
     "githubActions": {
-      "runId": 37228966502,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37228966502",
-      "sourceCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+      "runId": 37277131959,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37277131959",
+      "sourceCommit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
       "status": "completed",
       "conclusion": "success",
       "jobsStarted": 1,
       "nativeTestsExecuted": true,
       "jobName": "Native application verification",
+      "jobId": 111656537048,
       "failureMode": null,
       "rootCause": null,
-      "annotation": "All steps passed. Decoded job logs confirm 37 unit, 7 HTTP, 6 browser and 5 recovery cases, builds, dependency-audit gates, populated upgrade and native PostgreSQL/Redis application verification.",
+      "annotation": "All steps passed. Decoded job logs confirm build/audit gates, fresh migrations and configured native PostgreSQL/Redis application verification for the EDITOR-01G published source. Local pre-publication evidence confirms 41 unit, 7 HTTP, 6 browser and 5 recovery/configuration cases.",
       "path": ".github/workflows/ci.yml",
       "jobConclusion": "success",
       "priorRunIds": [
@@ -113,26 +115,23 @@
         37126029720,
         37143980421,
         37189446835,
-        37207895511
+        37191164246,
+        37207895511,
+        37228966502
       ]
     },
     "latestIncrement": {
-      "scope": "Configured-font glyph mappings in exact FFmpeg font bytes; worker-side, not a queue-time API check",
-      "configuredFontGlyphCoverageVerified": true,
-      "exactInspectedFontBytesUsedForFfmpegAndCache": true,
-      "beforeStorageCacheAndAssetDownloads": true,
-      "boundedFontRead": true,
-      "maxFontBytes": 16777216,
-      "singleTtfOtfOnly": true,
-      "safeFontErrorMessagesInHistory": true,
-      "missingSupplementaryLatinGlyphFailsJob": true,
-      "missingGlyphCreatesNoOutputOrCacheSegment": true,
-      "effectiveCaptionsAndSrtPreserved": true,
-      "latinGreekCyrillicAndAccentsRealFontVerified": true,
-      "malformedMissingOversizedAndCollectionFontsRejected": true,
-      "scriptPolicyUnchanged": true,
-      "multilingualShapingVerified": false,
-      "unitTestsPassed": 41,
+      "scope": "Arabic/Hebrew RTL rendered text support through explicit FFmpeg text shaping; broader multilingual fallback remains open",
+      "explicitDrawtextShaping": true,
+      "arabicPolicyAllowed": true,
+      "hebrewPolicyAllowed": true,
+      "configuredFontGlyphGateStillApplies": true,
+      "devanagariStillRejectedByPolicy": true,
+      "cjkStillRejectedByPolicy": true,
+      "captionsOffUnicodeSrtPreserved": true,
+      "rtlApiWorkerRenderVerified": true,
+      "rendererSmokeVerified": true,
+      "unitTestsPassed": 42,
       "httpScenariosPassed": 7,
       "browserScenariosPassed": 6,
       "recoveryConfigurationScenariosPassed": 5,
@@ -141,13 +140,12 @@
       "migrationsApplied": 12,
       "fullLocalVerifierRerun": true,
       "fullLocalVerifierBlocker": null,
+      "fullLocalVerifierNotes": "Direct integration invocation was intentionally blocked by the isolated-test guard. First full verifier attempt failed at S3Proxy readiness in sandbox; elevated rerun exposed stale dist, then npm run build refreshed dist and the final elevated verifier passed.",
       "populatedUpgradeRestoreRerun": false,
-      "priorUpgradeEvidence": "EDITOR-01F populated PGlite upgrade/fresh restore passed; no migration/schema change in EDITOR-01G",
-      "npmFullAuditAdvisories": 0,
+      "npmFullAuditRerun": false,
       "publicationStatus": "local_verified_awaiting_current_payload_approval",
       "liveProviderUsed": false,
-      "knownFailures": [],
-      "verificationNote": "Resumed known 10-file work-in-progress drift without overwriting it. Final full harness completed successfully without escalation on 2026-10-05. Unit cases explicitly reported using --test-isolation=none."
+      "knownFailures": []
     },
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-04 GitHub Actions: production/full moderate-severity gates passed; advisory-count fields retain the separately recorded 2026-09-29 zero-count audit.",
@@ -303,15 +301,59 @@
       "populatedUpgradeRestoreRerun": false,
       "priorUpgradeEvidence": "EDITOR-01F populated PGlite upgrade/fresh restore passed; no migration/schema change in EDITOR-01G",
       "npmFullAuditAdvisories": 0,
-      "publicationStatus": "local_verified_awaiting_current_payload_approval",
+      "publicationStatus": "published_ci_verified",
       "liveProviderUsed": false,
       "knownFailures": [],
-      "verificationNote": "Resumed known 10-file work-in-progress drift without overwriting it. Final full harness completed successfully without escalation on 2026-10-05. Unit cases explicitly reported using --test-isolation=none."
+      "verificationNote": "Resumed known 10-file work-in-progress drift without overwriting it. Final full harness completed successfully without escalation on 2026-10-05. Unit cases explicitly reported using --test-isolation=none.",
+      "publicationCommit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
+      "publicationTree": "79c3d129f6c824e12163ef66b22c705d1ecfc0c3",
+      "publishedAtUtc": "2026-10-05T07:19:47Z",
+      "remoteParent": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+      "remoteParentTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+      "remoteTreeMatchesLocalVerifiedTree": true,
+      "remoteBlobCount": 187,
+      "localBlobCount": 187,
+      "mismatchCount": 0,
+      "uploadedChangedBlobCount": 25,
+      "actionsRunId": 37277131959,
+      "actionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37277131959",
+      "actionsConclusion": "success",
+      "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
+      "actionsJobsStarted": 1,
+      "nativeTestsExecuted": true,
+      "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
-    "upgradeLastRerunSlice": "EDITOR-01F"
+    "upgradeLastRerunSlice": "EDITOR-01F",
+    "editor01hEvidence": {
+      "scope": "Arabic/Hebrew RTL rendered text support through explicit FFmpeg text shaping; broader multilingual fallback remains open",
+      "explicitDrawtextShaping": true,
+      "arabicPolicyAllowed": true,
+      "hebrewPolicyAllowed": true,
+      "configuredFontGlyphGateStillApplies": true,
+      "devanagariStillRejectedByPolicy": true,
+      "cjkStillRejectedByPolicy": true,
+      "captionsOffUnicodeSrtPreserved": true,
+      "rtlApiWorkerRenderVerified": true,
+      "rendererSmokeVerified": true,
+      "unitTestsPassed": 42,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 5,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "migrationsApplied": 12,
+      "fullLocalVerifierRerun": true,
+      "fullLocalVerifierBlocker": null,
+      "fullLocalVerifierNotes": "Direct integration invocation was intentionally blocked by the isolated-test guard. First full verifier attempt failed at S3Proxy readiness in sandbox; elevated rerun exposed stale dist, then npm run build refreshed dist and the final elevated verifier passed.",
+      "populatedUpgradeRestoreRerun": false,
+      "npmFullAuditRerun": false,
+      "publicationStatus": "local_verified_awaiting_current_payload_approval",
+      "liveProviderUsed": false,
+      "knownFailures": []
+    }
   },
   "accessState": {
-    "github": "EDITOR-01F rendered-text script preflight is published and CI-verified. Commit 72b796d6d93ae5f5da475e3c33d021858131df1e points to tree 97e227fa6352de563f6e3d018704960f8e34264d; all 185 remote blob paths/modes/SHAs matched the verified local source. Actions run 37228966502 passed every step, with logs confirming 37 unit, 7 HTTP, 6 browser and 5 recovery cases. No live/paid provider used. Actual font glyph coverage, multilingual shaping and wider language/audio QA remain open.",
+    "github": "Public main is CI-verified through EDITOR-01G. EDITOR-01H is locally verified only and awaits exact approval before public publication.",
     "nativeExecution": "Full isolated local PGlite/Redis 7.2.11/S3Proxy/FFmpeg/browser/recovery verifier passed with authorized loopback service permission after S3Proxy was initially blocked. Native application CI is separate; complete Compose and native/cross-store restore remain open.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
@@ -319,8 +361,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
-    "status": "editor01g_local_verified_awaiting_public_approval",
+    "commit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
+    "status": "editor01h_local_verified_awaiting_public_approval",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -333,9 +375,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "092b502cca399cfe732d9743202f310b0c80d994",
+    "sourceTree": "79c3d129f6c824e12163ef66b22c705d1ecfc0c3",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last published EDITOR-01F source; EDITOR-01G is local and verified.",
+    "commitMeaning": "Published EDITOR-01G source; EDITOR-01H is local and verified.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "102722eb30e005b465e61051bed8598b53d8b5d9",
     "uploadGate": {
@@ -347,49 +389,49 @@
       "resolved": true
     },
     "publication": {
-      "publishedAtUtc": "2026-10-04T19:36:44Z",
+      "publishedAtUtc": "2026-10-05T07:19:47Z",
       "visibility": "public",
-      "applicationCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
-      "applicationTree": "97e227fa6352de563f6e3d018704960f8e34264d",
-      "localCommit": "83c3b01631891f6a274fe65e81a59feba55c3e16",
-      "baseCommit": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
-      "baseTree": "ef47a192649746b0257dfc44c8d52a8d2c48b7c2",
-      "uploadedChangedBlobCount": 19,
-      "remoteBlobCount": 185,
-      "localBlobCount": 185,
+      "applicationCommit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
+      "applicationTree": "79c3d129f6c824e12163ef66b22c705d1ecfc0c3",
+      "localCommit": "e73f35c9c121597613c19abc38677c7099103265",
+      "baseCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+      "baseTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+      "uploadedChangedBlobCount": 25,
+      "remoteBlobCount": 187,
+      "localBlobCount": 187,
       "mismatchCount": 0,
-      "actionsRunId": 37228966502,
-      "actionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37228966502",
+      "actionsRunId": 37277131959,
+      "actionsRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37277131959",
       "actionsConclusion": "success",
-      "actionsCompletedAtUtc": "2026-10-04T19:41:34Z",
+      "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
       "actionsJobsStarted": 1,
       "nativeTestsExecuted": true
     },
     "currentUploadGate": {
-      "slice": "EDITOR-01F",
+      "slice": "EDITOR-01G",
       "initialRejected": false,
       "resolved": true,
       "destination": "public shlokagrawal13/organic-marketing-os main",
-      "changedFiles": 19,
+      "changedFiles": 25,
       "reason": "Exact current-payload user approval supplied before publication.",
       "bypassed": false,
       "remoteCommitCreated": true,
-      "remoteCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
-      "remoteTree": "97e227fa6352de563f6e3d018704960f8e34264d",
+      "remoteCommit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
+      "remoteTree": "79c3d129f6c824e12163ef66b22c705d1ecfc0c3",
       "remoteRefUpdated": true,
-      "localVerifiedSourceCommit": "83c3b01631891f6a274fe65e81a59feba55c3e16",
-      "verifiedRemoteParent": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
-      "actionsRunId": 37228966502,
+      "localVerifiedSourceCommit": "e73f35c9c121597613c19abc38677c7099103265",
+      "verifiedRemoteParent": "72b796d6d93ae5f5da475e3c33d021858131df1e",
+      "actionsRunId": 37277131959,
       "actionsConclusion": "success",
-      "userApproval": "I explicitly approve publishing EDITOR-01F’s 19 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main"
+      "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "publicationPreparation": {
-      "slice": "EDITOR-01F",
+      "slice": "EDITOR-01G",
       "status": "published_ci_verified",
       "destination": "public shlokagrawal13/organic-marketing-os main",
-      "remoteCommit": "72b796d6d93ae5f5da475e3c33d021858131df1e",
-      "remoteTree": "97e227fa6352de563f6e3d018704960f8e34264d",
-      "changedFiles": 19
+      "remoteCommit": "d9a205799e69725bd4642014f8aaeeea710e1b3f",
+      "remoteTree": "79c3d129f6c824e12163ef66b22c705d1ecfc0c3",
+      "changedFiles": 25
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -434,12 +476,33 @@
       "mismatchCount": 0
     },
     "nextPublication": {
-      "slice": "EDITOR-01G",
+      "slice": "EDITOR-01H",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "awaiting_current_payload_approval",
-      "changedFiles": 25,
-      "includes": "24 current increment paths plus previously saved EDITOR-01F publication evidence",
-      "remoteWriteAttempted": false
+      "changedFiles": 19,
+      "includes": "Arabic/Hebrew RTL shaping support, tests and continuity docs",
+      "remoteWriteAttempted": false,
+      "paths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "README.md",
+        "START_HERE.md",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/verification-summary.json",
+        "packages/core/media.ts",
+        "packages/core/renderer.ts",
+        "tests/integration/media.test.ts",
+        "tests/media.test.ts",
+        "tests/render-font.test.ts"
+      ]
     },
     "previousPublication": {
       "publishedAtUtc": "2026-10-04T14:03:56Z",
@@ -461,8 +524,8 @@
       "nativeTestsExecuted": true
     },
     "localEvidencePublication": {
-      "status": "not_uploaded",
-      "reason": "Follow-up evidence is outside the exact approved 19-file payload; no additional public write attempted."
+      "status": "local_after_editor01g_publication",
+      "reason": "Post-publication evidence is recorded locally and will accompany the next source payload instead of creating an evidence-only public write loop."
     }
   },
   "credentialsIncluded": false,
@@ -509,7 +572,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "EDITOR-01A/B/C/D/E/F are published and CI-verified. EDITOR-01G configured-font glyph checks are locally verified. Multilingual shaping/readability, automatic speech alignment, custom effects and platform text/composition remain."
+      "completedIncrement": "EDITOR-01A/B/C/D/E/F/G are published and CI-verified. EDITOR-01H Arabic/Hebrew RTL shaping is locally verified. Broader multilingual fallback/readability, automatic speech alignment, custom effects and platform text/composition remain."
     },
     {
       "id": "RESEARCH-01",
@@ -612,13 +675,11 @@
     }
   ],
   "lastChanges": [
-    ".env.example",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
     "START_HERE.md",
-    "apps/api/src/render-worker.ts",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -627,14 +688,11 @@
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
     "docs/VIDEO_PIPELINE.md",
-    "docs/qa/dependency-audit-summary.json",
     "docs/qa/verification-summary.json",
-    "package-lock.json",
-    "package.json",
     "packages/core/media.ts",
-    "packages/core/render-font.ts",
     "packages/core/renderer.ts",
     "tests/integration/media.test.ts",
+    "tests/media.test.ts",
     "tests/render-font.test.ts"
   ],
   "nextAgentProtocol": [
@@ -661,5 +719,5 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01G checks glyph mappings in the exact configured TTF/OTF bytes before worker storage/cache/media work. Missing glyphs and invalid font configuration produce bounded safe render-history errors; captions-off Unicode SRT and unused fallback captions remain supported. Pinned Fontkit 2.0.4 and types 2.0.9. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery cases, API/web builds, all 12 fresh migrations and zero-advisory full npm audit. Local only; publication approval and remote CI pending. Multilingual shaping/readability remains open; no live or paid provider used."
+  "latestStatus": "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. No live/paid provider or schema/migration change."
 }

@@ -234,7 +234,7 @@ test("render bounds and scene captions have deterministic, accurate timing", () 
   );
 });
 
-test("render text preflight reports unsupported font and shaping cases", () => {
+test("render text preflight accepts configured RTL scripts and reports unsupported shaping cases", () => {
   const latin = sceneSchema.parse({
     ...fixtureScene,
     id: "latin",
@@ -250,10 +250,19 @@ test("render text preflight reports unsupported font and shaping cases", () => {
     null,
   );
   assert.doesNotThrow(() => validateRenderScenes([latin]));
+  assert.doesNotThrow(() =>
+    validateRenderScenes([
+      sceneSchema.parse({
+        ...fixtureScene,
+        id: "rtl",
+        onScreenText: "مرحبا بالعالم",
+        caption: "שלום עולם",
+      }),
+    ]),
+  );
   for (const [field, text, pattern] of [
     ["onScreenText", "Launch 🚀", /emoji/i],
     ["caption", "नमस्ते", /Devanagari/],
-    ["caption", "مرحبا", /Arabic/],
     ["caption", "新品上市", /CJK/],
     ["caption", "bad\x00text", /control characters/],
     ["caption", "hidden\u202etext", /control characters/],

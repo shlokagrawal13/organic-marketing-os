@@ -554,6 +554,32 @@ test(
       ).text(),
       /नमस्ते/,
     );
+    const rtlContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Configured RTL render text",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "مرحبا بالعالم",
+          caption: "שלום עולם",
+        },
+      ],
+    });
+    assert.equal(rtlContent.status, 201);
+    const rtlRender = await a.call(root + "/renders", "POST", {
+      contentId: rtlContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { preset: "square-feed-v1", captions: true },
+    });
+    assert.equal(rtlRender.status, 201, JSON.stringify(rtlRender.body));
+    const rtlReady = await wait(rtlRender.body.id);
+    assert.equal(rtlReady.status, "SUCCEEDED", JSON.stringify(rtlReady));
+    assert.ok(rtlReady.outputBytes > 0);
+    assert.match(
+      await (await a.raw(`${root}/renders/${rtlReady.id}/file/captions`)).text(),
+      /שלום עולם/,
+    );
     const missingGlyphContent = await a.call(root + "/content", "POST", {
       ...alternate,
       title: "Configured font missing glyph",

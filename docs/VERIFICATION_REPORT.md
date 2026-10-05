@@ -1,5 +1,23 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01H RTL text shaping - 2026-10-05 (IST)
+
+- `node --import tsx --test --test-isolation=none tests/*.test.ts`: 42 cases passed.
+- `npm run build`: Prisma client, API TypeScript and Next.js production build passed.
+- `NODE_OPTIONS=--test-isolation=none npm run verify`: 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios passed, with all 12 migrations and explicit final success.
+
+The new coverage accepts Arabic titles and Hebrew burned captions through the API,
+worker and real FFmpeg renderer, with `text_shaping=1` pinned in the drawtext
+filter. It preserves the Devanagari burn-in rejection path and captions-off Unicode
+SRT behavior. Direct integration invocation was intentionally blocked by the test
+harness; the full verifier is the valid integration path. A first verifier attempt
+hit S3Proxy readiness under sandbox and the first elevated rerun exposed stale
+`dist`; rebuilding before the final elevated verifier resolved both. No live/paid
+provider, dependency, migration or user runtime data changed.
+
+This is bounded Arabic/Hebrew RTL support, not universal multilingual rendering.
+Broader fallback-font, Indic/CJK shaping and decoded readability remain open.
+
 ## EDITOR-01G configured-font glyph coverage - 2026-10-05 (IST)
 
 - `node --import tsx --test --test-isolation=none tests/*.test.ts`: 41 cases passed.
@@ -24,8 +42,11 @@ No schema/migration change; populated upgrade/fresh restore was not rerun and it
 prior EDITOR-01F evidence remains below. Font mapping coverage does not prove
 correct complex shaping or decoded multilingual readability. Full Compose/MinIO,
 native/cross-store restore, live providers and master acceptance remain open.
-EDITOR-01G public publication and native remote CI are pending current-payload
-approval. No paid provider or user runtime data was used.
+Published EDITOR-01G to public `main` as `d9a205799e69725bd4642014f8aaeeea710e1b3f`;
+tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched all 187 local blob paths,
+modes and SHAs. Actions run `37277131959` completed successfully with configured
+native PostgreSQL/Redis application verification. No paid provider or user runtime
+data was used.
 
 ## EDITOR-01F rendered-text preflight - 2026-10-05 (IST)
 

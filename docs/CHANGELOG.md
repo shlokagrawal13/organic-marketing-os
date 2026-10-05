@@ -1,10 +1,16 @@
 # Changelog
 
+## 0.9.2 EDITOR-01H RTL text shaping - 2026-10-05 (IST)
+
+- Enabled Arabic/Hebrew rendered titles and burned captions when the configured font covers them; FFmpeg `drawtext` now explicitly sets `text_shaping=1`.
+- Kept Devanagari/Indic/CJK, emoji and unsupported symbols blocked with named errors; captions-off Unicode SRT remains supported.
+- Passed 42 unit cases, API/web production build and full isolated verification with 7 HTTP, 6 browser and 5 recovery/configuration scenarios after rebuilding dist. No migration, dependency or live/paid provider change. Local only; publication/CI pending.
+
 ## 0.9.2 EDITOR-01G configured-font coverage - 2026-10-05 (IST)
 
 - Inspect exact configured TTF/OTF bytes with pinned Fontkit 2.0.4 before worker storage/cache/media work. Font hash and copied FFmpeg bytes stay identical.
 - Add bounded font loading (16 MiB), explicit invalid/missing/unsupported-font failures and safe scene/cue/codepoint errors in render history. Script policy, effective cues and captions-off Unicode SRT remain unchanged.
-- Passed 41 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web builds, 12 fresh migrations and zero-advisory npm audit. No live/paid provider or schema/migration change. Local only; publication/CI pending.
+- Passed 41 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web builds, 12 fresh migrations and zero-advisory npm audit. Published to public main as `d9a205799e69725bd4642014f8aaeeea710e1b3f`; tree `79c3d129f6c824e12163ef66b22c705d1ecfc0c3` matched 187/187 local blobs, and Actions run `37277131959` passed. No live/paid provider or schema/migration change.
 - Glyph mappings do not certify complex shaping or readability. Those remain next work; populated upgrade/restore evidence remains from EDITOR-01F.
 
 ## 0.9.2 EDITOR-01F rendered-text preflight - 2026-10-05 (IST)
