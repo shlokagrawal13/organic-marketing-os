@@ -1,5 +1,19 @@
 # Start here — Organic Marketing OS 0.9.2
 
+## EDITOR-01P saved-render review navigation — 2026-10-06
+
+EDITOR-01P saved-render scene/caption review navigation is locally verified. Scene starts and caption offsets come only from the immutable render snapshot, including stale renders. Native player seeks preserve play/pause, keyboard activation works, and half-open scene/cue highlights track playback. Buttons wait for metadata and disable on load failure; switching render IDs resets player state. Captions-off exports label SRT-only cues. API/web production builds passed; all 7 browser scenarios passed across the initial 6-case pass and corrected focused review-test rerun. Public P publication and native CI are pending.
+
+This is a UI-only increment with no backend, schema, dependency, renderer/cache or API-contract changes. Unit, HTTP, recovery, audits and populated-upgrade suites were not rerun for P. Dated O Actions run 37473495143 at eb9c02338bc62ab38aadafd713586f4b80f35a79 remains the preceding full-suite evidence, not P verification. No live/paid provider or user runtime data was used. Physical-device playback, wider Indic/CJK/font/readability, ASR, broader audio/custom effects/platform acceptance and full master acceptance remain open.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+## EDITOR-01O publication closure — 2026-10-06
+
+EDITOR-01O responsive selected/saved composition guides and the approved 17-file source/docs payload are published and CI-verified. Public main eb9c02338bc62ab38aadafd713586f4b80f35a79, matching verified local source tree a90d05e29183ddeaa6b5be908b2d9656ae5abee8; Actions run 37473495143 completed successfully on 2026-10-06T13:51:31Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 196 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Guides are review diagrams; complete Compose/MinIO, native cross-store restore, device/font/ASR and full master acceptance remain open.
+
+This closure is retained in the portable handoff; the exact approved public payload is the tree recorded above. Historical pending sections below describe earlier checkpoints.
+
 ## EDITOR-01O composition guides — 2026-10-06
 
 EDITOR-01O composition guides are locally verified. The selected-export diagram follows aspect, resolution, text placement, background and burned-caption controls; saved-render guides read immutable job options independently. Extra-margin boxes reuse the renderer geometry; standard positions are explicitly approximate. API/web builds and all 6 production-browser scenarios passed on final code, including real export playback/approval/download, guide controls, saved settings after navigation and mobile overflow. Public O publication and native CI are pending.
@@ -63,8 +77,8 @@ incrementally with independent implementation and verification.
    `docs/TASK_BOARD.md` and the relevant domain document.
 2. Run `python3 scripts/package_handoff.py --check`. Preserve and inspect any drift
    before editing. Do not overwrite user changes, `.env` or populated volumes.
-3. Use the recorded `nextTaskId`/`nextAction`. A through N are published and CI-verified.
-   Publish the reviewed EDITOR-01O payload after exact approval, then verify its own CI.
+3. Use the recorded `nextTaskId`/`nextAction`. A through O are published and CI-verified.
+   Continue the next bounded EDITOR-01 review/navigation increment from the task board.
    MEDIA-01D and MEDIA-LIVE-01 retain their separate follow-up scope.
 4. Keep Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3 and FFmpeg.
    `docs/MASTER_SPEC.md` and all prior migrations are preserved.

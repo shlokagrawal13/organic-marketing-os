@@ -1,5 +1,6 @@
 "use client";
 import { CompositionGuides } from "./render-composition";
+import { RenderReview } from "./render-review";
 import {
   INSET_TEXT_PLACEMENT,
   textPlacementLabel,
@@ -887,14 +888,12 @@ export function RenderPanel({
                 </details>
                 {active.status === "SUCCEEDED" ? (
                   <>
-                    <video
+                    <RenderReview
                       key={active.id}
-                      aria-label="Rendered video preview"
-                      className="render-player"
-                      controls
-                      preload="metadata"
-                      poster={`/api${base}/renders/${active.id}/file/thumbnail`}
-                      src={`/api${base}/renders/${active.id}/file/video`}
+                      base={base}
+                      jobId={active.id}
+                      scenes={active.snapshot?.scenes || []}
+                      captions={active.options.captions}
                     />
                     <div className="render-downloads">
                       <a

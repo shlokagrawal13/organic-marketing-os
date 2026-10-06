@@ -1,5 +1,11 @@
 # Video pipeline — 0.9.2
 
+## Saved-render review navigation (EDITOR-01P)
+
+Completed-render previews use cumulative saved scene durations and the same effective caption-cue rules as SRT. Scene and cue buttons seek absolute start times in the native video player; they preserve playing/paused state. Active highlights use half-open intervals and native time/seek/end events, not frame-accurate speech alignment. Empty captions produce no cue button; absent/empty explicit cues retain the scene-wide fallback. Captions-off exports label cues as SRT-only.
+
+The render-ID-keyed player resets readiness and position when switching jobs. Metadata must provide a finite duration before seeking; media errors disable navigation. Timings/text are read from the immutable snapshot, independently of current draft scenes or export controls. Stale renders remain reviewable while existing approval guards stay enforced. No auto-play, ASR, renderer or API/schema change.
+
 Uploaded or privately ingested generated images, H.264 clips and audio produce a real MP4 through FFmpeg. Generated-media presets require explicit configuration and consent; see GENERATED_MEDIA.md. Live provider acceptance remains open.
 
 ## Flow and files

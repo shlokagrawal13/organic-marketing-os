@@ -692,6 +692,41 @@ form {
   margin-top: 1.25rem;
   align-items: start;
 }
+.render-review {
+  margin: 18px 0;
+  min-width: 0;
+}
+.render-review-scenes,
+.render-review-captions {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: grid;
+  gap: 8px;
+}
+.render-review-scenes {
+  max-height: 360px;
+  overflow-y: auto;
+}
+.render-review-captions {
+  padding-left: 12px;
+}
+.render-review .button {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.render-review .button[aria-current="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.render-review .button small {
+  color: var(--muted);
+}
 .render-player {
   display: block;
   width: 100%;
