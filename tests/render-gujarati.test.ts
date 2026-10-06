@@ -99,7 +99,7 @@ test("Gujarati has a separate opt-in, shared mixed-script boundaries and unchang
   for (const text of ["ગુજરાતી שלום", "ગુજરાતી مرحبا"])
     assert.match(renderTextSupportIssue(text)!, /Separate Arabic, Hebrew/);
   assert.match(renderTextSupportIssue("ગુજરાતી 新品")!, /CJK/);
-  assert.match(renderTextSupportIssue("ગુજરાતી தமிழ்")!, /Tamil/);
+  assert.match(renderTextSupportIssue("ગુજરાતી ไทย")!, /Thai/);
   assert.match(renderTextSupportIssue("ક્\u200dષ")!, /control characters/);
   assert.match(renderTextSupportIssue("ગુજરાતી 😀")!, /emoji/);
   const scene = { ...fixture, caption: "ગુજરાતી שלום" };
@@ -330,7 +330,7 @@ test("Gujarati mixed-font wrapping preserves conjunct graphemes and missing cove
   assert.equal(storageTouched, false);
 });
 
-test("Gujarati outline runtime has a distinct fingerprint while existing Hindi and unburned captions retain identity", async (t) => {
+test("Gujarati outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime", async (t) => {
   environment(t);
   const ffmpeg = process.env.FFMPEG_PATH || "ffmpeg";
   const runtime = await runProcess(ffmpeg, ["-version"], { timeout: 15000 });
@@ -345,19 +345,19 @@ test("Gujarati outline runtime has a distinct fingerprint while existing Hindi a
   assert.equal(
     await check("શિક્ષણ"),
     sha256(
-      "fontkit-outlines-v1-gujarati-script-font-runs\n" + runtime + decoders,
+      "fontkit-outlines-v2-gujarati-script-font-runs\n" + runtime + decoders,
     ),
   );
   assert.equal(await check("ગુજરાતી বাংলা हिंदी"), await check("શિક્ષણ"));
   assert.equal(
     await check("বাংলা"),
     sha256(
-      "fontkit-outlines-v1-bengali-script-font-runs\n" + runtime + decoders,
+      "fontkit-outlines-v2-bengali-script-font-runs\n" + runtime + decoders,
     ),
   );
   assert.equal(
     await check("हिंदी"),
-    sha256("fontkit-outlines-v3-ltr-script-font-runs\n" + runtime + decoders),
+    sha256("fontkit-outlines-v4-ltr-script-font-runs\n" + runtime + decoders),
   );
   assert.equal(
     await checkRenderShaping(

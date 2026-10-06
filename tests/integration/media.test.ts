@@ -1,3 +1,4 @@
+import { INDIC_BATCH_FIXTURES } from "../fixtures/indic-batch";
 import "../support/isolated";
 import { test, after } from "node:test";
 import assert from "node:assert/strict";
@@ -494,7 +495,7 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "தமிழ்",
+          onScreenText: "ไทย",
           caption:
             "The API must explain unsupported rendered text before queueing.",
         },
@@ -511,7 +512,7 @@ test(
       options: { preset: "square-feed-v1" },
     });
     assert.equal(unsupportedRender.status, 400);
-    assert.match(JSON.stringify(unsupportedRender.body), /Tamil/);
+    assert.match(JSON.stringify(unsupportedRender.body), /Thai/);
     assert.equal(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeUnsupported,
@@ -524,7 +525,7 @@ test(
         {
           ...alternate.scenes[0],
           onScreenText: "Supported title",
-          caption: "தமிழ்",
+          caption: "ไทย",
         },
       ],
     });
@@ -541,10 +542,7 @@ test(
       srtOnlyPayload,
     );
     assert.equal(burnedUnsupported.status, 400);
-    assert.match(
-      JSON.stringify(burnedUnsupported.body),
-      /caption cue 1.*Tamil/,
-    );
+    assert.match(JSON.stringify(burnedUnsupported.body), /caption cue 1.*Thai/);
     const srtOnlyRender = await a.call(root + "/renders", "POST", {
       ...srtOnlyPayload,
       options: { captions: false },
@@ -560,7 +558,7 @@ test(
       await (
         await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
       ).text(),
-      /தமிழ்/,
+      /ไทย/,
     );
     const rtlContent = await a.call(root + "/content", "POST", {
       ...alternate,
@@ -746,6 +744,72 @@ test(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeGujaratiRtl,
     );
+    for (const sample of INDIC_BATCH_FIXTURES) {
+      const content = await a.call(root + "/content", "POST", {
+        ...alternate,
+        title: `Configured ${sample.name} mixed render`,
+        scenes: [
+          {
+            ...alternate.scenes[0],
+            onScreenText: "Video हिंदी বাংলা ગુજરાતી " + sample.title,
+            caption: "Ελλάδα Привет " + sample.caption,
+          },
+        ],
+      });
+      assert.equal(content.status, 201);
+      const job = await a.call(root + "/renders", "POST", {
+        contentId: content.body.id,
+        revision: 1,
+        requestKey: randomUUID(),
+        options: { aspect: "1:1", resolution: "720", captions: true },
+      });
+      assert.equal(job.status, 201, JSON.stringify(job.body));
+      const ready = await wait(job.body.id);
+      assert.equal(ready.status, "SUCCEEDED", JSON.stringify(ready));
+      const file = await a.raw(`${root}/renders/${ready.id}/file/video`);
+      assert.equal(file.status, 200);
+      assert.ok((await file.arrayBuffer()).byteLength > 0);
+      const captions = await a.raw(`${root}/renders/${ready.id}/file/captions`);
+      assert.equal(captions.status, 200);
+      assert.ok((await captions.text()).includes(sample.caption));
+      // b is already an ANALYST member of root; use b's other workspace
+      // to assert tenant isolation rather than denying authorized read access.
+      assert.equal(
+        (await b.raw(`${other}/renders/${ready.id}/file/video`)).status,
+        404,
+      );
+      assert.equal(
+        (await fetch(base + `${root}/renders/${ready.id}/file/video`)).status,
+        401,
+      );
+      const rtl = await a.call(root + "/content", "POST", {
+        ...alternate,
+        title: `${sample.name} RTL preflight`,
+        scenes: [
+          {
+            ...alternate.scenes[0],
+            onScreenText: sample.title + " שלום",
+            caption: "",
+          },
+        ],
+      });
+      assert.equal(rtl.status, 201);
+      const before = await db.renderJob.count({
+        where: { organizationId: org },
+      });
+      const blocked = await a.call(root + "/renders", "POST", {
+        contentId: rtl.body.id,
+        revision: 1,
+        requestKey: randomUUID(),
+        options: {},
+      });
+      assert.equal(blocked.status, 400, JSON.stringify(blocked.body));
+      assert.match(JSON.stringify(blocked.body), /Separate Arabic, Hebrew/);
+      assert.equal(
+        await db.renderJob.count({ where: { organizationId: org } }),
+        before,
+      );
+    }
     const mixedRtlContent = await a.call(root + "/content", "POST", {
       ...alternate,
       title: "Mixed Hindi RTL preflight",

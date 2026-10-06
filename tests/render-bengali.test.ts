@@ -82,7 +82,7 @@ test("Bengali has a separate opt-in, shared mixed-script boundaries and unchange
   for (const text of ["বাংলা שלום", "বাংলা مرحبا"])
     assert.match(renderTextSupportIssue(text)!, /Separate Arabic, Hebrew/);
   assert.match(renderTextSupportIssue("বাংলা 新品")!, /CJK/);
-  assert.match(renderTextSupportIssue("বাংলা தமிழ்")!, /Tamil/);
+  assert.match(renderTextSupportIssue("বাংলা ไทย")!, /Thai/);
   assert.match(renderTextSupportIssue("ক্\u200dষ")!, /control characters/);
   const scene = { ...fixture, caption: "বাংলা שלום" };
   assert.throws(
@@ -257,7 +257,7 @@ test("Bengali mixed-font wrapping preserves conjunct graphemes and missing cover
   assert.equal(storageTouched, false);
 });
 
-test("Bengali outline runtime has a distinct fingerprint while existing Hindi and unburned captions retain identity", async (t) => {
+test("Bengali outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime", async (t) => {
   environment(t);
   const ffmpeg = process.env.FFMPEG_PATH || "ffmpeg";
   const runtime = await runProcess(ffmpeg, ["-version"], { timeout: 15000 });
@@ -272,12 +272,12 @@ test("Bengali outline runtime has a distinct fingerprint while existing Hindi an
   assert.equal(
     await check("শিক্ষা"),
     sha256(
-      "fontkit-outlines-v1-bengali-script-font-runs\n" + runtime + decoders,
+      "fontkit-outlines-v2-bengali-script-font-runs\n" + runtime + decoders,
     ),
   );
   assert.equal(
     await check("हिंदी"),
-    sha256("fontkit-outlines-v3-ltr-script-font-runs\n" + runtime + decoders),
+    sha256("fontkit-outlines-v4-ltr-script-font-runs\n" + runtime + decoders),
   );
   assert.equal(
     await checkRenderShaping(

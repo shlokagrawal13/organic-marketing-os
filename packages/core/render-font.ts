@@ -3,15 +3,14 @@ import { delimiter } from "node:path";
 import { createHash } from "node:crypto";
 import { create, type Font } from "fontkit";
 import {
-  hasDevanagariText,
-  hasBengaliText,
-  hasGujaratiText,
   hasIndicOutlineText,
   indicMixSupportIssue,
   renderedSceneText,
   type RenderOptions,
   type Scene,
 } from "./media";
+
+import { outlineScript } from "./render-scripts";
 
 export const MAX_RENDER_FONT_BYTES = 16 * 1024 * 1024;
 export const DEFAULT_RENDER_FONT_PATH =
@@ -114,6 +113,17 @@ function inspectFont(bytes: Buffer): InspectedFont {
     throw new RenderFontError(
       "The configured render font must be a single TrueType or OpenType font, at most 16 MiB. Font collections and web fonts are not supported.",
     );
+  // Reject truncated sfnt tables before lazy Fontkit decoding can hide a bad file.
+  const count = bytes.readUInt16BE(4);
+  if (!count || 12 + count * 16 > bytes.length)
+    throw new Error("Invalid font directory");
+  for (let i = 0; i < count; i++) {
+    const entry = 12 + i * 16;
+    const offset = bytes.readUInt32BE(entry + 8);
+    const length = bytes.readUInt32BE(entry + 12);
+    if (offset > bytes.length || length > bytes.length - offset)
+      throw new Error("Truncated font table");
+  }
   const face = create(bytes);
   if (!("hasGlyphForCodePoint" in face) || !face.numGlyphs)
     throw new Error("No single font face");
@@ -161,19 +171,15 @@ export function createRenderFontPlan(
     const fontRuns = (text: string) => {
       const runs: { text: string; fontIndex: number; script: string }[] = [];
       for (const { segment } of graphemes.segment(text)) {
-        const script = hasDevanagariText(segment)
-          ? "deva"
-          : hasBengaliText(segment)
-            ? "beng"
-            : hasGujaratiText(segment)
-              ? "gujr"
-              : /\p{Script=Latin}/u.test(segment)
-                ? "latn"
-                : /\p{Script=Greek}/u.test(segment)
-                  ? "grek"
-                  : /\p{Script=Cyrillic}/u.test(segment)
-                    ? "cyrl"
-                    : runs.at(-1)?.script || "latn";
+        const script =
+          outlineScript(segment)?.tag ||
+          (/\p{Script=Latin}/u.test(segment)
+            ? "latn"
+            : /\p{Script=Greek}/u.test(segment)
+              ? "grek"
+              : /\p{Script=Cyrillic}/u.test(segment)
+                ? "cyrl"
+                : runs.at(-1)?.script || "latn");
         const previous = runs.at(-1);
         const preferred = previous?.script === script ? previous.fontIndex : -1;
         const covers = (font: InspectedFont) =>

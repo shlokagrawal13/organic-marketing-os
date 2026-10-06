@@ -48,7 +48,14 @@ jobs:
       RENDER_DEVANAGARI_ENABLED: "true"
       RENDER_BENGALI_ENABLED: "true"
       RENDER_GUJARATI_ENABLED: "true"
-      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf"
+      RENDER_GURMUKHI_ENABLED: "true"
+      RENDER_ODIA_ENABLED: "true"
+      RENDER_TAMIL_ENABLED: "true"
+      RENDER_TELUGU_ENABLED: "true"
+      RENDER_KANNADA_ENABLED: "true"
+      RENDER_MALAYALAM_ENABLED: "true"
+      RENDER_SINHALA_ENABLED: "true"
+      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGurmukhi-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansOriya-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTamil-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTelugu-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMalayalam-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf"
 
     steps:
       - name: Check out source
@@ -88,4 +95,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: browser-evidence
-          path: test-results/
+          path: |
+            test-results/
+            .local/unit-receipts.json

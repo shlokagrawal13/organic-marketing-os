@@ -145,7 +145,7 @@ test("Devanagari runtime guard rejects legacy/missing shaping before fonts, stor
       cacheGet: async () => unexpected(),
       cachePut: async () => unexpected(),
     }),
-    /Devanagari, Bengali or Gujarati rendering requires FFmpeg with the librsvg SVG decoder/,
+    /Indic rendering requires FFmpeg with the librsvg SVG decoder/,
   );
 });
 
@@ -229,7 +229,7 @@ test("Devanagari font fallback keeps conjunct graphemes intact and missing cover
         [{ ...fixture, onScreenText: "हिंदी שלום" }],
         { captions: false },
       ),
-    /Devanagari, Bengali or Gujarati with Latin/,
+    /Indic scripts with Latin/,
   );
 });
 

@@ -2,12 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-07.03",
-  "savedAtUtc": "2026-10-06T19:28:13.472252+00:00",
-  "currentMilestone": "EDITOR-01S Gujarati overlays locally verified; exact publication and own native CI pending",
+  "checkpointRevision": "2026-10-07.05",
+  "savedAtUtc": "2026-10-06T20:32:54.234983+00:00",
+  "currentMilestone": "EDITOR-01T shared registry/seven-script Indic batch locally verified; exact publication and own native CI pending",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
-    "EDITOR-01S is locally verified: separate opt-in Gujarati titles/burned caption cues use trusted complete-grapheme font/script runs, including bounded Latin/Greek/Cyrillic/Devanagari/Bengali combinations. API/web production builds, 73 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits passed. Independent HarfBuzz 8.3.0 matches glyph order, advances, offsets and emitted outlines for 19 Gujarati conjunct/matra/reph strings in both CJS/ESM Fontkit exports; six independently referenced mixed-script runs also match combined outline positions/scales. 18 pure/mixed exports yield 54 decoded timed frames across six geometries and standard/inset placement; portrait/landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119914ms Redis lock; the case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 25-file source/config/docs/evidence publication and its own native CI are pending.",
+    "EDITOR-01T is locally verified: one shared script registry adds separately opt-in Gurmukhi, Odia (Unicode Oriya), Tamil, Telugu, Kannada, Malayalam and bounded non-joiner Sinhala overlays. Passed API/web production builds, 113 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Independent HarfBuzz 8.3.0 matches 100 curated strings plus 656 generated Sinhala consonant/vowel cases against both CJS/ESM exports and runtime emitted outlines; 13 independently referenced runs compose Latin/Greek/Cyrillic plus all ten registered Indic scripts. Each new script passed 18 pure/mixed exports and 54 decoded timed frames across six geometries/standard-inset placement (126 exports/378 frames total); 14 representative portrait/mixed-landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119932ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 48-file source/config/docs/evidence public payload and its own native CI are pending.",
+    "EDITOR-01S's approved 25-file source/config/docs/evidence payload is published and its own native CI verified. Public main 51cd7ae5cb2f3898dd3dea49d464ee156f7449a0, tree 42abf968e0c0ab64fdfe0a665afd580e3b71f3fa; all 211 public blob paths/modes/SHAs match immutable local source 54d777e19042859a0b209d42663d93cf56126dae. Actions run 37519604078 attempt 1 completed successfully at 2026-10-06T19:39:45Z. Logs confirm clean npm install with the guarded Fontkit patch, API/web production builds, 73 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both npm audits with zero vulnerabilities. Independent HarfBuzz checks for 19 Gujarati conjunct/matra/reph strings pass against both CJS/ESM exports and emitted outlines; six independently referenced mixed-script runs match combined positions/scales. S's 54 decoded timed frames from 18 pure/mixed-script exports across six geometries/standard-inset placement pass; HTTP verifies private Gujarati MP4/SRT downloads and same-overlay Gujarati/RTL rejection before creating a job. Active-poll recovery naturally expired a 119831ms Redis lock; its case took 128.9s with exactly one video submission and the retained provider receipt/private output/completed queue job.",
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
     "MEDIA-01D retained-output reconciliation is published and CI-verified: provider bytes written to private storage before a lost database claim become UNKNOWN review evidence with credits retained in REVIEW.",
     "MEDIA-01D single-image editing is published and fixture/CI-verified: an opt-in separate quote, tenant-owned source-byte integrity preflight and multipart edit adapter; no live provider acceptance is claimed.",
@@ -41,7 +42,7 @@
     "EDITOR-01R's approved 32-file source/config/docs/evidence payload is published and its own native CI verified. Public main acbec7b9d04ff064fafe27675d7822b3d19ca135, tree 7027772a44ea9b64ad0b20c14fe6012366de9ee0; all 208 public blob paths/modes/SHAs match immutable local source 5962cbfe755b26d61d28b8ab50ec6142c816b559. Actions run 37516681778 attempt 1 completed successfully at 2026-10-06T19:15:00Z. Logs confirm clean npm install with the guarded Fontkit patch, API/web production builds, 68 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both npm audits with zero vulnerabilities. Independent HarfBuzz checks for 12 Bengali conjunct/matra/reph strings pass against both CJS/ESM exports and emitted outlines. R's 54 decoded timed frames from 18 pure/mixed-script exports across six geometries/standard-inset placement pass; HTTP verifies private Bengali MP4/SRT downloads and same-overlay Bengali/RTL rejection before creating a job. Active-poll recovery naturally expired a 119928ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Publish the exact reviewed 25-file EDITOR-01S payload after explicit scope authorization, verify its own native CI, then continue bounded remaining Indic/CJK/font/readability work.",
+  "nextAction": "Publish exact reviewed 48-file EDITOR-01T payload after explicit scope authorization, verify own native CI, then continue Southeast Asian/Tibetan and CJK/font/readability batches with explicit joiner/device acceptance gaps.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -78,13 +79,13 @@
   "verification": {
     "date": "2026-10-07",
     "applicationSuites": {
-      "unit": 73,
+      "unit": 113,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryConfigurationScenarios": 5
     },
     "migrationsApplied": 12,
-    "database": "S own local serialized PGlite WASM PostgreSQL; prior R native PostgreSQL CI separately dated",
+    "database": "T own local serialized PGlite WASM PostgreSQL; prior S native PostgreSQL CI separately dated",
     "populatedUpgradeRestore": "PGlite: original v0.1 user/membership/draft/queued AI job, immutable credit ledger and saved generated-video request/provider receipt preserved after fresh archive restore. Private object bytes and native Postgres restore not tested.",
     "nativePostgresVerified": false,
     "dockerMinioVerified": false,
@@ -98,19 +99,19 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "2026-10-06 P CI production/full npm audits report zero vulnerabilities; application/security acceptance excluded.",
     "githubActions": {
-      "runId": 37516681778,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37516681778",
-      "sourceCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
+      "runId": 37519604078,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37519604078",
+      "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
       "status": "completed",
       "conclusion": "success",
       "attempt": 1,
-      "completedAt": "2026-10-06T19:15:00Z",
-      "annotation": "R own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
+      "completedAt": "2026-10-06T19:39:45Z",
+      "annotation": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
     },
-    "latestIncrement": "EDITOR-01S is locally verified: separate opt-in Gujarati titles/burned caption cues use trusted complete-grapheme font/script runs, including bounded Latin/Greek/Cyrillic/Devanagari/Bengali combinations. API/web production builds, 73 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits passed. Independent HarfBuzz 8.3.0 matches glyph order, advances, offsets and emitted outlines for 19 Gujarati conjunct/matra/reph strings in both CJS/ESM Fontkit exports; six independently referenced mixed-script runs also match combined outline positions/scales. 18 pure/mixed exports yield 54 decoded timed frames across six geometries and standard/inset placement; portrait/landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119914ms Redis lock; the case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 25-file source/config/docs/evidence publication and its own native CI are pending.",
+    "latestIncrement": "EDITOR-01T is locally verified: one shared script registry adds separately opt-in Gurmukhi, Odia (Unicode Oriya), Tamil, Telugu, Kannada, Malayalam and bounded non-joiner Sinhala overlays. Passed API/web production builds, 113 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Independent HarfBuzz 8.3.0 matches 100 curated strings plus 656 generated Sinhala consonant/vowel cases against both CJS/ESM exports and runtime emitted outlines; 13 independently referenced runs compose Latin/Greek/Cyrillic plus all ten registered Indic scripts. Each new script passed 18 pure/mixed exports and 54 decoded timed frames across six geometries/standard-inset placement (126 exports/378 frames total); 14 representative portrait/mixed-landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119932ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 48-file source/config/docs/evidence public payload and its own native CI are pending.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-07",
-    "nativePostgresVerifiedMeaning": "R own dated CI covers configured native PostgreSQL/Redis flows; broader concurrency/Compose/MinIO/native cross-store restore remain separate.",
+    "nativePostgresVerifiedMeaning": "S own dated CI covers configured native PostgreSQL/Redis flows; broader concurrency/Compose/MinIO/native cross-store restore remain separate.",
     "nativeApplicationHarnessVerified": true,
     "advisoryCountsRecordedAt": "2026-09-29",
     "dateTimezone": "Asia/Calcutta",
@@ -284,7 +285,7 @@
       "nativeTestsExecuted": true,
       "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
-    "upgradeLastRerunSlice": "EDITOR-01S",
+    "upgradeLastRerunSlice": "EDITOR-01T",
     "editor01hEvidence": {
       "scope": "Arabic/Hebrew RTL rendered text support through explicit FFmpeg text shaping; broader multilingual fallback remains open",
       "explicitDrawtextShaping": true,
@@ -402,14 +403,14 @@
       "actionsConclusion": "success"
     },
     "priorGithubActions": {
-      "runId": 37491518572,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37491518572",
-      "sourceCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
+      "runId": 37516681778,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37516681778",
+      "sourceCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
       "status": "completed",
       "conclusion": "success",
       "attempt": 1,
-      "completedAt": "2026-10-06T16:02:41Z",
-      "annotation": "Q sharp follow-up own native application CI at exact public source; full Compose/native cross-store restore/live/device/master acceptance excluded."
+      "completedAt": "2026-10-06T19:15:00Z",
+      "annotation": "R own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
     },
     "editor01kEvidence": {
       "scope": "Decoded exported AAC audio QA and strict cached/final media probe checks",
@@ -633,7 +634,7 @@
       "mismatchCount": 0,
       "remoteTreeMatchesLocalVerifiedTree": true
     },
-    "applicationSuitesScope": "EDITOR-01S own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded.",
+    "applicationSuitesScope": "EDITOR-01T own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded.",
     "editor01pEvidence": {
       "scope": "UI-only immutable saved-render review navigation",
       "publicationStatus": "published_ci_verified",
@@ -690,9 +691,16 @@
       "remoteTreeMatchesLocalVerifiedTree": true
     },
     "currentIncrementChecks": {
+      "unitReporterFinalSummaryAndCaseReceiptsVerified": true,
+      "unitReporterSmoke": {
+        "passAccepted": true,
+        "failRejected": true,
+        "skipRejected": true,
+        "incompleteStreamRejected": true
+      },
       "apiBuild": true,
       "webProductionBuild": true,
-      "unit": 73,
+      "unit": 113,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryScenarios": 5,
@@ -702,7 +710,8 @@
       "productionAuditAdvisories": 0,
       "fullAuditAdvisories": 0,
       "nativeApplicationCiVerified": false,
-      "scope": "EDITOR-01S own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
+      "unitFileConcurrency": 2,
+      "scope": "EDITOR-01T own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
     },
     "editor01pRecoveryEvidence": {
       "scope": "Deterministic held-poll recovery regression, queue-aware bounded wait and awaited child exit; no application changes",
@@ -1012,7 +1021,7 @@
     },
     "editor01sEvidence": {
       "scope": "Separately enabled Gujarati outline overlays and bounded six-script LTR font runs",
-      "publicationStatus": "local_verified_pending_exact_25_file_approval",
+      "publicationStatus": "published_ci_verified",
       "unitPassed": 73,
       "httpScenariosPassed": 7,
       "browserScenariosPassed": 7,
@@ -1073,11 +1082,419 @@
       "dependencyPackageRecordsChanged": false,
       "fontkitPatchChanged": false,
       "liveProviderUsed": false,
+      "nativeCiVerified": true,
+      "dockerBuildExecuted": false,
+      "knownFailures": [],
+      "publicationCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+      "publicationTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa",
+      "githubActions": {
+        "runId": 37519604078,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37519604078",
+        "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+        "status": "completed",
+        "conclusion": "success",
+        "attempt": 1,
+        "completedAt": "2026-10-06T19:39:45Z",
+        "annotation": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
+      },
+      "ciReferenceShapingVerified": true,
+      "ciDecodedFramesVerified": 54,
+      "ciFontkitPostinstallVerified": true,
+      "ciObservedLockMs": 119831,
+      "ciObservedCaseDurationMs": 128880.224276,
+      "populatedUpgradeArchiveRestoreCi": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4866508,
+        "sha256": "4ab46b44a6629dac61baadb397546028e4bf01d0df788b86ff6453bc58523efc",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "harfbuzzReferenceEngineCi": "Independent system HarfBuzz via test-only Python oracle; exact version not emitted in CI logs."
+    },
+    "nativeApplicationHarnessVerifiedMeaning": "Prior S native PostgreSQL/Redis CI only; T own native CI remains pending.",
+    "editor01tEvidence": {
+      "slice": "EDITOR-01T",
+      "scope": "Shared ten-script Indic registry and seven-script bounded acceptance batch",
+      "publicationStatus": "local_verified_pending_exact_48_file_approval",
+      "scripts": [
+        {
+          "name": "Gurmukhi",
+          "enabledFlag": "RENDER_GURMUKHI_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 16,
+          "generatedReferenceStrings": 0,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Gurmukhi",
+            "bytes": 53000,
+            "sha256": "bbde4d85fdfb998eff6921cb2c7a9a7924a1c95560a6aa9a06172530e4f596da",
+            "directoryTables": 17,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansGurmukhi/NotoSansGurmukhi-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-gurmukhi-portrait.png",
+            "docs/qa/indic-gurmukhi-mixed-landscape.png"
+          ]
+        },
+        {
+          "name": "Odia",
+          "enabledFlag": "RENDER_ODIA_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 12,
+          "generatedReferenceStrings": 0,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Odia",
+            "bytes": 95776,
+            "sha256": "b8d8bd784b9d09c0668233437359913c93a3a83bf37d92ecde859e2bc728a0e0",
+            "directoryTables": 14,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansOriya/NotoSansOriya-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-odia-portrait.png",
+            "docs/qa/indic-odia-mixed-landscape.png"
+          ]
+        },
+        {
+          "name": "Tamil",
+          "enabledFlag": "RENDER_TAMIL_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 12,
+          "generatedReferenceStrings": 0,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Tamil",
+            "bytes": 74248,
+            "sha256": "6532db33b8b264abe3a098a40619feb489b5ddf5ab1d2b46e72b51eeb548001b",
+            "directoryTables": 17,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansTamil/NotoSansTamil-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-tamil-portrait.png",
+            "docs/qa/indic-tamil-mixed-landscape.png"
+          ]
+        },
+        {
+          "name": "Telugu",
+          "enabledFlag": "RENDER_TELUGU_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 12,
+          "generatedReferenceStrings": 0,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Telugu",
+            "bytes": 197228,
+            "sha256": "2c05072e8018a9be1cb0582953d9edf9a0cf129cdfb74e611de763b09c411f7f",
+            "directoryTables": 17,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansTelugu/NotoSansTelugu-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-telugu-portrait.png",
+            "docs/qa/indic-telugu-mixed-landscape.png"
+          ]
+        },
+        {
+          "name": "Kannada",
+          "enabledFlag": "RENDER_KANNADA_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 12,
+          "generatedReferenceStrings": 0,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Kannada",
+            "bytes": 151940,
+            "sha256": "5c804033c57f2c2844b1cd425f45b9a78d81d2f71bf358351b24258ebe168aea",
+            "directoryTables": 17,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansKannada/NotoSansKannada-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-kannada-portrait.png",
+            "docs/qa/indic-kannada-mixed-landscape.png"
+          ]
+        },
+        {
+          "name": "Malayalam",
+          "enabledFlag": "RENDER_MALAYALAM_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 17,
+          "generatedReferenceStrings": 0,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Malayalam",
+            "bytes": 111724,
+            "sha256": "42eb462ff13e820ebbeaaec4e7b426bd1de145d02cef8b634f5a3efd376b513c",
+            "directoryTables": 17,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansMalayalam/NotoSansMalayalam-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-malayalam-portrait.png",
+            "docs/qa/indic-malayalam-mixed-landscape.png"
+          ]
+        },
+        {
+          "name": "Sinhala",
+          "enabledFlag": "RENDER_SINHALA_ENABLED",
+          "defaultEnabled": false,
+          "curatedReferenceStrings": 19,
+          "generatedReferenceStrings": 656,
+          "referenceExports": [
+            "CJS",
+            "ESM"
+          ],
+          "glyphsAdvancesOffsetsAndRuntimeOutlinesMatched": true,
+          "renderExports": 18,
+          "decodedTimedFrames": 54,
+          "outputGeometries": 6,
+          "textPlacements": [
+            "standard",
+            "inset-v1"
+          ],
+          "independentOptInChecksPassed": true,
+          "wholeGraphemeWrappingAndMissingCoverageChecksPassed": true,
+          "truncatedFontTableRejected": true,
+          "httpPrivateVideoSrtAndTenantBoundaryPassed": true,
+          "mixedRtlRejectedBeforeJob": true,
+          "font": {
+            "name": "Sinhala",
+            "bytes": 310232,
+            "sha256": "a966549310b2d3046ba25bbeef11985428ff9356fa656fd6118bc90fb82df031",
+            "directoryTables": 17,
+            "source": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansSinhala/NotoSansSinhala-Regular.ttf"
+          },
+          "visualFrames": [
+            "docs/qa/indic-sinhala-portrait.png",
+            "docs/qa/indic-sinhala-mixed-landscape.png"
+          ]
+        }
+      ],
+      "curatedReferenceStrings": 100,
+      "generatedSinhalaReferenceStrings": 656,
+      "harfbuzzReferenceEngine": "HarfBuzz 8.3.0",
+      "referenceExports": [
+        "CJS",
+        "ESM"
+      ],
+      "runtimeEmittedOutlinesMatched": true,
+      "independentlyReferencedMixedRuns": 13,
+      "mixedIndicScripts": 10,
+      "renderExports": 126,
+      "decodedTimedFrames": 378,
+      "outputGeometries": 6,
+      "textPlacements": [
+        "standard",
+        "inset-v1"
+      ],
+      "unitPassed": 113,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 7,
+      "recoveryConfigurationScenariosPassed": 5,
+      "migrationsApplied": 12,
+      "cleanFullInstallPassed": true,
+      "cleanProductionOnlyInstallPassed": true,
+      "cleanInstallReferenceRunsMatched": 3024,
+      "fontkitPatchGuardIdempotentVersionHashesPartialMutationAndAllExportsVerified": true,
+      "markFilteringCoverageFormatsAndPrecedenceVerified": true,
+      "cacheFingerprints": {
+        "deva": "fontkit-outlines-v4-ltr-script-font-runs",
+        "beng": "fontkit-outlines-v2-bengali-script-font-runs",
+        "gujr": "fontkit-outlines-v2-gujarati-script-font-runs",
+        "batch": "fontkit-outlines-v1-indic-registry-mark-filter-sinhala"
+      },
+      "plainOverlayFingerprintUnchanged": true,
+      "fractionalEdgeTolerancePixels": 1e-07,
+      "realOverflowStillRejected": true,
+      "sinhalaJoinerConjunctsVerified": false,
+      "sinhalaJoinersPreservedWithImageFallback": true,
+      "defaultEnabled": false,
+      "wholeGraphemesPreserved": true,
+      "missingAndTruncatedFontCoverageRejectedBeforeStorage": true,
+      "apiMixedRtlRejectedBeforeJob": true,
+      "captionsOffUnicodeSrtPreserved": true,
+      "ignoredFallbackCaptionPreserved": true,
+      "visualFrames": [
+        "docs/qa/indic-gurmukhi-portrait.png",
+        "docs/qa/indic-gurmukhi-mixed-landscape.png",
+        "docs/qa/indic-odia-portrait.png",
+        "docs/qa/indic-odia-mixed-landscape.png",
+        "docs/qa/indic-tamil-portrait.png",
+        "docs/qa/indic-tamil-mixed-landscape.png",
+        "docs/qa/indic-telugu-portrait.png",
+        "docs/qa/indic-telugu-mixed-landscape.png",
+        "docs/qa/indic-kannada-portrait.png",
+        "docs/qa/indic-kannada-mixed-landscape.png",
+        "docs/qa/indic-malayalam-portrait.png",
+        "docs/qa/indic-malayalam-mixed-landscape.png",
+        "docs/qa/indic-sinhala-portrait.png",
+        "docs/qa/indic-sinhala-mixed-landscape.png"
+      ],
+      "visualReviewScope": "Visibility, clipping and sampled output layout; not native-speaker semantic certification or physical-device acceptance.",
+      "fontsBundled": false,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0,
+      "populatedUpgradeArchiveRestoreLocal": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4865624,
+        "sha256": "7151bc7a38caecd263ae5c1f3271ae9b15f35342e62c0b1013b803e355abb0b0",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "recoveryObservedLockMs": 119932,
+      "recoveryCaseDurationMs": 128094.979032,
+      "dependencyPackageRecordsChanged": false,
+      "fontkitPatchChanged": true,
+      "liveProviderUsed": false,
       "nativeCiVerified": false,
       "dockerBuildExecuted": false,
-      "knownFailures": []
-    },
-    "nativeApplicationHarnessVerifiedMeaning": "Prior R native PostgreSQL/Redis CI only; S own native CI remains pending."
+      "knownFailures": [],
+      "resolvedOrExcludedFindings": [
+        {
+          "finding": "Telugu test font download was truncated at 131072 bytes",
+          "status": "resolved",
+          "resolution": "Complete 197228-byte font verified against table directory bounds; production font preflight now rejects truncated tables."
+        },
+        {
+          "finding": "Kannada ಕ್ಷಿ yielded glyphs 206/128 instead of reference glyph 288",
+          "status": "resolved",
+          "resolution": "Implement OpenType GDEF mark filtering, including nested lookups and attachment-class precedence; independent CJS/ESM/outline references and both coverage formats pass."
+        },
+        {
+          "finding": "Eight Sinhala curated strings had non-reference mark advances",
+          "status": "resolved",
+          "resolution": "Scope zero GDEF-mark advances before GPOS to sinh, retaining existing Indic GSUB; 19 curated plus 656 generated cases pass. Broad USE shaper replacement was investigated and discarded."
+        },
+        {
+          "finding": "Initial batch render suite passed 35/37; Telugu/Sinhala fractional inset edges were rejected",
+          "status": "resolved",
+          "resolution": "1e-7px numerical edge tolerance; both complete matrices and focused real-overflow regression pass, followed by full 113-unit regression."
+        },
+        {
+          "finding": "First HTTP run passed 6/7; newly added outsider assertion used an existing ANALYST member",
+          "status": "resolved_test_fixture",
+          "resolution": "Assert foreign-workspace 404 and unauthenticated 401 per new script. Authorized member read access and production permissions are unchanged. Full application suite rerun passed."
+        },
+        {
+          "finding": "An earlier full-unit log lacked terminal totals",
+          "status": "excluded_as_incomplete_evidence",
+          "resolution": "No pass claim from that run; rerun all 113 cases using the summary/receipt reporter and captured exit/final-count verification."
+        }
+      ],
+      "openAcceptance": [
+        "Sinhala and other Indic joiner-based conjuncts",
+        "Thai/Lao/Khmer/Myanmar/Tibetan",
+        "CJK",
+        "General bidi/language semantics and all-font coverage",
+        "Physical-device readability",
+        "Full EDITOR-01 and master acceptance"
+      ]
+    }
   },
   "accessState": {
     "github": "Public main includes EDITOR-01I through 56702de088f2e8d2198e3ea858dd96efe6b9d200. Actions run 37317283904 completed successfully after the CI-portability font fixture fix.",
@@ -1088,8 +1505,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
-    "status": "editor01s_local_verified_publication_pending",
+    "commit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+    "status": "editor01t_local_verified_publication_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -1102,11 +1519,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0",
+    "sourceTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Approved exact 32-file R publication; own native CI passed.",
+    "commitMeaning": "Approved exact 25-file S publication; own native CI passed.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "760e9be5c04fc24cb4b93d78a1dacf922b8ecbda",
+    "lastLocalCheckpointCommit": "53c130c03e9e90c70169eead2e69b0eda61211e2",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -1116,33 +1533,34 @@
       "resolved": true
     },
     "publication": {
-      "slice": "EDITOR-01R",
-      "applicationCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
-      "applicationTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0",
-      "baseCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
-      "localSourceCommit": "5962cbfe755b26d61d28b8ab50ec6142c816b559",
-      "uploadedChangedBlobCount": 32,
-      "remoteBlobCount": 208,
-      "localBlobCount": 208,
+      "slice": "EDITOR-01S",
+      "applicationCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+      "applicationTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa",
+      "baseCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
+      "localSourceCommit": "54d777e19042859a0b209d42663d93cf56126dae",
+      "uploadedChangedBlobCount": 25,
+      "remoteBlobCount": 211,
+      "localBlobCount": 211,
       "mismatchCount": 0,
-      "actionsRunId": 37516681778,
+      "actionsRunId": 37519604078,
       "actionsConclusion": "success",
       "nativeTestsExecuted": true,
       "ciAttempt": 1
     },
     "currentUploadGate": {
-      "slice": "EDITOR-01S",
+      "slice": "EDITOR-01T",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "pending_exact_user_authorization",
       "resolved": false,
       "remoteWriteAttempted": false,
-      "reason": "Previous exact 32-file R approval was fulfilled. S is a new 25-file source/config/docs/evidence public payload.",
+      "reason": "Previous exact 25-file S approval was fulfilled. T is a new 48-file source/config/docs/evidence public payload.",
       "paths": [
         ".env.example",
         ".github/workflows/ci.yml",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
+        "README.md",
         "START_HERE.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -1153,32 +1571,55 @@
         "docs/TEST_STRATEGY.md",
         "docs/VERIFICATION_REPORT.md",
         "docs/VIDEO_PIPELINE.md",
-        "docs/qa/gujarati-mixed-landscape.png",
-        "docs/qa/gujarati-portrait.png",
+        "docs/qa/indic-batch-evidence.json",
+        "docs/qa/indic-gurmukhi-mixed-landscape.png",
+        "docs/qa/indic-gurmukhi-portrait.png",
+        "docs/qa/indic-kannada-mixed-landscape.png",
+        "docs/qa/indic-kannada-portrait.png",
+        "docs/qa/indic-malayalam-mixed-landscape.png",
+        "docs/qa/indic-malayalam-portrait.png",
+        "docs/qa/indic-odia-mixed-landscape.png",
+        "docs/qa/indic-odia-portrait.png",
+        "docs/qa/indic-sinhala-mixed-landscape.png",
+        "docs/qa/indic-sinhala-portrait.png",
+        "docs/qa/indic-tamil-mixed-landscape.png",
+        "docs/qa/indic-tamil-portrait.png",
+        "docs/qa/indic-telugu-mixed-landscape.png",
+        "docs/qa/indic-telugu-portrait.png",
         "docs/qa/verification-summary.json",
+        "package.json",
         "packages/core/media.ts",
         "packages/core/render-font.ts",
+        "packages/core/render-glyph-overlay.ts",
+        "packages/core/render-scripts.ts",
         "packages/core/render-shaping.ts",
+        "scripts/patch-fontkit.mjs",
+        "scripts/unit-reporter.mjs",
         "scripts/verify-local.mjs",
+        "tests/fixtures/indic-batch.ts",
+        "tests/fontkit-patch.test.ts",
         "tests/integration/media.test.ts",
+        "tests/render-bengali.test.ts",
         "tests/render-devanagari.test.ts",
-        "tests/render-gujarati.test.ts"
+        "tests/render-gujarati.test.ts",
+        "tests/render-indic-batch.test.ts"
       ],
-      "changedFiles": 25,
-      "baseCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
-      "baseTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0",
-      "localEquivalentBase": "5962cbfe755b26d61d28b8ab50ec6142c816b559"
+      "changedFiles": 48,
+      "baseCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+      "baseTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa",
+      "localEquivalentBase": "54d777e19042859a0b209d42663d93cf56126dae"
     },
     "publicationPreparation": {
-      "slice": "EDITOR-01S",
+      "slice": "EDITOR-01T",
       "status": "local_verified_ready_for_review",
-      "changedFiles": 25,
+      "changedFiles": 48,
       "paths": [
         ".env.example",
         ".github/workflows/ci.yml",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
+        "README.md",
         "START_HERE.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -1189,19 +1630,41 @@
         "docs/TEST_STRATEGY.md",
         "docs/VERIFICATION_REPORT.md",
         "docs/VIDEO_PIPELINE.md",
-        "docs/qa/gujarati-mixed-landscape.png",
-        "docs/qa/gujarati-portrait.png",
+        "docs/qa/indic-batch-evidence.json",
+        "docs/qa/indic-gurmukhi-mixed-landscape.png",
+        "docs/qa/indic-gurmukhi-portrait.png",
+        "docs/qa/indic-kannada-mixed-landscape.png",
+        "docs/qa/indic-kannada-portrait.png",
+        "docs/qa/indic-malayalam-mixed-landscape.png",
+        "docs/qa/indic-malayalam-portrait.png",
+        "docs/qa/indic-odia-mixed-landscape.png",
+        "docs/qa/indic-odia-portrait.png",
+        "docs/qa/indic-sinhala-mixed-landscape.png",
+        "docs/qa/indic-sinhala-portrait.png",
+        "docs/qa/indic-tamil-mixed-landscape.png",
+        "docs/qa/indic-tamil-portrait.png",
+        "docs/qa/indic-telugu-mixed-landscape.png",
+        "docs/qa/indic-telugu-portrait.png",
         "docs/qa/verification-summary.json",
+        "package.json",
         "packages/core/media.ts",
         "packages/core/render-font.ts",
+        "packages/core/render-glyph-overlay.ts",
+        "packages/core/render-scripts.ts",
         "packages/core/render-shaping.ts",
+        "scripts/patch-fontkit.mjs",
+        "scripts/unit-reporter.mjs",
         "scripts/verify-local.mjs",
+        "tests/fixtures/indic-batch.ts",
+        "tests/fontkit-patch.test.ts",
         "tests/integration/media.test.ts",
+        "tests/render-bengali.test.ts",
         "tests/render-devanagari.test.ts",
-        "tests/render-gujarati.test.ts"
+        "tests/render-gujarati.test.ts",
+        "tests/render-indic-batch.test.ts"
       ],
-      "baseCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
-      "baseTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0"
+      "baseCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+      "baseTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa"
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -1246,9 +1709,9 @@
       "mismatchCount": 0
     },
     "nextPublication": {
-      "slice": "EDITOR-01S",
+      "slice": "EDITOR-01T",
       "status": "awaiting_exact_scope_approval",
-      "changedFiles": 25
+      "changedFiles": 48
     },
     "previousPublication": {
       "publishedAtUtc": "2026-10-04T14:03:56Z",
@@ -1270,14 +1733,15 @@
       "nativeTestsExecuted": true
     },
     "localEvidencePublication": {
-      "status": "local_editor01s_verified_source_context",
-      "changedFiles": 25,
+      "status": "local_editor01t_verified_source_context",
+      "changedFiles": 48,
       "paths": [
         ".env.example",
         ".github/workflows/ci.yml",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
+        "README.md",
         "START_HERE.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -1288,20 +1752,42 @@
         "docs/TEST_STRATEGY.md",
         "docs/VERIFICATION_REPORT.md",
         "docs/VIDEO_PIPELINE.md",
-        "docs/qa/gujarati-mixed-landscape.png",
-        "docs/qa/gujarati-portrait.png",
+        "docs/qa/indic-batch-evidence.json",
+        "docs/qa/indic-gurmukhi-mixed-landscape.png",
+        "docs/qa/indic-gurmukhi-portrait.png",
+        "docs/qa/indic-kannada-mixed-landscape.png",
+        "docs/qa/indic-kannada-portrait.png",
+        "docs/qa/indic-malayalam-mixed-landscape.png",
+        "docs/qa/indic-malayalam-portrait.png",
+        "docs/qa/indic-odia-mixed-landscape.png",
+        "docs/qa/indic-odia-portrait.png",
+        "docs/qa/indic-sinhala-mixed-landscape.png",
+        "docs/qa/indic-sinhala-portrait.png",
+        "docs/qa/indic-tamil-mixed-landscape.png",
+        "docs/qa/indic-tamil-portrait.png",
+        "docs/qa/indic-telugu-mixed-landscape.png",
+        "docs/qa/indic-telugu-portrait.png",
         "docs/qa/verification-summary.json",
+        "package.json",
         "packages/core/media.ts",
         "packages/core/render-font.ts",
+        "packages/core/render-glyph-overlay.ts",
+        "packages/core/render-scripts.ts",
         "packages/core/render-shaping.ts",
+        "scripts/patch-fontkit.mjs",
+        "scripts/unit-reporter.mjs",
         "scripts/verify-local.mjs",
+        "tests/fixtures/indic-batch.ts",
+        "tests/fontkit-patch.test.ts",
         "tests/integration/media.test.ts",
+        "tests/render-bengali.test.ts",
         "tests/render-devanagari.test.ts",
-        "tests/render-gujarati.test.ts"
+        "tests/render-gujarati.test.ts",
+        "tests/render-indic-batch.test.ts"
       ],
-      "reason": "S verified source/config/docs/local evidence retained in handoff; no S public write attempted."
+      "reason": "T verified source/config/docs/local evidence retained in handoff; no T public write attempted."
     },
-    "lastLocalCheckpointCommitMeaning": "Immutable R publication closure parent; verified S source follows locally.",
+    "lastLocalCheckpointCommitMeaning": "Immutable S publication closure parent; verified T source follows locally.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -1778,6 +2264,84 @@
         "docs/qa/verification-summary.json"
       ],
       "reason": "Own publication/CI closure retained locally in handoff; no additional public payload attempted."
+    },
+    "editor01sUploadGate": {
+      "slice": "EDITOR-01S",
+      "destination": "public shlokagrawal13/organic-marketing-os main",
+      "status": "approved_published",
+      "resolved": true,
+      "remoteWriteAttempted": true,
+      "reason": "Exact 25-file approval fulfilled; matching public tree and successful own native CI recorded.",
+      "paths": [
+        ".env.example",
+        ".github/workflows/ci.yml",
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "START_HERE.md",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/gujarati-mixed-landscape.png",
+        "docs/qa/gujarati-portrait.png",
+        "docs/qa/verification-summary.json",
+        "packages/core/media.ts",
+        "packages/core/render-font.ts",
+        "packages/core/render-shaping.ts",
+        "scripts/verify-local.mjs",
+        "tests/integration/media.test.ts",
+        "tests/render-devanagari.test.ts",
+        "tests/render-gujarati.test.ts"
+      ],
+      "changedFiles": 25,
+      "baseCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
+      "baseTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0",
+      "localEquivalentBase": "5962cbfe755b26d61d28b8ab50ec6142c816b559",
+      "userApproval": "I explicitly approve publishing EDITOR-01S’s 25 verified source/config/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "remoteCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+      "remoteTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa"
+    },
+    "editor01sPublication": {
+      "slice": "EDITOR-01S",
+      "applicationCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+      "applicationTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa",
+      "baseCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
+      "localSourceCommit": "54d777e19042859a0b209d42663d93cf56126dae",
+      "uploadedChangedBlobCount": 25,
+      "remoteBlobCount": 211,
+      "localBlobCount": 211,
+      "mismatchCount": 0,
+      "actionsRunId": 37519604078,
+      "actionsConclusion": "success",
+      "nativeTestsExecuted": true,
+      "ciAttempt": 1
+    },
+    "editor01sClosureEvidence": {
+      "status": "local_after_editor01s_publication",
+      "changedFiles": 14,
+      "paths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "START_HERE.md",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/verification-summary.json"
+      ],
+      "reason": "Own publication/CI closure retained locally in handoff; no additional public payload attempted."
     }
   },
   "credentialsIncluded": false,
@@ -1824,7 +2388,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "A through R plus P recovery/Q sharp follow-ups published and own CI verified. S Gujarati overlays locally verified (73/7/7/5, 54 frames, 19 Gujarati reference strings and six mixed reference runs); publication/own CI pending. Other Indic/CJK/device/ASR/audio/custom effects/platform/semantic quality remain."
+      "completedIncrement": "A through S plus P recovery/Q sharp follow-ups published and own CI verified. T shared registry/seven-script bounded Indic batch locally verified (113/7/7/5, 378 frames, 100 curated plus 656 generated reference strings, 13 mixed runs); publication/own CI pending. Sinhala/other joiners, Southeast Asian/Tibetan, CJK/font/device/readability and ASR/audio/custom effects/platform/semantic quality remain."
     },
     {
       "id": "RESEARCH-01",
@@ -1932,6 +2496,7 @@
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
+    "README.md",
     "START_HERE.md",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
@@ -1942,16 +2507,38 @@
     "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
     "docs/VIDEO_PIPELINE.md",
-    "docs/qa/gujarati-mixed-landscape.png",
-    "docs/qa/gujarati-portrait.png",
+    "docs/qa/indic-batch-evidence.json",
+    "docs/qa/indic-gurmukhi-mixed-landscape.png",
+    "docs/qa/indic-gurmukhi-portrait.png",
+    "docs/qa/indic-kannada-mixed-landscape.png",
+    "docs/qa/indic-kannada-portrait.png",
+    "docs/qa/indic-malayalam-mixed-landscape.png",
+    "docs/qa/indic-malayalam-portrait.png",
+    "docs/qa/indic-odia-mixed-landscape.png",
+    "docs/qa/indic-odia-portrait.png",
+    "docs/qa/indic-sinhala-mixed-landscape.png",
+    "docs/qa/indic-sinhala-portrait.png",
+    "docs/qa/indic-tamil-mixed-landscape.png",
+    "docs/qa/indic-tamil-portrait.png",
+    "docs/qa/indic-telugu-mixed-landscape.png",
+    "docs/qa/indic-telugu-portrait.png",
     "docs/qa/verification-summary.json",
+    "package.json",
     "packages/core/media.ts",
     "packages/core/render-font.ts",
+    "packages/core/render-glyph-overlay.ts",
+    "packages/core/render-scripts.ts",
     "packages/core/render-shaping.ts",
+    "scripts/patch-fontkit.mjs",
+    "scripts/unit-reporter.mjs",
     "scripts/verify-local.mjs",
+    "tests/fixtures/indic-batch.ts",
+    "tests/fontkit-patch.test.ts",
     "tests/integration/media.test.ts",
+    "tests/render-bengali.test.ts",
     "tests/render-devanagari.test.ts",
-    "tests/render-gujarati.test.ts"
+    "tests/render-gujarati.test.ts",
+    "tests/render-indic-batch.test.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -1977,5 +2564,5 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01S is locally verified: separate opt-in Gujarati titles/burned caption cues use trusted complete-grapheme font/script runs, including bounded Latin/Greek/Cyrillic/Devanagari/Bengali combinations. API/web production builds, 73 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits passed. Independent HarfBuzz 8.3.0 matches glyph order, advances, offsets and emitted outlines for 19 Gujarati conjunct/matra/reph strings in both CJS/ESM Fontkit exports; six independently referenced mixed-script runs also match combined outline positions/scales. 18 pure/mixed exports yield 54 decoded timed frames across six geometries and standard/inset placement; portrait/landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119914ms Redis lock; the case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 25-file source/config/docs/evidence publication and its own native CI are pending."
+  "latestStatus": "EDITOR-01T is locally verified: one shared script registry adds separately opt-in Gurmukhi, Odia (Unicode Oriya), Tamil, Telugu, Kannada, Malayalam and bounded non-joiner Sinhala overlays. Passed API/web production builds, 113 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Independent HarfBuzz 8.3.0 matches 100 curated strings plus 656 generated Sinhala consonant/vowel cases against both CJS/ESM exports and runtime emitted outlines; 13 independently referenced runs compose Latin/Greek/Cyrillic plus all ten registered Indic scripts. Each new script passed 18 pure/mixed exports and 54 decoded timed frames across six geometries/standard-inset placement (126 exports/378 frames total); 14 representative portrait/mixed-landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119932ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 48-file source/config/docs/evidence public payload and its own native CI are pending."
 }

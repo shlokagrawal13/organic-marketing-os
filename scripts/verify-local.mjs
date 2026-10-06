@@ -23,11 +23,18 @@ process.env.WEB_ORIGIN = "http://localhost:3000";
 process.env.COOKIE_SECURE = "false";
 process.env.SMTP_SECURE = "false";
 process.env.BILLING_MODE = "self_hosted";
-// This isolated profile exercises optional Devanagari/Bengali/Gujarati rendering. Production
+// This isolated profile exercises all registered optional Indic rendering. Production
 // remains opt-in and must provide its own compatible runtime and trusted font.
 process.env.RENDER_DEVANAGARI_ENABLED = "true";
 process.env.RENDER_BENGALI_ENABLED = "true";
 process.env.RENDER_GUJARATI_ENABLED = "true";
+process.env.RENDER_GURMUKHI_ENABLED = "true";
+process.env.RENDER_ODIA_ENABLED = "true";
+process.env.RENDER_TAMIL_ENABLED = "true";
+process.env.RENDER_TELUGU_ENABLED = "true";
+process.env.RENDER_KANNADA_ENABLED = "true";
+process.env.RENDER_MALAYALAM_ENABLED = "true";
+process.env.RENDER_SINHALA_ENABLED = "true";
 process.env.RENDER_FONT_FALLBACK_PATHS ||= [
   process.env.TEST_DEVANAGARI_FONT_PATH ||
     "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
@@ -35,6 +42,20 @@ process.env.RENDER_FONT_FALLBACK_PATHS ||= [
     "/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf",
   process.env.TEST_GUJARATI_FONT_PATH ||
     "/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf",
+  process.env.TEST_GURMUKHI_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansGurmukhi-Regular.ttf",
+  process.env.TEST_ODIA_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansOriya-Regular.ttf",
+  process.env.TEST_TAMIL_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansTamil-Regular.ttf",
+  process.env.TEST_TELUGU_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansTelugu-Regular.ttf",
+  process.env.TEST_KANNADA_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf",
+  process.env.TEST_MALAYALAM_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansMalayalam-Regular.ttf",
+  process.env.TEST_SINHALA_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf",
 ].join(delimiter);
 process.env.PLATFORM_ADMIN_USER_IDS = "";
 process.env.AI_STRATEGY_CREDITS = "5";

@@ -1,4 +1,9 @@
 import { z } from "zod";
+import {
+  OUTLINE_SCRIPTS,
+  OUTLINE_UNICODE_CLASS,
+  outlineScript,
+} from "./render-scripts";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { sceneSchema } from "./ai";
@@ -54,13 +59,6 @@ export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
 const unsupportedRenderScripts: Array<[RegExp, string]> = [
-  [/\p{Script=Gurmukhi}/u, "Gurmukhi"],
-  [/\p{Script=Oriya}/u, "Odia"],
-  [/\p{Script=Tamil}/u, "Tamil"],
-  [/\p{Script=Telugu}/u, "Telugu"],
-  [/\p{Script=Kannada}/u, "Kannada"],
-  [/\p{Script=Malayalam}/u, "Malayalam"],
-  [/\p{Script=Sinhala}/u, "Sinhala"],
   [/\p{Script=Thai}/u, "Thai"],
   [/\p{Script=Lao}/u, "Lao"],
   [/\p{Script=Khmer}/u, "Khmer"],
@@ -73,8 +71,14 @@ const unsupportedRenderScripts: Array<[RegExp, string]> = [
 ];
 const emojiOrSymbol = /[\u{1f000}-\u{1faff}\u{2600}-\u{27bf}\ufe0f]/u;
 // Script preflight, not a font cmap guarantee. Keep common punctuation explicit.
-const supportedRenderCharacters =
-  /^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u0900-\u097f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Devanagari}\p{Script=Bengali}\p{Script=Gujarati}]*$/u;
+const supportedRenderCharacters = new RegExp(
+  String.raw`^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u0900-\u097f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}${OUTLINE_UNICODE_CLASS}]*$`,
+  "u",
+);
+const unsupportedIndicMix = new RegExp(
+  String.raw`[^\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Common}\p{Script=Inherited}${OUTLINE_UNICODE_CLASS}]`,
+  "u",
+);
 export const hasDevanagariText = (text: string) =>
   /[\u0900-\u097f\p{Script=Devanagari}]/u.test(text);
 export const hasBengaliText = (text: string) =>
@@ -82,32 +86,23 @@ export const hasBengaliText = (text: string) =>
 export const hasGujaratiText = (text: string) =>
   /\p{Script=Gujarati}/u.test(text);
 export const hasIndicOutlineText = (text: string) =>
-  hasDevanagariText(text) || hasBengaliText(text) || hasGujaratiText(text);
+  Boolean(outlineScript(text));
 export function indicMixSupportIssue(text: string, label = "Rendered text") {
-  if (
-    hasIndicOutlineText(text) &&
-    /[^\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Devanagari}\p{Script=Bengali}\p{Script=Gujarati}\p{Script=Common}\p{Script=Inherited}]/u.test(
-      text,
-    )
-  )
-    return `${label} can combine enabled Devanagari, Bengali or Gujarati with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
+  if (hasIndicOutlineText(text) && unsupportedIndicMix.test(text))
+    return `${label} can combine enabled Indic scripts with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
   return null;
 }
 export function renderTextSupportIssue(text: string, label = "Rendered text") {
+  if (/\p{Script=Sinhala}/u.test(text) && /[\u200c\u200d]/u.test(text))
+    return `${label} contains Sinhala joiner-based conjuncts outside the current shaping acceptance. Preserve the joiners and attach this text as an image until that coverage is verified.`;
   if (/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(text))
     return `${label} contains control characters. Remove them before rendering.`;
   if (emojiOrSymbol.test(text))
     return `${label} contains emoji or symbol glyphs that the current video font cannot guarantee. Remove them or attach that text as an image.`;
-  if (
-    // Danda is common Indic punctuation; it must not enable Hindi.
-    /\p{Script=Devanagari}/u.test(text) &&
-    process.env.RENDER_DEVANAGARI_ENABLED !== "true"
-  )
-    return `${label} contains Devanagari text but Devanagari rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
-  if (hasBengaliText(text) && process.env.RENDER_BENGALI_ENABLED !== "true")
-    return `${label} contains Bengali text but Bengali rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
-  if (hasGujaratiText(text) && process.env.RENDER_GUJARATI_ENABLED !== "true")
-    return `${label} contains Gujarati text but Gujarati rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
+  // Script-property matching keeps common danda independent of Hindi opt-in.
+  for (const script of OUTLINE_SCRIPTS)
+    if (script.pattern.test(text) && process.env[script.environment] !== "true")
+      return `${label} contains ${script.name} text but ${script.name} rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
   for (const [pattern, name] of unsupportedRenderScripts)
     if (pattern.test(text))
       return `${label} contains ${name} text outside the current render policy. Attach this text as an image or wait for broader multilingual font/shaping support.`;
