@@ -21,7 +21,7 @@
     "textAI": "isolated compatible HTTP provider fixture",
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
-    "generatedMedia": "Isolated generated-media fixtures, including deterministic held-poll recovery; no live provider"
+    "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider"
   },
   "requirements": {
     "headings": 161,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01Q bounded mixed LTR overlays are locally verified. With the existing Devanagari opt-in and covering fonts, Latin/Greek/Cyrillic/Hindi titles and burned cues use separate complete-grapheme script/font runs. API and worker now share the mixed-script boundary, rejecting Hindi combined with Arabic/Hebrew in one overlay before queueing. Passed API/web production builds, 63 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration scenarios, with 12 fresh migrations. Focused QA passed 36 decoded timed frames from 12 exports across six output geometries and standard/inset placement; portrait/landscape frames were visually reviewed. Q publication and own native CI are pending.",
+  "latestIncrement": "EDITOR-01Q’s approved 22-file source/docs/evidence payload is published at 8c3267ac77fa6833aee1e6099cb042ff44fad345 with matching tree 36c2de112243b98234e8845310c33cd0af200db3. Its own Actions run 37488801724 passed production builds and all 63 unit cases, including 36 mixed-script decoded frames, but failed the production audit on sharp 0.35.4 / GHSA-wq5f-xc86-pv6w. Native HTTP/browser/recovery and populated upgrade were skipped, so Q native full-suite success is not claimed. A narrow sharp 0.35.5 override/lockfile follow-up is now locally verified: clean npm ci, bundled librsvg 2.63.2 PNG/SVG decoding, both zero-vulnerability audits, API/web builds, 63 unit, 7 HTTP, 7 production-browser, 5 recovery/configuration scenarios and 12 migrations, plus populated PGlite upgrade/archive restore. The new 16-file dependency-fix/evidence follow-up awaits exact public approval and its own native CI.",
   "priorFullSuite": {
     "sourceCommit": "c2936113616522db099771684226276e91976957",
     "actionsRunId": 37479269861,
@@ -136,14 +136,15 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "runId": 37484095477,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37484095477",
-    "sourceCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
+    "runId": 37488801724,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37488801724",
+    "sourceCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
     "status": "completed",
-    "conclusion": "success",
+    "conclusion": "failure",
     "attempt": 1,
-    "completedAt": "2026-10-06T15:10:34Z",
-    "annotation": "Recovery follow-up own native CI, exact source commit; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    "completedAt": "2026-10-06T15:37:33Z",
+    "failedStep": "Audit production dependencies",
+    "annotation": "Builds/63 unit/36 decoded Q frames passed. Production audit: one high sharp advisory. Full audit, upgrade and native application flows skipped."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -749,11 +750,12 @@
     "browserScenarios": 7,
     "recoveryScenarios": 5,
     "migrations": 12,
+    "populatedUpgradeLocal": true,
     "populatedUpgradeCi": null,
-    "productionAuditAdvisories": null,
-    "fullAuditAdvisories": null,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
     "nativeApplicationCiVerified": false,
-    "scope": "Q local full application checks and decoded frame QA; P native CI/audit/upgrade are historical, not Q verification."
+    "scope": "Sharp dependency follow-up locally verified; original Q CI passed builds/unit but failed audit and skipped native application/upgrade flows."
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -863,7 +865,7 @@
   },
   "editor01qEvidence": {
     "scope": "Greek/Cyrillic + existing Latin/Devanagari bounded LTR overlay combinations; shared API/worker mixed-script boundary",
-    "publicationStatus": "local_verified_pending_exact_authorization",
+    "publicationStatus": "published_native_ci_audit_failed",
     "httpScenariosPassed": 7,
     "browserScenariosPassed": 7,
     "recoveryConfigurationScenariosPassed": 5,
@@ -895,10 +897,26 @@
     "liveProviderUsed": false,
     "knownFailures": [],
     "recoveryObservedLockMs": 119925,
-    "recoveryCaseDurationMs": 158385.301074
+    "recoveryCaseDurationMs": 158385.301074,
+    "publicationCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
+    "publicationTree": "36c2de112243b98234e8845310c33cd0af200db3",
+    "githubActions": {
+      "runId": 37488801724,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37488801724",
+      "sourceCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
+      "status": "completed",
+      "conclusion": "failure",
+      "attempt": 1,
+      "completedAt": "2026-10-06T15:37:33Z",
+      "failedStep": "Audit production dependencies",
+      "annotation": "Builds/63 unit/36 decoded Q frames passed. Production audit: one high sharp advisory. Full audit, upgrade and native application flows skipped."
+    },
+    "nativeUnitPassed": 63,
+    "nativeDecodedFrameTestsPassed": true,
+    "nativeApplicationFlowsExecuted": false
   },
   "localFullSuite": {
-    "slice": "EDITOR-01Q",
+    "slice": "EDITOR-01Q-SHARP",
     "verifiedDate": "2026-10-06",
     "passed": {
       "unit": 63,
@@ -907,6 +925,61 @@
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Q local full application checks and decoded frame QA; P native CI/audit/upgrade are historical, not Q verification."
+    "scope": "Sharp dependency follow-up locally verified; original Q CI passed builds/unit but failed audit and skipped native application/upgrade flows."
+  },
+  "editor01qSharpEvidence": {
+    "scope": "Exact sharp 0.35.5 override plus associated platform binaries/libvips lock records; no app source changes",
+    "publicationStatus": "local_verified_pending_exact_followup_approval",
+    "advisory": "GHSA-wq5f-xc86-pv6w",
+    "advisoryUrl": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w",
+    "releaseUrl": "https://github.com/lovell/sharp/releases/tag/v0.35.5",
+    "libvipsReleaseUrl": "https://github.com/lovell/sharp-libvips/releases/tag/v1.3.4",
+    "originalSharp": "0.35.4",
+    "patchedSharp": "0.35.5",
+    "sharpLibvips": "1.3.4",
+    "bundledRsvg": "2.63.2",
+    "bundledVips": "8.18.7",
+    "lockedPackageFamilyChanges": 27,
+    "unrelatedLockedPackagesUnchanged": true,
+    "cleanNpmCi": true,
+    "pngResizePassed": true,
+    "trustedSvgDecodePassed": true,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "unitPassed": 63,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 7,
+    "recoveryConfigurationScenariosPassed": 5,
+    "migrationsApplied": 12,
+    "decodedMixedLtrFrames": 36,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "populatedUpgradeArchiveRestoreLocal": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4865729,
+      "sha256": "68db6c8f9062eb61c0029d607b4ccab4c1e24d90ef1cae44741588b83f77b137",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "originalQCi": {
+      "runId": 37488801724,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37488801724",
+      "sourceCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
+      "status": "completed",
+      "conclusion": "failure",
+      "attempt": 1,
+      "completedAt": "2026-10-06T15:37:33Z",
+      "failedStep": "Audit production dependencies",
+      "annotation": "Builds/63 unit/36 decoded Q frames passed. Production audit: one high sharp advisory. Full audit, upgrade and native application flows skipped."
+    },
+    "liveProviderUsed": false,
+    "knownFailures": [],
+    "recoveryObservedLockMs": 119921,
+    "recoveryCaseDurationMs": 158740.442694
   }
 }
