@@ -1,4 +1,5 @@
 "use client";
+import { CompositionGuides } from "./render-composition";
 import {
   INSET_TEXT_PLACEMENT,
   textPlacementLabel,
@@ -779,6 +780,10 @@ export function RenderPanel({
                     Burn scene captions into video
                   </label>
                 </div>
+                <CompositionGuides
+                  options={options}
+                  label="Selected export composition"
+                />
                 <div className="render-summary">
                   <span>
                     <Film size={17} />
@@ -873,6 +878,13 @@ export function RenderPanel({
                     approve the latest revision.
                   </div>
                 )}
+                <details className="saved-composition">
+                  <summary>Saved render composition guides</summary>
+                  <CompositionGuides
+                    options={active.options}
+                    label="Saved render composition"
+                  />
+                </details>
                 {active.status === "SUCCEEDED" ? (
                   <>
                     <video

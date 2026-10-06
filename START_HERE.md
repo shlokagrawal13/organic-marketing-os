@@ -1,5 +1,19 @@
 # Start here — Organic Marketing OS 0.9.2
 
+## EDITOR-01O composition guides — 2026-10-06
+
+EDITOR-01O composition guides are locally verified. The selected-export diagram follows aspect, resolution, text placement, background and burned-caption controls; saved-render guides read immutable job options independently. Extra-margin boxes reuse the renderer geometry; standard positions are explicitly approximate. API/web builds and all 6 production-browser scenarios passed on final code, including real export playback/approval/download, guide controls, saved settings after navigation and mobile overflow. Public O publication and native CI are pending.
+
+This is a UI-only increment. Unit, HTTP, recovery, audits and populated-upgrade checks were not rerun; dated EDITOR-01N CI run 37450673612 remains the last full-suite evidence for N. Backend rendering/options/cache behavior and dependencies/migrations are unchanged. Guides are review diagrams, not actual text/frame or font-overflow preflight, and are not added to exports. No paid/live provider or user runtime data was used. Full platform/device/ASR and master acceptance remain open.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+## EDITOR-01N publication closure — 2026-10-06
+
+EDITOR-01N optional aspect-aware Extra margins and the approved 23-file source/docs payload are published and CI-verified. Public main c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38, matching verified local source tree 1e404024f8f8c86d0b3a344c569552bf6711979d; Actions run 37450673612 completed successfully on 2026-10-06T10:38:56Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 195 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Product composition margins do not guarantee official platform UI exclusion; complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.
+
+This publication closure is retained in the portable handoff; the exact approved public payload is the tree recorded above. Historical pending sections below describe earlier checkpoints.
+
 ## EDITOR-01N optional extra text margins — 2026-10-06
 
 EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.
@@ -49,8 +63,8 @@ incrementally with independent implementation and verification.
    `docs/TASK_BOARD.md` and the relevant domain document.
 2. Run `python3 scripts/package_handoff.py --check`. Preserve and inspect any drift
    before editing. Do not overwrite user changes, `.env` or populated volumes.
-3. Use the recorded `nextTaskId`/`nextAction`. A through M are published and CI-verified.
-   Publish the reviewed EDITOR-01N payload after exact approval, then verify its own CI.
+3. Use the recorded `nextTaskId`/`nextAction`. A through N are published and CI-verified.
+   Publish the reviewed EDITOR-01O payload after exact approval, then verify its own CI.
    MEDIA-01D and MEDIA-LIVE-01 retain their separate follow-up scope.
 4. Keep Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3 and FFmpeg.
    `docs/MASTER_SPEC.md` and all prior migrations are preserved.

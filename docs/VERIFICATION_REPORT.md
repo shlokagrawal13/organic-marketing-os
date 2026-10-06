@@ -1,5 +1,30 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01O composition guides — 2026-10-06
+
+EDITOR-01O composition guides are locally verified. The selected-export diagram follows aspect, resolution, text placement, background and burned-caption controls; saved-render guides read immutable job options independently. Extra-margin boxes reuse the renderer geometry; standard positions are explicitly approximate. API/web builds and all 6 production-browser scenarios passed on final code, including real export playback/approval/download, guide controls, saved settings after navigation and mobile overflow. Public O publication and native CI are pending.
+
+This is a UI-only increment. Unit, HTTP, recovery, audits and populated-upgrade checks were not rerun; dated EDITOR-01N CI run 37450673612 remains the last full-suite evidence for N. Backend rendering/options/cache behavior and dependencies/migrations are unchanged. Guides are review diagrams, not actual text/frame or font-overflow preflight, and are not added to exports. No paid/live provider or user runtime data was used. Full platform/device/ASR and master acceptance remain open.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+### O checks actually run
+
+- `npm run build`: Prisma generation, API TypeScript and Next.js production build passed. Final `npm run build:web` passed after improving label contrast and caption accessibility text.
+- `TEST_DEVANAGARI_FONT_PATH=.local/test-fonts/NotoSansDevanagari-Regular.ttf NODE_OPTIONS=--test-isolation=none node scripts/verify-local.mjs --production-web --ui-only`: 6 production-browser scenarios passed on final code; all 12 fresh migrations applied to the isolated PGlite harness. HTTP and recovery suites were explicitly skipped. No user runtime service or paid provider was used.
+- Browser assertions cover portrait/landscape/square viewBox geometry, standard/inset selection, actual portrait inset box coordinates, burned-caption visibility, background reflection, immutable saved geometry/placement/background/captions, return-to-studio persistence, playable real MP4 approval/download and 390-pixel mobile overflow.
+- Desktop/mobile/light/dark browser screenshots were visually reviewed. Guides remain diagrams, not scene text or official platform interface validation.
+- An elevated-execution request was rejected by the environment's permission policy before execution. The ordinary unprivileged isolated harness succeeded. After final contrast/accessibility and independence assertions, it was rerun and all 6 browser cases passed.
+- Unit/HTTP/recovery/upgrade/audit suites were not rerun for the UI-only change. The preceding N native CI at public commit c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38 passed 59/7/6/5 and zero dependency audits; it does not automatically certify modified O source.
+
+## EDITOR-01N publication closure — 2026-10-06
+
+EDITOR-01N optional aspect-aware Extra margins and the approved 23-file source/docs payload are published and CI-verified. Public main c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38, matching verified local source tree 1e404024f8f8c86d0b3a344c569552bf6711979d; Actions run 37450673612 completed successfully on 2026-10-06T10:38:56Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 195 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Product composition margins do not guarantee official platform UI exclusion; complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.
+
+This publication closure is retained in the portable handoff; the exact approved public payload is the tree recorded above. Historical pending sections below describe earlier checkpoints.
+
+The complete native job passed dependency installation, media setup, API/web build, 59 unit cases, both zero-advisory npm audits, populated PGlite upgrade/archive restore, the configured PostgreSQL/Redis application harness (7 HTTP, 6 browser, 5 recovery), browser-evidence upload and cleanup. Populated upgrade evidence covers test records and the captured PGlite data-directory archive; it does not certify native cross-store/PostgreSQL/private-media restore.
+
 ## EDITOR-01N optional extra text margins — 2026-10-06
 
 EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.

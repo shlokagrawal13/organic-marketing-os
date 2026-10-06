@@ -49,6 +49,26 @@ rendering. Changing placement rebuilds scenes with rendered text; empty scenes
 retain their cache key. Captions-off scenes still ignore unburned captions, and
 cue timing and scene-offset SRT content remain unchanged.
 
+## Composition guides (EDITOR-01O)
+
+The selected-export diagram follows the current aspect, resolution, placement,
+background colour and burned-caption choice. **Extra margins** boxes use the
+same versioned composition areas as the renderer. **Standard placement** shows
+illustrative title/caption positions; actual wrapping depends on the configured
+fonts. Turning burned captions off removes their guide while SRT stays available.
+
+Each saved render also has an expandable **Saved render composition guides**
+view. It reads that job's immutable options, independently of the controls for a
+new export. Changing a preset, placement, background or captions in the composer
+does not relabel the completed render or its diagram. Saved guides are retained
+when returning to Video studio.
+
+These responsive diagrams are review aids, not actual rendered-frame previews or
+font/overflow preflight. They do not add guides to the MP4 and do not change
+render options, queueing, approval, caption timing or scene caches. Review the
+playable export on the intended platform; device and official platform interface
+acceptance remains open.
+
 ## Audio output QA (EDITOR-01K)
 
 Every newly rendered segment, cached segment and final MP4 must have H.264 video

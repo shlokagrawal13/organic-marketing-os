@@ -254,13 +254,30 @@ test("inspect workspace pages, upload private media, render and approve a playab
     exact: true,
   });
   await expect(preset).toHaveValue("");
+  const guides = page.getByRole("figure", {
+    name: "Selected export composition",
+    exact: true,
+  });
+  await expect(guides).toContainText("Standard placement");
+  await expect(guides.locator("svg")).toHaveAttribute(
+    "viewBox",
+    "0 0 720 1280",
+  );
   await preset.selectOption("vertical-social-v1");
+  await expect(guides.locator("svg")).toHaveAttribute(
+    "viewBox",
+    "0 0 1080 1920",
+  );
   await expect(page.getByText(/Export size: 1080 × 1920 px/)).toBeVisible();
   await page
     .getByRole("combobox", { name: "Resolution", exact: true })
     .selectOption("720");
   await expect(preset).toHaveValue("");
   await preset.selectOption("landscape-video-v1");
+  await expect(guides.locator("svg")).toHaveAttribute(
+    "viewBox",
+    "0 0 1920 1080",
+  );
   await expect(
     page.getByRole("combobox", { name: "Aspect ratio", exact: true }),
   ).toHaveValue("16:9");
@@ -274,7 +291,24 @@ test("inspect workspace pages, upload private media, render and approve a playab
   });
   await expect(placement).toHaveValue("");
   await placement.selectOption("inset-v1");
+  await expect(guides).toContainText("Extra margins");
+  await expect(
+    guides.locator('[data-guide-kind="title"] > rect'),
+  ).toHaveAttribute("x", "129.6");
+  await expect(
+    guides.locator('[data-guide-kind="title"] > rect'),
+  ).toHaveAttribute("width", "734.4");
+  const burnedCaptions = page.getByLabel("Burn scene captions into video");
+  await burnedCaptions.uncheck();
+  await expect(guides.locator('[data-guide-kind="caption"]')).toHaveCount(0);
+  await expect(guides).toContainText("SRT remains available");
+  await burnedCaptions.check();
+  await expect(guides.locator('[data-guide-kind="caption"]')).toHaveCount(1);
   await preset.selectOption("square-feed-v1");
+  await expect(guides.locator("svg")).toHaveAttribute(
+    "viewBox",
+    "0 0 1080 1080",
+  );
   await expect(placement).toHaveValue("inset-v1");
   await expect(
     page.getByRole("combobox", { name: "Resolution", exact: true }),
@@ -299,6 +333,35 @@ test("inspect workspace pages, upload private media, render and approve a playab
   ).toEqual([1080, 1080]);
   // Composer changes must not relabel or modify the saved render.
   await preset.selectOption("landscape-video-v1");
+  await placement.selectOption("");
+  await page.getByLabel("Background colour", { exact: true }).fill("#ffffff");
+  await burnedCaptions.uncheck();
+  await expect(guides.locator("svg > rect")).toHaveAttribute("fill", "#ffffff");
+  await expect(guides.locator('[data-guide-kind="caption"]')).toHaveCount(0);
+  await expect(guides).toContainText("Standard placement");
+  await expect(guides.locator("svg")).toHaveAttribute(
+    "viewBox",
+    "0 0 1920 1080",
+  );
+  await page
+    .getByText("Saved render composition guides", { exact: true })
+    .click();
+  const savedGuides = page.getByRole("figure", {
+    name: "Saved render composition",
+    exact: true,
+  });
+  await expect(savedGuides).toContainText("Extra margins");
+  await expect(savedGuides.locator("svg > rect")).toHaveAttribute(
+    "fill",
+    "#183c2b",
+  );
+  await expect(savedGuides.locator('[data-guide-kind="caption"]')).toHaveCount(
+    1,
+  );
+  await expect(savedGuides.locator("svg")).toHaveAttribute(
+    "viewBox",
+    "0 0 1080 1080",
+  );
   await expect(page.locator(".render-history-item").first()).toContainText(
     "Square feed · 1080 × 1080 px",
   );
@@ -341,6 +404,12 @@ test("inspect workspace pages, upload private media, render and approve a playab
       v.pause();
     });
   await expect(page.getByText(/Extra margins.*scenes reused/)).toBeVisible();
+  await page
+    .getByText("Saved render composition guides", { exact: true })
+    .click();
+  await expect(savedGuides).toContainText(
+    "1:1 · 1080 × 1080 px · Extra margins",
+  );
   await page.screenshot({
     path: "test-results/video-studio-desktop.png",
     fullPage: true,
@@ -364,6 +433,7 @@ test("inspect workspace pages, upload private media, render and approve a playab
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+  await expect(savedGuides).toBeVisible();
   await page.screenshot({
     path: "test-results/video-studio-mobile.png",
     fullPage: true,

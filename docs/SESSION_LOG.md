@@ -1,5 +1,23 @@
 # Session log
 
+## EDITOR-01O composition guides — 2026-10-06
+
+EDITOR-01O composition guides are locally verified. The selected-export diagram follows aspect, resolution, text placement, background and burned-caption controls; saved-render guides read immutable job options independently. Extra-margin boxes reuse the renderer geometry; standard positions are explicitly approximate. API/web builds and all 6 production-browser scenarios passed on final code, including real export playback/approval/download, guide controls, saved settings after navigation and mobile overflow. Public O publication and native CI are pending.
+
+This is a UI-only increment. Unit, HTTP, recovery, audits and populated-upgrade checks were not rerun; dated EDITOR-01N CI run 37450673612 remains the last full-suite evidence for N. Backend rendering/options/cache behavior and dependencies/migrations are unchanged. Guides are review diagrams, not actual text/frame or font-overflow preflight, and are not added to exports. No paid/live provider or user runtime data was used. Full platform/device/ASR and master acceptance remain open.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+O implementation uses a reusable browser component and scoped responsive styles. Selected controls and saved job options are separate inputs. No renderer, API, dependency, migration or snapshot shape changed. Final production-browser run passed 6 cases after adding background/captions independence assertions and label contrast/accessibility refinements. Exact changed paths are recorded in `PROJECT_CHECKPOINT.json.repository.currentUploadGate.paths`.
+
+## EDITOR-01N publication closure — 2026-10-06
+
+EDITOR-01N optional aspect-aware Extra margins and the approved 23-file source/docs payload are published and CI-verified. Public main c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38, matching verified local source tree 1e404024f8f8c86d0b3a344c569552bf6711979d; Actions run 37450673612 completed successfully on 2026-10-06T10:38:56Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 195 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Product composition margins do not guarantee official platform UI exclusion; complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.
+
+This publication closure is retained in the portable handoff; the exact approved public payload is the tree recorded above. Historical pending sections below describe earlier checkpoints.
+
+Publication used the user’s exact 23-file public-export approval. Remote main was checked against the M base before a leased fast-forward update. The created tree matched local tree 1e404024f8f8c86d0b3a344c569552bf6711979d and all 195 blobs matched. A read-only git fetch synchronized origin/main; the prior approved local checkpoint is retained on `checkpoint/editor01n-approved-local`. N closure docs are local handoff evidence, not an additional public payload.
+
 ## EDITOR-01N optional extra text margins — 2026-10-06
 
 EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.

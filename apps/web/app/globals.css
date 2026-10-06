@@ -641,6 +641,45 @@ form {
   font-size: 0.8rem;
   color: var(--muted);
 }
+.composition-guide {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.composition-guide figcaption {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.8rem;
+}
+.composition-guide figcaption span {
+  color: var(--muted);
+}
+.composition-guide-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.composition-guide-body svg {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 320px);
+  max-height: 220px;
+  border-radius: 6px;
+}
+.composition-guide-body p {
+  flex: 1 1 170px;
+  margin: 0;
+}
+.saved-composition > summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin: 1rem 0;
+}
 .render-summary span {
   display: flex;
   gap: 0.5rem;
