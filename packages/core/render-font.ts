@@ -4,7 +4,9 @@ import { createHash } from "node:crypto";
 import { create, type Font } from "fontkit";
 import {
   hasDevanagariText,
-  devanagariMixSupportIssue,
+  hasBengaliText,
+  hasIndicOutlineText,
+  indicMixSupportIssue,
   renderedSceneText,
   type RenderOptions,
   type Scene,
@@ -160,13 +162,15 @@ export function createRenderFontPlan(
       for (const { segment } of graphemes.segment(text)) {
         const script = hasDevanagariText(segment)
           ? "deva"
-          : /\p{Script=Latin}/u.test(segment)
-            ? "latn"
-            : /\p{Script=Greek}/u.test(segment)
-              ? "grek"
-              : /\p{Script=Cyrillic}/u.test(segment)
-                ? "cyrl"
-                : runs.at(-1)?.script || "latn";
+          : hasBengaliText(segment)
+            ? "beng"
+            : /\p{Script=Latin}/u.test(segment)
+              ? "latn"
+              : /\p{Script=Greek}/u.test(segment)
+                ? "grek"
+                : /\p{Script=Cyrillic}/u.test(segment)
+                  ? "cyrl"
+                  : runs.at(-1)?.script || "latn";
         const previous = runs.at(-1);
         const preferred = previous?.script === script ? previous.fontIndex : -1;
         const covers = (font: InspectedFont) =>
@@ -191,8 +195,8 @@ export function createRenderFontPlan(
       for (const { text, label } of renderedSceneText(scene, options)) {
         const key = textKey(text);
         if (!key) continue;
-        if (hasDevanagariText(text)) {
-          const issue = devanagariMixSupportIssue(text, label.slice(0, 120));
+        if (hasIndicOutlineText(text)) {
+          const issue = indicMixSupportIssue(text, label.slice(0, 120));
           if (issue) throw new RenderFontError(issue);
           // Explicit script runs also shape correctly when a single font covers
           // both scripts; Fontkit must not infer one script for the whole line.

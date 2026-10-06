@@ -12,7 +12,7 @@ import {
   RENDER_TEXT_LINE_SPACING,
 } from "./render-text-layout";
 import {
-  hasDevanagariText,
+  hasIndicOutlineText,
   RenderOptions,
   Scene,
   dimensions,
@@ -174,7 +174,7 @@ export async function renderVideo(ctx: RenderContext) {
           version: "mos-render-6-font-layout",
           fonts: fontPlan.fontHashes,
           shapingRuntime: sceneOverlays[i].some((overlay) =>
-            hasDevanagariText(overlay.text),
+            hasIndicOutlineText(overlay.text),
           )
             ? shapingRuntime
             : undefined,
@@ -276,7 +276,7 @@ export async function renderVideo(ctx: RenderContext) {
           fontIndex,
           enable,
         } of sceneOverlays[i]) {
-          if (hasDevanagariText(text)) {
+          if (hasIndicOutlineText(text)) {
             const file = `${type}-${i}.png`;
             const svg = `${type}-${i}.svg`;
             await writeFile(

@@ -1,27 +1,28 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-06",
+  "verifiedDate": "2026-10-07",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 63,
+    "unit": 68,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 12
   },
   "environment": {
-    "database": "PGlite WASM PostgreSQL socket bridge",
-    "redis": "Native Redis 7.2.11 built from official GitHub tag d4c381df7a729c06a5207c4f18d804febe956dc4; disposable local service",
+    "database": "Disposable serialized PGlite WASM PostgreSQL; R own native CI pending",
+    "redis": "Native Redis test binary; disposable isolated verifier",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
     "textAI": "isolated compatible HTTP provider fixture",
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
-    "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider"
+    "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider",
+    "shapingReference": "HarfBuzz 8.3.0 via test-only Python ctypes oracle"
   },
   "requirements": {
     "headings": 161,
@@ -80,11 +81,12 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01Q’s approved 22-file source/docs/evidence payload is published at 8c3267ac77fa6833aee1e6099cb042ff44fad345 with matching tree 36c2de112243b98234e8845310c33cd0af200db3. Its own Actions run 37488801724 passed production builds and all 63 unit cases, including 36 mixed-script decoded frames, but failed the production audit on sharp 0.35.4 / GHSA-wq5f-xc86-pv6w. Native HTTP/browser/recovery and populated upgrade were skipped, so Q native full-suite success is not claimed. A narrow sharp 0.35.5 override/lockfile follow-up is now locally verified: clean npm ci, bundled librsvg 2.63.2 PNG/SVG decoding, both zero-vulnerability audits, API/web builds, 63 unit, 7 HTTP, 7 production-browser, 5 recovery/configuration scenarios and 12 migrations, plus populated PGlite upgrade/archive restore. The new 16-file dependency-fix/evidence follow-up awaits exact public approval and its own native CI.",
+  "latestIncrement": "EDITOR-01R is locally verified: separately opt-in Bengali titles/burned caption cues use trusted complete-grapheme script/font runs, with bounded Latin/Greek/Cyrillic/Devanagari combinations and shared API/worker rejection of same-overlay RTL mixing. Clean full and production-only npm installs apply the reviewed Fontkit 2.0.4 Node GPOS null-anchor patch. API/web production builds, 68 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits passed. Independent HarfBuzz 8.3.0 reference checks match 12 Bengali conjunct/matra/reph strings in both CJS/ESM exports and emitted outlines. 18 pure/mixed-script exports yield 54 decoded timed frames across six geometries and standard/inset placement; portrait/landscape samples were visually reviewed. Recovery naturally expired a 119945ms Redis lock; the case took 128.0s with one submission and retained private output/provider receipt. The exact 32-file source/config/docs/evidence publication and its own native CI are pending.",
   "priorFullSuite": {
-    "sourceCommit": "c2936113616522db099771684226276e91976957",
-    "actionsRunId": 37479269861,
+    "sourceCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
+    "actionsRunId": 37484095477,
     "verifiedDate": "2026-10-06",
+    "completedAt": "2026-10-06T15:10:34Z",
     "passed": {
       "unit": 59,
       "httpScenarios": 7,
@@ -92,7 +94,7 @@
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Dated P native application CI; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    "scope": "Recovery follow-up own native CI, exact source commit; full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "generatedMediaEvidence": {
     "tenantRoleAndRequestReplay": true,
@@ -107,7 +109,7 @@
     "liveProviderVerified": false,
     "nativeConcurrencyVerified": false
   },
-  "dependencyAuditDate": "2026-10-06",
+  "dependencyAuditDate": "2026-10-07",
   "media01dEvidence": {
     "planSpecificMediaRouting": true,
     "sourceReferenceOwnershipGate": true,
@@ -136,15 +138,14 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "runId": 37488801724,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37488801724",
-    "sourceCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
+    "runId": 37491518572,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37491518572",
+    "sourceCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
     "status": "completed",
-    "conclusion": "failure",
+    "conclusion": "success",
     "attempt": 1,
-    "completedAt": "2026-10-06T15:37:33Z",
-    "failedStep": "Audit production dependencies",
-    "annotation": "Builds/63 unit/36 decoded Q frames passed. Production audit: one high sharp advisory. Full audit, upgrade and native application flows skipped."
+    "completedAt": "2026-10-06T16:02:41Z",
+    "annotation": "Q sharp follow-up own native application CI at exact public source; full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -729,23 +730,26 @@
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "latestFullSuite": {
-    "sourceCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
-    "actionsRunId": 37484095477,
+    "sourceCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
+    "actionsRunId": 37491518572,
     "verifiedDate": "2026-10-06",
-    "completedAt": "2026-10-06T15:10:34Z",
+    "completedAt": "2026-10-06T16:02:41Z",
     "passed": {
-      "unit": 59,
+      "unit": 63,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Recovery follow-up own native CI, exact source commit; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    "scope": "Q sharp follow-up own native application CI at exact public source; full Compose/native cross-store restore/live/device/master acceptance excluded.",
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "populatedUpgradeArchiveRestoreCi": true
   },
   "currentIncrementChecks": {
     "apiBuild": true,
     "webProductionBuild": true,
-    "unit": 63,
+    "unit": 68,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryScenarios": 5,
@@ -755,7 +759,7 @@
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0,
     "nativeApplicationCiVerified": false,
-    "scope": "Sharp dependency follow-up locally verified; original Q CI passed builds/unit but failed audit and skipped native application/upgrade flows."
+    "scope": "EDITOR-01R own local serialized PGlite application checks; native CI/publication pending; full Compose/native cross-store restore/live/device/master excluded."
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -853,8 +857,8 @@
     "ciVideoSubmitCount": 1
   },
   "priorLocalEnvironment": {
-    "database": "PGlite WASM PostgreSQL socket bridge",
-    "redis": "Native Redis 7.2.11 built from official GitHub tag d4c381df7a729c06a5207c4f18d804febe956dc4; disposable local service",
+    "database": "Native PostgreSQL 17 disposable CI service; populated upgrade/archive restore separately uses PGlite",
+    "redis": "Native Redis 7 disposable CI service",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
@@ -865,7 +869,7 @@
   },
   "editor01qEvidence": {
     "scope": "Greek/Cyrillic + existing Latin/Devanagari bounded LTR overlay combinations; shared API/worker mixed-script boundary",
-    "publicationStatus": "published_native_ci_audit_failed",
+    "publicationStatus": "published_followup_ci_verified",
     "httpScenariosPassed": 7,
     "browserScenariosPassed": 7,
     "recoveryConfigurationScenariosPassed": 5,
@@ -901,6 +905,19 @@
     "publicationCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
     "publicationTree": "36c2de112243b98234e8845310c33cd0af200db3",
     "githubActions": {
+      "runId": 37491518572,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37491518572",
+      "sourceCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "completedAt": "2026-10-06T16:02:41Z",
+      "annotation": "Q sharp follow-up own native application CI at exact public source; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    },
+    "nativeUnitPassed": 63,
+    "nativeDecodedFrameTestsPassed": true,
+    "nativeApplicationFlowsExecuted": true,
+    "originalPublicationCi": {
       "runId": 37488801724,
       "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37488801724",
       "sourceCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
@@ -911,25 +928,29 @@
       "failedStep": "Audit production dependencies",
       "annotation": "Builds/63 unit/36 decoded Q frames passed. Production audit: one high sharp advisory. Full audit, upgrade and native application flows skipped."
     },
-    "nativeUnitPassed": 63,
-    "nativeDecodedFrameTestsPassed": true,
-    "nativeApplicationFlowsExecuted": false
+    "latestVerifiedCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
+    "latestVerifiedTree": "9a2d9f68bb9c235dce50c106bba29272660f68f9",
+    "ciObservedLockMs": 119843,
+    "ciObservedCaseDurationMs": 158416.65957,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "populatedUpgradeArchiveRestoreCi": true
   },
   "localFullSuite": {
-    "slice": "EDITOR-01Q-SHARP",
-    "verifiedDate": "2026-10-06",
+    "slice": "EDITOR-01R",
+    "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 63,
+      "unit": 68,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Sharp dependency follow-up locally verified; original Q CI passed builds/unit but failed audit and skipped native application/upgrade flows."
+    "scope": "EDITOR-01R own local serialized PGlite application checks; native CI/publication pending; full Compose/native cross-store restore/live/device/master excluded."
   },
   "editor01qSharpEvidence": {
     "scope": "Exact sharp 0.35.5 override plus associated platform binaries/libvips lock records; no app source changes",
-    "publicationStatus": "local_verified_pending_exact_followup_approval",
+    "publicationStatus": "published_ci_verified",
     "advisory": "GHSA-wq5f-xc86-pv6w",
     "advisoryUrl": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w",
     "releaseUrl": "https://github.com/lovell/sharp/releases/tag/v0.35.5",
@@ -980,6 +1001,141 @@
     "liveProviderUsed": false,
     "knownFailures": [],
     "recoveryObservedLockMs": 119921,
-    "recoveryCaseDurationMs": 158740.442694
+    "recoveryCaseDurationMs": 158740.442694,
+    "publicationCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
+    "publicationTree": "9a2d9f68bb9c235dce50c106bba29272660f68f9",
+    "githubActions": {
+      "runId": 37491518572,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37491518572",
+      "sourceCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "completedAt": "2026-10-06T16:02:41Z",
+      "annotation": "Q sharp follow-up own native application CI at exact public source; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    },
+    "nativeApplicationFlowsExecuted": true,
+    "nativeDecodedFrameTestsPassed": true,
+    "ciObservedLockMs": 119843,
+    "ciObservedCaseDurationMs": 158416.65957,
+    "populatedUpgradeArchiveRestoreCi": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4865996,
+      "sha256": "6890a54c246a12c4259d36a68c3288abb552039a2baa8a8852910738a8424270",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    }
+  },
+  "priorGithubActions": {
+    "runId": 37488801724,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37488801724",
+    "sourceCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
+    "status": "completed",
+    "conclusion": "failure",
+    "attempt": 1,
+    "completedAt": "2026-10-06T15:37:33Z",
+    "failedStep": "Audit production dependencies",
+    "annotation": "Builds/63 unit/36 decoded Q frames passed. Production audit: one high sharp advisory. Full audit, upgrade and native application flows skipped."
+  },
+  "priorLocalFullSuite": {
+    "slice": "EDITOR-01Q-SHARP",
+    "verifiedDate": "2026-10-06",
+    "passed": {
+      "unit": 63,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryAndConfigurationScenarios": 5,
+      "schemaMigrations": 12
+    },
+    "scope": "Sharp dependency follow-up locally verified; original Q CI passed builds/unit but failed audit and skipped native application/upgrade flows."
+  },
+  "editor01rEvidence": {
+    "scope": "Separately enabled Bengali outline overlays and bounded LTR script/font combinations",
+    "publicationStatus": "local_verified_pending_exact_32_file_approval",
+    "unitPassed": 68,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 7,
+    "recoveryConfigurationScenariosPassed": 5,
+    "migrationsApplied": 12,
+    "harfbuzzReferenceEngine": "HarfBuzz 8.3.0",
+    "harfbuzzReferenceStrings": 12,
+    "referenceNodeExports": [
+      "CJS",
+      "ESM"
+    ],
+    "referenceGlyphOrderAdvancesOffsetsAndOutlinePositionsMatched": true,
+    "decodedFrames": 54,
+    "renderExports": 18,
+    "outputGeometries": 6,
+    "textPlacements": [
+      "standard",
+      "inset-v1"
+    ],
+    "fontkitPatch": {
+      "version": "2.0.4",
+      "nullGposAttachmentTypes": [
+        4,
+        5,
+        6
+      ],
+      "upstreamNodeExportHashesGuarded": true,
+      "idempotent": true,
+      "cleanNpmCi": true,
+      "cleanProductionOnlyNpmCi": true,
+      "newDependencyPackages": false,
+      "lockfilePackageRecordsUnchanged": true,
+      "rootInstallMetadataAdded": true
+    },
+    "enabledFlag": "RENDER_BENGALI_ENABLED",
+    "defaultEnabled": false,
+    "devaOptInIndependent": true,
+    "completeGraphemesPreserved": true,
+    "missingCoverageRejectedBeforeStorage": true,
+    "apiMixedRtlRejectedBeforeJob": true,
+    "httpBengaliPrivateVideoAndSrtDownloaded": true,
+    "captionsOffUnicodeSrtPreserved": true,
+    "ignoredFallbackCaptionPreserved": true,
+    "outlineFingerprint": "fontkit-outlines-v1-bengali-script-font-runs",
+    "bengaliFreeDevanagariFingerprintUnchanged": true,
+    "fontPathsBundled": false,
+    "fontSource": "https://github.com/notofonts/noto-fonts/blob/main/hinted/ttf/NotoSansBengali/NotoSansBengali-Regular.ttf",
+    "fontSha256": "6300c5370cd688b0641343de4c786de6d412bb6c578d129dae75e93a0322dcab",
+    "fontGitBlob": "3e66c1a9ea885b999ce9736aa3b509cc51935fff",
+    "visualFrames": [
+      "docs/qa/bengali-portrait.png",
+      "docs/qa/bengali-mixed-landscape.png"
+    ],
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "populatedUpgradeArchiveRestoreLocal": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4866043,
+      "sha256": "a45a09b5f35bba920927e7beda836240741f75d48389bb2e0d8fabeda232eddb",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "recoveryObservedLockMs": 119945,
+    "recoveryCaseDurationMs": 128019.044125,
+    "liveProviderUsed": false,
+    "nativeCiVerified": false,
+    "dockerBuildExecuted": false,
+    "knownFailures": [],
+    "resolvedFindings": [
+      "Fontkit null anchor crash on Bengali reph: guarded GPOS patch; independent reference matches.",
+      "Wrapping assertion treated two Bengali graphemes as one word: corrected complete-grapheme boundary assertion.",
+      "Two preceding Hindi error-message assertions updated for the shared Bengali/Hindi boundary; final 68-test run passed."
+    ]
   }
 }

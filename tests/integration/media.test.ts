@@ -494,7 +494,7 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "নমস্কার",
+          onScreenText: "ગુજરાતી",
           caption:
             "The API must explain unsupported rendered text before queueing.",
         },
@@ -511,7 +511,7 @@ test(
       options: { preset: "square-feed-v1" },
     });
     assert.equal(unsupportedRender.status, 400);
-    assert.match(JSON.stringify(unsupportedRender.body), /Bengali/);
+    assert.match(JSON.stringify(unsupportedRender.body), /Gujarati/);
     assert.equal(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeUnsupported,
@@ -524,7 +524,7 @@ test(
         {
           ...alternate.scenes[0],
           onScreenText: "Supported title",
-          caption: "নমস্কার",
+          caption: "ગુજરાતી",
         },
       ],
     });
@@ -543,7 +543,7 @@ test(
     assert.equal(burnedUnsupported.status, 400);
     assert.match(
       JSON.stringify(burnedUnsupported.body),
-      /caption cue 1.*Bengali/,
+      /caption cue 1.*Gujarati/,
     );
     const srtOnlyRender = await a.call(root + "/renders", "POST", {
       ...srtOnlyPayload,
@@ -560,7 +560,7 @@ test(
       await (
         await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
       ).text(),
-      /নমস্কার/,
+      /ગુજરાતી/,
     );
     const rtlContent = await a.call(root + "/content", "POST", {
       ...alternate,
@@ -618,6 +618,66 @@ test(
         await a.raw(`${root}/renders/${hindiReady.id}/file/captions`)
       ).text(),
       /Start now: Ελλάδα Привет प्रशिक्षण और नई शुरुआत/,
+    );
+    const bengaliContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Configured Bengali mixed render text",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "Video 2026: বাংলা শিক্ষা কর্ম हिंदी Ελληνικά",
+          caption: "Привет: প্রশিক্ষণ শ্রদ্ধা ক্ষি নতুন শুরু",
+        },
+      ],
+    });
+    assert.equal(bengaliContent.status, 201);
+    const bengaliJob = await a.call(root + "/renders", "POST", {
+      contentId: bengaliContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { preset: "square-feed-v1", captions: true },
+    });
+    assert.equal(bengaliJob.status, 201, JSON.stringify(bengaliJob.body));
+    const bengaliReady = await wait(bengaliJob.body.id);
+    assert.equal(
+      bengaliReady.status,
+      "SUCCEEDED",
+      JSON.stringify(bengaliReady),
+    );
+    assert.ok(bengaliReady.outputBytes > 0);
+    const bengaliFile = await a.raw(
+      `${root}/renders/${bengaliReady.id}/file/video`,
+    );
+    assert.equal(bengaliFile.status, 200);
+    assert.ok((await bengaliFile.arrayBuffer()).byteLength > 0);
+    assert.match(
+      await (
+        await a.raw(`${root}/renders/${bengaliReady.id}/file/captions`)
+      ).text(),
+      /প্রশিক্ষণ শ্রদ্ধা ক্ষি/,
+    );
+    const bengaliRtlContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Mixed Bengali RTL preflight",
+      scenes: [
+        { ...alternate.scenes[0], onScreenText: "বাংলা שלום", caption: "" },
+      ],
+    });
+    assert.equal(bengaliRtlContent.status, 201);
+    const beforeBengaliRtl = await db.renderJob.count({
+      where: { organizationId: org },
+    });
+    const bengaliRtlJob = await a.call(root + "/renders", "POST", {
+      contentId: bengaliRtlContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: {},
+    });
+    assert.equal(bengaliRtlJob.status, 400, JSON.stringify(bengaliRtlJob.body));
+    assert.match(JSON.stringify(bengaliRtlJob.body), /Separate Arabic, Hebrew/);
+    assert.equal(
+      await db.renderJob.count({ where: { organizationId: org } }),
+      beforeBengaliRtl,
     );
     const mixedRtlContent = await a.call(root + "/content", "POST", {
       ...alternate,

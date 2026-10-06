@@ -54,7 +54,6 @@ export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
 const unsupportedRenderScripts: Array<[RegExp, string]> = [
-  [/\p{Script=Bengali}/u, "Bengali"],
   [/\p{Script=Gurmukhi}/u, "Gurmukhi"],
   [/\p{Script=Gujarati}/u, "Gujarati"],
   [/\p{Script=Oriya}/u, "Odia"],
@@ -76,20 +75,21 @@ const unsupportedRenderScripts: Array<[RegExp, string]> = [
 const emojiOrSymbol = /[\u{1f000}-\u{1faff}\u{2600}-\u{27bf}\ufe0f]/u;
 // Script preflight, not a font cmap guarantee. Keep common punctuation explicit.
 const supportedRenderCharacters =
-  /^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u0900-\u097f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Devanagari}]*$/u;
+  /^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u0900-\u097f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Devanagari}\p{Script=Bengali}]*$/u;
 export const hasDevanagariText = (text: string) =>
   /[\u0900-\u097f\p{Script=Devanagari}]/u.test(text);
-export function devanagariMixSupportIssue(
-  text: string,
-  label = "Rendered text",
-) {
+export const hasBengaliText = (text: string) =>
+  /\p{Script=Bengali}/u.test(text);
+export const hasIndicOutlineText = (text: string) =>
+  hasDevanagariText(text) || hasBengaliText(text);
+export function indicMixSupportIssue(text: string, label = "Rendered text") {
   if (
-    hasDevanagariText(text) &&
-    /[^\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Devanagari}\p{Script=Common}\p{Script=Inherited}]/u.test(
+    hasIndicOutlineText(text) &&
+    /[^\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Devanagari}\p{Script=Bengali}\p{Script=Common}\p{Script=Inherited}]/u.test(
       text,
     )
   )
-    return `${label} can combine Devanagari with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
+    return `${label} can combine enabled Devanagari or Bengali with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
   return null;
 }
 export function renderTextSupportIssue(text: string, label = "Rendered text") {
@@ -98,16 +98,19 @@ export function renderTextSupportIssue(text: string, label = "Rendered text") {
   if (emojiOrSymbol.test(text))
     return `${label} contains emoji or symbol glyphs that the current video font cannot guarantee. Remove them or attach that text as an image.`;
   if (
-    hasDevanagariText(text) &&
+    // Danda is common punctuation in both scripts; it must not enable Hindi.
+    /\p{Script=Devanagari}/u.test(text) &&
     process.env.RENDER_DEVANAGARI_ENABLED !== "true"
   )
     return `${label} contains Devanagari text but Devanagari rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
+  if (hasBengaliText(text) && process.env.RENDER_BENGALI_ENABLED !== "true")
+    return `${label} contains Bengali text but Bengali rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
   for (const [pattern, name] of unsupportedRenderScripts)
     if (pattern.test(text))
       return `${label} contains ${name} text outside the current render policy. Attach this text as an image or wait for broader multilingual font/shaping support.`;
   if (!supportedRenderCharacters.test(text))
     return `${label} contains characters outside the current render policy. Use Latin, Greek, Cyrillic, Arabic or Hebrew text with common punctuation, or attach the text as an image.`;
-  return devanagariMixSupportIssue(text, label);
+  return indicMixSupportIssue(text, label);
 }
 export function sniffMedia(b: Buffer) {
   if (b.length < 12) throw new Error("The file is empty or not supported.");

@@ -43,6 +43,7 @@ const fixture = sceneSchema.parse({
 function environment(t: TestContext) {
   const values = {
     RENDER_DEVANAGARI_ENABLED: "true",
+    RENDER_BENGALI_ENABLED: "false",
     RENDER_FONT_PATH: DEFAULT_RENDER_FONT_PATH,
     RENDER_FONT_FALLBACK_PATHS: fontPath,
   };

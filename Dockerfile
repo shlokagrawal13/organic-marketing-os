@@ -2,6 +2,7 @@ FROM node:24-bookworm-slim AS build
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json ./
+COPY scripts/patch-fontkit.mjs ./scripts/patch-fontkit.mjs
 RUN npm ci --no-audit --no-fund
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -13,6 +14,7 @@ FROM node:24-bookworm-slim AS runtime
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ffmpeg fonts-dejavu-core fonts-noto-core ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json ./
+COPY scripts/patch-fontkit.mjs ./scripts/patch-fontkit.mjs
 RUN npm ci --omit=dev --no-audit --no-fund
 COPY --from=build --chown=node:node /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=build --chown=node:node /app/dist ./dist

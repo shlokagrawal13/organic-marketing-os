@@ -9,7 +9,7 @@ import {
   appendFileSync,
   existsSync,
 } from "node:fs";
-import { resolve } from "node:path";
+import { resolve, delimiter } from "node:path";
 import { createServer } from "node:http";
 import { SMTPServer } from "smtp-server";
 import { startTestStorage } from "./test-storage.mjs";
@@ -23,12 +23,16 @@ process.env.WEB_ORIGIN = "http://localhost:3000";
 process.env.COOKIE_SECURE = "false";
 process.env.SMTP_SECURE = "false";
 process.env.BILLING_MODE = "self_hosted";
-// This isolated profile exercises optional Devanagari rendering. Production
+// This isolated profile exercises optional Devanagari/Bengali rendering. Production
 // remains opt-in and must provide its own compatible runtime and trusted font.
 process.env.RENDER_DEVANAGARI_ENABLED = "true";
-process.env.RENDER_FONT_FALLBACK_PATHS ||=
+process.env.RENDER_BENGALI_ENABLED = "true";
+process.env.RENDER_FONT_FALLBACK_PATHS ||= [
   process.env.TEST_DEVANAGARI_FONT_PATH ||
-  "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf";
+    "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
+  process.env.TEST_BENGALI_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf",
+].join(delimiter);
 process.env.PLATFORM_ADMIN_USER_IDS = "";
 process.env.AI_STRATEGY_CREDITS = "5";
 process.env.AI_CONTENT_CREDITS = "3";

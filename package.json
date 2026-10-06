@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "postinstall": "node scripts/patch-fontkit.mjs",
     "dev:web": "next dev apps/web -H 0.0.0.0",
     "dev:api": "tsc -p apps/api/tsconfig.json && node --env-file=.env dist/apps/api/src/main.js",
     "build:api": "tsc -p apps/api/tsconfig.json",
