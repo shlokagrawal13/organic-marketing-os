@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.",
+  "latestIncrement": "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization.",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -144,13 +144,13 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "latestRunId": 37356934913,
-    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37356934913",
-    "latestSourceCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
-    "latestConclusion": "success",
-    "latestIncrement": "EDITOR-01K",
-    "nativeTestsExecuted": true,
-    "scopeWarning": "Does not verify local EDITOR-01L."
+    "latestRunId": 37439306560,
+    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37439306560",
+    "latestSourceCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
+    "latestConclusion": "failure",
+    "latestIncrement": "EDITOR-01L",
+    "nativeTestsExecuted": false,
+    "scopeWarning": "Native/upgrade checks skipped after audit failure."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -575,9 +575,29 @@
     "apiBuild": true,
     "webProductionBuild": true,
     "migrationsApplied": 12,
-    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "publicationStatus": "published_ci_audit_failed",
     "nativeCiVerified": false,
     "liveProviderUsed": false,
-    "verificationNote": "Direct FFmpeg 6.1 drawtext failed visual Hindi shaping review despite decoded-pixel checks. Replaced it with Fontkit glyph outlines; decoded landscape/portrait frames visually reviewed. Earlier redirected unit run ended without complete counts; final foreground 54-case run passed. Test markup fixture initially included unsupported ampersand; corrected to font-covered angle brackets."
+    "verificationNote": "Direct FFmpeg 6.1 drawtext failed visual Hindi shaping review despite decoded-pixel checks. Replaced it with Fontkit glyph outlines; decoded landscape/portrait frames visually reviewed. Earlier redirected unit run ended without complete counts; final foreground 54-case run passed. Test markup fixture initially included unsupported ampersand; corrected to font-covered angle brackets.",
+    "diffCheckPassed": true,
+    "publicationCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
+    "publicationTree": "7a98fac4edadd4713772825bc3ad0bacf6dd045e",
+    "actionsRunId": 37439306560,
+    "actionsConclusion": "failure"
+  },
+  "sourceMapJsPatch": {
+    "before": "1.2.1",
+    "after": "1.2.2",
+    "advisory": "GHSA-68fv-2mgg-jv7q",
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "publicationStatus": "local_verified_pending_approval",
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "unitTestsPassed": 54,
+    "installedPackageSha512Verified": true,
+    "invalidOffsetSmokePassed": true,
+    "fullApplicationRerun": false,
+    "fullApplicationNote": "L full local 7 HTTP/6 browser/5 recovery run passed before this single transitive source-map patch; new native CI still required."
   }
 }
