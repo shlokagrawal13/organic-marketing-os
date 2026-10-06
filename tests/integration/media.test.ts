@@ -494,7 +494,7 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "ગુજરાતી",
+          onScreenText: "தமிழ்",
           caption:
             "The API must explain unsupported rendered text before queueing.",
         },
@@ -511,7 +511,7 @@ test(
       options: { preset: "square-feed-v1" },
     });
     assert.equal(unsupportedRender.status, 400);
-    assert.match(JSON.stringify(unsupportedRender.body), /Gujarati/);
+    assert.match(JSON.stringify(unsupportedRender.body), /Tamil/);
     assert.equal(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeUnsupported,
@@ -524,7 +524,7 @@ test(
         {
           ...alternate.scenes[0],
           onScreenText: "Supported title",
-          caption: "ગુજરાતી",
+          caption: "தமிழ்",
         },
       ],
     });
@@ -543,7 +543,7 @@ test(
     assert.equal(burnedUnsupported.status, 400);
     assert.match(
       JSON.stringify(burnedUnsupported.body),
-      /caption cue 1.*Gujarati/,
+      /caption cue 1.*Tamil/,
     );
     const srtOnlyRender = await a.call(root + "/renders", "POST", {
       ...srtOnlyPayload,
@@ -560,7 +560,7 @@ test(
       await (
         await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
       ).text(),
-      /ગુજરાતી/,
+      /தமிழ்/,
     );
     const rtlContent = await a.call(root + "/content", "POST", {
       ...alternate,
@@ -678,6 +678,73 @@ test(
     assert.equal(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeBengaliRtl,
+    );
+    const gujaratiContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Configured Gujarati mixed render text",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "Video 2026: ગુજરાતી શિક્ષણ કર્મ हिंदी বাংলা Ελληνικά",
+          caption: "Привет: પ્રશિક્ષણ શ્રદ્ધા ક્ષિ નવી શરૂઆત",
+        },
+      ],
+    });
+    assert.equal(gujaratiContent.status, 201);
+    const gujaratiJob = await a.call(root + "/renders", "POST", {
+      contentId: gujaratiContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { preset: "square-feed-v1", captions: true },
+    });
+    assert.equal(gujaratiJob.status, 201, JSON.stringify(gujaratiJob.body));
+    const gujaratiReady = await wait(gujaratiJob.body.id);
+    assert.equal(
+      gujaratiReady.status,
+      "SUCCEEDED",
+      JSON.stringify(gujaratiReady),
+    );
+    assert.ok(gujaratiReady.outputBytes > 0);
+    const gujaratiFile = await a.raw(
+      `${root}/renders/${gujaratiReady.id}/file/video`,
+    );
+    assert.equal(gujaratiFile.status, 200);
+    assert.ok((await gujaratiFile.arrayBuffer()).byteLength > 0);
+    assert.match(
+      await (
+        await a.raw(`${root}/renders/${gujaratiReady.id}/file/captions`)
+      ).text(),
+      /પ્રશિક્ષણ શ્રદ્ધા ક્ષિ/,
+    );
+    const gujaratiRtlContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Mixed Gujarati RTL preflight",
+      scenes: [
+        { ...alternate.scenes[0], onScreenText: "ગુજરાતી שלום", caption: "" },
+      ],
+    });
+    assert.equal(gujaratiRtlContent.status, 201);
+    const beforeGujaratiRtl = await db.renderJob.count({
+      where: { organizationId: org },
+    });
+    const gujaratiRtlJob = await a.call(root + "/renders", "POST", {
+      contentId: gujaratiRtlContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: {},
+    });
+    assert.equal(
+      gujaratiRtlJob.status,
+      400,
+      JSON.stringify(gujaratiRtlJob.body),
+    );
+    assert.match(
+      JSON.stringify(gujaratiRtlJob.body),
+      /Separate Arabic, Hebrew/,
+    );
+    assert.equal(
+      await db.renderJob.count({ where: { organizationId: org } }),
+      beforeGujaratiRtl,
     );
     const mixedRtlContent = await a.call(root + "/content", "POST", {
       ...alternate,

@@ -5,6 +5,7 @@ import { create, type Font } from "fontkit";
 import {
   hasDevanagariText,
   hasBengaliText,
+  hasGujaratiText,
   hasIndicOutlineText,
   indicMixSupportIssue,
   renderedSceneText,
@@ -164,13 +165,15 @@ export function createRenderFontPlan(
           ? "deva"
           : hasBengaliText(segment)
             ? "beng"
-            : /\p{Script=Latin}/u.test(segment)
-              ? "latn"
-              : /\p{Script=Greek}/u.test(segment)
-                ? "grek"
-                : /\p{Script=Cyrillic}/u.test(segment)
-                  ? "cyrl"
-                  : runs.at(-1)?.script || "latn";
+            : hasGujaratiText(segment)
+              ? "gujr"
+              : /\p{Script=Latin}/u.test(segment)
+                ? "latn"
+                : /\p{Script=Greek}/u.test(segment)
+                  ? "grek"
+                  : /\p{Script=Cyrillic}/u.test(segment)
+                    ? "cyrl"
+                    : runs.at(-1)?.script || "latn";
         const previous = runs.at(-1);
         const preferred = previous?.script === script ? previous.fontIndex : -1;
         const covers = (font: InspectedFont) =>

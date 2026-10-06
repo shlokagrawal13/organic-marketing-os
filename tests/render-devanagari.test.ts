@@ -60,7 +60,10 @@ const supportedBuild =
   " V....D librsvg              Librsvg rasterizer (codec svg)\n";
 
 test("Devanagari is opt-in, unsupported scripts/controls stay blocked and ignored captions need no shaping runtime", async (t) => {
-  environment(t, { RENDER_DEVANAGARI_ENABLED: "false", RENDER_BENGALI_ENABLED: "false" });
+  environment(t, {
+    RENDER_DEVANAGARI_ENABLED: "false",
+    RENDER_BENGALI_ENABLED: "false",
+  });
   assert.match(
     renderTextSupportIssue("हिंदी में वीडियो")!,
     /Devanagari.*not enabled/,
@@ -142,7 +145,7 @@ test("Devanagari runtime guard rejects legacy/missing shaping before fonts, stor
       cacheGet: async () => unexpected(),
       cachePut: async () => unexpected(),
     }),
-    /Devanagari or Bengali rendering requires FFmpeg with the librsvg SVG decoder/,
+    /Devanagari, Bengali or Gujarati rendering requires FFmpeg with the librsvg SVG decoder/,
   );
 });
 
@@ -226,7 +229,7 @@ test("Devanagari font fallback keeps conjunct graphemes intact and missing cover
         [{ ...fixture, onScreenText: "हिंदी שלום" }],
         { captions: false },
       ),
-    /Devanagari or Bengali with Latin/,
+    /Devanagari, Bengali or Gujarati with Latin/,
   );
 });
 

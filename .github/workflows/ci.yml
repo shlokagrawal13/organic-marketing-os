@@ -47,7 +47,8 @@ jobs:
       MOS_ALLOW_NATIVE_TESTS: "isolated-test-services"
       RENDER_DEVANAGARI_ENABLED: "true"
       RENDER_BENGALI_ENABLED: "true"
-      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf"
+      RENDER_GUJARATI_ENABLED: "true"
+      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf"
 
     steps:
       - name: Check out source

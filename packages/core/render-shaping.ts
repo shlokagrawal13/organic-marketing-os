@@ -1,6 +1,7 @@
 import {
   renderedSceneText,
   hasBengaliText,
+  hasGujaratiText,
   hasIndicOutlineText,
   runProcess,
   sha256,
@@ -10,7 +11,7 @@ import {
 import { RenderFontError } from "./render-font";
 
 const message =
-  "Devanagari or Bengali rendering requires FFmpeg with the librsvg SVG decoder. Ask an administrator to configure the render runtime or disable the affected script rendering.";
+  "Devanagari, Bengali or Gujarati rendering requires FFmpeg with the librsvg SVG decoder. Ask an administrator to configure the render runtime or disable the affected script rendering.";
 
 export function validateDevanagariRuntime(decoders: string) {
   if (!/^\s*V[.A-Z]{5}\s+librsvg\s/m.test(decoders))
@@ -46,11 +47,18 @@ export async function checkRenderShaping(
         hasBengaliText(text),
       ),
     );
-    // Keep the existing Devanagari fingerprint when no Bengali is rendered.
+    const gujarati = scenes.some((scene) =>
+      renderedSceneText(scene, options).some(({ text }) =>
+        hasGujaratiText(text),
+      ),
+    );
+    // Preserve existing Bengali/Hindi fingerprints when no Gujarati is rendered.
     return sha256(
-      (bengali
-        ? "fontkit-outlines-v1-bengali-script-font-runs\n"
-        : "fontkit-outlines-v3-ltr-script-font-runs\n") +
+      (gujarati
+        ? "fontkit-outlines-v1-gujarati-script-font-runs\n"
+        : bengali
+          ? "fontkit-outlines-v1-bengali-script-font-runs\n"
+          : "fontkit-outlines-v3-ltr-script-font-runs\n") +
         runtime +
         version,
     );
