@@ -596,8 +596,9 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "Video 2026: हिंदी में वीडियो शिक्षा",
-          caption: "Start now: प्रशिक्षण और नई शुरुआत",
+          onScreenText:
+            "Video 2026: Ελληνικά Кириллица हिंदी में वीडियो शिक्षा",
+          caption: "Start now: Ελλάδα Привет प्रशिक्षण और नई शुरुआत",
         },
       ],
     });
@@ -616,7 +617,30 @@ test(
       await (
         await a.raw(`${root}/renders/${hindiReady.id}/file/captions`)
       ).text(),
-      /Start now: प्रशिक्षण और नई शुरुआत/,
+      /Start now: Ελλάδα Привет प्रशिक्षण और नई शुरुआत/,
+    );
+    const mixedRtlContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Mixed Hindi RTL preflight",
+      scenes: [
+        { ...alternate.scenes[0], onScreenText: "हिंदी שלום", caption: "" },
+      ],
+    });
+    assert.equal(mixedRtlContent.status, 201);
+    const beforeMixedRtl = await db.renderJob.count({
+      where: { organizationId: org },
+    });
+    const mixedRtlJob = await a.call(root + "/renders", "POST", {
+      contentId: mixedRtlContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: {},
+    });
+    assert.equal(mixedRtlJob.status, 400, JSON.stringify(mixedRtlJob.body));
+    assert.match(JSON.stringify(mixedRtlJob.body), /Separate Arabic, Hebrew/);
+    assert.equal(
+      await db.renderJob.count({ where: { organizationId: org } }),
+      beforeMixedRtl,
     );
     const missingGlyphContent = await a.call(root + "/content", "POST", {
       ...alternate,

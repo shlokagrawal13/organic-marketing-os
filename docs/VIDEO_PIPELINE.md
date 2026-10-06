@@ -1,5 +1,15 @@
 # Video pipeline — 0.9.2
 
+## Mixed LTR overlays (EDITOR-01Q)
+
+With `RENDER_DEVANAGARI_ENABLED=true`, effective titles and burned captions can combine Latin, Greek, Cyrillic and Devanagari using configured covering fonts. The outline route creates separate script/font runs and keeps every combining/conjunct grapheme in one font. Common punctuation, digits and spaces follow adjacent runs. Font units share a normalized baseline. A missing complete grapheme still fails before storage/cache/download work.
+
+API preflight and worker font planning now share the mixed-script boundary: Devanagari combined with Arabic, Hebrew or other scripts in the same overlay is rejected with a clear explanation. Separate title/caption overlays can still use separate directions. Named Bengali/CJK policy errors, opt-in configuration, unsafe-control rejection, effective cue overrides and captions-off Unicode SRT are preserved. This adds bounded LTR combinations; it does not implement a general bidirectional or other Indic/CJK layout engine.
+
+The Devanagari outline fingerprint is now `fontkit-outlines-v3-ltr-script-font-runs`, preventing reuse of prior Devanagari segments. Ordinary non-Devanagari runtime/cache identities are unchanged. Focused QA decodes 36 timed frames from 12 exports across 720/1080, portrait/landscape/square, and standard/inset text placement. It checks visible title/cue pixels within the applicable bounds and absent cues outside their interval. Tests also cover accented Greek/Cyrillic/Latin clusters, Hindi conjunct wrapping, missing coverage, preserved SRT and the old runtime fingerprint. Representative portrait/landscape frames are retained in `docs/qa/ltr-mixed-portrait.png` and `docs/qa/ltr-mixed-landscape.png`; bounds/visual smoke checks do not establish semantic correctness for every language/font or physical-device legibility. Final regression outcomes are recorded in VERIFICATION_REPORT.md.
+
+Earlier sections below describe the preceding editor increments.
+
 ## Saved-render review navigation (EDITOR-01P)
 
 Completed-render previews use cumulative saved scene durations and the same effective caption-cue rules as SRT. Scene and cue buttons seek absolute start times in the native video player; they preserve playing/paused state. Active highlights use half-open intervals and native time/seek/end events, not frame-accurate speech alignment. Empty captions produce no cue button; absent/empty explicit cues retain the scene-wide fallback. Captions-off exports label cues as SRT-only.

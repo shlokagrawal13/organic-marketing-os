@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 59,
+    "unit": 63,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
@@ -21,7 +21,7 @@
     "textAI": "isolated compatible HTTP provider fixture",
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
-    "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider"
+    "generatedMedia": "Isolated generated-media fixtures, including deterministic held-poll recovery; no live provider"
   },
   "requirements": {
     "headings": 161,
@@ -80,27 +80,19 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01P recovery-test hardening is locally verified. A test-only first-poll barrier deterministically kills the real media worker with an accepted provider receipt and active BullMQ job. After confirmed process exit, the Redis lock/active state remains untouched and expires naturally. The scenario observes 119907ms lock remaining, completes in 128.2s, and verifies the same provider ID/private asset, completed queue job and exactly one video submission. The recovery completion wait is bounded at 210s and the whole case at 300s. Passed 7 HTTP and 5 recovery/configuration cases with 12 fresh migrations. Follow-up publication and its native CI are pending.",
+  "latestIncrement": "EDITOR-01Q bounded mixed LTR overlays are locally verified. With the existing Devanagari opt-in and covering fonts, Latin/Greek/Cyrillic/Hindi titles and burned cues use separate complete-grapheme script/font runs. API and worker now share the mixed-script boundary, rejecting Hindi combined with Arabic/Hebrew in one overlay before queueing. Passed API/web production builds, 63 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration scenarios, with 12 fresh migrations. Focused QA passed 36 decoded timed frames from 12 exports across six output geometries and standard/inset placement; portrait/landscape frames were visually reviewed. Q publication and own native CI are pending.",
   "priorFullSuite": {
-    "release": "0.6.0",
-    "verifiedDate": "2026-09-27",
+    "sourceCommit": "c2936113616522db099771684226276e91976957",
+    "actionsRunId": 37479269861,
+    "verifiedDate": "2026-10-06",
     "passed": {
-      "unit": 12,
-      "httpScenarios": 6,
-      "browserScenarios": 5,
-      "recoveryAndConfigurationScenarios": 3,
-      "schemaMigrations": 8
+      "unit": 59,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryAndConfigurationScenarios": 5,
+      "schemaMigrations": 12
     },
-    "environment": {
-      "database": "PGlite WASM PostgreSQL socket bridge",
-      "redis": "native Redis 6.2",
-      "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
-      "renderer": "real FFmpeg/ffprobe 6.1.1",
-      "email": "local SMTP capture",
-      "textAI": "isolated compatible HTTP provider fixture",
-      "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
-      "web": "production Next.js server"
-    }
+    "scope": "Dated P native application CI; full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "generatedMediaEvidence": {
     "tenantRoleAndRequestReplay": true,
@@ -115,7 +107,7 @@
     "liveProviderVerified": false,
     "nativeConcurrencyVerified": false
   },
-  "dependencyAuditDate": "2026-10-04 GitHub Actions: production/full moderate-severity gates passed; advisory-count fields retain the separately recorded 2026-09-29 zero-count audit.",
+  "dependencyAuditDate": "2026-10-06",
   "media01dEvidence": {
     "planSpecificMediaRouting": true,
     "sourceReferenceOwnershipGate": true,
@@ -144,12 +136,14 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "runId": 37473495143,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37473495143",
-    "sourceCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
+    "runId": 37484095477,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37484095477",
+    "sourceCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
     "status": "completed",
     "conclusion": "success",
-    "annotation": "O native application CI passed. Full Compose/MinIO, native cross-store restore, live/device/master acceptance excluded."
+    "attempt": 1,
+    "completedAt": "2026-10-06T15:10:34Z",
+    "annotation": "Recovery follow-up own native CI, exact source commit; full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -734,9 +728,10 @@
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "latestFullSuite": {
-    "sourceCommit": "c2936113616522db099771684226276e91976957",
-    "actionsRunId": 37479269861,
+    "sourceCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
+    "actionsRunId": 37484095477,
     "verifiedDate": "2026-10-06",
+    "completedAt": "2026-10-06T15:10:34Z",
     "passed": {
       "unit": 59,
       "httpScenarios": 7,
@@ -744,21 +739,21 @@
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Dated P native application CI; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    "scope": "Recovery follow-up own native CI, exact source commit; full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "currentIncrementChecks": {
-    "apiBuild": null,
-    "webProductionBuild": null,
-    "unit": null,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "unit": 63,
     "httpScenarios": 7,
-    "browserScenarios": null,
+    "browserScenarios": 7,
     "recoveryScenarios": 5,
     "migrations": 12,
     "populatedUpgradeCi": null,
     "productionAuditAdvisories": null,
     "fullAuditAdvisories": null,
     "nativeApplicationCiVerified": false,
-    "scope": "Test/fixture-only follow-up; unchanged P production artifacts. Builds/unit/browser/audits/upgrade not rerun; prior full suite remains explicitly dated."
+    "scope": "Q local full application checks and decoded frame QA; P native CI/audit/upgrade are historical, not Q verification."
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -817,11 +812,11 @@
   },
   "editor01pRecoveryEvidence": {
     "scope": "Deterministic held-poll recovery regression, queue-aware bounded wait and awaited child exit; no application changes",
-    "publicationStatus": "local_verified_pending_exact_followup_approval",
+    "publicationStatus": "published_ci_verified",
     "httpScenariosPassed": 7,
     "recoveryConfigurationScenariosPassed": 5,
     "migrationsApplied": 12,
-    "database": "Serialized PGlite; follow-up native CI pending",
+    "database": "Local serialized PGlite and follow-up native PostgreSQL CI",
     "realRedisBullMq": true,
     "firstPollHeldBeforeKill": true,
     "childExitAwaited": true,
@@ -838,6 +833,80 @@
     "videoSubmitCount": 1,
     "ambiguousSubmitNoReplayAndSavedPrivateOutputStillPass": true,
     "liveProviderUsed": false,
-    "knownFailures": []
+    "knownFailures": [],
+    "publicationCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
+    "publicationTree": "312e5ce9efa1f78fef47a4a06d1037beb6eebbbb",
+    "githubActions": {
+      "runId": 37484095477,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37484095477",
+      "sourceCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "completedAt": "2026-10-06T15:10:34Z",
+      "annotation": "Recovery follow-up own native CI, exact source commit; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    },
+    "ciObservedLockMs": 119834,
+    "ciObservedCaseDurationMs": 158448.562806,
+    "ciVideoSubmitCount": 1
+  },
+  "priorLocalEnvironment": {
+    "database": "PGlite WASM PostgreSQL socket bridge",
+    "redis": "Native Redis 7.2.11 built from official GitHub tag d4c381df7a729c06a5207c4f18d804febe956dc4; disposable local service",
+    "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
+    "renderer": "real FFmpeg/ffprobe 6.1.1",
+    "email": "local SMTP capture",
+    "textAI": "isolated compatible HTTP provider fixture",
+    "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
+    "web": "production Next.js server",
+    "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider"
+  },
+  "editor01qEvidence": {
+    "scope": "Greek/Cyrillic + existing Latin/Devanagari bounded LTR overlay combinations; shared API/worker mixed-script boundary",
+    "publicationStatus": "local_verified_pending_exact_authorization",
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 7,
+    "recoveryConfigurationScenariosPassed": 5,
+    "unitPassed": 63,
+    "migrationsApplied": 12,
+    "decodedFrames": 36,
+    "renderExports": 12,
+    "outputGeometries": 6,
+    "textPlacements": [
+      "standard",
+      "inset-v1"
+    ],
+    "fontConfiguration": "Existing DejaVu Sans plus Noto Sans Devanagari; no new font/dependency",
+    "fontPathsBundled": false,
+    "scriptFontRuns": true,
+    "completeGraphemesPreserved": true,
+    "apiMixedRtlRejectedBeforeJob": true,
+    "missingCoverageRejected": true,
+    "captionsOffUnicodeSrtPreserved": true,
+    "ignoredFallbackCaptionPreserved": true,
+    "outlineFingerprint": "fontkit-outlines-v3-ltr-script-font-runs",
+    "nonDevanagariCacheIdentityUnchanged": true,
+    "visualFrames": [
+      "docs/qa/ltr-mixed-portrait.png",
+      "docs/qa/ltr-mixed-landscape.png"
+    ],
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "liveProviderUsed": false,
+    "knownFailures": [],
+    "recoveryObservedLockMs": 119925,
+    "recoveryCaseDurationMs": 158385.301074
+  },
+  "localFullSuite": {
+    "slice": "EDITOR-01Q",
+    "verifiedDate": "2026-10-06",
+    "passed": {
+      "unit": 63,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryAndConfigurationScenarios": 5,
+      "schemaMigrations": 12
+    },
+    "scope": "Q local full application checks and decoded frame QA; P native CI/audit/upgrade are historical, not Q verification."
   }
 }

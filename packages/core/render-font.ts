@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { create, type Font } from "fontkit";
 import {
   hasDevanagariText,
+  devanagariMixSupportIssue,
   renderedSceneText,
   type RenderOptions,
   type Scene,
@@ -161,7 +162,11 @@ export function createRenderFontPlan(
           ? "deva"
           : /\p{Script=Latin}/u.test(segment)
             ? "latn"
-            : runs.at(-1)?.script || "latn";
+            : /\p{Script=Greek}/u.test(segment)
+              ? "grek"
+              : /\p{Script=Cyrillic}/u.test(segment)
+                ? "cyrl"
+                : runs.at(-1)?.script || "latn";
         const previous = runs.at(-1);
         const preferred = previous?.script === script ? previous.fontIndex : -1;
         const covers = (font: InspectedFont) =>
@@ -187,14 +192,8 @@ export function createRenderFontPlan(
         const key = textKey(text);
         if (!key) continue;
         if (hasDevanagariText(text)) {
-          if (
-            /[^\p{Script=Latin}\p{Script=Devanagari}\p{Script=Common}\p{Script=Inherited}]/u.test(
-              text,
-            )
-          )
-            throw new RenderFontError(
-              `${label.slice(0, 120)} can combine Devanagari with Latin text, numbers and punctuation only. Separate other scripts into another overlay.`,
-            );
+          const issue = devanagariMixSupportIssue(text, label.slice(0, 120));
+          if (issue) throw new RenderFontError(issue);
           // Explicit script runs also shape correctly when a single font covers
           // both scripts; Fontkit must not infer one script for the whole line.
           fontRuns(key);

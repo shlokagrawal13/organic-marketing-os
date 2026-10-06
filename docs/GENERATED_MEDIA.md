@@ -1,5 +1,13 @@
 # Generated media — 0.9.2
 
+## EDITOR-01P recovery-follow-up publication closure — 2026-10-06
+
+EDITOR-01P recovery-test hardening and its approved 16-file recovery-fix/evidence payload are published and CI-verified. Public main 981dd237c4a4d30bc7ed6b6a897c6617c09255f7, tree 312e5ce9efa1f78fef47a4a06d1037beb6eebbbb; Actions run 37484095477 attempt 1 completed successfully at 2026-10-06T15:10:34Z. Logs confirm 59 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated PGlite upgrade/archive restore and zero-vulnerability production/full npm audits. The deterministic interrupted poll left an active Redis queue job with 119834ms lock remaining; natural expiry/recovery completed the case in 158.4s with the same provider receipt, private output, completed queue job and exactly one video submission. All 200 remote blob paths/modes/SHAs match the approved local source.
+
+Changes are confined to isolated tests/fixtures and evidence. Production API/UI/workers, dependencies and migrations are unchanged. Native CI uses PostgreSQL/Redis, S3Proxy, real FFmpeg and synthetic providers. This test budget does not establish a production recovery SLA. Wider-script/readability and device QA, ASR, broader audio/custom effects/platform acceptance, full Compose/MinIO, native cross-store restore and master acceptance remain open.
+
+This publication closure is retained locally in the portable handoff. The exact approved public payload is the tree above; historical pending sections below describe earlier checkpoints. Next: bounded editor wider-script/readability QA.
+
 Image, video and voice generation now have durable database jobs, tenant APIs,
 a BullMQ worker, private asset ingestion and an Asset library → Generate with AI
 screen. The first adapter uses OpenAI HTTP contracts. All verification used

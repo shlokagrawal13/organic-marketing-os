@@ -1,5 +1,30 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01Q mixed LTR overlays — 2026-10-06
+
+EDITOR-01Q bounded mixed LTR overlays are locally verified. With the existing Devanagari opt-in and covering fonts, Latin/Greek/Cyrillic/Hindi titles and burned cues use separate complete-grapheme script/font runs. API and worker now share the mixed-script boundary, rejecting Hindi combined with Arabic/Hebrew in one overlay before queueing. Passed API/web production builds, 63 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration scenarios, with 12 fresh migrations. Focused QA passed 36 decoded timed frames from 12 exports across six output geometries and standard/inset placement; portrait/landscape frames were visually reviewed. Q publication and own native CI are pending.
+
+The isolated verifier uses serialized PGlite, real Redis/S3Proxy/FFmpeg and synthetic providers. Dependencies, schema/migrations, tenant/role/revision gates and ordinary non-Devanagari cache identity are unchanged. Devanagari outline runtime keys are bumped to v3. Audits and populated upgrade/archive restore were not rerun; dated P recovery Actions run 37484095477 at 981dd237c4a4d30bc7ed6b6a897c6617c09255f7 remains preceding native/full-audit evidence for P only. Bengali/other Indic/CJK, general bidirectional mixing, language semantics, physical-device legibility, ASR, broader audio/custom effects/platform acceptance, full Compose/native cross-store restore and master acceptance remain open.
+
+### Q checks actually run
+
+- `npm run build`: Prisma generation, API TypeScript and Next.js production build passed.
+- `TEST_DEVANAGARI_FONT_PATH=.local/test-fonts/NotoSansDevanagari-Regular.ttf NODE_OPTIONS=--test-isolation=none npm test`: 63 passed.
+- Focused `node --import tsx --test tests/render-ltr-mixed.test.ts` with the same font/environment and `MOS_LTR_QA_DIR=.local/editor01q-frames`: four passed, including 36 decoded frames across 12 real exports. Representative portrait/landscape frames visually inspected; Greek/Cyrillic diacritics, Hindi matras/conjuncts, intact baselines and bounded timed cues were checked as a smoke test, not a language-quality certification.
+- Same font/environment with `node scripts/verify-local.mjs --production-web`: 7 HTTP, 7 browser, 5 recovery/configuration scenarios passed. HTTP creates and downloads a mixed Greek/Cyrillic/Hindi export and verifies source Unicode SRT; a Hindi/Hebrew mixed overlay returns 400 with unchanged render-job count. Existing tenant/role/approval/cache/playback/download checks pass. The P hardened natural Redis lock-expiry recovery regression also passed on Q code.
+- 12 fresh migrations applied to disposable serialized PGlite. Real Redis, S3Proxy, FFmpeg and fixture providers used. No dependencies/migrations changed, live/paid provider, user business data or user runtime services used.
+- No known unresolved Q failures. Q native CI, audits and upgrade/archive restore were not run; last dated P CI is retained separately.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+## EDITOR-01P recovery-follow-up publication closure — 2026-10-06
+
+EDITOR-01P recovery-test hardening and its approved 16-file recovery-fix/evidence payload are published and CI-verified. Public main 981dd237c4a4d30bc7ed6b6a897c6617c09255f7, tree 312e5ce9efa1f78fef47a4a06d1037beb6eebbbb; Actions run 37484095477 attempt 1 completed successfully at 2026-10-06T15:10:34Z. Logs confirm 59 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated PGlite upgrade/archive restore and zero-vulnerability production/full npm audits. The deterministic interrupted poll left an active Redis queue job with 119834ms lock remaining; natural expiry/recovery completed the case in 158.4s with the same provider receipt, private output, completed queue job and exactly one video submission. All 200 remote blob paths/modes/SHAs match the approved local source.
+
+Changes are confined to isolated tests/fixtures and evidence. Production API/UI/workers, dependencies and migrations are unchanged. Native CI uses PostgreSQL/Redis, S3Proxy, real FFmpeg and synthetic providers. This test budget does not establish a production recovery SLA. Wider-script/readability and device QA, ASR, broader audio/custom effects/platform acceptance, full Compose/MinIO, native cross-store restore and master acceptance remain open.
+
+This publication closure is retained locally in the portable handoff. The exact approved public payload is the tree above; historical pending sections below describe earlier checkpoints. Next: bounded editor wider-script/readability QA.
+
 ## EDITOR-01P recovery-test hardening — 2026-10-06
 
 EDITOR-01P recovery-test hardening is locally verified. A test-only first-poll barrier deterministically kills the real media worker with an accepted provider receipt and active BullMQ job. After confirmed process exit, the Redis lock/active state remains untouched and expires naturally. The scenario observes 119907ms lock remaining, completes in 128.2s, and verifies the same provider ID/private asset, completed queue job and exactly one video submission. The recovery completion wait is bounded at 210s and the whole case at 300s. Passed 7 HTTP and 5 recovery/configuration cases with 12 fresh migrations. Follow-up publication and its native CI are pending.
