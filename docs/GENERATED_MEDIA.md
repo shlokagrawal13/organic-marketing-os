@@ -87,7 +87,7 @@ the job is moved to UNKNOWN with the private output pointer retained for platfor
 review and credits remain in REVIEW. Redis queue entries are repaired from
 database records. Poll errors retry reads, not generation. Polling or ingestion
 beyond 24 hours requires manual reconciliation. Workers use a 60-second stale
-lease and a three-minute per-attempt deadline.
+lease and a three-minute per-attempt deadline. Redis queue jobs also have a 120-second renewable lock and 30-second stalled checks: after SIGKILL, backdating a DB claim alone does not remove an active queue lock. The recovery fault fixture now deterministically interrupts a held poll, waits for natural queue recovery within a bounded 210-second test deadline and checks one submission/same provider ID/private output. This is a test budget, not a production recovery SLA; no runtime timing/queue behavior was changed.
 
 Output reads are bounded to 25 MiB. Arbitrary output URLs are never fetched;
 provider requests stay on the official origin and redirects fail closed. Only the

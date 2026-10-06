@@ -8,7 +8,7 @@
   "passed": {
     "unit": 59,
     "httpScenarios": 7,
-    "browserScenarios": 6,
+    "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 12
   },
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01P local review navigation; P native CI not yet run",
+  "latestIncrement": "EDITOR-01P recovery-test hardening is locally verified. A test-only first-poll barrier deterministically kills the real media worker with an accepted provider receipt and active BullMQ job. After confirmed process exit, the Redis lock/active state remains untouched and expires naturally. The scenario observes 119907ms lock remaining, completes in 128.2s, and verifies the same provider ID/private asset, completed queue job and exactly one video submission. The recovery completion wait is bounded at 210s and the whole case at 300s. Passed 7 HTTP and 5 recovery/configuration cases with 12 fresh migrations. Follow-up publication and its native CI are pending.",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -734,36 +734,35 @@
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "latestFullSuite": {
-    "sourceCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
-    "actionsRunId": 37473495143,
+    "sourceCommit": "c2936113616522db099771684226276e91976957",
+    "actionsRunId": 37479269861,
     "verifiedDate": "2026-10-06",
     "passed": {
       "unit": 59,
       "httpScenarios": 7,
-      "browserScenarios": 6,
+      "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Dated O full native application CI; full Compose/native cross-store restore/live/device/master acceptance excluded."
+    "scope": "Dated P native application CI; full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "currentIncrementChecks": {
-    "apiBuild": true,
-    "webProductionBuild": true,
-    "browserScenarios": 7,
-    "browserRuns": "6 existing cases on initial run; corrected new case on focused rerun; same application production build",
+    "apiBuild": null,
+    "webProductionBuild": null,
     "unit": null,
-    "httpScenarios": null,
-    "recoveryScenarios": null,
+    "httpScenarios": 7,
+    "browserScenarios": null,
+    "recoveryScenarios": 5,
     "migrations": 12,
     "populatedUpgradeCi": null,
     "productionAuditAdvisories": null,
     "fullAuditAdvisories": null,
     "nativeApplicationCiVerified": false,
-    "skipped": "Unit/HTTP/recovery/audits/upgrade not rerun; O latestFullSuite is dated prior evidence."
+    "scope": "Test/fixture-only follow-up; unchanged P production artifacts. Builds/unit/browser/audits/upgrade not rerun; prior full suite remains explicitly dated."
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
-    "publicationStatus": "local_verified_pending_exact_publication_approval",
+    "publicationStatus": "published_ci_verified",
     "apiBuild": true,
     "webProductionBuild": true,
     "browserScenariosPassed": 7,
@@ -781,6 +780,64 @@
     "screenshotsVisuallyReviewed": true,
     "knownFailures": [],
     "resolvedTestFailure": "Playwright browser evaluation needed the expected position supplied as an explicit argument. Corrected focused test passed.",
-    "liveProviderUsed": false
+    "liveProviderUsed": false,
+    "publicationCommit": "c2936113616522db099771684226276e91976957",
+    "publicationTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa",
+    "actionsRunId": 37479269861,
+    "actionsConclusion": "success",
+    "actionsCompletedAtUtc": "2026-10-06T14:41:45Z",
+    "unitTestsPassed": 59,
+    "httpScenariosPassed": 7,
+    "recoveryConfigurationScenariosPassed": 5,
+    "nativeCiPopulatedUpgradeVerified": true,
+    "nativeCiProductionAuditAdvisories": 0,
+    "nativeCiFullAuditAdvisories": 0,
+    "ciAttempt": 2,
+    "initialCiFailure": {
+      "jobId": 112322815134,
+      "scope": "media worker restart recovery",
+      "browserPassed": 7,
+      "httpPassed": 7,
+      "unitPassed": 59,
+      "recoveryPassed": 4,
+      "recoveryFailed": 1,
+      "observation": "PENDING persisted with provider ID; killed worker may leave BullMQ active lock for 120s, exceeding the recovery assertion 25s deadline. Timing-race inference from worker/test source; not yet reproduced deterministically.",
+      "isolatedQueueReproduction": {
+        "workerKilled": true,
+        "jobState": "active",
+        "remainingLockMs": 119993,
+        "testDeadlineMs": 25000,
+        "scope": "Fresh isolated Redis + BullMQ mechanics reproduced; original full application failure causality remains an inference."
+      }
+    },
+    "remoteBlobCount": 200,
+    "localBlobCount": 200,
+    "mismatchCount": 0,
+    "remoteTreeMatchesLocalVerifiedTree": true
+  },
+  "editor01pRecoveryEvidence": {
+    "scope": "Deterministic held-poll recovery regression, queue-aware bounded wait and awaited child exit; no application changes",
+    "publicationStatus": "local_verified_pending_exact_followup_approval",
+    "httpScenariosPassed": 7,
+    "recoveryConfigurationScenariosPassed": 5,
+    "migrationsApplied": 12,
+    "database": "Serialized PGlite; follow-up native CI pending",
+    "realRedisBullMq": true,
+    "firstPollHeldBeforeKill": true,
+    "childExitAwaited": true,
+    "queueActiveBeforeAndAfterKill": true,
+    "observedLockMs": 119907,
+    "previousDeadlineMs": 25000,
+    "completionDeadlineMs": 210000,
+    "caseTimeoutMs": 300000,
+    "observedCaseDurationMs": 128237.518472,
+    "redisLocksListsUntouched": true,
+    "onlyDbHeartbeatBackdated": true,
+    "sameProviderId": true,
+    "privateAssetAndQueueCompleted": true,
+    "videoSubmitCount": 1,
+    "ambiguousSubmitNoReplayAndSavedPrivateOutputStillPass": true,
+    "liveProviderUsed": false,
+    "knownFailures": []
   }
 }

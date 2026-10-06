@@ -3,6 +3,7 @@ import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 export function generationFixture() {
   const calls = {},
+    polls = {},
     videos = new Map();
   return createServer(async (req, res) => {
     const json = (value) => {
@@ -10,6 +11,7 @@ export function generationFixture() {
       res.end(JSON.stringify(value));
     };
     if (req.url === "/stats") return json(calls);
+    if (req.url === "/poll-stats") return json(polls);
     if (req.headers.authorization !== "Bearer isolated-media-fixture") {
       res.writeHead(401);
       return res.end();
@@ -88,6 +90,14 @@ export function generationFixture() {
       return res.end(readFileSync(".local/media-fixtures/clip.mp4"));
     }
     item.polls++;
+    polls[item.prompt] = (polls[item.prompt] || 0) + 1;
+    // Fault-test barrier: keep the first poll active until the worker is killed.
+    // Later polls of the SAME receipt complete normally. Never used by runtime.
+    if (item.prompt.startsWith("HOLD_POLL_ONCE:") && item.polls === 1) {
+      const timer = setTimeout(() => res.end("{}"), 90000);
+      res.on("close", () => clearTimeout(timer));
+      return;
+    }
     if (item.prompt.startsWith("POLL_ERROR:") && item.polls === 1) {
       res.writeHead(503);
       return res.end();

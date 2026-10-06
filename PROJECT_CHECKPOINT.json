@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-06.9",
-  "savedAtUtc": "2026-10-06T14:18:15.763147+00:00",
-  "currentMilestone": "EDITOR-01P review navigation locally verified; publication pending",
+  "checkpointRevision": "2026-10-06.11",
+  "savedAtUtc": "2026-10-06T14:54:58.095027+00:00",
+  "currentMilestone": "EDITOR-01P recovery-test hardening locally verified; follow-up publication pending",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -34,10 +34,11 @@
     "EDITOR-01N optional aspect-aware Extra margins and the approved 23-file source/docs payload are published and CI-verified. Public main c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38, matching verified local source tree 1e404024f8f8c86d0b3a344c569552bf6711979d; Actions run 37450673612 completed successfully on 2026-10-06T10:38:56Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 195 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Product composition margins do not guarantee official platform UI exclusion; complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.",
     "EDITOR-01O composition guides are locally verified. The selected-export diagram follows aspect, resolution, text placement, background and burned-caption controls; saved-render guides read immutable job options independently. Extra-margin boxes reuse the renderer geometry; standard positions are explicitly approximate. API/web builds and all 6 production-browser scenarios passed on final code, including real export playback/approval/download, guide controls, saved settings after navigation and mobile overflow. Public O publication and native CI are pending.",
     "EDITOR-01O responsive selected/saved composition guides and the approved 17-file source/docs payload are published and CI-verified. Public main eb9c02338bc62ab38aadafd713586f4b80f35a79, matching verified local source tree a90d05e29183ddeaa6b5be908b2d9656ae5abee8; Actions run 37473495143 completed successfully on 2026-10-06T13:51:31Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 196 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Guides are review diagrams; complete Compose/MinIO, native cross-store restore, device/font/ASR and full master acceptance remain open.",
-    "EDITOR-01P saved-render scene/caption review navigation is locally verified. Scene starts and caption offsets come only from the immutable render snapshot, including stale renders. Native player seeks preserve play/pause, keyboard activation works, and half-open scene/cue highlights track playback. Buttons wait for metadata and disable on load failure; switching render IDs resets player state. Captions-off exports label SRT-only cues. API/web production builds passed; all 7 browser scenarios passed across the initial 6-case pass and corrected focused review-test rerun. Public P publication and native CI are pending."
+    "EDITOR-01P saved-render scene/caption review navigation and the approved 19-file source/docs/evidence payload are published and CI-verified. Public main c2936113616522db099771684226276e91976957, matching verified local source tree 1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa; Actions run 37479269861 completed successfully on 2026-10-06T14:41:45Z. Logs confirm 59 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 200 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Physical devices, ASR, wider-script/readability, full Compose/native cross-store restore and master acceptance remain open. Initial CI attempt failed the media-worker restart recovery wait after 25s; all 7 browser cases passed. The same approved source passed the later CI attempt. An isolated Redis/BullMQ reproduction left a killed worker job active with 119993ms lock remaining, beyond the 25s assertion. This queue mechanism supports a timing-race explanation; original application failure causality remains an inference, and recovery-test hardening is prioritized. No code fix is claimed.",
+    "EDITOR-01P recovery-test hardening is locally verified. A test-only first-poll barrier deterministically kills the real media worker with an accepted provider receipt and active BullMQ job. After confirmed process exit, the Redis lock/active state remains untouched and expires naturally. The scenario observes 119907ms lock remaining, completes in 128.2s, and verifies the same provider ID/private asset, completed queue job and exactly one video submission. The recovery completion wait is bounded at 210s and the whole case at 300s. Passed 7 HTTP and 5 recovery/configuration cases with 12 fresh migrations. Follow-up publication and its native CI are pending."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Publish exact reviewed 19-file EDITOR-01P source/docs/evidence payload after authorization, verify its own CI; then continue bounded wider-script/readability QA from EDITOR-01 remaining scope.",
+  "nextAction": "Publish the exact reviewed 16-file EDITOR-01P recovery-fix/evidence follow-up after authorization and verify its own native CI, then continue bounded editor wider-script/readability QA.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -76,7 +77,7 @@
     "applicationSuites": {
       "unit": 59,
       "httpScenarios": 7,
-      "browserScenarios": 6,
+      "browserScenarios": 7,
       "recoveryConfigurationScenarios": 5
     },
     "migrationsApplied": 12,
@@ -92,19 +93,19 @@
     "developmentAdvisories": 0,
     "scopeWarning": "Dated evidence; do not apply automatically to modified code or a new environment.",
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
-    "auditScope": "2026-10-06 O native GitHub CI production/full npm audits report zero vulnerabilities; application/security acceptance excluded.",
+    "auditScope": "2026-10-06 P CI production/full npm audits report zero vulnerabilities; application/security acceptance excluded.",
     "githubActions": {
-      "runId": 37473495143,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37473495143",
-      "sourceCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
+      "runId": 37479269861,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37479269861",
+      "sourceCommit": "c2936113616522db099771684226276e91976957",
       "status": "completed",
       "conclusion": "success",
-      "annotation": "O native application CI passed. Full Compose/MinIO, native cross-store restore, live/device/master acceptance excluded."
+      "annotation": "P native application CI passed; full Compose/MinIO/native cross-store restore/live/device/master acceptance excluded."
     },
-    "latestIncrement": "EDITOR-01P saved-render scene/caption review navigation is locally verified. Scene starts and caption offsets come only from the immutable render snapshot, including stale renders. Native player seeks preserve play/pause, keyboard activation works, and half-open scene/cue highlights track playback. Buttons wait for metadata and disable on load failure; switching render IDs resets player state. Captions-off exports label SRT-only cues. API/web production builds passed; all 7 browser scenarios passed across the initial 6-case pass and corrected focused review-test rerun. Public P publication and native CI are pending.",
+    "latestIncrement": "EDITOR-01P recovery-test hardening is locally verified. A test-only first-poll barrier deterministically kills the real media worker with an accepted provider receipt and active BullMQ job. After confirmed process exit, the Redis lock/active state remains untouched and expires naturally. The scenario observes 119907ms lock remaining, completes in 128.2s, and verifies the same provider ID/private asset, completed queue job and exactly one video submission. The recovery completion wait is bounded at 210s and the whole case at 300s. Passed 7 HTTP and 5 recovery/configuration cases with 12 fresh migrations. Follow-up publication and its native CI are pending.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-06",
-    "nativePostgresVerifiedMeaning": "Local harness remains PGlite; separate dated O Actions evidence covers configured PostgreSQL/Redis application flows, not complete Compose/MinIO, native restore or production concurrency acceptance.",
+    "nativePostgresVerifiedMeaning": "Local harness remains PGlite; separate dated P Actions evidence covers configured PostgreSQL/Redis application flows, not complete Compose/MinIO/native restore or production concurrency acceptance.",
     "nativeApplicationHarnessVerified": true,
     "advisoryCountsRecordedAt": "2026-09-29",
     "dateTimezone": "Asia/Kolkata",
@@ -657,7 +658,7 @@
     "applicationSuitesScope": "Dated O native CI confirms full 59/7/6/5 suite. Earlier local O verification was browser-only; full Compose/native cross-store restore/live/device/master acceptance remains open.",
     "editor01pEvidence": {
       "scope": "UI-only immutable saved-render review navigation",
-      "publicationStatus": "local_verified_pending_exact_publication_approval",
+      "publicationStatus": "published_ci_verified",
       "apiBuild": true,
       "webProductionBuild": true,
       "browserScenariosPassed": 7,
@@ -675,22 +676,79 @@
       "screenshotsVisuallyReviewed": true,
       "knownFailures": [],
       "resolvedTestFailure": "Playwright browser evaluation needed the expected position supplied as an explicit argument. Corrected focused test passed.",
-      "liveProviderUsed": false
+      "liveProviderUsed": false,
+      "publicationCommit": "c2936113616522db099771684226276e91976957",
+      "publicationTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa",
+      "actionsRunId": 37479269861,
+      "actionsConclusion": "success",
+      "actionsCompletedAtUtc": "2026-10-06T14:41:45Z",
+      "unitTestsPassed": 59,
+      "httpScenariosPassed": 7,
+      "recoveryConfigurationScenariosPassed": 5,
+      "nativeCiPopulatedUpgradeVerified": true,
+      "nativeCiProductionAuditAdvisories": 0,
+      "nativeCiFullAuditAdvisories": 0,
+      "ciAttempt": 2,
+      "initialCiFailure": {
+        "jobId": 112322815134,
+        "scope": "media worker restart recovery",
+        "browserPassed": 7,
+        "httpPassed": 7,
+        "unitPassed": 59,
+        "recoveryPassed": 4,
+        "recoveryFailed": 1,
+        "observation": "PENDING persisted with provider ID; killed worker may leave BullMQ active lock for 120s, exceeding the recovery assertion 25s deadline. Timing-race inference from worker/test source; not yet reproduced deterministically.",
+        "isolatedQueueReproduction": {
+          "workerKilled": true,
+          "jobState": "active",
+          "remainingLockMs": 119993,
+          "testDeadlineMs": 25000,
+          "scope": "Fresh isolated Redis + BullMQ mechanics reproduced; original full application failure causality remains an inference."
+        }
+      },
+      "remoteBlobCount": 200,
+      "localBlobCount": 200,
+      "mismatchCount": 0,
+      "remoteTreeMatchesLocalVerifiedTree": true
     },
     "currentIncrementChecks": {
-      "apiBuild": true,
-      "webProductionBuild": true,
-      "browserScenarios": 7,
-      "browserRuns": "6 existing cases on initial run; corrected new case on focused rerun; same application production build",
+      "apiBuild": null,
+      "webProductionBuild": null,
       "unit": null,
-      "httpScenarios": null,
-      "recoveryScenarios": null,
+      "httpScenarios": 7,
+      "browserScenarios": null,
+      "recoveryScenarios": 5,
       "migrations": 12,
       "populatedUpgradeCi": null,
       "productionAuditAdvisories": null,
       "fullAuditAdvisories": null,
       "nativeApplicationCiVerified": false,
-      "skipped": "Unit/HTTP/recovery/audits/upgrade not rerun; O latestFullSuite is dated prior evidence."
+      "scope": "Test/fixture-only follow-up; unchanged P production artifacts. Builds/unit/browser/audits/upgrade not rerun; prior full suite remains explicitly dated."
+    },
+    "editor01pRecoveryEvidence": {
+      "scope": "Deterministic held-poll recovery regression, queue-aware bounded wait and awaited child exit; no application changes",
+      "publicationStatus": "local_verified_pending_exact_followup_approval",
+      "httpScenariosPassed": 7,
+      "recoveryConfigurationScenariosPassed": 5,
+      "migrationsApplied": 12,
+      "database": "Serialized PGlite; follow-up native CI pending",
+      "realRedisBullMq": true,
+      "firstPollHeldBeforeKill": true,
+      "childExitAwaited": true,
+      "queueActiveBeforeAndAfterKill": true,
+      "observedLockMs": 119907,
+      "previousDeadlineMs": 25000,
+      "completionDeadlineMs": 210000,
+      "caseTimeoutMs": 300000,
+      "observedCaseDurationMs": 128237.518472,
+      "redisLocksListsUntouched": true,
+      "onlyDbHeartbeatBackdated": true,
+      "sameProviderId": true,
+      "privateAssetAndQueueCompleted": true,
+      "videoSubmitCount": 1,
+      "ambiguousSubmitNoReplayAndSavedPrivateOutputStillPass": true,
+      "liveProviderUsed": false,
+      "knownFailures": []
     }
   },
   "accessState": {
@@ -702,8 +760,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
-    "status": "editor01p_local_verified_pending_publication",
+    "commit": "c2936113616522db099771684226276e91976957",
+    "status": "editor01p_recovery_followup_local_verified",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -716,11 +774,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "a90d05e29183ddeaa6b5be908b2d9656ae5abee8",
+    "sourceTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Approved exact 17-file EDITOR-01O publication; native CI passed.",
+    "commitMeaning": "Approved exact 19-file EDITOR-01P publication; native CI passed.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "cae1f53",
+    "lastLocalCheckpointCommit": "f1705bd04be6a7c74e053328353a3a3e90092cc5",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -730,55 +788,54 @@
       "resolved": true
     },
     "publication": {
-      "slice": "EDITOR-01O",
-      "applicationCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
-      "applicationTree": "a90d05e29183ddeaa6b5be908b2d9656ae5abee8",
-      "baseCommit": "c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38",
-      "uploadedChangedBlobCount": 17,
-      "remoteBlobCount": 196,
-      "localBlobCount": 196,
+      "slice": "EDITOR-01P",
+      "applicationCommit": "c2936113616522db099771684226276e91976957",
+      "applicationTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa",
+      "baseCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
+      "uploadedChangedBlobCount": 19,
+      "remoteBlobCount": 200,
+      "localBlobCount": 200,
       "mismatchCount": 0,
-      "actionsRunId": 37473495143,
+      "actionsRunId": 37479269861,
       "actionsConclusion": "success",
-      "nativeTestsExecuted": true
+      "nativeTestsExecuted": true,
+      "ciAttempt": 2
     },
     "currentUploadGate": {
-      "slice": "EDITOR-01P",
+      "slice": "EDITOR-01P-RECOVERY",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "pending_exact_user_authorization",
       "resolved": false,
       "remoteWriteAttempted": false,
-      "reason": "Prior automatic public-export review required exact authorization for each new payload; O approval covered O only.",
+      "reason": "Earlier exact approval covered the published 19-file P navigation payload. Prior automatic review requires exact approval for the new recovery-fix/evidence public payload.",
       "paths": [
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
         "START_HERE.md",
-        "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
-        "apps/web/app/render-review.tsx",
         "docs/CHANGELOG.md",
+        "docs/GENERATED_MEDIA.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/SESSION_LOG.md",
         "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
         "docs/VERIFICATION_REPORT.md",
-        "docs/VIDEO_PIPELINE.md",
-        "docs/qa/render-review-desktop.png",
-        "docs/qa/render-review-mobile.png",
         "docs/qa/verification-summary.json",
-        "tests/ui/render-review.spec.ts"
+        "scripts/test-generation-provider.mjs",
+        "tests/recovery/worker.test.ts"
       ],
-      "changedFiles": 19,
-      "baseCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
-      "includes": "P UI/component/styles/browser tests, reviewed screenshots and updated source/docs continuity including O publication closure."
+      "changedFiles": 16,
+      "baseCommit": "c2936113616522db099771684226276e91976957",
+      "baseTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa",
+      "localEquivalentBase": "f1705bd04be6a7c74e053328353a3a3e90092cc5",
+      "includes": "Isolated provider/recovery tests, test strategy/domain docs, local P publication closure and new local verification evidence."
     },
     "publicationPreparation": {
-      "slice": "EDITOR-01P",
+      "slice": "EDITOR-01P-RECOVERY",
       "status": "local_verified_ready_for_review",
-      "changedFiles": 19,
-      "baseCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79"
+      "changedFiles": 16
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -1028,6 +1085,58 @@
       "userApproval": "I explicitly approve publishing EDITOR-01N’s 23 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38",
       "remoteTree": "1e404024f8f8c86d0b3a344c569552bf6711979d"
+    },
+    "initialPVerificationFailure": {
+      "jobId": 112322815134,
+      "scope": "media worker restart recovery",
+      "browserPassed": 7,
+      "httpPassed": 7,
+      "unitPassed": 59,
+      "recoveryPassed": 4,
+      "recoveryFailed": 1,
+      "observation": "PENDING persisted with provider ID; killed worker may leave BullMQ active lock for 120s, exceeding the recovery assertion 25s deadline. Timing-race inference from worker/test source; not yet reproduced deterministically.",
+      "isolatedQueueReproduction": {
+        "workerKilled": true,
+        "jobState": "active",
+        "remainingLockMs": 119993,
+        "testDeadlineMs": 25000,
+        "scope": "Fresh isolated Redis + BullMQ mechanics reproduced; original full application failure causality remains an inference."
+      }
+    },
+    "editor01pNavigationUploadGate": {
+      "slice": "EDITOR-01P",
+      "destination": "public shlokagrawal13/organic-marketing-os main",
+      "status": "approved_published",
+      "resolved": true,
+      "remoteWriteAttempted": true,
+      "reason": "Exact user approval supplied and fulfilled; matching remote tree and successful P CI recorded.",
+      "paths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "START_HERE.md",
+        "apps/web/app/globals.css",
+        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/render-review.tsx",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/render-review-desktop.png",
+        "docs/qa/render-review-mobile.png",
+        "docs/qa/verification-summary.json",
+        "tests/ui/render-review.spec.ts"
+      ],
+      "changedFiles": 19,
+      "baseCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
+      "includes": "P UI/component/styles/browser tests, reviewed screenshots and updated source/docs continuity including O publication closure.",
+      "userApproval": "I explicitly approve publishing EDITOR-01P’s 19 verified source/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "remoteCommit": "c2936113616522db099771684226276e91976957",
+      "remoteTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa"
     }
   },
   "credentialsIncluded": false,
@@ -1074,7 +1183,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "A through O published and CI-verified. P saved-render scene/caption navigation locally verified with builds and 7 browser cases; publication/native CI pending. Wider scripts/device/ASR/audio/custom motion/platform/semantic quality remain."
+      "completedIncrement": "A through P published/CI-verified. P active-poll recovery-test hardening now locally passed 7 HTTP/5 recovery with natural queue-lock expiry and one submission; follow-up publication/native CI pending. Wider scripts/device/ASR/audio/custom motion/platform/semantic quality remain."
     },
     {
       "id": "RESEARCH-01",
@@ -1181,21 +1290,18 @@
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
-    "apps/web/app/globals.css",
-    "apps/web/app/media-workspace.tsx",
-    "apps/web/app/render-review.tsx",
     "docs/CHANGELOG.md",
+    "docs/GENERATED_MEDIA.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
+    "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/VIDEO_PIPELINE.md",
-    "docs/qa/render-review-desktop.png",
-    "docs/qa/render-review-mobile.png",
     "docs/qa/verification-summary.json",
-    "tests/ui/render-review.spec.ts"
+    "scripts/test-generation-provider.mjs",
+    "tests/recovery/worker.test.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -1221,5 +1327,5 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01P saved-render scene/caption review navigation is locally verified. Scene starts and caption offsets come only from the immutable render snapshot, including stale renders. Native player seeks preserve play/pause, keyboard activation works, and half-open scene/cue highlights track playback. Buttons wait for metadata and disable on load failure; switching render IDs resets player state. Captions-off exports label SRT-only cues. API/web production builds passed; all 7 browser scenarios passed across the initial 6-case pass and corrected focused review-test rerun. Public P publication and native CI are pending."
+  "latestStatus": "EDITOR-01P recovery-test hardening is locally verified. A test-only first-poll barrier deterministically kills the real media worker with an accepted provider receipt and active BullMQ job. After confirmed process exit, the Redis lock/active state remains untouched and expires naturally. The scenario observes 119907ms lock remaining, completes in 128.2s, and verifies the same provider ID/private asset, completed queue job and exactly one video submission. The recovery completion wait is bounded at 210s and the whole case at 300s. Passed 7 HTTP and 5 recovery/configuration cases with 12 fresh migrations. Follow-up publication and its native CI are pending."
 }

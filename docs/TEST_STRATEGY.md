@@ -1,9 +1,6 @@
-# Verification and remaining gates — 0.9.0
+# Verification and remaining gates — 0.9.2
 
-Current completed evidence: 28 unit tests, 7 HTTP scenarios, 6 production-browser
-scenarios, 4 recovery/configuration scenarios, builds and 12 migrations. See
-VERIFICATION_REPORT.md for failures fixed, exact scope and limits. A scenario
-contains multiple assertions and does not imply exhaustive coverage.
+Latest full-suite evidence is P native Actions run 37479269861 attempt 2 at c2936113616522db099771684226276e91976957: 59 unit, 7 HTTP, 7 production-browser, 5 recovery/configuration cases, builds, audits, populated upgrade and 12 migrations. The recovery-hardening follow-up separately passed 7 HTTP and 5 recovery cases locally; other suites were not rerun. See VERIFICATION_REPORT.md for dated scope and remaining gates. A scenario contains multiple assertions and does not imply exhaustive coverage.
 
 ## Reproduce with disposable services
 
@@ -49,8 +46,8 @@ private validated files, cancellation races, ambiguous acceptance, saved video-I
 polling, output recovery and revision-checked attachment. Browser scenarios cover
 the real Next proxy, generated/uploaded media, rendering, approval and saved state.
 
-Fault tests kill actual isolated workers; stale heartbeat timestamps are advanced
-after the kill instead of waiting a minute. This verifies local restart behavior,
+Fault tests kill actual isolated workers; stale database heartbeat timestamps are advanced
+after confirmed child exit instead of waiting a minute. The media-restart case holds the first accepted-video poll, verifies an active Redis job and a surviving lock above 25 seconds, then allows the real 120-second queue lock and 30-second stalled checks to recover naturally. Redis locks/lists are not edited. The completion deadline is 210 seconds (lock + up to two scans + ingestion margin), within a 300-second case budget. Same provider ID, private output, completed queue state and one submission are required. This verifies local restart behavior,
 not full host power loss or provider-billing reconciliation. The PGlite bridge
 serializes SQL: native lock/race correctness remains unverified. The populated
 upgrade fixture applies SQL directly, restores a fresh PGlite data-directory

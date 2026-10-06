@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { spawn, ChildProcess } from "node:child_process";
 import { createWriteStream } from "node:fs";
+import { Queue } from "bullmq";
+import IORedis from "ioredis";
 import { db, actor, base, draft, scene, until } from "../support/http";
 import { grantCredits, reserveCredits } from "../../packages/core/credits";
 import { retainPrivateMediaOutputForReview } from "../../packages/core/media-generation-runtime";
@@ -26,6 +28,24 @@ function restart(kind: "worker" | "render-worker" | "media-generation-worker") {
   return child;
 }
 async function kill(pid: number, signal: NodeJS.Signals) {
+  const child = children.find((c) => c.pid === pid);
+  if (child) {
+    if (child.exitCode !== null || child.signalCode !== null) return;
+    // Register before signaling: do not backdate the DB lease while the old
+    // worker can still renew it, and do not rely on a fixed 300ms exit delay.
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(
+        () => reject(new Error("Worker did not exit")),
+        5000,
+      );
+      child.once("exit", () => {
+        clearTimeout(timer);
+        resolve();
+      });
+      process.kill(pid, signal);
+    });
+    return;
+  }
   process.kill(pid, signal);
   await new Promise((r) => setTimeout(r, 300));
 }
@@ -273,7 +293,7 @@ test(
 
 test(
   "media worker restart preserves accepted video IDs and private outputs, and never replays ambiguous paid submissions",
-  { timeout: 70000 },
+  { timeout: 300000 },
   async () => {
     await kill(Number(process.env.TEST_MEDIA_WORKER_PID), "SIGKILL");
     const org = await db.organization.create({
@@ -347,7 +367,8 @@ test(
       ).state,
       "REVIEW",
     );
-    const video = await create("video", "Recovery video receipt");
+    const videoPrompt = "HOLD_POLL_ONCE: Recovery video receipt";
+    const video = await create("video", videoPrompt);
     assert.equal(video.status, 201);
     const pending = await until(
       () =>
@@ -355,20 +376,65 @@ test(
       (r) => r.state === "PENDING",
     );
     assert.ok(pending.providerJobId);
-    await kill(running.pid!, "SIGKILL");
-    // Expire any acquired poll lease after the actual kill.
-    await db.mediaGeneration.update({
-      where: { id: video.body.id },
-      data: { heartbeatAt: new Date(Date.now() - 120000) },
+    const connection = new IORedis(process.env.REDIS_URL!, {
+      maxRetriesPerRequest: null,
     });
-    running = restart("media-generation-worker");
-    const complete = await until(
-      () =>
-        db.mediaGeneration.findUniqueOrThrow({ where: { id: video.body.id } }),
-      (r) => r.state === "SUCCEEDED",
-      25000,
-    );
-    assert.equal(complete.providerJobId, pending.providerJobId);
+    const queue = new Queue("marketing-media-generation", {
+      connection: connection as any,
+    });
+    try {
+      // PENDING alone is not a reliable kill barrier: its original queue job
+      // may already be completed. Hold a real poll so the queue is always active.
+      await until(
+        async () => (await fetch("http://127.0.0.1:4998/poll-stats")).json(),
+        (r) => r[videoPrompt] === 1,
+      );
+      const active = await queue.getJob(video.body.id);
+      assert.ok(active);
+      assert.equal(await active.getState(), "active");
+      await kill(running.pid!, "SIGKILL");
+      const remainingLockMs = await connection.pttl(
+        queue.toKey(video.body.id) + ":lock",
+      );
+      assert.ok(
+        remainingLockMs > 25000,
+        `Expected surviving queue lock, got ${remainingLockMs}ms`,
+      );
+      assert.equal(await active.getState(), "active");
+      console.log(
+        JSON.stringify({
+          event: "recovery.active_poll_interrupted",
+          remainingLockMs,
+          previousDeadlineMs: 25000,
+        }),
+      );
+      // Expire only the DB claim, after actual process exit. Redis lock/active
+      // state stay untouched: production BullMQ expiry/stall handling must run.
+      await db.mediaGeneration.update({
+        where: { id: video.body.id },
+        data: { heartbeatAt: new Date(Date.now() - 120000) },
+      });
+      running = restart("media-generation-worker");
+      // Runtime uses a 120s lock and 30s stalled checks. Allow two stalled scans
+      // plus 30s for polling/private ingestion; failures are still bounded.
+      const complete = await until(
+        () =>
+          db.mediaGeneration.findUniqueOrThrow({
+            where: { id: video.body.id },
+          }),
+        (r) => r.state === "SUCCEEDED",
+        210000,
+      );
+      assert.equal(complete.providerJobId, pending.providerJobId);
+      assert.ok(complete.assetId);
+      await until(
+        () => active.getState(),
+        (state) => state === "completed",
+      );
+    } finally {
+      await queue.close();
+      await connection.quit();
+    }
     await kill(running.pid!, "SIGKILL");
     const ready = await create("image", "Never submit saved private output");
     assert.equal(ready.status, 201);
@@ -399,7 +465,7 @@ test(
     );
     const stats = await (await fetch("http://127.0.0.1:4998/stats")).json();
     assert.equal(stats[prompt], 1);
-    assert.equal(stats["Recovery video receipt"], 1);
+    assert.equal(stats[videoPrompt], 1);
     assert.equal(stats["Never submit saved private output"], undefined);
   },
 );
