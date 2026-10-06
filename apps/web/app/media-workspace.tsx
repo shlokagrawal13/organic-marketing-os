@@ -1,4 +1,8 @@
 "use client";
+import {
+  INSET_TEXT_PLACEMENT,
+  textPlacementLabel,
+} from "../../../packages/core/render-text-placement";
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Upload,
@@ -526,6 +530,7 @@ export function RenderPanel({
     aspect: "9:16",
     resolution: "720",
     captions: true,
+    textPlacement: undefined as typeof INSET_TEXT_PLACEMENT | undefined,
     musicAssetId: null as string | null,
     musicVolume: 0.12,
     background: "#183c2b",
@@ -708,6 +713,25 @@ export function RenderPanel({
                     requirements before publishing.
                   </p>
                   <label>
+                    Text placement
+                    <select
+                      value={options.textPlacement || ""}
+                      onChange={(e) =>
+                        option("textPlacement", e.target.value || undefined)
+                      }
+                    >
+                      <option value="">Standard placement</option>
+                      <option value={INSET_TEXT_PLACEMENT}>
+                        Extra margins
+                      </option>
+                    </select>
+                  </label>
+                  <p className="field-help">
+                    Extra margins move text further inside the frame. Vertical
+                    exports leave more room on the right and bottom. Review the
+                    exported video on your target platform.
+                  </p>
+                  <label>
                     Background colour
                     <input
                       type="color"
@@ -840,6 +864,7 @@ export function RenderPanel({
                   {renderPreset(active.options.preset)?.label || "Custom"} ·{" "}
                   {active.options.aspect} ·{" "}
                   {renderDimensions(active.options).join(" × ")} px ·{" "}
+                  {textPlacementLabel(active.options.textPlacement)} ·{" "}
                   {active.reusedScenes}/{active.totalScenes} scenes reused
                 </p>
                 {active.stale && (
@@ -1030,7 +1055,8 @@ export function RenderPanel({
                   </small>
                   <small>
                     {renderPreset(j.options.preset)?.label || "Custom"} ·{" "}
-                    {renderDimensions(j.options).join(" × ")} px
+                    {renderDimensions(j.options).join(" × ")} px ·{" "}
+                    {textPlacementLabel(j.options.textPlacement)}
                   </small>
                   <span className={`status status-${j.status.toLowerCase()}`}>
                     {j.approvedAt ? "approved" : j.status.toLowerCase()}

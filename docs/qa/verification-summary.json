@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 56,
+    "unit": 59,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending.",
+  "latestIncrement": "EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -144,13 +144,14 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "latestRunId": 37440418977,
-    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37440418977",
-    "latestSourceCommit": "2326f1290453b09306928a3155b5f508b3710349",
+    "latestRunId": 37444585056,
+    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37444585056",
+    "latestSourceCommit": "eb8196e594889984651e9b93eb3ffe1bd2e195c2",
     "latestConclusion": "success",
-    "latestIncrement": "EDITOR-01L dependency follow-up",
+    "latestIncrement": "EDITOR-01M",
     "nativeTestsExecuted": true,
-    "scopeWarning": "L native CI does not verify local M. Full Compose/native restore/live acceptance remains open."
+    "scopeWarning": "Configured native PostgreSQL/Redis CI passed; full Compose/native cross-store restore/live acceptance remains open.",
+    "annotation": "Historical M CI only; N native CI pending."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -253,7 +254,7 @@
     "actionsConclusion": "success",
     "actionsCompletedAtUtc": "2026-10-04T14:08:27Z",
     "nativeTestsExecuted": true,
-    "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+    "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
   },
   "editor01fEvidence": {
     "scope": "Conservative rendered-text script/character preflight; not configured-font glyph coverage",
@@ -364,7 +365,7 @@
     "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
     "actionsJobsStarted": 1,
     "nativeTestsExecuted": true,
-    "userApproval": "I explicitly approve publishing EDITOR-01G\u2019s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+    "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "editor01gCommands": [
     "node --import tsx --test --test-isolation=none tests/*.test.ts",
@@ -395,7 +396,7 @@
     "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
     "actionsJobsStarted": 1,
     "nativeTestsExecuted": true,
-    "userApproval": "I explicitly approve publishing EDITOR-01G\u2019s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+    "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "editor01hEvidence": {
     "scope": "Arabic/Hebrew RTL rendered text support through explicit FFmpeg text shaping; broader multilingual fallback remains open",
@@ -626,10 +627,56 @@
     "apiBuild": true,
     "webProductionBuild": true,
     "migrationsApplied": 12,
-    "publicationStatus": "local_verified_pending_exact_approval",
-    "nativeCiVerified": false,
+    "publicationStatus": "published_ci_verified",
+    "nativeCiVerified": true,
     "liveProviderUsed": false,
     "fullLocalVerifierRerun": true,
-    "knownFailures": []
+    "knownFailures": [],
+    "publicationCommit": "eb8196e594889984651e9b93eb3ffe1bd2e195c2",
+    "publicationTree": "2504d062d94c7691d05365353d2746659c1b9f14",
+    "actionsRunId": 37444585056,
+    "actionsConclusion": "success"
+  },
+  "editor01nEvidence": {
+    "scope": "Optional versioned aspect-aware inset text placement",
+    "textPlacementValue": "inset-v1",
+    "defaultFieldOmitted": true,
+    "legacySerializationAndCachePreserved": true,
+    "productCompositionMarginsOnly": true,
+    "officialPlatformUiGuaranteed": false,
+    "immutableOptionsAndHistory": true,
+    "presetSelectionRetainsPlacement": true,
+    "drawtextAndGlyphOutlines": true,
+    "minimumFontSize": 16,
+    "captionTimingAndSrtPreserved": true,
+    "textScenesRebuiltAndEmptyScenesReused": true,
+    "decodedFrames": 36,
+    "outputGeometries": 6,
+    "scriptCases": [
+      "Latin",
+      "mixed Latin/Devanagari"
+    ],
+    "visualReview": [
+      "1080x1920 mixed",
+      "1280x720 mixed"
+    ],
+    "unitTestsPassed": 59,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "fullLocalVerifierRerun": true,
+    "populatedUpgradeRestoreRerun": false,
+    "npmFullAuditRerun": false,
+    "publicationStatus": "awaiting_exact_payload_approval",
+    "nativeCiVerified": false,
+    "liveProviderUsed": false,
+    "knownFailures": [],
+    "verificationNote": "Two default verifier attempts failed at S3Proxy startup before application checks; final elevated foreground verifier passed all 7/6/5 scenarios. No official platform/device or arbitrary-font acceptance. Strengthened overflow fixture initially exceeded the title worker limit; corrected to a valid 300-character caption, with zero storage/cache/progress calls confirmed.",
+    "validDraftOverflowBeforeStorageCacheProgress": true,
+    "handoffIncludedFiles": 194,
+    "handoffArchiveFiles": 195
   }
 }

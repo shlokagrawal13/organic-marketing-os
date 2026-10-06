@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { ObjectStore } from "./object-store";
 import { sceneCaptionCues } from "./captions";
 import { readRenderFonts, createRenderFontPlan } from "./render-font";
+import { renderTextAreas } from "./render-text-placement";
 import { glyphOverlaySvg } from "./render-glyph-overlay";
 import { checkRenderShaping } from "./render-shaping";
 import {
@@ -62,13 +63,18 @@ export async function renderVideo(ctx: RenderContext) {
   );
   const [width, height] = dimensions(options),
     duration = scenes.reduce((sum, s) => sum + s.duration, 0);
+  const areas = renderTextAreas(options, width, height);
   const sceneOverlays = scenes.map((scene) =>
     [
       {
         type: "title",
         text: scene.onScreenText,
         label: `Scene ${scene.id} on-screen text`,
-        y: "h*0.10",
+        area: areas?.title,
+        x: areas
+          ? `${(areas.title.left + areas.title.right) / 2}-tw/2`
+          : "(w-tw)/2",
+        y: areas ? String(areas.title.top + 12) : "h*0.10",
         baseSize: Math.round(Math.min(width, height) / 18),
         enable: "",
       },
@@ -77,7 +83,11 @@ export async function renderVideo(ctx: RenderContext) {
             type: `caption-${index}`,
             text: cue.text,
             label: `Scene ${scene.id} caption cue ${index + 1}`,
-            y: "h*0.91-th",
+            area: areas?.caption,
+            x: areas
+              ? `${(areas.caption.left + areas.caption.right) / 2}-tw/2`
+              : "(w-tw)/2",
+            y: areas ? `${areas.caption.bottom - 12}-th` : "h*0.91-th",
             baseSize: Math.round(Math.min(width, height) / 25),
             enable: `:enable='gte(t,${cue.start})*lt(t,${cue.end})'`,
           }))
@@ -93,6 +103,7 @@ export async function renderVideo(ctx: RenderContext) {
           width,
           height,
           overlay.baseSize,
+          overlay.area,
         ),
       })),
   );
@@ -170,6 +181,9 @@ export async function renderVideo(ctx: RenderContext) {
           width,
           height,
           background: options.background,
+          textPlacement: sceneOverlays[i].length
+            ? options.textPlacement
+            : undefined,
           captions: options.captions ? sceneCaptionCues(scene) : [],
           text: scene.onScreenText,
           duration: scene.duration,
@@ -255,6 +269,8 @@ export async function renderVideo(ctx: RenderContext) {
         for (const {
           type,
           text,
+          area,
+          x,
           y,
           fontSize,
           fontIndex,
@@ -273,6 +289,7 @@ export async function renderVideo(ctx: RenderContext) {
                 width,
                 height,
                 type !== "title",
+                area,
               ),
             );
             await exec([
@@ -292,7 +309,7 @@ export async function renderVideo(ctx: RenderContext) {
           const file = `${type}-${i}.txt`;
           await writeFile(join(dir, file), text, "utf8");
           filters.push(
-            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=${RENDER_TEXT_LINE_SPACING}:x=(w-tw)/2:y=${y}${enable}`,
+            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=${RENDER_TEXT_LINE_SPACING}:x=${x}:y=${y}${enable}`,
           );
         }
         const fadeFilters: string[] = [];

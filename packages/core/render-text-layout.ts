@@ -1,3 +1,4 @@
+import type { RenderTextArea } from "./render-text-placement";
 import { RenderFontError, type RenderFontPlan } from "./render-font";
 
 const graphemes = new Intl.Segmenter("und", { granularity: "grapheme" });
@@ -10,6 +11,7 @@ export function layoutRenderText(
   width: number,
   height: number,
   baseSize: number,
+  area?: RenderTextArea,
 ) {
   const fontIndex = plan.selectFontIndex(text);
   const normalized = text.replace(/\s+/gu, " ").trim();
@@ -19,8 +21,8 @@ export function layoutRenderText(
       measurements.set(line, plan.measureText(line, fontIndex));
     return measurements.get(line)!;
   };
-  const maxWidth = width * 0.84;
-  const maxHeight = height * 0.28;
+  const maxWidth = area ? area.right - area.left - 24 : width * 0.84;
+  const maxHeight = area ? area.bottom - area.top - 24 : height * 0.28;
   for (let fontSize = Math.max(18, baseSize); fontSize >= 16; fontSize--) {
     // Leave room for FreeType's per-glyph pixel rounding, not only EM metrics.
     const fits = (line: string) =>

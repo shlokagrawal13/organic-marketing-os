@@ -1,5 +1,22 @@
 # Session log
 
+## EDITOR-01N optional extra text margins — 2026-10-06
+
+EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.
+
+These are controlled product composition margins, not official platform UI guarantees. Font/grapheme bounds, minimum size, caption timing and SRT content remain enforced. No dependency/schema/migration change, live/paid provider or user runtime-data change. Complete Compose/MinIO, native cross-store restore, wider scripts/device QA, ASR and full master acceptance remain open. Latest M native CI is historical evidence for M only.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+N scope: optional `textPlacement: "inset-v1"`, shared pixel composition areas, both drawtext/glyph-outline placement, immutable snapshots, effective scene cache keys, editor selection/history and frame/API/browser coverage. Final 7/6/5 verifier passed after elevating local-service execution; two earlier default runs failed during S3Proxy startup. No runtime provider calls were made. A strengthened overflow test initially used a title beyond the worker limit; corrected to a worker-valid 300-character caption and reran focused/final unit checks. Exact changed paths are in `PROJECT_CHECKPOINT.json.repository.currentUploadGate.paths`.
+
+## EDITOR-01M publication closure — 2026-10-06
+
+EDITOR-01M mixed Latin/Devanagari font runs and the approved 18-file payload are published and CI-verified. Public main eb8196e594889984651e9b93eb3ffe1bd2e195c2, matching local source tree 2504d062d94c7691d05365353d2746659c1b9f14; Actions run 37444585056 completed successfully on 2026-10-06T09:45:36Z. Logs confirm 56 unit, 7 HTTP, 6 production-browser, 5 recovery/configuration scenarios, API/web build, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. No live/paid provider or user runtime data was used. Complete Compose/MinIO, native cross-store restore, broader language/device/ASR and master acceptance remain open.
+
+This publication closure is retained in the portable handoff. Historical pending sections below describe earlier checkpoints.
+
+
 ## EDITOR-01M mixed-script font runs — 2026-10-06
 
 EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending.

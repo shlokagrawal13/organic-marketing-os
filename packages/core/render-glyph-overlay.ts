@@ -1,3 +1,4 @@
+import type { RenderTextArea } from "./render-text-placement";
 import { type RenderFontPlan, RenderFontError } from "./render-font";
 import { RENDER_TEXT_LINE_SPACING } from "./render-text-layout";
 
@@ -11,6 +12,7 @@ export function glyphOverlaySvg(
   width: number,
   height: number,
   caption: boolean,
+  area?: RenderTextArea,
 ) {
   const lines = text.split("\n").map((line) => plan.shapeText(line, fontIndex));
   const scale = fontSize / lines[0].unitsPerEm;
@@ -19,7 +21,14 @@ export function glyphOverlaySvg(
   const lineHeight = (ascent - descent) * scale;
   const blockHeight =
     lines.length * lineHeight + (lines.length - 1) * RENDER_TEXT_LINE_SPACING;
-  const top = caption ? height * 0.91 - blockHeight : height * 0.1;
+  const top = area
+    ? caption
+      ? area.bottom - 12 - blockHeight
+      : area.top + 12
+    : caption
+      ? height * 0.91 - blockHeight
+      : height * 0.1;
+  const center = area ? (area.left + area.right) / 2 : width / 2;
   const blockWidth = Math.max(
     ...lines.map((line) => line.advanceWidth * scale),
   );
@@ -28,7 +37,8 @@ export function glyphOverlaySvg(
     scale <= 0 ||
     top < 12 ||
     top + blockHeight + 12 > height ||
-    blockWidth + 24 > width
+    blockWidth + 24 > (area ? area.right - area.left : width) ||
+    (area && (top - 12 < area.top || top + blockHeight + 12 > area.bottom))
   )
     throw new RenderFontError(
       "The shaped render text does not fit the output frame. Shorten the text or choose another font.",
@@ -41,7 +51,7 @@ export function glyphOverlaySvg(
       .replace(/>/g, "&gt;");
   const paths = lines
     .flatMap((line, index) => {
-      const left = (width - line.advanceWidth * scale) / 2;
+      const left = center - (line.advanceWidth * scale) / 2;
       const baseline =
         top + ascent * scale + index * (lineHeight + RENDER_TEXT_LINE_SPACING);
       return line.paths.map((glyph) => {
@@ -55,5 +65,5 @@ export function glyphOverlaySvg(
       });
     })
     .join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect x="${(width - blockWidth) / 2 - 12}" y="${top - 12}" width="${blockWidth + 24}" height="${blockHeight + 24}" fill="black" fill-opacity="0.65"/><g fill="white">${paths}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect x="${center - blockWidth / 2 - 12}" y="${top - 12}" width="${blockWidth + 24}" height="${blockHeight + 24}" fill="black" fill-opacity="0.65"/><g fill="white">${paths}</g></svg>`;
 }

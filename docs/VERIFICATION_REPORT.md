@@ -1,5 +1,29 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01N optional extra text margins — 2026-10-06
+
+EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.
+
+These are controlled product composition margins, not official platform UI guarantees. Font/grapheme bounds, minimum size, caption timing and SRT content remain enforced. No dependency/schema/migration change, live/paid provider or user runtime-data change. Complete Compose/MinIO, native cross-store restore, wider scripts/device QA, ASR and full master acceptance remain open. Latest M native CI is historical evidence for M only.
+
+Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
+
+### N verification commands and limits
+
+- `npm run build`: API and Next.js production build passed.
+- `TEST_DEVANAGARI_FONT_PATH=.local/test-fonts/NotoSansDevanagari-Regular.ttf NODE_OPTIONS=--test-isolation=none npm test`: 59 passed.
+- Isolated `npm run verify` with the same font/environment: 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios passed; 12 fresh migrations applied. Final verifier used elevated local-service permissions after two default attempts failed at S3Proxy startup before application checks.
+- `tests/render-placement.test.ts`: three focused cases passed, including 36 decoded frames (Latin and mixed Latin/Devanagari, three aspects, 720/1080) with independent expected boxes, visible title/caption pixels and hidden captions outside cues. Scene-offset SRT, legacy serialization, strict placement values, minimum-size overflow on a worker-valid 300-character caption and actual cache reuse/rebuild were checked. The overflow assertion also confirms zero storage/cache/progress calls. An intermediate strengthened fixture used a title longer than the worker limit and failed before the intended layout assertion. Replaced it with a worker-valid 300-character caption; the focused assertion passed and the final 59-case unit suite was rerun. Application source was unchanged.
+- Representative mixed-script 1080×1920 and 1280×720 exported frames were visually reviewed. Browser export remains playable/approvable and persisted placement is visible after navigation; API presets retain placement in immutable options.
+- Dependencies and migrations are unchanged. Audit and populated-upgrade checks were not repeated; dated M Actions run 37444585056 covers the preceding source, not N. Physical-device/official platform interface guarantees are not verified.
+
+## EDITOR-01M publication closure — 2026-10-06
+
+EDITOR-01M mixed Latin/Devanagari font runs and the approved 18-file payload are published and CI-verified. Public main eb8196e594889984651e9b93eb3ffe1bd2e195c2, matching local source tree 2504d062d94c7691d05365353d2746659c1b9f14; Actions run 37444585056 completed successfully on 2026-10-06T09:45:36Z. Logs confirm 56 unit, 7 HTTP, 6 production-browser, 5 recovery/configuration scenarios, API/web build, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. No live/paid provider or user runtime data was used. Complete Compose/MinIO, native cross-store restore, broader language/device/ASR and master acceptance remain open.
+
+This publication closure is retained in the portable handoff. Historical pending sections below describe earlier checkpoints.
+
+
 Final commands: `npm run build`; `TEST_DEVANAGARI_FONT_PATH=.local/test-fonts/NotoSansDevanagari-Regular.ttf NODE_OPTIONS=--test-isolation=none npm test`; isolated `npm run verify` with the same font/environment. An initial verifier was intentionally stopped after adding explicit space-glyph coverage; API was rebuilt and full verification restarted on final code. No incomplete run is counted as a pass. Dependencies/migrations unchanged; latest dated native upgrade/audit evidence remains L CI run 37440418977.
 
 

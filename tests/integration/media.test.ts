@@ -472,6 +472,7 @@ test(
     );
     for (const options of [
       { preset: "unknown" },
+      { textPlacement: "unknown" },
       { preset: "vertical-social-v1", aspect: "1:1" },
       { preset: "square-feed-v1", resolution: "720" },
     ]) {
@@ -691,7 +692,7 @@ test(
         contentId: alternateContent.body.id,
         revision: 1,
         requestKey: randomUUID(),
-        options: { preset },
+        options: { preset, textPlacement: "inset-v1" },
       });
       assert.equal(alt.status, 201, JSON.stringify(alt.body));
       const ready = await wait(alt.body.id);
@@ -699,6 +700,7 @@ test(
       assert.equal(ready.width, width);
       assert.equal(ready.height, height);
       assert.equal(ready.options.preset, preset);
+      assert.equal(ready.options.textPlacement, "inset-v1");
       assert.deepEqual(ready.snapshot.scenes, beforePresets.item.scenes);
       assert.equal(ready.contentRevision, beforePresets.item.revision);
       assert.equal(ready.approvedAt, null);
@@ -720,6 +722,7 @@ test(
         options: {
           aspect: ready.options.aspect,
           resolution: ready.options.resolution,
+          textPlacement: "inset-v1",
         },
       });
       const customReady = await wait(custom.body.id);
