@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-06.1",
-  "savedAtUtc": "2026-10-06T08:59:13.381631+00:00",
-  "currentMilestone": "EDITOR-01L published; CI audit failed; dependency follow-up locally verified",
+  "checkpointRevision": "2026-10-06.3",
+  "savedAtUtc": "2026-10-06T09:37:29.115108+00:00",
+  "currentMilestone": "EDITOR-01M locally verified; L published/CI verified",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -26,10 +26,12 @@
     "EDITOR-01J replaces character-count wrapping with selected-font metrics and grapheme-safe splitting, bounds each overlay and rejects overflow before storage/cache/media work. Cache version 6 avoids old layouts. Local verification: 47 unit, 7 HTTP, 6 browser, 5 recovery, builds and 12 migrations; 18 decoded frames across 720/1080 in three aspects. Published at ffb398d34279898074765141048cb6955e198c53 with matching tree 97fe4253f2e63dabd545a95481768210ea1009a2; Actions run 37353516609 completed success.",
     "EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.",
     "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.",
-    "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization."
+    "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization.",
+    "EDITOR-01L and its approved 13-file dependency/evidence follow-up are published and CI-verified. Public main commit 2326f1290453b09306928a3155b5f508b3710349, tree 0d5d567f1cff2e06112898c96af15a89e1300cb2, Actions run 37440418977 completed success. Logs confirm 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, production builds, all 12 migrations, populated upgrade verification and zero-vulnerability production/full dependency audits. Original L run 37439306560 failed the source-map-js audit; the approved patch to 1.2.2 resolves it. No paid/live provider was used. Complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.",
+    "EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Publish the 13-file source-map-js patch/evidence follow-up after exact approval, then verify native CI.",
+  "nextAction": "Publish verified EDITOR-01M payload after exact approval, verify native CI, then continue bounded platform composition/editor work.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -66,7 +68,7 @@
   "verification": {
     "date": "2026-10-06",
     "applicationSuites": {
-      "unit": 54,
+      "unit": 56,
       "httpScenarios": 7,
       "browserScenarios": 6,
       "recoveryConfigurationScenarios": 5
@@ -86,14 +88,14 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "2026-10-06 patched lockfile production and full npm audit report zero vulnerabilities; application/security acceptance excluded.",
     "githubActions": {
-      "runId": 37439306560,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37439306560",
-      "sourceCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
+      "runId": 37440418977,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37440418977",
+      "sourceCommit": "2326f1290453b09306928a3155b5f508b3710349",
       "status": "completed",
-      "conclusion": "failure",
-      "annotation": "L build/54 unit passed; source-map-js audit failed; native flows skipped."
+      "conclusion": "success",
+      "annotation": "Published EDITOR-01L native CI passed; does not verify local M."
     },
-    "latestIncrement": "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization.",
+    "latestIncrement": "EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-06",
     "nativePostgresVerifiedMeaning": "Local database remains PGlite. Separate dated GitHub Actions evidence covers the configured PostgreSQL 17/Redis 7 application harness, not complete Compose/MinIO, native restore or production concurrency acceptance.",
@@ -487,15 +489,15 @@
       "apiBuild": true,
       "webProductionBuild": true,
       "migrationsApplied": 12,
-      "publicationStatus": "published_ci_audit_failed",
-      "nativeCiVerified": false,
+      "publicationStatus": "published_ci_verified",
+      "nativeCiVerified": true,
       "liveProviderUsed": false,
       "verificationNote": "Direct FFmpeg 6.1 drawtext failed visual Hindi shaping review despite decoded-pixel checks. Replaced it with Fontkit glyph outlines; decoded landscape/portrait frames visually reviewed. Earlier redirected unit run ended without complete counts; final foreground 54-case run passed. Test markup fixture initially included unsupported ampersand; corrected to font-covered angle brackets.",
       "diffCheckPassed": true,
-      "publicationCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
-      "publicationTree": "7a98fac4edadd4713772825bc3ad0bacf6dd045e",
-      "actionsRunId": 37439306560,
-      "actionsConclusion": "failure"
+      "publicationCommit": "2326f1290453b09306928a3155b5f508b3710349",
+      "publicationTree": "0d5d567f1cff2e06112898c96af15a89e1300cb2",
+      "actionsRunId": 37440418977,
+      "actionsConclusion": "success"
     },
     "sourceMapJsPatch": {
       "before": "1.2.1",
@@ -503,14 +505,46 @@
       "advisory": "GHSA-68fv-2mgg-jv7q",
       "productionAuditAdvisories": 0,
       "fullAuditAdvisories": 0,
-      "publicationStatus": "local_verified_pending_approval",
+      "publicationStatus": "published_ci_verified",
       "apiBuild": true,
       "webProductionBuild": true,
       "unitTestsPassed": 54,
       "installedPackageSha512Verified": true,
       "invalidOffsetSmokePassed": true,
       "fullApplicationRerun": false,
-      "fullApplicationNote": "L full local 7 HTTP/6 browser/5 recovery run passed before this single transitive source-map patch; new native CI still required."
+      "fullApplicationNote": "Post-patch native GitHub CI passed 7 HTTP,6 browser,5 recovery and populated upgrade; local full rerun remained pre-patch dated evidence.",
+      "nativeCiVerified": true,
+      "actionsRunId": 37440418977,
+      "actionsConclusion": "success"
+    },
+    "editor01mEvidence": {
+      "scope": "Bounded mixed Latin/Devanagari configured-font runs",
+      "completeGraphemeCoverageRequired": true,
+      "spacesChecked": true,
+      "scriptRunsSeparated": true,
+      "normalizedFontUnits": true,
+      "sharedBaselineAndLineHeight": true,
+      "mixedBidiRejected": true,
+      "pureHindiAndMixedDecodedFrames": 36,
+      "outputGeometriesEach": 6,
+      "visualReview": [
+        "mixed 1920x1080",
+        "mixed 720x1280"
+      ],
+      "fontChangeInvalidatesCache": true,
+      "unchangedSceneReusesCache": true,
+      "unitTestsPassed": 56,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 5,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "migrationsApplied": 12,
+      "publicationStatus": "local_verified_pending_exact_approval",
+      "nativeCiVerified": false,
+      "liveProviderUsed": false,
+      "fullLocalVerifierRerun": true,
+      "knownFailures": []
     }
   },
   "accessState": {
@@ -522,8 +556,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
-    "status": "editor01l_published_ci_audit_failed_followup_local",
+    "commit": "2326f1290453b09306928a3155b5f508b3710349",
+    "status": "editor01m_local_verified_awaiting_approval",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -536,11 +570,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "7a98fac4edadd4713772825bc3ad0bacf6dd045e",
+    "sourceTree": "0d5d567f1cff2e06112898c96af15a89e1300cb2",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Approved 24-file L payload published; CI audit blocked.",
+    "commitMeaning": "Approved L dependency/evidence follow-up; native CI passed.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
+    "lastLocalCheckpointCommit": "2326f1290453b09306928a3155b5f508b3710349",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -551,23 +585,22 @@
     },
     "publication": {
       "slice": "EDITOR-01L",
-      "applicationCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
-      "applicationTree": "7a98fac4edadd4713772825bc3ad0bacf6dd045e",
-      "baseCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
-      "uploadedChangedBlobCount": 24,
+      "applicationCommit": "2326f1290453b09306928a3155b5f508b3710349",
+      "applicationTree": "0d5d567f1cff2e06112898c96af15a89e1300cb2",
+      "baseCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
+      "uploadedChangedBlobCount": 13,
       "mismatchCount": 0,
-      "actionsRunId": 37439306560,
-      "actionsConclusion": "failure",
-      "nativeTestsExecuted": false
+      "actionsRunId": 37440418977,
+      "actionsConclusion": "success",
+      "nativeTestsExecuted": true
     },
     "currentUploadGate": {
-      "slice": "EDITOR-01L dependency follow-up",
+      "slice": "EDITOR-01M",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "awaiting_exact_payload_approval",
       "resolved": false,
       "remoteWriteAttempted": false,
-      "reason": "Approved 24-file L payload already published; new lockfile/docs follow-up requires separate authorization under prior automatic-review export gate.",
-      "changedFiles": 13,
+      "reason": "Earlier L authorization covered already published payloads; prior automatic review required exact authorization for new public payloads.",
       "paths": [
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -580,12 +613,18 @@
         "docs/SESSION_LOG.md",
         "docs/TASK_BOARD.md",
         "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
         "docs/qa/verification-summary.json",
-        "package-lock.json"
-      ]
+        "packages/core/render-font.ts",
+        "packages/core/render-glyph-overlay.ts",
+        "packages/core/render-shaping.ts",
+        "tests/integration/media.test.ts",
+        "tests/render-devanagari.test.ts"
+      ],
+      "changedFiles": 18
     },
     "publicationPreparation": {
-      "slice": "EDITOR-01L dependency follow-up",
+      "slice": "EDITOR-01M",
       "status": "local_verified"
     },
     "previousUploadGate": {
@@ -759,7 +798,8 @@
       "changedFiles": 11,
       "actionsRunId": 37317283904,
       "actionsConclusion": "success"
-    }
+    },
+    "localClosureEvidencePublished": false
   },
   "credentialsIncluded": false,
   "runtimeDatabaseOrMediaIncluded": false,
@@ -805,7 +845,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "EDITOR-01A through K published; K CI passed. L opt-in Devanagari rendering locally verified (54 unit,7 HTTP,6 browser,5 recovery), publication/CI pending. Other Indic/CJK, ASR, custom effects and platform composition remain."
+      "completedIncrement": "A through L published; L native CI success. M mixed Latin/Devanagari rendering locally verified; publication/CI pending. Wider scripts/ASR/custom motion/platform composition remain."
     },
     {
       "id": "RESEARCH-01",
@@ -919,8 +959,13 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
+    "docs/VIDEO_PIPELINE.md",
     "docs/qa/verification-summary.json",
-    "package-lock.json"
+    "packages/core/render-font.ts",
+    "packages/core/render-glyph-overlay.ts",
+    "packages/core/render-shaping.ts",
+    "tests/integration/media.test.ts",
+    "tests/render-devanagari.test.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -946,5 +991,5 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization."
+  "latestStatus": "EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending."
 }

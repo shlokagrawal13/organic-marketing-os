@@ -2,7 +2,12 @@ import { open } from "node:fs/promises";
 import { delimiter } from "node:path";
 import { createHash } from "node:crypto";
 import { create, type Font } from "fontkit";
-import { renderedSceneText, type RenderOptions, type Scene } from "./media";
+import {
+  hasDevanagariText,
+  renderedSceneText,
+  type RenderOptions,
+  type Scene,
+} from "./media";
 
 export const MAX_RENDER_FONT_BYTES = 16 * 1024 * 1024;
 export const DEFAULT_RENDER_FONT_PATH =
@@ -28,7 +33,7 @@ export type RenderFontPlan = {
     ascent: number;
     descent: number;
     advanceWidth: number;
-    paths: { path: string; x: number; y: number }[];
+    paths: { path: string; x: number; y: number; scale?: number }[];
   };
   measureText: (
     text: string,
@@ -146,10 +151,56 @@ export function createRenderFontPlan(
   try {
     const fonts = bytes.map(inspectFont);
     const selections = new Map<string, number>();
+    const graphemes = new Intl.Segmenter("und", { granularity: "grapheme" });
+    // The -1 index identifies an outline overlay composed from script/font runs.
+    // Never split a conjunct or combining cluster between fonts.
+    const fontRuns = (text: string) => {
+      const runs: { text: string; fontIndex: number; script: string }[] = [];
+      for (const { segment } of graphemes.segment(text)) {
+        const script = hasDevanagariText(segment)
+          ? "deva"
+          : /\p{Script=Latin}/u.test(segment)
+            ? "latn"
+            : runs.at(-1)?.script || "latn";
+        const previous = runs.at(-1);
+        const preferred = previous?.script === script ? previous.fontIndex : -1;
+        const covers = (font: InspectedFont) =>
+          Array.from(segment).every((character) =>
+            hasGlyph(font, character.codePointAt(0)!),
+          );
+        const index =
+          preferred >= 0 && covers(fonts[preferred])
+            ? preferred
+            : fonts.findIndex(covers);
+        if (index < 0)
+          throw new RenderFontError(
+            "The text uses a grapheme with glyphs missing from the configured render fonts. Configure a font covering the complete grapheme.",
+          );
+        if (previous?.fontIndex === index && previous.script === script)
+          previous.text += segment;
+        else runs.push({ text: segment, fontIndex: index, script });
+      }
+      return runs;
+    };
     for (const scene of scenes) {
       for (const { text, label } of renderedSceneText(scene, options)) {
         const key = textKey(text);
         if (!key) continue;
+        if (hasDevanagariText(text)) {
+          if (
+            /[^\p{Script=Latin}\p{Script=Devanagari}\p{Script=Common}\p{Script=Inherited}]/u.test(
+              text,
+            )
+          )
+            throw new RenderFontError(
+              `${label.slice(0, 120)} can combine Devanagari with Latin text, numbers and punctuation only. Separate other scripts into another overlay.`,
+            );
+          // Explicit script runs also shape correctly when a single font covers
+          // both scripts; Fontkit must not infer one script for the whole line.
+          fontRuns(key);
+          selections.set(key, -1);
+          continue;
+        }
         const index = fonts.findIndex(
           (font) => !missingFromFont(font, text).size,
         );
@@ -168,12 +219,39 @@ export function createRenderFontPlan(
         }
       }
     }
-    return {
+    const plan: RenderFontPlan = {
       fonts: bytes,
       fontHashes: bytes.map(sha256),
       selectFontIndex: (text: string) => selections.get(textKey(text)) ?? 0,
       shapeText: (text: string, fontIndex: number) => {
         try {
+          if (fontIndex === -1) {
+            let advanceWidth = 0,
+              ascent = 0,
+              descent = 0;
+            const paths: {
+              path: string;
+              x: number;
+              y: number;
+              scale: number;
+            }[] = [];
+            for (const item of fontRuns(text)) {
+              const shaped = plan.shapeText(item.text, item.fontIndex);
+              const unit = shaped.unitsPerEm;
+              paths.push(
+                ...shaped.paths.map((glyph) => ({
+                  path: glyph.path,
+                  x: advanceWidth + glyph.x / unit,
+                  y: glyph.y / unit,
+                  scale: 1 / unit,
+                })),
+              );
+              advanceWidth += shaped.advanceWidth / unit;
+              ascent = Math.max(ascent, shaped.ascent / unit);
+              descent = Math.min(descent, shaped.descent / unit);
+            }
+            return { unitsPerEm: 1, ascent, descent, advanceWidth, paths };
+          }
           const { face } = fonts[fontIndex];
           const run = face.layout(text);
           let advance = 0;
@@ -202,6 +280,19 @@ export function createRenderFontPlan(
       },
       measureText: (text: string, fontIndex: number) => {
         try {
+          if (fontIndex === -1) {
+            const measures = fontRuns(text).map((run) =>
+              plan.measureText(run.text, run.fontIndex),
+            );
+            const shaped = plan.shapeText(text, -1);
+            return {
+              width: measures.reduce((sum, measure) => sum + measure.width, 0),
+              height: Math.max(
+                shaped.ascent - shaped.descent,
+                ...measures.map((measure) => measure.height),
+              ),
+            };
+          }
           const { face } = fonts[fontIndex];
           const run = face.layout(text);
           let advance = 0,
@@ -241,6 +332,7 @@ export function createRenderFontPlan(
         }
       },
     };
+    return plan;
   } catch (error) {
     if (error instanceof RenderFontError) throw error;
     throw new RenderFontError(

@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 54,
+    "unit": 56,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization.",
+  "latestIncrement": "EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending.",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -144,13 +144,13 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "latestRunId": 37439306560,
-    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37439306560",
-    "latestSourceCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
-    "latestConclusion": "failure",
-    "latestIncrement": "EDITOR-01L",
-    "nativeTestsExecuted": false,
-    "scopeWarning": "Native/upgrade checks skipped after audit failure."
+    "latestRunId": 37440418977,
+    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37440418977",
+    "latestSourceCommit": "2326f1290453b09306928a3155b5f508b3710349",
+    "latestConclusion": "success",
+    "latestIncrement": "EDITOR-01L dependency follow-up",
+    "nativeTestsExecuted": true,
+    "scopeWarning": "L native CI does not verify local M. Full Compose/native restore/live acceptance remains open."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -575,15 +575,15 @@
     "apiBuild": true,
     "webProductionBuild": true,
     "migrationsApplied": 12,
-    "publicationStatus": "published_ci_audit_failed",
-    "nativeCiVerified": false,
+    "publicationStatus": "published_ci_verified",
+    "nativeCiVerified": true,
     "liveProviderUsed": false,
     "verificationNote": "Direct FFmpeg 6.1 drawtext failed visual Hindi shaping review despite decoded-pixel checks. Replaced it with Fontkit glyph outlines; decoded landscape/portrait frames visually reviewed. Earlier redirected unit run ended without complete counts; final foreground 54-case run passed. Test markup fixture initially included unsupported ampersand; corrected to font-covered angle brackets.",
     "diffCheckPassed": true,
-    "publicationCommit": "924eadc0f207ed85ac9bc387c85a49d62fb50675",
-    "publicationTree": "7a98fac4edadd4713772825bc3ad0bacf6dd045e",
-    "actionsRunId": 37439306560,
-    "actionsConclusion": "failure"
+    "publicationCommit": "2326f1290453b09306928a3155b5f508b3710349",
+    "publicationTree": "0d5d567f1cff2e06112898c96af15a89e1300cb2",
+    "actionsRunId": 37440418977,
+    "actionsConclusion": "success"
   },
   "sourceMapJsPatch": {
     "before": "1.2.1",
@@ -591,13 +591,45 @@
     "advisory": "GHSA-68fv-2mgg-jv7q",
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0,
-    "publicationStatus": "local_verified_pending_approval",
+    "publicationStatus": "published_ci_verified",
     "apiBuild": true,
     "webProductionBuild": true,
     "unitTestsPassed": 54,
     "installedPackageSha512Verified": true,
     "invalidOffsetSmokePassed": true,
     "fullApplicationRerun": false,
-    "fullApplicationNote": "L full local 7 HTTP/6 browser/5 recovery run passed before this single transitive source-map patch; new native CI still required."
+    "fullApplicationNote": "Post-patch native GitHub CI passed 7 HTTP,6 browser,5 recovery and populated upgrade; local full rerun remained pre-patch dated evidence.",
+    "nativeCiVerified": true,
+    "actionsRunId": 37440418977,
+    "actionsConclusion": "success"
+  },
+  "editor01mEvidence": {
+    "scope": "Bounded mixed Latin/Devanagari configured-font runs",
+    "completeGraphemeCoverageRequired": true,
+    "spacesChecked": true,
+    "scriptRunsSeparated": true,
+    "normalizedFontUnits": true,
+    "sharedBaselineAndLineHeight": true,
+    "mixedBidiRejected": true,
+    "pureHindiAndMixedDecodedFrames": 36,
+    "outputGeometriesEach": 6,
+    "visualReview": [
+      "mixed 1920x1080",
+      "mixed 720x1280"
+    ],
+    "fontChangeInvalidatesCache": true,
+    "unchangedSceneReusesCache": true,
+    "unitTestsPassed": 56,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "publicationStatus": "local_verified_pending_exact_approval",
+    "nativeCiVerified": false,
+    "liveProviderUsed": false,
+    "fullLocalVerifierRerun": true,
+    "knownFailures": []
   }
 }

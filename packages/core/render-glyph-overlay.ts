@@ -14,7 +14,9 @@ export function glyphOverlaySvg(
 ) {
   const lines = text.split("\n").map((line) => plan.shapeText(line, fontIndex));
   const scale = fontSize / lines[0].unitsPerEm;
-  const lineHeight = (lines[0].ascent - lines[0].descent) * scale;
+  const ascent = Math.max(...lines.map((line) => line.ascent));
+  const descent = Math.min(...lines.map((line) => line.descent));
+  const lineHeight = (ascent - descent) * scale;
   const blockHeight =
     lines.length * lineHeight + (lines.length - 1) * RENDER_TEXT_LINE_SPACING;
   const top = caption ? height * 0.91 - blockHeight : height * 0.1;
@@ -41,9 +43,7 @@ export function glyphOverlaySvg(
     .flatMap((line, index) => {
       const left = (width - line.advanceWidth * scale) / 2;
       const baseline =
-        top +
-        line.ascent * scale +
-        index * (lineHeight + RENDER_TEXT_LINE_SPACING);
+        top + ascent * scale + index * (lineHeight + RENDER_TEXT_LINE_SPACING);
       return line.paths.map((glyph) => {
         const x = left + glyph.x * scale,
           y = baseline - glyph.y * scale;
@@ -51,7 +51,7 @@ export function glyphOverlaySvg(
           throw new RenderFontError(
             "The configured render font has invalid glyph positions.",
           );
-        return `<path d="${escape(glyph.path)}" transform="translate(${x},${y}) scale(${scale},${-scale})"/>`;
+        return `<path d="${escape(glyph.path)}" transform="translate(${x},${y}) scale(${scale * (glyph.scale ?? 1)},${-scale * (glyph.scale ?? 1)})"/>`;
       });
     })
     .join("");

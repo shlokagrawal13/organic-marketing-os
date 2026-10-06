@@ -595,8 +595,8 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "हिंदी में वीडियो शिक्षा",
-          caption: "प्रशिक्षण और नई शुरुआत",
+          onScreenText: "Video 2026: हिंदी में वीडियो शिक्षा",
+          caption: "Start now: प्रशिक्षण और नई शुरुआत",
         },
       ],
     });
@@ -615,7 +615,7 @@ test(
       await (
         await a.raw(`${root}/renders/${hindiReady.id}/file/captions`)
       ).text(),
-      /प्रशिक्षण और नई शुरुआत/,
+      /Start now: प्रशिक्षण और नई शुरुआत/,
     );
     const missingGlyphContent = await a.call(root + "/content", "POST", {
       ...alternate,

@@ -40,7 +40,7 @@ export async function checkRenderShaping(
       signal,
       timeout: 15000,
     });
-    return sha256("fontkit-outlines-v1\n" + runtime + version);
+    return sha256("fontkit-outlines-v2-script-font-runs\n" + runtime + version);
   } catch (error) {
     if (signal.aborted) throw new Error("Render canceled.");
     if (error instanceof RenderFontError) throw error;
