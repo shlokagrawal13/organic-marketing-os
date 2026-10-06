@@ -493,7 +493,7 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "नमस्ते",
+          onScreenText: "নমস্কার",
           caption:
             "The API must explain unsupported rendered text before queueing.",
         },
@@ -510,7 +510,7 @@ test(
       options: { preset: "square-feed-v1" },
     });
     assert.equal(unsupportedRender.status, 400);
-    assert.match(JSON.stringify(unsupportedRender.body), /Devanagari/);
+    assert.match(JSON.stringify(unsupportedRender.body), /Bengali/);
     assert.equal(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeUnsupported,
@@ -523,7 +523,7 @@ test(
         {
           ...alternate.scenes[0],
           onScreenText: "Supported title",
-          caption: "नमस्ते",
+          caption: "নমস্কার",
         },
       ],
     });
@@ -542,7 +542,7 @@ test(
     assert.equal(burnedUnsupported.status, 400);
     assert.match(
       JSON.stringify(burnedUnsupported.body),
-      /caption cue 1.*Devanagari/,
+      /caption cue 1.*Bengali/,
     );
     const srtOnlyRender = await a.call(root + "/renders", "POST", {
       ...srtOnlyPayload,
@@ -559,7 +559,7 @@ test(
       await (
         await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
       ).text(),
-      /नमस्ते/,
+      /নমস্কার/,
     );
     const rtlContent = await a.call(root + "/content", "POST", {
       ...alternate,
@@ -588,6 +588,34 @@ test(
         await a.raw(`${root}/renders/${rtlReady.id}/file/captions`)
       ).text(),
       /שלום עולם/,
+    );
+    const hindiContent = await a.call(root + "/content", "POST", {
+      ...alternate,
+      title: "Configured Devanagari render text",
+      scenes: [
+        {
+          ...alternate.scenes[0],
+          onScreenText: "हिंदी में वीडियो शिक्षा",
+          caption: "प्रशिक्षण और नई शुरुआत",
+        },
+      ],
+    });
+    assert.equal(hindiContent.status, 201);
+    const hindiJob = await a.call(root + "/renders", "POST", {
+      contentId: hindiContent.body.id,
+      revision: 1,
+      requestKey: randomUUID(),
+      options: { preset: "square-feed-v1", captions: true },
+    });
+    assert.equal(hindiJob.status, 201, JSON.stringify(hindiJob.body));
+    const hindiReady = await wait(hindiJob.body.id);
+    assert.equal(hindiReady.status, "SUCCEEDED", JSON.stringify(hindiReady));
+    assert.ok(hindiReady.outputBytes > 0);
+    assert.match(
+      await (
+        await a.raw(`${root}/renders/${hindiReady.id}/file/captions`)
+      ).text(),
+      /प्रशिक्षण और नई शुरुआत/,
     );
     const missingGlyphContent = await a.call(root + "/content", "POST", {
       ...alternate,

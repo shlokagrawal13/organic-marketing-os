@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-05.10",
-  "savedAtUtc": "2026-10-05T18:30:05.102802+00:00",
-  "currentMilestone": "EDITOR-01K locally verified; current-payload public approval and CI pending",
+  "checkpointRevision": "2026-10-06.1",
+  "savedAtUtc": "2026-10-06T08:50:18.586318+00:00",
+  "currentMilestone": "EDITOR-01K published/CI verified; EDITOR-01L locally verified",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
     "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
@@ -24,10 +24,11 @@
     "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. Published to public main at 2e33a2cc230ab99bed6d28a18a35853e4ab9c313.",
     "EDITOR-01I adds trusted worker-side fallback font configuration via RENDER_FONT_FALLBACK_PATHS. Each rendered title/caption cue must be fully covered by one configured TTF/OTF; the selected font is copied to FFmpeg and all configured font hashes are part of the scene cache key. A decoded-frame smoke check verifies visible Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and the fallback supplies them. The verified 15-file source/docs payload was published to public main through 27aaf5cd752ad3fb83c5127523eff01416ace53a with matching tree 59cc372fec1f759f2955985b0e84dfdb608b591b. Actions run 37315707338 failed unit tests only because the tests used a local URW/Nimbus font absent from CI. The approved 11-file follow-up switches to CI-installed DejaVu Serif/Sans and is published as 56702de088f2e8d2198e3ea858dd96efe6b9d200 with matching tree d4e6cf0c0d93defb64e391a0a1496dae5d5f1534. Actions run 37317283904 passed build, unit tests, audits, populated upgrade and native application flows. No live/paid provider, schema/migration or runtime data changed.",
     "EDITOR-01J replaces character-count wrapping with selected-font metrics and grapheme-safe splitting, bounds each overlay and rejects overflow before storage/cache/media work. Cache version 6 avoids old layouts. Local verification: 47 unit, 7 HTTP, 6 browser, 5 recovery, builds and 12 migrations; 18 decoded frames across 720/1080 in three aspects. Published at ffb398d34279898074765141048cb6955e198c53 with matching tree 97fe4253f2e63dabd545a95481768210ea1009a2; Actions run 37353516609 completed success.",
-    "EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations."
+    "EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.",
+    "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Obtain exact approval for EDITOR-01K source/docs payload, publish to canonical main, verify its tree and own CI; then continue broader language/device/audio acceptance or automatic speech alignment.",
+  "nextAction": "Publish the concrete verified EDITOR-01L payload when authorized, verify its native CI, then continue bounded editor/media acceptance.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -62,9 +63,9 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-10-05",
+    "date": "2026-10-06",
     "applicationSuites": {
-      "unit": 49,
+      "unit": 54,
       "httpScenarios": 7,
       "browserScenarios": 6,
       "recoveryConfigurationScenarios": 5
@@ -84,14 +85,14 @@
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "2026-10-05 npm audit --json: zero advisories in all dependencies; Java/S3Proxy and full application security excluded.",
     "githubActions": {
-      "runId": 37353516609,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37353516609",
-      "sourceCommit": "ffb398d34279898074765141048cb6955e198c53",
+      "runId": 37356934913,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37356934913",
+      "sourceCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
       "status": "completed",
       "conclusion": "success",
-      "annotation": "EDITOR-01J published native CI evidence; does not verify local EDITOR-01K."
+      "annotation": "Published EDITOR-01K native CI; does not verify local L."
     },
-    "latestIncrement": "EDITOR-01K audio output QA locally verified; public publication/CI pending",
+    "latestIncrement": "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-04 GitHub Actions: production/full moderate-severity gates passed; advisory-count fields retain the separately recorded 2026-09-29 zero-count audit.",
     "nativePostgresVerifiedMeaning": "Local database remains PGlite. Separate dated GitHub Actions evidence covers the configured PostgreSQL 17/Redis 7 application harness, not complete Compose/MinIO, native restore or production concurrency acceptance.",
@@ -184,7 +185,7 @@
       "actionsConclusion": "success",
       "actionsCompletedAtUtc": "2026-10-04T14:08:27Z",
       "nativeTestsExecuted": true,
-      "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "editor01fEvidence": {
       "scope": "Conservative rendered-text script/character preflight; not configured-font glyph coverage",
@@ -266,7 +267,7 @@
       "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
       "actionsJobsStarted": 1,
       "nativeTestsExecuted": true,
-      "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "userApproval": "I explicitly approve publishing EDITOR-01G\u2019s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "upgradeLastRerunSlice": "EDITOR-01F",
     "editor01hEvidence": {
@@ -451,14 +452,44 @@
       "webProductionBuild": true,
       "migrationsApplied": 12,
       "fullLocalVerifierRerun": true,
-      "publicationStatus": "local_verified_awaiting_current_payload_approval",
-      "nativeCiVerified": false,
+      "publicationStatus": "published_ci_verified",
+      "nativeCiVerified": true,
       "liveProviderUsed": false,
       "populatedUpgradeRestoreRerun": false,
       "npmFullAuditRerun": false,
       "verificationNote": "Initial invalid UUID fixture corrected. First redirected verifier stalled at first migration and stopped; foreground rerun passed 7/6/5. No subjective loudness/true-peak, ASR or physical-device claim. Encoding/cache key unchanged.",
       "handoffCheckPassed": true,
       "includedFilesVerified": 189,
+      "diffCheckPassed": true,
+      "publicationCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
+      "publicationTree": "fc45a64336541df456737f34629faff1f42f6502",
+      "actionsRunId": 37356934913,
+      "actionsConclusion": "success"
+    },
+    "editor01lEvidence": {
+      "scope": "Opt-in Devanagari glyph-outline rendering",
+      "defaultEnabled": false,
+      "trustedWholeOverlayFontRequired": true,
+      "fontkitShapedOutlines": true,
+      "librsvgDecoderPreflight": true,
+      "runtimeAndFontCacheFingerprint": true,
+      "graphemeWrapping": true,
+      "decodedGeometries": 6,
+      "decodedFrames": 18,
+      "captionHalfOpenTiming": true,
+      "svgContainsOnlyTrustedOutlines": true,
+      "conjunctSubstitutionTest": true,
+      "unitTestsPassed": 54,
+      "httpScenariosPassed": 7,
+      "browserScenariosPassed": 6,
+      "recoveryConfigurationScenariosPassed": 5,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "migrationsApplied": 12,
+      "publicationStatus": "local_verified_awaiting_current_payload_approval",
+      "nativeCiVerified": false,
+      "liveProviderUsed": false,
+      "verificationNote": "Direct FFmpeg 6.1 drawtext failed visual Hindi shaping review despite decoded-pixel checks. Replaced it with Fontkit glyph outlines; decoded landscape/portrait frames visually reviewed. Earlier redirected unit run ended without complete counts; final foreground 54-case run passed. Test markup fixture initially included unsupported ampersand; corrected to font-covered angle brackets.",
       "diffCheckPassed": true
     }
   },
@@ -471,8 +502,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "ffb398d34279898074765141048cb6955e198c53",
-    "status": "editor01k_local_verified_awaiting_approval",
+    "commit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
+    "status": "editor01l_local_verified_awaiting_approval",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -485,39 +516,41 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "97fe4253f2e63dabd545a95481768210ea1009a2",
+    "sourceTree": "fc45a64336541df456737f34629faff1f42f6502",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published and CI-verified EDITOR-01J source/docs.",
+    "commitMeaning": "Published and CI-verified EDITOR-01K base.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "ffb398d34279898074765141048cb6955e198c53",
+    "lastLocalCheckpointCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
       "destination": "shlokagrawal13/organic-marketing-os main",
-      "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
+      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
       "bypassed": false,
       "resolved": true
     },
     "publication": {
-      "slice": "EDITOR-01J",
-      "applicationCommit": "ffb398d34279898074765141048cb6955e198c53",
-      "applicationTree": "97fe4253f2e63dabd545a95481768210ea1009a2",
-      "baseCommit": "56702de088f2e8d2198e3ea858dd96efe6b9d200",
-      "uploadedChangedBlobCount": 18,
+      "slice": "EDITOR-01K",
+      "applicationCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
+      "applicationTree": "fc45a64336541df456737f34629faff1f42f6502",
+      "baseCommit": "ffb398d34279898074765141048cb6955e198c53",
+      "uploadedChangedBlobCount": 17,
       "mismatchCount": 0,
-      "actionsRunId": 37353516609,
+      "actionsRunId": 37356934913,
       "actionsConclusion": "success",
       "nativeTestsExecuted": true
     },
     "currentUploadGate": {
-      "slice": "EDITOR-01K",
+      "slice": "EDITOR-01L",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "awaiting_exact_payload_approval",
       "resolved": false,
       "remoteWriteAttempted": false,
-      "reason": "New K source/docs payload; earlier J approval covers the already published J payload.",
-      "changedFiles": 17,
+      "reason": "Earlier K authorization covered its published 17-file payload. Prior automatic approval review required exact public-export authorization for new payloads.",
+      "changedFiles": 24,
       "paths": [
+        ".env.example",
+        ".github/workflows/ci.yml",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
@@ -532,13 +565,18 @@
         "docs/VIDEO_PIPELINE.md",
         "docs/qa/verification-summary.json",
         "packages/core/media.ts",
+        "packages/core/render-font.ts",
+        "packages/core/render-glyph-overlay.ts",
+        "packages/core/render-shaping.ts",
         "packages/core/renderer.ts",
+        "scripts/verify-local.mjs",
         "tests/integration/media.test.ts",
-        "tests/render-audio.test.ts"
+        "tests/media.test.ts",
+        "tests/render-devanagari.test.ts"
       ]
     },
     "publicationPreparation": {
-      "slice": "EDITOR-01K",
+      "slice": "EDITOR-01L",
       "status": "local_verified"
     },
     "previousUploadGate": {
@@ -560,7 +598,7 @@
       "verifiedRemoteParent": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae",
       "actionsRunId": 37207895511,
       "actionsConclusion": "success",
-      "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "docsEvidencePublicationGate": {
       "slice": "EDITOR-01E",
@@ -577,7 +615,7 @@
       "localEvidenceCommit": "800ec51bf5464fcaecd23c615331efa0a4d7efa1",
       "verifiedRemoteParent": "06e5da96ec4e811b0a95510247db25c3d54ac669",
       "verifiedRemoteParentTree": "092b502cca399cfe732d9743202f310b0c80d994",
-      "userApproval": "User explicitly approved publishing EDITOR-01E’s 13 publication evidence/continuity docs to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
+      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 13 publication evidence/continuity docs to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
       "remoteCommit": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
       "remoteTree": "ef47a192649746b0257dfc44c8d52a8d2c48b7c2",
       "remoteBlobCount": 185,
@@ -634,7 +672,7 @@
       "status": "local_after_editor01j_publication",
       "reason": "J publication/CI evidence accompanies the K source/docs payload."
     },
-    "lastLocalCheckpointCommitMeaning": "Public EDITOR-01J base of this local EDITOR-01K payload; the packaging commit is recorded in the final turn, not self-referentially.",
+    "lastLocalCheckpointCommitMeaning": "Published EDITOR-01K base; L packaging commit recorded separately to avoid self-reference.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -651,7 +689,7 @@
       "verifiedRemoteParent": "27aaf5cd752ad3fb83c5127523eff01416ace53a",
       "actionsRunId": 37317283904,
       "actionsConclusion": "success",
-      "userApproval": "I explicitly approve publishing EDITOR-01I’s 11-file CI portability fix/source-docs payload to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "userApproval": "I explicitly approve publishing EDITOR-01I\u2019s 11-file CI portability fix/source-docs payload to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "editor01jUploadGate": {
       "slice": "EDITOR-01J",
@@ -682,7 +720,7 @@
         "tests/integration/media.test.ts",
         "tests/render-layout.test.ts"
       ],
-      "userApproval": "I explicitly approve publishing EDITOR-01J’s 18 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "userApproval": "I explicitly approve publishing EDITOR-01J\u2019s 18 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "editor01gPublication": {
       "publishedAtUtc": "2026-10-05T07:19:47Z",
@@ -758,7 +796,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "EDITOR-01A/B/C/D/E/F/G are published and CI-verified. EDITOR-01H Arabic/Hebrew RTL shaping is published. EDITOR-01I trusted fallback-font/readability smoke coverage is published and CI-verified. Broader Indic/CJK shaping, automatic speech alignment, custom effects and platform text/composition remain. EDITOR-01J font-aware bounded wrapping is published and CI-verified at ffb398d. EDITOR-01K audio output QA is locally verified (49 unit, 7 HTTP, 6 browser, 5 recovery); publication/CI pending."
+      "completedIncrement": "EDITOR-01A through K published; K CI passed. L opt-in Devanagari rendering locally verified (54 unit,7 HTTP,6 browser,5 recovery), publication/CI pending. Other Indic/CJK, ASR, custom effects and platform composition remain."
     },
     {
       "id": "RESEARCH-01",
@@ -861,6 +899,8 @@
     }
   ],
   "lastChanges": [
+    ".env.example",
+    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
@@ -875,9 +915,14 @@
     "docs/VIDEO_PIPELINE.md",
     "docs/qa/verification-summary.json",
     "packages/core/media.ts",
+    "packages/core/render-font.ts",
+    "packages/core/render-glyph-overlay.ts",
+    "packages/core/render-shaping.ts",
     "packages/core/renderer.ts",
+    "scripts/verify-local.mjs",
     "tests/integration/media.test.ts",
-    "tests/render-audio.test.ts"
+    "tests/media.test.ts",
+    "tests/render-devanagari.test.ts"
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -903,5 +948,5 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations. Public main remains ffb398d34279898074765141048cb6955e198c53 with successful J Actions run 37353516609. K has no public write or CI yet."
+  "latestStatus": "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending."
 }

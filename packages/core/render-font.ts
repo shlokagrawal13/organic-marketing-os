@@ -20,6 +20,16 @@ export type RenderFontPlan = {
   fonts: Buffer[];
   fontHashes: string[];
   selectFontIndex: (text: string) => number;
+  shapeText: (
+    text: string,
+    fontIndex: number,
+  ) => {
+    unitsPerEm: number;
+    ascent: number;
+    descent: number;
+    advanceWidth: number;
+    paths: { path: string; x: number; y: number }[];
+  };
   measureText: (
     text: string,
     fontIndex: number,
@@ -162,6 +172,34 @@ export function createRenderFontPlan(
       fonts: bytes,
       fontHashes: bytes.map(sha256),
       selectFontIndex: (text: string) => selections.get(textKey(text)) ?? 0,
+      shapeText: (text: string, fontIndex: number) => {
+        try {
+          const { face } = fonts[fontIndex];
+          const run = face.layout(text);
+          let advance = 0;
+          const paths = run.glyphs.map((glyph, i) => {
+            const position = run.positions[i];
+            const item = {
+              path: glyph.path.toSVG(),
+              x: advance + position.xOffset,
+              y: position.yOffset,
+            };
+            advance += position.xAdvance;
+            return item;
+          });
+          return {
+            unitsPerEm: face.unitsPerEm,
+            ascent: face.ascent,
+            descent: face.descent,
+            advanceWidth: advance,
+            paths,
+          };
+        } catch {
+          throw new RenderFontError(
+            "The configured render font could not shape the text. Ask an administrator to configure a valid TrueType or OpenType font.",
+          );
+        }
+      },
       measureText: (text: string, fontIndex: number) => {
         try {
           const { face } = fonts[fontIndex];

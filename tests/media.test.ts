@@ -234,7 +234,10 @@ test("render bounds and scene captions have deterministic, accurate timing", () 
   );
 });
 
-test("render text preflight accepts configured RTL scripts and reports unsupported shaping cases", () => {
+test("render text preflight accepts configured RTL scripts and reports unsupported shaping cases", (t) => {
+  const enabled = process.env.RENDER_DEVANAGARI_ENABLED;
+  process.env.RENDER_DEVANAGARI_ENABLED = "false";
+  t.after(() => { if (enabled === undefined) delete process.env.RENDER_DEVANAGARI_ENABLED; else process.env.RENDER_DEVANAGARI_ENABLED = enabled; });
   const latin = sceneSchema.parse({
     ...fixtureScene,
     id: "latin",

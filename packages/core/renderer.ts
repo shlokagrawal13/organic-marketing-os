@@ -4,11 +4,14 @@ import { tmpdir } from "node:os";
 import { ObjectStore } from "./object-store";
 import { sceneCaptionCues } from "./captions";
 import { readRenderFonts, createRenderFontPlan } from "./render-font";
+import { glyphOverlaySvg } from "./render-glyph-overlay";
+import { checkRenderShaping } from "./render-shaping";
 import {
   layoutRenderText,
   RENDER_TEXT_LINE_SPACING,
 } from "./render-text-layout";
 import {
+  hasDevanagariText,
   RenderOptions,
   Scene,
   dimensions,
@@ -46,6 +49,12 @@ const ffmpeg = () => process.env.FFMPEG_PATH || "ffmpeg";
 export async function renderVideo(ctx: RenderContext) {
   const { store, signal, options, scenes } = ctx;
   validateRenderScenes(scenes, options);
+  const shapingRuntime = await checkRenderShaping(
+    scenes,
+    options,
+    ffmpeg(),
+    signal,
+  );
   const fontPlan = createRenderFontPlan(
     await readRenderFonts(),
     scenes,
@@ -105,6 +114,8 @@ export async function renderVideo(ctx: RenderContext) {
         "-y",
         "-filter_threads",
         "1",
+        "-filter_complex_threads",
+        "1",
         ...args,
       ],
       { cwd: dir, signal, timeout },
@@ -151,6 +162,11 @@ export async function renderVideo(ctx: RenderContext) {
         JSON.stringify({
           version: "mos-render-6-font-layout",
           fonts: fontPlan.fontHashes,
+          shapingRuntime: sceneOverlays[i].some((overlay) =>
+            hasDevanagariText(overlay.text),
+          )
+            ? shapingRuntime
+            : undefined,
           width,
           height,
           background: options.background,
@@ -235,6 +251,7 @@ export async function renderVideo(ctx: RenderContext) {
             `zoompan=z='1+0.08*min(on/${lastFrame},1)':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s=${width}x${height}:fps=30`,
           );
         }
+        const shaped: { file: string; enable: string }[] = [];
         for (const {
           type,
           text,
@@ -243,24 +260,68 @@ export async function renderVideo(ctx: RenderContext) {
           fontIndex,
           enable,
         } of sceneOverlays[i]) {
+          if (hasDevanagariText(text)) {
+            const file = `${type}-${i}.png`;
+            const svg = `${type}-${i}.svg`;
+            await writeFile(
+              join(dir, svg),
+              glyphOverlaySvg(
+                text,
+                fontPlan,
+                fontIndex,
+                fontSize,
+                width,
+                height,
+                type !== "title",
+              ),
+            );
+            await exec([
+              "-c:v",
+              "librsvg",
+              "-i",
+              svg,
+              "-frames:v",
+              "1",
+              "-pix_fmt",
+              "rgba",
+              file,
+            ]);
+            shaped.push({ file, enable });
+            continue;
+          }
           const file = `${type}-${i}.txt`;
           await writeFile(join(dir, file), text, "utf8");
           filters.push(
             `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=${RENDER_TEXT_LINE_SPACING}:x=(w-tw)/2:y=${y}${enable}`,
           );
         }
+        const fadeFilters: string[] = [];
         if (scene.transition.toLowerCase().trim() === "fade")
-          filters.push(
+          fadeFilters.push(
             "fade=t=in:st=0:d=0.2",
             `fade=t=out:st=${Math.max(0, scene.duration - 0.2)}:d=0.2`,
           );
+        if (shaped.length) {
+          const graph = [`[0:v]${filters.join(",")}[base0]`];
+          shaped.forEach((overlay, index) =>
+            graph.push(
+              `movie=filename=${overlay.file},format=rgba[layer${index}];[base${index}][layer${index}]overlay=0:0:eof_action=repeat${overlay.enable}[base${index + 1}]`,
+            ),
+          );
+          graph.push(
+            `[base${shaped.length}]${fadeFilters.length ? fadeFilters.join(",") : "null"}[out]`,
+          );
+          args.push("-filter_complex", graph.join(";"), "-map", "[out]");
+        } else
+          args.push(
+            "-vf",
+            [...filters, ...fadeFilters].join(","),
+            "-map",
+            "0:v:0",
+          );
         args.push(
           "-map",
-          "0:v:0",
-          "-map",
           "1:a:0",
-          "-vf",
-          filters.join(","),
           "-af",
           "aresample=48000,apad,alimiter=limit=0.95",
           "-t",

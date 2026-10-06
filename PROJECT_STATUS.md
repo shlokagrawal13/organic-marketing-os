@@ -1,5 +1,12 @@
 # Project status — Organic Marketing OS 0.9.2
 
+## Current checkpoint — 2026-10-06
+
+EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.
+
+No universal Indic/CJK, arbitrary mixed-font, physical-device or ASR acceptance is claimed. The Noto Devanagari test font does not cover English letters; mixed English/Hindi requires one configured font covering the entire overlay. No dependency/schema change, paid/live provider call or user runtime-data change. Full Compose/MinIO and native restore acceptance remain open.
+
+
 The existing Next.js/NestJS/PostgreSQL/Redis/private-storage architecture now includes
 an executable generated-media workflow. **The full V3 product is still incomplete.**
 Provider fixtures and passing local tests do not certify production readiness.
@@ -55,7 +62,7 @@ Provider fixtures and passing local tests do not certify production readiness.
 EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.
 
 Subjective speech quality, loudness/true-peak targets, arbitrary codecs/channel layouts, physical-device playback, Indic/CJK shaping and automatic speech alignment remain open. No new dependency, schema/migration, live/paid provider or user runtime data change.
-EDITOR-01K source/docs are local; public publication and its own CI remain pending.
+EDITOR-01K is published at 9c3e67c41f60a0a7408cca522cd7292a645425d9; Actions run 37356934913 passed. New L payload remains local.
 
 EDITOR-01J is published at `ffb398d34279898074765141048cb6955e198c53` with matching tree `97fe4253f2e63dabd545a95481768210ea1009a2`. Actions run `37353516609` completed successfully: build, unit tests, dependency audits, populated upgrade and native application flows passed.
 

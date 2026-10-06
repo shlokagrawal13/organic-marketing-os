@@ -45,6 +45,8 @@ jobs:
       COOKIE_SECURE: "false"
       NEXT_TELEMETRY_DISABLED: "1"
       MOS_ALLOW_NATIVE_TESTS: "isolated-test-services"
+      RENDER_DEVANAGARI_ENABLED: "true"
+      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf"
 
     steps:
       - name: Check out source
@@ -66,7 +68,7 @@ jobs:
       - name: Install media dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core
       - name: Build
         run: npm run build
       - name: Run unit tests

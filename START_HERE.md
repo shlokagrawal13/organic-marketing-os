@@ -1,5 +1,12 @@
 # Start here — Organic Marketing OS 0.9.2
 
+## Current checkpoint — 2026-10-06
+
+EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.
+
+No universal Indic/CJK, arbitrary mixed-font, physical-device or ASR acceptance is claimed. The Noto Devanagari test font does not cover English letters; mixed English/Hindi requires one configured font covering the entire overlay. No dependency/schema change, paid/live provider call or user runtime-data change. Full Compose/MinIO and native restore acceptance remain open.
+
+
 Resume the saved project; do not rebuild it from a template or ask the user to
 repeat its history. The user wants the full supplied V3 specification completed
 incrementally with independent implementation and verification.
@@ -9,7 +16,7 @@ incrementally with independent implementation and verification.
 2. Run `python3 scripts/package_handoff.py --check`. Preserve and inspect any drift
    before editing. Do not overwrite user changes, `.env` or populated volumes.
 3. Use the recorded `nextTaskId`/`nextAction`. EDITOR-01J font-aware bounded text layout is published and CI-verified.
-   EDITOR-01K audio output QA is locally verified; publish the reviewed payload
+   EDITOR-01K audio output QA is published and CI-verified. Publish the reviewed EDITOR-01L payload
    after exact approval, then verify its own CI.
    MEDIA-01D and MEDIA-LIVE-01 retain their separate follow-up scope.
 4. Keep Next.js, NestJS, PostgreSQL/Prisma, Redis/BullMQ, private S3 and FFmpeg.
@@ -17,7 +24,7 @@ incrementally with independent implementation and verification.
 5. Record checks actually completed, update the continuity files together, and
    create a fresh source ZIP with `python3 scripts/package_handoff.py`.
 
-The source through EDITOR-01J is published to the canonical public repository:
+The source through EDITOR-01K is published to the canonical public repository:
 https://github.com/shlokagrawal13/organic-marketing-os. A prior automatic
 approval review rejection was resolved by explicit user approval for this public
 upload. Never use `shlokagrawal13/OrganicMarketing`, which is a different project.

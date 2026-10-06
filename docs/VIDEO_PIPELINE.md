@@ -227,3 +227,10 @@ Real FFmpeg, private upload/download, byte ranges, non-silent decoded audio, all
 Generated image/video/voice presets, private ingestion and explicit targeted attachment are implemented in 0.9; see GENERATED_MEDIA.md. Voiceover text never starts speech automatically.
 
 Missing: live generated-media acceptance, remaining provider-specific reference modes, ASR/word timing, camera panning/custom motion, arbitrary transitions/effects/SFX tracks, drag/drop timeline editing, automatic platform-specific composition/text variants and policy validation, visual/semantic quality models, render-specific financial pricing, CDN/signed sharing, cache/output retention and full operational recovery. Rendering limits are resource guards, not a billing system.
+
+
+## Optional Devanagari overlays
+
+Set `RENDER_DEVANAGARI_ENABLED=true` on API and render worker only after configuring a trusted covering TTF/OTF through `RENDER_FONT_PATH` / `RENDER_FONT_FALLBACK_PATHS` and FFmpeg with the `librsvg` decoder. It defaults to false. Fontkit applies OpenType substitutions/positions in the selected exact font bytes, emits glyph paths into controlled transparent SVG, then FFmpeg rasterizes and composites PNG overlays. User text never enters SVG markup or font/URL references. Cue timing and fades apply to the composite; Unicode SRT stays unchanged. Ordinary non-Devanagari scenes keep their existing drawtext path/cache identity. Devanagari scenes include runtime/pipeline fingerprints.
+
+Do not infer Hindi shaping from the presence of FFmpeg drawtext/HarfBuzz build flags: the tested FFmpeg 6.1.1 direct path failed visual conjunct/matra QA. Six output geometries and 18 decoded timed frames pass the outline route. Local test font is an unbundled official NotoSansDevanagari-Regular.ttf (SHA-256 `385e78e6359a9d88a0f243d53b1209d7548361ba2194e2b9ec779bcaa7e8949d`); CI installs fonts-noto-core. Mixed English/Hindi needs a single font covering the whole overlay. Full native/container/device and other Indic/CJK acceptance remain open.

@@ -1,5 +1,14 @@
 # Session log
 
+## EDITOR-01L Devanagari rendering — 2026-10-06
+
+EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.
+
+No universal Indic/CJK, arbitrary mixed-font, physical-device or ASR acceptance is claimed. The Noto Devanagari test font does not cover English letters; mixed English/Hindi requires one configured font covering the entire overlay. No dependency/schema change, paid/live provider call or user runtime-data change. Full Compose/MinIO and native restore acceptance remain open.
+
+K publication: `9c3e67c41f60a0a7408cca522cd7292a645425d9`, matching tree `fc45a64336541df456737f34629faff1f42f6502`; Actions run `37356934913` completed successfully.
+
+
 ## 2026-10-05 (IST) - EDITOR-01J publication closure and EDITOR-01K audio QA
 
 Resumed clean canonical `main` at `ffb398d34279898074765141048cb6955e198c53`; handoff check verified 188 included files. Recorded J publication tree `97fe4253f2e63dabd545a95481768210ea1009a2` and successful Actions run `37353516609`. Updated stale publication-pending continuity records.

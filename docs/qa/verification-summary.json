@@ -1,12 +1,12 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-05",
+  "verifiedDate": "2026-10-06",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 49,
+    "unit": 54,
     "httpScenarios": 7,
     "browserScenarios": 6,
     "recoveryAndConfigurationScenarios": 5,
@@ -80,7 +80,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01K audio output QA locally verified; public publication/CI pending",
+  "latestIncrement": "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.",
   "priorFullSuite": {
     "release": "0.6.0",
     "verifiedDate": "2026-09-27",
@@ -144,13 +144,13 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "latestRunId": 37353516609,
-    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37353516609",
-    "latestSourceCommit": "ffb398d34279898074765141048cb6955e198c53",
+    "latestRunId": 37356934913,
+    "latestRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37356934913",
+    "latestSourceCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
     "latestConclusion": "success",
-    "latestIncrement": "EDITOR-01J",
+    "latestIncrement": "EDITOR-01K",
     "nativeTestsExecuted": true,
-    "scopeWarning": "Does not verify local EDITOR-01K."
+    "scopeWarning": "Does not verify local EDITOR-01L."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -253,7 +253,7 @@
     "actionsConclusion": "success",
     "actionsCompletedAtUtc": "2026-10-04T14:08:27Z",
     "nativeTestsExecuted": true,
-    "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+    "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
   },
   "editor01fEvidence": {
     "scope": "Conservative rendered-text script/character preflight; not configured-font glyph coverage",
@@ -364,7 +364,7 @@
     "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
     "actionsJobsStarted": 1,
     "nativeTestsExecuted": true,
-    "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+    "userApproval": "I explicitly approve publishing EDITOR-01G\u2019s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "editor01gCommands": [
     "node --import tsx --test --test-isolation=none tests/*.test.ts",
@@ -395,7 +395,7 @@
     "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
     "actionsJobsStarted": 1,
     "nativeTestsExecuted": true,
-    "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+    "userApproval": "I explicitly approve publishing EDITOR-01G\u2019s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "editor01hEvidence": {
     "scope": "Arabic/Hebrew RTL rendered text support through explicit FFmpeg text shaping; broader multilingual fallback remains open",
@@ -541,14 +541,43 @@
     "webProductionBuild": true,
     "migrationsApplied": 12,
     "fullLocalVerifierRerun": true,
-    "publicationStatus": "local_verified_awaiting_current_payload_approval",
-    "nativeCiVerified": false,
+    "publicationStatus": "published_ci_verified",
+    "nativeCiVerified": true,
     "liveProviderUsed": false,
     "populatedUpgradeRestoreRerun": false,
     "npmFullAuditRerun": false,
     "verificationNote": "Initial invalid UUID fixture corrected. First redirected verifier stalled at first migration and stopped; foreground rerun passed 7/6/5. No subjective loudness/true-peak, ASR or physical-device claim. Encoding/cache key unchanged.",
     "handoffCheckPassed": true,
     "includedFilesVerified": 189,
-    "diffCheckPassed": true
+    "diffCheckPassed": true,
+    "publicationCommit": "9c3e67c41f60a0a7408cca522cd7292a645425d9",
+    "publicationTree": "fc45a64336541df456737f34629faff1f42f6502",
+    "actionsRunId": 37356934913,
+    "actionsConclusion": "success"
+  },
+  "editor01lEvidence": {
+    "scope": "Opt-in Devanagari glyph-outline rendering",
+    "defaultEnabled": false,
+    "trustedWholeOverlayFontRequired": true,
+    "fontkitShapedOutlines": true,
+    "librsvgDecoderPreflight": true,
+    "runtimeAndFontCacheFingerprint": true,
+    "graphemeWrapping": true,
+    "decodedGeometries": 6,
+    "decodedFrames": 18,
+    "captionHalfOpenTiming": true,
+    "svgContainsOnlyTrustedOutlines": true,
+    "conjunctSubstitutionTest": true,
+    "unitTestsPassed": 54,
+    "httpScenariosPassed": 7,
+    "browserScenariosPassed": 6,
+    "recoveryConfigurationScenariosPassed": 5,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "migrationsApplied": 12,
+    "publicationStatus": "local_verified_awaiting_current_payload_approval",
+    "nativeCiVerified": false,
+    "liveProviderUsed": false,
+    "verificationNote": "Direct FFmpeg 6.1 drawtext failed visual Hindi shaping review despite decoded-pixel checks. Replaced it with Fontkit glyph outlines; decoded landscape/portrait frames visually reviewed. Earlier redirected unit run ended without complete counts; final foreground 54-case run passed. Test markup fixture initially included unsupported ampersand; corrected to font-covered angle brackets."
   }
 }
