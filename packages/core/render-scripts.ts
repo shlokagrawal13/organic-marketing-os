@@ -1,3 +1,4 @@
+import { CJK_CHARACTERS, type CjkLanguage } from "./render-cjk";
 // One registry defines opt-ins, Unicode policy and outline font-run boundaries.
 // Common/inherited punctuation follows adjacent runs; controls remain blocked.
 export const OUTLINE_SCRIPTS = [
@@ -136,6 +137,42 @@ export const OUTLINE_SCRIPTS = [
     fontFile: "NotoSerifTibetan-Regular.ttf",
     pattern: /\p{Script=Tibetan}/u,
   },
+  {
+    name: "CJK Han",
+    tag: "hani",
+    unicode: "Han",
+    environment: "RENDER_HAN_ENABLED",
+    testFontEnvironment: "TEST_CJK_SC_FONT_PATH",
+    fontFile: "NotoSansCJKsc-Regular.otf",
+    pattern: /\p{Script=Han}/u,
+  },
+  {
+    name: "Japanese Hiragana",
+    tag: "kana",
+    unicode: "Hiragana",
+    environment: "RENDER_HIRAGANA_ENABLED",
+    testFontEnvironment: "TEST_CJK_JP_FONT_PATH",
+    fontFile: "NotoSansCJKjp-Regular.otf",
+    pattern: /\p{Script=Hiragana}/u,
+  },
+  {
+    name: "Japanese Katakana",
+    tag: "kana",
+    unicode: "Katakana",
+    environment: "RENDER_KATAKANA_ENABLED",
+    testFontEnvironment: "TEST_CJK_JP_FONT_PATH",
+    fontFile: "NotoSansCJKjp-Regular.otf",
+    pattern: /\p{Script=Katakana}/u,
+  },
+  {
+    name: "Korean Hangul",
+    tag: "hang",
+    unicode: "Hangul",
+    environment: "RENDER_HANGUL_ENABLED",
+    testFontEnvironment: "TEST_CJK_KR_FONT_PATH",
+    fontFile: "NotoSansCJKkr-Regular.otf",
+    pattern: /\p{Script=Hangul}/u,
+  },
 ] as const;
 export const OUTLINE_UNICODE_CLASS = OUTLINE_SCRIPTS.map(
   (script) => `\\p{Script=${script.unicode}}`,
@@ -147,7 +184,14 @@ export function outlineScript(text: string) {
     (script.tag === "deva" ? devanagariRun : script.pattern).test(text),
   );
 }
-export function outlinePipelineRevision(_texts: string[]) {
+export function outlinePipelineRevision(
+  texts: string[],
+  language?: CjkLanguage,
+) {
+  if (texts.some((text) => CJK_CHARACTERS.test(text)))
+    return (
+      "fontkit-outlines-v1-cjk-locale-uax14:" + (language || "unspecified")
+    );
   // U's CI follow-up fixes common coverage-sensitive mark-to-base attachment. Every
   // outline script must invalidate prior shaping, including the ten legacy scripts.
   return "fontkit-outlines-v3-context-mark-base-coverage";

@@ -49,7 +49,11 @@ test("review real saved scene/caption timings, stale revisions, player readiness
     body: "Test-only scene plan",
     cta: "",
     scenes: [
-      { ...scene("opening", 2), caption: "Scene-wide fallback" },
+      {
+        ...scene("opening", 2),
+        onScreenText: "新商品「こんにちは」",
+        caption: "Scene-wide fallback",
+      },
       {
         ...scene("closing", 3),
         caption: "Unused fallback",
@@ -68,7 +72,7 @@ test("review real saved scene/caption timings, stale revisions, player readiness
         contentId: content.id,
         revision: 1,
         requestKey: randomUUID(),
-        options: { captions },
+        options: { captions, cjkLanguage: "ja" },
       },
     });
     expect(response.status()).toBe(201);

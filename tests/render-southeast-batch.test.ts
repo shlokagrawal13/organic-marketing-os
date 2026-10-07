@@ -31,7 +31,10 @@ import { renderVideo } from "../packages/core/renderer";
 import type { ObjectStore } from "../packages/core/object-store";
 import { SOUTHEAST_BATCH_FIXTURES } from "./fixtures/southeast-batch";
 
-const fontPathFor = (script: (typeof OUTLINE_SCRIPTS)[number]) =>
+const LEGACY_OUTLINE_SCRIPTS = OUTLINE_SCRIPTS.filter(
+  (s) => !["hani", "kana", "hang"].includes(s.tag),
+);
+const fontPathFor = (script: (typeof LEGACY_OUTLINE_SCRIPTS)[number]) =>
   process.env[script.testFontEnvironment] ||
   `/usr/share/fonts/truetype/noto/${script.fontFile}`;
 const fixture = sceneSchema.parse({
@@ -52,15 +55,19 @@ function environment(
   sample?: (typeof SOUTHEAST_BATCH_FIXTURES)[number],
 ) {
   const values: Record<string, string> = {
+    RENDER_HAN_ENABLED: "false",
+    RENDER_HIRAGANA_ENABLED: "false",
+    RENDER_KATAKANA_ENABLED: "false",
+    RENDER_HANGUL_ENABLED: "false",
     ...Object.fromEntries(
-      OUTLINE_SCRIPTS.map((script) => [script.environment, "true"]),
+      LEGACY_OUTLINE_SCRIPTS.map((script) => [script.environment, "true"]),
     ),
     RENDER_FONT_PATH: sample
-      ? fontPathFor(OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!)
+      ? fontPathFor(LEGACY_OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!)
       : DEFAULT_RENDER_FONT_PATH,
     RENDER_FONT_FALLBACK_PATHS: [
       DEFAULT_RENDER_FONT_PATH,
-      ...OUTLINE_SCRIPTS.map(fontPathFor),
+      ...LEGACY_OUTLINE_SCRIPTS.map(fontPathFor),
     ].join(delimiter),
   };
   const old = Object.fromEntries(
@@ -79,7 +86,7 @@ const getFonts = () =>
       ...new Set([
         process.env.RENDER_FONT_PATH || DEFAULT_RENDER_FONT_PATH,
         DEFAULT_RENDER_FONT_PATH,
-        ...OUTLINE_SCRIPTS.map(fontPathFor),
+        ...LEGACY_OUTLINE_SCRIPTS.map(fontPathFor),
       ]),
     ].map((path) => readRenderFont(path)),
   );
@@ -155,7 +162,9 @@ const generatedTexts = (name: string) => {
   return texts;
 };
 for (const sample of SOUTHEAST_BATCH_FIXTURES) {
-  const script = OUTLINE_SCRIPTS.find((item) => item.name === sample.name)!;
+  const script = LEGACY_OUTLINE_SCRIPTS.find(
+    (item) => item.name === sample.name,
+  )!;
   const fontPath = fontPathFor(script);
   test(`${sample.name}: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries`, (t) => {
     environment(t, sample);
@@ -379,7 +388,7 @@ for (const sample of SOUTHEAST_BATCH_FIXTURES) {
     );
     process.env.RENDER_FONT_FALLBACK_PATHS = "";
     process.env.RENDER_FONT_PATH = fontPathFor(
-      OUTLINE_SCRIPTS.find(
+      LEGACY_OUTLINE_SCRIPTS.find(
         (s) => s.name === (sample.name === "Thai" ? "Khmer" : "Thai"),
       )!,
     );
@@ -416,9 +425,7 @@ for (const sample of SOUTHEAST_BATCH_FIXTURES) {
     assert.equal(
       current,
       sha256(
-        "fontkit-outlines-v3-context-mark-base-coverage\n" +
-          runtime +
-          decoders,
+        "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
       ),
     );
     for (const previous of [
@@ -667,7 +674,7 @@ test("Southeast Asian word wrapping protects dictionary words, leading vowels an
 
 test("Derived Sara Am glyph coverage selects a complete fallback and rejects missing glyphs before cache/storage", async (t) => {
   environment(t);
-  const script = OUTLINE_SCRIPTS.find((s) => s.name === "Thai")!;
+  const script = LEGACY_OUTLINE_SCRIPTS.find((s) => s.name === "Thai")!;
   const original = await readRenderFont(fontPathFor(script)),
     broken = Buffer.from(original);
   const tables = broken.readUInt16BE(4);
@@ -739,7 +746,7 @@ test("Derived Sara Am glyph coverage selects a complete fallback and rejects mis
 test("All fifteen registered scripts compose independently referenced runs without changing Unicode SRT", async (t) => {
   environment(t);
   process.env.RENDER_FONT_PATH = fontPathFor(
-    OUTLINE_SCRIPTS.find((s) => s.name === "Lao")!,
+    LEGACY_OUTLINE_SCRIPTS.find((s) => s.name === "Lao")!,
   );
   const { INDIC_BATCH_FIXTURES } = await import("./fixtures/indic-batch");
   const { create } = await import("fontkit");
@@ -747,13 +754,15 @@ test("All fifteen registered scripts compose independently referenced runs witho
     [DEFAULT_RENDER_FONT_PATH, "Café "],
     [DEFAULT_RENDER_FONT_PATH, "Ελλάδα "],
     [DEFAULT_RENDER_FONT_PATH, "Привет "],
-    [fontPathFor(OUTLINE_SCRIPTS[0]), "हिंदी "],
-    [fontPathFor(OUTLINE_SCRIPTS[1]), "বাংলা "],
-    [fontPathFor(OUTLINE_SCRIPTS[2]), "ગુજરાતી "],
+    [fontPathFor(LEGACY_OUTLINE_SCRIPTS[0]), "हिंदी "],
+    [fontPathFor(LEGACY_OUTLINE_SCRIPTS[1]), "বাংলা "],
+    [fontPathFor(LEGACY_OUTLINE_SCRIPTS[2]), "ગુજરાતી "],
     ...[...INDIC_BATCH_FIXTURES, ...SOUTHEAST_BATCH_FIXTURES].map(
       (sample) =>
         [
-          fontPathFor(OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!),
+          fontPathFor(
+            LEGACY_OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!,
+          ),
           sample.texts[0] + " ",
         ] as [string, string],
     ),

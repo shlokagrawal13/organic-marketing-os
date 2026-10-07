@@ -1,0 +1,2296 @@
+{
+  "task": "EDITOR-01V",
+  "verifiedAtUtc": "2026-10-07T14:47:51.295017+00:00",
+  "fontSets": {
+    "modern": {
+      "passed": [
+        {
+          "name": "all 18 specified agents have explicit responsibilities and are mapped into a task graph",
+          "file": "tests/agents.test.ts",
+          "durationMs": 1.87582
+        },
+        {
+          "name": "agent context is frozen and research/community agents disclose absent external evidence",
+          "file": "tests/agents.test.ts",
+          "durationMs": 0.387239
+        },
+        {
+          "name": "agent critique blocks obvious guarantees and always requires a human gate",
+          "file": "tests/agents.test.ts",
+          "durationMs": 4.032898
+        },
+        {
+          "name": "model router validates output and records primary failure, fallback, tokens and estimates",
+          "file": "tests/ai.test.ts",
+          "durationMs": 10.581745
+        },
+        {
+          "name": "invalid model output never becomes successful generated content",
+          "file": "tests/ai.test.ts",
+          "durationMs": 1.809337
+        },
+        {
+          "name": "invalid task output does not disable the provider for the next job, but an outage does",
+          "file": "tests/ai.test.ts",
+          "durationMs": 5.519834
+        },
+        {
+          "name": "empty content and unsupported guarantees block approval; structural passes still require human review",
+          "file": "tests/ai.test.ts",
+          "durationMs": 1.450489
+        },
+        {
+          "name": "usage-record failure cannot trigger another paid provider request",
+          "file": "tests/ai.test.ts",
+          "durationMs": 1.813588
+        },
+        {
+          "name": "aborted jobs cannot start a fallback and oversized provider output is rejected",
+          "file": "tests/ai.test.ts",
+          "durationMs": 3.072034
+        },
+        {
+          "name": "critical routing never downgrades quality and ambiguous transport failures never duplicate a paid call",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.437077
+        },
+        {
+          "name": "routing enforces plan, capability and maximum estimated cost before calling a provider",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.256834
+        },
+        {
+          "name": "shared health removes an unavailable provider from selection and records the configured fallback",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.601375
+        },
+        {
+          "name": "Redis health adapter shares failure cooldown and clears it after success",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.988455
+        },
+        {
+          "name": "Fontkit postinstall is idempotent and rejects partial/unknown/version inputs without modifying another export",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 1009.4268
+        },
+        {
+          "name": "OpenType mark filtering supports both coverage formats, supersedes attachment class and respects IgnoreMarks in CJS/ESM",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 150.981805
+        },
+        {
+          "name": "Mark-to-base accepts unmultiplied bases and covered multiple outputs while preserving contiguous uncovered-output boundaries in CJS/ESM",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 46.14179
+        },
+        {
+          "name": "OpenType chained backtrack arrays are nearest-first in glyph/class/coverage formats, including skipped marks, without mutating font tables",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 26.714109
+        },
+        {
+          "name": "concurrent generation workers submit once and polling does not invent zero cost or bypass private ingestion",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 101.598768
+        },
+        {
+          "name": "ambiguous provider acceptance and failed persistence cannot replay an expensive generation",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 31.10612
+        },
+        {
+          "name": "generation capability, unknown quote and cost ceiling stop before the paid boundary",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 7.152836
+        },
+        {
+          "name": "cancellation requires provider confirmation and a completed race retains the billable result",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 7.062226
+        },
+        {
+          "name": "poll transport errors retry only polling and malformed output cannot become ready",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 12.124905
+        },
+        {
+          "name": "generation payloads retain targeted revision, reject rights/component mismatch and isolate replay",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 11.973946
+        },
+        {
+          "name": "named render presets normalize geometry, reject conflicts and preserve legacy hashes",
+          "file": "tests/media.test.ts",
+          "durationMs": 7.795962
+        },
+        {
+          "name": "scene motion defaults to static and accepts only bounded presets",
+          "file": "tests/media.test.ts",
+          "durationMs": 1.477821
+        },
+        {
+          "name": "scene framing defaults legacy inputs to fit and accepts only bounded modes",
+          "file": "tests/media.test.ts",
+          "durationMs": 0.742787
+        },
+        {
+          "name": "caption cues preserve legacy scenes and export exact ordered scene-relative timing",
+          "file": "tests/media.test.ts",
+          "durationMs": 1.519859
+        },
+        {
+          "name": "caption validation rejects invalid, overlapping, unordered and excessive cues",
+          "file": "tests/media.test.ts",
+          "durationMs": 3.774498
+        },
+        {
+          "name": "uploads reject executable/text formats and rendering options reject filter injection",
+          "file": "tests/media.test.ts",
+          "durationMs": 0.605783
+        },
+        {
+          "name": "render bounds and scene captions have deterministic, accurate timing",
+          "file": "tests/media.test.ts",
+          "durationMs": 4.549406
+        },
+        {
+          "name": "render text preflight accepts configured RTL scripts and reports unsupported shaping cases",
+          "file": "tests/media.test.ts",
+          "durationMs": 4.884295
+        },
+        {
+          "name": "media subprocess cancellation closes a running child promptly",
+          "file": "tests/media.test.ts",
+          "durationMs": 117.058257
+        },
+        {
+          "name": "media process output preserves Unicode split across UTF-8 pipe chunks",
+          "file": "tests/media.test.ts",
+          "durationMs": 221.850861
+        },
+        {
+          "name": "media configuration requires explicit prices; presets reject unsupported references and budget/model mismatch",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 2.455682
+        },
+        {
+          "name": "bounded provider reads enforce declared and streamed size without trusting headers",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 3.848809
+        },
+        {
+          "name": "image editing uses a separately quoted preset and sends owned bytes as multipart",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 5.545511
+        },
+        {
+          "name": "source preflight checks tenant ownership and private byte integrity before submission",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 1.64386
+        },
+        {
+          "name": "provider adapter fixes request shape, disables redirects and refuses remote URLs or malformed image encodings",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 28.554829
+        },
+        {
+          "name": "voice options are bounded and sent in the saved provider request",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 3.25287
+        },
+        {
+          "name": "render output rejects malformed duration, audio timing and incompatible cached audio",
+          "file": "tests/render-audio.test.ts",
+          "durationMs": 4.869458
+        },
+        {
+          "name": "decoded narration is padded/trimmed at scene boundaries, silent scenes stay silent and audio caches are validated",
+          "file": "tests/render-audio.test.ts",
+          "durationMs": 6069.792942
+        },
+        {
+          "name": "Bengali has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 11.328229
+        },
+        {
+          "name": "Bengali conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 402.372135
+        },
+        {
+          "name": "Bengali mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 1456.522669
+        },
+        {
+          "name": "Bengali outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 370.093672
+        },
+        {
+          "name": "decoded pure/mixed Bengali titles/cues remain bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 33055.979819
+        },
+        {
+          "name": "Simplified Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 17.846807
+        },
+        {
+          "name": "Simplified Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1660.240931
+        },
+        {
+          "name": "Simplified Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1448.918776
+        },
+        {
+          "name": "Simplified Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 272.213253
+        },
+        {
+          "name": "Simplified Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 51074.538079
+        },
+        {
+          "name": "Traditional Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 3.326511
+        },
+        {
+          "name": "Traditional Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1519.994636
+        },
+        {
+          "name": "Traditional Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1265.896706
+        },
+        {
+          "name": "Traditional Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 234.861153
+        },
+        {
+          "name": "Traditional Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 84100.093605
+        },
+        {
+          "name": "Japanese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 6.435084
+        },
+        {
+          "name": "Japanese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1393.555173
+        },
+        {
+          "name": "Japanese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1198.204558
+        },
+        {
+          "name": "Japanese: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 392.052051
+        },
+        {
+          "name": "Japanese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 53809.319659
+        },
+        {
+          "name": "Korean: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 7.529104
+        },
+        {
+          "name": "Korean: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 27583.660142
+        },
+        {
+          "name": "Korean: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 753.733967
+        },
+        {
+          "name": "Korean: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 302.554783
+        },
+        {
+          "name": "Korean: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 40158.384884
+        },
+        {
+          "name": "CJK wrapping yields only independent ICU strict boundaries and preserves all complete graphemes",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 88.846812
+        },
+        {
+          "name": "CJK localized Han glyphs independently match across all four configured font variants",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 3758.898281
+        },
+        {
+          "name": "CJK saved locale and trusted font bytes separate scene caches while unchanged renders reuse them",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 4709.788359
+        },
+        {
+          "name": "CJK mixed Latin Greek Cyrillic and three Indic font runs match independent HarfBuzz placement",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 2580.686533
+        },
+        {
+          "name": "Devanagari is opt-in, unsupported scripts/controls stay blocked and ignored captions need no shaping runtime",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 9.530794
+        },
+        {
+          "name": "Devanagari runtime guard rejects legacy/missing shaping before fonts, storage or cache work",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 63.000393
+        },
+        {
+          "name": "Devanagari font fallback keeps conjunct graphemes intact and missing coverage fails safely while Latin/Devanagari font runs compose",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 474.725002
+        },
+        {
+          "name": "decoded Hindi and mixed Latin title/caption frames are bounded and timed across all six output geometries",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 53445.893986
+        },
+        {
+          "name": "Hindi outlines apply conjunct substitution and never embed user text as SVG markup",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 162.703928
+        },
+        {
+          "name": "mixed-script wrapping preserves complete Latin combining and Hindi conjunct clusters",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 2813.558681
+        },
+        {
+          "name": "mixed overlay reuses valid scene cache and changing configured fonts rebuilds it",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 14297.760498
+        },
+        {
+          "name": "configured font maps real Latin, Greek, Cyrillic, accents and normalized whitespace",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 197.995679
+        },
+        {
+          "name": "font coverage rejects missing glyphs in effective titles/cues, preserving unburned SRT and fallback overrides",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 18.828467
+        },
+        {
+          "name": "configured fallback fonts cover allowed multilingual text missing from the primary font",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 9.27532
+        },
+        {
+          "name": "readRenderFonts loads unique primary and fallback font paths from configuration",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 3.502343
+        },
+        {
+          "name": "font inspection rejects malformed, collection, web, oversized and unreadable files without exposing paths",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 5.764525
+        },
+        {
+          "name": "renderer checks the configured font before storage, cache or media work",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 35.023221
+        },
+        {
+          "name": "renderer uses explicit text shaping and fallback fonts for readable Arabic and Hebrew text",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 1108.032356
+        },
+        {
+          "name": "Gujarati has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 10.702302
+        },
+        {
+          "name": "Gujarati conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 1183.914536
+        },
+        {
+          "name": "Gujarati mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 5347.448827
+        },
+        {
+          "name": "Gujarati outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 1531.995524
+        },
+        {
+          "name": "decoded pure/mixed Gujarati titles/cues remain bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 47386.536327
+        },
+        {
+          "name": "Gurmukhi: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 10.524923
+        },
+        {
+          "name": "Gurmukhi: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 231.807002
+        },
+        {
+          "name": "Gurmukhi: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 1027.569631
+        },
+        {
+          "name": "Gurmukhi: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 246.531025
+        },
+        {
+          "name": "Gurmukhi: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 42886.371384
+        },
+        {
+          "name": "Odia: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 6.296359
+        },
+        {
+          "name": "Odia: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 146.06978
+        },
+        {
+          "name": "Odia: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 1038.584379
+        },
+        {
+          "name": "Odia: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 311.098721
+        },
+        {
+          "name": "Odia: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 38364.1117
+        },
+        {
+          "name": "Tamil: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 2.714333
+        },
+        {
+          "name": "Tamil: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 93.946937
+        },
+        {
+          "name": "Tamil: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 630.918086
+        },
+        {
+          "name": "Tamil: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 280.940646
+        },
+        {
+          "name": "Tamil: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 32425.984889
+        },
+        {
+          "name": "Telugu: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 2.569808
+        },
+        {
+          "name": "Telugu: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 142.583891
+        },
+        {
+          "name": "Telugu: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 653.620442
+        },
+        {
+          "name": "Telugu: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 246.398703
+        },
+        {
+          "name": "Telugu: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 52323.846562
+        },
+        {
+          "name": "Kannada: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 4.781262
+        },
+        {
+          "name": "Kannada: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 235.398793
+        },
+        {
+          "name": "Kannada: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 2620.268757
+        },
+        {
+          "name": "Kannada: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 447.106169
+        },
+        {
+          "name": "Kannada: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 122045.526524
+        },
+        {
+          "name": "Malayalam: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 4.323002
+        },
+        {
+          "name": "Malayalam: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 150.71605
+        },
+        {
+          "name": "Malayalam: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 1166.072094
+        },
+        {
+          "name": "Malayalam: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 518.263039
+        },
+        {
+          "name": "Malayalam: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 90966.750384
+        },
+        {
+          "name": "Sinhala: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 1.898659
+        },
+        {
+          "name": "Sinhala: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 1063.867681
+        },
+        {
+          "name": "Sinhala: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 969.137576
+        },
+        {
+          "name": "Sinhala: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 325.615972
+        },
+        {
+          "name": "Sinhala: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 40661.069772
+        },
+        {
+          "name": "registry: all ten Indic scripts compose independently referenced font/script runs in one overlay",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 940.146841
+        },
+        {
+          "name": "registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 2.273882
+        },
+        {
+          "name": "fractional inset caption bounds accept Telugu/Sinhala edge rounding while rejecting real overflow",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 118.172746
+        },
+        {
+          "name": "font-aware wrapping bounds wide text and preserves combining graphemes across output geometries",
+          "file": "tests/render-layout.test.ts",
+          "durationMs": 171.860201
+        },
+        {
+          "name": "overfull captions fail before storage/cache/media work but unburned SRT and cue overrides stay usable",
+          "file": "tests/render-layout.test.ts",
+          "durationMs": 1282.20511
+        },
+        {
+          "name": "decoded titles and captions stay in separate bounded bands at 720/1080 in all three aspects",
+          "file": "tests/render-layout.test.ts",
+          "durationMs": 19656.542879
+        },
+        {
+          "name": "mixed LTR preflight permits configured Hindi/Greek/Cyrillic but rejects mixed RTL in effective titles and cues",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 12.774811
+        },
+        {
+          "name": "mixed LTR runs preserve combining/conjunct clusters and use each script's covering font",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 1920.644653
+        },
+        {
+          "name": "LTR outline pipeline invalidates preceding Devanagari segments without changing plain-script runtime identity",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 448.772492
+        },
+        {
+          "name": "decoded mixed LTR titles/cues remain bounded and timed at six geometries with standard and extra margins",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 41604.429845
+        },
+        {
+          "name": "placement is strict/optional, legacy serialization stays stable and inset overflow fails before media work",
+          "file": "tests/render-placement.test.ts",
+          "durationMs": 177.08362
+        },
+        {
+          "name": "decoded inset Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
+          "file": "tests/render-placement.test.ts",
+          "durationMs": 92933.596559
+        },
+        {
+          "name": "placement changes rebuild text scenes while empty scenes and unchanged placement reuse cache",
+          "file": "tests/render-placement.test.ts",
+          "durationMs": 4867.99638
+        },
+        {
+          "name": "Thai: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 24.629821
+        },
+        {
+          "name": "Thai: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 1698.656261
+        },
+        {
+          "name": "Thai: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 572.698212
+        },
+        {
+          "name": "Thai: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 546.426812
+        },
+        {
+          "name": "Thai: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 95327.936548
+        },
+        {
+          "name": "Lao: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 2.814145
+        },
+        {
+          "name": "Lao: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 285.197216
+        },
+        {
+          "name": "Lao: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 322.643052
+        },
+        {
+          "name": "Lao: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 254.374795
+        },
+        {
+          "name": "Lao: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 40887.748391
+        },
+        {
+          "name": "Khmer: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 3.712921
+        },
+        {
+          "name": "Khmer: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 4556.208614
+        },
+        {
+          "name": "Khmer: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 483.193398
+        },
+        {
+          "name": "Khmer: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 270.607107
+        },
+        {
+          "name": "Khmer: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 32181.971868
+        },
+        {
+          "name": "Myanmar: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 3.938238
+        },
+        {
+          "name": "Myanmar: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 4381.45768
+        },
+        {
+          "name": "Myanmar: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 298.48081
+        },
+        {
+          "name": "Myanmar: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 303.779615
+        },
+        {
+          "name": "Myanmar: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 35170.695147
+        },
+        {
+          "name": "Tibetan: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 3.038969
+        },
+        {
+          "name": "Tibetan: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 7363.033907
+        },
+        {
+          "name": "Tibetan: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 656.761304
+        },
+        {
+          "name": "Tibetan: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 553.981889
+        },
+        {
+          "name": "Tibetan: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 33279.861945
+        },
+        {
+          "name": "Southeast Asian word wrapping protects dictionary words, leading vowels and Tibetan tsheg while oversized words fail readably",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 383.447826
+        },
+        {
+          "name": "Derived Sara Am glyph coverage selects a complete fallback and rejects missing glyphs before cache/storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 146.058962
+        },
+        {
+          "name": "All fifteen registered scripts compose independently referenced runs without changing Unicode SRT",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 1432.19626
+        },
+        {
+          "name": "password hashes are salted; correct password succeeds and incorrect fails",
+          "file": "tests/security.test.ts",
+          "durationMs": 185.281223
+        },
+        {
+          "name": "session tokens have independent entropy and hashes hide the raw token",
+          "file": "tests/security.test.ts",
+          "durationMs": 2.232307
+        },
+        {
+          "name": "creators cannot approve and analysts cannot mutate content",
+          "file": "tests/security.test.ts",
+          "durationMs": 0.190057
+        }
+      ],
+      "failed": [],
+      "summaries": [
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 29.820752,
+          "file": "tests/agents.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 10,
+            "failed": 0,
+            "passed": 10,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 10,
+            "suites": 0
+          },
+          "duration_ms": 52.230187,
+          "file": "tests/ai.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 4,
+            "failed": 0,
+            "passed": 4,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 4,
+            "suites": 0
+          },
+          "duration_ms": 1239.941385,
+          "file": "tests/fontkit-patch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 6,
+            "failed": 0,
+            "passed": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 6,
+            "suites": 0
+          },
+          "duration_ms": 298.585443,
+          "file": "tests/generated-media.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 10,
+            "failed": 0,
+            "passed": 10,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 10,
+            "suites": 0
+          },
+          "duration_ms": 371.067362,
+          "file": "tests/media.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 6,
+            "failed": 0,
+            "passed": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 6,
+            "suites": 0
+          },
+          "duration_ms": 61.481839,
+          "file": "tests/openai-media.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 2,
+            "failed": 0,
+            "passed": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 2,
+            "suites": 0
+          },
+          "duration_ms": 6093.218489,
+          "file": "tests/render-audio.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 5,
+            "failed": 0,
+            "passed": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 5,
+            "suites": 0
+          },
+          "duration_ms": 35302.246268,
+          "file": "tests/render-bengali.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 24,
+            "failed": 0,
+            "passed": 24,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 24,
+            "suites": 0
+          },
+          "duration_ms": 278353.084174,
+          "file": "tests/render-cjk-batch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 7,
+            "failed": 0,
+            "passed": 7,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 7,
+            "suites": 0
+          },
+          "duration_ms": 71275.943077,
+          "file": "tests/render-devanagari.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 7,
+            "failed": 0,
+            "passed": 7,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 7,
+            "suites": 0
+          },
+          "duration_ms": 1389.866975,
+          "file": "tests/render-font.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 5,
+            "failed": 0,
+            "passed": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 5,
+            "suites": 0
+          },
+          "duration_ms": 55466.462697,
+          "file": "tests/render-gujarati.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 38,
+            "failed": 0,
+            "passed": 38,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 38,
+            "suites": 0
+          },
+          "duration_ms": 433329.880985,
+          "file": "tests/render-indic-batch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 21118.570374,
+          "file": "tests/render-layout.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 4,
+            "failed": 0,
+            "passed": 4,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 4,
+            "suites": 0
+          },
+          "duration_ms": 43997.096467,
+          "file": "tests/render-ltr-mixed.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 97986.973225,
+          "file": "tests/render-placement.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 28,
+            "failed": 0,
+            "passed": 28,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 28,
+            "suites": 0
+          },
+          "duration_ms": 261407.665649,
+          "file": "tests/render-southeast-batch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 196.926948,
+          "file": "tests/security.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 168,
+            "failed": 0,
+            "passed": 168,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 168,
+            "suites": 0
+          },
+          "duration_ms": 715931.227963
+        }
+      ],
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 168,
+          "failed": 0,
+          "passed": 168,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 168,
+          "suites": 0
+        },
+        "duration_ms": 715931.227963
+      }
+    },
+    "ci": {
+      "passed": [
+        {
+          "name": "all 18 specified agents have explicit responsibilities and are mapped into a task graph",
+          "file": "tests/agents.test.ts",
+          "durationMs": 2.327393
+        },
+        {
+          "name": "agent context is frozen and research/community agents disclose absent external evidence",
+          "file": "tests/agents.test.ts",
+          "durationMs": 0.48351
+        },
+        {
+          "name": "agent critique blocks obvious guarantees and always requires a human gate",
+          "file": "tests/agents.test.ts",
+          "durationMs": 1.420878
+        },
+        {
+          "name": "model router validates output and records primary failure, fallback, tokens and estimates",
+          "file": "tests/ai.test.ts",
+          "durationMs": 9.416063
+        },
+        {
+          "name": "invalid model output never becomes successful generated content",
+          "file": "tests/ai.test.ts",
+          "durationMs": 6.567874
+        },
+        {
+          "name": "invalid task output does not disable the provider for the next job, but an outage does",
+          "file": "tests/ai.test.ts",
+          "durationMs": 3.920913
+        },
+        {
+          "name": "empty content and unsupported guarantees block approval; structural passes still require human review",
+          "file": "tests/ai.test.ts",
+          "durationMs": 1.425803
+        },
+        {
+          "name": "usage-record failure cannot trigger another paid provider request",
+          "file": "tests/ai.test.ts",
+          "durationMs": 1.708517
+        },
+        {
+          "name": "aborted jobs cannot start a fallback and oversized provider output is rejected",
+          "file": "tests/ai.test.ts",
+          "durationMs": 3.906261
+        },
+        {
+          "name": "critical routing never downgrades quality and ambiguous transport failures never duplicate a paid call",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.604864
+        },
+        {
+          "name": "routing enforces plan, capability and maximum estimated cost before calling a provider",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.318458
+        },
+        {
+          "name": "shared health removes an unavailable provider from selection and records the configured fallback",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.77088
+        },
+        {
+          "name": "Redis health adapter shares failure cooldown and clears it after success",
+          "file": "tests/ai.test.ts",
+          "durationMs": 0.526667
+        },
+        {
+          "name": "Fontkit postinstall is idempotent and rejects partial/unknown/version inputs without modifying another export",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 952.491456
+        },
+        {
+          "name": "OpenType mark filtering supports both coverage formats, supersedes attachment class and respects IgnoreMarks in CJS/ESM",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 173.737125
+        },
+        {
+          "name": "Mark-to-base accepts unmultiplied bases and covered multiple outputs while preserving contiguous uncovered-output boundaries in CJS/ESM",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 61.130557
+        },
+        {
+          "name": "OpenType chained backtrack arrays are nearest-first in glyph/class/coverage formats, including skipped marks, without mutating font tables",
+          "file": "tests/fontkit-patch.test.ts",
+          "durationMs": 48.567513
+        },
+        {
+          "name": "concurrent generation workers submit once and polling does not invent zero cost or bypass private ingestion",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 10.056321
+        },
+        {
+          "name": "ambiguous provider acceptance and failed persistence cannot replay an expensive generation",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 1.467299
+        },
+        {
+          "name": "generation capability, unknown quote and cost ceiling stop before the paid boundary",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 1.774978
+        },
+        {
+          "name": "cancellation requires provider confirmation and a completed race retains the billable result",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 1.403748
+        },
+        {
+          "name": "poll transport errors retry only polling and malformed output cannot become ready",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 1.856246
+        },
+        {
+          "name": "generation payloads retain targeted revision, reject rights/component mismatch and isolate replay",
+          "file": "tests/generated-media.test.ts",
+          "durationMs": 3.340104
+        },
+        {
+          "name": "named render presets normalize geometry, reject conflicts and preserve legacy hashes",
+          "file": "tests/media.test.ts",
+          "durationMs": 6.963557
+        },
+        {
+          "name": "scene motion defaults to static and accepts only bounded presets",
+          "file": "tests/media.test.ts",
+          "durationMs": 1.948438
+        },
+        {
+          "name": "scene framing defaults legacy inputs to fit and accepts only bounded modes",
+          "file": "tests/media.test.ts",
+          "durationMs": 0.392624
+        },
+        {
+          "name": "caption cues preserve legacy scenes and export exact ordered scene-relative timing",
+          "file": "tests/media.test.ts",
+          "durationMs": 1.034738
+        },
+        {
+          "name": "caption validation rejects invalid, overlapping, unordered and excessive cues",
+          "file": "tests/media.test.ts",
+          "durationMs": 5.181502
+        },
+        {
+          "name": "uploads reject executable/text formats and rendering options reject filter injection",
+          "file": "tests/media.test.ts",
+          "durationMs": 0.495398
+        },
+        {
+          "name": "render bounds and scene captions have deterministic, accurate timing",
+          "file": "tests/media.test.ts",
+          "durationMs": 13.19994
+        },
+        {
+          "name": "render text preflight accepts configured RTL scripts and reports unsupported shaping cases",
+          "file": "tests/media.test.ts",
+          "durationMs": 6.031925
+        },
+        {
+          "name": "media subprocess cancellation closes a running child promptly",
+          "file": "tests/media.test.ts",
+          "durationMs": 120.020157
+        },
+        {
+          "name": "media process output preserves Unicode split across UTF-8 pipe chunks",
+          "file": "tests/media.test.ts",
+          "durationMs": 226.391858
+        },
+        {
+          "name": "media configuration requires explicit prices; presets reject unsupported references and budget/model mismatch",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 3.320545
+        },
+        {
+          "name": "bounded provider reads enforce declared and streamed size without trusting headers",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 5.941712
+        },
+        {
+          "name": "image editing uses a separately quoted preset and sends owned bytes as multipart",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 5.743454
+        },
+        {
+          "name": "source preflight checks tenant ownership and private byte integrity before submission",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 1.493473
+        },
+        {
+          "name": "provider adapter fixes request shape, disables redirects and refuses remote URLs or malformed image encodings",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 38.00123
+        },
+        {
+          "name": "voice options are bounded and sent in the saved provider request",
+          "file": "tests/openai-media.test.ts",
+          "durationMs": 4.394023
+        },
+        {
+          "name": "render output rejects malformed duration, audio timing and incompatible cached audio",
+          "file": "tests/render-audio.test.ts",
+          "durationMs": 2.480192
+        },
+        {
+          "name": "decoded narration is padded/trimmed at scene boundaries, silent scenes stay silent and audio caches are validated",
+          "file": "tests/render-audio.test.ts",
+          "durationMs": 6124.718581
+        },
+        {
+          "name": "Bengali has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 15.561861
+        },
+        {
+          "name": "Bengali conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 566.343255
+        },
+        {
+          "name": "Bengali mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 1322.871109
+        },
+        {
+          "name": "Bengali outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 336.88674
+        },
+        {
+          "name": "decoded pure/mixed Bengali titles/cues remain bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-bengali.test.ts",
+          "durationMs": 32261.779607
+        },
+        {
+          "name": "Simplified Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 12.522316
+        },
+        {
+          "name": "Simplified Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1453.514857
+        },
+        {
+          "name": "Simplified Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1046.795596
+        },
+        {
+          "name": "Simplified Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 245.385271
+        },
+        {
+          "name": "Simplified Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 41788.539381
+        },
+        {
+          "name": "Traditional Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 2.74077
+        },
+        {
+          "name": "Traditional Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1175.200265
+        },
+        {
+          "name": "Traditional Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1357.818341
+        },
+        {
+          "name": "Traditional Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 279.229197
+        },
+        {
+          "name": "Traditional Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 42217.71911
+        },
+        {
+          "name": "Japanese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 3.769982
+        },
+        {
+          "name": "Japanese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1121.651553
+        },
+        {
+          "name": "Japanese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 1038.770944
+        },
+        {
+          "name": "Japanese: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 310.497737
+        },
+        {
+          "name": "Japanese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 47800.428561
+        },
+        {
+          "name": "Korean: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 4.716625
+        },
+        {
+          "name": "Korean: independent HarfBuzz glyph/advance/offset and runtime outlines",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 19248.849216
+        },
+        {
+          "name": "Korean: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 774.428953
+        },
+        {
+          "name": "Korean: runtime fingerprint records locale and ignores unburned or overridden cues",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 283.120078
+        },
+        {
+          "name": "Korean: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 43212.253788
+        },
+        {
+          "name": "CJK wrapping yields only independent ICU strict boundaries and preserves all complete graphemes",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 91.850875
+        },
+        {
+          "name": "CJK localized Han glyphs independently match across all four configured font variants",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 3978.328482
+        },
+        {
+          "name": "CJK saved locale and trusted font bytes separate scene caches while unchanged renders reuse them",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 8441.719144
+        },
+        {
+          "name": "CJK mixed Latin Greek Cyrillic and three Indic font runs match independent HarfBuzz placement",
+          "file": "tests/render-cjk-batch.test.ts",
+          "durationMs": 4335.561021
+        },
+        {
+          "name": "Devanagari is opt-in, unsupported scripts/controls stay blocked and ignored captions need no shaping runtime",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 10.503889
+        },
+        {
+          "name": "Devanagari runtime guard rejects legacy/missing shaping before fonts, storage or cache work",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 32.499142
+        },
+        {
+          "name": "Devanagari font fallback keeps conjunct graphemes intact and missing coverage fails safely while Latin/Devanagari font runs compose",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 379.541488
+        },
+        {
+          "name": "decoded Hindi and mixed Latin title/caption frames are bounded and timed across all six output geometries",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 26763.187766
+        },
+        {
+          "name": "Hindi outlines apply conjunct substitution and never embed user text as SVG markup",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 35.912728
+        },
+        {
+          "name": "mixed-script wrapping preserves complete Latin combining and Hindi conjunct clusters",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 411.263625
+        },
+        {
+          "name": "mixed overlay reuses valid scene cache and changing configured fonts rebuilds it",
+          "file": "tests/render-devanagari.test.ts",
+          "durationMs": 2607.716072
+        },
+        {
+          "name": "configured font maps real Latin, Greek, Cyrillic, accents and normalized whitespace",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 16.340045
+        },
+        {
+          "name": "font coverage rejects missing glyphs in effective titles/cues, preserving unburned SRT and fallback overrides",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 14.891765
+        },
+        {
+          "name": "configured fallback fonts cover allowed multilingual text missing from the primary font",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 6.060563
+        },
+        {
+          "name": "readRenderFonts loads unique primary and fallback font paths from configuration",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 2.51697
+        },
+        {
+          "name": "font inspection rejects malformed, collection, web, oversized and unreadable files without exposing paths",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 7.479337
+        },
+        {
+          "name": "renderer checks the configured font before storage, cache or media work",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 30.044412
+        },
+        {
+          "name": "renderer uses explicit text shaping and fallback fonts for readable Arabic and Hebrew text",
+          "file": "tests/render-font.test.ts",
+          "durationMs": 1204.295147
+        },
+        {
+          "name": "Gujarati has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 29.52874
+        },
+        {
+          "name": "Gujarati conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 1429.555508
+        },
+        {
+          "name": "Gujarati mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 2342.95407
+        },
+        {
+          "name": "Gujarati outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 756.811402
+        },
+        {
+          "name": "decoded pure/mixed Gujarati titles/cues remain bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-gujarati.test.ts",
+          "durationMs": 31961.898418
+        },
+        {
+          "name": "Gurmukhi: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 15.35229
+        },
+        {
+          "name": "Gurmukhi: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 223.614929
+        },
+        {
+          "name": "Gurmukhi: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 740.536782
+        },
+        {
+          "name": "Gurmukhi: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 282.957091
+        },
+        {
+          "name": "Gurmukhi: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 42244.018825
+        },
+        {
+          "name": "Odia: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 2.192598
+        },
+        {
+          "name": "Odia: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 106.990302
+        },
+        {
+          "name": "Odia: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 597.173066
+        },
+        {
+          "name": "Odia: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 245.976411
+        },
+        {
+          "name": "Odia: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 32645.623592
+        },
+        {
+          "name": "Tamil: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 4.303083
+        },
+        {
+          "name": "Tamil: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 99.572112
+        },
+        {
+          "name": "Tamil: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 528.339926
+        },
+        {
+          "name": "Tamil: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 261.675255
+        },
+        {
+          "name": "Tamil: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 40079.173165
+        },
+        {
+          "name": "Telugu: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 7.173097
+        },
+        {
+          "name": "Telugu: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 179.663962
+        },
+        {
+          "name": "Telugu: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 974.724069
+        },
+        {
+          "name": "Telugu: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 293.975553
+        },
+        {
+          "name": "Telugu: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 40613.099896
+        },
+        {
+          "name": "Kannada: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 3.033188
+        },
+        {
+          "name": "Kannada: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 142.470894
+        },
+        {
+          "name": "Kannada: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 786.519412
+        },
+        {
+          "name": "Kannada: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 259.816711
+        },
+        {
+          "name": "Kannada: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 42737.575806
+        },
+        {
+          "name": "Malayalam: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 1.741492
+        },
+        {
+          "name": "Malayalam: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 108.339489
+        },
+        {
+          "name": "Malayalam: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 539.080054
+        },
+        {
+          "name": "Malayalam: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 250.402592
+        },
+        {
+          "name": "Malayalam: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 32546.330205
+        },
+        {
+          "name": "Sinhala: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 2.996838
+        },
+        {
+          "name": "Sinhala: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 821.249436
+        },
+        {
+          "name": "Sinhala: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 666.641983
+        },
+        {
+          "name": "Sinhala: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 301.731613
+        },
+        {
+          "name": "Sinhala: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 34011.517278
+        },
+        {
+          "name": "registry: all ten Indic scripts compose independently referenced font/script runs in one overlay",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 918.140409
+        },
+        {
+          "name": "registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 4.008503
+        },
+        {
+          "name": "fractional inset caption bounds accept Telugu/Sinhala edge rounding while rejecting real overflow",
+          "file": "tests/render-indic-batch.test.ts",
+          "durationMs": 101.362129
+        },
+        {
+          "name": "font-aware wrapping bounds wide text and preserves combining graphemes across output geometries",
+          "file": "tests/render-layout.test.ts",
+          "durationMs": 259.25121
+        },
+        {
+          "name": "overfull captions fail before storage/cache/media work but unburned SRT and cue overrides stay usable",
+          "file": "tests/render-layout.test.ts",
+          "durationMs": 3884.819577
+        },
+        {
+          "name": "decoded titles and captions stay in separate bounded bands at 720/1080 in all three aspects",
+          "file": "tests/render-layout.test.ts",
+          "durationMs": 18558.244677
+        },
+        {
+          "name": "mixed LTR preflight permits configured Hindi/Greek/Cyrillic but rejects mixed RTL in effective titles and cues",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 14.689761
+        },
+        {
+          "name": "mixed LTR runs preserve combining/conjunct clusters and use each script's covering font",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 857.919973
+        },
+        {
+          "name": "LTR outline pipeline invalidates preceding Devanagari segments without changing plain-script runtime identity",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 273.19657
+        },
+        {
+          "name": "decoded mixed LTR titles/cues remain bounded and timed at six geometries with standard and extra margins",
+          "file": "tests/render-ltr-mixed.test.ts",
+          "durationMs": 20750.859374
+        },
+        {
+          "name": "placement is strict/optional, legacy serialization stays stable and inset overflow fails before media work",
+          "file": "tests/render-placement.test.ts",
+          "durationMs": 109.996927
+        },
+        {
+          "name": "decoded inset Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
+          "file": "tests/render-placement.test.ts",
+          "durationMs": 19525.08041
+        },
+        {
+          "name": "placement changes rebuild text scenes while empty scenes and unchanged placement reuse cache",
+          "file": "tests/render-placement.test.ts",
+          "durationMs": 5096.83683
+        },
+        {
+          "name": "Thai: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 29.604064
+        },
+        {
+          "name": "Thai: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 5315.337417
+        },
+        {
+          "name": "Thai: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 356.346233
+        },
+        {
+          "name": "Thai: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 211.059981
+        },
+        {
+          "name": "Thai: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 32239.182118
+        },
+        {
+          "name": "Lao: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 2.988643
+        },
+        {
+          "name": "Lao: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 311.921495
+        },
+        {
+          "name": "Lao: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 274.351957
+        },
+        {
+          "name": "Lao: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 266.177368
+        },
+        {
+          "name": "Lao: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 33090.159092
+        },
+        {
+          "name": "Khmer: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 1.719397
+        },
+        {
+          "name": "Khmer: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 5449.330101
+        },
+        {
+          "name": "Khmer: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 383.705029
+        },
+        {
+          "name": "Khmer: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 236.1311
+        },
+        {
+          "name": "Khmer: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 29493.591972
+        },
+        {
+          "name": "Myanmar: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 3.734888
+        },
+        {
+          "name": "Myanmar: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 4273.240336
+        },
+        {
+          "name": "Myanmar: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 304.736095
+        },
+        {
+          "name": "Myanmar: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 383.199729
+        },
+        {
+          "name": "Myanmar: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 32618.365501
+        },
+        {
+          "name": "Tibetan: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 1.314498
+        },
+        {
+          "name": "Tibetan: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 3319.37525
+        },
+        {
+          "name": "Tibetan: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 530.238871
+        },
+        {
+          "name": "Tibetan: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 215.078295
+        },
+        {
+          "name": "Tibetan: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 37591.76581
+        },
+        {
+          "name": "Southeast Asian word wrapping protects dictionary words, leading vowels and Tibetan tsheg while oversized words fail readably",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 349.148087
+        },
+        {
+          "name": "Derived Sara Am glyph coverage selects a complete fallback and rejects missing glyphs before cache/storage",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 371.639307
+        },
+        {
+          "name": "All fifteen registered scripts compose independently referenced runs without changing Unicode SRT",
+          "file": "tests/render-southeast-batch.test.ts",
+          "durationMs": 2441.944649
+        },
+        {
+          "name": "password hashes are salted; correct password succeeds and incorrect fails",
+          "file": "tests/security.test.ts",
+          "durationMs": 292.754834
+        },
+        {
+          "name": "session tokens have independent entropy and hashes hide the raw token",
+          "file": "tests/security.test.ts",
+          "durationMs": 1.021391
+        },
+        {
+          "name": "creators cannot approve and analysts cannot mutate content",
+          "file": "tests/security.test.ts",
+          "durationMs": 0.37082
+        }
+      ],
+      "failed": [],
+      "summaries": [
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 21.004888,
+          "file": "tests/agents.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 10,
+            "failed": 0,
+            "passed": 10,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 10,
+            "suites": 0
+          },
+          "duration_ms": 51.449581,
+          "file": "tests/ai.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 4,
+            "failed": 0,
+            "passed": 4,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 4,
+            "suites": 0
+          },
+          "duration_ms": 1242.320647,
+          "file": "tests/fontkit-patch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 6,
+            "failed": 0,
+            "passed": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 6,
+            "suites": 0
+          },
+          "duration_ms": 37.594127,
+          "file": "tests/generated-media.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 10,
+            "failed": 0,
+            "passed": 10,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 10,
+            "suites": 0
+          },
+          "duration_ms": 389.579182,
+          "file": "tests/media.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 6,
+            "failed": 0,
+            "passed": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 6,
+            "suites": 0
+          },
+          "duration_ms": 77.470054,
+          "file": "tests/openai-media.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 2,
+            "failed": 0,
+            "passed": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 2,
+            "suites": 0
+          },
+          "duration_ms": 6134.475461,
+          "file": "tests/render-audio.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 5,
+            "failed": 0,
+            "passed": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 5,
+            "suites": 0
+          },
+          "duration_ms": 34514.275226,
+          "file": "tests/render-bengali.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 24,
+            "failed": 0,
+            "passed": 24,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 24,
+            "suites": 0
+          },
+          "duration_ms": 220238.861599,
+          "file": "tests/render-cjk-batch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 7,
+            "failed": 0,
+            "passed": 7,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 7,
+            "suites": 0
+          },
+          "duration_ms": 30247.535372,
+          "file": "tests/render-devanagari.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 7,
+            "failed": 0,
+            "passed": 7,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 7,
+            "suites": 0
+          },
+          "duration_ms": 1288.059606,
+          "file": "tests/render-font.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 5,
+            "failed": 0,
+            "passed": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 5,
+            "suites": 0
+          },
+          "duration_ms": 36540.998748,
+          "file": "tests/render-gujarati.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 38,
+            "failed": 0,
+            "passed": 38,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 38,
+            "suites": 0
+          },
+          "duration_ms": 274360.257541,
+          "file": "tests/render-indic-batch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 22710.671324,
+          "file": "tests/render-layout.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 4,
+            "failed": 0,
+            "passed": 4,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 4,
+            "suites": 0
+          },
+          "duration_ms": 21903.130708,
+          "file": "tests/render-ltr-mixed.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 24737.187474,
+          "file": "tests/render-placement.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 28,
+            "failed": 0,
+            "passed": 28,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 28,
+            "suites": 0
+          },
+          "duration_ms": 190082.449599,
+          "file": "tests/render-southeast-batch.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 3,
+            "failed": 0,
+            "passed": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 3,
+            "suites": 0
+          },
+          "duration_ms": 306.973811,
+          "file": "tests/security.test.ts"
+        },
+        {
+          "success": true,
+          "counts": {
+            "tests": 168,
+            "failed": 0,
+            "passed": 168,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 168,
+            "suites": 0
+          },
+          "duration_ms": 490329.068153
+        }
+      ],
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 168,
+          "failed": 0,
+          "passed": 168,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 168,
+          "suites": 0
+        },
+        "duration_ms": 490329.068153
+      }
+    }
+  }
+}

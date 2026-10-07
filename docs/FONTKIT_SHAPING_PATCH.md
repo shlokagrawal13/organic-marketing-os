@@ -1,5 +1,10 @@
 # Fontkit shaping patch
 
+## CI-fix own native acceptance — 2026-10-07
+
+The exact 28-file fix is published at ca7d7a34eddd791df55f0996c41b77d27179db9e. Its own Actions 37608908118 passed all 144 unit cases, including the older Ubuntu Noto Myanmar mark offset and Bengali/Gujarati opt-in isolation, plus 7 HTTP, 7 browser and 5 recovery/config cases. CJS/ESM/outlines independently matched HarfBuzz 8.3.0. Local dual-font/clean-install receipts remain separate. The previous original U run failed and is excluded from pass evidence. Pending statements below are historical. Default-disabled opt-ins and all documented device/font/joiner/control/production gaps remain.
+
+
 ## EDITOR-01U native CI follow-up
 
 NotoSansMyanmar 2.001 from Ubuntu fonts-noto-core 20201225-2 exposed a valid base carrying a nonzero ligature component without being a MultipleSubst output. The corrected backward search follows [HarfBuzz 8.3.0 MarkBasePosFormat1](https://github.com/harfbuzz/harfbuzz/blob/8.3.0/src/OT/Layout/GPOS/MarkBasePosFormat1.hh): stop at an unmultiplied base, preserve consecutive multiplied-output boundaries, and allow covered bases. The first MultipleSubst output is marked multiplied too. The original complete U patch remains an explicitly accepted migration input; unknown/partial inputs still fail. Both font sets passed the whole 144-case suite, 65560 clean-export independent references and 180 new-script exports/540 timed decoded frames. All outline and scene cache revisions were bumped again to fontkit-outlines-v3-context-mark-base-coverage and mos-render-8-mark-base-coverage. Public original U CI failed; fixed-source publication and own native CI remain pending. Historical U design below is retained.
@@ -35,3 +40,7 @@ Primary algorithm/data sources:
 - [Microsoft Myanmar development](https://learn.microsoft.com/en-us/typography/script-development/myanmar), [Thai](https://learn.microsoft.com/en-us/typography/script-development/thai), [Tibetan](https://learn.microsoft.com/en-us/typography/script-development/tibetan) and [OpenType GSUB](https://learn.microsoft.com/en-us/typography/opentype/spec/gsub).
 
 The HarfBuzz copyright/permission notice for the adapted Myanmar logic is included in `scripts/fontkit-southeast.mjs`. Diagnostic font bytes, temporary probes, install trees and raw logs remain outside the source checkpoint. Acceptance evidence is in `docs/qa/southeast-batch-evidence.json`.
+
+## EDITOR-01V locale use
+
+V retains the exact guarded Fontkit 2.0.4 CJS/ESM patch. Application font runs supply saved OpenType CJK language tags, shape CJK text with NFC without changing source Unicode/SRT, and keep adjacent common punctuation in context. This does not replace the Indic/SEA shaper. Clean full/production installs and independent comparisons must establish V acceptance; U native CI remains evidence for U only. See `docs/CJK_RENDERING.md`.

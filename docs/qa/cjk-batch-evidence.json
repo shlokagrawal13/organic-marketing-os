@@ -1,0 +1,1847 @@
+{
+  "task": "EDITOR-01V",
+  "status": "locally_verified_awaiting_publication_approval",
+  "verifiedAtUtc": "2026-10-07T14:47:51.295017+00:00",
+  "publicWriteAttempted": false,
+  "ownNativeCiVerified": false,
+  "expectedPublicParent": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+  "expectedPublicTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+  "checks": {
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "unitByFontSet": {
+      "modern": {
+        "tests": 168,
+        "passed": 168,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 715931.227963,
+        "caseReceipts": 168,
+        "summaries": 19
+      },
+      "ci": {
+        "tests": 168,
+        "passed": 168,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 490329.068153,
+        "caseReceipts": 168,
+        "summaries": 19
+      }
+    },
+    "unitCaseReceipts": 336,
+    "unitSummaries": 38,
+    "httpScenarios": 7,
+    "browserScenarios": 7,
+    "recoveryScenarios": 5,
+    "migrations": 12,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "upgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4866501,
+      "sha256": "6c8f62489e3f214346e951553ec72199f127765c7bcc129dfd22d9bb5c349801",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "browserPngHashes": [
+      {
+        "path": "test-results/asset-library-desktop.png",
+        "bytes": 147519,
+        "sha256": "5d815c8cf0a8ba47efa11f74899ad361f1d03e1033914ef6378dad637f2f2b36"
+      },
+      {
+        "path": "test-results/asset-library-mobile.png",
+        "bytes": 112385,
+        "sha256": "e3d58d2a0418683f50ba23296c1d6bfcc0cb662249299e088de363c017fefb46"
+      },
+      {
+        "path": "test-results/auth-mobile.png",
+        "bytes": 42075,
+        "sha256": "eddaace569e02857e195a7ea1f842fb64a9650070b1094271e9a7a50b9fa4ebd"
+      },
+      {
+        "path": "test-results/content-mobile.png",
+        "bytes": 50601,
+        "sha256": "bf667d1ea7f37c7609828101f36901290800d57240964b12401bd164663c97b1"
+      },
+      {
+        "path": "test-results/content-review-desktop.png",
+        "bytes": 172342,
+        "sha256": "00fdedf502db0a18225872ceb3e6df8fbdcaa09e39050997b8b51900f0df9784"
+      },
+      {
+        "path": "test-results/credits-desktop.png",
+        "bytes": 233896,
+        "sha256": "51bf3649ee81a429e979953d1ad98550f39928850be39b845a6a052079da469e"
+      },
+      {
+        "path": "test-results/credits-mobile.png",
+        "bytes": 197408,
+        "sha256": "59fcfec6d70db41c68c780ee34d73fe32c6fb9a0ecc44b88b402c4f1462296af"
+      },
+      {
+        "path": "test-results/generated-media-dark.png",
+        "bytes": 297170,
+        "sha256": "10269e8b4d6dbc6abe7a7255f3299265cbdb8fabd490d3b15ae4fa6dd0a892a5"
+      },
+      {
+        "path": "test-results/generated-media-desktop.png",
+        "bytes": 295268,
+        "sha256": "e27c7c5aeb7a6606249cf9b00090ede03b77dce5b739c95a5dca90f39698ab4a"
+      },
+      {
+        "path": "test-results/generated-media-mobile.png",
+        "bytes": 257673,
+        "sha256": "340a1afc415f507f68db43acbd4f082cb46392c152f2c766587bd261a0978ba2"
+      },
+      {
+        "path": "test-results/render-review-desktop.png",
+        "bytes": 33352,
+        "sha256": "25b9a42597ccadf1a51b6e37585edc1372195a410652680349095a557de3d7b2"
+      },
+      {
+        "path": "test-results/render-review-mobile.png",
+        "bytes": 32231,
+        "sha256": "a4abdf71ac3cb044265015ee269fa6f8a8f06b1dbd62833bed0400069b1c38ea"
+      },
+      {
+        "path": "test-results/timed-caption-editor-desktop.png",
+        "bytes": 32824,
+        "sha256": "6c3d55786a30852817d1adac0773b784f9c0acda7bd583066df3071891e28a0e"
+      },
+      {
+        "path": "test-results/timed-caption-editor-mobile.png",
+        "bytes": 33051,
+        "sha256": "a7429b3a41b90d488e26a7e5e46e85a55d1e9ea366528a55d124bd013d835f45"
+      },
+      {
+        "path": "test-results/video-studio-dark.png",
+        "bytes": 327732,
+        "sha256": "938682cbdaf6062a058e5aa8885428f7f8e9472ffbe61d7cf7049488e8c4e51d"
+      },
+      {
+        "path": "test-results/video-studio-desktop.png",
+        "bytes": 334160,
+        "sha256": "fa8ea2eff47d48cd7a9e78f23f923c3592955d5e382396ad873e4afdc4055875"
+      },
+      {
+        "path": "test-results/video-studio-mobile.png",
+        "bytes": 273367,
+        "sha256": "28f05aed0dd0f1620665df87c82153355a9e6a5e66b8ca97e69ab52d83d201d0"
+      },
+      {
+        "path": "test-results/workspace-dark.png",
+        "bytes": 166762,
+        "sha256": "16e4f90d2888e3a8cf8405635a8597a597fbc0b9fc87d6f04e908a2e6de22900"
+      },
+      {
+        "path": "test-results/workspace-desktop.png",
+        "bytes": 168390,
+        "sha256": "fa26b89876a51dd2f94b53debb145992e717f1415e74ed53ab28c22401a620c7"
+      },
+      {
+        "path": "test-results/workspace-health-dark.png",
+        "bytes": 257232,
+        "sha256": "642c0b33db9ec48a0762399c4489bf87facae4b543a226e71dee166747b4e677"
+      },
+      {
+        "path": "test-results/workspace-health-desktop.png",
+        "bytes": 263318,
+        "sha256": "8d23d2c9f2e9a4df4c1797deb02d4b1133861416deffc5c274488fcd2dd55979"
+      },
+      {
+        "path": "test-results/workspace-health-mobile.png",
+        "bytes": 214778,
+        "sha256": "77e705887a7584fe44857944ac663e39c117f35b03ce0cb8d1caa8410545c39c"
+      }
+    ]
+  },
+  "localeContract": {
+    "savedOptions": [
+      "zh-Hans",
+      "zh-Hant",
+      "ja",
+      "ko"
+    ],
+    "flags": [
+      "RENDER_HAN_ENABLED",
+      "RENDER_HIRAGANA_ENABLED",
+      "RENDER_KATAKANA_ENABLED",
+      "RENDER_HANGUL_ENABLED"
+    ],
+    "defaultEnabled": false,
+    "perOverlayLanguageSupported": false,
+    "localeInShapingFingerprintAndSceneCache": true,
+    "localeAndFontChangesRebuildCache": true,
+    "sourceUnicodeAndSrtUnchanged": true,
+    "nfcUsedOnlyForCjkShapingMeasurement": true
+  },
+  "fonts": {
+    "pinCommit": "523d033d6cb47f4a80c58a35753646f5c3608a78",
+    "tag": "Sans2.004",
+    "metadata": {
+      "sc": {
+        "file": "NotoSansCJKsc-Regular.otf",
+        "region": "SimplifiedChinese",
+        "bytes": 16437364,
+        "sha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+      },
+      "tc": {
+        "file": "NotoSansCJKtc-Regular.otf",
+        "region": "TraditionalChinese",
+        "bytes": 16435884,
+        "sha256": "dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4"
+      },
+      "jp": {
+        "file": "NotoSansCJKjp-Regular.otf",
+        "region": "Japanese",
+        "bytes": 16467736,
+        "sha256": "68a3fc98800b2a27b371f2fb79991daf3633bd89309d4ffaa6946fd587f375b5"
+      },
+      "kr": {
+        "file": "NotoSansCJKkr-Regular.otf",
+        "region": "Korean",
+        "bytes": 16433112,
+        "sha256": "6bcb2a0703aa137e874fc2dffa85f6c21ba9a67fa329e81b8c801663af7e992a"
+      }
+    },
+    "legacyModernMetadata": [
+      {
+        "family": "NotoSansDevanagari",
+        "path": ".local/test-fonts/NotoSansDevanagari-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 219212,
+        "sha256": "385e78e6359a9d88a0f243d53b1209d7548361ba2194e2b9ec779bcaa7e8949d"
+      },
+      {
+        "family": "NotoSansBengali",
+        "path": ".local/test-fonts/NotoSansBengali-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansBengali/NotoSansBengali-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 200048,
+        "sha256": "6300c5370cd688b0641343de4c786de6d412bb6c578d129dae75e93a0322dcab"
+      },
+      {
+        "family": "NotoSansGujarati",
+        "path": ".local/test-fonts/NotoSansGujarati-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 208452,
+        "sha256": "8d5c22d7b729ef2839e6d1fe2cde77b2d083907be3659bca63676baa76e01fd6"
+      },
+      {
+        "family": "NotoSansGurmukhi",
+        "path": ".local/test-fonts/NotoSansGurmukhi-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansGurmukhi/NotoSansGurmukhi-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 53000,
+        "sha256": "bbde4d85fdfb998eff6921cb2c7a9a7924a1c95560a6aa9a06172530e4f596da"
+      },
+      {
+        "family": "NotoSansOriya",
+        "path": ".local/test-fonts/NotoSansOriya-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansOriya/NotoSansOriya-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 95776,
+        "sha256": "b8d8bd784b9d09c0668233437359913c93a3a83bf37d92ecde859e2bc728a0e0"
+      },
+      {
+        "family": "NotoSansTamil",
+        "path": ".local/test-fonts/NotoSansTamil-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansTamil/NotoSansTamil-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 74248,
+        "sha256": "6532db33b8b264abe3a098a40619feb489b5ddf5ab1d2b46e72b51eeb548001b"
+      },
+      {
+        "family": "NotoSansTelugu",
+        "path": ".local/test-fonts/NotoSansTelugu-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansTelugu/NotoSansTelugu-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 197228,
+        "sha256": "2c05072e8018a9be1cb0582953d9edf9a0cf129cdfb74e611de763b09c411f7f"
+      },
+      {
+        "family": "NotoSansKannada",
+        "path": ".local/test-fonts/NotoSansKannada-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansKannada/NotoSansKannada-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 151940,
+        "sha256": "5c804033c57f2c2844b1cd425f45b9a78d81d2f71bf358351b24258ebe168aea"
+      },
+      {
+        "family": "NotoSansMalayalam",
+        "path": ".local/test-fonts/NotoSansMalayalam-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansMalayalam/NotoSansMalayalam-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 111724,
+        "sha256": "42eb462ff13e820ebbeaaec4e7b426bd1de145d02cef8b634f5a3efd376b513c"
+      },
+      {
+        "family": "NotoSansSinhala",
+        "path": ".local/test-fonts/NotoSansSinhala-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansSinhala/NotoSansSinhala-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 310232,
+        "sha256": "a966549310b2d3046ba25bbeef11985428ff9356fa656fd6118bc90fb82df031"
+      },
+      {
+        "family": "NotoSansThai",
+        "path": ".local/test-fonts/NotoSansThai-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansThai/NotoSansThai-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 37752,
+        "sha256": "404ddfb5ed0aaa6b6ec8a85700d682978992062d67da93903967b56cbd9a4acc"
+      },
+      {
+        "family": "NotoSansLao",
+        "path": ".local/test-fonts/NotoSansLao-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansLao/NotoSansLao-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 31340,
+        "sha256": "4a64d40850990992913d4be44b2e87a93d52f76882c1f0c0755edcb12ec57aa2"
+      },
+      {
+        "family": "NotoSansKhmer",
+        "path": ".local/test-fonts/NotoSansKhmer-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansKhmer/NotoSansKhmer-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 114096,
+        "sha256": "5c1ec068352f1e1fe8e7a3218230360d054e104d377ef40c0423b17c34c3c259"
+      },
+      {
+        "family": "NotoSansMyanmar",
+        "path": ".local/test-fonts/NotoSansMyanmar-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansMyanmar/NotoSansMyanmar-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 195408,
+        "sha256": "9dd2bc76a822a974efce803a4b07302d14d01d5c1fa9e33a258d15a9cb513a7d"
+      },
+      {
+        "family": "NotoSerifTibetan",
+        "path": ".local/test-fonts/NotoSerifTibetan-Regular.ttf",
+        "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSerifTibetan/NotoSerifTibetan-Regular.ttf?editor01u=recovery-complete",
+        "bytes": 613292,
+        "sha256": "3dd3876c670008cef5e29a79392fc8874d9bb9e349fc54755b2861c050c0fd7c"
+      }
+    ],
+    "ciFontPackage": {
+      "version": "20201225-2",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/f/fonts-noto/fonts-noto-core_20201225-2_all.deb",
+      "sha256": "4fee136cb12fc197703a340e010478f780a41044339fcefbd78ed9aa96c8b617",
+      "fonts": [
+        {
+          "file": "NotoSansKhmer-Regular.ttf",
+          "bytes": 113376,
+          "sha256": "bc9a5e2afcee249849e409aabe6e22330c479b878ea3e59bf5e7c84482d7ee53"
+        },
+        {
+          "file": "NotoSansLao-Regular.ttf",
+          "bytes": 31136,
+          "sha256": "6c3de7db369e85cba20255d161eeeb3d934ea3c4c51e2574c2ddcce79a25025c"
+        },
+        {
+          "file": "NotoSansMyanmar-Regular.ttf",
+          "bytes": 196608,
+          "sha256": "3fe9a4babc12081adc979e0313433e6ec85bb3ad069681c23ee8d8ea8b91332b"
+        },
+        {
+          "file": "NotoSansThai-Regular.ttf",
+          "bytes": 37744,
+          "sha256": "dfbd5ed0f1e68c3cbc51aa08f646d1ab0e68e7c4ceab70a69e465225ff701f93"
+        },
+        {
+          "file": "NotoSerifTibetan-Regular.ttf",
+          "bytes": 595476,
+          "sha256": "5893c1e0aefb250bcbeff5c0f8ee4bb27cd3dc19b47d14954b154b094e10ee63"
+        }
+      ]
+    },
+    "singleTtfOtfOnly": true,
+    "maxBytes": 16777216,
+    "fontBytesIncluded": false
+  },
+  "referenceAcceptance": {
+    "engine": "HarfBuzz",
+    "version": "8.3.0",
+    "coveredCjkStrings": 14775,
+    "curatedCjkStrings": 42,
+    "modernHangulSyllables": 11172,
+    "missingFontStringsRejected": {
+      "sc": 2,
+      "tc": 2,
+      "jp": 0,
+      "kr": 0
+    },
+    "cjsEsmAndRuntimePathsAdvancesOffsetsMatched": true,
+    "localizedHanMatrix": {
+      "fontVariants": 4,
+      "savedLocales": 4,
+      "stringsPerPair": 10,
+      "referenceRuns": 160,
+      "regionalGlyphDifferenceAsserted": true
+    },
+    "mixedReferenceRuns": 28,
+    "cleanInstalls": {
+      "modern": {
+        "fontSet": "modern",
+        "installs": [
+          {
+            "type": "full",
+            "patchedBytesMatchWorking": true,
+            "exports": [
+              {
+                "file": "main.cjs",
+                "sha256": "88914c3388bf7bbd48fab79549f697fa7d3c0376c52af5b776799573197b7d39"
+              },
+              {
+                "file": "module.mjs",
+                "sha256": "86fae79b7cc8d3b94d15039ed74fdf61cedfd46fc10fa6c712a60ddd77111b5b"
+              }
+            ],
+            "checks": [
+              {
+                "name": "Devanagari",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "385e78e6359a9d88a0f243d53b1209d7548361ba2194e2b9ec779bcaa7e8949d"
+              },
+              {
+                "name": "Bengali",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "6300c5370cd688b0641343de4c786de6d412bb6c578d129dae75e93a0322dcab"
+              },
+              {
+                "name": "Gujarati",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "8d5c22d7b729ef2839e6d1fe2cde77b2d083907be3659bca63676baa76e01fd6"
+              },
+              {
+                "name": "Gurmukhi",
+                "strings": 16,
+                "missingFontStrings": 0,
+                "fontSha256": "bbde4d85fdfb998eff6921cb2c7a9a7924a1c95560a6aa9a06172530e4f596da"
+              },
+              {
+                "name": "Odia",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "b8d8bd784b9d09c0668233437359913c93a3a83bf37d92ecde859e2bc728a0e0"
+              },
+              {
+                "name": "Tamil",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "6532db33b8b264abe3a098a40619feb489b5ddf5ab1d2b46e72b51eeb548001b"
+              },
+              {
+                "name": "Telugu",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "2c05072e8018a9be1cb0582953d9edf9a0cf129cdfb74e611de763b09c411f7f"
+              },
+              {
+                "name": "Kannada",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "5c804033c57f2c2844b1cd425f45b9a78d81d2f71bf358351b24258ebe168aea"
+              },
+              {
+                "name": "Malayalam",
+                "strings": 17,
+                "missingFontStrings": 0,
+                "fontSha256": "42eb462ff13e820ebbeaaec4e7b426bd1de145d02cef8b634f5a3efd376b513c"
+              },
+              {
+                "name": "Sinhala",
+                "strings": 665,
+                "missingFontStrings": 0,
+                "fontSha256": "a966549310b2d3046ba25bbeef11985428ff9356fa656fd6118bc90fb82df031"
+              },
+              {
+                "name": "Thai",
+                "strings": 383,
+                "missingFontStrings": 0,
+                "fontSha256": "404ddfb5ed0aaa6b6ec8a85700d682978992062d67da93903967b56cbd9a4acc"
+              },
+              {
+                "name": "Lao",
+                "strings": 230,
+                "missingFontStrings": 0,
+                "fontSha256": "4a64d40850990992913d4be44b2e87a93d52f76882c1f0c0755edcb12ec57aa2"
+              },
+              {
+                "name": "Khmer",
+                "strings": 2113,
+                "missingFontStrings": 0,
+                "fontSha256": "5c1ec068352f1e1fe8e7a3218230360d054e104d377ef40c0423b17c34c3c259"
+              },
+              {
+                "name": "Myanmar",
+                "strings": 3477,
+                "missingFontStrings": 0,
+                "fontSha256": "9dd2bc76a822a974efce803a4b07302d14d01d5c1fa9e33a258d15a9cb513a7d"
+              },
+              {
+                "name": "Tibetan",
+                "strings": 1203,
+                "missingFontStrings": 0,
+                "fontSha256": "3dd3876c670008cef5e29a79392fc8874d9bb9e349fc54755b2861c050c0fd7c"
+              },
+              {
+                "name": "Simplified Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+              },
+              {
+                "name": "Traditional Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4"
+              },
+              {
+                "name": "Japanese",
+                "strings": 556,
+                "missingFontStrings": 0,
+                "fontSha256": "68a3fc98800b2a27b371f2fb79991daf3633bd89309d4ffaa6946fd587f375b5"
+              },
+              {
+                "name": "Korean",
+                "strings": 13177,
+                "missingFontStrings": 0,
+                "fontSha256": "6bcb2a0703aa137e874fc2dffa85f6c21ba9a67fa329e81b8c801663af7e992a"
+              }
+            ]
+          },
+          {
+            "type": "production",
+            "patchedBytesMatchWorking": true,
+            "exports": [
+              {
+                "file": "main.cjs",
+                "sha256": "88914c3388bf7bbd48fab79549f697fa7d3c0376c52af5b776799573197b7d39"
+              },
+              {
+                "file": "module.mjs",
+                "sha256": "86fae79b7cc8d3b94d15039ed74fdf61cedfd46fc10fa6c712a60ddd77111b5b"
+              }
+            ],
+            "checks": [
+              {
+                "name": "Devanagari",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "385e78e6359a9d88a0f243d53b1209d7548361ba2194e2b9ec779bcaa7e8949d"
+              },
+              {
+                "name": "Bengali",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "6300c5370cd688b0641343de4c786de6d412bb6c578d129dae75e93a0322dcab"
+              },
+              {
+                "name": "Gujarati",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "8d5c22d7b729ef2839e6d1fe2cde77b2d083907be3659bca63676baa76e01fd6"
+              },
+              {
+                "name": "Gurmukhi",
+                "strings": 16,
+                "missingFontStrings": 0,
+                "fontSha256": "bbde4d85fdfb998eff6921cb2c7a9a7924a1c95560a6aa9a06172530e4f596da"
+              },
+              {
+                "name": "Odia",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "b8d8bd784b9d09c0668233437359913c93a3a83bf37d92ecde859e2bc728a0e0"
+              },
+              {
+                "name": "Tamil",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "6532db33b8b264abe3a098a40619feb489b5ddf5ab1d2b46e72b51eeb548001b"
+              },
+              {
+                "name": "Telugu",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "2c05072e8018a9be1cb0582953d9edf9a0cf129cdfb74e611de763b09c411f7f"
+              },
+              {
+                "name": "Kannada",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "5c804033c57f2c2844b1cd425f45b9a78d81d2f71bf358351b24258ebe168aea"
+              },
+              {
+                "name": "Malayalam",
+                "strings": 17,
+                "missingFontStrings": 0,
+                "fontSha256": "42eb462ff13e820ebbeaaec4e7b426bd1de145d02cef8b634f5a3efd376b513c"
+              },
+              {
+                "name": "Sinhala",
+                "strings": 665,
+                "missingFontStrings": 0,
+                "fontSha256": "a966549310b2d3046ba25bbeef11985428ff9356fa656fd6118bc90fb82df031"
+              },
+              {
+                "name": "Thai",
+                "strings": 383,
+                "missingFontStrings": 0,
+                "fontSha256": "404ddfb5ed0aaa6b6ec8a85700d682978992062d67da93903967b56cbd9a4acc"
+              },
+              {
+                "name": "Lao",
+                "strings": 230,
+                "missingFontStrings": 0,
+                "fontSha256": "4a64d40850990992913d4be44b2e87a93d52f76882c1f0c0755edcb12ec57aa2"
+              },
+              {
+                "name": "Khmer",
+                "strings": 2113,
+                "missingFontStrings": 0,
+                "fontSha256": "5c1ec068352f1e1fe8e7a3218230360d054e104d377ef40c0423b17c34c3c259"
+              },
+              {
+                "name": "Myanmar",
+                "strings": 3477,
+                "missingFontStrings": 0,
+                "fontSha256": "9dd2bc76a822a974efce803a4b07302d14d01d5c1fa9e33a258d15a9cb513a7d"
+              },
+              {
+                "name": "Tibetan",
+                "strings": 1203,
+                "missingFontStrings": 0,
+                "fontSha256": "3dd3876c670008cef5e29a79392fc8874d9bb9e349fc54755b2861c050c0fd7c"
+              },
+              {
+                "name": "Simplified Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+              },
+              {
+                "name": "Traditional Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4"
+              },
+              {
+                "name": "Japanese",
+                "strings": 556,
+                "missingFontStrings": 0,
+                "fontSha256": "68a3fc98800b2a27b371f2fb79991daf3633bd89309d4ffaa6946fd587f375b5"
+              },
+              {
+                "name": "Korean",
+                "strings": 13177,
+                "missingFontStrings": 0,
+                "fontSha256": "6bcb2a0703aa137e874fc2dffa85f6c21ba9a67fa329e81b8c801663af7e992a"
+              }
+            ]
+          }
+        ],
+        "totalMatchedLayouts": 91744
+      },
+      "ci": {
+        "fontSet": "ci",
+        "installs": [
+          {
+            "type": "full",
+            "patchedBytesMatchWorking": true,
+            "exports": [
+              {
+                "file": "main.cjs",
+                "sha256": "88914c3388bf7bbd48fab79549f697fa7d3c0376c52af5b776799573197b7d39"
+              },
+              {
+                "file": "module.mjs",
+                "sha256": "86fae79b7cc8d3b94d15039ed74fdf61cedfd46fc10fa6c712a60ddd77111b5b"
+              }
+            ],
+            "checks": [
+              {
+                "name": "Devanagari",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "79a470365ccb210fa3c7d8d8ff2e005ef9d983cfd067f735a0caf7e15070ca9f"
+              },
+              {
+                "name": "Bengali",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "9bb35b3547829ecc42041b6017e87fd4c5f1da1edcd00f59171777050f346018"
+              },
+              {
+                "name": "Gujarati",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "4468a3a24516831874fb4a867b760a22257944584e478d32a97e3c4d4bfc6400"
+              },
+              {
+                "name": "Gurmukhi",
+                "strings": 16,
+                "missingFontStrings": 0,
+                "fontSha256": "1db960ff6f506a98f5b3ece78f54618388c6187e7edf8ceee5ab63389c0db3ab"
+              },
+              {
+                "name": "Odia",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "20751837a8cac9d0e610ffdf91c43d3391e2b267ca2cad07f6e3866798436369"
+              },
+              {
+                "name": "Tamil",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "a7bb7f92f165479af2f0556c4fd669b74c5959f464f603e18389b532f4d07a71"
+              },
+              {
+                "name": "Telugu",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "cb3165071121b1e80c55a041d0c1f79b3bbc68e4b0eab37b0d881958dfc3ed7a"
+              },
+              {
+                "name": "Kannada",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "892b841b0b87ca3c2702bdc78d3031c8220f53e8f5f496ec5e37ccf0ca03ddf7"
+              },
+              {
+                "name": "Malayalam",
+                "strings": 17,
+                "missingFontStrings": 0,
+                "fontSha256": "5433f4a642b4325aa169a55c4c6b8d1c4a45c4e08bcd9cbe72888229709a8f2d"
+              },
+              {
+                "name": "Sinhala",
+                "strings": 665,
+                "missingFontStrings": 0,
+                "fontSha256": "31f83eec724a27779d1434afc84beabee239c0ff77dc8d04bee9f49c60b23fdd"
+              },
+              {
+                "name": "Thai",
+                "strings": 383,
+                "missingFontStrings": 0,
+                "fontSha256": "dfbd5ed0f1e68c3cbc51aa08f646d1ab0e68e7c4ceab70a69e465225ff701f93"
+              },
+              {
+                "name": "Lao",
+                "strings": 230,
+                "missingFontStrings": 0,
+                "fontSha256": "6c3de7db369e85cba20255d161eeeb3d934ea3c4c51e2574c2ddcce79a25025c"
+              },
+              {
+                "name": "Khmer",
+                "strings": 2113,
+                "missingFontStrings": 0,
+                "fontSha256": "bc9a5e2afcee249849e409aabe6e22330c479b878ea3e59bf5e7c84482d7ee53"
+              },
+              {
+                "name": "Myanmar",
+                "strings": 3477,
+                "missingFontStrings": 0,
+                "fontSha256": "3fe9a4babc12081adc979e0313433e6ec85bb3ad069681c23ee8d8ea8b91332b"
+              },
+              {
+                "name": "Tibetan",
+                "strings": 1203,
+                "missingFontStrings": 0,
+                "fontSha256": "5893c1e0aefb250bcbeff5c0f8ee4bb27cd3dc19b47d14954b154b094e10ee63"
+              },
+              {
+                "name": "Simplified Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+              },
+              {
+                "name": "Traditional Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4"
+              },
+              {
+                "name": "Japanese",
+                "strings": 556,
+                "missingFontStrings": 0,
+                "fontSha256": "68a3fc98800b2a27b371f2fb79991daf3633bd89309d4ffaa6946fd587f375b5"
+              },
+              {
+                "name": "Korean",
+                "strings": 13177,
+                "missingFontStrings": 0,
+                "fontSha256": "6bcb2a0703aa137e874fc2dffa85f6c21ba9a67fa329e81b8c801663af7e992a"
+              }
+            ]
+          },
+          {
+            "type": "production",
+            "patchedBytesMatchWorking": true,
+            "exports": [
+              {
+                "file": "main.cjs",
+                "sha256": "88914c3388bf7bbd48fab79549f697fa7d3c0376c52af5b776799573197b7d39"
+              },
+              {
+                "file": "module.mjs",
+                "sha256": "86fae79b7cc8d3b94d15039ed74fdf61cedfd46fc10fa6c712a60ddd77111b5b"
+              }
+            ],
+            "checks": [
+              {
+                "name": "Devanagari",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "79a470365ccb210fa3c7d8d8ff2e005ef9d983cfd067f735a0caf7e15070ca9f"
+              },
+              {
+                "name": "Bengali",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "9bb35b3547829ecc42041b6017e87fd4c5f1da1edcd00f59171777050f346018"
+              },
+              {
+                "name": "Gujarati",
+                "strings": 3,
+                "missingFontStrings": 0,
+                "fontSha256": "4468a3a24516831874fb4a867b760a22257944584e478d32a97e3c4d4bfc6400"
+              },
+              {
+                "name": "Gurmukhi",
+                "strings": 16,
+                "missingFontStrings": 0,
+                "fontSha256": "1db960ff6f506a98f5b3ece78f54618388c6187e7edf8ceee5ab63389c0db3ab"
+              },
+              {
+                "name": "Odia",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "20751837a8cac9d0e610ffdf91c43d3391e2b267ca2cad07f6e3866798436369"
+              },
+              {
+                "name": "Tamil",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "a7bb7f92f165479af2f0556c4fd669b74c5959f464f603e18389b532f4d07a71"
+              },
+              {
+                "name": "Telugu",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "cb3165071121b1e80c55a041d0c1f79b3bbc68e4b0eab37b0d881958dfc3ed7a"
+              },
+              {
+                "name": "Kannada",
+                "strings": 12,
+                "missingFontStrings": 0,
+                "fontSha256": "892b841b0b87ca3c2702bdc78d3031c8220f53e8f5f496ec5e37ccf0ca03ddf7"
+              },
+              {
+                "name": "Malayalam",
+                "strings": 17,
+                "missingFontStrings": 0,
+                "fontSha256": "5433f4a642b4325aa169a55c4c6b8d1c4a45c4e08bcd9cbe72888229709a8f2d"
+              },
+              {
+                "name": "Sinhala",
+                "strings": 665,
+                "missingFontStrings": 0,
+                "fontSha256": "31f83eec724a27779d1434afc84beabee239c0ff77dc8d04bee9f49c60b23fdd"
+              },
+              {
+                "name": "Thai",
+                "strings": 383,
+                "missingFontStrings": 0,
+                "fontSha256": "dfbd5ed0f1e68c3cbc51aa08f646d1ab0e68e7c4ceab70a69e465225ff701f93"
+              },
+              {
+                "name": "Lao",
+                "strings": 230,
+                "missingFontStrings": 0,
+                "fontSha256": "6c3de7db369e85cba20255d161eeeb3d934ea3c4c51e2574c2ddcce79a25025c"
+              },
+              {
+                "name": "Khmer",
+                "strings": 2113,
+                "missingFontStrings": 0,
+                "fontSha256": "bc9a5e2afcee249849e409aabe6e22330c479b878ea3e59bf5e7c84482d7ee53"
+              },
+              {
+                "name": "Myanmar",
+                "strings": 3477,
+                "missingFontStrings": 0,
+                "fontSha256": "3fe9a4babc12081adc979e0313433e6ec85bb3ad069681c23ee8d8ea8b91332b"
+              },
+              {
+                "name": "Tibetan",
+                "strings": 1203,
+                "missingFontStrings": 0,
+                "fontSha256": "5893c1e0aefb250bcbeff5c0f8ee4bb27cd3dc19b47d14954b154b094e10ee63"
+              },
+              {
+                "name": "Simplified Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+              },
+              {
+                "name": "Traditional Chinese",
+                "strings": 521,
+                "missingFontStrings": 2,
+                "fontSha256": "dce08bd4fd91aa8aa76ed8fea4b694c2dfb8550f67871e326843212ddbeb88b4"
+              },
+              {
+                "name": "Japanese",
+                "strings": 556,
+                "missingFontStrings": 0,
+                "fontSha256": "68a3fc98800b2a27b371f2fb79991daf3633bd89309d4ffaa6946fd587f375b5"
+              },
+              {
+                "name": "Korean",
+                "strings": 13177,
+                "missingFontStrings": 0,
+                "fontSha256": "6bcb2a0703aa137e874fc2dffa85f6c21ba9a67fa329e81b8c801663af7e992a"
+              }
+            ]
+          }
+        ],
+        "totalMatchedLayouts": 91744
+      }
+    },
+    "cleanMatchedLayoutsTotal": 183488,
+    "priorFifteenScriptRegressionsPassedBothFontSets": true
+  },
+  "lineBreakAcceptance": {
+    "dependency": "linebreak 1.1.0",
+    "baseline": "Unicode 13 UAX #14",
+    "oracle": "ICU 74.2.0.0 strict",
+    "cases": 176,
+    "everyEmittedBoundaryInIndependentAllowedSet": true,
+    "completeGraphemesProtected": true,
+    "japaneseNonstartersAndOpeningBracketsProtected": true,
+    "koreanWordsProtected": true,
+    "mixedDictionaryWordsProtected": true,
+    "arbitraryCjkEmergencySplits": false,
+    "universalCurrentUnicodeConformanceClaimed": false
+  },
+  "renderAcceptance": {
+    "exportsPerFontSet": 72,
+    "decodedTimedFramesPerFontSet": 216,
+    "bothFontSetsExports": 144,
+    "bothFontSetsDecodedFrames": 432,
+    "geometries": "720/1080 x 9:16/16:9/1:1",
+    "modes": "pure standard; mixed standard/inset-v1",
+    "timedFramesSeconds": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "cueIntervalSeconds": [
+      0.3,
+      0.8
+    ],
+    "boundsAndCueTimingAsserted": true,
+    "unicodeSrtAsserted": true,
+    "frameHashes": [
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-16x9-1080.png",
+        "bytes": 80998,
+        "sha256": "b75fc9e8319e1d6f0f04644d8319e748e5a56b5919837c4aea1758092f8be4bc"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-16x9-720.png",
+        "bytes": 47040,
+        "sha256": "828530287a9f02f49e55cf5fcc83befe1382dec797a1f677bfd189d50c1c1271"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-1x1-1080.png",
+        "bytes": 69356,
+        "sha256": "e75da92319606e4c7a0fd235d0b1162d4c5080986b35e13c9d6dcb44465e371a"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-1x1-720.png",
+        "bytes": 41948,
+        "sha256": "b6c6a9c57b9f69ed4ee923da90dc991549345b1be7f82ccb32c61795254ad5b6"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-9x16-1080.png",
+        "bytes": 79716,
+        "sha256": "43a5fcc7c49905744f1e659b7892e07c8fd440dce9ce2111708a287822063fee"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-9x16-720.png",
+        "bytes": 48737,
+        "sha256": "ebc6bda40ddb0bbf81ada4051d70efaa478f8a88544bd18302ce3a5202f6b2e5"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-standard-16x9-1080.png",
+        "bytes": 81135,
+        "sha256": "f7cb5295f736fac21ac2d523c6eee1b1db717594aa563b6f92340dcb1f9eb64f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-standard-16x9-720.png",
+        "bytes": 47238,
+        "sha256": "e1b650654dac2ccfd0f69fd093578f68abcc9c63402e8d0fbb891041bdd2c7db"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-standard-1x1-1080.png",
+        "bytes": 75830,
+        "sha256": "b88054e12091966eec5e0eb85b1af10395fdcd8de616dfb8903c6c8121da1bf2"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-standard-1x1-720.png",
+        "bytes": 44361,
+        "sha256": "c5a612d4dbe41f2e3ef9df3a7c8a04fd5f731155bc1c896bbda9d3c2224dae22"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-standard-9x16-1080.png",
+        "bytes": 79071,
+        "sha256": "e3c2257a5ac5682ddcb2f7777aac8e89fe3f8d7257bdbfa5aee9319d2f748cfb"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-standard-9x16-720.png",
+        "bytes": 46762,
+        "sha256": "5b4da89a6ca8a2009bb79505c6ea6df71738091bd954d0e617cde9ef43d5e363"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-16x9-1080.png",
+        "bytes": 36707,
+        "sha256": "3362fffacbc5d436b231295e4ad82ad884f27e9e6759ee7babb7099270706f92"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-16x9-720.png",
+        "bytes": 21927,
+        "sha256": "c2fa77341f1b53283604bc71c50b7947744aea224475da86ba2552d42538abc9"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-1x1-1080.png",
+        "bytes": 32501,
+        "sha256": "abc18cb4d242d5272e8c265a801bd52b50e10ea052389cb13cc7c3e6c632f68e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-1x1-720.png",
+        "bytes": 20021,
+        "sha256": "3437b467805de10450b888ae3e3ea2831ac8e7d21d6bae5fc655d2d6c18a305f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-9x16-1080.png",
+        "bytes": 35563,
+        "sha256": "299274f51b09d7437cd7960d40ffd467783ca73d89e21bb00fee1ef00719163c"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-9x16-720.png",
+        "bytes": 20964,
+        "sha256": "6315a889b040aa37cda01848d29b2eb3cab4c5cb77d9bc45c3860e92e128fdbd"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-16x9-1080.png",
+        "bytes": 79092,
+        "sha256": "1d00b528a30f5060436e7543b46d3cb0a928cfa7582d84950f5b50d3219ada36"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-16x9-720.png",
+        "bytes": 46643,
+        "sha256": "5bb234483caec4e9e30f581de7b62cc29164b9d769163fa2e6bac2b3f28caaef"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-1x1-1080.png",
+        "bytes": 67039,
+        "sha256": "d69977f2a023afcc7c09da16826ec77d109412fcfa8a61b4ec2ed4c11b99956e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-1x1-720.png",
+        "bytes": 41473,
+        "sha256": "a7e87c573e2c2ccc9d8324eb80948ca911cf7fda750efa6d54685ee655bec322"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-9x16-1080.png",
+        "bytes": 78148,
+        "sha256": "c49d3467e1b97f15906042eed9e51e39e65f12c31ac1366b1ad630d6911f89eb"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-9x16-720.png",
+        "bytes": 48157,
+        "sha256": "6c38f0b8ca18b4ee740eb7b9520e146cdd845e08dfbc8fe02f201dffe9fc5a7d"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-standard-16x9-1080.png",
+        "bytes": 78944,
+        "sha256": "47ae91552a9a4d7b5909b35079bb5270a17973e62b465a3ef7b8c19859f7b739"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-standard-16x9-720.png",
+        "bytes": 46774,
+        "sha256": "9f593afdb52ed4b4ec08572ef454023a842ff741cb329e3d7b0717f392733c77"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-standard-1x1-1080.png",
+        "bytes": 74079,
+        "sha256": "2667680f1a39776faf4b2581c2b9bb00c3f1a9e4a877ef7dfc0cc94d465d0148"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-standard-1x1-720.png",
+        "bytes": 43799,
+        "sha256": "57a7d9d0b24127e40037e13a648deba3fca9a9c7f1790387d6e690b215d93999"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-standard-9x16-1080.png",
+        "bytes": 77067,
+        "sha256": "387c39255fe5df81783957899baa1742e1d8bed53ad73f7f29d8af541a8dcbaf"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-standard-9x16-720.png",
+        "bytes": 47679,
+        "sha256": "e9d041a5eafda1c0102899e6c89111baafb454ad2db0743618ebc7889f8778bf"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-16x9-1080.png",
+        "bytes": 33191,
+        "sha256": "7dc9b186e51795f70a3ead39bd4625c526eb648f091f55c54546bbdfed0ef3eb"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-16x9-720.png",
+        "bytes": 20862,
+        "sha256": "a431882bb44bd6ad858ed4f85a6d95ef11f202730609352387acf118100b9fff"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-1x1-1080.png",
+        "bytes": 29671,
+        "sha256": "bc49c2b542866d39a8fb2ddf0a990a81a69b8fcd86d888b9c823e4f30a0e61ec"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-1x1-720.png",
+        "bytes": 19620,
+        "sha256": "75dc1afc258feedeb1a8339df8685e152c0f950e0c10e1278dd390c6c3d0cc2e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-9x16-1080.png",
+        "bytes": 32183,
+        "sha256": "84ff385bb1059860cd7e9234bbe5f024944e0e96435f0e143e735e31006fd3f2"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-9x16-720.png",
+        "bytes": 20949,
+        "sha256": "bb41b18ff0fdb829e5c67e96e5fc345adbb4cf0dfc4ab1f52e19a5940482b2ea"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 83137,
+        "sha256": "25cf044563927927a0983e17e380bf49e4285f979b2405febde16cd20d78dfed"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-16x9-720.png",
+        "bytes": 48018,
+        "sha256": "3c06e0d5eb2550fe97019d27cd41caab6d402587dcfe3cf97234e36b0d33186f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-1x1-1080.png",
+        "bytes": 71861,
+        "sha256": "530d03170b95b042986561ddd40a8232e48ad73fecf307333cba2574e363628d"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-1x1-720.png",
+        "bytes": 42817,
+        "sha256": "f6a0fde7744f4250dc8eed3818a3cdee8276c6a50971bf990252e72368e56ba6"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-9x16-1080.png",
+        "bytes": 82320,
+        "sha256": "43bf06c8788b1d560c881e661c337c7a344a14668631d777362500b44ce68231"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-9x16-720.png",
+        "bytes": 50590,
+        "sha256": "a907a9909d5903d91b8086816953cf0045400e2ea2da05605f13c3780cbcbd42"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-standard-16x9-1080.png",
+        "bytes": 83134,
+        "sha256": "eda6fd491c5a2db7475745e95c8a5a4aa9c8709d29e589ae7a12e8c2602186d2"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-standard-16x9-720.png",
+        "bytes": 48568,
+        "sha256": "e1dfe9ed8e7e285ab401ae491e7c569bef019944ba54bcd93bc2f19ba42cbf30"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-standard-1x1-1080.png",
+        "bytes": 78565,
+        "sha256": "30109f77213d537012094805257104f5f870aa2c9592c3e6206e22e932948803"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-standard-1x1-720.png",
+        "bytes": 45679,
+        "sha256": "f018688311446497ae27cd642b388d670314f2a095a987d57c4cfbb40973dca9"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-standard-9x16-1080.png",
+        "bytes": 79930,
+        "sha256": "fd60eaff7f8957da2ef47617c4d9c691cf4fcc6a26852c17bb8e453f2be01ed6"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-standard-9x16-720.png",
+        "bytes": 47728,
+        "sha256": "340375d2e0187e03f94c722a6487f180d99c22e000872597263cb6e8e2e27103"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-16x9-1080.png",
+        "bytes": 39439,
+        "sha256": "ea38f72a5ad55a591cb028df52e7e811dfbf6a0e4e104961a6137b6812326462"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-16x9-720.png",
+        "bytes": 22949,
+        "sha256": "5b96ab9f786ac76b07e9b186a62e9c05ab97af194031cfdc2b4b9da2ca7527e3"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-1x1-1080.png",
+        "bytes": 34859,
+        "sha256": "dd3710a308232b03d8786448285aad0c2d025544f40d29c028b268f433e3ac89"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-1x1-720.png",
+        "bytes": 21435,
+        "sha256": "7f6f442bff8230fb7097fdcef2a8b14d7f071b591ed9a17f819d0db8ca8e418d"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-9x16-1080.png",
+        "bytes": 37596,
+        "sha256": "d308f9ec46525e7e603dd2e515dfc411e40f1ebf70296ec830db171ca072b7e4"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-9x16-720.png",
+        "bytes": 22562,
+        "sha256": "c4912a7dd5b9ba09f760f7ac332006b7708f56d8d05fcee5b020fbc3d7eb11df"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 85368,
+        "sha256": "821180b992e6ae315f66934701f36b1c154e5e2dc8226686b69ea8e68f1f16b0"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-16x9-720.png",
+        "bytes": 49230,
+        "sha256": "8a51d97c85aaca1317a46e6c06bbf44484585b3b5ed619b7c9e34d80c220f02f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-1x1-1080.png",
+        "bytes": 74481,
+        "sha256": "62da527d422f8f7c71fc213aeccc9e8e944cb3767cfa664b607d3a2aff40936e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-1x1-720.png",
+        "bytes": 43802,
+        "sha256": "b948a20b8032ee0c3ec3292d0d9f9b170aca823a24e007754893e199a9549c2e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-9x16-1080.png",
+        "bytes": 84528,
+        "sha256": "8af21793ea9d06ecbdaad0143e881f0f8d46f58b293713f98256777dfdd05447"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-9x16-720.png",
+        "bytes": 51914,
+        "sha256": "7dbe90be70f47547728db6b4e3e53221478346a712926e7004052b055a41c2cf"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-standard-16x9-1080.png",
+        "bytes": 84538,
+        "sha256": "ee27b14d40b96137cc848beeb17ae480d2ee6b4eeb91d76aa021cf8e1e97e3fc"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-standard-16x9-720.png",
+        "bytes": 49654,
+        "sha256": "068ef8780e338ab67b403ccb57ea89618ca89afb37bcc172a7396e8fca5cd3f9"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-standard-1x1-1080.png",
+        "bytes": 80620,
+        "sha256": "3da29ee52f6aa2b1dd0ae1602b94f7d69c9178b0f18202ee0bddb33a80f68904"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-standard-1x1-720.png",
+        "bytes": 46668,
+        "sha256": "8e22de21082a5ac4deccb1365ce2bd0638074157f31fcc30def9482d17b09ede"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-standard-9x16-1080.png",
+        "bytes": 81570,
+        "sha256": "c1aebd928144b99326735cf64d029549aeeef58cfa9981cf35403790dee55f27"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-standard-9x16-720.png",
+        "bytes": 49114,
+        "sha256": "4d05ef3ed3a846ac6572e107d78ce1e295a472cd85973ac722b588622e82d404"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-16x9-1080.png",
+        "bytes": 42344,
+        "sha256": "eb115860f89aac039393dd2c39fc8423297e7569d64a294908f861ed48de20cc"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-16x9-720.png",
+        "bytes": 24933,
+        "sha256": "31de6475cb40571f937f8337fd31fd82eb26006c611c245ca56984c5679dde8e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-1x1-1080.png",
+        "bytes": 37845,
+        "sha256": "a126fe75d634f9bc972e4a2598600db419700091bd375443a063e312759225d8"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-1x1-720.png",
+        "bytes": 23276,
+        "sha256": "4f1a43416a84dda67e5c0c1aaaae55ae211533e06ff36c4759ddaad7940a4558"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-9x16-1080.png",
+        "bytes": 40233,
+        "sha256": "10cf7f42f01d31f3df0b58c66a73b0c28f90b17f583c6c0956a9242a9d85ba68"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-9x16-720.png",
+        "bytes": 24016,
+        "sha256": "47b53c87a5feebf23f096fdeb640277c21c1aeb6b2bce89eeeb15ba21d805ec0"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-16x9-1080.png",
+        "bytes": 80998,
+        "sha256": "b75fc9e8319e1d6f0f04644d8319e748e5a56b5919837c4aea1758092f8be4bc"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-16x9-720.png",
+        "bytes": 47040,
+        "sha256": "828530287a9f02f49e55cf5fcc83befe1382dec797a1f677bfd189d50c1c1271"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-1x1-1080.png",
+        "bytes": 69356,
+        "sha256": "e75da92319606e4c7a0fd235d0b1162d4c5080986b35e13c9d6dcb44465e371a"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-1x1-720.png",
+        "bytes": 41948,
+        "sha256": "b6c6a9c57b9f69ed4ee923da90dc991549345b1be7f82ccb32c61795254ad5b6"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-9x16-1080.png",
+        "bytes": 79716,
+        "sha256": "43a5fcc7c49905744f1e659b7892e07c8fd440dce9ce2111708a287822063fee"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-9x16-720.png",
+        "bytes": 48737,
+        "sha256": "ebc6bda40ddb0bbf81ada4051d70efaa478f8a88544bd18302ce3a5202f6b2e5"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-standard-16x9-1080.png",
+        "bytes": 81135,
+        "sha256": "f7cb5295f736fac21ac2d523c6eee1b1db717594aa563b6f92340dcb1f9eb64f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-standard-16x9-720.png",
+        "bytes": 47238,
+        "sha256": "e1b650654dac2ccfd0f69fd093578f68abcc9c63402e8d0fbb891041bdd2c7db"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-standard-1x1-1080.png",
+        "bytes": 75830,
+        "sha256": "b88054e12091966eec5e0eb85b1af10395fdcd8de616dfb8903c6c8121da1bf2"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-standard-1x1-720.png",
+        "bytes": 44361,
+        "sha256": "c5a612d4dbe41f2e3ef9df3a7c8a04fd5f731155bc1c896bbda9d3c2224dae22"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-standard-9x16-1080.png",
+        "bytes": 79071,
+        "sha256": "e3c2257a5ac5682ddcb2f7777aac8e89fe3f8d7257bdbfa5aee9319d2f748cfb"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-standard-9x16-720.png",
+        "bytes": 46762,
+        "sha256": "5b4da89a6ca8a2009bb79505c6ea6df71738091bd954d0e617cde9ef43d5e363"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-16x9-1080.png",
+        "bytes": 36707,
+        "sha256": "3362fffacbc5d436b231295e4ad82ad884f27e9e6759ee7babb7099270706f92"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-16x9-720.png",
+        "bytes": 21927,
+        "sha256": "c2fa77341f1b53283604bc71c50b7947744aea224475da86ba2552d42538abc9"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-1x1-1080.png",
+        "bytes": 32501,
+        "sha256": "abc18cb4d242d5272e8c265a801bd52b50e10ea052389cb13cc7c3e6c632f68e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-1x1-720.png",
+        "bytes": 20021,
+        "sha256": "3437b467805de10450b888ae3e3ea2831ac8e7d21d6bae5fc655d2d6c18a305f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-9x16-1080.png",
+        "bytes": 35563,
+        "sha256": "299274f51b09d7437cd7960d40ffd467783ca73d89e21bb00fee1ef00719163c"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-9x16-720.png",
+        "bytes": 20964,
+        "sha256": "6315a889b040aa37cda01848d29b2eb3cab4c5cb77d9bc45c3860e92e128fdbd"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-16x9-1080.png",
+        "bytes": 79092,
+        "sha256": "1d00b528a30f5060436e7543b46d3cb0a928cfa7582d84950f5b50d3219ada36"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-16x9-720.png",
+        "bytes": 46643,
+        "sha256": "5bb234483caec4e9e30f581de7b62cc29164b9d769163fa2e6bac2b3f28caaef"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-1x1-1080.png",
+        "bytes": 67039,
+        "sha256": "d69977f2a023afcc7c09da16826ec77d109412fcfa8a61b4ec2ed4c11b99956e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-1x1-720.png",
+        "bytes": 41473,
+        "sha256": "a7e87c573e2c2ccc9d8324eb80948ca911cf7fda750efa6d54685ee655bec322"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-9x16-1080.png",
+        "bytes": 78148,
+        "sha256": "c49d3467e1b97f15906042eed9e51e39e65f12c31ac1366b1ad630d6911f89eb"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-9x16-720.png",
+        "bytes": 48157,
+        "sha256": "6c38f0b8ca18b4ee740eb7b9520e146cdd845e08dfbc8fe02f201dffe9fc5a7d"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-standard-16x9-1080.png",
+        "bytes": 78944,
+        "sha256": "47ae91552a9a4d7b5909b35079bb5270a17973e62b465a3ef7b8c19859f7b739"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-standard-16x9-720.png",
+        "bytes": 46774,
+        "sha256": "9f593afdb52ed4b4ec08572ef454023a842ff741cb329e3d7b0717f392733c77"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-standard-1x1-1080.png",
+        "bytes": 74079,
+        "sha256": "2667680f1a39776faf4b2581c2b9bb00c3f1a9e4a877ef7dfc0cc94d465d0148"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-standard-1x1-720.png",
+        "bytes": 43799,
+        "sha256": "57a7d9d0b24127e40037e13a648deba3fca9a9c7f1790387d6e690b215d93999"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-standard-9x16-1080.png",
+        "bytes": 77067,
+        "sha256": "387c39255fe5df81783957899baa1742e1d8bed53ad73f7f29d8af541a8dcbaf"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-standard-9x16-720.png",
+        "bytes": 47679,
+        "sha256": "e9d041a5eafda1c0102899e6c89111baafb454ad2db0743618ebc7889f8778bf"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-16x9-1080.png",
+        "bytes": 33191,
+        "sha256": "7dc9b186e51795f70a3ead39bd4625c526eb648f091f55c54546bbdfed0ef3eb"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-16x9-720.png",
+        "bytes": 20862,
+        "sha256": "a431882bb44bd6ad858ed4f85a6d95ef11f202730609352387acf118100b9fff"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-1x1-1080.png",
+        "bytes": 29671,
+        "sha256": "bc49c2b542866d39a8fb2ddf0a990a81a69b8fcd86d888b9c823e4f30a0e61ec"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-1x1-720.png",
+        "bytes": 19620,
+        "sha256": "75dc1afc258feedeb1a8339df8685e152c0f950e0c10e1278dd390c6c3d0cc2e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-9x16-1080.png",
+        "bytes": 32183,
+        "sha256": "84ff385bb1059860cd7e9234bbe5f024944e0e96435f0e143e735e31006fd3f2"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-9x16-720.png",
+        "bytes": 20949,
+        "sha256": "bb41b18ff0fdb829e5c67e96e5fc345adbb4cf0dfc4ab1f52e19a5940482b2ea"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 83137,
+        "sha256": "25cf044563927927a0983e17e380bf49e4285f979b2405febde16cd20d78dfed"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-16x9-720.png",
+        "bytes": 48018,
+        "sha256": "3c06e0d5eb2550fe97019d27cd41caab6d402587dcfe3cf97234e36b0d33186f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-1x1-1080.png",
+        "bytes": 71861,
+        "sha256": "530d03170b95b042986561ddd40a8232e48ad73fecf307333cba2574e363628d"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-1x1-720.png",
+        "bytes": 42817,
+        "sha256": "f6a0fde7744f4250dc8eed3818a3cdee8276c6a50971bf990252e72368e56ba6"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-9x16-1080.png",
+        "bytes": 82320,
+        "sha256": "43bf06c8788b1d560c881e661c337c7a344a14668631d777362500b44ce68231"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-9x16-720.png",
+        "bytes": 50590,
+        "sha256": "a907a9909d5903d91b8086816953cf0045400e2ea2da05605f13c3780cbcbd42"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-standard-16x9-1080.png",
+        "bytes": 83134,
+        "sha256": "eda6fd491c5a2db7475745e95c8a5a4aa9c8709d29e589ae7a12e8c2602186d2"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-standard-16x9-720.png",
+        "bytes": 48568,
+        "sha256": "e1dfe9ed8e7e285ab401ae491e7c569bef019944ba54bcd93bc2f19ba42cbf30"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-standard-1x1-1080.png",
+        "bytes": 78565,
+        "sha256": "30109f77213d537012094805257104f5f870aa2c9592c3e6206e22e932948803"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-standard-1x1-720.png",
+        "bytes": 45679,
+        "sha256": "f018688311446497ae27cd642b388d670314f2a095a987d57c4cfbb40973dca9"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-standard-9x16-1080.png",
+        "bytes": 79930,
+        "sha256": "fd60eaff7f8957da2ef47617c4d9c691cf4fcc6a26852c17bb8e453f2be01ed6"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-standard-9x16-720.png",
+        "bytes": 47728,
+        "sha256": "340375d2e0187e03f94c722a6487f180d99c22e000872597263cb6e8e2e27103"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-16x9-1080.png",
+        "bytes": 39439,
+        "sha256": "ea38f72a5ad55a591cb028df52e7e811dfbf6a0e4e104961a6137b6812326462"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-16x9-720.png",
+        "bytes": 22949,
+        "sha256": "5b96ab9f786ac76b07e9b186a62e9c05ab97af194031cfdc2b4b9da2ca7527e3"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-1x1-1080.png",
+        "bytes": 34859,
+        "sha256": "dd3710a308232b03d8786448285aad0c2d025544f40d29c028b268f433e3ac89"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-1x1-720.png",
+        "bytes": 21435,
+        "sha256": "7f6f442bff8230fb7097fdcef2a8b14d7f071b591ed9a17f819d0db8ca8e418d"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-9x16-1080.png",
+        "bytes": 37596,
+        "sha256": "d308f9ec46525e7e603dd2e515dfc411e40f1ebf70296ec830db171ca072b7e4"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-9x16-720.png",
+        "bytes": 22562,
+        "sha256": "c4912a7dd5b9ba09f760f7ac332006b7708f56d8d05fcee5b020fbc3d7eb11df"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 85368,
+        "sha256": "821180b992e6ae315f66934701f36b1c154e5e2dc8226686b69ea8e68f1f16b0"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-16x9-720.png",
+        "bytes": 49230,
+        "sha256": "8a51d97c85aaca1317a46e6c06bbf44484585b3b5ed619b7c9e34d80c220f02f"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-1x1-1080.png",
+        "bytes": 74481,
+        "sha256": "62da527d422f8f7c71fc213aeccc9e8e944cb3767cfa664b607d3a2aff40936e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-1x1-720.png",
+        "bytes": 43802,
+        "sha256": "b948a20b8032ee0c3ec3292d0d9f9b170aca823a24e007754893e199a9549c2e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-9x16-1080.png",
+        "bytes": 84528,
+        "sha256": "8af21793ea9d06ecbdaad0143e881f0f8d46f58b293713f98256777dfdd05447"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-9x16-720.png",
+        "bytes": 51914,
+        "sha256": "7dbe90be70f47547728db6b4e3e53221478346a712926e7004052b055a41c2cf"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-standard-16x9-1080.png",
+        "bytes": 84538,
+        "sha256": "ee27b14d40b96137cc848beeb17ae480d2ee6b4eeb91d76aa021cf8e1e97e3fc"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-standard-16x9-720.png",
+        "bytes": 49654,
+        "sha256": "068ef8780e338ab67b403ccb57ea89618ca89afb37bcc172a7396e8fca5cd3f9"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-standard-1x1-1080.png",
+        "bytes": 80620,
+        "sha256": "3da29ee52f6aa2b1dd0ae1602b94f7d69c9178b0f18202ee0bddb33a80f68904"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-standard-1x1-720.png",
+        "bytes": 46668,
+        "sha256": "8e22de21082a5ac4deccb1365ce2bd0638074157f31fcc30def9482d17b09ede"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-standard-9x16-1080.png",
+        "bytes": 81570,
+        "sha256": "c1aebd928144b99326735cf64d029549aeeef58cfa9981cf35403790dee55f27"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-standard-9x16-720.png",
+        "bytes": 49114,
+        "sha256": "4d05ef3ed3a846ac6572e107d78ce1e295a472cd85973ac722b588622e82d404"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-16x9-1080.png",
+        "bytes": 42344,
+        "sha256": "eb115860f89aac039393dd2c39fc8423297e7569d64a294908f861ed48de20cc"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-16x9-720.png",
+        "bytes": 24933,
+        "sha256": "31de6475cb40571f937f8337fd31fd82eb26006c611c245ca56984c5679dde8e"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-1x1-1080.png",
+        "bytes": 37845,
+        "sha256": "a126fe75d634f9bc972e4a2598600db419700091bd375443a063e312759225d8"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-1x1-720.png",
+        "bytes": 23276,
+        "sha256": "4f1a43416a84dda67e5c0c1aaaae55ae211533e06ff36c4759ddaad7940a4558"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-9x16-1080.png",
+        "bytes": 40233,
+        "sha256": "10cf7f42f01d31f3df0b58c66a73b0c28f90b17f583c6c0956a9242a9d85ba68"
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-9x16-720.png",
+        "bytes": 24016,
+        "sha256": "47b53c87a5feebf23f096fdeb640277c21c1aeb6b2bce89eeeb15ba21d805ec0"
+      }
+    ],
+    "visuallyReviewed": [
+      {
+        "path": ".local/editor01v-cjk-frames/sc/pure-standard-9x16-720.png",
+        "bytes": 22562,
+        "sha256": "c4912a7dd5b9ba09f760f7ac332006b7708f56d8d05fcee5b020fbc3d7eb11df",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/sc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 83137,
+        "sha256": "25cf044563927927a0983e17e380bf49e4285f979b2405febde16cd20d78dfed",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/pure-standard-9x16-720.png",
+        "bytes": 24016,
+        "sha256": "47b53c87a5feebf23f096fdeb640277c21c1aeb6b2bce89eeeb15ba21d805ec0",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/tc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 85368,
+        "sha256": "821180b992e6ae315f66934701f36b1c154e5e2dc8226686b69ea8e68f1f16b0",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/pure-standard-9x16-720.png",
+        "bytes": 20964,
+        "sha256": "6315a889b040aa37cda01848d29b2eb3cab4c5cb77d9bc45c3860e92e128fdbd",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/jp/mixed-inset-v1-16x9-1080.png",
+        "bytes": 80998,
+        "sha256": "b75fc9e8319e1d6f0f04644d8319e748e5a56b5919837c4aea1758092f8be4bc",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/pure-standard-9x16-720.png",
+        "bytes": 20949,
+        "sha256": "bb41b18ff0fdb829e5c67e96e5fc345adbb4cf0dfc4ab1f52e19a5940482b2ea",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames/kr/mixed-inset-v1-16x9-1080.png",
+        "bytes": 79092,
+        "sha256": "1d00b528a30f5060436e7543b46d3cb0a928cfa7582d84950f5b50d3219ada36",
+        "review": "Visible complete title/cue glyphs, no clipped edges or leading closing punctuation; mixed script baselines and combining forms visually intact. Decoded synthetic fixture only; physical-device acceptance remains open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/pure-standard-9x16-720.png",
+        "bytes": 22562,
+        "sha256": "c4912a7dd5b9ba09f760f7ac332006b7708f56d8d05fcee5b020fbc3d7eb11df",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/sc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 83137,
+        "sha256": "25cf044563927927a0983e17e380bf49e4285f979b2405febde16cd20d78dfed",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/pure-standard-9x16-720.png",
+        "bytes": 24016,
+        "sha256": "47b53c87a5feebf23f096fdeb640277c21c1aeb6b2bce89eeeb15ba21d805ec0",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/tc/mixed-inset-v1-16x9-1080.png",
+        "bytes": 85368,
+        "sha256": "821180b992e6ae315f66934701f36b1c154e5e2dc8226686b69ea8e68f1f16b0",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/pure-standard-9x16-720.png",
+        "bytes": 20964,
+        "sha256": "6315a889b040aa37cda01848d29b2eb3cab4c5cb77d9bc45c3860e92e128fdbd",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/jp/mixed-inset-v1-16x9-1080.png",
+        "bytes": 80998,
+        "sha256": "b75fc9e8319e1d6f0f04644d8319e748e5a56b5919837c4aea1758092f8be4bc",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/pure-standard-9x16-720.png",
+        "bytes": 20949,
+        "sha256": "bb41b18ff0fdb829e5c67e96e5fc345adbb4cf0dfc4ab1f52e19a5940482b2ea",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      },
+      {
+        "path": ".local/editor01v-cjk-frames-ci/kr/mixed-inset-v1-16x9-1080.png",
+        "bytes": 79092,
+        "sha256": "1d00b528a30f5060436e7543b46d3cb0a928cfa7582d84950f5b50d3219ada36",
+        "review": "Visible complete title/cue glyphs, intact mixed-script forms/baselines and no clipped edges or leading closing punctuation. Older Ubuntu legacy font set; decoded synthetic smoke review only, physical-device acceptance open."
+      }
+    ],
+    "visualReviewScope": "Sixteen synthetic decoded frames (eight per font set): portrait720 pure / landscape1080 mixed inset for four locales. Visibility/clipping smoke review only; physical-device and broader typography acceptance remains open."
+  },
+  "recovery": {
+    "naturalRedisLockMs": 119962,
+    "caseDurationMs": 129017.307136,
+    "providerSubmissionsAsserted": 1,
+    "retainedProviderReceiptPrivateOutputCompletedQueueJobAsserted": true
+  },
+  "failedOrIncompleteRunsNotPassEvidence": [
+    {
+      "run": "Initial Japanese reference probe",
+      "result": "3 passed / 1 failed",
+      "problem": "Common prolonged mark in アー。 split the script run and lost contextual kerning.",
+      "resolution": "Common CJK punctuation inherits adjacent CJK script; all inputs retained and complete suite rerun."
+    },
+    {
+      "run": "Initial mixed-reference probe",
+      "result": "9 passed / 1 failed",
+      "problem": "Reference assumed the primary CJK font covered all accented Greek; runtime correctly used a fallback grapheme.",
+      "resolution": "Explicit complete covering fonts establish independent known-script reference runs; frame tests still exercise configured fallback."
+    },
+    {
+      "run": "First full HTTP flow",
+      "result": "6 passed / 1 timeout; no browser/recovery acceptance",
+      "problem": "Expanded sixteen-language case reached inherited120-second whole-case deadline.",
+      "resolution": "Bounded180-second whole-case budget; same assertions/per-render60-second waits retained. Fresh full HTTP/browser/recovery rerun passed."
+    },
+    {
+      "run": "Temporary setup/probes",
+      "result": "Not counted",
+      "problem": "Lost temporary workspace, empty-name probe, nonexistent @types/linebreak package, scratch clean-runner module/package-export setup errors.",
+      "resolution": "Recovered verified U source; only complete fresh final receipts count."
+    }
+  ],
+  "scope": "Disposable PGlite WASM PostgreSQL, native Redis7.2.11, S3Proxy4.1.1, real FFmpeg and synthetic providers. Clean full/production dependency installs and newer/actual Ubuntu CI font sets verified locally. Own V native PostgreSQL application CI follows approved public publication.",
+  "knownGaps": [
+    "CJK variation sequences and broader/variable fonts",
+    "per-overlay CJK locale and additional line-break language tailoring",
+    "physical-device readability",
+    "Indic/SEA joiners and word-break controls",
+    "native PostgreSQL/private-media cross-store restore and full Docker/Compose/MinIO",
+    "live providers and full master acceptance",
+    "ASR/audio/custom effects/platform/semantic editor acceptance"
+  ],
+  "testedImplementationSha256": {
+    "packages/core/media.ts": "4dc1df62c53df2b092e498d3d6909d6bf14c01dc322dea13d7e81bfdbc36bd3f",
+    "packages/core/render-font.ts": "5aed4c0492146fe2308a4470fba12af51a4ff95c17ea1beef7060a43c0e021d9",
+    "packages/core/render-scripts.ts": "6bb408b4974b9a2a548df571d682d7509c4ac7b68f6b04fa2be1cd1726f37baa",
+    "packages/core/render-cjk.ts": "7ef8fd23954b107e2f9aebae12a9cb14fc22e1b2a933b9ff953470f7b307fd71",
+    "packages/core/render-cjk-linebreak.ts": "6465b2324e109a55841ea056588093a658d63ad3a8f9fd3d73676f7cfabc2a9e",
+    "packages/core/render-shaping.ts": "2916884a6a3dfdd206b75758d698c5f66c28abb9c271af53b80c12b470c26c96",
+    "packages/core/render-text-layout.ts": "3eaa1fa8dc8810adc2c36f52e66712fb1c286eb101410a5a9b97b68198d17073",
+    "packages/core/renderer.ts": "5828364a8a1f5e721411ffda6fc5630b62e706e909bf390393edf1c2fcdaddf5",
+    "apps/web/app/media-workspace.tsx": "cafc7143d948d85f32f1ee222b8126708af11442f54c4916a0cec7cfb1b15fec",
+    "tests/render-cjk-batch.test.ts": "68d9b8940d310c581b4cb80ad133b4727360ee492e6815ba9da2ffca04f68594",
+    "tests/render-indic-batch.test.ts": "ced8f45418889bb1265126c072e673bf4e97738732a58f93769ad4fdccd73485",
+    "tests/render-southeast-batch.test.ts": "46737c6de99fe2a08e33060947fc9198596eb6ef5b071cf69277d07f88a78620",
+    "tests/integration/media.test.ts": "6ef1b7eb5eb2dcc2e8c35ae4416f5c1581c7e3a439390f264bb91983625f235e",
+    "tests/ui/media.spec.ts": "93b739ef3397b107c83319a3e9ded433cd83696268665511c931a2a0651a2389",
+    "tests/ui/render-review.spec.ts": "be296a7ac860445c303a88edd28d9c85a23c8ff65d7e4a910a85d85fe431b7d7",
+    "package.json": "57679dbbacb0880d330399916864f9d97a9e24fb8c37b9895dec59540d21e647",
+    "package-lock.json": "8b8cd4964e23d388463f202841da3e0687c5441f2435d87023b6a716670eeff1",
+    "packages/core/linebreak.d.ts": "c2b58cd041eb030d3599bca5f2cc9294f9307f79b069100b715d69a0469f3b80",
+    "tests/fixtures/cjk-batch.ts": "ed5e0f1f98a700dc88169749dda6180e84381210945d97d9b2d43afd1e6325e4",
+    "tests/fixtures/cjk-fonts.json": "8d0389c11a398c74da7c1ece0ffa875122fab3e6061dd25342881f5ec9dbd02b",
+    "tests/fixtures/linebreak-reference.py": "2b9b829e2e99ed62bf044c56394bf876f8b268c5f11676380e04618ef80c9c84",
+    "tests/fixtures/shaping-reference.py": "fa27f9191176e40b56f1a04bbd2c8633d2b66c0c42df77a9e4d18c692ed4c579",
+    "scripts/install_test_cjk_fonts.py": "ffa3d0ff111bfacc3a6cec774cccde8f89717e3547bdcd38ad041151dd5bcdb9",
+    "scripts/verify-local.mjs": "eb7c3cec8c21d6d7b6f408e25c3a735030cbc6b03c36e7d5444ca5a6d44d4403"
+  },
+  "sourceChanges": {
+    "schemaMigrationsUnchanged": true,
+    "fontkitPatchSourceUnchanged": true,
+    "productionDependencyAdded": "linebreak 1.1.0 plus one newly locked base64-js transitive; unicode-trie reuses the existing locked dependency",
+    "sceneCacheVersion": "mos-render-9-cjk-locale-uax14",
+    "legacyFifteenScriptOutlineRevision": "fontkit-outlines-v3-context-mark-base-coverage"
+  }
+}

@@ -314,11 +314,18 @@ test("inspect workspace pages, upload private media, render and approve a playab
     page.getByRole("combobox", { name: "Resolution", exact: true }),
   ).toHaveValue("1080");
   await expect(page.getByText(/Export size: 1080 × 1080 px/)).toBeVisible();
+  const cjkLanguage = page.getByRole("combobox", {
+    name: "Chinese, Japanese or Korean language",
+    exact: true,
+  });
+  await expect(cjkLanguage).toHaveValue("");
+  await cjkLanguage.selectOption("ja");
   await page.getByRole("button", { name: "Render video", exact: true }).click();
   await expect(
     page.getByRole("link", { name: "Download MP4", exact: true }),
   ).toBeVisible({ timeout: 45000 });
   await expect(page.getByText(/Extra margins.*scenes reused/)).toBeVisible();
+  await expect(page.getByText(/Japanese.*scenes reused/)).toBeVisible();
   const video = page.getByLabel("Rendered video preview", { exact: true });
   await expect
     .poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState), {

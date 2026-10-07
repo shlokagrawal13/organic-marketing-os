@@ -1,6 +1,8 @@
 import type { RenderTextArea } from "./render-text-placement";
 import { RenderFontError, type RenderFontPlan } from "./render-font";
 
+import { cjkLineBreakUnits } from "./render-cjk-linebreak";
+
 const graphemes = new Intl.Segmenter("und", { granularity: "grapheme" });
 const dictionaryWords = new Intl.Segmenter("und", { granularity: "word" });
 const dictionaryScript =
@@ -9,6 +11,8 @@ const dictionaryScript =
 // Attach punctuation (including Tibetan tsheg) to its preceding word. An
 // oversized dictionary word reduces the font size or fails; never split it.
 export function renderLineBreakUnits(text: string) {
+  const cjk = cjkLineBreakUnits(text);
+  if (cjk) return cjk;
   if (!dictionaryScript.test(text)) return null;
   const units: string[] = [];
   for (const part of dictionaryWords.segment(text)) {

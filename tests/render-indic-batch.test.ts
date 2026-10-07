@@ -31,7 +31,10 @@ import { renderVideo } from "../packages/core/renderer";
 import type { ObjectStore } from "../packages/core/object-store";
 import { INDIC_BATCH_FIXTURES } from "./fixtures/indic-batch";
 
-const fontPathFor = (script: (typeof OUTLINE_SCRIPTS)[number]) =>
+const LEGACY_OUTLINE_SCRIPTS = OUTLINE_SCRIPTS.filter(
+  (s) => !["hani", "kana", "hang"].includes(s.tag),
+);
+const fontPathFor = (script: (typeof LEGACY_OUTLINE_SCRIPTS)[number]) =>
   process.env[script.testFontEnvironment] ||
   `/usr/share/fonts/truetype/noto/${script.fontFile}`;
 const fixture = sceneSchema.parse({
@@ -49,12 +52,16 @@ const fixture = sceneSchema.parse({
 });
 function environment(t: TestContext) {
   const values: Record<string, string> = {
+    RENDER_HAN_ENABLED: "false",
+    RENDER_HIRAGANA_ENABLED: "false",
+    RENDER_KATAKANA_ENABLED: "false",
+    RENDER_HANGUL_ENABLED: "false",
     ...Object.fromEntries(
-      OUTLINE_SCRIPTS.map((script) => [script.environment, "true"]),
+      LEGACY_OUTLINE_SCRIPTS.map((script) => [script.environment, "true"]),
     ),
     RENDER_FONT_PATH: DEFAULT_RENDER_FONT_PATH,
     RENDER_FONT_FALLBACK_PATHS:
-      OUTLINE_SCRIPTS.map(fontPathFor).join(delimiter),
+      LEGACY_OUTLINE_SCRIPTS.map(fontPathFor).join(delimiter),
   };
   const old = Object.fromEntries(
     Object.keys(values).map((key) => [key, process.env[key]]),
@@ -68,7 +75,7 @@ function environment(t: TestContext) {
 }
 const getFonts = () =>
   Promise.all(
-    [DEFAULT_RENDER_FONT_PATH, ...OUTLINE_SCRIPTS.map(fontPathFor)].map(
+    [DEFAULT_RENDER_FONT_PATH, ...LEGACY_OUTLINE_SCRIPTS.map(fontPathFor)].map(
       (path) => readRenderFont(path),
     ),
   );
@@ -98,7 +105,9 @@ const generatedSinhala = () => {
   return texts;
 };
 for (const sample of INDIC_BATCH_FIXTURES) {
-  const script = OUTLINE_SCRIPTS.find((item) => item.name === sample.name)!;
+  const script = LEGACY_OUTLINE_SCRIPTS.find(
+    (item) => item.name === sample.name,
+  )!;
   const fontPath = fontPathFor(script);
   test(`${sample.name}: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries`, (t) => {
     environment(t);
@@ -274,7 +283,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
       }
     }
     const missing = fonts.filter(
-      (_, i) => i !== OUTLINE_SCRIPTS.indexOf(script) + 1,
+      (_, i) => i !== LEGACY_OUTLINE_SCRIPTS.indexOf(script) + 1,
     );
     assert.throws(
       () =>
@@ -332,9 +341,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     assert.equal(
       current,
       sha256(
-        "fontkit-outlines-v3-context-mark-base-coverage\n" +
-          runtime +
-          decoders,
+        "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
       ),
     );
     for (const previous of [
@@ -525,11 +532,11 @@ test("registry: all ten Indic scripts compose independently referenced font/scri
     [DEFAULT_RENDER_FONT_PATH, "Café "],
     [DEFAULT_RENDER_FONT_PATH, "Ελλάδα "],
     [DEFAULT_RENDER_FONT_PATH, "Привет "],
-    [fontPathFor(OUTLINE_SCRIPTS[0]), "हिंदी "],
-    [fontPathFor(OUTLINE_SCRIPTS[1]), "বাংলা "],
-    [fontPathFor(OUTLINE_SCRIPTS[2]), "ગુજરાતી "],
+    [fontPathFor(LEGACY_OUTLINE_SCRIPTS[0]), "हिंदी "],
+    [fontPathFor(LEGACY_OUTLINE_SCRIPTS[1]), "বাংলা "],
+    [fontPathFor(LEGACY_OUTLINE_SCRIPTS[2]), "ગુજરાતી "],
     ...INDIC_BATCH_FIXTURES.map((sample) => [
-      fontPathFor(OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!),
+      fontPathFor(LEGACY_OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!),
       sample.texts[0] + " ",
     ]),
   ];

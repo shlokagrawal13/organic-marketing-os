@@ -20,7 +20,7 @@ export function validateDevanagariRuntime(decoders: string) {
 
 export async function checkRenderShaping(
   scenes: Scene[],
-  options: Pick<RenderOptions, "captions">,
+  options: Pick<RenderOptions, "captions" | "cjkLanguage">,
   ffmpeg: string,
   signal: AbortSignal,
 ) {
@@ -45,7 +45,12 @@ export async function checkRenderShaping(
     const texts = scenes.flatMap((scene) =>
       renderedSceneText(scene, options).map(({ text }) => text),
     );
-    return sha256(outlinePipelineRevision(texts) + "\n" + runtime + version);
+    return sha256(
+      outlinePipelineRevision(texts, options.cjkLanguage) +
+        "\n" +
+        runtime +
+        version,
+    );
   } catch (error) {
     if (signal.aborted) throw new Error("Render canceled.");
     if (error instanceof RenderFontError) throw error;

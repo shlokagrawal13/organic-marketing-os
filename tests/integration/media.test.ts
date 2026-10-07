@@ -1,3 +1,4 @@
+import { CJK_BATCH_FIXTURES } from "../fixtures/cjk-batch";
 import { SOUTHEAST_BATCH_FIXTURES } from "../fixtures/southeast-batch";
 import { INDIC_BATCH_FIXTURES } from "../fixtures/indic-batch";
 import "../support/isolated";
@@ -67,7 +68,9 @@ after(async () => {
 });
 test(
   "private uploads, real MP4/audio rendering, tenant isolation, cache reuse, cancellation and exact-version approval",
-  { timeout: 120000 },
+  // Covers the expanded sixteen-language render/tenant matrix; individual
+  // render waits remain bounded at 60 seconds and all assertions are retained.
+  { timeout: 180000 },
   async () => {
     const a = client(),
       b = client(),
@@ -748,6 +751,7 @@ test(
     for (const sample of [
       ...INDIC_BATCH_FIXTURES,
       ...SOUTHEAST_BATCH_FIXTURES,
+      ...CJK_BATCH_FIXTURES,
     ]) {
       const content = await a.call(root + "/content", "POST", {
         ...alternate,
@@ -761,15 +765,42 @@ test(
         ],
       });
       assert.equal(content.status, 201);
+      if ("language" in sample) {
+        const before = await db.renderJob.count({
+          where: { organizationId: org },
+        });
+        const missingLocale = await a.call(root + "/renders", "POST", {
+          contentId: content.body.id,
+          revision: 1,
+          requestKey: randomUUID(),
+          options: {},
+        });
+        assert.equal(missingLocale.status, 400);
+        assert.match(
+          JSON.stringify(missingLocale.body),
+          /Choose.*Japanese.*Korean/,
+        );
+        assert.equal(
+          await db.renderJob.count({ where: { organizationId: org } }),
+          before,
+        );
+      }
       const job = await a.call(root + "/renders", "POST", {
         contentId: content.body.id,
         revision: 1,
         requestKey: randomUUID(),
-        options: { aspect: "1:1", resolution: "720", captions: true },
+        options: {
+          aspect: "1:1",
+          resolution: "720",
+          captions: true,
+          ...("language" in sample ? { cjkLanguage: sample.language } : {}),
+        },
       });
       assert.equal(job.status, 201, JSON.stringify(job.body));
       const ready = await wait(job.body.id);
       assert.equal(ready.status, "SUCCEEDED", JSON.stringify(ready));
+      if ("language" in sample)
+        assert.equal(ready.options.cjkLanguage, sample.language);
       const file = await a.raw(`${root}/renders/${ready.id}/file/video`);
       assert.equal(file.status, 200);
       assert.ok((await file.arrayBuffer()).byteLength > 0);
@@ -805,7 +836,7 @@ test(
         contentId: rtl.body.id,
         revision: 1,
         requestKey: randomUUID(),
-        options: {},
+        options: "language" in sample ? { cjkLanguage: sample.language } : {},
       });
       assert.equal(blocked.status, 400, JSON.stringify(blocked.body));
       assert.match(JSON.stringify(blocked.body), /Separate Arabic, Hebrew/);

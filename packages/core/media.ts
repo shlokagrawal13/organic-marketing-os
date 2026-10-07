@@ -4,6 +4,12 @@ import {
   OUTLINE_UNICODE_CLASS,
   outlineScript,
 } from "./render-scripts";
+import {
+  CJK_LANGUAGES,
+  CJK_CHARACTERS,
+  cjkTextIssue,
+  type CjkLanguage,
+} from "./render-cjk";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { sceneSchema } from "./ai";
@@ -28,6 +34,7 @@ const normalizedRenderOptions = z
       .default("#183c2b"),
     preset: z.enum(RENDER_PRESET_IDS).optional(),
     textPlacement: z.literal(INSET_TEXT_PLACEMENT).optional(),
+    cjkLanguage: z.enum(CJK_LANGUAGES).optional(),
   })
   .strict()
   .superRefine((options, ctx) => {
@@ -58,16 +65,10 @@ export type RenderOptions = z.infer<typeof renderOptions>;
 export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
-const unsupportedRenderScripts: Array<[RegExp, string]> = [
-  [/\p{Script=Han}/u, "CJK"],
-  [/\p{Script=Hiragana}/u, "Japanese"],
-  [/\p{Script=Katakana}/u, "Japanese"],
-  [/\p{Script=Hangul}/u, "Korean"],
-];
 const emojiOrSymbol = /[\u{1f000}-\u{1faff}\u{2600}-\u{27bf}\ufe0f]/u;
 // Script preflight, not a font cmap guarantee. Keep common punctuation explicit.
 const supportedRenderCharacters = new RegExp(
-  String.raw`^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u0900-\u097f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}${OUTLINE_UNICODE_CLASS}]*$`,
+  String.raw`^[\t\r\n\x20-\x7e\u00a0-\u00ff\u0300-\u036f\u0590-\u05ff\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\u0900-\u097f\u2000-\u200a\u2010-\u2027\u202f\u2030-\u205e\u20ac\u20b9\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}${OUTLINE_UNICODE_CLASS}\u3000-\u303f\u3099-\u309c\u30a0\u30fb\u30fc\uff01-\uff60\uff9e\uff9f]*$`,
   "u",
 );
 const unsupportedIndicMix = new RegExp(
@@ -81,13 +82,19 @@ export const hasBengaliText = (text: string) =>
 export const hasGujaratiText = (text: string) =>
   /\p{Script=Gujarati}/u.test(text);
 export const hasIndicOutlineText = (text: string) =>
-  Boolean(outlineScript(text));
+  Boolean(outlineScript(text)) || CJK_CHARACTERS.test(text);
 export function indicMixSupportIssue(text: string, label = "Rendered text") {
   if (hasIndicOutlineText(text) && unsupportedIndicMix.test(text))
     return `${label} can combine enabled outline scripts with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
   return null;
 }
-export function renderTextSupportIssue(text: string, label = "Rendered text") {
+export function renderTextSupportIssue(
+  text: string,
+  label = "Rendered text",
+  cjkLanguage?: CjkLanguage,
+) {
+  const cjkIssue = cjkTextIssue(text, label, cjkLanguage);
+  if (cjkIssue) return cjkIssue;
   if (/\p{Script=Sinhala}/u.test(text) && /[\u200c\u200d]/u.test(text))
     return `${label} contains Sinhala joiner-based conjuncts outside the current shaping acceptance. Preserve the joiners and attach this text as an image until that coverage is verified.`;
   if (
@@ -105,9 +112,6 @@ export function renderTextSupportIssue(text: string, label = "Rendered text") {
   for (const script of OUTLINE_SCRIPTS)
     if (script.pattern.test(text) && process.env[script.environment] !== "true")
       return `${label} contains ${script.name} text but ${script.name} rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
-  for (const [pattern, name] of unsupportedRenderScripts)
-    if (pattern.test(text))
-      return `${label} contains ${name} text outside the current render policy. Attach this text as an image or wait for broader multilingual font/shaping support.`;
   if (!supportedRenderCharacters.test(text))
     return `${label} contains characters outside the current render policy. Use Latin, Greek, Cyrillic, Arabic or Hebrew text with common punctuation, or attach the text as an image.`;
   return indicMixSupportIssue(text, label);
@@ -283,7 +287,7 @@ export function validateProbe(probe: any, kind: "IMAGE" | "VIDEO" | "AUDIO") {
 }
 export function renderedSceneText(
   scene: Scene,
-  options: Pick<RenderOptions, "captions">,
+  options: Pick<RenderOptions, "captions" | "cjkLanguage">,
 ) {
   return [
     { text: scene.onScreenText, label: `Scene ${scene.id} on-screen text` },
@@ -296,7 +300,7 @@ export function renderedSceneText(
 
 export function validateRenderScenes(
   scenes: Scene[],
-  options: Pick<RenderOptions, "captions"> = { captions: true },
+  options: Pick<RenderOptions, "captions" | "cjkLanguage"> = { captions: true },
 ) {
   if (!scenes.length || scenes.length > 12)
     throw new Error("Use between 1 and 12 scenes for a render.");
@@ -311,7 +315,7 @@ export function validateRenderScenes(
         "Keep each scene's on-screen text under 180 characters and its caption under 300 characters.",
       );
     for (const { text, label } of renderedSceneText(s, options)) {
-      const issue = renderTextSupportIssue(text, label);
+      const issue = renderTextSupportIssue(text, label, options.cjkLanguage);
       if (issue) throw new Error(issue);
     }
     if (!["", "cut", "fade"].includes(s.transition.toLowerCase().trim()))

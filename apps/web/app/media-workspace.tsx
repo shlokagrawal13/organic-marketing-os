@@ -2,6 +2,11 @@
 import { CompositionGuides } from "./render-composition";
 import { RenderReview } from "./render-review";
 import {
+  CJK_LANGUAGES,
+  CJK_LANGUAGE_LABELS,
+  type CjkLanguage,
+} from "../../../packages/core/render-cjk";
+import {
   INSET_TEXT_PLACEMENT,
   textPlacementLabel,
 } from "../../../packages/core/render-text-placement";
@@ -533,6 +538,7 @@ export function RenderPanel({
     resolution: "720",
     captions: true,
     textPlacement: undefined as typeof INSET_TEXT_PLACEMENT | undefined,
+    cjkLanguage: undefined as CjkLanguage | undefined,
     musicAssetId: null as string | null,
     musicVolume: 0.12,
     background: "#183c2b",
@@ -734,6 +740,29 @@ export function RenderPanel({
                     exported video on your target platform.
                   </p>
                   <label>
+                    Chinese, Japanese or Korean language
+                    <select
+                      value={options.cjkLanguage || ""}
+                      onChange={(e) =>
+                        option("cjkLanguage", e.target.value || undefined)
+                      }
+                    >
+                      <option value="">
+                        Choose for Chinese, Japanese or Korean text
+                      </option>
+                      {CJK_LANGUAGES.map((language) => (
+                        <option key={language} value={language}>
+                          {CJK_LANGUAGE_LABELS[language]}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <p className="field-help">
+                    Choose the language of Chinese, Japanese or Korean text to
+                    use the correct regional letter forms. Use separate exports
+                    for different CJK languages.
+                  </p>
+                  <label>
                     Background colour
                     <input
                       type="color"
@@ -871,6 +900,10 @@ export function RenderPanel({
                   {active.options.aspect} ·{" "}
                   {renderDimensions(active.options).join(" × ")} px ·{" "}
                   {textPlacementLabel(active.options.textPlacement)} ·{" "}
+                  {active.options.cjkLanguage &&
+                    CJK_LANGUAGE_LABELS[
+                      active.options.cjkLanguage as CjkLanguage
+                    ] + " · "}
                   {active.reusedScenes}/{active.totalScenes} scenes reused
                 </p>
                 {active.stale && (

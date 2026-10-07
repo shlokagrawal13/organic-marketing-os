@@ -11,6 +11,12 @@ import {
 } from "./media";
 
 import { outlineScript, outlineLayoutTags } from "./render-scripts";
+import {
+  CJK_CHARACTERS,
+  cjkTextIssue,
+  cjkLanguageTag,
+  isCjkTag,
+} from "./render-cjk";
 
 export const MAX_RENDER_FONT_BYTES = 16 * 1024 * 1024;
 export const DEFAULT_RENDER_FONT_PATH =
@@ -152,7 +158,7 @@ function missingFromFont(font: InspectedFont, text: string) {
 export function createRenderFontPlan(
   input: Buffer | Buffer[],
   scenes: Scene[],
-  options: Pick<RenderOptions, "captions">,
+  options: Pick<RenderOptions, "captions" | "cjkLanguage">,
 ) {
   const bytes = Array.isArray(input) ? input : [input];
   if (
@@ -172,6 +178,11 @@ export function createRenderFontPlan(
     // Never split a conjunct or combining cluster between fonts.
     const fontRuns = (text: string) => {
       const runs: { text: string; fontIndex: number; script: string }[] = [];
+      const defaultCjkScript =
+        Array.from(
+          graphemes.segment(text),
+          (item) => outlineScript(item.segment)?.tag,
+        ).find((tag) => tag && isCjkTag(tag)) || "hani";
       for (const { segment } of graphemes.segment(text)) {
         const script =
           outlineScript(segment)?.tag ||
@@ -181,7 +192,11 @@ export function createRenderFontPlan(
               ? "grek"
               : /\p{Script=Cyrillic}/u.test(segment)
                 ? "cyrl"
-                : runs.at(-1)?.script || "latn");
+                : CJK_CHARACTERS.test(segment)
+                  ? isCjkTag(runs.at(-1)?.script || "")
+                    ? runs.at(-1)!.script
+                    : defaultCjkScript
+                  : runs.at(-1)?.script || "latn");
         const previous = runs.at(-1);
         const preferred = previous?.script === script ? previous.fontIndex : -1;
         const covers = (font: InspectedFont) =>
@@ -215,6 +230,12 @@ export function createRenderFontPlan(
         const key = textKey(text);
         if (!key) continue;
         if (hasIndicOutlineText(text)) {
+          const cjkIssue = cjkTextIssue(
+            text,
+            label.slice(0, 120),
+            options.cjkLanguage,
+          );
+          if (cjkIssue) throw new RenderFontError(cjkIssue);
           const issue = indicMixSupportIssue(text, label.slice(0, 120));
           if (issue) throw new RenderFontError(issue);
           // Explicit script runs also shape correctly when a single font covers
@@ -285,12 +306,16 @@ export function createRenderFontPlan(
             text: string,
             features: undefined,
             script?: string | string[],
+            language?: string,
           ) => ReturnType<FontFace["layout"]>;
           const run = layout.call(
             face,
-            text,
+            script && isCjkTag(script) ? text.normalize("NFC") : text,
             undefined,
             script ? outlineLayoutTags(script) : undefined,
+            script && isCjkTag(script)
+              ? cjkLanguageTag(options.cjkLanguage)
+              : undefined,
           );
           if (run.glyphs.some((glyph) => glyph.id === 0))
             throw new RenderFontError(
@@ -343,12 +368,16 @@ export function createRenderFontPlan(
             text: string,
             features: undefined,
             script?: string | string[],
+            language?: string,
           ) => ReturnType<FontFace["layout"]>;
           const run = layout.call(
             face,
-            text,
+            script && isCjkTag(script) ? text.normalize("NFC") : text,
             undefined,
             script ? outlineLayoutTags(script) : undefined,
+            script && isCjkTag(script)
+              ? cjkLanguageTag(options.cjkLanguage)
+              : undefined,
           );
           if (run.glyphs.some((glyph) => glyph.id === 0))
             throw new RenderFontError(
@@ -361,7 +390,9 @@ export function createRenderFontPlan(
             bottom = face.descent;
           // Older FFmpeg builds do not apply all OpenType positioning. Bound
           // both the shaped run and unpositioned glyphs, including overhangs.
-          for (const glyph of face.glyphsForString(text)) {
+          for (const glyph of face.glyphsForString(
+            script && isCjkTag(script) ? text.normalize("NFC") : text,
+          )) {
             const box = glyph.bbox;
             if (Number.isFinite(box.minX)) {
               left = Math.min(left, advance + box.minX);
@@ -410,7 +441,7 @@ export function createRenderFontPlan(
 export function assertRenderFontCoverage(
   bytes: Buffer | Buffer[],
   scenes: Scene[],
-  options: Pick<RenderOptions, "captions">,
+  options: Pick<RenderOptions, "captions" | "cjkLanguage">,
 ) {
   createRenderFontPlan(bytes, scenes, options);
 }

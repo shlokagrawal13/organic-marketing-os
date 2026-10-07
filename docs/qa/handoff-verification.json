@@ -1,41 +1,189 @@
 {
-  "checkpointRevision": "2026-10-01.1",
-  "applicationVersion": "0.9.0",
-  "verifiedDate": "2026-10-01",
-  "priorPackerVerification": {
-    "checkpointRevision": "2026-09-20.1",
-    "applicationVersion": "0.3.0",
-    "verifiedDate": "2026-09-20",
-    "checks": {
+  "checkpointRevision": "2026-10-07.14",
+  "applicationVersion": "0.9.2",
+  "verifiedDate": "2026-10-07",
+  "priorHandoffVerification": {
+    "checkpointRevision": "2026-10-01.1",
+    "applicationVersion": "0.9.0",
+    "verifiedDate": "2026-10-01",
+    "priorPackerVerification": {
+      "checkpointRevision": "2026-09-20.1",
+      "applicationVersion": "0.3.0",
+      "verifiedDate": "2026-09-20",
+      "checks": {
+        "freshExtractionAndManifest": true,
+        "archiveCrcAndEveryFileSha256": true,
+        "changedSourceDetected": true,
+        "privateEnvExcluded": true,
+        "knownSecretRejected": true,
+        "previousArchivePreservedWhenPackagingRejected": true,
+        "runtimeDependenciesMigrationsDeploymentByteUnchangedFromV03": true,
+        "all161RequirementsRetained": true
+      },
+      "limits": [
+        "Offline source checkpoint only; not user database/media backup",
+        "Known-secret guard is not a comprehensive secret scanner",
+        "Application test suites were not rerun for documentation/packer changes",
+        "No account login, repository connection or API quota is transferred"
+      ]
+    },
+    "currentArchive": {
       "freshExtractionAndManifest": true,
       "archiveCrcAndEveryFileSha256": true,
-      "changedSourceDetected": true,
-      "privateEnvExcluded": true,
-      "knownSecretRejected": true,
-      "previousArchivePreservedWhenPackagingRejected": true,
-      "runtimeDependenciesMigrationsDeploymentByteUnchangedFromV03": true,
-      "all161RequirementsRetained": true
+      "privateEnvAndRuntimeExcluded": true,
+      "all161RequirementsRetained": true,
+      "priorElevenMigrationsUnchanged": true,
+      "twelveMigrationsIncluded": true,
+      "generatedMediaCoreAndUIIncluded": true,
+      "nativeOrLiveProviderVerified": false
     },
     "limits": [
-      "Offline source checkpoint only; not user database/media backup",
+      "Portable source/context only; not a database/media backup",
       "Known-secret guard is not a comprehensive secret scanner",
-      "Application test suites were not rerun for documentation/packer changes",
-      "No account login, repository connection or API quota is transferred"
+      "Connections, credentials, provider quotas and running process state do not transfer"
     ]
   },
   "currentArchive": {
-    "freshExtractionAndManifest": true,
     "archiveCrcAndEveryFileSha256": true,
     "privateEnvAndRuntimeExcluded": true,
-    "all161RequirementsRetained": true,
-    "priorElevenMigrationsUnchanged": true,
-    "twelveMigrationsIncluded": true,
-    "generatedMediaCoreAndUIIncluded": true,
-    "nativeOrLiveProviderVerified": false
+    "checkpointManifestVerified": true,
+    "statusCopiesAgree": true,
+    "scope": "Portable source/context/evidence only. Own U fix native application CI is recorded separately; user database/media backup is not included."
   },
   "limits": [
     "Portable source/context only; not a database/media backup",
     "Known-secret guard is not a comprehensive secret scanner",
     "Connections, credentials, provider quotas and running process state do not transfer"
-  ]
+  ],
+  "priorEditor01uHandoffVerification": {
+    "checkpointRevision": "2026-10-07.11",
+    "applicationVersion": "0.9.2",
+    "verifiedDate": "2026-10-07",
+    "priorHandoffVerification": {
+      "checkpointRevision": "2026-10-01.1",
+      "applicationVersion": "0.9.0",
+      "verifiedDate": "2026-10-01",
+      "priorPackerVerification": {
+        "checkpointRevision": "2026-09-20.1",
+        "applicationVersion": "0.3.0",
+        "verifiedDate": "2026-09-20",
+        "checks": {
+          "freshExtractionAndManifest": true,
+          "archiveCrcAndEveryFileSha256": true,
+          "changedSourceDetected": true,
+          "privateEnvExcluded": true,
+          "knownSecretRejected": true,
+          "previousArchivePreservedWhenPackagingRejected": true,
+          "runtimeDependenciesMigrationsDeploymentByteUnchangedFromV03": true,
+          "all161RequirementsRetained": true
+        },
+        "limits": [
+          "Offline source checkpoint only; not user database/media backup",
+          "Known-secret guard is not a comprehensive secret scanner",
+          "Application test suites were not rerun for documentation/packer changes",
+          "No account login, repository connection or API quota is transferred"
+        ]
+      },
+      "currentArchive": {
+        "freshExtractionAndManifest": true,
+        "archiveCrcAndEveryFileSha256": true,
+        "privateEnvAndRuntimeExcluded": true,
+        "all161RequirementsRetained": true,
+        "priorElevenMigrationsUnchanged": true,
+        "twelveMigrationsIncluded": true,
+        "generatedMediaCoreAndUIIncluded": true,
+        "nativeOrLiveProviderVerified": false
+      },
+      "limits": [
+        "Portable source/context only; not a database/media backup",
+        "Known-secret guard is not a comprehensive secret scanner",
+        "Connections, credentials, provider quotas and running process state do not transfer"
+      ]
+    },
+    "currentArchive": {
+      "archiveCrcAndEveryFileSha256": true,
+      "privateEnvAndRuntimeExcluded": true,
+      "checkpointManifestVerified": true,
+      "statusCopiesAgree": true,
+      "scope": "Portable source/context/evidence only. Own U fix native application CI is recorded separately; user database/media backup is not included."
+    },
+    "limits": [
+      "Portable source/context only; not a database/media backup",
+      "Known-secret guard is not a comprehensive secret scanner",
+      "Connections, credentials, provider quotas and running process state do not transfer"
+    ]
+  },
+  "latestIncrement": "EDITOR-01V locally verified",
+  "checks": {
+    "manifestAndArchiveCrcShaCheckRequiredBeforeDelivery": true,
+    "sourceOnly": true,
+    "runtimeDataCredentialsRawLogsDependenciesFontBytesExcluded": true,
+    "protectedMasterSpecAndAllTwelveMigrationsUnchanged": true,
+    "unitReceipts": 336,
+    "unitSummaries": 38,
+    "apiWebBuildsPassed": true,
+    "http": 7,
+    "browser": 7,
+    "recovery": 5,
+    "auditsVulnerabilities": 0,
+    "ownNativeCiVerified": false,
+    "archiveCrcAndEveryEntrySha256Verified": true,
+    "freshExtractedManifestVerified": true
+  },
+  "publicPublication": {
+    "approved": false,
+    "attempted": false,
+    "expectedParent": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+    "changedPaths": [
+      ".env.example",
+      ".github/workflows/ci.yml",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "README.md",
+      "START_HERE.md",
+      "apps/web/app/media-workspace.tsx",
+      "docs/CHANGELOG.md",
+      "docs/CJK_RENDERING.md",
+      "docs/FONTKIT_SHAPING_PATCH.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/TEST_STRATEGY.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/VIDEO_PIPELINE.md",
+      "docs/qa/cjk-batch-evidence.json",
+      "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+      "docs/qa/editor01v-unit-receipts.json",
+      "docs/qa/handoff-verification.json",
+      "docs/qa/southeast-batch-evidence.json",
+      "docs/qa/verification-summary.json",
+      "package-lock.json",
+      "package.json",
+      "packages/core/linebreak.d.ts",
+      "packages/core/media.ts",
+      "packages/core/render-cjk-linebreak.ts",
+      "packages/core/render-cjk.ts",
+      "packages/core/render-font.ts",
+      "packages/core/render-scripts.ts",
+      "packages/core/render-shaping.ts",
+      "packages/core/render-text-layout.ts",
+      "packages/core/renderer.ts",
+      "scripts/install_test_cjk_fonts.py",
+      "scripts/verify-local.mjs",
+      "tests/fixtures/cjk-batch.ts",
+      "tests/fixtures/cjk-fonts.json",
+      "tests/fixtures/linebreak-reference.py",
+      "tests/fixtures/shaping-reference.py",
+      "tests/integration/media.test.ts",
+      "tests/render-cjk-batch.test.ts",
+      "tests/render-indic-batch.test.ts",
+      "tests/render-southeast-batch.test.ts",
+      "tests/ui/media.spec.ts",
+      "tests/ui/render-review.spec.ts"
+    ],
+    "changedFiles": 48
+  }
 }

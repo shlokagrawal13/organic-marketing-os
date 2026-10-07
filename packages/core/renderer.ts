@@ -171,7 +171,7 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-8-mark-base-coverage",
+          version: "mos-render-9-cjk-locale-uax14",
           fonts: fontPlan.fontHashes,
           shapingRuntime: sceneOverlays[i].some((overlay) =>
             hasIndicOutlineText(overlay.text),
@@ -185,6 +185,11 @@ export async function renderVideo(ctx: RenderContext) {
             ? options.textPlacement
             : undefined,
           captions: options.captions ? sceneCaptionCues(scene) : [],
+          cjkLanguage: sceneOverlays[i].some((overlay) =>
+            hasIndicOutlineText(overlay.text),
+          )
+            ? options.cjkLanguage
+            : undefined,
           text: scene.onScreenText,
           duration: scene.duration,
           transition: scene.transition.toLowerCase().trim(),

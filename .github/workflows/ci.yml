@@ -60,7 +60,11 @@ jobs:
       RENDER_KHMER_ENABLED: "true"
       RENDER_MYANMAR_ENABLED: "true"
       RENDER_TIBETAN_ENABLED: "true"
-      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGurmukhi-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansOriya-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTamil-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTelugu-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMalayalam-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansLao-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKhmer-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMyanmar-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSerifTibetan-Regular.ttf"
+      RENDER_HAN_ENABLED: "true"
+      RENDER_HIRAGANA_ENABLED: "true"
+      RENDER_KATAKANA_ENABLED: "true"
+      RENDER_HANGUL_ENABLED: "true"
+      RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGurmukhi-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansOriya-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTamil-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTelugu-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMalayalam-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansLao-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKhmer-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMyanmar-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSerifTibetan-Regular.ttf:${{ github.workspace }}/.local/test-cjk-fonts/NotoSansCJKsc-Regular.otf"
 
     steps:
       - name: Check out source
@@ -82,7 +86,9 @@ jobs:
       - name: Install media dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core libharfbuzz0b libicu-dev
+      - name: Install pinned test CJK fonts
+        run: python3 scripts/install_test_cjk_fonts.py
       - name: Build
         run: npm run build
       - name: Run unit tests
