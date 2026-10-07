@@ -1,7 +1,7 @@
 {
   "slice": "EDITOR-01T",
   "scope": "Shared ten-script Indic registry and seven-script bounded acceptance batch",
-  "publicationStatus": "local_verified_pending_exact_48_file_approval",
+  "publicationStatus": "published_ci_verified",
   "scripts": [
     {
       "name": "Gurmukhi",
@@ -332,7 +332,7 @@
   "dependencyPackageRecordsChanged": false,
   "fontkitPatchChanged": true,
   "liveProviderUsed": false,
-  "nativeCiVerified": false,
+  "nativeCiVerified": true,
   "dockerBuildExecuted": false,
   "knownFailures": [],
   "resolvedOrExcludedFindings": [
@@ -374,5 +374,184 @@
     "General bidi/language semantics and all-font coverage",
     "Physical-device readability",
     "Full EDITOR-01 and master acceptance"
-  ]
+  ],
+  "publicationCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
+  "publicationTree": "5a9241f00bae03348b46d03cf384f57aeba78336",
+  "githubActions": {
+    "runId": 37529863574,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
+    "sourceCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "completedAt": "2026-10-06T21:04:17Z",
+    "annotation": "T own native PostgreSQL/Redis application CI at the exact approved public source; Docker/full Compose/native cross-store restore/live/device/master acceptance excluded."
+  },
+  "nativeCiEvidence": {
+    "slice": "EDITOR-01T",
+    "headSha": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "runId": 37529863574,
+    "jobId": 112496182254,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
+    "attempt": 1,
+    "conclusion": "success",
+    "startedAt": "2026-10-06T20:53:35Z",
+    "completedAt": "2026-10-06T21:04:17Z",
+    "passed": {
+      "unit": 113,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryAndConfigurationScenarios": 5,
+      "schemaMigrations": 12
+    },
+    "unitFinalSummaryVerified": true,
+    "unitUniqueCaseReceiptsVerified": true,
+    "unitCaseReceiptCount": 113,
+    "unitSummaryCount": 17,
+    "unitArtifactId": 11444516381,
+    "unitArtifactSha256": "46b563c2329c5fada686e3f18a1d3117057bf7bd0f8ae82f85f2dd94a2baa15e",
+    "testSummaries": [
+      {
+        "tests": 113,
+        "suites": 0,
+        "passed": 113,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 209365.770067
+      },
+      {
+        "tests": 7,
+        "suites": 0,
+        "passed": 7,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 114983.353937
+      },
+      {
+        "tests": 5,
+        "suites": 0,
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 178624.388546
+      }
+    ],
+    "sevenScriptReferenceDiagnosticsVerified": true,
+    "sevenScriptFrameMatricesVerified": true,
+    "scriptReferences": [
+      {
+        "script": "Gurmukhi",
+        "version": "8.3.0",
+        "curated": 16,
+        "generated": 0
+      },
+      {
+        "script": "Odia",
+        "version": "8.3.0",
+        "curated": 12,
+        "generated": 0
+      },
+      {
+        "script": "Tamil",
+        "version": "8.3.0",
+        "curated": 12,
+        "generated": 0
+      },
+      {
+        "script": "Telugu",
+        "version": "8.3.0",
+        "curated": 12,
+        "generated": 0
+      },
+      {
+        "script": "Kannada",
+        "version": "8.3.0",
+        "curated": 12,
+        "generated": 0
+      },
+      {
+        "script": "Malayalam",
+        "version": "8.3.0",
+        "curated": 17,
+        "generated": 0
+      },
+      {
+        "script": "Sinhala",
+        "version": "8.3.0",
+        "curated": 19,
+        "generated": 656
+      }
+    ],
+    "scriptRenderMatrices": [
+      {
+        "script": "Gurmukhi",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 25936.478309
+      },
+      {
+        "script": "Odia",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 26338.895874
+      },
+      {
+        "script": "Tamil",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 26204.801464
+      },
+      {
+        "script": "Telugu",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 22889.814974
+      },
+      {
+        "script": "Kannada",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 23048.902966
+      },
+      {
+        "script": "Malayalam",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 23866.513701
+      },
+      {
+        "script": "Sinhala",
+        "exports": 18,
+        "frames": 54,
+        "durationMs": 23159.523399
+      }
+    ],
+    "independentlyReferencedMixedRuns": 13,
+    "fontkitPostinstallVerified": true,
+    "harfbuzzReferenceEngineCi": "HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics)",
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "upgradeEvidence": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4866285,
+      "sha256": "b7d3b482b60b37a72e12e77c5a9476171ee68c06d0b5a763f7dac5fc9b94a6aa",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "observedLockMs": 119830,
+    "observedCaseDurationMs": 158564.78982,
+    "browserDurationSeconds": 40.3,
+    "scope": "Disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers; populated upgrade/restore separately PGlite; Docker/full Compose/MinIO/native cross-store restore/live/physical-device/master acceptance excluded."
+  }
 }

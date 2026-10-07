@@ -91,6 +91,51 @@ export const OUTLINE_SCRIPTS = [
     fontFile: "NotoSansSinhala-Regular.ttf",
     pattern: /\p{Script=Sinhala}/u,
   },
+  {
+    name: "Thai",
+    tag: "thai",
+    unicode: "Thai",
+    environment: "RENDER_THAI_ENABLED",
+    testFontEnvironment: "TEST_THAI_FONT_PATH",
+    fontFile: "NotoSansThai-Regular.ttf",
+    pattern: /\p{Script=Thai}/u,
+  },
+  {
+    name: "Lao",
+    tag: "lao ",
+    unicode: "Lao",
+    environment: "RENDER_LAO_ENABLED",
+    testFontEnvironment: "TEST_LAO_FONT_PATH",
+    fontFile: "NotoSansLao-Regular.ttf",
+    pattern: /\p{Script=Lao}/u,
+  },
+  {
+    name: "Khmer",
+    tag: "khmr",
+    unicode: "Khmer",
+    environment: "RENDER_KHMER_ENABLED",
+    testFontEnvironment: "TEST_KHMER_FONT_PATH",
+    fontFile: "NotoSansKhmer-Regular.ttf",
+    pattern: /\p{Script=Khmer}/u,
+  },
+  {
+    name: "Myanmar",
+    tag: "mymr",
+    unicode: "Myanmar",
+    environment: "RENDER_MYANMAR_ENABLED",
+    testFontEnvironment: "TEST_MYANMAR_FONT_PATH",
+    fontFile: "NotoSansMyanmar-Regular.ttf",
+    pattern: /\p{Script=Myanmar}/u,
+  },
+  {
+    name: "Tibetan",
+    tag: "tibt",
+    unicode: "Tibetan",
+    environment: "RENDER_TIBETAN_ENABLED",
+    testFontEnvironment: "TEST_TIBETAN_FONT_PATH",
+    fontFile: "NotoSerifTibetan-Regular.ttf",
+    pattern: /\p{Script=Tibetan}/u,
+  },
 ] as const;
 export const OUTLINE_UNICODE_CLASS = OUTLINE_SCRIPTS.map(
   (script) => `\\p{Script=${script.unicode}}`,
@@ -102,17 +147,23 @@ export function outlineScript(text: string) {
     (script.tag === "deva" ? devanagariRun : script.pattern).test(text),
   );
 }
-export function outlinePipelineRevision(texts: string[]) {
-  // T changes the shaping engine. Invalidate prior Indic cache entries, including
-  // legacy scripts affected by OpenType lookup filtering. Plain paths are unchanged.
-  const used = OUTLINE_SCRIPTS.filter((script) =>
-    texts.some((text) => script.pattern.test(text)),
-  );
-  if (used.some((script) => !["deva", "beng", "gujr"].includes(script.tag)))
-    return "fontkit-outlines-v1-indic-registry-mark-filter-sinhala";
-  if (used.some((script) => script.tag === "gujr"))
-    return "fontkit-outlines-v2-gujarati-script-font-runs";
-  if (used.some((script) => script.tag === "beng"))
-    return "fontkit-outlines-v2-bengali-script-font-runs";
-  return "fontkit-outlines-v4-ltr-script-font-runs";
+export function outlinePipelineRevision(_texts: string[]) {
+  // U fixes common OpenType context matching and multiple substitution. Every
+  // outline script must invalidate prior shaping, including the ten legacy scripts.
+  return "fontkit-outlines-v2-shared-context-southeast-tibetan";
+}
+export function outlineLayoutTags(tag: string): string | string[] {
+  const modern: Record<string, string[]> = {
+    deva: ["dev2", "deva"],
+    beng: ["bng2", "beng"],
+    gujr: ["gjr2", "gujr"],
+    guru: ["gur2", "guru"],
+    orya: ["ory2", "orya"],
+    taml: ["tml2", "taml"],
+    telu: ["tel2", "telu"],
+    knda: ["knd2", "knda"],
+    mlym: ["mlm2", "mlym"],
+    mymr: ["mym2", "mymr"],
+  };
+  return modern[tag] || tag;
 }

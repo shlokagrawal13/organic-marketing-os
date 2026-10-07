@@ -35,6 +35,11 @@ process.env.RENDER_TELUGU_ENABLED = "true";
 process.env.RENDER_KANNADA_ENABLED = "true";
 process.env.RENDER_MALAYALAM_ENABLED = "true";
 process.env.RENDER_SINHALA_ENABLED = "true";
+process.env.RENDER_THAI_ENABLED = "true";
+process.env.RENDER_LAO_ENABLED = "true";
+process.env.RENDER_KHMER_ENABLED = "true";
+process.env.RENDER_MYANMAR_ENABLED = "true";
+process.env.RENDER_TIBETAN_ENABLED = "true";
 process.env.RENDER_FONT_FALLBACK_PATHS ||= [
   process.env.TEST_DEVANAGARI_FONT_PATH ||
     "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
@@ -56,6 +61,16 @@ process.env.RENDER_FONT_FALLBACK_PATHS ||= [
     "/usr/share/fonts/truetype/noto/NotoSansMalayalam-Regular.ttf",
   process.env.TEST_SINHALA_FONT_PATH ||
     "/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf",
+  process.env.TEST_THAI_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf",
+  process.env.TEST_LAO_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansLao-Regular.ttf",
+  process.env.TEST_KHMER_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansKhmer-Regular.ttf",
+  process.env.TEST_MYANMAR_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansMyanmar-Regular.ttf",
+  process.env.TEST_TIBETAN_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSerifTibetan-Regular.ttf",
 ].join(delimiter);
 process.env.PLATFORM_ADMIN_USER_IDS = "";
 process.env.AI_STRATEGY_CREDITS = "5";

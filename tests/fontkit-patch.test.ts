@@ -22,6 +22,8 @@ test("Fontkit postinstall is idempotent and rejects partial/unknown/version inpu
   await mkdir(join(root, "dist"), { recursive: true });
   await mkdir(join(dir, "scripts"));
   await copyFile("scripts/patch-fontkit.mjs", script);
+  for (const name of ["fontkit-southeast.mjs", "fontkit-myanmar-data.json"])
+    await copyFile(`scripts/${name}`, join(dir, "scripts", name));
   const originals = await Promise.all(
     ["main.cjs", "module.mjs"].map((name) =>
       readFile(`node_modules/fontkit/dist/${name}`, "utf8"),
@@ -138,5 +140,79 @@ test("OpenType mark filtering supports both coverage formats, supersedes attachm
         "attachment class remains active without a filtering set",
       );
     }
+  }
+});
+
+test("OpenType chained backtrack arrays are nearest-first in glyph/class/coverage formats, including skipped marks, without mutating font tables", async () => {
+  const path =
+    process.env.TEST_KANNADA_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf";
+  const bytes = await readRenderFont(path);
+  const { create } = await import("fontkit");
+  for (const face of [
+    create(bytes),
+    createRequire(import.meta.url)("fontkit").create(bytes),
+  ] as any[]) {
+    face.layout("ಕ್ಷಿ");
+    const processor = face._layoutEngine.engine.GSUBProcessor;
+    const Iterator = processor.glyphIterator.constructor;
+    const coverage = (id: number) => ({ version: 1, glyphs: [id] });
+    const classes = {
+      version: 1,
+      startGlyph: 10,
+      classValueArray: Array.from({ length: 31 }, (_, i) => i + 10),
+    };
+    const rule = {
+      backtrack: [20, 10],
+      input: [],
+      lookahead: [40],
+      lookupRecords: [],
+    };
+    const tables = [
+      { version: 1, coverage: coverage(30), chainRuleSets: [[rule]] },
+      {
+        version: 2,
+        coverage: coverage(30),
+        inputClassDef: classes,
+        backtrackClassDef: classes,
+        lookaheadClassDef: classes,
+        chainClassSet: Object.assign([], { 30: [rule] }),
+      },
+      {
+        version: 3,
+        backtrackGlyphCount: 2,
+        backtrackCoverage: [coverage(20), coverage(10)],
+        inputGlyphCount: 1,
+        inputCoverage: [coverage(30)],
+        lookaheadCoverage: [coverage(40)],
+        lookupRecords: [],
+      },
+    ];
+    let applied = 0;
+    processor.applyLookupList = () => {
+      applied++;
+      return true;
+    };
+    for (const table of tables) {
+      const snapshot = JSON.stringify(table);
+      for (const ids of [
+        [10, 99, 20, 99, 30, 40],
+        [20, 99, 10, 99, 30, 40],
+      ]) {
+        processor.glyphs = ids.map((id) => ({
+          id,
+          isMark: id === 99,
+          features: { ccmp: true },
+        }));
+        processor.glyphIterator = new Iterator(processor.glyphs, {
+          flags: { ignoreMarks: true },
+        });
+        processor.glyphIterator.index = 4;
+        assert.equal(processor.applyChainingContext(table), ids[0] === 10);
+        assert.equal(processor.glyphIterator.index, 4);
+      }
+      assert.equal(JSON.stringify(table), snapshot);
+    }
+    assert.equal(applied, 3);
   }
 });

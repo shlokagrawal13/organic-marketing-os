@@ -2,6 +2,22 @@ import type { RenderTextArea } from "./render-text-placement";
 import { RenderFontError, type RenderFontPlan } from "./render-font";
 
 const graphemes = new Intl.Segmenter("und", { granularity: "grapheme" });
+const dictionaryWords = new Intl.Segmenter("und", { granularity: "word" });
+const dictionaryScript =
+  /[\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}\p{Script=Tibetan}]/u;
+// ICU dictionary words protect leading vowels and multi-grapheme syllables.
+// Attach punctuation (including Tibetan tsheg) to its preceding word. An
+// oversized dictionary word reduces the font size or fails; never split it.
+export function renderLineBreakUnits(text: string) {
+  if (!dictionaryScript.test(text)) return null;
+  const units: string[] = [];
+  for (const part of dictionaryWords.segment(text)) {
+    if (!part.isWordLike && units.length && !/^\s+$/u.test(part.segment))
+      units[units.length - 1] += part.segment;
+    else units.push(part.segment);
+  }
+  return units;
+}
 export const RENDER_TEXT_LINE_SPACING = 6;
 
 export function layoutRenderText(
@@ -30,29 +46,49 @@ export function layoutRenderText(
     const lines: string[] = [];
     let line = "",
       oversized = false;
-    for (const word of normalized.split(" ")) {
-      const candidate = line ? `${line} ${word}` : word;
-      if (fits(candidate)) {
-        line = candidate;
-        continue;
+    const dictionary = renderLineBreakUnits(normalized);
+    if (dictionary) {
+      for (const unit of dictionary) {
+        if (/^\s+$/u.test(unit)) {
+          if (line) line += unit;
+          continue;
+        }
+        if (fits(line + unit)) line += unit;
+        else {
+          if (line.trimEnd()) lines.push(line.trimEnd());
+          line = "";
+          if (!fits(unit)) {
+            oversized = true;
+            break;
+          }
+          line = unit;
+        }
       }
-      if (line) {
-        lines.push(line);
-        line = "";
-      }
-      for (const { segment } of graphemes.segment(word)) {
-        if (line && !fits(line + segment)) {
+      line = line.trimEnd();
+    } else
+      for (const word of normalized.split(" ")) {
+        const candidate = line ? `${line} ${word}` : word;
+        if (fits(candidate)) {
+          line = candidate;
+          continue;
+        }
+        if (line) {
           lines.push(line);
           line = "";
         }
-        if (!fits(segment)) {
-          oversized = true;
-          break;
+        for (const { segment } of graphemes.segment(word)) {
+          if (line && !fits(line + segment)) {
+            lines.push(line);
+            line = "";
+          }
+          if (!fits(segment)) {
+            oversized = true;
+            break;
+          }
+          line += segment;
         }
-        line += segment;
+        if (oversized) break;
       }
-      if (oversized) break;
-    }
     if (line) lines.push(line);
     const lineHeight = Math.max(
       0,

@@ -29,13 +29,13 @@ import { checkRenderShaping } from "../packages/core/render-shaping";
 import { glyphOverlaySvg } from "../packages/core/render-glyph-overlay";
 import { renderVideo } from "../packages/core/renderer";
 import type { ObjectStore } from "../packages/core/object-store";
-import { INDIC_BATCH_FIXTURES } from "./fixtures/indic-batch";
+import { SOUTHEAST_BATCH_FIXTURES } from "./fixtures/southeast-batch";
 
 const fontPathFor = (script: (typeof OUTLINE_SCRIPTS)[number]) =>
   process.env[script.testFontEnvironment] ||
   `/usr/share/fonts/truetype/noto/${script.fontFile}`;
 const fixture = sceneSchema.parse({
-  id: "indic-batch",
+  id: "southeast-batch",
   purpose: "",
   duration: 1,
   voiceover: "",
@@ -47,14 +47,21 @@ const fixture = sceneSchema.parse({
   sfx: "",
   cta: "",
 });
-function environment(t: TestContext) {
+function environment(
+  t: TestContext,
+  sample?: (typeof SOUTHEAST_BATCH_FIXTURES)[number],
+) {
   const values: Record<string, string> = {
     ...Object.fromEntries(
       OUTLINE_SCRIPTS.map((script) => [script.environment, "true"]),
     ),
-    RENDER_FONT_PATH: DEFAULT_RENDER_FONT_PATH,
-    RENDER_FONT_FALLBACK_PATHS:
-      OUTLINE_SCRIPTS.map(fontPathFor).join(delimiter),
+    RENDER_FONT_PATH: sample
+      ? fontPathFor(OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!)
+      : DEFAULT_RENDER_FONT_PATH,
+    RENDER_FONT_FALLBACK_PATHS: [
+      DEFAULT_RENDER_FONT_PATH,
+      ...OUTLINE_SCRIPTS.map(fontPathFor),
+    ].join(delimiter),
   };
   const old = Object.fromEntries(
     Object.keys(values).map((key) => [key, process.env[key]]),
@@ -68,40 +75,90 @@ function environment(t: TestContext) {
 }
 const getFonts = () =>
   Promise.all(
-    [DEFAULT_RENDER_FONT_PATH, ...OUTLINE_SCRIPTS.map(fontPathFor)].map(
-      (path) => readRenderFont(path),
-    ),
+    [
+      ...new Set([
+        process.env.RENDER_FONT_PATH || DEFAULT_RENDER_FONT_PATH,
+        DEFAULT_RENDER_FONT_PATH,
+        ...OUTLINE_SCRIPTS.map(fontPathFor),
+      ]),
+    ].map((path) => readRenderFont(path)),
   );
-const generatedSinhala = () => {
+const generatedTexts = (name: string) => {
   const texts: string[] = [];
-  for (let c = 0xd9a; c <= 0xdc6; c++)
-    if (/\p{Letter}/u.test(String.fromCodePoint(c)))
-      for (const vowel of [
-        "",
-        "ා",
-        "ැ",
-        "ෑ",
-        "ි",
-        "ී",
-        "ු",
-        "ූ",
-        "ෘ",
-        "ෙ",
-        "ේ",
-        "ෛ",
-        "ො",
-        "ෝ",
-        "ෞ",
-        "්",
+  if (name === "Thai" || name === "Lao") {
+    const shift = name === "Thai" ? 0 : 0x80;
+    // The pinned Lao test font predates these 14 modern letters. Test their
+    // missing-font rejection separately rather than using .notdef as acceptance.
+    const absentLao = new Set([
+      3718, 3721, 3724, 3726, 3727, 3728, 3729, 3730, 3731, 3736, 3744, 3752,
+      3753, 3756,
+    ]);
+    for (let b = 0xe01 + shift; b < 0xe2f + shift; b++) {
+      if (
+        !/\p{Letter}/u.test(String.fromCodePoint(b)) ||
+        (shift && absentLao.has(b))
+      )
+        continue;
+      for (const suffix of [
+        [],
+        [0xe33],
+        [0xe48, 0xe33],
+        [0xe49, 0xe33],
+        [0xe34],
+        [0xe38],
+        [0xe34, 0xe48],
+        [0xe38, 0xe49],
       ])
-        texts.push(String.fromCodePoint(c) + vowel);
+        texts.push(String.fromCodePoint(b, ...suffix.map((c) => c + shift)));
+    }
+  } else if (name === "Khmer") {
+    for (let b = 0x1780; b < 0x17a3; b++)
+      for (const sub of ["", "្ក", "្រ", "្យ"])
+        for (const v of [
+          "",
+          "ា",
+          "ិ",
+          "ី",
+          "ុ",
+          "ូ",
+          "េ",
+          "ែ",
+          "ៃ",
+          "ោ",
+          "ៅ",
+          "ើ",
+          "ៀ",
+          "ឿ",
+          "ំ",
+        ])
+          texts.push(String.fromCodePoint(b) + sub + v);
+  } else if (name === "Myanmar") {
+    for (let b = 0x1000; b < 0x1021; b++) {
+      for (const medial of ["", "ျ", "ြ", "ွ", "ှ", "ျွ", "ြွ", "ျှ", "ြှ"])
+        for (const v of ["", "ိ", "ီ", "ု", "ူ", "ေ", "ော", "ံ", "့", "ို"])
+          texts.push(String.fromCodePoint(b) + medial + v);
+      for (const v of ["", "ိ", "ီ", "ု", "ေ"]) {
+        texts.push(
+          "င်္" + String.fromCodePoint(b) + v,
+          "င်္" + String.fromCodePoint(b) + "ျ" + v,
+          String.fromCodePoint(b) + "္က" + v,
+        );
+      }
+    }
+  } else if (name === "Tibetan") {
+    for (let b = 0xf40; b < 0xf6d; b++)
+      if (/\p{Letter}/u.test(String.fromCodePoint(b)))
+        for (const sub of ["", "ྲ", "ྱ"])
+          for (const v of ["", "ཱ", "ི", "ུ", "ེ", "ོ", "ཱི", "ཱུ", "ིཾ"])
+            texts.push(String.fromCodePoint(b) + sub + v);
+  }
   return texts;
 };
-for (const sample of INDIC_BATCH_FIXTURES) {
+for (const sample of SOUTHEAST_BATCH_FIXTURES) {
   const script = OUTLINE_SCRIPTS.find((item) => item.name === sample.name)!;
   const fontPath = fontPathFor(script);
   test(`${sample.name}: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries`, (t) => {
-    environment(t);
+    environment(t, sample);
     delete process.env[script.environment];
     assert.match(
       renderTextSupportIssue(sample.title)!,
@@ -115,7 +172,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
       ),
       null,
     );
-    for (const other of INDIC_BATCH_FIXTURES) {
+    for (const other of SOUTHEAST_BATCH_FIXTURES) {
       if (other.key === sample.key) continue;
       process.env[`RENDER_${other.key}_ENABLED`] = "false";
       assert.equal(renderTextSupportIssue(sample.title), null);
@@ -131,7 +188,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
         /Separate Arabic, Hebrew/,
       );
     assert.match(renderTextSupportIssue(sample.title + " 新品")!, /CJK/);
-    assert.equal(renderTextSupportIssue(sample.title + " ไทย"), null);
+
     assert.match(
       renderTextSupportIssue(sample.title + "\u200d")!,
       /control characters|Sinhala joiner-based conjuncts/,
@@ -165,19 +222,38 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     );
   });
   test(`${sample.name}: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM`, async (t) => {
-    environment(t);
+    environment(t, sample);
     const texts = [
-      ...sample.texts,
-      ...(sample.name === "Sinhala" ? generatedSinhala() : []),
+      ...new Set([...sample.texts, ...generatedTexts(sample.name)]),
     ];
     const bytes = await readRenderFont(fontPath);
-    const reference = JSON.parse(
-      await runProcess(
-        "python3",
-        ["tests/fixtures/shaping-reference.py", fontPath, ...texts],
-        { timeout: 30000 },
-      ),
-    );
+    const reference = {
+      engine: "HarfBuzz",
+      version: "",
+      unitsPerEm: 0,
+      runs: [] as any[],
+    };
+    for (let start = 0; start < texts.length; start += 100) {
+      const batch = JSON.parse(
+        await runProcess(
+          "python3",
+          [
+            "tests/fixtures/shaping-reference.py",
+            fontPath,
+            ...texts.slice(start, start + 100),
+          ],
+          { timeout: 30000 },
+        ),
+      );
+      assert.equal(batch.engine, "HarfBuzz");
+      if (start) {
+        assert.equal(batch.version, reference.version);
+        assert.equal(batch.unitsPerEm, reference.unitsPerEm);
+      }
+      reference.version = batch.version;
+      reference.unitsPerEm = batch.unitsPerEm;
+      reference.runs.push(...batch.runs);
+    }
     assert.equal(reference.engine, "HarfBuzz");
     const { create } = await import("fontkit");
     const faces = [
@@ -188,7 +264,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     // hundreds of identical fonts adds allocations without adding coverage.
     const plan = createRenderFontPlan(
       bytes,
-      [{ ...fixture, onScreenText: sample.title }],
+      [{ ...fixture, onScreenText: sample.texts[0] }],
       { captions: false },
     );
     for (const face of faces) {
@@ -231,13 +307,14 @@ for (const sample of INDIC_BATCH_FIXTURES) {
       }
     }
     t.diagnostic(
-      `HarfBuzz ${reference.version}: ${sample.texts.length} curated${sample.name === "Sinhala" ? " + 656 generated" : ""} strings, CJS/ESM/outlines matched.`,
+      `HarfBuzz ${reference.version}: ${sample.texts.length} curated, ${texts.length} unique total reference strings, CJS/ESM/outlines matched.`,
     );
   });
   test(`${sample.name}: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage`, async (t) => {
-    environment(t);
+    environment(t, sample);
     const fonts = await getFonts();
-    const text = ("A\u0301" + sample.cluster + "क्षि").repeat(18);
+    const text = ("A\u0301 " + sample.cluster + " क्षि ").repeat(6).trim();
+    const compact = text.replace(/ /g, "");
     const plan = createRenderFontPlan(
       fonts,
       [{ ...fixture, onScreenText: text }],
@@ -246,7 +323,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     const boundaries = new Set([
       0,
       ...Array.from(
-        new Intl.Segmenter("und", { granularity: "grapheme" }).segment(text),
+        new Intl.Segmenter("und", { granularity: "grapheme" }).segment(compact),
         (item) => item.index + item.segment.length,
       ),
     ]);
@@ -260,10 +337,10 @@ for (const sample of INDIC_BATCH_FIXTURES) {
         height,
         40,
       );
-      assert.equal(layout.text.replace(/\n/g, ""), text);
+      assert.equal(layout.text.replace(/[\n ]/g, ""), compact);
       let consumed = 0;
       for (const line of layout.text.split("\n")) {
-        consumed += line.length;
+        consumed += line.replace(/ /g, "").length;
         assert.ok(
           boundaries.has(consumed),
           "wrap at a complete grapheme boundary",
@@ -273,8 +350,10 @@ for (const sample of INDIC_BATCH_FIXTURES) {
         );
       }
     }
+    const { create } = await import("fontkit");
+    const point = sample.texts[0].codePointAt(0)!;
     const missing = fonts.filter(
-      (_, i) => i !== OUTLINE_SCRIPTS.indexOf(script) + 1,
+      (font) => !create(font).hasGlyphForCodePoint(point),
     );
     assert.throws(
       () =>
@@ -299,6 +378,11 @@ for (const sample of INDIC_BATCH_FIXTURES) {
       /could not be inspected/,
     );
     process.env.RENDER_FONT_FALLBACK_PATHS = "";
+    process.env.RENDER_FONT_PATH = fontPathFor(
+      OUTLINE_SCRIPTS.find(
+        (s) => s.name === (sample.name === "Thai" ? "Khmer" : "Thai"),
+      )!,
+    );
     const unexpected = () => {
       throw new Error("Unexpected storage/cache work");
     };
@@ -319,7 +403,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     );
   });
   test(`${sample.name}: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues`, async (t) => {
-    environment(t);
+    environment(t, sample);
     const ffmpeg = process.env.FFMPEG_PATH || "ffmpeg";
     const runtime = await runProcess(ffmpeg, ["-version"], { timeout: 15000 }),
       decoders = await runProcess(ffmpeg, ["-decoders"], { timeout: 15000 });
@@ -372,13 +456,13 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     `${sample.name}: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames`,
     { timeout: 180000 },
     async (t) => {
-      environment(t);
+      environment(t, sample);
       const dir = await mkdtemp(
         join(tmpdir(), `mos-${sample.key.toLowerCase()}-`),
       );
       t.after(() => rm(dir, { recursive: true, force: true }));
-      const qaDir = process.env.MOS_INDIC_BATCH_QA_DIR
-        ? join(process.env.MOS_INDIC_BATCH_QA_DIR, sample.key.toLowerCase())
+      const qaDir = process.env.MOS_SOUTHEAST_BATCH_QA_DIR
+        ? join(process.env.MOS_SOUTHEAST_BATCH_QA_DIR, sample.key.toLowerCase())
         : undefined;
       if (qaDir) await mkdir(qaDir, { recursive: true });
       const titleFor = (mode: string) =>
@@ -410,7 +494,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
                 captionCues: [{ start: 0.3, end: 0.8, text: captionFor(mode) }],
               };
               await renderVideo({
-                organizationId: "indic-batch-qa",
+                organizationId: "southeast-batch-qa",
                 id: name,
                 scenes: [scene],
                 options,
@@ -518,22 +602,163 @@ for (const sample of INDIC_BATCH_FIXTURES) {
   );
 }
 
-test("registry: all ten Indic scripts compose independently referenced font/script runs in one overlay", async (t) => {
+test("Southeast Asian word wrapping protects dictionary words, leading vowels and Tibetan tsheg while oversized words fail readably", async (t) => {
   environment(t);
+  const { renderLineBreakUnits } =
+    await import("../packages/core/render-text-layout");
+  for (const text of [
+    "ภาษาไทยการศึกษา",
+    "ພາສາລາວສຶກສາ",
+    "ភាសាខ្មែរសិក្សា",
+    "မြန်မာပညာရေး",
+    "བོད་ཡིག་སློབ་",
+  ]) {
+    const units = renderLineBreakUnits(text)!;
+    assert.equal(units.join(""), text);
+    assert.ok(units.length > 1);
+    const plan = createRenderFontPlan(
+      await getFonts(),
+      [{ ...fixture, onScreenText: text }],
+      { captions: false },
+    );
+    const width =
+      Math.max(
+        ...units.map(
+          (unit) =>
+            plan.measureText(unit, -1).width * 18 + Array.from(unit).length,
+        ),
+      ) /
+        0.84 +
+      1;
+    const layout = layoutRenderText(
+      text,
+      "dictionary title",
+      plan,
+      width,
+      2000,
+      18,
+    );
+    const boundaries = new Set<number>([0]);
+    let consumed = 0;
+    for (const unit of units) {
+      consumed += unit.length;
+      boundaries.add(consumed);
+    }
+    consumed = 0;
+    for (const line of layout.text.split("\n")) {
+      consumed += line.length;
+      assert.ok(boundaries.has(consumed));
+      assert.ok(!/^[་]/u.test(line));
+    }
+    assert.equal(layout.text.replace(/\n/g, ""), text);
+    const longest = units.reduce((a, b) => (a.length > b.length ? a : b));
+    const shortPlan = createRenderFontPlan(
+      await getFonts(),
+      [{ ...fixture, onScreenText: longest }],
+      { captions: false },
+    );
+    assert.throws(
+      () =>
+        layoutRenderText(longest, "dictionary title", shortPlan, 20, 2000, 18),
+      /minimum readable font size/,
+    );
+  }
+});
+
+test("Derived Sara Am glyph coverage selects a complete fallback and rejects missing glyphs before cache/storage", async (t) => {
+  environment(t);
+  const script = OUTLINE_SCRIPTS.find((s) => s.name === "Thai")!;
+  const original = await readRenderFont(fontPathFor(script)),
+    broken = Buffer.from(original);
+  const tables = broken.readUInt16BE(4);
+  let cmap = 0;
+  for (let i = 0; i < tables; i++)
+    if (broken.toString("ascii", 12 + i * 16, 16 + i * 16) === "cmap")
+      cmap = broken.readUInt32BE(20 + i * 16);
+  assert.ok(cmap);
+  const records = broken.readUInt16BE(cmap + 2);
+  let removed = 0;
+  for (let i = 0; i < records; i++) {
+    const table = cmap + broken.readUInt32BE(cmap + 8 + i * 8);
+    if (broken.readUInt16BE(table) !== 4) continue;
+    const count = broken.readUInt16BE(table + 6) / 2;
+    for (let j = 0; j < count; j++) {
+      const end = broken.readUInt16BE(table + 14 + j * 2),
+        start = broken.readUInt16BE(table + 16 + count * 2 + j * 2);
+      if (start > 0xe4d || end < 0xe4d) continue;
+      const address = table + 16 + count * 6 + j * 2,
+        offset = broken.readUInt16BE(address);
+      assert.ok(offset, "pinned test cmap uses a glyph array for Nikhahit");
+      broken.writeUInt16BE(0, address + offset + (0xe4d - start) * 2);
+      removed++;
+    }
+  }
+  assert.ok(removed);
   const { create } = await import("fontkit");
-  const segments = [
+  assert.equal(create(broken).hasGlyphForCodePoint(0xe33), true);
+  assert.equal(create(broken).hasGlyphForCodePoint(0xe4d), false);
+  const scene = { ...fixture, onScreenText: "น้ำ" };
+  assert.throws(
+    () => createRenderFontPlan(broken, [scene], { captions: false }),
+    /grapheme.*glyphs missing/,
+  );
+  const complete = createRenderFontPlan([broken, original], [scene], {
+    captions: false,
+  });
+  const expected = createRenderFontPlan(original, [scene], { captions: false });
+  assert.deepEqual(
+    complete.shapeText(scene.onScreenText, -1),
+    expected.shapeText(scene.onScreenText, -1),
+  );
+  const dir = await mkdtemp(join(tmpdir(), "mos-derived-glyph-"));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const path = join(dir, "missing-nikhahit.ttf");
+  await writeFile(path, broken);
+  process.env.RENDER_FONT_PATH = path;
+  process.env.RENDER_FONT_FALLBACK_PATHS = "";
+  const unexpected = () => {
+    throw new Error("Unexpected storage/cache work");
+  };
+  await assert.rejects(
+    renderVideo({
+      organizationId: "southeast-missing",
+      id: "derived",
+      scenes: [scene],
+      options: renderOptions.parse({ captions: false }),
+      assets: [],
+      signal: new AbortController().signal,
+      store: new Proxy({} as ObjectStore, { get: unexpected }),
+      progress: async () => unexpected(),
+      cacheGet: async () => unexpected(),
+      cachePut: async () => unexpected(),
+    }),
+    /grapheme.*glyphs missing/,
+  );
+});
+
+test("All fifteen registered scripts compose independently referenced runs without changing Unicode SRT", async (t) => {
+  environment(t);
+  process.env.RENDER_FONT_PATH = fontPathFor(
+    OUTLINE_SCRIPTS.find((s) => s.name === "Lao")!,
+  );
+  const { INDIC_BATCH_FIXTURES } = await import("./fixtures/indic-batch");
+  const { create } = await import("fontkit");
+  const segments: [string, string][] = [
     [DEFAULT_RENDER_FONT_PATH, "Café "],
     [DEFAULT_RENDER_FONT_PATH, "Ελλάδα "],
     [DEFAULT_RENDER_FONT_PATH, "Привет "],
     [fontPathFor(OUTLINE_SCRIPTS[0]), "हिंदी "],
     [fontPathFor(OUTLINE_SCRIPTS[1]), "বাংলা "],
     [fontPathFor(OUTLINE_SCRIPTS[2]), "ગુજરાતી "],
-    ...INDIC_BATCH_FIXTURES.map((sample) => [
-      fontPathFor(OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!),
-      sample.texts[0] + " ",
-    ]),
+    ...[...INDIC_BATCH_FIXTURES, ...SOUTHEAST_BATCH_FIXTURES].map(
+      (sample) =>
+        [
+          fontPathFor(OUTLINE_SCRIPTS.find((s) => s.name === sample.name)!),
+          sample.texts[0] + " ",
+        ] as [string, string],
+    ),
   ];
-  const text = segments.map(([, text]) => text).join("");
+  const text = segments.map(([, part]) => part).join("");
   const plan = createRenderFontPlan(
     await getFonts(),
     [{ ...fixture, onScreenText: text }],
@@ -553,7 +778,11 @@ test("registry: all ten Indic scripts compose independently referenced font/scri
     );
     for (const glyph of ref.runs[0].glyphs) {
       const actual = outlined.paths[index++];
-      assert.equal(actual.path, face.getGlyph(glyph.id).path.toSVG());
+      assert.equal(
+        actual.path,
+        face.getGlyph(glyph.id).path.toSVG(),
+        `${part} glyph ${index - 1} from ${path}`,
+      );
       assert.equal(actual.scale, 1 / ref.unitsPerEm);
       assert.ok(
         Math.abs(actual.x - advance - glyph.xOffset / ref.unitsPerEm) < 1e-8,
@@ -564,82 +793,9 @@ test("registry: all ten Indic scripts compose independently referenced font/scri
   }
   assert.equal(index, outlined.paths.length);
   assert.ok(Math.abs(outlined.advanceWidth - advance) < 1e-8);
-});
-test("registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path", () => {
-  assert.equal(
-    outlinePipelineRevision(["हिंदी"]),
-    "fontkit-outlines-v2-shared-context-southeast-tibetan",
+  const scene = { ...fixture, caption: text };
+  assert.ok(captionSrt([scene]).includes(text));
+  t.diagnostic(
+    "18 independently referenced Latin/Greek/Cyrillic and fifteen outline script runs matched.",
   );
-  assert.equal(
-    outlinePipelineRevision(["বাংলা"]),
-    "fontkit-outlines-v2-shared-context-southeast-tibetan",
-  );
-  assert.equal(
-    outlinePipelineRevision(["ગુજરાતી"]),
-    "fontkit-outlines-v2-shared-context-southeast-tibetan",
-  );
-  assert.equal(renderTextSupportIssue("Café Ελλάδα Привет مرحبا שלום"), null);
-  assert.match(
-    renderTextSupportIssue("ශ්\u200dරී")!,
-    /control characters|Sinhala joiner-based conjuncts/,
-  );
-});
-
-test("fractional inset caption bounds accept Telugu/Sinhala edge rounding while rejecting real overflow", async (t) => {
-  environment(t);
-  const fonts = await getFonts();
-  for (const [name, aspect, resolution] of [
-    ["Telugu", "16:9", "720"],
-    ["Sinhala", "9:16", "1080"],
-  ] as const) {
-    const sample = INDIC_BATCH_FIXTURES.find((s) => s.name === name)!;
-    const text = "Ελλάδα Привет हिंदी " + sample.caption;
-    const options = renderOptions.parse({
-        aspect,
-        resolution,
-        textPlacement: "inset-v1",
-      }),
-      [width, height] = dimensions(options);
-    const area = renderTextAreas(options, width, height)!.caption;
-    const plan = createRenderFontPlan(
-      fonts,
-      [{ ...fixture, caption: text }],
-      options,
-    );
-    const layout = layoutRenderText(
-      text,
-      "fractional inset caption",
-      plan,
-      width,
-      height,
-      Math.round(Math.min(width, height) / 25),
-      area,
-    );
-    assert.doesNotThrow(() =>
-      glyphOverlaySvg(
-        layout.text,
-        plan,
-        layout.fontIndex,
-        layout.fontSize,
-        width,
-        height,
-        true,
-        area,
-      ),
-    );
-    assert.throws(
-      () =>
-        glyphOverlaySvg(
-          layout.text,
-          plan,
-          layout.fontIndex,
-          layout.fontSize * 20,
-          width,
-          height,
-          true,
-          area,
-        ),
-      /does not fit/,
-    );
-  }
 });

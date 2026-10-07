@@ -11,7 +11,7 @@ import { RenderFontError } from "./render-font";
 import { outlinePipelineRevision } from "./render-scripts";
 
 const message =
-  "Indic rendering requires FFmpeg with the librsvg SVG decoder. Ask an administrator to configure the render runtime or disable the affected script rendering.";
+  "Outline rendering requires FFmpeg with the librsvg SVG decoder. Ask an administrator to configure the render runtime or disable the affected script rendering.";
 
 export function validateDevanagariRuntime(decoders: string) {
   if (!/^\s*V[.A-Z]{5}\s+librsvg\s/m.test(decoders))

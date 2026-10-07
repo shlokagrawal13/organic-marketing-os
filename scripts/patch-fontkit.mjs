@@ -14,6 +14,8 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 
+import { southeastReplacements } from "./fontkit-southeast.mjs";
+
 const root = new URL("../node_modules/fontkit/", import.meta.url);
 const pkg = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
 if (pkg.version !== "2.0.4")
@@ -67,7 +69,10 @@ const pending = [];
 for (const [path, hash] of Object.entries(upstream)) {
   const url = new URL(path, root);
   const current = await readFile(url, "utf8");
+  const additions = southeastReplacements(current);
   let original = current;
+  for (const [before, after] of [...additions].reverse())
+    original = original.split(after).join(before);
   for (const [before, after] of replacements)
     original = original.split(after).join(before);
   original = original.split(guard).join("");
@@ -86,9 +91,15 @@ for (const [path, hash] of Object.entries(upstream)) {
       throw new Error(`Fontkit patch target changed: ${path}`);
     patched = patched.replace(before, after);
   }
+  const previous = patched;
+  for (const [before, after] of additions) {
+    if (patched.split(before).length !== 2)
+      throw new Error(`Fontkit Southeast Asian patch target changed: ${path}`);
+    patched = patched.replace(before, after);
+  }
   // Accept pristine bytes, the complete prior R patch, or this complete patch.
   // Reject partial/mutated inputs rather than silently completing unknown edits.
-  if (![original, legacy, patched].includes(current))
+  if (![original, legacy, previous, patched].includes(current))
     throw new Error(`Fontkit has an unexpected partial patch: ${path}`);
   pending.push({ url, patched, changed: current !== patched });
 }
@@ -96,5 +107,5 @@ for (const [path, hash] of Object.entries(upstream)) {
 for (const { url, patched, changed } of pending)
   if (changed) await writeFile(fileURLToPath(url), patched);
 console.log(
-  "Fontkit 2.0.4 Node shaping patches verified (CJS/ESM: null anchors, mark filtering, Sinhala marks).",
+  "Fontkit 2.0.4 Node shaping patches verified (CJS/ESM: null anchors, mark filtering, Sinhala marks, Southeast Asian/Tibetan shaping).",
 );

@@ -237,7 +237,10 @@ test("render bounds and scene captions have deterministic, accurate timing", () 
 test("render text preflight accepts configured RTL scripts and reports unsupported shaping cases", (t) => {
   const enabled = process.env.RENDER_DEVANAGARI_ENABLED;
   process.env.RENDER_DEVANAGARI_ENABLED = "false";
-  t.after(() => { if (enabled === undefined) delete process.env.RENDER_DEVANAGARI_ENABLED; else process.env.RENDER_DEVANAGARI_ENABLED = enabled; });
+  t.after(() => {
+    if (enabled === undefined) delete process.env.RENDER_DEVANAGARI_ENABLED;
+    else process.env.RENDER_DEVANAGARI_ENABLED = enabled;
+  });
   const latin = sceneSchema.parse({
     ...fixtureScene,
     id: "latin",
@@ -329,4 +332,14 @@ test("media subprocess cancellation closes a running child promptly", async () =
   );
   setTimeout(() => abort.abort(), 100);
   await assert.rejects(running, /canceled/i);
+});
+
+test("media process output preserves Unicode split across UTF-8 pipe chunks", async () => {
+  const { runProcess } = await import("../packages/core/media");
+  const text = "ภาษาไทย ພາສາລາວ ភាសាខ្មែរ မြန်မာ བོད་ཡིག་";
+  const program = `const b=Buffer.from(${JSON.stringify(text)});let i=0;function write(){if(i===b.length)return;process.stdout.write(b.subarray(i,i+1));i++;setTimeout(write,1);}write();`;
+  assert.equal(
+    await runProcess(process.execPath, ["-e", program], { timeout: 5000 }),
+    text,
+  );
 });

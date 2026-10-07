@@ -10,7 +10,7 @@ import {
   type Scene,
 } from "./media";
 
-import { outlineScript } from "./render-scripts";
+import { outlineScript, outlineLayoutTags } from "./render-scripts";
 
 export const MAX_RENDER_FONT_BYTES = 16 * 1024 * 1024;
 export const DEFAULT_RENDER_FONT_PATH =
@@ -31,6 +31,7 @@ export type RenderFontPlan = {
   shapeText: (
     text: string,
     fontIndex: number,
+    script?: string,
   ) => {
     unitsPerEm: number;
     ascent: number;
@@ -41,6 +42,7 @@ export type RenderFontPlan = {
   measureText: (
     text: string,
     fontIndex: number,
+    script?: string,
   ) => {
     width: number;
     height: number;
@@ -183,9 +185,17 @@ export function createRenderFontPlan(
         const previous = runs.at(-1);
         const preferred = previous?.script === script ? previous.fontIndex : -1;
         const covers = (font: InspectedFont) =>
-          Array.from(segment).every((character) =>
-            hasGlyph(font, character.codePointAt(0)!),
-          );
+          Array.from(
+            segment.replace(
+              /[\u0e33\u0eb3]/gu,
+              (am) =>
+                am +
+                String.fromCodePoint(
+                  am.codePointAt(0)! + 0x1a,
+                  am.codePointAt(0)! - 1,
+                ),
+            ),
+          ).every((character) => hasGlyph(font, character.codePointAt(0)!));
         const index =
           preferred >= 0 && covers(fonts[preferred])
             ? preferred
@@ -235,7 +245,7 @@ export function createRenderFontPlan(
       fonts: bytes,
       fontHashes: bytes.map(sha256),
       selectFontIndex: (text: string) => selections.get(textKey(text)) ?? 0,
-      shapeText: (text: string, fontIndex: number) => {
+      shapeText: (text: string, fontIndex: number, script?: string) => {
         try {
           if (fontIndex === -1) {
             let advanceWidth = 0,
@@ -248,7 +258,11 @@ export function createRenderFontPlan(
               scale: number;
             }[] = [];
             for (const item of fontRuns(text)) {
-              const shaped = plan.shapeText(item.text, item.fontIndex);
+              const shaped = plan.shapeText(
+                item.text,
+                item.fontIndex,
+                item.script,
+              );
               const unit = shaped.unitsPerEm;
               paths.push(
                 ...shaped.paths.map((glyph) => ({
@@ -265,7 +279,23 @@ export function createRenderFontPlan(
             return { unitsPerEm: 1, ascent, descent, advanceWidth, paths };
           }
           const { face } = fonts[fontIndex];
-          const run = face.layout(text);
+          // Fontkit accepts ordered script-tag arrays; its declarations expose only a
+          // string. Keep the checked runtime capability explicit at this boundary.
+          const layout = face.layout as unknown as (
+            text: string,
+            features: undefined,
+            script?: string | string[],
+          ) => ReturnType<FontFace["layout"]>;
+          const run = layout.call(
+            face,
+            text,
+            undefined,
+            script ? outlineLayoutTags(script) : undefined,
+          );
+          if (run.glyphs.some((glyph) => glyph.id === 0))
+            throw new RenderFontError(
+              "The shaped text has glyphs missing from the configured render font. Configure a font covering the complete shaping cluster.",
+            );
           let advance = 0;
           const paths = run.glyphs.map((glyph, i) => {
             const position = run.positions[i];
@@ -284,17 +314,18 @@ export function createRenderFontPlan(
             advanceWidth: advance,
             paths,
           };
-        } catch {
+        } catch (error) {
+          if (error instanceof RenderFontError) throw error;
           throw new RenderFontError(
             "The configured render font could not shape the text. Ask an administrator to configure a valid TrueType or OpenType font.",
           );
         }
       },
-      measureText: (text: string, fontIndex: number) => {
+      measureText: (text: string, fontIndex: number, script?: string) => {
         try {
           if (fontIndex === -1) {
             const measures = fontRuns(text).map((run) =>
-              plan.measureText(run.text, run.fontIndex),
+              plan.measureText(run.text, run.fontIndex, run.script),
             );
             const shaped = plan.shapeText(text, -1);
             return {
@@ -306,7 +337,23 @@ export function createRenderFontPlan(
             };
           }
           const { face } = fonts[fontIndex];
-          const run = face.layout(text);
+          // Fontkit accepts ordered script-tag arrays; its declarations expose only a
+          // string. Keep the checked runtime capability explicit at this boundary.
+          const layout = face.layout as unknown as (
+            text: string,
+            features: undefined,
+            script?: string | string[],
+          ) => ReturnType<FontFace["layout"]>;
+          const run = layout.call(
+            face,
+            text,
+            undefined,
+            script ? outlineLayoutTags(script) : undefined,
+          );
+          if (run.glyphs.some((glyph) => glyph.id === 0))
+            throw new RenderFontError(
+              "The shaped text has glyphs missing from the configured render font. Configure a font covering the complete shaping cluster.",
+            );
           let advance = 0,
             left = 0,
             right = 0;
@@ -337,13 +384,20 @@ export function createRenderFontPlan(
           )
             throw new Error("Invalid font metrics");
           return { width, height };
-        } catch {
+        } catch (error) {
+          if (error instanceof RenderFontError) throw error;
           throw new RenderFontError(
             "The configured render font could not be measured. Ask an administrator to configure a valid TrueType or OpenType font.",
           );
         }
       },
     };
+    // Verify derived glyphs (Sara Am/split vowels/dotted circles) before any
+    // cache or storage work. Cmap coverage of the original text is not enough.
+    for (const scene of scenes)
+      for (const { text } of renderedSceneText(scene, options))
+        if (hasIndicOutlineText(text) && textKey(text))
+          plan.shapeText(textKey(text), -1);
     return plan;
   } catch (error) {
     if (error instanceof RenderFontError) throw error;

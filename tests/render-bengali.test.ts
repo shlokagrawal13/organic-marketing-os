@@ -272,12 +272,18 @@ test("Bengali outline runtime has a distinct fingerprint and invalidates prior I
   assert.equal(
     await check("শিক্ষা"),
     sha256(
-      "fontkit-outlines-v2-bengali-script-font-runs\n" + runtime + decoders,
+      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
+        runtime +
+        decoders,
     ),
   );
   assert.equal(
     await check("हिंदी"),
-    sha256("fontkit-outlines-v4-ltr-script-font-runs\n" + runtime + decoders),
+    sha256(
+      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
+        runtime +
+        decoders,
+    ),
   );
   assert.equal(
     await checkRenderShaping(

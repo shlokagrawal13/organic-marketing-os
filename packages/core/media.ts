@@ -59,11 +59,6 @@ export type Scene = z.infer<typeof sceneSchema>;
 export const sha256 = (value: string | Buffer) =>
   createHash("sha256").update(value).digest("hex");
 const unsupportedRenderScripts: Array<[RegExp, string]> = [
-  [/\p{Script=Thai}/u, "Thai"],
-  [/\p{Script=Lao}/u, "Lao"],
-  [/\p{Script=Khmer}/u, "Khmer"],
-  [/\p{Script=Myanmar}/u, "Myanmar"],
-  [/\p{Script=Tibetan}/u, "Tibetan"],
   [/\p{Script=Han}/u, "CJK"],
   [/\p{Script=Hiragana}/u, "Japanese"],
   [/\p{Script=Katakana}/u, "Japanese"],
@@ -89,12 +84,19 @@ export const hasIndicOutlineText = (text: string) =>
   Boolean(outlineScript(text));
 export function indicMixSupportIssue(text: string, label = "Rendered text") {
   if (hasIndicOutlineText(text) && unsupportedIndicMix.test(text))
-    return `${label} can combine enabled Indic scripts with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
+    return `${label} can combine enabled outline scripts with Latin, Greek or Cyrillic text, numbers and punctuation only. Separate Arabic, Hebrew and other scripts into another overlay.`;
   return null;
 }
 export function renderTextSupportIssue(text: string, label = "Rendered text") {
   if (/\p{Script=Sinhala}/u.test(text) && /[\u200c\u200d]/u.test(text))
     return `${label} contains Sinhala joiner-based conjuncts outside the current shaping acceptance. Preserve the joiners and attach this text as an image until that coverage is verified.`;
+  if (
+    /[\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}\p{Script=Tibetan}]/u.test(
+      text,
+    ) &&
+    /\p{Cf}/u.test(text)
+  )
+    return `${label} contains shaping or word-break control characters outside current acceptance. Preserve legitimate joiners and word-break controls and attach this text as an image until that coverage is verified.`;
   if (/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(text))
     return `${label} contains control characters. Remove them before rendering.`;
   if (emojiOrSymbol.test(text))
@@ -165,6 +167,9 @@ export function runProcess(
       kill();
     }, options.timeout ?? 90000);
     options.signal?.addEventListener("abort", kill, { once: true });
+    // Preserve UTF-8 characters split across pipe chunks without raising the output cap.
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
     child.stdout.on("data", (chunk) => {
       stdout += chunk.toString();
       if (stdout.length > 500000) kill();

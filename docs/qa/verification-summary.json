@@ -6,15 +6,15 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 113,
+    "unit": 143,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 12
   },
   "environment": {
-    "database": "Disposable serialized PGlite WASM PostgreSQL; T own native CI pending",
-    "redis": "Native Redis 7.2.11 test binary; disposable isolated verifier",
+    "database": "Own U: serialized disposable PGlite WASM PostgreSQL; populated upgrade/archive restore separately uses PGlite. Own native PostgreSQL CI pending.",
+    "redis": "Own U: native Redis 7.2.11 disposable local test process",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
@@ -22,7 +22,7 @@
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
     "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider",
-    "shapingReference": "HarfBuzz 8.3.0 via test-only Python ctypes oracle"
+    "shapingReference": "HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics)"
   },
   "requirements": {
     "headings": 161,
@@ -81,20 +81,20 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01T is locally verified: one shared script registry adds separately opt-in Gurmukhi, Odia (Unicode Oriya), Tamil, Telugu, Kannada, Malayalam and bounded non-joiner Sinhala overlays. Passed API/web production builds, 113 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Independent HarfBuzz 8.3.0 matches 100 curated strings plus 656 generated Sinhala consonant/vowel cases against both CJS/ESM exports and runtime emitted outlines; 13 independently referenced runs compose Latin/Greek/Cyrillic plus all ten registered Indic scripts. Each new script passed 18 pure/mixed exports and 54 decoded timed frames across six geometries/standard-inset placement (126 exports/378 frames total); 14 representative portrait/mixed-landscape samples were visually reviewed for visibility and clipping. Recovery naturally expired a 119932ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact 48-file source/config/docs/evidence public payload and its own native CI are pending.",
+  "latestIncrement": "EDITOR-01U is locally verified: separately opt-in Thai/Lao/Khmer/Myanmar/Tibetan overlays use the shared registry, trusted complete-grapheme font/script runs and controlled Fontkit outlines. Passed API/web production builds, a complete 143-unit summary (zero failed/cancelled/skipped/todo, 143 unique case receipts and 18 summaries), 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. HarfBuzz 8.3.0 independently matches 115 curated and 7406 unique total covered new-script strings in both CJS/ESM and runtime emitted outlines, plus 18 combined Latin/Greek/Cyrillic/fifteen-script reference runs. Each new script passed 18 pure/mixed exports and 54 decoded timed frames across six geometries/standard-inset placement (90 exports/270 frames total); ten portrait/mixed-landscape samples were visually reviewed for visibility and clipping. Clean full and production-only installs matched 32780 reference layouts across four exports, including all fifteen scripts; their patched bytes match the working install. Default DejaVuSans Lao additionally matched 21 cases in both exports and runtime outlines. Recovery naturally expired a 119920ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact U publication payload and its own native CI remain pending.",
   "priorFullSuite": {
-    "sourceCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
-    "actionsRunId": 37516681778,
+    "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+    "actionsRunId": 37519604078,
     "verifiedDate": "2026-10-07",
-    "completedAt": "2026-10-06T19:15:00Z",
+    "completedAt": "2026-10-06T19:39:45Z",
     "passed": {
-      "unit": 68,
+      "unit": 73,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "R own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded.",
+    "scope": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded.",
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0,
     "populatedUpgradeArchiveRestoreCi": true
@@ -141,14 +141,14 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "runId": 37519604078,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37519604078",
-    "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+    "runId": 37529863574,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
+    "sourceCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
-    "completedAt": "2026-10-06T19:39:45Z",
-    "annotation": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
+    "completedAt": "2026-10-06T21:04:17Z",
+    "annotation": "T own native PostgreSQL/Redis application CI at the exact approved public source; Docker/full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -733,44 +733,35 @@
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "latestFullSuite": {
-    "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
-    "actionsRunId": 37519604078,
+    "slice": "EDITOR-01U",
     "verifiedDate": "2026-10-07",
-    "completedAt": "2026-10-06T19:39:45Z",
     "passed": {
-      "unit": 73,
+      "unit": 143,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded.",
-    "productionAuditAdvisories": 0,
-    "fullAuditAdvisories": 0,
-    "populatedUpgradeArchiveRestoreCi": true
+    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
   },
   "currentIncrementChecks": {
-    "unitReporterFinalSummaryAndCaseReceiptsVerified": true,
-    "unitReporterSmoke": {
-      "passAccepted": true,
-      "failRejected": true,
-      "skipRejected": true,
-      "incompleteStreamRejected": true
-    },
     "apiBuild": true,
     "webProductionBuild": true,
-    "unit": 113,
+    "unit": 143,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryScenarios": 5,
     "migrations": 12,
+    "unitFileConcurrency": 2,
+    "unitReporterFinalSummaryAndCaseReceiptsVerified": true,
+    "unitCaseReceipts": 143,
+    "unitSummaries": 18,
     "populatedUpgradeLocal": true,
-    "populatedUpgradeCi": null,
+    "populatedUpgradeCi": false,
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0,
     "nativeApplicationCiVerified": false,
-    "unitFileConcurrency": 2,
-    "scope": "EDITOR-01T own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
+    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -868,8 +859,8 @@
     "ciVideoSubmitCount": 1
   },
   "priorLocalEnvironment": {
-    "database": "Native PostgreSQL 17 disposable CI service; populated upgrade/archive restore separately uses PGlite",
-    "redis": "Native Redis 7 disposable CI service",
+    "database": "Disposable serialized PGlite WASM PostgreSQL; T own native CI pending",
+    "redis": "Native Redis 7.2.11 test binary; disposable isolated verifier",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
     "email": "local SMTP capture",
@@ -877,7 +868,7 @@
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
     "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider",
-    "shapingReference": "Independent system HarfBuzz through test-only Python oracle; exact CI version not emitted"
+    "shapingReference": "HarfBuzz 8.3.0 via test-only Python ctypes oracle"
   },
   "editor01qEvidence": {
     "scope": "Greek/Cyrillic + existing Latin/Devanagari bounded LTR overlay combinations; shared API/worker mixed-script boundary",
@@ -949,16 +940,16 @@
     "populatedUpgradeArchiveRestoreCi": true
   },
   "localFullSuite": {
-    "slice": "EDITOR-01T",
+    "slice": "EDITOR-01U",
     "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 113,
+      "unit": 143,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "EDITOR-01T own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
+    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
   },
   "editor01qSharpEvidence": {
     "scope": "Exact sharp 0.35.5 override plus associated platform binaries/libvips lock records; no app source changes",
@@ -1044,26 +1035,26 @@
     }
   },
   "priorGithubActions": {
-    "runId": 37516681778,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37516681778",
-    "sourceCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
+    "runId": 37519604078,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37519604078",
+    "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
-    "completedAt": "2026-10-06T19:15:00Z",
-    "annotation": "R own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
+    "completedAt": "2026-10-06T19:39:45Z",
+    "annotation": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "priorLocalFullSuite": {
-    "slice": "EDITOR-01S",
+    "slice": "EDITOR-01T",
     "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 73,
+      "unit": 113,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "EDITOR-01S own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
+    "scope": "EDITOR-01T own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
   },
   "editor01rEvidence": {
     "scope": "Separately enabled Bengali outline overlays and bounded LTR script/font combinations",
@@ -1279,7 +1270,7 @@
   "editor01tEvidence": {
     "slice": "EDITOR-01T",
     "scope": "Shared ten-script Indic registry and seven-script bounded acceptance batch",
-    "publicationStatus": "local_verified_pending_exact_48_file_approval",
+    "publicationStatus": "published_ci_verified",
     "scripts": [
       {
         "name": "Gurmukhi",
@@ -1610,7 +1601,7 @@
     "dependencyPackageRecordsChanged": false,
     "fontkitPatchChanged": true,
     "liveProviderUsed": false,
-    "nativeCiVerified": false,
+    "nativeCiVerified": true,
     "dockerBuildExecuted": false,
     "knownFailures": [],
     "resolvedOrExcludedFindings": [
@@ -1652,6 +1643,244 @@
       "General bidi/language semantics and all-font coverage",
       "Physical-device readability",
       "Full EDITOR-01 and master acceptance"
-    ]
+    ],
+    "publicationCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "publicationTree": "5a9241f00bae03348b46d03cf384f57aeba78336",
+    "githubActions": {
+      "runId": 37529863574,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
+      "sourceCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "completedAt": "2026-10-06T21:04:17Z",
+      "annotation": "T own native PostgreSQL/Redis application CI at the exact approved public source; Docker/full Compose/native cross-store restore/live/device/master acceptance excluded."
+    },
+    "ciUnitFinalSummaryVerified": true,
+    "ciReferenceShapingVerified": true,
+    "ciDecodedFramesVerified": 378,
+    "ciRenderExportsVerified": 126,
+    "ciFontkitPostinstallVerified": true,
+    "ciObservedLockMs": 119830,
+    "ciObservedCaseDurationMs": 158564.78982,
+    "populatedUpgradeArchiveRestoreCi": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4866285,
+      "sha256": "b7d3b482b60b37a72e12e77c5a9476171ee68c06d0b5a763f7dac5fc9b94a6aa",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "harfbuzzReferenceEngineCi": "HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics)",
+    "nativeCiEvidence": {
+      "slice": "EDITOR-01T",
+      "headSha": "eede92658ebde9e214c998442ae7988b4e1734e4",
+      "runId": 37529863574,
+      "jobId": 112496182254,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
+      "attempt": 1,
+      "conclusion": "success",
+      "startedAt": "2026-10-06T20:53:35Z",
+      "completedAt": "2026-10-06T21:04:17Z",
+      "passed": {
+        "unit": 113,
+        "httpScenarios": 7,
+        "browserScenarios": 7,
+        "recoveryAndConfigurationScenarios": 5,
+        "schemaMigrations": 12
+      },
+      "unitFinalSummaryVerified": true,
+      "unitUniqueCaseReceiptsVerified": true,
+      "unitCaseReceiptCount": 113,
+      "unitSummaryCount": 17,
+      "unitArtifactId": 11444516381,
+      "unitArtifactSha256": "46b563c2329c5fada686e3f18a1d3117057bf7bd0f8ae82f85f2dd94a2baa15e",
+      "testSummaries": [
+        {
+          "tests": 113,
+          "suites": 0,
+          "passed": 113,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 209365.770067
+        },
+        {
+          "tests": 7,
+          "suites": 0,
+          "passed": 7,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 114983.353937
+        },
+        {
+          "tests": 5,
+          "suites": 0,
+          "passed": 5,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 178624.388546
+        }
+      ],
+      "sevenScriptReferenceDiagnosticsVerified": true,
+      "sevenScriptFrameMatricesVerified": true,
+      "scriptReferences": [
+        {
+          "script": "Gurmukhi",
+          "version": "8.3.0",
+          "curated": 16,
+          "generated": 0
+        },
+        {
+          "script": "Odia",
+          "version": "8.3.0",
+          "curated": 12,
+          "generated": 0
+        },
+        {
+          "script": "Tamil",
+          "version": "8.3.0",
+          "curated": 12,
+          "generated": 0
+        },
+        {
+          "script": "Telugu",
+          "version": "8.3.0",
+          "curated": 12,
+          "generated": 0
+        },
+        {
+          "script": "Kannada",
+          "version": "8.3.0",
+          "curated": 12,
+          "generated": 0
+        },
+        {
+          "script": "Malayalam",
+          "version": "8.3.0",
+          "curated": 17,
+          "generated": 0
+        },
+        {
+          "script": "Sinhala",
+          "version": "8.3.0",
+          "curated": 19,
+          "generated": 656
+        }
+      ],
+      "scriptRenderMatrices": [
+        {
+          "script": "Gurmukhi",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 25936.478309
+        },
+        {
+          "script": "Odia",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 26338.895874
+        },
+        {
+          "script": "Tamil",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 26204.801464
+        },
+        {
+          "script": "Telugu",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 22889.814974
+        },
+        {
+          "script": "Kannada",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 23048.902966
+        },
+        {
+          "script": "Malayalam",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 23866.513701
+        },
+        {
+          "script": "Sinhala",
+          "exports": 18,
+          "frames": 54,
+          "durationMs": 23159.523399
+        }
+      ],
+      "independentlyReferencedMixedRuns": 13,
+      "fontkitPostinstallVerified": true,
+      "harfbuzzReferenceEngineCi": "HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics)",
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0,
+      "upgradeEvidence": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4866285,
+        "sha256": "b7d3b482b60b37a72e12e77c5a9476171ee68c06d0b5a763f7dac5fc9b94a6aa",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "observedLockMs": 119830,
+      "observedCaseDurationMs": 158564.78982,
+      "browserDurationSeconds": 40.3,
+      "scope": "Disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers; populated upgrade/restore separately PGlite; Docker/full Compose/MinIO/native cross-store restore/live/physical-device/master acceptance excluded."
+    }
+  },
+  "priorNativeFullSuite": {
+    "sourceCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "actionsRunId": 37529863574,
+    "verifiedDate": "2026-10-07",
+    "completedAt": "2026-10-06T21:04:17Z",
+    "passed": {
+      "unit": 113,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryAndConfigurationScenarios": 5,
+      "schemaMigrations": 12
+    },
+    "scope": "T own native PostgreSQL/Redis application CI at the exact approved public source; Docker/full Compose/native cross-store restore/live/device/master acceptance excluded.",
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "populatedUpgradeArchiveRestoreCi": true,
+    "unitFinalSummaryVerified": true
+  },
+  "editor01uEvidence": {
+    "status": "locally_verified_publication_and_own_native_ci_pending",
+    "scripts": [
+      "Thai",
+      "Lao",
+      "Khmer",
+      "Myanmar",
+      "Tibetan"
+    ],
+    "evidence": "docs/qa/southeast-batch-evidence.json",
+    "unitCaseReceipts": "docs/qa/editor01u-unit-receipts.json",
+    "referenceEngine": "HarfBuzz 8.3.0",
+    "curated": 115,
+    "uniqueCoveredReferenceStrings": 7406,
+    "mixedReferenceRuns": 18,
+    "exports": 90,
+    "decodedFrames": 270,
+    "cleanInstallReferenceLayouts": 32780,
+    "nativeCiVerified": false,
+    "publicWriteAttempted": false
   }
 }

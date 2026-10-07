@@ -1,0 +1,721 @@
+{
+  "task": "EDITOR-01U",
+  "status": "locally_verified_publication_and_own_native_ci_pending",
+  "publication": {
+    "approved": false,
+    "attempted": false,
+    "lastVerifiedPublicMain": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "expectedParent": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "parentTree": "5a9241f00bae03348b46d03cf384f57aeba78336",
+    "nativeCiVerified": false,
+    "fileCount": 43,
+    "paths": [
+      ".env.example",
+      ".github/workflows/ci.yml",
+      "CHECKPOINT_MANIFEST.json",
+      "Dockerfile",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "README.md",
+      "START_HERE.md",
+      "docs/CHANGELOG.md",
+      "docs/FONTKIT_SHAPING_PATCH.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/TEST_STRATEGY.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/VIDEO_PIPELINE.md",
+      "docs/qa/editor01u-unit-receipts.json",
+      "docs/qa/indic-batch-evidence.json",
+      "docs/qa/southeast-batch-evidence.json",
+      "docs/qa/verification-summary.json",
+      "packages/core/media.ts",
+      "packages/core/render-font.ts",
+      "packages/core/render-scripts.ts",
+      "packages/core/render-shaping.ts",
+      "packages/core/render-text-layout.ts",
+      "packages/core/renderer.ts",
+      "scripts/fontkit-myanmar-data.json",
+      "scripts/fontkit-myanmar.machine",
+      "scripts/fontkit-southeast.mjs",
+      "scripts/generate-fontkit-myanmar.mjs",
+      "scripts/patch-fontkit.mjs",
+      "scripts/verify-local.mjs",
+      "tests/fixtures/southeast-batch.ts",
+      "tests/fontkit-patch.test.ts",
+      "tests/integration/media.test.ts",
+      "tests/media.test.ts",
+      "tests/render-bengali.test.ts",
+      "tests/render-devanagari.test.ts",
+      "tests/render-gujarati.test.ts",
+      "tests/render-indic-batch.test.ts",
+      "tests/render-southeast-batch.test.ts"
+    ],
+    "deletions": []
+  },
+  "fontMetadata": [
+    {
+      "family": "NotoSansDevanagari",
+      "path": ".local/test-fonts/NotoSansDevanagari-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 219212,
+      "sha256": "385e78e6359a9d88a0f243d53b1209d7548361ba2194e2b9ec779bcaa7e8949d"
+    },
+    {
+      "family": "NotoSansBengali",
+      "path": ".local/test-fonts/NotoSansBengali-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansBengali/NotoSansBengali-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 200048,
+      "sha256": "6300c5370cd688b0641343de4c786de6d412bb6c578d129dae75e93a0322dcab"
+    },
+    {
+      "family": "NotoSansGujarati",
+      "path": ".local/test-fonts/NotoSansGujarati-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 208452,
+      "sha256": "8d5c22d7b729ef2839e6d1fe2cde77b2d083907be3659bca63676baa76e01fd6"
+    },
+    {
+      "family": "NotoSansGurmukhi",
+      "path": ".local/test-fonts/NotoSansGurmukhi-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansGurmukhi/NotoSansGurmukhi-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 53000,
+      "sha256": "bbde4d85fdfb998eff6921cb2c7a9a7924a1c95560a6aa9a06172530e4f596da"
+    },
+    {
+      "family": "NotoSansOriya",
+      "path": ".local/test-fonts/NotoSansOriya-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansOriya/NotoSansOriya-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 95776,
+      "sha256": "b8d8bd784b9d09c0668233437359913c93a3a83bf37d92ecde859e2bc728a0e0"
+    },
+    {
+      "family": "NotoSansTamil",
+      "path": ".local/test-fonts/NotoSansTamil-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansTamil/NotoSansTamil-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 74248,
+      "sha256": "6532db33b8b264abe3a098a40619feb489b5ddf5ab1d2b46e72b51eeb548001b"
+    },
+    {
+      "family": "NotoSansTelugu",
+      "path": ".local/test-fonts/NotoSansTelugu-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansTelugu/NotoSansTelugu-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 197228,
+      "sha256": "2c05072e8018a9be1cb0582953d9edf9a0cf129cdfb74e611de763b09c411f7f"
+    },
+    {
+      "family": "NotoSansKannada",
+      "path": ".local/test-fonts/NotoSansKannada-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansKannada/NotoSansKannada-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 151940,
+      "sha256": "5c804033c57f2c2844b1cd425f45b9a78d81d2f71bf358351b24258ebe168aea"
+    },
+    {
+      "family": "NotoSansMalayalam",
+      "path": ".local/test-fonts/NotoSansMalayalam-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansMalayalam/NotoSansMalayalam-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 111724,
+      "sha256": "42eb462ff13e820ebbeaaec4e7b426bd1de145d02cef8b634f5a3efd376b513c"
+    },
+    {
+      "family": "NotoSansSinhala",
+      "path": ".local/test-fonts/NotoSansSinhala-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansSinhala/NotoSansSinhala-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 310232,
+      "sha256": "a966549310b2d3046ba25bbeef11985428ff9356fa656fd6118bc90fb82df031"
+    },
+    {
+      "family": "NotoSansThai",
+      "path": ".local/test-fonts/NotoSansThai-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansThai/NotoSansThai-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 37752,
+      "sha256": "404ddfb5ed0aaa6b6ec8a85700d682978992062d67da93903967b56cbd9a4acc"
+    },
+    {
+      "family": "NotoSansLao",
+      "path": ".local/test-fonts/NotoSansLao-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansLao/NotoSansLao-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 31340,
+      "sha256": "4a64d40850990992913d4be44b2e87a93d52f76882c1f0c0755edcb12ec57aa2"
+    },
+    {
+      "family": "NotoSansKhmer",
+      "path": ".local/test-fonts/NotoSansKhmer-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansKhmer/NotoSansKhmer-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 114096,
+      "sha256": "5c1ec068352f1e1fe8e7a3218230360d054e104d377ef40c0423b17c34c3c259"
+    },
+    {
+      "family": "NotoSansMyanmar",
+      "path": ".local/test-fonts/NotoSansMyanmar-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSansMyanmar/NotoSansMyanmar-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 195408,
+      "sha256": "9dd2bc76a822a974efce803a4b07302d14d01d5c1fa9e33a258d15a9cb513a7d"
+    },
+    {
+      "family": "NotoSerifTibetan",
+      "path": ".local/test-fonts/NotoSerifTibetan-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSerifTibetan/NotoSerifTibetan-Regular.ttf?editor01u=recovery-complete",
+      "bytes": 613292,
+      "sha256": "3dd3876c670008cef5e29a79392fc8874d9bb9e349fc54755b2861c050c0fd7c"
+    }
+  ],
+  "referenceEngine": "HarfBuzz 8.3.0",
+  "findings": [
+    {
+      "problem": "Sara Am handling",
+      "resolution": "Thai/Lao Nikhahit/AA decomposition and above-mark reorder, with derived coverage preflight"
+    },
+    {
+      "problem": "Lao chaining contextual backtrack order",
+      "resolution": "Reverse nearest-first backtrack glyph/class/coverage arrays for forward matching; preserve table arrays"
+    },
+    {
+      "problem": "Myanmar mym2 orthographic behavior",
+      "resolution": "Dedicated Myanmar syllable machine and per-syllable basic stages, kinzi/medial Ra/pre-vowel ordering and before-GPOS mark widths"
+    },
+    {
+      "problem": "Expanded Myanmar multiple substitution grows indefinitely",
+      "resolution": "Advance contextual cursor over inserted output glyphs; avoid skipping multiplied base glyphs during mark positioning"
+    },
+    {
+      "problem": "Tibetan old USE U+0F71 and broken cluster placement",
+      "resolution": "CMBlw classification and dotted circle before the first non-repha mark"
+    },
+    {
+      "problem": "Large reference JSON corrupts UTF-8 across pipe chunks and exceeds guarded output cap",
+      "resolution": "Stream UTF-8 decoder; test-only batches of 100 keep original 500000-character output cap"
+    },
+    {
+      "problem": "Default DejaVu also covers Lao",
+      "resolution": "U frame matrices select the pinned script font as primary; full mixed reference selects the covering Lao font before DejaVu"
+    },
+    {
+      "problem": "Old error wording assertion fails",
+      "resolution": "Expected wording corrected; earlier 142/143 run excluded; complete 143/143 rerun with terminal summary and every case receipt verified."
+    }
+  ],
+  "knownGaps": [
+    "joiner and word-break controls",
+    "14 modern Lao test letters absent from pinned NotoSansLao font (112 generated diagnostic strings); rejected rather than counted as matches",
+    "CJK",
+    "physical-device/all-language/all-font readability",
+    "actual Docker/full Compose/MinIO",
+    "native PostgreSQL/private-media cross-store restore",
+    "live providers and master acceptance"
+  ],
+  "verification": {
+    "builds": [
+      "API TypeScript",
+      "production Next.js"
+    ],
+    "unit": 143,
+    "unitReceiptFile": "docs/qa/editor01u-unit-receipts.json",
+    "unitSummaries": 18,
+    "unitDurationMs": 231551.946817,
+    "http": 7,
+    "httpDurationMs": 138790.225134,
+    "browser": 7,
+    "browserDurationSeconds": 43.4,
+    "recovery": 5,
+    "recoverySuiteDurationMs": 147965.645706,
+    "naturalRedisLockMs": 119920,
+    "recoveryCaseDurationMs": 128137.442068,
+    "providerSubmissions": 1,
+    "retainedProviderReceiptPrivateOutputAndCompletedJob": true,
+    "migrations": 12,
+    "upgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4865827,
+      "sha256": "9d83b40a6628f8a540b66f851ff96bf83a932924edc3ae06132a56f86cd964a5",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "auditAllVulnerabilities": 0,
+    "auditProductionVulnerabilities": 0,
+    "ownNativeCiVerified": false,
+    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
+  },
+  "referenceAcceptance": {
+    "engine": "HarfBuzz",
+    "version": "8.3.0",
+    "curated": 115,
+    "uniqueCoveredStrings": 7406,
+    "exports": [
+      "CJS",
+      "ESM"
+    ],
+    "runtimeGlyphIdsOrderAdvancesOffsetsAndPathsMatched": true,
+    "byScript": [
+      {
+        "name": "Thai",
+        "curated": 23,
+        "uniqueCovered": 383,
+        "exports": 18,
+        "frames": 54
+      },
+      {
+        "name": "Lao",
+        "curated": 21,
+        "uniqueCovered": 230,
+        "exports": 18,
+        "frames": 54
+      },
+      {
+        "name": "Khmer",
+        "curated": 23,
+        "uniqueCovered": 2113,
+        "exports": 18,
+        "frames": 54
+      },
+      {
+        "name": "Myanmar",
+        "curated": 24,
+        "uniqueCovered": 3477,
+        "exports": 18,
+        "frames": 54
+      },
+      {
+        "name": "Tibetan",
+        "curated": 24,
+        "uniqueCovered": 1203,
+        "exports": 18,
+        "frames": 54
+      }
+    ],
+    "mixedReferenceRuns": 18,
+    "defaultLao": {
+      "font": "default DejaVuSans",
+      "engine": "HarfBuzz",
+      "version": "8.3.0",
+      "cases": 21,
+      "exports": [
+        "CJS",
+        "ESM"
+      ],
+      "runtimeOutlinesMatched": true
+    },
+    "cleanInstalls": {
+      "engine": "HarfBuzz",
+      "version": "8.3.0",
+      "scripts": [
+        {
+          "script": "Thai",
+          "export": "full-esm",
+          "matched": 383
+        },
+        {
+          "script": "Thai",
+          "export": "full-cjs",
+          "matched": 383
+        },
+        {
+          "script": "Thai",
+          "export": "production-esm",
+          "matched": 383
+        },
+        {
+          "script": "Thai",
+          "export": "production-cjs",
+          "matched": 383
+        },
+        {
+          "script": "Lao",
+          "export": "full-esm",
+          "matched": 230
+        },
+        {
+          "script": "Lao",
+          "export": "full-cjs",
+          "matched": 230
+        },
+        {
+          "script": "Lao",
+          "export": "production-esm",
+          "matched": 230
+        },
+        {
+          "script": "Lao",
+          "export": "production-cjs",
+          "matched": 230
+        },
+        {
+          "script": "Khmer",
+          "export": "full-esm",
+          "matched": 2113
+        },
+        {
+          "script": "Khmer",
+          "export": "full-cjs",
+          "matched": 2113
+        },
+        {
+          "script": "Khmer",
+          "export": "production-esm",
+          "matched": 2113
+        },
+        {
+          "script": "Khmer",
+          "export": "production-cjs",
+          "matched": 2113
+        },
+        {
+          "script": "Myanmar",
+          "export": "full-esm",
+          "matched": 3477
+        },
+        {
+          "script": "Myanmar",
+          "export": "full-cjs",
+          "matched": 3477
+        },
+        {
+          "script": "Myanmar",
+          "export": "production-esm",
+          "matched": 3477
+        },
+        {
+          "script": "Myanmar",
+          "export": "production-cjs",
+          "matched": 3477
+        },
+        {
+          "script": "Tibetan",
+          "export": "full-esm",
+          "matched": 1203
+        },
+        {
+          "script": "Tibetan",
+          "export": "full-cjs",
+          "matched": 1203
+        },
+        {
+          "script": "Tibetan",
+          "export": "production-esm",
+          "matched": 1203
+        },
+        {
+          "script": "Tibetan",
+          "export": "production-cjs",
+          "matched": 1203
+        },
+        {
+          "script": "Gurmukhi",
+          "export": "full-esm",
+          "matched": 16
+        },
+        {
+          "script": "Gurmukhi",
+          "export": "full-cjs",
+          "matched": 16
+        },
+        {
+          "script": "Gurmukhi",
+          "export": "production-esm",
+          "matched": 16
+        },
+        {
+          "script": "Gurmukhi",
+          "export": "production-cjs",
+          "matched": 16
+        },
+        {
+          "script": "Odia",
+          "export": "full-esm",
+          "matched": 12
+        },
+        {
+          "script": "Odia",
+          "export": "full-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Odia",
+          "export": "production-esm",
+          "matched": 12
+        },
+        {
+          "script": "Odia",
+          "export": "production-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Tamil",
+          "export": "full-esm",
+          "matched": 12
+        },
+        {
+          "script": "Tamil",
+          "export": "full-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Tamil",
+          "export": "production-esm",
+          "matched": 12
+        },
+        {
+          "script": "Tamil",
+          "export": "production-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Telugu",
+          "export": "full-esm",
+          "matched": 12
+        },
+        {
+          "script": "Telugu",
+          "export": "full-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Telugu",
+          "export": "production-esm",
+          "matched": 12
+        },
+        {
+          "script": "Telugu",
+          "export": "production-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Kannada",
+          "export": "full-esm",
+          "matched": 12
+        },
+        {
+          "script": "Kannada",
+          "export": "full-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Kannada",
+          "export": "production-esm",
+          "matched": 12
+        },
+        {
+          "script": "Kannada",
+          "export": "production-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Malayalam",
+          "export": "full-esm",
+          "matched": 17
+        },
+        {
+          "script": "Malayalam",
+          "export": "full-cjs",
+          "matched": 17
+        },
+        {
+          "script": "Malayalam",
+          "export": "production-esm",
+          "matched": 17
+        },
+        {
+          "script": "Malayalam",
+          "export": "production-cjs",
+          "matched": 17
+        },
+        {
+          "script": "Sinhala",
+          "export": "full-esm",
+          "matched": 665
+        },
+        {
+          "script": "Sinhala",
+          "export": "full-cjs",
+          "matched": 665
+        },
+        {
+          "script": "Sinhala",
+          "export": "production-esm",
+          "matched": 665
+        },
+        {
+          "script": "Sinhala",
+          "export": "production-cjs",
+          "matched": 665
+        },
+        {
+          "script": "Devanagari",
+          "export": "full-esm",
+          "matched": 12
+        },
+        {
+          "script": "Devanagari",
+          "export": "full-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Devanagari",
+          "export": "production-esm",
+          "matched": 12
+        },
+        {
+          "script": "Devanagari",
+          "export": "production-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Bengali",
+          "export": "full-esm",
+          "matched": 12
+        },
+        {
+          "script": "Bengali",
+          "export": "full-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Bengali",
+          "export": "production-esm",
+          "matched": 12
+        },
+        {
+          "script": "Bengali",
+          "export": "production-cjs",
+          "matched": 12
+        },
+        {
+          "script": "Gujarati",
+          "export": "full-esm",
+          "matched": 19
+        },
+        {
+          "script": "Gujarati",
+          "export": "full-cjs",
+          "matched": 19
+        },
+        {
+          "script": "Gujarati",
+          "export": "production-esm",
+          "matched": 19
+        },
+        {
+          "script": "Gujarati",
+          "export": "production-cjs",
+          "matched": 19
+        }
+      ],
+      "totalMatched": 32780
+    }
+  },
+  "patchByteHashes": {
+    "CJS": "788122a4d5c63ccc531b4a8a6d4c715422dc649e37ef11e76b83b5915eefc3b3",
+    "ESM": "36e299c1d42c6a6e386cf7b3917193a6f418f4e79d94c3b2d06e402f34feb9f0",
+    "fullAndProductionMatchWorkingInstall": true,
+    "unknownPartialVersionChangedInputsRejectedBeforeAnyExportWrite": true,
+    "idempotent": true,
+    "grammarStates": 84,
+    "categoryColumns": 42,
+    "dependencyRecordsVersionsLockfileUnchanged": true
+  },
+  "renderAcceptance": {
+    "exports": 90,
+    "decodedFrames": 270,
+    "geometries": [
+      "9:16 720",
+      "9:16 1080",
+      "16:9 720",
+      "16:9 1080",
+      "1:1 720",
+      "1:1 1080"
+    ],
+    "modes": [
+      "pure standard",
+      "mixed standard",
+      "mixed inset-v1"
+    ],
+    "cueInterval": [
+      0.3,
+      0.8
+    ],
+    "frameTimes": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "boundsTitleCueTimingAndUnicodeSrtPassed": true,
+    "primaryScriptFontsUsed": true,
+    "physicalDevicesVerified": false,
+    "reviewedFrames": [
+      {
+        "script": "thai",
+        "file": "pure-standard-9x16-720.png",
+        "sha256": "82dc5cd20c83ce78aa104c078e63a8bd651a51fb81209fc07856f61a05a163dd",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "thai",
+        "file": "mixed-inset-v1-16x9-1080.png",
+        "sha256": "4a24504ff3044f44a4570bf9a4576730c46de197cdea26c295a4368f6cc18a05",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "lao",
+        "file": "pure-standard-9x16-720.png",
+        "sha256": "eed4cea1135548fc3e425c13542f778b0993a537e1414e6d59a36afaaec5401e",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "lao",
+        "file": "mixed-inset-v1-16x9-1080.png",
+        "sha256": "b61f3fcb1961aa06d15e29bc23cb8e3d909694960fd7a9e0583c2faed5b53c78",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "khmer",
+        "file": "pure-standard-9x16-720.png",
+        "sha256": "b05c607799eee6d6ae4a69403584333054c4f7b697038f4439154536ad8517a1",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "khmer",
+        "file": "mixed-inset-v1-16x9-1080.png",
+        "sha256": "7678c6205bdb9f071e8ae574a206853d51775cb70e446147569499ab56d0bdc7",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "myanmar",
+        "file": "pure-standard-9x16-720.png",
+        "sha256": "3d9a76ea9fa54b9772adb40bd8ffb3c4f3e48a04e903712b9a516e54a17830ee",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "myanmar",
+        "file": "mixed-inset-v1-16x9-1080.png",
+        "sha256": "b34a2e2b38995e0ceb66935137cd912d28ea883f3b7fb97a566694155481860b",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "tibetan",
+        "file": "pure-standard-9x16-720.png",
+        "sha256": "695ea31fd74a7bbe6501071b0e69d7be028cba02b7e8b68b9d781388f468c68d",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      },
+      {
+        "script": "tibetan",
+        "file": "mixed-inset-v1-16x9-1080.png",
+        "sha256": "e4e7ba8c5feeaf6791767eeadd099fd973afb40d248d69e906e52bc996caf151",
+        "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+      }
+    ]
+  },
+  "failedOrIncompleteRunsNotPassEvidence": true,
+  "references": [
+    "docs/FONTKIT_SHAPING_PATCH.md",
+    "scripts/fontkit-myanmar.machine",
+    "scripts/generate-fontkit-myanmar.mjs"
+  ]
+}

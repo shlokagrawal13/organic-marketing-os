@@ -1,3 +1,4 @@
+import { SOUTHEAST_BATCH_FIXTURES } from "../fixtures/southeast-batch";
 import { INDIC_BATCH_FIXTURES } from "../fixtures/indic-batch";
 import "../support/isolated";
 import { test, after } from "node:test";
@@ -495,7 +496,7 @@ test(
       scenes: [
         {
           ...alternate.scenes[0],
-          onScreenText: "ไทย",
+          onScreenText: "新品",
           caption:
             "The API must explain unsupported rendered text before queueing.",
         },
@@ -512,7 +513,7 @@ test(
       options: { preset: "square-feed-v1" },
     });
     assert.equal(unsupportedRender.status, 400);
-    assert.match(JSON.stringify(unsupportedRender.body), /Thai/);
+    assert.match(JSON.stringify(unsupportedRender.body), /CJK/);
     assert.equal(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeUnsupported,
@@ -525,7 +526,7 @@ test(
         {
           ...alternate.scenes[0],
           onScreenText: "Supported title",
-          caption: "ไทย",
+          caption: "新品",
         },
       ],
     });
@@ -542,7 +543,7 @@ test(
       srtOnlyPayload,
     );
     assert.equal(burnedUnsupported.status, 400);
-    assert.match(JSON.stringify(burnedUnsupported.body), /caption cue 1.*Thai/);
+    assert.match(JSON.stringify(burnedUnsupported.body), /caption cue 1.*CJK/);
     const srtOnlyRender = await a.call(root + "/renders", "POST", {
       ...srtOnlyPayload,
       options: { captions: false },
@@ -558,7 +559,7 @@ test(
       await (
         await a.raw(`${root}/renders/${srtOnlyReady.id}/file/captions`)
       ).text(),
-      /ไทย/,
+      /新品/,
     );
     const rtlContent = await a.call(root + "/content", "POST", {
       ...alternate,
@@ -744,7 +745,10 @@ test(
       await db.renderJob.count({ where: { organizationId: org } }),
       beforeGujaratiRtl,
     );
-    for (const sample of INDIC_BATCH_FIXTURES) {
+    for (const sample of [
+      ...INDIC_BATCH_FIXTURES,
+      ...SOUTHEAST_BATCH_FIXTURES,
+    ]) {
       const content = await a.call(root + "/content", "POST", {
         ...alternate,
         title: `Configured ${sample.name} mixed render`,
