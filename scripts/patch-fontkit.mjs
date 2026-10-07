@@ -70,13 +70,23 @@ for (const [path, hash] of Object.entries(upstream)) {
   const url = new URL(path, root);
   const current = await readFile(url, "utf8");
   const additions = southeastReplacements(current);
-  let original = current;
-  for (const [before, after] of [...additions].reverse())
-    original = original.split(after).join(before);
-  for (const [before, after] of replacements)
-    original = original.split(after).join(before);
-  original = original.split(guard).join("");
-  if (digest(original) !== hash)
+  const previousUAdditions = southeastReplacements(current, {
+    previousU: true,
+  });
+  let original;
+  for (const candidate of [additions, previousUAdditions]) {
+    let input = current;
+    for (const [before, after] of [...candidate].reverse())
+      input = input.split(after).join(before);
+    for (const [before, after] of replacements)
+      input = input.split(after).join(before);
+    input = input.split(guard).join("");
+    if (digest(input) === hash) {
+      original = input;
+      break;
+    }
+  }
+  if (!original)
     throw new Error(`Fontkit patch input differs from reviewed bytes: ${path}`);
   let legacy = original;
   for (const anchor of anchors) {
@@ -92,6 +102,9 @@ for (const [path, hash] of Object.entries(upstream)) {
     patched = patched.replace(before, after);
   }
   const previous = patched;
+  let previousU = previous;
+  for (const [before, after] of previousUAdditions)
+    previousU = previousU.replace(before, after);
   for (const [before, after] of additions) {
     if (patched.split(before).length !== 2)
       throw new Error(`Fontkit Southeast Asian patch target changed: ${path}`);
@@ -99,7 +112,7 @@ for (const [path, hash] of Object.entries(upstream)) {
   }
   // Accept pristine bytes, the complete prior R patch, or this complete patch.
   // Reject partial/mutated inputs rather than silently completing unknown edits.
-  if (![original, legacy, previous, patched].includes(current))
+  if (![original, legacy, previous, previousU, patched].includes(current))
     throw new Error(`Fontkit has an unexpected partial patch: ${path}`);
   pending.push({ url, patched, changed: current !== patched });
 }

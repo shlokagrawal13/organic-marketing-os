@@ -148,9 +148,9 @@ export function outlineScript(text: string) {
   );
 }
 export function outlinePipelineRevision(_texts: string[]) {
-  // U fixes common OpenType context matching and multiple substitution. Every
+  // U's CI follow-up fixes common coverage-sensitive mark-to-base attachment. Every
   // outline script must invalidate prior shaping, including the ten legacy scripts.
-  return "fontkit-outlines-v2-shared-context-southeast-tibetan";
+  return "fontkit-outlines-v3-context-mark-base-coverage";
 }
 export function outlineLayoutTags(tag: string): string | string[] {
   const modern: Record<string, string[]> = {

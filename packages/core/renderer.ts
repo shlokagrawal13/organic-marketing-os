@@ -171,7 +171,7 @@ export async function renderVideo(ctx: RenderContext) {
         segmentPath = join(dir, segment);
       const key = sha256(
         JSON.stringify({
-          version: "mos-render-7-context-shaping",
+          version: "mos-render-8-mark-base-coverage",
           fonts: fontPlan.fontHashes,
           shapingRuntime: sceneOverlays[i].some((overlay) =>
             hasIndicOutlineText(overlay.text),

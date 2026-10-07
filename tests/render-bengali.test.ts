@@ -48,6 +48,7 @@ function environment(t: TestContext) {
   const values = {
     RENDER_DEVANAGARI_ENABLED: "true",
     RENDER_BENGALI_ENABLED: "true",
+    RENDER_THAI_ENABLED: "false",
     RENDER_FONT_PATH: DEFAULT_RENDER_FONT_PATH,
     RENDER_FONT_FALLBACK_PATHS: [devaPath, fontPath].join(delimiter),
   };
@@ -272,17 +273,13 @@ test("Bengali outline runtime has a distinct fingerprint and invalidates prior I
   assert.equal(
     await check("শিক্ষা"),
     sha256(
-      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
-        runtime +
-        decoders,
+      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
     ),
   );
   assert.equal(
     await check("हिंदी"),
     sha256(
-      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
-        runtime +
-        decoders,
+      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
     ),
   );
   assert.equal(

@@ -52,6 +52,7 @@ function environment(t: TestContext) {
     RENDER_DEVANAGARI_ENABLED: "true",
     RENDER_GUJARATI_ENABLED: "true",
     RENDER_BENGALI_ENABLED: "true",
+    RENDER_THAI_ENABLED: "false",
     RENDER_FONT_PATH: DEFAULT_RENDER_FONT_PATH,
     RENDER_FONT_FALLBACK_PATHS: [devaPath, bengaliPath, fontPath].join(
       delimiter,
@@ -345,26 +346,20 @@ test("Gujarati outline runtime has a distinct fingerprint and invalidates prior 
   assert.equal(
     await check("શિક્ષણ"),
     sha256(
-      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
-        runtime +
-        decoders,
+      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
     ),
   );
   assert.equal(await check("ગુજરાતી বাংলা हिंदी"), await check("શિક્ષણ"));
   assert.equal(
     await check("বাংলা"),
     sha256(
-      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
-        runtime +
-        decoders,
+      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
     ),
   );
   assert.equal(
     await check("हिंदी"),
     sha256(
-      "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
-        runtime +
-        decoders,
+      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
     ),
   );
   assert.equal(

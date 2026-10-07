@@ -6,14 +6,14 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 143,
+    "unit": 144,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 12
   },
   "environment": {
-    "database": "Own U: serialized disposable PGlite WASM PostgreSQL; populated upgrade/archive restore separately uses PGlite. Own native PostgreSQL CI pending.",
+    "database": "Own local CI-fix disposable PGlite; original U native CI failed before application tests.",
     "redis": "Own U: native Redis 7.2.11 disposable local test process",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "real FFmpeg/ffprobe 6.1.1",
@@ -81,7 +81,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01U is locally verified: separately opt-in Thai/Lao/Khmer/Myanmar/Tibetan overlays use the shared registry, trusted complete-grapheme font/script runs and controlled Fontkit outlines. Passed API/web production builds, a complete 143-unit summary (zero failed/cancelled/skipped/todo, 143 unique case receipts and 18 summaries), 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. HarfBuzz 8.3.0 independently matches 115 curated and 7406 unique total covered new-script strings in both CJS/ESM and runtime emitted outlines, plus 18 combined Latin/Greek/Cyrillic/fifteen-script reference runs. Each new script passed 18 pure/mixed exports and 54 decoded timed frames across six geometries/standard-inset placement (90 exports/270 frames total); ten portrait/mixed-landscape samples were visually reviewed for visibility and clipping. Clean full and production-only installs matched 32780 reference layouts across four exports, including all fifteen scripts; their patched bytes match the working install. Default DejaVuSans Lao additionally matched 21 cases in both exports and runtime outlines. Recovery naturally expired a 119920ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job. The exact U publication payload and its own native CI remain pending.",
+  "latestIncrement": "EDITOR-01U's exact approved 43 files are published at ed82e963cfaa4033703c3f22ca992b60aab26ea3 (tree 8d0f8bcdae09e284a4650241c35036b4eeb74fc5); all 240 public paths/modes/blob hashes match immutable reviewed source. Own Actions 37604254705 attempt 1 failed 140/143 unit cases: two inherited-Thai-flag assertions and one older-Noto Myanmar mark offset. Audits/upgrade/native application flows were skipped and are not pass evidence. The CI follow-up is locally verified: complete 144/144 units on each of the newer and actual Ubuntu CI font sets (288 case receipts, 36 summaries), 7 HTTP, 7 production-browser, 5 recovery/config cases, API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Four clean CJS/ESM exports independently matched 65560 HarfBuzz 8.3.0 layouts across both font sets and all fifteen registered scripts. Each font set also passed 90 new-script exports/270 timed frames, 115 curated/7406 unique covered new-script strings and 18 combined reference runs; twenty representative frames were visually reviewed. The corrected payload and its own native CI remain pending.",
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
     "actionsRunId": 37519604078,
@@ -141,14 +141,38 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "runId": 37529863574,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
-    "sourceCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
+    "runId": 37604254705,
+    "jobId": 112735789242,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37604254705",
+    "sourceCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+    "sourceTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
     "status": "completed",
-    "conclusion": "success",
+    "conclusion": "failure",
     "attempt": 1,
-    "completedAt": "2026-10-06T21:04:17Z",
-    "annotation": "T own native PostgreSQL/Redis application CI at the exact approved public source; Docker/full Compose/native cross-store restore/live/device/master acceptance excluded."
+    "completedAt": "2026-10-07T10:04:09Z",
+    "unit": {
+      "tests": 143,
+      "passed": 140,
+      "failed": 3,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 256170.823836
+    },
+    "unexecuted": [
+      "production audit",
+      "full audit",
+      "populated upgrade",
+      "native HTTP/browser/recovery application flows"
+    ],
+    "artifact": {
+      "id": 11473909145,
+      "name": "browser-evidence",
+      "digest": "sha256:b5dbb14196fbafa9250a74e400f79786ff511a5af13f4f7471baa9158852e2d4",
+      "bytes": 6313
+    },
+    "unitCaseReceipts": "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
+    "annotation": "Exact approved U public source. Failed/incomplete run is excluded from pass evidence; native application flows did not execute."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -733,35 +757,37 @@
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "latestFullSuite": {
-    "slice": "EDITOR-01U",
+    "slice": "EDITOR-01U CI fix",
     "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 143,
+      "unit": 144,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
+    "scope": "Own CI-fix local application harness: disposable serialized PGlite, Redis 7.2.11, S3Proxy 4.1.1, real FFmpeg and synthetic providers. Native PostgreSQL CI requires publishing the separately reviewed fix payload; no Docker/full Compose/MinIO, native cross-store restore, live providers, physical devices or master acceptance established.",
+    "unitFontSets": 2
   },
   "currentIncrementChecks": {
     "apiBuild": true,
     "webProductionBuild": true,
-    "unit": 143,
+    "unit": 144,
+    "unitFontSets": 2,
+    "unitCaseReceipts": 288,
+    "unitSummaries": 36,
+    "unitReporterFinalSummaryAndCaseReceiptsVerified": true,
+    "unitFileConcurrency": 2,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryScenarios": 5,
     "migrations": 12,
-    "unitFileConcurrency": 2,
-    "unitReporterFinalSummaryAndCaseReceiptsVerified": true,
-    "unitCaseReceipts": 143,
-    "unitSummaries": 18,
     "populatedUpgradeLocal": true,
     "populatedUpgradeCi": false,
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0,
     "nativeApplicationCiVerified": false,
-    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
+    "scope": "Own CI-fix local application harness: disposable serialized PGlite, Redis 7.2.11, S3Proxy 4.1.1, real FFmpeg and synthetic providers. Native PostgreSQL CI requires publishing the separately reviewed fix payload; no Docker/full Compose/MinIO, native cross-store restore, live providers, physical devices or master acceptance established."
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -940,16 +966,17 @@
     "populatedUpgradeArchiveRestoreCi": true
   },
   "localFullSuite": {
-    "slice": "EDITOR-01U",
+    "slice": "EDITOR-01U CI fix",
     "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 143,
+      "unit": 144,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
+    "scope": "Own CI-fix local application harness: disposable serialized PGlite, Redis 7.2.11, S3Proxy 4.1.1, real FFmpeg and synthetic providers. Native PostgreSQL CI requires publishing the separately reviewed fix payload; no Docker/full Compose/MinIO, native cross-store restore, live providers, physical devices or master acceptance established.",
+    "unitFontSets": 2
   },
   "editor01qSharpEvidence": {
     "scope": "Exact sharp 0.35.5 override plus associated platform binaries/libvips lock records; no app source changes",
@@ -1035,26 +1062,26 @@
     }
   },
   "priorGithubActions": {
-    "runId": 37519604078,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37519604078",
-    "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
+    "runId": 37529863574,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37529863574",
+    "sourceCommit": "eede92658ebde9e214c998442ae7988b4e1734e4",
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
-    "completedAt": "2026-10-06T19:39:45Z",
-    "annotation": "S own native application CI at exact public source; full Docker/Compose/native cross-store restore/live/device/master acceptance excluded."
+    "completedAt": "2026-10-06T21:04:17Z",
+    "annotation": "T own native PostgreSQL/Redis application CI at the exact approved public source; Docker/full Compose/native cross-store restore/live/device/master acceptance excluded."
   },
   "priorLocalFullSuite": {
-    "slice": "EDITOR-01T",
+    "slice": "EDITOR-01U",
     "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 113,
+      "unit": 143,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "EDITOR-01T own local serialized PGlite application checks; own native CI/publication pending; full Docker/Compose/native cross-store restore/live/device/master excluded."
+    "scope": "U own local serialized PGlite plus native Redis/S3Proxy/FFmpeg and synthetic providers; U public write/native CI, Docker/full Compose/native cross-store restore/live/device/master acceptance pending."
   },
   "editor01rEvidence": {
     "scope": "Separately enabled Bengali outline overlays and bounded LTR script/font combinations",
@@ -1881,6 +1908,1591 @@
     "decodedFrames": 270,
     "cleanInstallReferenceLayouts": 32780,
     "nativeCiVerified": false,
-    "publicWriteAttempted": false
+    "publicWriteAttempted": true,
+    "originalPublication": {
+      "task": "EDITOR-01U",
+      "approved": true,
+      "expectedParent": "eede92658ebde9e214c998442ae7988b4e1734e4",
+      "expectedParentTree": "5a9241f00bae03348b46d03cf384f57aeba78336",
+      "files": [
+        {
+          "path": ".env.example",
+          "mode": "100644",
+          "sha": "1bb8f4133899202e02f340292a152d8633b422bb",
+          "status": "modified",
+          "bytes": 3860
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "mode": "100644",
+          "sha": "7d5ee122f128ec4dbe36de4a6db0815d4cf9bc72",
+          "status": "modified",
+          "bytes": 4016
+        },
+        {
+          "path": "CHECKPOINT_MANIFEST.json",
+          "mode": "100644",
+          "sha": "9883b89aa25b3cce6c91bb1fd0ac4d5c70935062",
+          "status": "modified",
+          "bytes": 36008
+        },
+        {
+          "path": "Dockerfile",
+          "mode": "100644",
+          "sha": "783ffa64e69545bec62d7699012287705b3ae5ba",
+          "status": "modified",
+          "bytes": 1179
+        },
+        {
+          "path": "PROJECT_CHECKPOINT.json",
+          "mode": "100644",
+          "sha": "ae348b3c614f0eaeaf61349fc17c5d646007ea1d",
+          "status": "modified",
+          "bytes": 145386
+        },
+        {
+          "path": "PROJECT_STATUS.md",
+          "mode": "100644",
+          "sha": "0f1e924e3e41f455a3bcabea04d1b88c9fd1b420",
+          "status": "modified",
+          "bytes": 57770
+        },
+        {
+          "path": "README.md",
+          "mode": "100644",
+          "sha": "19de5bfd9196f711a954780739695eb3b1938a6c",
+          "status": "modified",
+          "bytes": 23825
+        },
+        {
+          "path": "START_HERE.md",
+          "mode": "100644",
+          "sha": "72ce3933ea5f6f09bbfdeb0b8a9e2025c23871a3",
+          "status": "modified",
+          "bytes": 48744
+        },
+        {
+          "path": "docs/CHANGELOG.md",
+          "mode": "100644",
+          "sha": "5837796068f21239702a2fd1e156f816a7f4583b",
+          "status": "modified",
+          "bytes": 74694
+        },
+        {
+          "path": "docs/FONTKIT_SHAPING_PATCH.md",
+          "mode": "100644",
+          "sha": "f8d2d39dfeb4fe85af5be606113973df6885a062",
+          "status": "added",
+          "bytes": 5332
+        },
+        {
+          "path": "docs/HANDOFF.md",
+          "mode": "100644",
+          "sha": "13935116e1eafc5dc03039635bd0e2675fc51059",
+          "status": "modified",
+          "bytes": 55904
+        },
+        {
+          "path": "docs/PROJECT_STATUS.md",
+          "mode": "100644",
+          "sha": "0f1e924e3e41f455a3bcabea04d1b88c9fd1b420",
+          "status": "modified",
+          "bytes": 57770
+        },
+        {
+          "path": "docs/REQUIREMENTS_MATRIX.md",
+          "mode": "100644",
+          "sha": "13e6b7f5eb15bacd1b543aa93c8260ecd1332800",
+          "status": "modified",
+          "bytes": 100769
+        },
+        {
+          "path": "docs/SESSION_LOG.md",
+          "mode": "100644",
+          "sha": "364795180241d26d7e0cc26fe820bd60537b6b7b",
+          "status": "modified",
+          "bytes": 114977
+        },
+        {
+          "path": "docs/TASK_BOARD.md",
+          "mode": "100644",
+          "sha": "f26dc34198398ca82ee59ac537d7d8d0ac24b380",
+          "status": "modified",
+          "bytes": 63347
+        },
+        {
+          "path": "docs/TEST_STRATEGY.md",
+          "mode": "100644",
+          "sha": "e1bcc2ef45409dea13717d1eecb6c4e02bb450e0",
+          "status": "modified",
+          "bytes": 36172
+        },
+        {
+          "path": "docs/VERIFICATION_REPORT.md",
+          "mode": "100644",
+          "sha": "446c455b9ef2c473216ae06b649c55f374a7d57d",
+          "status": "modified",
+          "bytes": 91557
+        },
+        {
+          "path": "docs/VIDEO_PIPELINE.md",
+          "mode": "100644",
+          "sha": "1edd791b37970bc9f038b621eb92b394b9be702e",
+          "status": "modified",
+          "bytes": 57262
+        },
+        {
+          "path": "docs/qa/editor01u-unit-receipts.json",
+          "mode": "100644",
+          "sha": "6c6a10d66a8f0359d4973e2028de7aee0a190fd5",
+          "status": "added",
+          "bytes": 34554
+        },
+        {
+          "path": "docs/qa/indic-batch-evidence.json",
+          "mode": "100644",
+          "sha": "e7866b311457b3cba66fec1c52a716f31675f1b8",
+          "status": "modified",
+          "bytes": 19234
+        },
+        {
+          "path": "docs/qa/southeast-batch-evidence.json",
+          "mode": "100644",
+          "sha": "d9d079610166d36aa9a4a309ce0418f0e7aefee4",
+          "status": "added",
+          "bytes": 23532
+        },
+        {
+          "path": "docs/qa/verification-summary.json",
+          "mode": "100644",
+          "sha": "0e448ffe9c791773ca5f5f14782017d97f7d1de9",
+          "status": "modified",
+          "bytes": 79827
+        },
+        {
+          "path": "packages/core/media.ts",
+          "mode": "100644",
+          "sha": "b32b2276f7d8971a4a8e1101d387d5b3a2d6df2f",
+          "status": "modified",
+          "bytes": 13758
+        },
+        {
+          "path": "packages/core/render-font.ts",
+          "mode": "100644",
+          "sha": "151f48f69db65810dc06e229ba9140f6a4c2716a",
+          "status": "modified",
+          "bytes": 15435
+        },
+        {
+          "path": "packages/core/render-scripts.ts",
+          "mode": "100644",
+          "sha": "b3603952a398b3e2d0e0ccb59ec1e39380d05997",
+          "status": "modified",
+          "bytes": 5003
+        },
+        {
+          "path": "packages/core/render-shaping.ts",
+          "mode": "100644",
+          "sha": "303972e8a8a695fa1500a7a0b472ad4c6ecf9ea7",
+          "status": "modified",
+          "bytes": 1536
+        },
+        {
+          "path": "packages/core/render-text-layout.ts",
+          "mode": "100644",
+          "sha": "20c407d1d10f3b8b45dc2c85c8619c845e9c0c51",
+          "status": "modified",
+          "bytes": 3780
+        },
+        {
+          "path": "packages/core/renderer.ts",
+          "mode": "100644",
+          "sha": "0dcb34216917cc9c6e38f9e0065da547bd70f10a",
+          "status": "modified",
+          "bytes": 16088
+        },
+        {
+          "path": "scripts/fontkit-myanmar-data.json",
+          "mode": "100644",
+          "sha": "6adb099669a09b4896f12e55a385d8060b6e2eca",
+          "status": "added",
+          "bytes": 10552
+        },
+        {
+          "path": "scripts/fontkit-myanmar.machine",
+          "mode": "100644",
+          "sha": "bfdb1b74373d725694fc8222efd2bb161e86a334",
+          "status": "added",
+          "bytes": 1019
+        },
+        {
+          "path": "scripts/fontkit-southeast.mjs",
+          "mode": "100644",
+          "sha": "5eaf1e2d6a1241c626a8f30fc19d2440c65b5b5a",
+          "status": "added",
+          "bytes": 8922
+        },
+        {
+          "path": "scripts/generate-fontkit-myanmar.mjs",
+          "mode": "100644",
+          "sha": "e278ab00130e3f54917b8f32c75be04a6e2cc982",
+          "status": "added",
+          "bytes": 1003
+        },
+        {
+          "path": "scripts/patch-fontkit.mjs",
+          "mode": "100644",
+          "sha": "7ba36e7b980b1f7fc9f2c314520133e8a6c9e1f3",
+          "status": "modified",
+          "bytes": 5402
+        },
+        {
+          "path": "scripts/verify-local.mjs",
+          "mode": "100644",
+          "sha": "76b83d14cd14a6d497b2145ec0867b0987d67487",
+          "status": "modified",
+          "bytes": 17277
+        },
+        {
+          "path": "tests/fixtures/southeast-batch.ts",
+          "mode": "100644",
+          "sha": "6692f7fe23b6fd14251c5afbe16803efa5e1a15d",
+          "status": "added",
+          "bytes": 4087
+        },
+        {
+          "path": "tests/fontkit-patch.test.ts",
+          "mode": "100644",
+          "sha": "b5d9afa8e018048eba9f9e21e07067da3d42f254",
+          "status": "modified",
+          "bytes": 7303
+        },
+        {
+          "path": "tests/integration/media.test.ts",
+          "mode": "100644",
+          "sha": "58a327fbf3076edf579bf16161ad70ed78daafb2",
+          "status": "modified",
+          "bytes": 44126
+        },
+        {
+          "path": "tests/media.test.ts",
+          "mode": "100644",
+          "sha": "bc27d58bfe486f5e897cfc0147dcccba409e83f9",
+          "status": "modified",
+          "bytes": 10623
+        },
+        {
+          "path": "tests/render-bengali.test.ts",
+          "mode": "100644",
+          "sha": "4bd90bc9166321a221e78b845fa749a0e8072625",
+          "status": "modified",
+          "bytes": 15337
+        },
+        {
+          "path": "tests/render-devanagari.test.ts",
+          "mode": "100644",
+          "sha": "753f009fc25e54233e3dbd4717cce12b9aa631c4",
+          "status": "modified",
+          "bytes": 16592
+        },
+        {
+          "path": "tests/render-gujarati.test.ts",
+          "mode": "100644",
+          "sha": "e77ada122dceb526b8b8bcb07ee6d916971793ff",
+          "status": "modified",
+          "bytes": 18380
+        },
+        {
+          "path": "tests/render-indic-batch.test.ts",
+          "mode": "100644",
+          "sha": "c64258c18fc9027efa31807e7b6b0f5158244719",
+          "status": "modified",
+          "bytes": 22060
+        },
+        {
+          "path": "tests/render-southeast-batch.test.ts",
+          "mode": "100644",
+          "sha": "095be26119be455f70ca2d24767d6e73eb2d9acf",
+          "status": "added",
+          "bytes": 28249
+        }
+      ],
+      "fileCount": 43,
+      "sourcePaths": 240,
+      "publicWriteAttempted": true,
+      "immutableLocalCommit": "ecd96e328aa75d16d06a216da85f7df30b9a679c",
+      "immutableLocalTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
+      "localParent": "1f2c85584c38f6ff0c8954dd8d9119adfa633613",
+      "sourceTreePathModeBlobMatch": true,
+      "zipSha256": "4cf71ec7f7f9261ed28401f1f38c738e71b63feea42bddeb0257d2b5916da5b3",
+      "publicCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+      "publicTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
+      "publicMainMatch": true,
+      "createdBlobs": [
+        {
+          "path": ".env.example",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1bb8f4133899202e02f340292a152d8633b422bb"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7d5ee122f128ec4dbe36de4a6db0815d4cf9bc72"
+        },
+        {
+          "path": "CHECKPOINT_MANIFEST.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9883b89aa25b3cce6c91bb1fd0ac4d5c70935062"
+        },
+        {
+          "path": "Dockerfile",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "783ffa64e69545bec62d7699012287705b3ae5ba"
+        },
+        {
+          "path": "PROJECT_CHECKPOINT.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ae348b3c614f0eaeaf61349fc17c5d646007ea1d"
+        },
+        {
+          "path": "PROJECT_STATUS.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0f1e924e3e41f455a3bcabea04d1b88c9fd1b420"
+        },
+        {
+          "path": "README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "19de5bfd9196f711a954780739695eb3b1938a6c"
+        },
+        {
+          "path": "START_HERE.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "72ce3933ea5f6f09bbfdeb0b8a9e2025c23871a3"
+        },
+        {
+          "path": "docs/CHANGELOG.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5837796068f21239702a2fd1e156f816a7f4583b"
+        },
+        {
+          "path": "docs/FONTKIT_SHAPING_PATCH.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f8d2d39dfeb4fe85af5be606113973df6885a062"
+        },
+        {
+          "path": "docs/HANDOFF.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "13935116e1eafc5dc03039635bd0e2675fc51059"
+        },
+        {
+          "path": "docs/PROJECT_STATUS.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0f1e924e3e41f455a3bcabea04d1b88c9fd1b420"
+        },
+        {
+          "path": "docs/REQUIREMENTS_MATRIX.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "13e6b7f5eb15bacd1b543aa93c8260ecd1332800"
+        },
+        {
+          "path": "docs/SESSION_LOG.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "364795180241d26d7e0cc26fe820bd60537b6b7b"
+        },
+        {
+          "path": "docs/TASK_BOARD.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f26dc34198398ca82ee59ac537d7d8d0ac24b380"
+        },
+        {
+          "path": "docs/TEST_STRATEGY.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e1bcc2ef45409dea13717d1eecb6c4e02bb450e0"
+        },
+        {
+          "path": "docs/VERIFICATION_REPORT.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "446c455b9ef2c473216ae06b649c55f374a7d57d"
+        },
+        {
+          "path": "docs/VIDEO_PIPELINE.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1edd791b37970bc9f038b621eb92b394b9be702e"
+        },
+        {
+          "path": "docs/qa/editor01u-unit-receipts.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6c6a10d66a8f0359d4973e2028de7aee0a190fd5"
+        },
+        {
+          "path": "docs/qa/indic-batch-evidence.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e7866b311457b3cba66fec1c52a716f31675f1b8"
+        },
+        {
+          "path": "docs/qa/southeast-batch-evidence.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d9d079610166d36aa9a4a309ce0418f0e7aefee4"
+        },
+        {
+          "path": "docs/qa/verification-summary.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0e448ffe9c791773ca5f5f14782017d97f7d1de9"
+        },
+        {
+          "path": "packages/core/media.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b32b2276f7d8971a4a8e1101d387d5b3a2d6df2f"
+        },
+        {
+          "path": "packages/core/render-font.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "151f48f69db65810dc06e229ba9140f6a4c2716a"
+        },
+        {
+          "path": "packages/core/render-scripts.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b3603952a398b3e2d0e0ccb59ec1e39380d05997"
+        },
+        {
+          "path": "packages/core/render-shaping.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "303972e8a8a695fa1500a7a0b472ad4c6ecf9ea7"
+        },
+        {
+          "path": "packages/core/render-text-layout.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "20c407d1d10f3b8b45dc2c85c8619c845e9c0c51"
+        },
+        {
+          "path": "packages/core/renderer.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0dcb34216917cc9c6e38f9e0065da547bd70f10a"
+        },
+        {
+          "path": "scripts/fontkit-myanmar-data.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6adb099669a09b4896f12e55a385d8060b6e2eca"
+        },
+        {
+          "path": "scripts/fontkit-myanmar.machine",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bfdb1b74373d725694fc8222efd2bb161e86a334"
+        },
+        {
+          "path": "scripts/fontkit-southeast.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5eaf1e2d6a1241c626a8f30fc19d2440c65b5b5a"
+        },
+        {
+          "path": "scripts/generate-fontkit-myanmar.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e278ab00130e3f54917b8f32c75be04a6e2cc982"
+        },
+        {
+          "path": "scripts/patch-fontkit.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7ba36e7b980b1f7fc9f2c314520133e8a6c9e1f3"
+        },
+        {
+          "path": "scripts/verify-local.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "76b83d14cd14a6d497b2145ec0867b0987d67487"
+        },
+        {
+          "path": "tests/fixtures/southeast-batch.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6692f7fe23b6fd14251c5afbe16803efa5e1a15d"
+        },
+        {
+          "path": "tests/fontkit-patch.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b5d9afa8e018048eba9f9e21e07067da3d42f254"
+        },
+        {
+          "path": "tests/integration/media.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "58a327fbf3076edf579bf16161ad70ed78daafb2"
+        },
+        {
+          "path": "tests/media.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bc27d58bfe486f5e897cfc0147dcccba409e83f9"
+        },
+        {
+          "path": "tests/render-bengali.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bd90bc9166321a221e78b845fa749a0e8072625"
+        },
+        {
+          "path": "tests/render-devanagari.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753f009fc25e54233e3dbd4717cce12b9aa631c4"
+        },
+        {
+          "path": "tests/render-gujarati.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e77ada122dceb526b8b8bcb07ee6d916971793ff"
+        },
+        {
+          "path": "tests/render-indic-batch.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c64258c18fc9027efa31807e7b6b0f5158244719"
+        },
+        {
+          "path": "tests/render-southeast-batch.test.ts",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "095be26119be455f70ca2d24767d6e73eb2d9acf"
+        }
+      ],
+      "publishedAt": "2026-10-07T09:58:45.499Z",
+      "remoteBlobCount": 240,
+      "localBlobCount": 240,
+      "pathModeBlobMismatchCount": 0
+    },
+    "originalFailedCi": {
+      "runId": 37604254705,
+      "jobId": 112735789242,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37604254705",
+      "sourceCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+      "sourceTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
+      "status": "completed",
+      "conclusion": "failure",
+      "attempt": 1,
+      "completedAt": "2026-10-07T10:04:09Z",
+      "unit": {
+        "tests": 143,
+        "passed": 140,
+        "failed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 256170.823836
+      },
+      "unexecuted": [
+        "production audit",
+        "full audit",
+        "populated upgrade",
+        "native HTTP/browser/recovery application flows"
+      ],
+      "artifact": {
+        "id": 11473909145,
+        "name": "browser-evidence",
+        "digest": "sha256:b5dbb14196fbafa9250a74e400f79786ff511a5af13f4f7471baa9158852e2d4",
+        "bytes": 6313
+      },
+      "unitCaseReceipts": "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
+      "annotation": "Exact approved U public source. Failed/incomplete run is excluded from pass evidence; native application flows did not execute."
+    },
+    "ciFix": {
+      "status": "locally_verified_publication_and_own_native_ci_pending",
+      "publicWriteAttempted": false,
+      "approved": false,
+      "expectedParent": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+      "expectedParentTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
+      "failuresResolved": [
+        {
+          "case": "Bengali/Gujarati isolated opt-in tests",
+          "cause": "CI enabled Thai while the two legacy tests expected disabled Thai",
+          "resolution": "Explicitly disable and restore Thai inside their test environment; retain the disabled-script rejection assertion."
+        },
+        {
+          "case": "Myanmar ကြွိ",
+          "cause": "NotoSansMyanmar 2.001 supplies ligature-component metadata on an unmultiplied base; U skipped the valid base and missed the -27 offset",
+          "resolution": "Coverage-sensitive HarfBuzz mark-to-base candidate rule; unmultiplied bases accepted, contiguous uncovered MultipleSubst outputs skipped, covered outputs retained. Mark first MultipleSubst output multiplied too."
+        }
+      ],
+      "priorFailedCi": {
+        "runId": 37604254705,
+        "jobId": 112735789242,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37604254705",
+        "sourceCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+        "sourceTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
+        "status": "completed",
+        "conclusion": "failure",
+        "attempt": 1,
+        "completedAt": "2026-10-07T10:04:09Z",
+        "unit": {
+          "tests": 143,
+          "passed": 140,
+          "failed": 3,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 256170.823836
+        },
+        "unexecuted": [
+          "production audit",
+          "full audit",
+          "populated upgrade",
+          "native HTTP/browser/recovery application flows"
+        ],
+        "artifact": {
+          "id": 11473909145,
+          "name": "browser-evidence",
+          "digest": "sha256:b5dbb14196fbafa9250a74e400f79786ff511a5af13f4f7471baa9158852e2d4",
+          "bytes": 6313
+        },
+        "unitCaseReceipts": "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
+        "annotation": "Exact approved U public source. Failed/incomplete run is excluded from pass evidence; native application flows did not execute."
+      },
+      "checks": {
+        "apiBuild": true,
+        "webProductionBuild": true,
+        "unit": 144,
+        "unitFontSets": 2,
+        "unitCaseReceipts": 288,
+        "unitSummaries": 36,
+        "unitReporterFinalSummaryAndCaseReceiptsVerified": true,
+        "unitFileConcurrency": 2,
+        "httpScenarios": 7,
+        "browserScenarios": 7,
+        "recoveryScenarios": 5,
+        "migrations": 12,
+        "populatedUpgradeLocal": true,
+        "populatedUpgradeCi": false,
+        "productionAuditAdvisories": 0,
+        "fullAuditAdvisories": 0,
+        "nativeApplicationCiVerified": false,
+        "scope": "Own CI-fix local application harness: disposable serialized PGlite, Redis 7.2.11, S3Proxy 4.1.1, real FFmpeg and synthetic providers. Native PostgreSQL CI requires publishing the separately reviewed fix payload; no Docker/full Compose/MinIO, native cross-store restore, live providers, physical devices or master acceptance established."
+      },
+      "unitByFontSet": {
+        "ci": {
+          "success": true,
+          "counts": {
+            "tests": 144,
+            "failed": 0,
+            "passed": 144,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 144,
+            "suites": 0
+          },
+          "duration_ms": 268862.399818
+        },
+        "latest": {
+          "success": true,
+          "counts": {
+            "tests": 144,
+            "failed": 0,
+            "passed": 144,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 144,
+            "suites": 0
+          },
+          "duration_ms": 250269.250573
+        }
+      },
+      "unitReceipts": "docs/qa/editor01u-ci-fix-unit-receipts.json",
+      "referenceAcceptance": {
+        "engine": "HarfBuzz",
+        "version": "8.3.0",
+        "coveredNewScriptStringsPerFontSet": 7406,
+        "curatedPerFontSet": 115,
+        "combinedRunsPerFontSet": 18,
+        "cleanReferenceLayouts": 65560,
+        "cleanByFontSet": {
+          "ci": {
+            "engine": "HarfBuzz",
+            "version": "8.3.0",
+            "scripts": [
+              {
+                "script": "Thai",
+                "export": "full-esm",
+                "matched": 383
+              },
+              {
+                "script": "Thai",
+                "export": "full-cjs",
+                "matched": 383
+              },
+              {
+                "script": "Thai",
+                "export": "production-esm",
+                "matched": 383
+              },
+              {
+                "script": "Thai",
+                "export": "production-cjs",
+                "matched": 383
+              },
+              {
+                "script": "Lao",
+                "export": "full-esm",
+                "matched": 230
+              },
+              {
+                "script": "Lao",
+                "export": "full-cjs",
+                "matched": 230
+              },
+              {
+                "script": "Lao",
+                "export": "production-esm",
+                "matched": 230
+              },
+              {
+                "script": "Lao",
+                "export": "production-cjs",
+                "matched": 230
+              },
+              {
+                "script": "Khmer",
+                "export": "full-esm",
+                "matched": 2113
+              },
+              {
+                "script": "Khmer",
+                "export": "full-cjs",
+                "matched": 2113
+              },
+              {
+                "script": "Khmer",
+                "export": "production-esm",
+                "matched": 2113
+              },
+              {
+                "script": "Khmer",
+                "export": "production-cjs",
+                "matched": 2113
+              },
+              {
+                "script": "Myanmar",
+                "export": "full-esm",
+                "matched": 3477
+              },
+              {
+                "script": "Myanmar",
+                "export": "full-cjs",
+                "matched": 3477
+              },
+              {
+                "script": "Myanmar",
+                "export": "production-esm",
+                "matched": 3477
+              },
+              {
+                "script": "Myanmar",
+                "export": "production-cjs",
+                "matched": 3477
+              },
+              {
+                "script": "Tibetan",
+                "export": "full-esm",
+                "matched": 1203
+              },
+              {
+                "script": "Tibetan",
+                "export": "full-cjs",
+                "matched": 1203
+              },
+              {
+                "script": "Tibetan",
+                "export": "production-esm",
+                "matched": 1203
+              },
+              {
+                "script": "Tibetan",
+                "export": "production-cjs",
+                "matched": 1203
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "full-esm",
+                "matched": 16
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "full-cjs",
+                "matched": 16
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "production-esm",
+                "matched": 16
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "production-cjs",
+                "matched": 16
+              },
+              {
+                "script": "Odia",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Odia",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Odia",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Odia",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Malayalam",
+                "export": "full-esm",
+                "matched": 17
+              },
+              {
+                "script": "Malayalam",
+                "export": "full-cjs",
+                "matched": 17
+              },
+              {
+                "script": "Malayalam",
+                "export": "production-esm",
+                "matched": 17
+              },
+              {
+                "script": "Malayalam",
+                "export": "production-cjs",
+                "matched": 17
+              },
+              {
+                "script": "Sinhala",
+                "export": "full-esm",
+                "matched": 665
+              },
+              {
+                "script": "Sinhala",
+                "export": "full-cjs",
+                "matched": 665
+              },
+              {
+                "script": "Sinhala",
+                "export": "production-esm",
+                "matched": 665
+              },
+              {
+                "script": "Sinhala",
+                "export": "production-cjs",
+                "matched": 665
+              },
+              {
+                "script": "Devanagari",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Devanagari",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Devanagari",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Devanagari",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Gujarati",
+                "export": "full-esm",
+                "matched": 19
+              },
+              {
+                "script": "Gujarati",
+                "export": "full-cjs",
+                "matched": 19
+              },
+              {
+                "script": "Gujarati",
+                "export": "production-esm",
+                "matched": 19
+              },
+              {
+                "script": "Gujarati",
+                "export": "production-cjs",
+                "matched": 19
+              }
+            ],
+            "totalMatched": 32780
+          },
+          "latest": {
+            "engine": "HarfBuzz",
+            "version": "8.3.0",
+            "scripts": [
+              {
+                "script": "Thai",
+                "export": "full-esm",
+                "matched": 383
+              },
+              {
+                "script": "Thai",
+                "export": "full-cjs",
+                "matched": 383
+              },
+              {
+                "script": "Thai",
+                "export": "production-esm",
+                "matched": 383
+              },
+              {
+                "script": "Thai",
+                "export": "production-cjs",
+                "matched": 383
+              },
+              {
+                "script": "Lao",
+                "export": "full-esm",
+                "matched": 230
+              },
+              {
+                "script": "Lao",
+                "export": "full-cjs",
+                "matched": 230
+              },
+              {
+                "script": "Lao",
+                "export": "production-esm",
+                "matched": 230
+              },
+              {
+                "script": "Lao",
+                "export": "production-cjs",
+                "matched": 230
+              },
+              {
+                "script": "Khmer",
+                "export": "full-esm",
+                "matched": 2113
+              },
+              {
+                "script": "Khmer",
+                "export": "full-cjs",
+                "matched": 2113
+              },
+              {
+                "script": "Khmer",
+                "export": "production-esm",
+                "matched": 2113
+              },
+              {
+                "script": "Khmer",
+                "export": "production-cjs",
+                "matched": 2113
+              },
+              {
+                "script": "Myanmar",
+                "export": "full-esm",
+                "matched": 3477
+              },
+              {
+                "script": "Myanmar",
+                "export": "full-cjs",
+                "matched": 3477
+              },
+              {
+                "script": "Myanmar",
+                "export": "production-esm",
+                "matched": 3477
+              },
+              {
+                "script": "Myanmar",
+                "export": "production-cjs",
+                "matched": 3477
+              },
+              {
+                "script": "Tibetan",
+                "export": "full-esm",
+                "matched": 1203
+              },
+              {
+                "script": "Tibetan",
+                "export": "full-cjs",
+                "matched": 1203
+              },
+              {
+                "script": "Tibetan",
+                "export": "production-esm",
+                "matched": 1203
+              },
+              {
+                "script": "Tibetan",
+                "export": "production-cjs",
+                "matched": 1203
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "full-esm",
+                "matched": 16
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "full-cjs",
+                "matched": 16
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "production-esm",
+                "matched": 16
+              },
+              {
+                "script": "Gurmukhi",
+                "export": "production-cjs",
+                "matched": 16
+              },
+              {
+                "script": "Odia",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Odia",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Odia",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Odia",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Tamil",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Telugu",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Kannada",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Malayalam",
+                "export": "full-esm",
+                "matched": 17
+              },
+              {
+                "script": "Malayalam",
+                "export": "full-cjs",
+                "matched": 17
+              },
+              {
+                "script": "Malayalam",
+                "export": "production-esm",
+                "matched": 17
+              },
+              {
+                "script": "Malayalam",
+                "export": "production-cjs",
+                "matched": 17
+              },
+              {
+                "script": "Sinhala",
+                "export": "full-esm",
+                "matched": 665
+              },
+              {
+                "script": "Sinhala",
+                "export": "full-cjs",
+                "matched": 665
+              },
+              {
+                "script": "Sinhala",
+                "export": "production-esm",
+                "matched": 665
+              },
+              {
+                "script": "Sinhala",
+                "export": "production-cjs",
+                "matched": 665
+              },
+              {
+                "script": "Devanagari",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Devanagari",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Devanagari",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Devanagari",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "full-esm",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "full-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "production-esm",
+                "matched": 12
+              },
+              {
+                "script": "Bengali",
+                "export": "production-cjs",
+                "matched": 12
+              },
+              {
+                "script": "Gujarati",
+                "export": "full-esm",
+                "matched": 19
+              },
+              {
+                "script": "Gujarati",
+                "export": "full-cjs",
+                "matched": 19
+              },
+              {
+                "script": "Gujarati",
+                "export": "production-esm",
+                "matched": 19
+              },
+              {
+                "script": "Gujarati",
+                "export": "production-cjs",
+                "matched": 19
+              }
+            ],
+            "totalMatched": 32780
+          }
+        }
+      },
+      "renderAcceptance": {
+        "newScriptExports": 180,
+        "decodedFrames": 540,
+        "fontSets": 2,
+        "exportsPerScriptPerFontSet": 18,
+        "framesPerScriptPerFontSet": 54,
+        "reviewedFrames": [
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "thai",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "82dc5cd20c83ce78aa104c078e63a8bd651a51fb81209fc07856f61a05a163dd",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "thai",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "4a24504ff3044f44a4570bf9a4576730c46de197cdea26c295a4368f6cc18a05",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "lao",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "eed4cea1135548fc3e425c13542f778b0993a537e1414e6d59a36afaaec5401e",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "lao",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "b61f3fcb1961aa06d15e29bc23cb8e3d909694960fd7a9e0583c2faed5b53c78",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "khmer",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "b05c607799eee6d6ae4a69403584333054c4f7b697038f4439154536ad8517a1",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "khmer",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "7678c6205bdb9f071e8ae574a206853d51775cb70e446147569499ab56d0bdc7",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "myanmar",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "3d9a76ea9fa54b9772adb40bd8ffb3c4f3e48a04e903712b9a516e54a17830ee",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "myanmar",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "b34a2e2b38995e0ceb66935137cd912d28ea883f3b7fb97a566694155481860b",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "tibetan",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "695ea31fd74a7bbe6501071b0e69d7be028cba02b7e8b68b9d781388f468c68d",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Ubuntu CI fonts-noto-core 20201225-2",
+            "script": "tibetan",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "e4e7ba8c5feeaf6791767eeadd099fd973afb40d248d69e906e52bc996caf151",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "thai",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "82dc5cd20c83ce78aa104c078e63a8bd651a51fb81209fc07856f61a05a163dd",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "thai",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "4a24504ff3044f44a4570bf9a4576730c46de197cdea26c295a4368f6cc18a05",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "lao",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "eed4cea1135548fc3e425c13542f778b0993a537e1414e6d59a36afaaec5401e",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "lao",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "b61f3fcb1961aa06d15e29bc23cb8e3d909694960fd7a9e0583c2faed5b53c78",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "khmer",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "b05c607799eee6d6ae4a69403584333054c4f7b697038f4439154536ad8517a1",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "khmer",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "7678c6205bdb9f071e8ae574a206853d51775cb70e446147569499ab56d0bdc7",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "myanmar",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "3d9a76ea9fa54b9772adb40bd8ffb3c4f3e48a04e903712b9a516e54a17830ee",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "myanmar",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "b34a2e2b38995e0ceb66935137cd912d28ea883f3b7fb97a566694155481860b",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "tibetan",
+            "file": "pure-standard-9x16-720.png",
+            "sha256": "695ea31fd74a7bbe6501071b0e69d7be028cba02b7e8b68b9d781388f468c68d",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          },
+          {
+            "fontSet": "Newer upstream Noto fonts pinned in original U evidence",
+            "script": "tibetan",
+            "file": "mixed-inset-v1-16x9-1080.png",
+            "sha256": "e4e7ba8c5feeaf6791767eeadd099fd973afb40d248d69e906e52bc996caf151",
+            "observation": "Title and active caption visible within bounds; no visible clipping in this representative frame."
+          }
+        ],
+        "physicalDevicesVerified": false
+      },
+      "ciFontPackage": {
+        "version": "20201225-2",
+        "url": "https://archive.ubuntu.com/ubuntu/pool/main/f/fonts-noto/fonts-noto-core_20201225-2_all.deb",
+        "sha256": "4fee136cb12fc197703a340e010478f780a41044339fcefbd78ed9aa96c8b617",
+        "fonts": [
+          {
+            "file": "NotoSansKhmer-Regular.ttf",
+            "bytes": 113376,
+            "sha256": "bc9a5e2afcee249849e409aabe6e22330c479b878ea3e59bf5e7c84482d7ee53"
+          },
+          {
+            "file": "NotoSansLao-Regular.ttf",
+            "bytes": 31136,
+            "sha256": "6c3de7db369e85cba20255d161eeeb3d934ea3c4c51e2574c2ddcce79a25025c"
+          },
+          {
+            "file": "NotoSansMyanmar-Regular.ttf",
+            "bytes": 196608,
+            "sha256": "3fe9a4babc12081adc979e0313433e6ec85bb3ad069681c23ee8d8ea8b91332b"
+          },
+          {
+            "file": "NotoSansThai-Regular.ttf",
+            "bytes": 37744,
+            "sha256": "dfbd5ed0f1e68c3cbc51aa08f646d1ab0e68e7c4ceab70a69e465225ff701f93"
+          },
+          {
+            "file": "NotoSerifTibetan-Regular.ttf",
+            "bytes": 595476,
+            "sha256": "5893c1e0aefb250bcbeff5c0f8ee4bb27cd3dc19b47d14954b154b094e10ee63"
+          }
+        ]
+      },
+      "patchedExportSha256": {
+        "main.cjs": "88914c3388bf7bbd48fab79549f697fa7d3c0376c52af5b776799573197b7d39",
+        "module.mjs": "86fae79b7cc8d3b94d15039ed74fdf61cedfd46fc10fa6c712a60ddd77111b5b"
+      },
+      "cleanFullAndProductionMatchWorkingInstall": true,
+      "firstFullUToFixPatchMigrationPassed": true,
+      "idempotentPartialUnknownVersionInputsRejected": true,
+      "upgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4866028,
+        "sha256": "9e850335cfbb5d5ae1237e91bd92ff04c9cd54fe638a9ec6b22fb6feac2644f2",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "naturalRedisLockMs": 119873,
+      "recoveryCaseDurationMs": 158930.061533,
+      "providerSubmissions": 1,
+      "retainedProviderReceiptPrivateOutputAndCompletedJob": true,
+      "sourcePackageDependenciesLockfileSchemaMigrationsFrontendUnchanged": true,
+      "outlineRevision": "fontkit-outlines-v3-context-mark-base-coverage",
+      "sceneCacheVersion": "mos-render-8-mark-base-coverage",
+      "fileCount": 28,
+      "paths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "README.md",
+        "START_HERE.md",
+        "docs/CHANGELOG.md",
+        "docs/FONTKIT_SHAPING_PATCH.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
+        "docs/qa/editor01u-ci-fix-unit-receipts.json",
+        "docs/qa/southeast-batch-evidence.json",
+        "docs/qa/verification-summary.json",
+        "packages/core/render-scripts.ts",
+        "packages/core/renderer.ts",
+        "scripts/fontkit-southeast.mjs",
+        "scripts/patch-fontkit.mjs",
+        "tests/fontkit-patch.test.ts",
+        "tests/render-bengali.test.ts",
+        "tests/render-gujarati.test.ts",
+        "tests/render-indic-batch.test.ts",
+        "tests/render-southeast-batch.test.ts"
+      ]
+    }
   }
 }

@@ -145,7 +145,18 @@ function mosThaiLaoText(text) {
  return chars.join('');
 }
 `;
-export function southeastReplacements(source) {
+// Match HarfBuzz 8.3.0 MarkBasePosFormat1: ligature-component metadata
+// on an unmultiplied base is not a reason to skip it. A contiguous later
+// MultipleSubst output is skipped only when absent from this base coverage.
+const markBase = String.raw`
+function mosSkipMarkBase(processor,table,index) {
+ const glyph=processor.glyphs[index],previous=processor.glyphs[index-1];
+ if(glyph.isMark)return true;
+ const continuation=glyph.isMultiplied&&glyph.ligatureComponent>0&&previous&&!previous.isMark&&previous.isMultiplied&&glyph.ligatureID===previous.ligatureID&&glyph.ligatureComponent===previous.ligatureComponent+1;
+ return continuation&&processor.coverageIndex(table.baseCoverage,glyph.id)===-1;
+}
+`;
+export function southeastReplacements(source, { previousU = false } = {}) {
   const universal = source.match(/tibt: \(0, (\$[\w$]+)\)/)?.[1];
   const defaultShaper = source.match(
     /\((\$[\w$]+), "zeroMarkWidths", 'AFTER_GPOS'\)/,
@@ -165,7 +176,7 @@ export function southeastReplacements(source) {
     .replace("MACHINE", JSON.stringify(data.machine))
     .replace("DEFAULTSHAPER", defaultShaper)
     .replace("GLYPHINFO", glyphInfo);
-  return [
+  const replacements = [
     ["glyphs.splice(++i, 0, g);", "glyphs.splice(i, 0, g);"],
     [
       "processor.applyFeatures(stage, glyphs, positions);",
@@ -207,6 +218,25 @@ export function southeastReplacements(source) {
       `    tibt: (0, ${universal}),`,
       `    mym2: mosMyanmarShaper,\n    mymr: mosMyanmarShaper,\n    tibt: (0, ${universal}),`,
     ],
-    [shaperMap, block + "\n" + thaiLao + "\n" + shaperMap],
+    [
+      shaperMap,
+      block + "\n" + thaiLao + (previousU ? "" : markBase) + "\n" + shaperMap,
+    ],
   ];
+  if (!previousU) {
+    const base = replacements.find(
+      ([before]) =>
+        before === "this.glyphs[baseGlyphIndex].ligatureComponent > 0",
+    );
+    // Replace the whole backward-search predicate to retain the mark test
+    // while applying the coverage-sensitive MultipleSubst rule.
+    base[0] =
+      "this.glyphs[baseGlyphIndex].isMark || this.glyphs[baseGlyphIndex].ligatureComponent > 0";
+    base[1] = "mosSkipMarkBase(this, table, baseGlyphIndex)";
+    replacements.push([
+      "                        this.glyphIterator.cur.ligatureComponent = 0;",
+      "                        this.glyphIterator.cur.ligatureComponent = 0;\n                        this.glyphIterator.cur.isMultiplied = true;",
+    ]);
+  }
+  return replacements;
 }

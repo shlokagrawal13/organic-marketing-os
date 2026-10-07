@@ -332,7 +332,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     assert.equal(
       current,
       sha256(
-        "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
+        "fontkit-outlines-v3-context-mark-base-coverage\n" +
           runtime +
           decoders,
       ),
@@ -568,15 +568,15 @@ test("registry: all ten Indic scripts compose independently referenced font/scri
 test("registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path", () => {
   assert.equal(
     outlinePipelineRevision(["हिंदी"]),
-    "fontkit-outlines-v2-shared-context-southeast-tibetan",
+    "fontkit-outlines-v3-context-mark-base-coverage",
   );
   assert.equal(
     outlinePipelineRevision(["বাংলা"]),
-    "fontkit-outlines-v2-shared-context-southeast-tibetan",
+    "fontkit-outlines-v3-context-mark-base-coverage",
   );
   assert.equal(
     outlinePipelineRevision(["ગુજરાતી"]),
-    "fontkit-outlines-v2-shared-context-southeast-tibetan",
+    "fontkit-outlines-v3-context-mark-base-coverage",
   );
   assert.equal(renderTextSupportIssue("Café Ελλάδα Привет مرحبا שלום"), null);
   assert.match(

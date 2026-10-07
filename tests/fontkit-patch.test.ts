@@ -143,6 +143,93 @@ test("OpenType mark filtering supports both coverage formats, supersedes attachm
   }
 });
 
+test("Mark-to-base accepts unmultiplied bases and covered multiple outputs while preserving contiguous uncovered-output boundaries in CJS/ESM", async () => {
+  const path =
+    process.env.TEST_KANNADA_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf";
+  const bytes = await readRenderFont(path);
+  const { create } = await import("fontkit");
+  for (const face of [
+    create(bytes),
+    createRequire(import.meta.url)("fontkit").create(bytes),
+  ] as any[]) {
+    face.layout("ಕ್ಷಿ");
+    const processor = face._layoutEngine.engine.GPOSProcessor;
+    const Iterator = processor.glyphIterator.constructor;
+    const table = {
+      markCoverage: { version: 1, glyphs: [40] },
+      baseCoverage: { version: 1, glyphs: [20] },
+      markArray: [
+        {
+          class: 0,
+          markAnchor: { version: 1, xCoordinate: 20, yCoordinate: 30 },
+        },
+      ],
+      baseArray: [[{ version: 1, xCoordinate: 100, yCoordinate: 200 }]],
+    };
+    const glyph = (id: number, properties: object = {}) => ({
+      id,
+      isMark: false,
+      isMultiplied: false,
+      ligatureID: null,
+      ligatureComponent: 0,
+      ...properties,
+    });
+    const mark = glyph(40, { isMark: true });
+    const cases = [
+      {
+        bases: [glyph(10), glyph(20, { ligatureID: 1, ligatureComponent: 1 })],
+        attach: 1,
+      },
+      {
+        bases: [
+          glyph(10, { isMultiplied: true }),
+          glyph(20, { isMultiplied: true, ligatureComponent: 1 }),
+        ],
+        attach: 1,
+      },
+      {
+        bases: [
+          glyph(20, { isMultiplied: true }),
+          glyph(30, { isMultiplied: true, ligatureComponent: 1 }),
+        ],
+        attach: 0,
+      },
+      {
+        bases: [
+          glyph(20),
+          glyph(30, { isMultiplied: true, ligatureComponent: 1 }),
+        ],
+        attach: null,
+      },
+      {
+        bases: [
+          glyph(20, { isMark: true, isMultiplied: true }),
+          glyph(30, { isMultiplied: true, ligatureComponent: 1 }),
+        ],
+        attach: null,
+      },
+    ];
+    for (const sample of cases) {
+      processor.glyphs = [...sample.bases, { ...mark, markAttachment: null }];
+      processor.positions = processor.glyphs.map(() => ({
+        xAdvance: 0,
+        yAdvance: 0,
+        xOffset: 0,
+        yOffset: 0,
+      }));
+      processor.glyphIterator = new Iterator(processor.glyphs);
+      processor.glyphIterator.reset({ flags: {} }, 2);
+      assert.equal(processor.applyLookup(4, table), sample.attach !== null);
+      assert.equal(processor.glyphs[2].markAttachment, sample.attach);
+      assert.deepEqual(
+        [processor.positions[2].xOffset, processor.positions[2].yOffset],
+        sample.attach === null ? [0, 0] : [80, 170],
+      );
+    }
+  }
+});
+
 test("OpenType chained backtrack arrays are nearest-first in glyph/class/coverage formats, including skipped marks, without mutating font tables", async () => {
   const path =
     process.env.TEST_KANNADA_FONT_PATH ||

@@ -416,7 +416,7 @@ for (const sample of SOUTHEAST_BATCH_FIXTURES) {
     assert.equal(
       current,
       sha256(
-        "fontkit-outlines-v2-shared-context-southeast-tibetan\n" +
+        "fontkit-outlines-v3-context-mark-base-coverage\n" +
           runtime +
           decoders,
       ),

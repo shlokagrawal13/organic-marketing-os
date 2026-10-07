@@ -1,5 +1,10 @@
 # Fontkit shaping patch
 
+## EDITOR-01U native CI follow-up
+
+NotoSansMyanmar 2.001 from Ubuntu fonts-noto-core 20201225-2 exposed a valid base carrying a nonzero ligature component without being a MultipleSubst output. The corrected backward search follows [HarfBuzz 8.3.0 MarkBasePosFormat1](https://github.com/harfbuzz/harfbuzz/blob/8.3.0/src/OT/Layout/GPOS/MarkBasePosFormat1.hh): stop at an unmultiplied base, preserve consecutive multiplied-output boundaries, and allow covered bases. The first MultipleSubst output is marked multiplied too. The original complete U patch remains an explicitly accepted migration input; unknown/partial inputs still fail. Both font sets passed the whole 144-case suite, 65560 clean-export independent references and 180 new-script exports/540 timed decoded frames. All outline and scene cache revisions were bumped again to fontkit-outlines-v3-context-mark-base-coverage and mos-render-8-mark-base-coverage. Public original U CI failed; fixed-source publication and own native CI remain pending. Historical U design below is retained.
+
+
 EDITOR-01U extends the reviewed Fontkit **2.0.4** CJS/ESM postinstall. The renderer continues to use Fontkit outlines and FFmpeg/librsvg; HarfBuzz/Python remains a test oracle. Dependency versions and lockfile records are unchanged.
 
 `scripts/patch-fontkit.mjs` reverses only the exact reviewed additions and checks the original upstream SHA-256 for each export. It accepts pristine upstream, complete R, complete T or complete U bytes; partial, unexpected and version-changed inputs fail. Every export is validated before any write, and repeated installs are idempotent. Both Docker install stages copy the helper/data before installation. Docker execution itself is not claimed.
