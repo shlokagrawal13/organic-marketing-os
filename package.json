@@ -24,6 +24,7 @@
     "start:render": "node dist/apps/api/src/render-worker.js",
     "verify": "node scripts/verify-local.mjs --production-web",
     "verify:upgrade": "node scripts/verify-upgrade.mjs",
+    "verify:readability": "node --import tsx scripts/verify-render-readability.ts",
     "start:media": "node dist/apps/api/src/media-generation-worker.js"
   },
   "dependencies": {

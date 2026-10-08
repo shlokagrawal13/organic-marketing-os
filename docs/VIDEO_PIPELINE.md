@@ -1,5 +1,9 @@
 # Video pipeline — 0.9.2
 
+## EDITOR-01Y bounded placement/readability QA — 2026-10-08 IST
+
+The real FFmpeg matrix now checks device-safe and inset title/caption containment and cue timing on 72 Latin/mixed-Hindi decoded frames across six geometries per placement. A separate 18-export English OCR matrix yields 36/36 exact reads after display-width rescaling and rejects a blank negative control. Four representative PNGs and the sample report are retained under `docs/qa/editor01y-*`. This is local automated evidence, not physical-device, official social-app UI or multilingual OCR acceptance. No render behavior changed.
+
 ## EDITOR-01W local verification complete — 2026-10-07 UTC
 
 EDITOR-01W recovered from the durable WIP checkpoint and reran final verification on rebuilt dependencies. Modern fonts passed 187/187 unit cases with complete receipts; Ubuntu fonts-noto-core 20201225-2 passed the same 187/187 suite. The production build passed, isolated local application verification passed 7 HTTP, 7 production-browser and 5 recovery/configuration cases with 12 migrations, both npm audits reported zero vulnerabilities, and 30 generated control QA frames across both fontsets were reviewed with no clipping/visibility failure. Public GitHub publication and native W CI are not attempted yet and require separate explicit approval.

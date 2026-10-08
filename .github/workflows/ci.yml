@@ -87,13 +87,15 @@ jobs:
       - name: Install media dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core libharfbuzz0b libicu-dev
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core libharfbuzz0b libicu-dev tesseract-ocr tesseract-ocr-eng
       - name: Install pinned test CJK fonts
         run: python3 scripts/install_test_cjk_fonts.py
       - name: Build
         run: npm run build
       - name: Run unit tests
         run: npm test
+      - name: Verify bounded small-screen English readability
+        run: npm run verify:readability
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=moderate
       - name: Audit all dependencies
@@ -111,3 +113,5 @@ jobs:
             test-results/
             .local/unit-receipts.json
             .local/control-qa/
+            .local/editor01y-placement/
+            .local/readability/

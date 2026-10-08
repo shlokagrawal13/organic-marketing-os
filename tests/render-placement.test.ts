@@ -144,148 +144,162 @@ test("placement is strict/optional, legacy serialization stays stable and inset 
     "valid draft overflow fails before storage/cache/media work",
   );
 });
-test(
-  "decoded inset Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
-  { timeout: 120000 },
-  async (t) => {
-    environment(t);
-    const dir = await mkdtemp(join(tmpdir(), "mos-inset-"));
-    t.after(() => rm(dir, { recursive: true, force: true }));
-    await mkdir(".local/editor01n-frames", { recursive: true });
-    const scenes = [
-      {
-        ...fixture,
-        id: "latin",
-        onScreenText: "Readable video title with extra margins",
-        captionCues: [
-          {
-            start: 0.3,
-            end: 0.8,
-            text: "Caption placement with extra margins",
-          },
-        ],
-      },
-      {
-        ...fixture,
-        id: "mixed",
-        onScreenText: "Video 2026: किरण क्षत्रिय शिक्षा",
-        captionCues: [
-          { start: 0.3, end: 0.8, text: "Start now! हिंदी में नई शुरुआत" },
-        ],
-      },
-    ];
-    for (const aspect of ["9:16", "16:9", "1:1"] as const)
-      for (const resolution of ["720", "1080"] as const) {
-        const options = renderOptions.parse({
-          aspect,
-          resolution,
-          textPlacement: "inset-v1",
-          background: "#000000",
-        });
-        const [width, height] = dimensions(options);
-        const file = join(dir, "video.mp4");
-        await renderVideo({
-          organizationId: "inset-test",
-          id: "matrix",
-          scenes,
-          options,
-          assets: [],
-          store: {
-            ready: async () => {},
-            putFile: async (key: string, path: string) => {
-              if (key.endsWith("/video.mp4"))
-                await writeFile(file, await readFile(path));
-              if (key.endsWith(".srt"))
-                assert.match(
-                  await readFile(path, "utf8"),
-                  /00:00:01,300 --> 00:00:01,800\nStart now!/,
-                );
+for (const placement of ["inset-v1", "device-safe-v1"] as const)
+  test(
+    `decoded ${placement} Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes`,
+    { timeout: 120000 },
+    async (t) => {
+      environment(t);
+      const dir = await mkdtemp(join(tmpdir(), "mos-inset-"));
+      t.after(() => rm(dir, { recursive: true, force: true }));
+      await mkdir(".local/editor01y-placement", { recursive: true });
+      const scenes = [
+        {
+          ...fixture,
+          id: "latin",
+          onScreenText: "Readable video title with extra margins",
+          captionCues: [
+            {
+              start: 0.3,
+              end: 0.8,
+              text: "Caption placement with extra margins",
             },
-            remove: async () => {},
-          } as unknown as ObjectStore,
-          signal: new AbortController().signal,
-          progress: async () => {},
-          cacheGet: async () => null,
-          cachePut: async () => {},
-        });
-        const [left, right, titleTop, titleBottom, captionTop, captionBottom] =
-          aspect === "9:16"
-            ? [0.12, 0.8, 0.18, 0.38, 0.52, 0.72]
-            : aspect === "16:9"
-              ? [0.1, 0.9, 0.14, 0.36, 0.6, 0.82]
-              : [0.12, 0.88, 0.16, 0.38, 0.58, 0.8];
-        for (const index of [0, 1])
-          for (const time of [0.1, 0.5, 0.9]) {
-            const raw = join(dir, "frame.gray");
-            await runProcess(
-              process.env.FFMPEG_PATH || "ffmpeg",
-              [
-                "-v",
-                "error",
-                "-y",
-                "-ss",
-                String(index + time),
-                "-i",
-                file,
-                "-frames:v",
-                "1",
-                "-pix_fmt",
-                "gray",
-                "-f",
-                "rawvideo",
-                raw,
-              ],
-              { timeout: 15000 },
-            );
-            const pixels = await readFile(raw);
-            assert.equal(pixels.length, width * height);
-            let title = 0,
-              caption = 0,
-              outside = 0;
-            for (let y = 0; y < height; y++)
-              for (let x = 0; x < width; x++) {
-                if (pixels[y * width + x] <= 210) continue;
-                if (x < width * left || x > width * right) outside++;
-                else if (y >= height * titleTop && y <= height * titleBottom)
-                  title++;
-                else if (
-                  y >= height * captionTop &&
-                  y <= height * captionBottom
-                )
-                  caption++;
-                else outside++;
-              }
-            assert.ok(
-              title > 150,
-              `${aspect}/${resolution}/${index}: title visible`,
-            );
-            assert.equal(
-              outside,
-              0,
-              "all bright text inside designated inset boxes",
-            );
-            if (time === 0.5) assert.ok(caption > 150);
-            else assert.equal(caption, 0, "cue hidden outside interval");
-          }
-        await runProcess(
-          process.env.FFMPEG_PATH || "ffmpeg",
-          [
-            "-v",
-            "error",
-            "-y",
-            "-ss",
-            "1.5",
-            "-i",
-            file,
-            "-frames:v",
-            "1",
-            `.local/editor01n-frames/${aspect.replace(":", "-")}-${resolution}.png`,
           ],
-          { timeout: 15000 },
-        );
-      }
-  },
-);
+        },
+        {
+          ...fixture,
+          id: "mixed",
+          onScreenText: "Video 2026: किरण क्षत्रिय शिक्षा",
+          captionCues: [
+            { start: 0.3, end: 0.8, text: "Start now! हिंदी में नई शुरुआत" },
+          ],
+        },
+      ];
+      for (const aspect of ["9:16", "16:9", "1:1"] as const)
+        for (const resolution of ["720", "1080"] as const) {
+          const options = renderOptions.parse({
+            aspect,
+            resolution,
+            textPlacement: placement,
+            background: "#000000",
+          });
+          const [width, height] = dimensions(options);
+          const file = join(dir, "video.mp4");
+          await renderVideo({
+            organizationId: "inset-test",
+            id: "matrix",
+            scenes,
+            options,
+            assets: [],
+            store: {
+              ready: async () => {},
+              putFile: async (key: string, path: string) => {
+                if (key.endsWith("/video.mp4"))
+                  await writeFile(file, await readFile(path));
+                if (key.endsWith(".srt"))
+                  assert.match(
+                    await readFile(path, "utf8"),
+                    /00:00:01,300 --> 00:00:01,800\nStart now!/,
+                  );
+              },
+              remove: async () => {},
+            } as unknown as ObjectStore,
+            signal: new AbortController().signal,
+            progress: async () => {},
+            cacheGet: async () => null,
+            cachePut: async () => {},
+          });
+          const [
+            left,
+            right,
+            titleTop,
+            titleBottom,
+            captionTop,
+            captionBottom,
+          ] =
+            placement === "device-safe-v1"
+              ? aspect === "9:16"
+                ? [0.16, 0.72, 0.2, 0.36, 0.48, 0.66]
+                : aspect === "16:9"
+                  ? [0.12, 0.88, 0.16, 0.34, 0.58, 0.78]
+                  : [0.16, 0.84, 0.18, 0.34, 0.54, 0.74]
+              : aspect === "9:16"
+                ? [0.12, 0.8, 0.18, 0.38, 0.52, 0.72]
+                : aspect === "16:9"
+                  ? [0.1, 0.9, 0.14, 0.36, 0.6, 0.82]
+                  : [0.12, 0.88, 0.16, 0.38, 0.58, 0.8];
+          for (const index of [0, 1])
+            for (const time of [0.1, 0.5, 0.9]) {
+              const raw = join(dir, "frame.gray");
+              await runProcess(
+                process.env.FFMPEG_PATH || "ffmpeg",
+                [
+                  "-v",
+                  "error",
+                  "-y",
+                  "-ss",
+                  String(index + time),
+                  "-i",
+                  file,
+                  "-frames:v",
+                  "1",
+                  "-pix_fmt",
+                  "gray",
+                  "-f",
+                  "rawvideo",
+                  raw,
+                ],
+                { timeout: 15000 },
+              );
+              const pixels = await readFile(raw);
+              assert.equal(pixels.length, width * height);
+              let title = 0,
+                caption = 0,
+                outside = 0;
+              for (let y = 0; y < height; y++)
+                for (let x = 0; x < width; x++) {
+                  if (pixels[y * width + x] <= 210) continue;
+                  if (x < width * left || x > width * right) outside++;
+                  else if (y >= height * titleTop && y <= height * titleBottom)
+                    title++;
+                  else if (
+                    y >= height * captionTop &&
+                    y <= height * captionBottom
+                  )
+                    caption++;
+                  else outside++;
+                }
+              assert.ok(
+                title > 150,
+                `${aspect}/${resolution}/${index}: title visible`,
+              );
+              assert.equal(
+                outside,
+                0,
+                "all bright text inside designated placement boxes",
+              );
+              if (time === 0.5) assert.ok(caption > 150);
+              else assert.equal(caption, 0, "cue hidden outside interval");
+            }
+          await runProcess(
+            process.env.FFMPEG_PATH || "ffmpeg",
+            [
+              "-v",
+              "error",
+              "-y",
+              "-ss",
+              "1.5",
+              "-i",
+              file,
+              "-frames:v",
+              "1",
+              `.local/editor01y-placement/${placement}-${aspect.replace(":", "-")}-${resolution}.png`,
+            ],
+            { timeout: 15000 },
+          );
+        }
+    },
+  );
 test("placement changes rebuild text scenes while empty scenes and unchanged placement reuse cache", async (t) => {
   environment(t);
   const entries = new Map<string, { objectKey: string; bytes: number }>(),

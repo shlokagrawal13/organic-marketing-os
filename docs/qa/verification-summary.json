@@ -83,7 +83,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01X's approved 22 files are published at 8fdb7efce7f866a0fafa6a9541a07f77d0372447, exact tree 1086591e54ce63acecb073165c4d0037cd9f4fec. Own native Actions 37769888218 succeeded with 187 unit, 7 HTTP, 7 browser, 5 recovery, 12 migrations, builds, populated PGlite upgrade/restore and both zero-vulnerability audits. This later docs/evidence closure is local pending separate approval; physical-device/platform and master acceptance remain open.",
+  "latestIncrement": "EDITOR-01Y locally verifies 72 timed inset/device-safe placement frames and 36/36 small-screen English OCR samples from 18 exports plus blank negative control. Selected 14/14 units and API/web builds passed on clean X source. Physical devices, official platform app UI and multilingual OCR remain open; Y publication/own CI pending exact approval.",
   "latestNativeRun": {
     "runId": 37769888218,
     "jobId": 113286580705,
@@ -7299,7 +7299,28 @@
     "publishedFileCount": 22,
     "ownNativeCiRunId": 37769888218,
     "ownNativeCiConclusion": "success",
-    "laterClosureEvidencePublished": false,
+    "laterClosureEvidencePublished": true,
     "physicalDeviceOcrReadabilityVerified": false
+  },
+  "editor01yEvidence": {
+    "slice": "EDITOR-01Y",
+    "basePublicCommit": "e104cbea16a1e29af64f903c2511d0573397929b",
+    "selectedUnitCases": 14,
+    "selectedUnitFailures": 0,
+    "placementExports": 12,
+    "decodedTimedFrames": 72,
+    "ocrExports": 18,
+    "ocrSamples": 36,
+    "ocrExactReads": 36,
+    "blankNegativeControlPassed": true,
+    "apiBuildPassed": true,
+    "webProductionBuildPassed": true,
+    "report": "docs/qa/editor01y-readability-evidence.json",
+    "reportSha256": "155f658fca8f82d2c58770263e83e67a134c1827268d4a6f1c52a577674605a9",
+    "physicalDeviceVerified": false,
+    "officialPlatformUiVerified": false,
+    "multilingualOcrVerified": false,
+    "nativeCiPending": true,
+    "publicWriteAttempted": false
   }
 }

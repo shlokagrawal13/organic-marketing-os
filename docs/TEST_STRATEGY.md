@@ -1,5 +1,9 @@
 # Verification and remaining gates — 0.9.2
 
+## EDITOR-01Y bounded readability gate — 2026-10-08 IST
+
+`npm run verify:readability` renders 18 short-English videos across Standard, Extra margins and Device safe, three aspects and two resolutions. FFmpeg decodes the caption-visible half-second frame and rescales to portrait/square widths 320/390 or landscape 568/844; English Tesseract must read the complete expected title and caption in all 36 cases, while a blank frame must not pass. The unit placement matrix separately checks 72 Latin/mixed-Hindi timed frames for text inside independent aspect-specific bounds and absent cues outside their interval. This checks a bounded synthetic display condition; real phones, app chrome overlays, contrast on realistic media and multilingual OCR need separate acceptance.
+
 ## EDITOR-01X device-safe placement local verification — 2026-10-08 IST
 
 EDITOR-01W is published and own native CI verified at public main `51ec6015e79d5176699490e9968e115ec2766d27`; all 262 public blobs matched the verified source and Actions run 37738372169 completed successfully. EDITOR-01X adds optional `textPlacement: "device-safe-v1"` for stricter social-review text boxes while preserving legacy Standard placement and existing `inset-v1` Extra margins. The placement is saved in immutable render options/history, shown in selected/saved composition guides and included in rendered-text scene cache identity; no schema, dependency, provider or migration change is introduced.

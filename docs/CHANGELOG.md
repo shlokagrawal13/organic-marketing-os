@@ -1,5 +1,9 @@
 # Changelog
 
+## EDITOR-01Y bounded readability QA — 2026-10-08 IST
+
+Added decoded-frame containment and cue-timing coverage for optional device-safe placement alongside inset, plus an isolated FFmpeg/Tesseract 36-sample English small-screen OCR check with a blank negative control. Native CI now installs English Tesseract data, runs the check and uploads QA artifacts. Selected local suite 14/14, API/web builds and OCR 36/36 pass; source rendering behavior is unchanged. Physical-device, platform-app and multilingual readability remain open.
+
 ## EDITOR-01W local verification complete — 2026-10-07 UTC
 
 EDITOR-01W recovered from the durable WIP checkpoint and reran final verification on rebuilt dependencies. Modern fonts passed 187/187 unit cases with complete receipts; Ubuntu fonts-noto-core 20201225-2 passed the same 187/187 suite. The production build passed, isolated local application verification passed 7 HTTP, 7 production-browser and 5 recovery/configuration cases with 12 migrations, both npm audits reported zero vulnerabilities, and 30 generated control QA frames across both fontsets were reviewed with no clipping/visibility failure. Public GitHub publication and native W CI are not attempted yet and require separate explicit approval.

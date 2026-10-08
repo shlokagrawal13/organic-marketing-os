@@ -1,5 +1,11 @@
 # Session log
 
+## EDITOR-01Y bounded readability QA local verification — 2026-10-08 IST
+
+The previous scratch checkout was absent at resume. A fresh checkout of public X closure `e104cbea16a1e29af64f903c2511d0573397929b` passed the 261-file manifest check; the older dirty Q/R checkout was left alone. The first interrupted scratch run's Unicode subprocess failure was excluded; the same clean-base case and final 14/14 selected suite passed. The final suite includes 72 decoded Latin/mixed-Hindi timing/box frames from 12 inset/device-safe exports. Standard/inset/device-safe OCR yielded 36/36 exact short-English reads from 18 FFmpeg exports with a blank negative control at rescaled portrait/square widths 320/390 and landscape widths 568/844. API/web builds passed; four representative PNGs and complete sample hash/readout report are retained in `docs/qa/editor01y-*`.
+
+Y remains local and needs exact public approval and own native CI. Real phones, official app UI overlays, broad content/background and multilingual OCR are still open, along with broader EDITOR-01/master acceptance. No live provider or populated user data was used; no renderer/schema/dependency/migration change was made.
+
 ## EDITOR-01X public publication and native CI closure — 2026-10-08 IST
 
 EDITOR-01X's approved 22 source/config/docs/evidence files are published on public main at `8fdb7efce7f866a0fafa6a9541a07f77d0372447`, tree `1086591e54ce63acecb073165c4d0037cd9f4fec`, matching the locally verified source tree. Own Actions run `37769888218`, job `113286580705`, attempt 1 completed successfully. Its logs confirm 187/187 unit cases with zero failed/cancelled/skipped/todo, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, API/web builds, populated PGlite upgrade/restore and both zero-vulnerability npm audits. No runtime/source/schema change is made by this later closure record; it remains local and is not yet published. Earlier X publication/CI-pending text below is historical.

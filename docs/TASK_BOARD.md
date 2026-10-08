@@ -1,5 +1,11 @@
 # Remaining task board — 2026-10-07.06
 
+## EDITOR-01Y bounded readability QA local verification — 2026-10-08 IST
+
+EDITOR-01X's 10-file closure is published at `e104cbea16a1e29af64f903c2511d0573397929b` (tree `c60ca91fa42b5acf29890db081f8823f5e5a8132`); its own Actions run `37772767654` passed 187 unit, 7 HTTP, 7 browser, 5 recovery, 12 migrations and both audits. EDITOR-01Y adds independent decoded-frame containment/timing checks for `device-safe-v1` beside `inset-v1`, plus a reproducible small-screen English OCR check for Standard, Extra margins and Device safe. On the clean X source, 14/14 selected unit cases pass, including 72 timed frames from 12 placement exports; 18 OCR exports yield 36/36 exact reads with a blank-frame negative control. API and web production builds pass. Four representative frames and the full 36-sample hash/readout report are in `docs/qa/editor01y-*`.
+
+Y's 23-file source/config/docs/evidence delta is local, not published. The OCR fixture is short English text on black at rescaled frame widths; mixed Hindi frames pass containment and were visually reviewed, not Hindi OCR. Physical phones, official platform app overlays, real-world backgrounds/content and broader font/language readability remain open. No runtime renderer, schema, dependency or migration change. Earlier dated publication-pending sections below are historical. Next: publish Y only after exact approval and verify its own native CI; then continue official platform/device and wider font/readability acceptance.
+
 ## EDITOR-01X public publication and native CI closure — 2026-10-08 IST
 
 EDITOR-01X's approved 22 source/config/docs/evidence files are published on public main at `8fdb7efce7f866a0fafa6a9541a07f77d0372447`, tree `1086591e54ce63acecb073165c4d0037cd9f4fec`, matching the locally verified source tree. Own Actions run `37769888218`, job `113286580705`, attempt 1 completed successfully. Its logs confirm 187/187 unit cases with zero failed/cancelled/skipped/todo, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, API/web builds, populated PGlite upgrade/restore and both zero-vulnerability npm audits. No runtime/source/schema change is made by this later closure record; it remains local and is not yet published. Earlier X publication/CI-pending text below is historical.

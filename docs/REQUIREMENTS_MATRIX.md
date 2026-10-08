@@ -1,5 +1,9 @@
 # Requirements matrix
 
+## EDITOR-01Y bounded verification mapping — 2026-10-08 IST
+
+Requirement 31 (AI VIDEO EDITOR) gains device-safe real-frame title/caption containment and timing checks (72 frames) and a separate 36-sample, short-English display-width OCR diagnostic across all three placements. Requirement 37 (PLATFORM VARIANTS) gains the same placement evidence across three aspects and two resolutions. Both remain Partial: official platform UI exclusion, physical-device viewing, longer/real-world media readability and multilingual OCR are unverified; the row histories below remain dated evidence, not current completion claims.
+
 ## EDITOR-01W recovery and verification in progress — 2026-10-07 UTC
 
 Latest WIP: nested lookup insertion regression reproduced and corrected. Twenty-two focused cases pass on each font set; mixed CJK wrapping remains at complete joined font-unit boundaries. Fresh full/production installs, populated PGlite upgrade/archive restore and both zero-vulnerability audits pass. Historical 186-case unit run passed but source changed during execution; final 187-case suites are required. Application run passed seven HTTP checks and two browser cases, then ended without complete browser/recovery summaries; exact cause unconfirmed and no full application pass is claimed. Final verification continues. No W publication attempted.
