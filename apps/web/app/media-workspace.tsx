@@ -7,7 +7,9 @@ import {
   type CjkLanguage,
 } from "../../../packages/core/render-cjk";
 import {
+  DEVICE_SAFE_TEXT_PLACEMENT,
   INSET_TEXT_PLACEMENT,
+  type RenderTextPlacement,
   textPlacementLabel,
 } from "../../../packages/core/render-text-placement";
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -537,7 +539,7 @@ export function RenderPanel({
     aspect: "9:16",
     resolution: "720",
     captions: true,
-    textPlacement: undefined as typeof INSET_TEXT_PLACEMENT | undefined,
+    textPlacement: undefined as RenderTextPlacement | undefined,
     cjkLanguage: undefined as CjkLanguage | undefined,
     musicAssetId: null as string | null,
     musicVolume: 0.12,
@@ -732,12 +734,16 @@ export function RenderPanel({
                       <option value={INSET_TEXT_PLACEMENT}>
                         Extra margins
                       </option>
+                      <option value={DEVICE_SAFE_TEXT_PLACEMENT}>
+                        Device safe
+                      </option>
                     </select>
                   </label>
                   <p className="field-help">
-                    Extra margins move text further inside the frame. Vertical
-                    exports leave more room on the right and bottom. Review the
-                    exported video on your target platform.
+                    Extra margins move text further inside the frame. Device
+                    safe uses stricter social-review boxes, especially on
+                    vertical exports. Review the exported video on your target
+                    platform.
                   </p>
                   <label>
                     Chinese, Japanese or Korean language

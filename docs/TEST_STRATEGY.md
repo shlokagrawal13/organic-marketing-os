@@ -1,5 +1,11 @@
 # Verification and remaining gates — 0.9.2
 
+## EDITOR-01X device-safe placement local verification — 2026-10-08 IST
+
+EDITOR-01W is published and own native CI verified at public main `51ec6015e79d5176699490e9968e115ec2766d27`; all 262 public blobs matched the verified source and Actions run 37738372169 completed successfully. EDITOR-01X adds optional `textPlacement: "device-safe-v1"` for stricter social-review text boxes while preserving legacy Standard placement and existing `inset-v1` Extra margins. The placement is saved in immutable render options/history, shown in selected/saved composition guides and included in rendered-text scene cache identity; no schema, dependency, provider or migration change is introduced.
+
+Focused local verification passed API TypeScript build, Next.js production build, both production and full npm audits with zero vulnerabilities, 13 selected unit cases (`tests/media.test.ts`, `tests/render-placement.test.ts`) under the strict unit reporter, and the selected production browser UI spec `tests/ui/media.spec.ts` with 12 fresh migrations and a real render/download path. Render-placement verification used the recovered Noto Devanagari test font and real FFmpeg frames. An earlier UI attempt failed only because this scratch runtime advertised optional fallback fonts that were not present; it is excluded from pass evidence, and the final rerun used an explicit verified fallback-font list. Full application/native X CI and public publication are pending exact approval; broader physical-device/OCR readability, official platform UI acceptance, ASR, custom effects and full master acceptance remain open.
+
 ## EDITOR-01W local verification complete — 2026-10-07 UTC
 
 EDITOR-01W recovered from the durable WIP checkpoint and reran final verification on rebuilt dependencies. Modern fonts passed 187/187 unit cases with complete receipts; Ubuntu fonts-noto-core 20201225-2 passed the same 187/187 suite. The production build passed, isolated local application verification passed 7 HTTP, 7 production-browser and 5 recovery/configuration cases with 12 migrations, both npm audits reported zero vulnerabilities, and 30 generated control QA frames across both fontsets were reviewed with no clipping/visibility failure. Public GitHub publication and native W CI are not attempted yet and require separate explicit approval.

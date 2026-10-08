@@ -15,7 +15,10 @@ import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { sceneSchema } from "./ai";
 import { sceneTimeline, sceneCaptionCues } from "./captions";
-import { INSET_TEXT_PLACEMENT } from "./render-text-placement";
+import {
+  DEVICE_SAFE_TEXT_PLACEMENT,
+  INSET_TEXT_PLACEMENT,
+} from "./render-text-placement";
 import { RENDER_PRESET_IDS, renderPreset } from "./render-presets";
 export { renderDimensions as dimensions } from "./render-presets";
 export { sceneTimeline } from "./captions";
@@ -34,7 +37,9 @@ const normalizedRenderOptions = z
       .regex(/^#[0-9a-fA-F]{6}$/)
       .default("#183c2b"),
     preset: z.enum(RENDER_PRESET_IDS).optional(),
-    textPlacement: z.literal(INSET_TEXT_PLACEMENT).optional(),
+    textPlacement: z
+      .enum([INSET_TEXT_PLACEMENT, DEVICE_SAFE_TEXT_PLACEMENT])
+      .optional(),
     cjkLanguage: z.enum(CJK_LANGUAGES).optional(),
   })
   .strict()

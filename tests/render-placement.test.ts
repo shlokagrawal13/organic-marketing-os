@@ -11,7 +11,10 @@ import {
   createRenderFontPlan,
   readRenderFont,
 } from "../packages/core/render-font";
-import { renderTextAreas } from "../packages/core/render-text-placement";
+import {
+  DEVICE_SAFE_TEXT_PLACEMENT,
+  renderTextAreas,
+} from "../packages/core/render-text-placement";
 import { layoutRenderText } from "../packages/core/render-text-layout";
 import type { ObjectStore } from "../packages/core/object-store";
 const fixture = sceneSchema.parse({
@@ -53,7 +56,15 @@ test("placement is strict/optional, legacy serialization stays stable and inset 
     JSON.stringify(renderOptions.parse({})),
     '{"aspect":"9:16","resolution":"720","captions":true,"musicAssetId":null,"musicVolume":0.12,"background":"#183c2b"}',
   );
-  for (const textPlacement of ["standard", "inset-v2", "x=0", null, {}, 42])
+  for (const textPlacement of [
+    "standard",
+    "inset-v2",
+    "device-safe-v2",
+    "x=0",
+    null,
+    {},
+    42,
+  ])
     assert.throws(() => renderOptions.parse({ textPlacement }));
   const options = renderOptions.parse({
     preset: "vertical-social-v1",
@@ -65,6 +76,15 @@ test("placement is strict/optional, legacy serialization stays stable and inset 
   const area = renderTextAreas(options, 1080, 1920)!;
   assert.equal(area.title.right, 864);
   assert.ok(Math.abs(area.caption.bottom - 1382.4) < 0.001);
+  const safe = renderTextAreas(
+    { aspect: "9:16", textPlacement: DEVICE_SAFE_TEXT_PLACEMENT },
+    1080,
+    1920,
+  )!;
+  assert.equal(safe.title.left, 172.8);
+  assert.equal(safe.title.right, 777.6);
+  assert.ok(Math.abs(safe.caption.top - 921.6) < 0.001);
+  assert.ok(Math.abs(safe.caption.bottom - 1267.2) < 0.001);
   const text = "W".repeat(300);
   const plan = createRenderFontPlan(
     await readRenderFont(DEFAULT_RENDER_FONT_PATH),
@@ -303,6 +323,12 @@ test("placement changes rebuild text scenes while empty scenes and unchanged pla
   context.options = renderOptions.parse({
     aspect: "1:1",
     textPlacement: "inset-v1",
+  });
+  assert.equal((await renderVideo(context)).reusedScenes, 1);
+  assert.equal((await renderVideo(context)).reusedScenes, 2);
+  context.options = renderOptions.parse({
+    aspect: "1:1",
+    textPlacement: DEVICE_SAFE_TEXT_PLACEMENT,
   });
   assert.equal((await renderVideo(context)).reusedScenes, 1);
   assert.equal((await renderVideo(context)).reusedScenes, 2);

@@ -2,15 +2,16 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-07.18-EDITOR-01W-local-verified",
-  "savedAtUtc": "2026-10-07T21:33:56.303156+00:00",
-  "currentMilestone": "EDITOR-01W local verification complete; publication approval pending",
+  "checkpointRevision": "2026-10-08.01-EDITOR-01X-device-safe-local-verified",
+  "savedAtUtc": "2026-10-08T06:59:00+00:00",
+  "currentMilestone": "EDITOR-01X device-safe text placement local verification complete; publication approval pending",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
-    "EDITOR-01W local verification is complete on rebuilt dependencies: modern and Ubuntu Noto unit suites each pass 187/187, production build passes, local application verification passes 7 HTTP, 7 browser and 5 recovery/configuration cases, audits are zero, and 30 control QA frames were reviewed. Public write/native W CI pending explicit approval."
+    "EDITOR-01W is published and own native CI verified at public main 51ec6015e79d5176699490e9968e115ec2766d27 with all 262 blobs exact and Actions run 37738372169 successful.",
+    "EDITOR-01X adds optional textPlacement device-safe-v1 with stricter versioned social-review title/caption boxes while preserving Standard placement and inset-v1 Extra margins. Focused local verification passed API/web production builds, 13 selected unit cases, the selected production media browser spec with 12 migrations and real render/download, and both npm audits with zero vulnerabilities. The earlier UI font-configuration failure is excluded from pass evidence. Public write/native X CI pending explicit approval."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Request exact EDITOR-01W public GitHub publication approval for the reviewed source/docs/evidence delta; after approval publish to main and run/record native W CI.",
+  "nextAction": "Request exact EDITOR-01X public GitHub publication approval for the reviewed source/docs/evidence delta; after approval publish to main and run/record native X CI.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -45,7 +46,7 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-10-07",
+    "date": "2026-10-08",
     "applicationSuites": {
       "unitPerFontSet": 187,
       "unitFontSets": 2,
@@ -75,9 +76,9 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "Dated evidence; do not apply automatically to modified code or a new environment.",
+    "scopeWarning": "Focused local EDITOR-01X evidence; full native application CI requires publication and GitHub Actions.",
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
-    "auditScope": "EDITOR-01W local final npm audit and npm audit --omit=dev: zero vulnerabilities.",
+    "auditScope": "EDITOR-01X focused local npm audit and npm audit --omit=dev: zero vulnerabilities.",
     "githubActions": {
       "runId": 37646367807,
       "jobId": 112878071601,
@@ -277,7 +278,7 @@
       "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
       "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
     },
-    "latestIncrement": "EDITOR-01V is locally verified: saved per-render zh-Hans/zh-Hant/ja/ko locale, four independently default-disabled script opt-ins, controlled language-sensitive Fontkit outlines and conservative grapheme-safe wrapping. Complete 168/168 units passed on each of the modern and actual Ubuntu CI font sets (336 unique case receipts, 38 summaries, zero failed/cancelled/skipped/todo), 7 HTTP, 7 production-browser and 5 recovery/config cases. API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. HarfBuzz 8.3.0 matches 14775 covered CJK strings (42 curated; all 11172 modern Hangul syllables), 160 regional Han font/locale cases and 28 mixed-script reference runs; four generated Han strings without font coverage are explicitly rejected. Clean full/production CJS/ESM exports independently match 183488 layouts across both font sets and retain the fifteen-script regressions. Each font set passed 72 new CJK exports / 216 decoded timed frames; sixteen representative frames were visually reviewed. ICU 74.2 strict independently accepts every emitted boundary in 176 cases. Natural recovery lock=119962ms, provider submission count 1. Public V publication and its own native CI remain pending; EDITOR-01 stays Partial.",
+    "latestIncrement": "EDITOR-01X locally verified optional device-safe text placement: Standard and Extra margins are preserved, device-safe-v1 adds stricter saved composition boxes and cache identity. API TypeScript build, Next.js production build, 13 selected media/render-placement unit cases, the selected production media browser spec with 12 migrations and real render/download, and production/full npm audits passed. Public publication and native X CI pending exact approval.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-07",
     "nativePostgresVerifiedMeaning": "Own U CI-fix application CI uses disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers. Populated upgrade/archive restore separately uses PGlite. Docker/full Compose/MinIO, native PostgreSQL/private-media cross-store restore, live providers, physical-device readability and full master acceptance remain open.",

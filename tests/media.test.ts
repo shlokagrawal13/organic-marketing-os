@@ -79,6 +79,11 @@ test("named render presets normalize geometry, reject conflicts and preserve leg
   assert.throws(() =>
     renderOptions.parse({ preset: RENDER_PRESETS[0].id, filter: "crop=1:1" }),
   );
+  assert.equal(
+    renderOptions.parse({ textPlacement: "device-safe-v1" }).textPlacement,
+    "device-safe-v1",
+  );
+  assert.throws(() => renderOptions.parse({ textPlacement: "device-safe-v2" }));
 });
 
 test("scene motion defaults to static and accepts only bounded presets", () => {

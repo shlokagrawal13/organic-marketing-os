@@ -93,7 +93,7 @@ export function CompositionGuides({
         </svg>
         <p className="field-help">
           {areas
-            ? "Boxes show extra-margin text regions."
+            ? `${textPlacementLabel(options.textPlacement)} boxes show text regions.`
             : "Standard positions are approximate; wrapping depends on your fonts."}{" "}
           Guides are not included in exports. Review the rendered video on your
           target platform.

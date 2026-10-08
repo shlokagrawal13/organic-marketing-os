@@ -298,6 +298,15 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await expect(
     guides.locator('[data-guide-kind="title"] > rect'),
   ).toHaveAttribute("width", "734.4");
+  await placement.selectOption("device-safe-v1");
+  await expect(guides).toContainText("Device safe");
+  await expect(
+    guides.locator('[data-guide-kind="title"] > rect'),
+  ).toHaveAttribute("x", "172.8");
+  await expect(
+    guides.locator('[data-guide-kind="title"] > rect'),
+  ).toHaveAttribute("width", "604.8");
+  await placement.selectOption("inset-v1");
   const burnedCaptions = page.getByLabel("Burn scene captions into video");
   await burnedCaptions.uncheck();
   await expect(guides.locator('[data-guide-kind="caption"]')).toHaveCount(0);

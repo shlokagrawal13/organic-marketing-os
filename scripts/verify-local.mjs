@@ -497,7 +497,7 @@ try {
     process.env.CHROMIUM_EXECUTABLE_PATH = process.cwd() + "/.local/chromium";
     await run("node_modules/.bin/playwright", [
       "test",
-      ...(uiSpec ? [uiSpec] : []),
+      ...(uiSpec ? [`tests/ui/${uiSpec}`] : []),
     ]);
   }
   if (!uiOnly)

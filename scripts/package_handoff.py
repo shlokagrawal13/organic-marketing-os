@@ -22,7 +22,7 @@ MANIFEST = "CHECKPOINT_MANIFEST.json"
 SKIP_DIRS = {
     "node_modules", ".git", ".local", ".next", "dist", "build", "coverage",
     "test-results", "playwright-report", "__pycache__", ".venv", "venv",
-    ".cache", ".pytest_cache",
+    ".cache", ".npm-cache", ".pytest_cache",
 }
 RUNTIME_ROOTS = {"uploads", "backups", "data", "storage", "media_data", ".data"}
 PRIVATE_SUFFIXES = {".zip", ".log", ".tsbuildinfo", ".pyc", ".pem", ".key",

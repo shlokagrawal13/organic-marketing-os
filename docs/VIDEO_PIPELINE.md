@@ -195,12 +195,13 @@ Implementation: `apps/api/src/renders.ts`, `apps/api/src/render-worker.ts`, `pac
 - On-screen text and optional burned captions wrap into bounded areas. Manual scene-relative caption cues control video visibility and SRT timing; absent/empty cues preserve full-scene captions. Other writing systems and complex font shaping need their own QA.
 - SHA-256 scene caching includes tenant, dimensions/settings, effective caption text/timing, rendering text/duration, visual framing, input hashes and font hash. With burned captions enabled, changing a cue invalidates that scene only. Captions-off scenes ignore cue changes in their video cache key; SRT is still regenerated. Changing visual framing rerenders that scene only. Original assets and completed renders are immutable.
 
-## Optional extra text margins (EDITOR-01N)
+## Optional text placement margins (EDITOR-01N/EDITOR-01X)
 
-Render options accept optional `textPlacement: "inset-v1"`. The Video studio
-labels this **Extra margins**; omitting the field retains **Standard placement**
-and the previous serialized options, text positions and scene cache identity.
-The placement is saved in the immutable render options and displayed with the
+Render options accept optional `textPlacement: "inset-v1"` or
+`"device-safe-v1"`. The Video studio labels these **Extra margins** and
+**Device safe**; omitting the field retains **Standard placement** and the
+previous serialized options, text positions and scene cache identity. The
+placement is saved in the immutable render options and displayed with the
 preview and history; changing the export-size preset retains the selection.
 
 The versioned composition areas below are fractions of the output frame. Both
@@ -208,13 +209,18 @@ title and caption boxes share the listed horizontal limits. Layout reserves a
 12-pixel background-box border on every edge, uses the configured font metrics
 and grapheme wrapping, and rejects text that cannot fit at the 16-pixel minimum.
 Titles align to the top of their box; captions align to its bottom. Portrait
-composition leaves additional space on the right and below the captions.
+composition leaves additional space on the right and below the captions. Device
+safe is a stricter review profile for social-player chrome; it is not automatic
+platform detection.
 
-| Aspect | Left–right | Title top–bottom | Caption top–bottom |
-| --- | --- | --- | --- |
-| 9:16 | 12%–80% | 18%–38% | 52%–72% |
-| 16:9 | 10%–90% | 14%–36% | 60%–82% |
-| 1:1 | 12%–88% | 16%–38% | 58%–80% |
+| Placement | Aspect | Left–right | Title top–bottom | Caption top–bottom |
+| --- | --- | --- | --- | --- |
+| Extra margins | 9:16 | 12%–80% | 18%–38% | 52%–72% |
+| Extra margins | 16:9 | 10%–90% | 14%–36% | 60%–82% |
+| Extra margins | 1:1 | 12%–88% | 16%–38% | 58%–80% |
+| Device safe | 9:16 | 16%–72% | 20%–36% | 48%–66% |
+| Device safe | 16:9 | 12%–88% | 16%–34% | 58%–78% |
+| Device safe | 1:1 | 16%–84% | 18%–34% | 54%–74% |
 
 These are product composition margins, not official platform UI guarantees.
 Review the exported video on the intended platform. Per-platform interface,
@@ -228,10 +234,11 @@ cue timing and scene-offset SRT content remain unchanged.
 ## Composition guides (EDITOR-01O)
 
 The selected-export diagram follows the current aspect, resolution, placement,
-background colour and burned-caption choice. **Extra margins** boxes use the
-same versioned composition areas as the renderer. **Standard placement** shows
-illustrative title/caption positions; actual wrapping depends on the configured
-fonts. Turning burned captions off removes their guide while SRT stays available.
+background colour and burned-caption choice. **Extra margins** and **Device
+safe** boxes use the same versioned composition areas as the renderer.
+**Standard placement** shows illustrative title/caption positions; actual
+wrapping depends on the configured fonts. Turning burned captions off removes
+their guide while SRT stays available.
 
 Each saved render also has an expandable **Saved render composition guides**
 view. It reads that job's immutable options, independently of the controls for a
