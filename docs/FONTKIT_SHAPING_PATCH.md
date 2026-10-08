@@ -1,5 +1,9 @@
 # Fontkit shaping patch
 
+## EDITOR-01W local verification complete — 2026-10-07 UTC
+
+EDITOR-01W recovered from the durable WIP checkpoint and reran final verification on rebuilt dependencies. Modern fonts passed 187/187 unit cases with complete receipts; Ubuntu fonts-noto-core 20201225-2 passed the same 187/187 suite. The production build passed, isolated local application verification passed 7 HTTP, 7 production-browser and 5 recovery/configuration cases with 12 migrations, both npm audits reported zero vulnerabilities, and 30 generated control QA frames across both fontsets were reviewed with no clipping/visibility failure. Public GitHub publication and native W CI are not attempted yet and require separate explicit approval.
+
 ## CI-fix own native acceptance — 2026-10-07
 
 The exact 28-file fix is published at ca7d7a34eddd791df55f0996c41b77d27179db9e. Its own Actions 37608908118 passed all 144 unit cases, including the older Ubuntu Noto Myanmar mark offset and Bengali/Gujarati opt-in isolation, plus 7 HTTP, 7 browser and 5 recovery/config cases. CJS/ESM/outlines independently matched HarfBuzz 8.3.0. Local dual-font/clean-install receipts remain separate. The previous original U run failed and is excluded from pass evidence. Pending statements below are historical. Default-disabled opt-ins and all documented device/font/joiner/control/production gaps remain.

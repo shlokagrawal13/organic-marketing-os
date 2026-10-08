@@ -2,48 +2,15 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-07.14",
-  "savedAtUtc": "2026-10-07T14:47:51.295017+00:00",
-  "currentMilestone": "EDITOR-01V locally verified; exact public payload awaiting authorization",
+  "checkpointRevision": "2026-10-07.18-EDITOR-01W-local-verified",
+  "savedAtUtc": "2026-10-07T21:33:56.303156+00:00",
+  "currentMilestone": "EDITOR-01W local verification complete; publication approval pending",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
-    "EDITOR-01V is locally verified: saved per-render zh-Hans/zh-Hant/ja/ko locale, four independently default-disabled script opt-ins, controlled language-sensitive Fontkit outlines and conservative grapheme-safe wrapping. Complete 168/168 units passed on each of the modern and actual Ubuntu CI font sets (336 unique case receipts, 38 summaries, zero failed/cancelled/skipped/todo), 7 HTTP, 7 production-browser and 5 recovery/config cases. API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. HarfBuzz 8.3.0 matches 14775 covered CJK strings (42 curated; all 11172 modern Hangul syllables), 160 regional Han font/locale cases and 28 mixed-script reference runs; four generated Han strings without font coverage are explicitly rejected. Clean full/production CJS/ESM exports independently match 183488 layouts across both font sets and retain the fifteen-script regressions. Each font set passed 72 new CJK exports / 216 decoded timed frames; sixteen representative frames were visually reviewed. ICU 74.2 strict independently accepts every emitted boundary in 176 cases. Natural recovery lock=119962ms, provider submission count 1. Public V publication and its own native CI remain pending; EDITOR-01 stays Partial.",
-    "EDITOR-01T's approved 48-file source/config/docs/evidence payload is published and its own native CI verified. Public main eede92658ebde9e214c998442ae7988b4e1734e4, tree 5a9241f00bae03348b46d03cf384f57aeba78336; all 231 public blob paths/modes/SHAs match immutable local source a54dad774cf7569c42a1a005f12a24c0ca98fe4f. Actions run 37529863574 attempt 1 completed successfully at 2026-10-06T21:04:17Z. Logs confirm clean npm install with the guarded Fontkit patch, API/web production builds, a complete 113-unit summary with zero failed/cancelled/skipped/todo cases, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. All seven independent script reference diagnostics and render matrices pass: 100 curated strings plus 656 generated Sinhala cases, 13 combined script reference runs, 126 exports and 378 decoded timed frames. CI reference engine: HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics). Recovery naturally expired a 119830ms Redis lock; its case took 158.6s with exactly one video submission and the retained provider receipt/private output/completed queue job.",
-    "EDITOR-01S's approved 25-file source/config/docs/evidence payload is published and its own native CI verified. Public main 51cd7ae5cb2f3898dd3dea49d464ee156f7449a0, tree 42abf968e0c0ab64fdfe0a665afd580e3b71f3fa; all 211 public blob paths/modes/SHAs match immutable local source 54d777e19042859a0b209d42663d93cf56126dae. Actions run 37519604078 attempt 1 completed successfully at 2026-10-06T19:39:45Z. Logs confirm clean npm install with the guarded Fontkit patch, API/web production builds, 73 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both npm audits with zero vulnerabilities. Independent HarfBuzz checks for 19 Gujarati conjunct/matra/reph strings pass against both CJS/ESM exports and emitted outlines; six independently referenced mixed-script runs match combined positions/scales. S's 54 decoded timed frames from 18 pure/mixed-script exports across six geometries/standard-inset placement pass; HTTP verifies private Gujarati MP4/SRT downloads and same-overlay Gujarati/RTL rejection before creating a job. Active-poll recovery naturally expired a 119831ms Redis lock; its case took 128.9s with exactly one video submission and the retained provider receipt/private output/completed queue job.",
-    "MEDIA-01D second slice is implemented and published: platform credit review resolution now blocks active media-generation reservations until the generation reaches a terminal state.",
-    "MEDIA-01D retained-output reconciliation is published and CI-verified: provider bytes written to private storage before a lost database claim become UNKNOWN review evidence with credits retained in REVIEW.",
-    "MEDIA-01D single-image editing is published and fixture/CI-verified: an opt-in separate quote, tenant-owned source-byte integrity preflight and multipart edit adapter; no live provider acceptance is claimed.",
-    "MEDIA-01D bounded options are published and fixture/CI-verified: image size/quality/background plus built-in voice, WAV/MP3 and speed are normalized, persisted and included in audit evidence.",
-    "MEDIA-01D ordered multi-image editing is published and CI-verified: one to four unique tenant-owned images are revalidated byte-by-byte before ordered multipart submission.",
-    "EDITOR-01A is published and CI-verified: cumulative scene start/end timing plus move, duplicate-with-new-ID and remove controls persist through save and real FFmpeg browser rendering.",
-    "Plan-specific media routing and tenant-owned source-reference gates remain implemented from 0.9.1.",
-    "Public main application commit 4611fb0170d4851be6bc6d805009c42a0ba5dd63 and tree 54e29ec0a2d0fa15921be62ccd0282de9e135c07 contain EDITOR-01B; Actions run 37143980421 completed successfully.",
-    "EDITOR-01B is published and CI-verified: bounded manual caption cues persist through save/reorder, control half-open FFmpeg burn-in and scene-offset SRT, and invalidate only the changed caption-enabled scene cache. No ASR or automatic speech alignment.",
-    "EDITOR-01C is published and CI-verified: Fit/Fill framing for attached images/video, legacy contain default, bounded crop-before-scale for extreme aspect ratios, mode-aware caching and save/reload.",
-    "EDITOR-01D is published and CI-verified: bounded image-only Static / Slow zoom in, legacy static default, 8% center zoom, preserved framing/overlays, effective-mode caching and browser render coverage. Public main application commit 9334411055f63f33333044b2b4ce079420fa2596 matches local tree 8be7bfe6976d21a7db3411627548ebd8af7bd8c4 exactly; Actions run 37191164246 passed.",
-    "EDITOR-01E named export geometry presets are published at 06e5da96ec4e811b0a95510247db25c3d54ac669 and CI-verified by Actions run 37207895511; its approved continuity/docs publication completed at 3348ee27b4338c6403ac7a70234d56cd94e9b354.",
-    "EDITOR-01F rendered-text script preflight is published and CI-verified. Commit 72b796d6d93ae5f5da475e3c33d021858131df1e points to tree 97e227fa6352de563f6e3d018704960f8e34264d; all 185 remote blob paths/modes/SHAs matched the verified local source. Actions run 37228966502 passed every step, with logs confirming 37 unit, 7 HTTP, 6 browser and 5 recovery cases. No live/paid provider used. Actual font glyph coverage, multilingual shaping and wider language/audio QA remain open.",
-    "EDITOR-01G checks glyph mappings in the exact configured TTF/OTF bytes before worker storage/cache/media work. Missing glyphs and invalid font configuration produce bounded safe render-history errors; captions-off Unicode SRT and unused fallback captions remain supported. Pinned Fontkit 2.0.4 and types 2.0.9. Passed 41 unit, 7 HTTP, 6 production-browser and 5 recovery cases, API/web builds, all 12 fresh migrations and zero-advisory full npm audit. Published to public main as d9a205799e69725bd4642014f8aaeeea710e1b3f; tree 79c3d129f6c824e12163ef66b22c705d1ecfc0c3 matched 187/187 local blobs. Actions run 37277131959 completed successfully with configured native PostgreSQL/Redis application verification. Multilingual shaping/readability remains open; no live or paid provider used.",
-    "EDITOR-01H adds explicit FFmpeg drawtext text_shaping=1 and opens the render-text policy for Arabic and Hebrew when the configured font covers the glyphs. Devanagari/Indic/CJK and other unsupported scripts still fail with named API/worker errors unless broader font/shaping support is added. Passed 42 unit cases, API/web production build and the full isolated verifier with 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios after rebuilding dist. Published to public main at 2e33a2cc230ab99bed6d28a18a35853e4ab9c313.",
-    "EDITOR-01I adds trusted worker-side fallback font configuration via RENDER_FONT_FALLBACK_PATHS. Each rendered title/caption cue must be fully covered by one configured TTF/OTF; the selected font is copied to FFmpeg and all configured font hashes are part of the scene cache key. A decoded-frame smoke check verifies visible Arabic/Hebrew overlay pixels when the primary font lacks those glyphs and the fallback supplies them. The verified 15-file source/docs payload was published to public main through 27aaf5cd752ad3fb83c5127523eff01416ace53a with matching tree 59cc372fec1f759f2955985b0e84dfdb608b591b. Actions run 37315707338 failed unit tests only because the tests used a local URW/Nimbus font absent from CI. The approved 11-file follow-up switches to CI-installed DejaVu Serif/Sans and is published as 56702de088f2e8d2198e3ea858dd96efe6b9d200 with matching tree d4e6cf0c0d93defb64e391a0a1496dae5d5f1534. Actions run 37317283904 passed build, unit tests, audits, populated upgrade and native application flows. No live/paid provider, schema/migration or runtime data changed.",
-    "EDITOR-01J replaces character-count wrapping with selected-font metrics and grapheme-safe splitting, bounds each overlay and rejects overflow before storage/cache/media work. Cache version 6 avoids old layouts. Local verification: 47 unit, 7 HTTP, 6 browser, 5 recovery, builds and 12 migrations; 18 decoded frames across 720/1080 in three aspects. Published at ffb398d34279898074765141048cb6955e198c53 with matching tree 97fe4253f2e63dabd545a95481768210ea1009a2; Actions run 37353516609 completed success.",
-    "EDITOR-01K audio output QA is locally verified: stereo 48 kHz AAC, finite audio/video/container durations and aligned audio start are required for cached segments and final exports. Decoded PCM tests cover narration trim/padding, scene boundaries, muted embedded video sound, silent scenes, music looping/volume and invalid-cache rebuilding. Passed 49 unit, 7 HTTP, 6 browser and 5 recovery cases, API/web production builds and all 12 fresh migrations.",
-    "EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari titles/captions using trusted Fontkit-shaped glyph outlines, rasterized through FFmpeg librsvg and composited before fades. Default remains disabled. A covering configured TTF/OTF is required for each whole overlay; Bengali/CJK, emoji and formatting controls remain blocked. Local verification: 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. L public publication and native CI are pending.",
-    "EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization.",
-    "EDITOR-01L and its approved 13-file dependency/evidence follow-up are published and CI-verified. Public main commit 2326f1290453b09306928a3155b5f508b3710349, tree 0d5d567f1cff2e06112898c96af15a89e1300cb2, Actions run 37440418977 completed success. Logs confirm 54 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, production builds, all 12 migrations, populated upgrade verification and zero-vulnerability production/full dependency audits. Original L run 37439306560 failed the source-map-js audit; the approved patch to 1.2.2 resolves it. No paid/live provider was used. Complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.",
-    "EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending.",
-    "EDITOR-01M mixed Latin/Devanagari font runs and the approved 18-file payload are published and CI-verified. Public main eb8196e594889984651e9b93eb3ffe1bd2e195c2, matching local source tree 2504d062d94c7691d05365353d2746659c1b9f14; Actions run 37444585056 completed successfully on 2026-10-06T09:45:36Z. Logs confirm 56 unit, 7 HTTP, 6 production-browser, 5 recovery/configuration scenarios, API/web build, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. No live/paid provider or user runtime data was used. Complete Compose/MinIO, native cross-store restore, broader language/device/ASR and master acceptance remain open.",
-    "EDITOR-01N optional Extra margins text placement is locally verified. The versioned inset-v1 option uses aspect-aware title/caption boxes; portrait leaves more room on the right and bottom. Omitted placement preserves legacy options, positions and cache keys. Immutable render options and preview/history retain the selection. Changing placement rebuilds text scenes while empty scenes reuse cache. Passed 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and all 12 fresh migrations. The new frame matrix covers 36 decoded Latin/mixed-Hindi frames across six output geometries. N public publication and native CI are pending.",
-    "EDITOR-01N optional aspect-aware Extra margins and the approved 23-file source/docs payload are published and CI-verified. Public main c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38, matching verified local source tree 1e404024f8f8c86d0b3a344c569552bf6711979d; Actions run 37450673612 completed successfully on 2026-10-06T10:38:56Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 195 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Product composition margins do not guarantee official platform UI exclusion; complete Compose/MinIO, native cross-store restore, wider scripts/device/ASR and full master acceptance remain open.",
-    "EDITOR-01O composition guides are locally verified. The selected-export diagram follows aspect, resolution, text placement, background and burned-caption controls; saved-render guides read immutable job options independently. Extra-margin boxes reuse the renderer geometry; standard positions are explicitly approximate. API/web builds and all 6 production-browser scenarios passed on final code, including real export playback/approval/download, guide controls, saved settings after navigation and mobile overflow. Public O publication and native CI are pending.",
-    "EDITOR-01O responsive selected/saved composition guides and the approved 17-file source/docs payload are published and CI-verified. Public main eb9c02338bc62ab38aadafd713586f4b80f35a79, matching verified local source tree a90d05e29183ddeaa6b5be908b2d9656ae5abee8; Actions run 37473495143 completed successfully on 2026-10-06T13:51:31Z. Logs confirm 59 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 196 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Guides are review diagrams; complete Compose/MinIO, native cross-store restore, device/font/ASR and full master acceptance remain open.",
-    "EDITOR-01P saved-render scene/caption review navigation and the approved 19-file source/docs/evidence payload are published and CI-verified. Public main c2936113616522db099771684226276e91976957, matching verified local source tree 1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa; Actions run 37479269861 completed successfully on 2026-10-06T14:41:45Z. Logs confirm 59 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated upgrade and zero-vulnerability production/full npm audits. All 200 remote blob paths/modes/SHAs matched the approved local source. No live/paid provider or user runtime data was used. Physical devices, ASR, wider-script/readability, full Compose/native cross-store restore and master acceptance remain open. Initial CI attempt failed the media-worker restart recovery wait after 25s; all 7 browser cases passed. The same approved source passed the later CI attempt. An isolated Redis/BullMQ reproduction left a killed worker job active with 119993ms lock remaining, beyond the 25s assertion. This queue mechanism supports a timing-race explanation; original application failure causality remains an inference, and recovery-test hardening is prioritized. No code fix is claimed.",
-    "EDITOR-01P recovery-test hardening and its approved 16-file recovery-fix/evidence payload are published and CI-verified. Public main 981dd237c4a4d30bc7ed6b6a897c6617c09255f7, tree 312e5ce9efa1f78fef47a4a06d1037beb6eebbbb; Actions run 37484095477 attempt 1 completed successfully at 2026-10-06T15:10:34Z. Logs confirm 59 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, API/web builds, 12 migrations, populated PGlite upgrade/archive restore and zero-vulnerability production/full npm audits. The deterministic interrupted poll left an active Redis queue job with 119834ms lock remaining; natural expiry/recovery completed the case in 158.4s with the same provider receipt, private output, completed queue job and exactly one video submission. All 200 remote blob paths/modes/SHAs match the approved local source.",
-    "EDITOR-01Q's approved 16-file sharp dependency-fix/evidence follow-up is published and own native CI verified. Public main 3834a452011c6a942fdcd8bc0c11699305380831, tree 9a2d9f68bb9c235dce50c106bba29272660f68f9; all 203 public blob paths/modes/SHAs match immutable local source 0c1627938a5c77bf7a210328e28c311729225822. Actions run 37491518572 attempt 1 completed successfully at 2026-10-06T16:02:41Z. Logs confirm API/web production builds, 63 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration scenarios, 12 migrations, populated PGlite upgrade/archive restore and zero-vulnerability production/full npm audits. Q's 36 decoded timed mixed-script frames across 12 exports/six geometries/both placements pass on this patched source. Active-poll recovery naturally expired a 119843ms Redis lock and completed its case in 158.4s; the same provider receipt/private output/completed queue job and exactly one video submission were asserted.",
-    "EDITOR-01R's approved 32-file source/config/docs/evidence payload is published and its own native CI verified. Public main acbec7b9d04ff064fafe27675d7822b3d19ca135, tree 7027772a44ea9b64ad0b20c14fe6012366de9ee0; all 208 public blob paths/modes/SHAs match immutable local source 5962cbfe755b26d61d28b8ab50ec6142c816b559. Actions run 37516681778 attempt 1 completed successfully at 2026-10-06T19:15:00Z. Logs confirm clean npm install with the guarded Fontkit patch, API/web production builds, 68 unit, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 fresh migrations, populated PGlite upgrade/archive restore and both npm audits with zero vulnerabilities. Independent HarfBuzz checks for 12 Bengali conjunct/matra/reph strings pass against both CJS/ESM exports and emitted outlines. R's 54 decoded timed frames from 18 pure/mixed-script exports across six geometries/standard-inset placement pass; HTTP verifies private Bengali MP4/SRT downloads and same-overlay Bengali/RTL rejection before creating a job. Active-poll recovery naturally expired a 119928ms Redis lock; its case took 128.1s with exactly one video submission and the retained provider receipt/private output/completed queue job."
+    "EDITOR-01W local verification is complete on rebuilt dependencies: modern and Ubuntu Noto unit suites each pass 187/187, production build passes, local application verification passes 7 HTTP, 7 browser and 5 recovery/configuration cases, audits are zero, and 30 control QA frames were reviewed. Public write/native W CI pending explicit approval."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Publish exact reviewed EDITOR-01V payload only after explicit public-main authorization, verify its own native CI and full public tree, then continue focused Indic/SEA joiner/control and device/readability acceptance.",
+  "nextAction": "Request exact EDITOR-01W public GitHub publication approval for the reviewed source/docs/evidence delta; after approval publish to main and run/record native W CI.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -80,27 +47,27 @@
   "verification": {
     "date": "2026-10-07",
     "applicationSuites": {
-      "unitPerFontSet": 168,
+      "unitPerFontSet": 187,
       "unitFontSets": 2,
       "http": 7,
       "browser": 7,
       "recovery": 5
     },
     "migrationsApplied": 12,
-    "database": "Own U CI-fix native PostgreSQL 17 application CI; local and populated upgrade/archive restore separately use PGlite.",
+    "database": "Local W final verifier used PGlite WASM PostgreSQL; prior V native PostgreSQL CI remains prior evidence only.",
     "populatedUpgradeRestore": {
       "passed": true,
       "engine": "PGlite WASM PostgreSQL",
       "migrations": 12,
       "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
       "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4866028,
-      "sha256": "9e850335cfbb5d5ae1237e91bd92ff04c9cd54fe638a9ec6b22fb6feac2644f2",
+      "archiveBytes": 4866048,
+      "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
       "nativePostgresRestoreVerified": false,
       "creditLedgerRestoreAndImmutabilityVerified": true,
       "generatedMediaRequestAndProviderReceiptRestored": true
     },
-    "nativePostgresVerified": true,
+    "nativePostgresVerified": false,
     "dockerMinioVerified": false,
     "liveAiVerified": false,
     "stripeContractFixtureVerified": true,
@@ -110,37 +77,63 @@
     "developmentAdvisories": 0,
     "scopeWarning": "Dated evidence; do not apply automatically to modified code or a new environment.",
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
-    "auditScope": "Own U CI-fix native CI production/full npm audits: zero vulnerabilities; original U audits were skipped.",
+    "auditScope": "EDITOR-01W local final npm audit and npm audit --omit=dev: zero vulnerabilities.",
     "githubActions": {
-      "runId": 37608908118,
-      "jobId": 112751091986,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37608908118",
-      "sourceCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-      "sourceTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+      "runId": 37646367807,
+      "jobId": 112878071601,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37646367807",
+      "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+      "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
       "status": "completed",
       "conclusion": "success",
       "attempt": 1,
-      "startedAt": "2026-10-07T10:40:05Z",
-      "completedAt": "2026-10-07T10:50:25Z",
+      "startedAt": "2026-10-07T15:44:15Z",
+      "completedAt": "2026-10-07T15:56:20Z",
       "unit": {
-        "tests": 144,
-        "passed": 144,
+        "tests": 168,
+        "passed": 168,
         "failed": 0,
         "cancelled": 0,
         "skipped": 0,
         "todo": 0,
-        "durationMs": 223049.955562
+        "durationMs": 306723.318004
       },
-      "unitCaseReceipts": 144,
-      "unitSummaries": 18,
-      "unitReceipts": "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+      "terminalReceiptsVerified": true,
+      "unitCaseReceipts": 168,
+      "unitSummaries": 19,
+      "unitReceipts": "docs/qa/editor01v-native-unit-receipts.json",
       "unitCaseNamesAndFilesMatchReviewedSource": true,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryScenarios": 5,
       "migrations": 12,
-      "harfbuzzVersion": "8.3.0",
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0,
+      "upgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4866048,
+        "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "naturalRedisLockMs": 119962,
+      "recoveryCaseDurationMs": 128326.279325,
+      "providerSubmissionsAsserted": 1,
+      "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
       "referenceDiagnostics": [
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+        "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
         "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
         "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
         "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
@@ -154,37 +147,19 @@
         "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
         "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
       ],
-      "newScriptCoveredStrings": 7406,
-      "newScriptCuratedStrings": 115,
-      "newScriptExports": 90,
-      "newScriptDecodedTimedFrames": 270,
-      "priorIndicReferenceAndExportRegressionsPassed": true,
-      "apiBuild": true,
-      "webProductionBuild": true,
-      "productionAuditAdvisories": 0,
-      "fullAuditAdvisories": 0,
-      "upgradeRestore": {
-        "passed": true,
-        "engine": "PGlite WASM PostgreSQL",
-        "migrations": 12,
-        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
-        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-        "archiveBytes": 4865915,
-        "sha256": "a942ac68c590fab349553bcdab0fb9600f7f748eeaa8cf5eab1b77a51720bdd7",
-        "nativePostgresRestoreVerified": false,
-        "creditLedgerRestoreAndImmutabilityVerified": true,
-        "generatedMediaRequestAndProviderReceiptRestored": true
-      },
-      "naturalRedisLockMs": 119952,
-      "recoveryCaseDurationMs": 128265.858989,
-      "providerSubmissionsAsserted": 1,
-      "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+      "coveredCjkStrings": 14775,
+      "curatedCjkStrings": 42,
+      "modernHangulSyllables": 11172,
+      "newCjkExports": 72,
+      "newCjkTimedFrames": 216,
+      "priorFifteenScriptRegressionsPassed": true,
       "artifact": {
-        "id": 11477326448,
+        "id": 11496000125,
         "name": "browser-evidence",
-        "digest": "sha256:7a24a7a3bb6dfd6e5bbf697b6dde53f1b21fd1b53c732599d3ef0bf6b7495db1",
-        "bytes": 3694321,
+        "digest": "sha256:244992ff35aad8d63f7b6c986bc113f480d014d6182e79e23cee0d8c573fb7e1",
+        "bytes": 3750338,
         "downloadedZipSha256Matched": true,
+        "crcVerified": true,
         "pngs": [
           {
             "path": "test-results/asset-library-desktop.png",
@@ -207,49 +182,44 @@
             "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
           },
           {
-            "path": "test-results/credits-desktop.png",
-            "bytes": 225956,
-            "sha256": "5f21905a2194d4a98ed1a4a666d6f85087015a7dd0da351e4786c5f9bed56690"
-          },
-          {
             "path": "test-results/content-review-desktop.png",
             "bytes": 163217,
             "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
           },
           {
+            "path": "test-results/credits-desktop.png",
+            "bytes": 225863,
+            "sha256": "d78c1eebbb461fada91b2a58b567f3007dfe4cb7d22d7b476ecc0ef8f8a6990f"
+          },
+          {
             "path": "test-results/credits-mobile.png",
-            "bytes": 197119,
-            "sha256": "1f3ff1b8d246936ae73699d27faeabf59932f8e216487e84eff8fceeae18d157"
+            "bytes": 197486,
+            "sha256": "ea409665a43c534c05cf6151f4d3ccd44bcdb76f07565cadf30182f4735b661a"
           },
           {
             "path": "test-results/generated-media-dark.png",
-            "bytes": 287062,
-            "sha256": "485387975850c61694d7acab340589332d0208c8ffafd2f8ee11559f4ebd9b6f"
+            "bytes": 286608,
+            "sha256": "c6c075687912f9e48226860c8a9fead4f837dacef40176e26085d58f453b26b7"
           },
           {
             "path": "test-results/generated-media-desktop.png",
-            "bytes": 284322,
-            "sha256": "fd618b816e638d77ed8abcc5ac6bf6aa0323c1f9b124e5b5899677a561230327"
+            "bytes": 283800,
+            "sha256": "2d009fe260758e62e230f12f38d6dd6478f3bad4af14f1e22990a2d4dfe8f392"
           },
           {
             "path": "test-results/generated-media-mobile.png",
-            "bytes": 248448,
-            "sha256": "d7b3ce8cfe4f499ffe697b07199922f7979cbb50df3360ce7eb60719d91fce17"
+            "bytes": 248046,
+            "sha256": "095b1c542e9b44fd9f85ed392b092a1f54b97706cce9255b5e8870a0fdcb9964"
           },
           {
             "path": "test-results/render-review-desktop.png",
-            "bytes": 33426,
-            "sha256": "16bda90c2470cd6d4b80ca21a4eae6af5f002619824e716f75633d6b062941b7"
+            "bytes": 33431,
+            "sha256": "fbd203c4bf94f1048d1629ca4d4f153fcd9d5eb5c6a7137292f93a3b50bc3629"
           },
           {
             "path": "test-results/render-review-mobile.png",
-            "bytes": 32693,
-            "sha256": "fcd0ef8c1c6e15a0edff85016daa4d760606089877d0c7835b4deba5e7b61e3c"
-          },
-          {
-            "path": "test-results/timed-caption-editor-mobile.png",
-            "bytes": 31961,
-            "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+            "bytes": 32691,
+            "sha256": "476845ea0dd17685ef34ab6e172eb391cb9c7618c6d8701795ca48f3a6932b89"
           },
           {
             "path": "test-results/timed-caption-editor-desktop.png",
@@ -257,170 +227,55 @@
             "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
           },
           {
-            "path": "test-results/video-studio-desktop.png",
-            "bytes": 296847,
-            "sha256": "33e689dc8305d94c429c39b3f33bb1f22f42efe3aaf6bbb1fa1194dc68d27881"
-          },
-          {
-            "path": "test-results/video-studio-mobile.png",
-            "bytes": 244823,
-            "sha256": "0954092b0033d18101f3ac7389055880d826fa6906f4c522e7dc47689e9e8118"
+            "path": "test-results/timed-caption-editor-mobile.png",
+            "bytes": 31961,
+            "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
           },
           {
             "path": "test-results/video-studio-dark.png",
-            "bytes": 292335,
-            "sha256": "c387de3d08d16ce277fe0a29fd4b5503743b56fdc3103abbc8679175f04647ab"
+            "bytes": 312411,
+            "sha256": "e76528425c3018e1e052a508b2faa1a2afffb81833ff2e0239df468ce4487772"
+          },
+          {
+            "path": "test-results/video-studio-desktop.png",
+            "bytes": 316460,
+            "sha256": "bad5f20525da050540e20b1b91025fcb88149a9421e2dbbfe6707bb882ce2a2b"
+          },
+          {
+            "path": "test-results/video-studio-mobile.png",
+            "bytes": 262957,
+            "sha256": "4ea44b514525c69da1e8aa9b58c3edbdaab73f95537edc7baf938a4ca4f97a0f"
           },
           {
             "path": "test-results/workspace-dark.png",
-            "bytes": 159993,
-            "sha256": "349aaf985640e756067b40514c33431e97499ccd98f48f1bf6486d0d905dc33d"
-          },
-          {
-            "path": "test-results/workspace-desktop.png",
-            "bytes": 162141,
-            "sha256": "d2c2904e07bc490a788bc49e27d8940d715c327548e633d9761b62535f383d11"
+            "bytes": 160329,
+            "sha256": "fa2f93c98753a0d44e31c956733d876bd1f557e41d606c6e196f02a4c185d589"
           },
           {
             "path": "test-results/workspace-health-dark.png",
-            "bytes": 249372,
-            "sha256": "46eefe0e9d1375a157b12a4ba1cea1d390ac31f44b54aec9cb96d303818cae5e"
+            "bytes": 249395,
+            "sha256": "d4d2ecdf54b097809adffaa77b253e240f46b471b5377e7bd1b0d0f6dd8051c7"
+          },
+          {
+            "path": "test-results/workspace-desktop.png",
+            "bytes": 162483,
+            "sha256": "ba0331ce5ae792d52b07e488fed4503d78842cf640160febfe282d6e6a587a49"
           },
           {
             "path": "test-results/workspace-health-desktop.png",
-            "bytes": 254678,
-            "sha256": "3be6abc9dd7f605ea1c2a349f19e51eda9cd575a731c359131e56888783b73b1"
+            "bytes": 254712,
+            "sha256": "b246a6aa838b87fb8d0fdae22b96b999156c12f71ccdedfb8bc6c991984de078"
           },
           {
             "path": "test-results/workspace-health-mobile.png",
-            "bytes": 213021,
-            "sha256": "6d5b924bf0db20868e3a5ad79e013c30b36d18f3a7bc9ea7bf3a6fff9329262b"
+            "bytes": 212917,
+            "sha256": "8ec891919edf5c0376a66193d736ec8ed6dab63dc60131b7df3289c2d8073bc9"
           }
-        ]
+        ],
+        "unitReceiptSha256": "140087ed89d9b6a662a7b26bc15ad6347f52c83dc7179a8f93c7e5766287d3e3"
       },
-      "steps": [
-        {
-          "name": "Set up job",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 1
-        },
-        {
-          "name": "Initialize containers",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 2
-        },
-        {
-          "name": "Check out source",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 3
-        },
-        {
-          "name": "Set up Node.js",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 4
-        },
-        {
-          "name": "Install dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 5
-        },
-        {
-          "name": "Set up Java",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 6
-        },
-        {
-          "name": "Install test object storage",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 7
-        },
-        {
-          "name": "Install media dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 8
-        },
-        {
-          "name": "Build",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 9
-        },
-        {
-          "name": "Run unit tests",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 10
-        },
-        {
-          "name": "Audit production dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 11
-        },
-        {
-          "name": "Audit all dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 12
-        },
-        {
-          "name": "Verify populated upgrade",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 13
-        },
-        {
-          "name": "Verify native application flows",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 14
-        },
-        {
-          "name": "Upload browser evidence",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 15
-        },
-        {
-          "name": "Post Set up Java",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 27
-        },
-        {
-          "name": "Post Set up Node.js",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 28
-        },
-        {
-          "name": "Post Check out source",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 29
-        },
-        {
-          "name": "Stop containers",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 30
-        },
-        {
-          "name": "Complete job",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 31
-        }
-      ],
-      "scope": "Own U fixed-source native PostgreSQL 17/Redis 7 application CI, disposable services/S3Proxy/FFmpeg/synthetic providers. Populated upgrade/archive restore separately uses PGlite; native cross-store restore/full Compose/MinIO/live/device/master acceptance remain open."
+      "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
+      "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
     },
     "latestIncrement": "EDITOR-01V is locally verified: saved per-render zh-Hans/zh-Hant/ja/ko locale, four independently default-disabled script opt-ins, controlled language-sensitive Fontkit outlines and conservative grapheme-safe wrapping. Complete 168/168 units passed on each of the modern and actual Ubuntu CI font sets (336 unique case receipts, 38 summaries, zero failed/cancelled/skipped/todo), 7 HTTP, 7 production-browser and 5 recovery/config cases. API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. HarfBuzz 8.3.0 matches 14775 covered CJK strings (42 curated; all 11172 modern Hangul syllables), 160 regional Han font/locale cases and 28 mixed-script reference runs; four generated Han strings without font coverage are explicitly rejected. Clean full/production CJS/ESM exports independently match 183488 layouts across both font sets and retain the fifteen-script regressions. Each font set passed 72 new CJK exports / 216 decoded timed frames; sixteen representative frames were visually reviewed. ICU 74.2 strict independently accepts every emitted boundary in 176 cases. Natural recovery lock=119962ms, provider submission count 1. Public V publication and its own native CI remain pending; EDITOR-01 stays Partial.",
     "billingInvoiceViewsVerified": true,
@@ -6293,6 +6148,317 @@
         "sceneCacheVersion": "mos-render-9-cjk-locale-uax14",
         "legacyFifteenScriptOutlineRevision": "fontkit-outlines-v3-context-mark-base-coverage"
       }
+    },
+    "priorGithubActionsBeforeV": {
+      "runId": 37608908118,
+      "jobId": 112751091986,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37608908118",
+      "sourceCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+      "sourceTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "startedAt": "2026-10-07T10:40:05Z",
+      "completedAt": "2026-10-07T10:50:25Z",
+      "unit": {
+        "tests": 144,
+        "passed": 144,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 223049.955562
+      },
+      "unitCaseReceipts": 144,
+      "unitSummaries": 18,
+      "unitReceipts": "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+      "unitCaseNamesAndFilesMatchReviewedSource": true,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryScenarios": 5,
+      "migrations": 12,
+      "harfbuzzVersion": "8.3.0",
+      "referenceDiagnostics": [
+        "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+      ],
+      "newScriptCoveredStrings": 7406,
+      "newScriptCuratedStrings": 115,
+      "newScriptExports": 90,
+      "newScriptDecodedTimedFrames": 270,
+      "priorIndicReferenceAndExportRegressionsPassed": true,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0,
+      "upgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4865915,
+        "sha256": "a942ac68c590fab349553bcdab0fb9600f7f748eeaa8cf5eab1b77a51720bdd7",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "naturalRedisLockMs": 119952,
+      "recoveryCaseDurationMs": 128265.858989,
+      "providerSubmissionsAsserted": 1,
+      "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+      "artifact": {
+        "id": 11477326448,
+        "name": "browser-evidence",
+        "digest": "sha256:7a24a7a3bb6dfd6e5bbf697b6dde53f1b21fd1b53c732599d3ef0bf6b7495db1",
+        "bytes": 3694321,
+        "downloadedZipSha256Matched": true,
+        "pngs": [
+          {
+            "path": "test-results/asset-library-desktop.png",
+            "bytes": 141329,
+            "sha256": "eb1fad479de38d398c49725d660fedaf60e1ad071bf584a41920976dcf27068e"
+          },
+          {
+            "path": "test-results/asset-library-mobile.png",
+            "bytes": 109243,
+            "sha256": "1f5577c3e19ad44fb7528797a2fa7f533a1692d50b5c8338ba1d2b846ba1990c"
+          },
+          {
+            "path": "test-results/auth-mobile.png",
+            "bytes": 41513,
+            "sha256": "0f1e8105a673eefdfb122e8b7eddb2ae37916b20c710b60cbfe536f5b1661831"
+          },
+          {
+            "path": "test-results/content-mobile.png",
+            "bytes": 49700,
+            "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
+          },
+          {
+            "path": "test-results/credits-desktop.png",
+            "bytes": 225956,
+            "sha256": "5f21905a2194d4a98ed1a4a666d6f85087015a7dd0da351e4786c5f9bed56690"
+          },
+          {
+            "path": "test-results/content-review-desktop.png",
+            "bytes": 163217,
+            "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
+          },
+          {
+            "path": "test-results/credits-mobile.png",
+            "bytes": 197119,
+            "sha256": "1f3ff1b8d246936ae73699d27faeabf59932f8e216487e84eff8fceeae18d157"
+          },
+          {
+            "path": "test-results/generated-media-dark.png",
+            "bytes": 287062,
+            "sha256": "485387975850c61694d7acab340589332d0208c8ffafd2f8ee11559f4ebd9b6f"
+          },
+          {
+            "path": "test-results/generated-media-desktop.png",
+            "bytes": 284322,
+            "sha256": "fd618b816e638d77ed8abcc5ac6bf6aa0323c1f9b124e5b5899677a561230327"
+          },
+          {
+            "path": "test-results/generated-media-mobile.png",
+            "bytes": 248448,
+            "sha256": "d7b3ce8cfe4f499ffe697b07199922f7979cbb50df3360ce7eb60719d91fce17"
+          },
+          {
+            "path": "test-results/render-review-desktop.png",
+            "bytes": 33426,
+            "sha256": "16bda90c2470cd6d4b80ca21a4eae6af5f002619824e716f75633d6b062941b7"
+          },
+          {
+            "path": "test-results/render-review-mobile.png",
+            "bytes": 32693,
+            "sha256": "fcd0ef8c1c6e15a0edff85016daa4d760606089877d0c7835b4deba5e7b61e3c"
+          },
+          {
+            "path": "test-results/timed-caption-editor-mobile.png",
+            "bytes": 31961,
+            "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+          },
+          {
+            "path": "test-results/timed-caption-editor-desktop.png",
+            "bytes": 31997,
+            "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
+          },
+          {
+            "path": "test-results/video-studio-desktop.png",
+            "bytes": 296847,
+            "sha256": "33e689dc8305d94c429c39b3f33bb1f22f42efe3aaf6bbb1fa1194dc68d27881"
+          },
+          {
+            "path": "test-results/video-studio-mobile.png",
+            "bytes": 244823,
+            "sha256": "0954092b0033d18101f3ac7389055880d826fa6906f4c522e7dc47689e9e8118"
+          },
+          {
+            "path": "test-results/video-studio-dark.png",
+            "bytes": 292335,
+            "sha256": "c387de3d08d16ce277fe0a29fd4b5503743b56fdc3103abbc8679175f04647ab"
+          },
+          {
+            "path": "test-results/workspace-dark.png",
+            "bytes": 159993,
+            "sha256": "349aaf985640e756067b40514c33431e97499ccd98f48f1bf6486d0d905dc33d"
+          },
+          {
+            "path": "test-results/workspace-desktop.png",
+            "bytes": 162141,
+            "sha256": "d2c2904e07bc490a788bc49e27d8940d715c327548e633d9761b62535f383d11"
+          },
+          {
+            "path": "test-results/workspace-health-dark.png",
+            "bytes": 249372,
+            "sha256": "46eefe0e9d1375a157b12a4ba1cea1d390ac31f44b54aec9cb96d303818cae5e"
+          },
+          {
+            "path": "test-results/workspace-health-desktop.png",
+            "bytes": 254678,
+            "sha256": "3be6abc9dd7f605ea1c2a349f19e51eda9cd575a731c359131e56888783b73b1"
+          },
+          {
+            "path": "test-results/workspace-health-mobile.png",
+            "bytes": 213021,
+            "sha256": "6d5b924bf0db20868e3a5ad79e013c30b36d18f3a7bc9ea7bf3a6fff9329262b"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install test object storage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install media dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Audit all dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Verify populated upgrade",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Verify native application flows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Upload browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        }
+      ],
+      "scope": "Own U fixed-source native PostgreSQL 17/Redis 7 application CI, disposable services/S3Proxy/FFmpeg/synthetic providers. Populated upgrade/archive restore separately uses PGlite; native cross-store restore/full Compose/MinIO/live/device/master acceptance remain open."
     }
   },
   "accessState": {
@@ -6304,8 +6470,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-    "status": "editor01v_locally_verified_awaiting_publication_approval",
+    "commit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+    "status": "editor01v_published_and_own_native_ci_verified",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6318,11 +6484,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+    "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Exact authorized 28-file U fix; own native CI verified.",
+    "commitMeaning": "Exact approved 48-file V payload; own native CI verified. Later local closure is not included in public source.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "5480b3fd3a7fa96687abe37804f0fd4d811fd5e7",
+    "lastLocalCheckpointCommit": "3651e31beebc8b8949e473f50676f95b43c9f658",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -6332,34 +6498,286 @@
       "resolved": true
     },
     "publication": {
-      "slice": "EDITOR-01U CI fix",
-      "applicationCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-      "applicationTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
-      "baseCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
-      "localSourceCommit": "5480b3fd3a7fa96687abe37804f0fd4d811fd5e7",
-      "uploadedChangedBlobCount": 28,
-      "remoteBlobCount": 242,
-      "localBlobCount": 242,
-      "mismatchCount": 0,
-      "actionsRunId": 37608908118,
-      "actionsConclusion": "success",
-      "nativeTestsExecuted": true,
-      "ciAttempt": 1
+      "commit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+      "tree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+      "parent": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+      "files": 48,
+      "verifiedBlobs": 254,
+      "publicMainVerified": true,
+      "slice": "EDITOR-01V",
+      "approved": true,
+      "uploadedChangedFiles": 48,
+      "paths": [
+        ".env.example",
+        ".github/workflows/ci.yml",
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "README.md",
+        "START_HERE.md",
+        "apps/web/app/media-workspace.tsx",
+        "docs/CHANGELOG.md",
+        "docs/CJK_RENDERING.md",
+        "docs/FONTKIT_SHAPING_PATCH.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/cjk-batch-evidence.json",
+        "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+        "docs/qa/editor01v-unit-receipts.json",
+        "docs/qa/handoff-verification.json",
+        "docs/qa/southeast-batch-evidence.json",
+        "docs/qa/verification-summary.json",
+        "package-lock.json",
+        "package.json",
+        "packages/core/linebreak.d.ts",
+        "packages/core/media.ts",
+        "packages/core/render-cjk-linebreak.ts",
+        "packages/core/render-cjk.ts",
+        "packages/core/render-font.ts",
+        "packages/core/render-scripts.ts",
+        "packages/core/render-shaping.ts",
+        "packages/core/render-text-layout.ts",
+        "packages/core/renderer.ts",
+        "scripts/install_test_cjk_fonts.py",
+        "scripts/verify-local.mjs",
+        "tests/fixtures/cjk-batch.ts",
+        "tests/fixtures/cjk-fonts.json",
+        "tests/fixtures/linebreak-reference.py",
+        "tests/fixtures/shaping-reference.py",
+        "tests/integration/media.test.ts",
+        "tests/render-cjk-batch.test.ts",
+        "tests/render-indic-batch.test.ts",
+        "tests/render-southeast-batch.test.ts",
+        "tests/ui/media.spec.ts",
+        "tests/ui/render-review.spec.ts"
+      ],
+      "immutableLocalReviewedSource": "3651e31beebc8b8949e473f50676f95b43c9f658",
+      "ownNativeCi": {
+        "runId": 37646367807,
+        "jobId": 112878071601,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37646367807",
+        "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+        "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+        "status": "completed",
+        "conclusion": "success",
+        "attempt": 1,
+        "startedAt": "2026-10-07T15:44:15Z",
+        "completedAt": "2026-10-07T15:56:20Z",
+        "unit": {
+          "tests": 168,
+          "passed": 168,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 306723.318004
+        },
+        "terminalReceiptsVerified": true,
+        "unitCaseReceipts": 168,
+        "unitSummaries": 19,
+        "unitReceipts": "docs/qa/editor01v-native-unit-receipts.json",
+        "unitCaseNamesAndFilesMatchReviewedSource": true,
+        "httpScenarios": 7,
+        "browserScenarios": 7,
+        "recoveryScenarios": 5,
+        "migrations": 12,
+        "apiBuild": true,
+        "webProductionBuild": true,
+        "productionAuditAdvisories": 0,
+        "fullAuditAdvisories": 0,
+        "upgradeRestore": {
+          "passed": true,
+          "engine": "PGlite WASM PostgreSQL",
+          "migrations": 12,
+          "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+          "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+          "archiveBytes": 4866048,
+          "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
+          "nativePostgresRestoreVerified": false,
+          "creditLedgerRestoreAndImmutabilityVerified": true,
+          "generatedMediaRequestAndProviderReceiptRestored": true
+        },
+        "naturalRedisLockMs": 119962,
+        "recoveryCaseDurationMs": 128326.279325,
+        "providerSubmissionsAsserted": 1,
+        "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+        "referenceDiagnostics": [
+          "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+          "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+          "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+        ],
+        "coveredCjkStrings": 14775,
+        "curatedCjkStrings": 42,
+        "modernHangulSyllables": 11172,
+        "newCjkExports": 72,
+        "newCjkTimedFrames": 216,
+        "priorFifteenScriptRegressionsPassed": true,
+        "artifact": {
+          "id": 11496000125,
+          "name": "browser-evidence",
+          "digest": "sha256:244992ff35aad8d63f7b6c986bc113f480d014d6182e79e23cee0d8c573fb7e1",
+          "bytes": 3750338,
+          "downloadedZipSha256Matched": true,
+          "crcVerified": true,
+          "pngs": [
+            {
+              "path": "test-results/asset-library-desktop.png",
+              "bytes": 141329,
+              "sha256": "eb1fad479de38d398c49725d660fedaf60e1ad071bf584a41920976dcf27068e"
+            },
+            {
+              "path": "test-results/asset-library-mobile.png",
+              "bytes": 109243,
+              "sha256": "1f5577c3e19ad44fb7528797a2fa7f533a1692d50b5c8338ba1d2b846ba1990c"
+            },
+            {
+              "path": "test-results/auth-mobile.png",
+              "bytes": 41513,
+              "sha256": "0f1e8105a673eefdfb122e8b7eddb2ae37916b20c710b60cbfe536f5b1661831"
+            },
+            {
+              "path": "test-results/content-mobile.png",
+              "bytes": 49700,
+              "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
+            },
+            {
+              "path": "test-results/content-review-desktop.png",
+              "bytes": 163217,
+              "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
+            },
+            {
+              "path": "test-results/credits-desktop.png",
+              "bytes": 225863,
+              "sha256": "d78c1eebbb461fada91b2a58b567f3007dfe4cb7d22d7b476ecc0ef8f8a6990f"
+            },
+            {
+              "path": "test-results/credits-mobile.png",
+              "bytes": 197486,
+              "sha256": "ea409665a43c534c05cf6151f4d3ccd44bcdb76f07565cadf30182f4735b661a"
+            },
+            {
+              "path": "test-results/generated-media-dark.png",
+              "bytes": 286608,
+              "sha256": "c6c075687912f9e48226860c8a9fead4f837dacef40176e26085d58f453b26b7"
+            },
+            {
+              "path": "test-results/generated-media-desktop.png",
+              "bytes": 283800,
+              "sha256": "2d009fe260758e62e230f12f38d6dd6478f3bad4af14f1e22990a2d4dfe8f392"
+            },
+            {
+              "path": "test-results/generated-media-mobile.png",
+              "bytes": 248046,
+              "sha256": "095b1c542e9b44fd9f85ed392b092a1f54b97706cce9255b5e8870a0fdcb9964"
+            },
+            {
+              "path": "test-results/render-review-desktop.png",
+              "bytes": 33431,
+              "sha256": "fbd203c4bf94f1048d1629ca4d4f153fcd9d5eb5c6a7137292f93a3b50bc3629"
+            },
+            {
+              "path": "test-results/render-review-mobile.png",
+              "bytes": 32691,
+              "sha256": "476845ea0dd17685ef34ab6e172eb391cb9c7618c6d8701795ca48f3a6932b89"
+            },
+            {
+              "path": "test-results/timed-caption-editor-desktop.png",
+              "bytes": 31997,
+              "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
+            },
+            {
+              "path": "test-results/timed-caption-editor-mobile.png",
+              "bytes": 31961,
+              "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+            },
+            {
+              "path": "test-results/video-studio-dark.png",
+              "bytes": 312411,
+              "sha256": "e76528425c3018e1e052a508b2faa1a2afffb81833ff2e0239df468ce4487772"
+            },
+            {
+              "path": "test-results/video-studio-desktop.png",
+              "bytes": 316460,
+              "sha256": "bad5f20525da050540e20b1b91025fcb88149a9421e2dbbfe6707bb882ce2a2b"
+            },
+            {
+              "path": "test-results/video-studio-mobile.png",
+              "bytes": 262957,
+              "sha256": "4ea44b514525c69da1e8aa9b58c3edbdaab73f95537edc7baf938a4ca4f97a0f"
+            },
+            {
+              "path": "test-results/workspace-dark.png",
+              "bytes": 160329,
+              "sha256": "fa2f93c98753a0d44e31c956733d876bd1f557e41d606c6e196f02a4c185d589"
+            },
+            {
+              "path": "test-results/workspace-health-dark.png",
+              "bytes": 249395,
+              "sha256": "d4d2ecdf54b097809adffaa77b253e240f46b471b5377e7bd1b0d0f6dd8051c7"
+            },
+            {
+              "path": "test-results/workspace-desktop.png",
+              "bytes": 162483,
+              "sha256": "ba0331ce5ae792d52b07e488fed4503d78842cf640160febfe282d6e6a587a49"
+            },
+            {
+              "path": "test-results/workspace-health-desktop.png",
+              "bytes": 254712,
+              "sha256": "b246a6aa838b87fb8d0fdae22b96b999156c12f71ccdedfb8bc6c991984de078"
+            },
+            {
+              "path": "test-results/workspace-health-mobile.png",
+              "bytes": 212917,
+              "sha256": "8ec891919edf5c0376a66193d736ec8ed6dab63dc60131b7df3289c2d8073bc9"
+            }
+          ],
+          "unitReceiptSha256": "140087ed89d9b6a662a7b26bc15ad6347f52c83dc7179a8f93c7e5766287d3e3"
+        },
+        "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
+        "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
+      },
+      "closurePublished": false,
+      "closureScope": "Publication/CI closure created after approved public source; retained locally in portable handoff."
     },
     "currentUploadGate": {
-      "slice": "EDITOR-01U CI fix",
+      "slice": "EDITOR-01V",
       "destination": "public shlokagrawal13/organic-marketing-os main",
       "status": "approved_published_ci_verified",
       "resolved": true,
       "remoteWriteAttempted": true,
-      "changedFiles": 28,
+      "changedFiles": 48,
       "paths": [
+        ".env.example",
+        ".github/workflows/ci.yml",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
         "README.md",
         "START_HERE.md",
+        "apps/web/app/media-workspace.tsx",
         "docs/CHANGELOG.md",
+        "docs/CJK_RENDERING.md",
         "docs/FONTKIT_SHAPING_PATCH.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -6369,35 +6787,61 @@
         "docs/TEST_STRATEGY.md",
         "docs/VERIFICATION_REPORT.md",
         "docs/VIDEO_PIPELINE.md",
-        "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
-        "docs/qa/editor01u-ci-fix-unit-receipts.json",
+        "docs/qa/cjk-batch-evidence.json",
+        "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+        "docs/qa/editor01v-unit-receipts.json",
+        "docs/qa/handoff-verification.json",
         "docs/qa/southeast-batch-evidence.json",
         "docs/qa/verification-summary.json",
+        "package-lock.json",
+        "package.json",
+        "packages/core/linebreak.d.ts",
+        "packages/core/media.ts",
+        "packages/core/render-cjk-linebreak.ts",
+        "packages/core/render-cjk.ts",
+        "packages/core/render-font.ts",
         "packages/core/render-scripts.ts",
+        "packages/core/render-shaping.ts",
+        "packages/core/render-text-layout.ts",
         "packages/core/renderer.ts",
-        "scripts/fontkit-southeast.mjs",
-        "scripts/patch-fontkit.mjs",
-        "tests/fontkit-patch.test.ts",
-        "tests/render-bengali.test.ts",
-        "tests/render-gujarati.test.ts",
+        "scripts/install_test_cjk_fonts.py",
+        "scripts/verify-local.mjs",
+        "tests/fixtures/cjk-batch.ts",
+        "tests/fixtures/cjk-fonts.json",
+        "tests/fixtures/linebreak-reference.py",
+        "tests/fixtures/shaping-reference.py",
+        "tests/integration/media.test.ts",
+        "tests/render-cjk-batch.test.ts",
         "tests/render-indic-batch.test.ts",
-        "tests/render-southeast-batch.test.ts"
+        "tests/render-southeast-batch.test.ts",
+        "tests/ui/media.spec.ts",
+        "tests/ui/render-review.spec.ts"
       ],
-      "remoteCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-      "remoteTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
-      "userApproval": "I explicitly approve publishing EDITOR-01U’s 28 verified CI-fix/source/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "remoteCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+      "remoteTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+      "userApproval": "Explicit V 48-file approval plus explicit U native CI closure/run/job/artifact/test-receipt disclosure approval for both reviewed evidence files.",
+      "bypassed": false,
+      "automaticReviewDisclosureBlockResolved": true,
+      "explicitlyApprovedUClosureMetadataFiles": [
+        "docs/qa/southeast-batch-evidence.json",
+        "docs/qa/verification-summary.json"
+      ]
     },
     "publicationPreparation": {
-      "slice": "EDITOR-01U CI fix",
+      "slice": "EDITOR-01V",
       "status": "published_ci_verified",
-      "changedFiles": 28,
+      "changedFiles": 48,
       "paths": [
+        ".env.example",
+        ".github/workflows/ci.yml",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
         "PROJECT_STATUS.md",
         "README.md",
         "START_HERE.md",
+        "apps/web/app/media-workspace.tsx",
         "docs/CHANGELOG.md",
+        "docs/CJK_RENDERING.md",
         "docs/FONTKIT_SHAPING_PATCH.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -6407,22 +6851,38 @@
         "docs/TEST_STRATEGY.md",
         "docs/VERIFICATION_REPORT.md",
         "docs/VIDEO_PIPELINE.md",
-        "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
-        "docs/qa/editor01u-ci-fix-unit-receipts.json",
+        "docs/qa/cjk-batch-evidence.json",
+        "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+        "docs/qa/editor01v-unit-receipts.json",
+        "docs/qa/handoff-verification.json",
         "docs/qa/southeast-batch-evidence.json",
         "docs/qa/verification-summary.json",
+        "package-lock.json",
+        "package.json",
+        "packages/core/linebreak.d.ts",
+        "packages/core/media.ts",
+        "packages/core/render-cjk-linebreak.ts",
+        "packages/core/render-cjk.ts",
+        "packages/core/render-font.ts",
         "packages/core/render-scripts.ts",
+        "packages/core/render-shaping.ts",
+        "packages/core/render-text-layout.ts",
         "packages/core/renderer.ts",
-        "scripts/fontkit-southeast.mjs",
-        "scripts/patch-fontkit.mjs",
-        "tests/fontkit-patch.test.ts",
-        "tests/render-bengali.test.ts",
-        "tests/render-gujarati.test.ts",
+        "scripts/install_test_cjk_fonts.py",
+        "scripts/verify-local.mjs",
+        "tests/fixtures/cjk-batch.ts",
+        "tests/fixtures/cjk-fonts.json",
+        "tests/fixtures/linebreak-reference.py",
+        "tests/fixtures/shaping-reference.py",
+        "tests/integration/media.test.ts",
+        "tests/render-cjk-batch.test.ts",
         "tests/render-indic-batch.test.ts",
-        "tests/render-southeast-batch.test.ts"
+        "tests/render-southeast-batch.test.ts",
+        "tests/ui/media.spec.ts",
+        "tests/ui/render-review.spec.ts"
       ],
-      "baseCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
-      "baseTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5"
+      "baseCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+      "baseTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e"
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -6538,7 +6998,7 @@
       ],
       "reason": "Authorized immutable 28-file payload published; dated CI/publication closure is retained locally."
     },
-    "lastLocalCheckpointCommitMeaning": "Immutable reviewed U CI-fix source; dated local closure has a later commit obtained with git rev-parse HEAD.",
+    "lastLocalCheckpointCommitMeaning": "Immutable locally reviewed source anchor for the exact 48-file V public payload; later 19-file continuity closure retained locally and not published.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -7153,6 +7613,47 @@
       "remoteTree": "ef47a192649746b0257dfc44c8d52a8d2c48b7c2",
       "remoteBlobCount": 185,
       "mismatchCount": 0
+    },
+    "priorPublicationBeforeV": {
+      "slice": "EDITOR-01U CI fix",
+      "applicationCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+      "applicationTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+      "baseCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+      "localSourceCommit": "5480b3fd3a7fa96687abe37804f0fd4d811fd5e7",
+      "uploadedChangedBlobCount": 28,
+      "remoteBlobCount": 242,
+      "localBlobCount": 242,
+      "mismatchCount": 0,
+      "actionsRunId": 37608908118,
+      "actionsConclusion": "success",
+      "nativeTestsExecuted": true,
+      "ciAttempt": 1
+    },
+    "localClosure": {
+      "changedFiles": 19,
+      "paths": [
+        "START_HERE.md",
+        "PROJECT_STATUS.md",
+        "README.md",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/CJK_RENDERING.md",
+        "PROJECT_CHECKPOINT.json",
+        "docs/qa/cjk-batch-evidence.json",
+        "docs/qa/verification-summary.json",
+        "docs/qa/handoff-verification.json",
+        "docs/qa/editor01v-native-unit-receipts.json",
+        "CHECKPOINT_MANIFEST.json"
+      ],
+      "published": false,
+      "requiresSeparatePublicScopeAuthorization": true
     }
   },
   "credentialsIncluded": false,
@@ -7301,28 +7802,42 @@
       "title": "Authorized live generated-media quality and billing acceptance"
     }
   ],
-  "lastChanges": [
-    "EDITOR-01V is locally verified: saved per-render zh-Hans/zh-Hant/ja/ko locale, four independently default-disabled script opt-ins, controlled language-sensitive Fontkit outlines and conservative grapheme-safe wrapping. Complete 168/168 units passed on each of the modern and actual Ubuntu CI font sets (336 unique case receipts, 38 summaries, zero failed/cancelled/skipped/todo), 7 HTTP, 7 production-browser and 5 recovery/config cases. API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. HarfBuzz 8.3.0 matches 14775 covered CJK strings (42 curated; all 11172 modern Hangul syllables), 160 regional Han font/locale cases and 28 mixed-script reference runs; four generated Han strings without font coverage are explicitly rejected. Clean full/production CJS/ESM exports independently match 183488 layouts across both font sets and retain the fifteen-script regressions. Each font set passed 72 new CJK exports / 216 decoded timed frames; sixteen representative frames were visually reviewed. ICU 74.2 strict independently accepts every emitted boundary in 176 cases. Natural recovery lock=119962ms, provider submission count 1. Public V publication and its own native CI remain pending; EDITOR-01 stays Partial.",
-    "CHECKPOINT_MANIFEST.json",
-    "PROJECT_CHECKPOINT.json",
-    "PROJECT_STATUS.md",
-    "README.md",
-    "START_HERE.md",
-    "docs/CHANGELOG.md",
-    "docs/FONTKIT_SHAPING_PATCH.md",
-    "docs/HANDOFF.md",
-    "docs/PROJECT_STATUS.md",
-    "docs/REQUIREMENTS_MATRIX.md",
-    "docs/SESSION_LOG.md",
-    "docs/TASK_BOARD.md",
-    "docs/TEST_STRATEGY.md",
-    "docs/VERIFICATION_REPORT.md",
-    "docs/VIDEO_PIPELINE.md",
-    "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
-    "docs/qa/handoff-verification.json",
-    "docs/qa/southeast-batch-evidence.json",
-    "docs/qa/verification-summary.json"
-  ],
+  "lastChanges": {
+    "slice": "EDITOR-01W recovery WIP",
+    "paths": [
+      "Dockerfile",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "START_HERE.md",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/VIDEO_PIPELINE.md",
+      "packages/core/media.ts",
+      "packages/core/render-cjk-linebreak.ts",
+      "packages/core/render-font.ts",
+      "packages/core/render-scripts.ts",
+      "packages/core/render-text-layout.ts",
+      "packages/core/renderer.ts",
+      "scripts/patch-fontkit.mjs",
+      "tests/fontkit-patch.test.ts",
+      "tests/render-bengali.test.ts",
+      "tests/render-devanagari.test.ts",
+      "tests/render-gujarati.test.ts",
+      "tests/render-indic-batch.test.ts",
+      "tests/render-southeast-batch.test.ts",
+      "packages/core/render-controls.ts",
+      "scripts/fontkit-controls.mjs",
+      "tests/render-controls.test.ts",
+      "tests/fixtures/render-controls.ts",
+      "docs/qa/render-controls-evidence.json"
+    ],
+    "verified": false
+  },
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
     "Read start/checkpoint/task files before asking about history.",
@@ -7347,8 +7862,8 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01V is locally verified: saved per-render zh-Hans/zh-Hant/ja/ko locale, four independently default-disabled script opt-ins, controlled language-sensitive Fontkit outlines and conservative grapheme-safe wrapping. Complete 168/168 units passed on each of the modern and actual Ubuntu CI font sets (336 unique case receipts, 38 summaries, zero failed/cancelled/skipped/todo), 7 HTTP, 7 production-browser and 5 recovery/config cases. API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. HarfBuzz 8.3.0 matches 14775 covered CJK strings (42 curated; all 11172 modern Hangul syllables), 160 regional Han font/locale cases and 28 mixed-script reference runs; four generated Han strings without font coverage are explicitly rejected. Clean full/production CJS/ESM exports independently match 183488 layouts across both font sets and retain the fifteen-script regressions. Each font set passed 72 new CJK exports / 216 decoded timed frames; sixteen representative frames were visually reviewed. ICU 74.2 strict independently accepts every emitted boundary in 176 cases. Natural recovery lock=119962ms, provider submission count 1. Public V publication and its own native CI remain pending; EDITOR-01 stays Partial.",
-  "activeTask": "EDITOR-01V verified saved CJK locale/font/readability batch",
+  "latestStatus": "W reconstruction saved. Twenty-two focused cases pass on each font set, prior Sinhala/Tibetan references pass, API/web builds, full/production clean installs, populated PGlite upgrade and both zero-vulnerability audits pass. Final complete dual-font/application verification is pending. No W public write.",
+  "activeTask": "EDITOR-01W bounded joiner/control acceptance — work in progress",
   "workspaceRecovery": {
     "sourceZipSha256": "2cdf22f352cae1356447a23bb956df85d1f9b81abb2c7ee4b6586ac281688582",
     "sourceRevision": "2026-10-07.06",
@@ -7369,11 +7884,62 @@
     }
   },
   "pendingPublication": {
-    "slice": "EDITOR-01V",
-    "status": "verified_awaiting_explicit_publication_approval",
+    "slice": "EDITOR-01W",
     "approved": false,
-    "publicWriteAttempted": false,
-    "ownNativeCiVerified": false,
+    "writeAttempted": false,
+    "baseCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+    "scope": "reviewed local source/config/docs/evidence delta pending exact path freeze"
+  },
+  "priorPendingPublication": {
+    "slice": "EDITOR-01U CI fix",
+    "status": "approved_payload_published_ci_verified",
+    "approved": true,
+    "remoteWriteAttempted": true,
+    "baseCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
+    "baseTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
+    "fileCount": 28,
+    "paths": [
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "README.md",
+      "START_HERE.md",
+      "docs/CHANGELOG.md",
+      "docs/FONTKIT_SHAPING_PATCH.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/TEST_STRATEGY.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/VIDEO_PIPELINE.md",
+      "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
+      "docs/qa/editor01u-ci-fix-unit-receipts.json",
+      "docs/qa/southeast-batch-evidence.json",
+      "docs/qa/verification-summary.json",
+      "packages/core/render-scripts.ts",
+      "packages/core/renderer.ts",
+      "scripts/fontkit-southeast.mjs",
+      "scripts/patch-fontkit.mjs",
+      "tests/fontkit-patch.test.ts",
+      "tests/render-bengali.test.ts",
+      "tests/render-gujarati.test.ts",
+      "tests/render-indic-batch.test.ts",
+      "tests/render-southeast-batch.test.ts"
+    ],
+    "publicWriteAttempted": true,
+    "ownNativeCiVerified": true,
+    "publicCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+    "publicTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+    "changedFiles": 28
+  },
+  "priorPendingPublicationBeforeW": {
+    "slice": "EDITOR-01V",
+    "status": "published_and_own_native_ci_verified",
+    "approved": true,
+    "publicWriteAttempted": true,
+    "ownNativeCiVerified": true,
     "baseCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
     "baseTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
     "fileCount": 48,
@@ -7426,50 +7992,209 @@
       "tests/render-southeast-batch.test.ts",
       "tests/ui/media.spec.ts",
       "tests/ui/render-review.spec.ts"
-    ]
-  },
-  "priorPendingPublication": {
-    "slice": "EDITOR-01U CI fix",
-    "status": "approved_payload_published_ci_verified",
-    "approved": true,
-    "remoteWriteAttempted": true,
-    "baseCommit": "ed82e963cfaa4033703c3f22ca992b60aab26ea3",
-    "baseTree": "8d0f8bcdae09e284a4650241c35036b4eeb74fc5",
-    "fileCount": 28,
-    "paths": [
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "README.md",
-      "START_HERE.md",
-      "docs/CHANGELOG.md",
-      "docs/FONTKIT_SHAPING_PATCH.md",
-      "docs/HANDOFF.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/TEST_STRATEGY.md",
-      "docs/VERIFICATION_REPORT.md",
-      "docs/VIDEO_PIPELINE.md",
-      "docs/qa/editor01u-ci-attempt1-unit-receipts.json",
-      "docs/qa/editor01u-ci-fix-unit-receipts.json",
-      "docs/qa/southeast-batch-evidence.json",
-      "docs/qa/verification-summary.json",
-      "packages/core/render-scripts.ts",
-      "packages/core/renderer.ts",
-      "scripts/fontkit-southeast.mjs",
-      "scripts/patch-fontkit.mjs",
-      "tests/fontkit-patch.test.ts",
-      "tests/render-bengali.test.ts",
-      "tests/render-gujarati.test.ts",
-      "tests/render-indic-batch.test.ts",
-      "tests/render-southeast-batch.test.ts"
     ],
-    "publicWriteAttempted": true,
-    "ownNativeCiVerified": true,
-    "publicCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-    "publicTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
-    "changedFiles": 28
+    "publicCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+    "publicTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+    "verifiedBlobs": 254,
+    "ownNativeCi": {
+      "runId": 37646367807,
+      "jobId": 112878071601,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37646367807",
+      "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+      "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "startedAt": "2026-10-07T15:44:15Z",
+      "completedAt": "2026-10-07T15:56:20Z",
+      "unit": {
+        "tests": 168,
+        "passed": 168,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 306723.318004
+      },
+      "terminalReceiptsVerified": true,
+      "unitCaseReceipts": 168,
+      "unitSummaries": 19,
+      "unitReceipts": "docs/qa/editor01v-native-unit-receipts.json",
+      "unitCaseNamesAndFilesMatchReviewedSource": true,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryScenarios": 5,
+      "migrations": 12,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0,
+      "upgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4866048,
+        "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "naturalRedisLockMs": 119962,
+      "recoveryCaseDurationMs": 128326.279325,
+      "providerSubmissionsAsserted": 1,
+      "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+      "referenceDiagnostics": [
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+        "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+        "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+      ],
+      "coveredCjkStrings": 14775,
+      "curatedCjkStrings": 42,
+      "modernHangulSyllables": 11172,
+      "newCjkExports": 72,
+      "newCjkTimedFrames": 216,
+      "priorFifteenScriptRegressionsPassed": true,
+      "artifact": {
+        "id": 11496000125,
+        "name": "browser-evidence",
+        "digest": "sha256:244992ff35aad8d63f7b6c986bc113f480d014d6182e79e23cee0d8c573fb7e1",
+        "bytes": 3750338,
+        "downloadedZipSha256Matched": true,
+        "crcVerified": true,
+        "pngs": [
+          {
+            "path": "test-results/asset-library-desktop.png",
+            "bytes": 141329,
+            "sha256": "eb1fad479de38d398c49725d660fedaf60e1ad071bf584a41920976dcf27068e"
+          },
+          {
+            "path": "test-results/asset-library-mobile.png",
+            "bytes": 109243,
+            "sha256": "1f5577c3e19ad44fb7528797a2fa7f533a1692d50b5c8338ba1d2b846ba1990c"
+          },
+          {
+            "path": "test-results/auth-mobile.png",
+            "bytes": 41513,
+            "sha256": "0f1e8105a673eefdfb122e8b7eddb2ae37916b20c710b60cbfe536f5b1661831"
+          },
+          {
+            "path": "test-results/content-mobile.png",
+            "bytes": 49700,
+            "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
+          },
+          {
+            "path": "test-results/content-review-desktop.png",
+            "bytes": 163217,
+            "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
+          },
+          {
+            "path": "test-results/credits-desktop.png",
+            "bytes": 225863,
+            "sha256": "d78c1eebbb461fada91b2a58b567f3007dfe4cb7d22d7b476ecc0ef8f8a6990f"
+          },
+          {
+            "path": "test-results/credits-mobile.png",
+            "bytes": 197486,
+            "sha256": "ea409665a43c534c05cf6151f4d3ccd44bcdb76f07565cadf30182f4735b661a"
+          },
+          {
+            "path": "test-results/generated-media-dark.png",
+            "bytes": 286608,
+            "sha256": "c6c075687912f9e48226860c8a9fead4f837dacef40176e26085d58f453b26b7"
+          },
+          {
+            "path": "test-results/generated-media-desktop.png",
+            "bytes": 283800,
+            "sha256": "2d009fe260758e62e230f12f38d6dd6478f3bad4af14f1e22990a2d4dfe8f392"
+          },
+          {
+            "path": "test-results/generated-media-mobile.png",
+            "bytes": 248046,
+            "sha256": "095b1c542e9b44fd9f85ed392b092a1f54b97706cce9255b5e8870a0fdcb9964"
+          },
+          {
+            "path": "test-results/render-review-desktop.png",
+            "bytes": 33431,
+            "sha256": "fbd203c4bf94f1048d1629ca4d4f153fcd9d5eb5c6a7137292f93a3b50bc3629"
+          },
+          {
+            "path": "test-results/render-review-mobile.png",
+            "bytes": 32691,
+            "sha256": "476845ea0dd17685ef34ab6e172eb391cb9c7618c6d8701795ca48f3a6932b89"
+          },
+          {
+            "path": "test-results/timed-caption-editor-desktop.png",
+            "bytes": 31997,
+            "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
+          },
+          {
+            "path": "test-results/timed-caption-editor-mobile.png",
+            "bytes": 31961,
+            "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+          },
+          {
+            "path": "test-results/video-studio-dark.png",
+            "bytes": 312411,
+            "sha256": "e76528425c3018e1e052a508b2faa1a2afffb81833ff2e0239df468ce4487772"
+          },
+          {
+            "path": "test-results/video-studio-desktop.png",
+            "bytes": 316460,
+            "sha256": "bad5f20525da050540e20b1b91025fcb88149a9421e2dbbfe6707bb882ce2a2b"
+          },
+          {
+            "path": "test-results/video-studio-mobile.png",
+            "bytes": 262957,
+            "sha256": "4ea44b514525c69da1e8aa9b58c3edbdaab73f95537edc7baf938a4ca4f97a0f"
+          },
+          {
+            "path": "test-results/workspace-dark.png",
+            "bytes": 160329,
+            "sha256": "fa2f93c98753a0d44e31c956733d876bd1f557e41d606c6e196f02a4c185d589"
+          },
+          {
+            "path": "test-results/workspace-health-dark.png",
+            "bytes": 249395,
+            "sha256": "d4d2ecdf54b097809adffaa77b253e240f46b471b5377e7bd1b0d0f6dd8051c7"
+          },
+          {
+            "path": "test-results/workspace-desktop.png",
+            "bytes": 162483,
+            "sha256": "ba0331ce5ae792d52b07e488fed4503d78842cf640160febfe282d6e6a587a49"
+          },
+          {
+            "path": "test-results/workspace-health-desktop.png",
+            "bytes": 254712,
+            "sha256": "b246a6aa838b87fb8d0fdae22b96b999156c12f71ccdedfb8bc6c991984de078"
+          },
+          {
+            "path": "test-results/workspace-health-mobile.png",
+            "bytes": 212917,
+            "sha256": "8ec891919edf5c0376a66193d736ec8ed6dab63dc60131b7df3289c2d8073bc9"
+          }
+        ],
+        "unitReceiptSha256": "140087ed89d9b6a662a7b26bc15ad6347f52c83dc7179a8f93c7e5766287d3e3"
+      },
+      "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
+      "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
+    },
+    "closurePublished": false
   }
 }

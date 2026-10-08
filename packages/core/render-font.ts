@@ -1,3 +1,8 @@
+import {
+  RENDER_CONTROLS,
+  renderControlSupportIssue,
+  renderFontUnits,
+} from "./render-controls";
 import { open } from "node:fs/promises";
 import { delimiter } from "node:path";
 import { createHash } from "node:crypto";
@@ -149,7 +154,8 @@ function missingFromFont(font: InspectedFont, text: string) {
   // Match the renderer's whitespace collapsing; layout controls need no glyph.
   for (const character of textKey(text)) {
     const point = character.codePointAt(0)!;
-    if (!hasGlyph(font, point)) missing.add(point);
+    if (!RENDER_CONTROLS.test(character) && !hasGlyph(font, point))
+      missing.add(point);
     if (missing.size === 8) break;
   }
   return missing;
@@ -183,7 +189,7 @@ export function createRenderFontPlan(
           graphemes.segment(text),
           (item) => outlineScript(item.segment)?.tag,
         ).find((tag) => tag && isCjkTag(tag)) || "hani";
-      for (const { segment } of graphemes.segment(text)) {
+      for (const segment of renderFontUnits(text)) {
         const script =
           outlineScript(segment)?.tag ||
           (/\p{Script=Latin}/u.test(segment)
@@ -210,7 +216,11 @@ export function createRenderFontPlan(
                   am.codePointAt(0)! - 1,
                 ),
             ),
-          ).every((character) => hasGlyph(font, character.codePointAt(0)!));
+          ).every(
+            (character) =>
+              RENDER_CONTROLS.test(character) ||
+              hasGlyph(font, character.codePointAt(0)!),
+          );
         const index =
           preferred >= 0 && covers(fonts[preferred])
             ? preferred
@@ -227,6 +237,8 @@ export function createRenderFontPlan(
     };
     for (const scene of scenes) {
       for (const { text, label } of renderedSceneText(scene, options)) {
+        const controls = renderControlSupportIssue(text, label.slice(0, 120));
+        if (controls) throw new RenderFontError(controls);
         const key = textKey(text);
         if (!key) continue;
         if (hasIndicOutlineText(text)) {
@@ -393,6 +405,12 @@ export function createRenderFontPlan(
           for (const glyph of face.glyphsForString(
             script && isCjkTag(script) ? text.normalize("NFC") : text,
           )) {
+            if (
+              glyph.codePoints.some((point) =>
+                [0x200b, 0x200c, 0x200d, 0x2060].includes(point),
+              )
+            )
+              continue;
             const box = glyph.bbox;
             if (Number.isFinite(box.minX)) {
               left = Math.min(left, advance + box.minX);

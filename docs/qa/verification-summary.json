@@ -6,23 +6,24 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 144,
+    "unit": 187,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
-    "schemaMigrations": 12
+    "schemaMigrations": 12,
+    "unitFontSets": 2
   },
   "environment": {
-    "database": "Own U CI-fix native PostgreSQL 17 application CI; local and populated upgrade/archive restore separately use PGlite.",
-    "redis": "Own U CI-fix native Redis 7 CI; local native Redis 7.2.11.",
+    "database": "Own V native PostgreSQL 17 application CI; separate local/PGlite populated upgrade/archive restore.",
+    "redis": "Own V native Redis 7 CI; local native Redis 7.2.11.",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
-    "renderer": "real FFmpeg/ffprobe 6.1.1",
+    "renderer": "Real FFmpeg/ffprobe; native environment version retained in raw job logs.",
     "email": "local SMTP capture",
     "textAI": "isolated compatible HTTP provider fixture",
     "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
     "web": "production Next.js server",
     "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider",
-    "shapingReference": "HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics)"
+    "shapingReference": "HarfBuzz 8.3.0 emitted in native script diagnostics."
   },
   "requirements": {
     "headings": 161,
@@ -35,7 +36,8 @@
   "integrity": {
     "masterSpecificationUnchanged": true,
     "masterSha256": "8379fc4310db9d9225c8a192d7d8919ce708b493f34a486a1b48a40b175bb8b6",
-    "priorElevenMigrationsUnchanged": true
+    "priorElevenMigrationsUnchanged": true,
+    "allTwelveMigrationsUnchangedByV": true
   },
   "gatesNotVerified": [
     "Native PostgreSQL concurrency and restore",
@@ -81,7 +83,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01V is locally verified: saved per-render zh-Hans/zh-Hant/ja/ko locale, four independently default-disabled script opt-ins, controlled language-sensitive Fontkit outlines and conservative grapheme-safe wrapping. Complete 168/168 units passed on each of the modern and actual Ubuntu CI font sets (336 unique case receipts, 38 summaries, zero failed/cancelled/skipped/todo), 7 HTTP, 7 production-browser and 5 recovery/config cases. API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. HarfBuzz 8.3.0 matches 14775 covered CJK strings (42 curated; all 11172 modern Hangul syllables), 160 regional Han font/locale cases and 28 mixed-script reference runs; four generated Han strings without font coverage are explicitly rejected. Clean full/production CJS/ESM exports independently match 183488 layouts across both font sets and retain the fifteen-script regressions. Each font set passed 72 new CJK exports / 216 decoded timed frames; sixteen representative frames were visually reviewed. ICU 74.2 strict independently accepts every emitted boundary in 176 cases. Natural recovery lock=119962ms, provider submission count 1. Public V publication and its own native CI remain pending; EDITOR-01 stays Partial.",
+  "latestIncrement": "EDITOR-01W local verification complete but not yet approved for public write: modern and legacy Ubuntu Noto unit suites each passed 187/187 with complete summaries, production build passed, isolated local application verification passed 7 HTTP, 7 browser and 5 recovery/configuration cases, and both npm audits report zero vulnerabilities. Public GitHub publication and native W CI are pending separate explicit approval.",
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
     "actionsRunId": 37519604078,
@@ -141,35 +143,61 @@
     "ciConclusion": "success"
   },
   "githubActions": {
-    "runId": 37608908118,
-    "jobId": 112751091986,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37608908118",
-    "sourceCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-    "sourceTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+    "runId": 37646367807,
+    "jobId": 112878071601,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37646367807",
+    "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+    "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
-    "startedAt": "2026-10-07T10:40:05Z",
-    "completedAt": "2026-10-07T10:50:25Z",
+    "startedAt": "2026-10-07T15:44:15Z",
+    "completedAt": "2026-10-07T15:56:20Z",
     "unit": {
-      "tests": 144,
-      "passed": 144,
+      "tests": 168,
+      "passed": 168,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "durationMs": 223049.955562
+      "durationMs": 306723.318004
     },
-    "unitCaseReceipts": 144,
-    "unitSummaries": 18,
-    "unitReceipts": "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+    "terminalReceiptsVerified": true,
+    "unitCaseReceipts": 168,
+    "unitSummaries": 19,
+    "unitReceipts": "docs/qa/editor01v-native-unit-receipts.json",
     "unitCaseNamesAndFilesMatchReviewedSource": true,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryScenarios": 5,
     "migrations": 12,
-    "harfbuzzVersion": "8.3.0",
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "upgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4866048,
+      "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "naturalRedisLockMs": 119962,
+    "recoveryCaseDurationMs": 128326.279325,
+    "providerSubmissionsAsserted": 1,
+    "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
     "referenceDiagnostics": [
+      "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+      "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
       "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
       "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
       "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
@@ -183,37 +211,19 @@
       "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
       "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
     ],
-    "newScriptCoveredStrings": 7406,
-    "newScriptCuratedStrings": 115,
-    "newScriptExports": 90,
-    "newScriptDecodedTimedFrames": 270,
-    "priorIndicReferenceAndExportRegressionsPassed": true,
-    "apiBuild": true,
-    "webProductionBuild": true,
-    "productionAuditAdvisories": 0,
-    "fullAuditAdvisories": 0,
-    "upgradeRestore": {
-      "passed": true,
-      "engine": "PGlite WASM PostgreSQL",
-      "migrations": 12,
-      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
-      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4865915,
-      "sha256": "a942ac68c590fab349553bcdab0fb9600f7f748eeaa8cf5eab1b77a51720bdd7",
-      "nativePostgresRestoreVerified": false,
-      "creditLedgerRestoreAndImmutabilityVerified": true,
-      "generatedMediaRequestAndProviderReceiptRestored": true
-    },
-    "naturalRedisLockMs": 119952,
-    "recoveryCaseDurationMs": 128265.858989,
-    "providerSubmissionsAsserted": 1,
-    "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+    "coveredCjkStrings": 14775,
+    "curatedCjkStrings": 42,
+    "modernHangulSyllables": 11172,
+    "newCjkExports": 72,
+    "newCjkTimedFrames": 216,
+    "priorFifteenScriptRegressionsPassed": true,
     "artifact": {
-      "id": 11477326448,
+      "id": 11496000125,
       "name": "browser-evidence",
-      "digest": "sha256:7a24a7a3bb6dfd6e5bbf697b6dde53f1b21fd1b53c732599d3ef0bf6b7495db1",
-      "bytes": 3694321,
+      "digest": "sha256:244992ff35aad8d63f7b6c986bc113f480d014d6182e79e23cee0d8c573fb7e1",
+      "bytes": 3750338,
       "downloadedZipSha256Matched": true,
+      "crcVerified": true,
       "pngs": [
         {
           "path": "test-results/asset-library-desktop.png",
@@ -236,49 +246,44 @@
           "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
         },
         {
-          "path": "test-results/credits-desktop.png",
-          "bytes": 225956,
-          "sha256": "5f21905a2194d4a98ed1a4a666d6f85087015a7dd0da351e4786c5f9bed56690"
-        },
-        {
           "path": "test-results/content-review-desktop.png",
           "bytes": 163217,
           "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
         },
         {
+          "path": "test-results/credits-desktop.png",
+          "bytes": 225863,
+          "sha256": "d78c1eebbb461fada91b2a58b567f3007dfe4cb7d22d7b476ecc0ef8f8a6990f"
+        },
+        {
           "path": "test-results/credits-mobile.png",
-          "bytes": 197119,
-          "sha256": "1f3ff1b8d246936ae73699d27faeabf59932f8e216487e84eff8fceeae18d157"
+          "bytes": 197486,
+          "sha256": "ea409665a43c534c05cf6151f4d3ccd44bcdb76f07565cadf30182f4735b661a"
         },
         {
           "path": "test-results/generated-media-dark.png",
-          "bytes": 287062,
-          "sha256": "485387975850c61694d7acab340589332d0208c8ffafd2f8ee11559f4ebd9b6f"
+          "bytes": 286608,
+          "sha256": "c6c075687912f9e48226860c8a9fead4f837dacef40176e26085d58f453b26b7"
         },
         {
           "path": "test-results/generated-media-desktop.png",
-          "bytes": 284322,
-          "sha256": "fd618b816e638d77ed8abcc5ac6bf6aa0323c1f9b124e5b5899677a561230327"
+          "bytes": 283800,
+          "sha256": "2d009fe260758e62e230f12f38d6dd6478f3bad4af14f1e22990a2d4dfe8f392"
         },
         {
           "path": "test-results/generated-media-mobile.png",
-          "bytes": 248448,
-          "sha256": "d7b3ce8cfe4f499ffe697b07199922f7979cbb50df3360ce7eb60719d91fce17"
+          "bytes": 248046,
+          "sha256": "095b1c542e9b44fd9f85ed392b092a1f54b97706cce9255b5e8870a0fdcb9964"
         },
         {
           "path": "test-results/render-review-desktop.png",
-          "bytes": 33426,
-          "sha256": "16bda90c2470cd6d4b80ca21a4eae6af5f002619824e716f75633d6b062941b7"
+          "bytes": 33431,
+          "sha256": "fbd203c4bf94f1048d1629ca4d4f153fcd9d5eb5c6a7137292f93a3b50bc3629"
         },
         {
           "path": "test-results/render-review-mobile.png",
-          "bytes": 32693,
-          "sha256": "fcd0ef8c1c6e15a0edff85016daa4d760606089877d0c7835b4deba5e7b61e3c"
-        },
-        {
-          "path": "test-results/timed-caption-editor-mobile.png",
-          "bytes": 31961,
-          "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+          "bytes": 32691,
+          "sha256": "476845ea0dd17685ef34ab6e172eb391cb9c7618c6d8701795ca48f3a6932b89"
         },
         {
           "path": "test-results/timed-caption-editor-desktop.png",
@@ -286,170 +291,55 @@
           "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
         },
         {
-          "path": "test-results/video-studio-desktop.png",
-          "bytes": 296847,
-          "sha256": "33e689dc8305d94c429c39b3f33bb1f22f42efe3aaf6bbb1fa1194dc68d27881"
-        },
-        {
-          "path": "test-results/video-studio-mobile.png",
-          "bytes": 244823,
-          "sha256": "0954092b0033d18101f3ac7389055880d826fa6906f4c522e7dc47689e9e8118"
+          "path": "test-results/timed-caption-editor-mobile.png",
+          "bytes": 31961,
+          "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
         },
         {
           "path": "test-results/video-studio-dark.png",
-          "bytes": 292335,
-          "sha256": "c387de3d08d16ce277fe0a29fd4b5503743b56fdc3103abbc8679175f04647ab"
+          "bytes": 312411,
+          "sha256": "e76528425c3018e1e052a508b2faa1a2afffb81833ff2e0239df468ce4487772"
+        },
+        {
+          "path": "test-results/video-studio-desktop.png",
+          "bytes": 316460,
+          "sha256": "bad5f20525da050540e20b1b91025fcb88149a9421e2dbbfe6707bb882ce2a2b"
+        },
+        {
+          "path": "test-results/video-studio-mobile.png",
+          "bytes": 262957,
+          "sha256": "4ea44b514525c69da1e8aa9b58c3edbdaab73f95537edc7baf938a4ca4f97a0f"
         },
         {
           "path": "test-results/workspace-dark.png",
-          "bytes": 159993,
-          "sha256": "349aaf985640e756067b40514c33431e97499ccd98f48f1bf6486d0d905dc33d"
-        },
-        {
-          "path": "test-results/workspace-desktop.png",
-          "bytes": 162141,
-          "sha256": "d2c2904e07bc490a788bc49e27d8940d715c327548e633d9761b62535f383d11"
+          "bytes": 160329,
+          "sha256": "fa2f93c98753a0d44e31c956733d876bd1f557e41d606c6e196f02a4c185d589"
         },
         {
           "path": "test-results/workspace-health-dark.png",
-          "bytes": 249372,
-          "sha256": "46eefe0e9d1375a157b12a4ba1cea1d390ac31f44b54aec9cb96d303818cae5e"
+          "bytes": 249395,
+          "sha256": "d4d2ecdf54b097809adffaa77b253e240f46b471b5377e7bd1b0d0f6dd8051c7"
+        },
+        {
+          "path": "test-results/workspace-desktop.png",
+          "bytes": 162483,
+          "sha256": "ba0331ce5ae792d52b07e488fed4503d78842cf640160febfe282d6e6a587a49"
         },
         {
           "path": "test-results/workspace-health-desktop.png",
-          "bytes": 254678,
-          "sha256": "3be6abc9dd7f605ea1c2a349f19e51eda9cd575a731c359131e56888783b73b1"
+          "bytes": 254712,
+          "sha256": "b246a6aa838b87fb8d0fdae22b96b999156c12f71ccdedfb8bc6c991984de078"
         },
         {
           "path": "test-results/workspace-health-mobile.png",
-          "bytes": 213021,
-          "sha256": "6d5b924bf0db20868e3a5ad79e013c30b36d18f3a7bc9ea7bf3a6fff9329262b"
+          "bytes": 212917,
+          "sha256": "8ec891919edf5c0376a66193d736ec8ed6dab63dc60131b7df3289c2d8073bc9"
         }
-      ]
+      ],
+      "unitReceiptSha256": "140087ed89d9b6a662a7b26bc15ad6347f52c83dc7179a8f93c7e5766287d3e3"
     },
-    "steps": [
-      {
-        "name": "Set up job",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 1
-      },
-      {
-        "name": "Initialize containers",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 2
-      },
-      {
-        "name": "Check out source",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 3
-      },
-      {
-        "name": "Set up Node.js",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 4
-      },
-      {
-        "name": "Install dependencies",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 5
-      },
-      {
-        "name": "Set up Java",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 6
-      },
-      {
-        "name": "Install test object storage",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 7
-      },
-      {
-        "name": "Install media dependencies",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 8
-      },
-      {
-        "name": "Build",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 9
-      },
-      {
-        "name": "Run unit tests",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 10
-      },
-      {
-        "name": "Audit production dependencies",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 11
-      },
-      {
-        "name": "Audit all dependencies",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 12
-      },
-      {
-        "name": "Verify populated upgrade",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 13
-      },
-      {
-        "name": "Verify native application flows",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 14
-      },
-      {
-        "name": "Upload browser evidence",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 15
-      },
-      {
-        "name": "Post Set up Java",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 27
-      },
-      {
-        "name": "Post Set up Node.js",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 28
-      },
-      {
-        "name": "Post Check out source",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 29
-      },
-      {
-        "name": "Stop containers",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 30
-      },
-      {
-        "name": "Complete job",
-        "status": "completed",
-        "conclusion": "success",
-        "number": 31
-      }
-    ],
-    "scope": "Own U fixed-source native PostgreSQL 17/Redis 7 application CI, disposable services/S3Proxy/FFmpeg/synthetic providers. Populated upgrade/archive restore separately uses PGlite; native cross-store restore/full Compose/MinIO/live/device/master acceptance remain open."
+    "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
+    "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -1034,18 +924,18 @@
     "remoteTreeMatchesLocalVerifiedTree": true
   },
   "latestFullSuite": {
-    "slice": "EDITOR-01U CI fix own native CI",
+    "slice": "EDITOR-01V own native CI",
     "verifiedDate": "2026-10-07",
     "passed": {
-      "unit": 144,
+      "unit": 168,
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryAndConfigurationScenarios": 5,
       "schemaMigrations": 12
     },
-    "scope": "Own U CI-fix application CI uses disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers. Populated upgrade/archive restore separately uses PGlite. Docker/full Compose/MinIO, native PostgreSQL/private-media cross-store restore, live providers, physical-device readability and full master acceptance remain open.",
-    "sourceCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
-    "actionsRunId": 37608908118
+    "scope": "Own V application CI uses disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers. Populated upgrade/archive restore separately uses PGlite. CJK variations/per-overlay locales, broader font/device/readability, Indic/SEA joiners/controls, ASR/audio/effects/platform/semantic acceptance, full Compose/MinIO, native PostgreSQL/private-media cross-store restore, live providers and master acceptance remain open.",
+    "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+    "actionsRunId": 37646367807
   },
   "currentIncrementChecks": {
     "apiBuild": true,
@@ -1205,7 +1095,8 @@
         "bytes": 214778,
         "sha256": "77e705887a7584fe44857944ac663e39c117f35b03ce0cb8d1caa8410545c39c"
       }
-    ]
+    ],
+    "ownNativeCiVerified": true
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -4611,10 +4502,10 @@
   },
   "editor01vEvidence": {
     "task": "EDITOR-01V",
-    "status": "locally_verified_awaiting_publication_approval",
+    "status": "published_and_own_native_ci_verified",
     "verifiedAtUtc": "2026-10-07T14:47:51.295017+00:00",
-    "publicWriteAttempted": false,
-    "ownNativeCiVerified": false,
+    "publicWriteAttempted": true,
+    "ownNativeCiVerified": true,
     "expectedPublicParent": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
     "expectedPublicTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
     "checks": {
@@ -6454,6 +6345,468 @@
       "productionDependencyAdded": "linebreak 1.1.0 plus one newly locked base64-js transitive; unicode-trie reuses the existing locked dependency",
       "sceneCacheVersion": "mos-render-9-cjk-locale-uax14",
       "legacyFifteenScriptOutlineRevision": "fontkit-outlines-v3-context-mark-base-coverage"
+    },
+    "publication": {
+      "commit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+      "tree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+      "parent": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+      "files": 48,
+      "verifiedBlobs": 254,
+      "publicMainVerified": true,
+      "slice": "EDITOR-01V",
+      "approved": true,
+      "uploadedChangedFiles": 48,
+      "paths": [
+        ".env.example",
+        ".github/workflows/ci.yml",
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "README.md",
+        "START_HERE.md",
+        "apps/web/app/media-workspace.tsx",
+        "docs/CHANGELOG.md",
+        "docs/CJK_RENDERING.md",
+        "docs/FONTKIT_SHAPING_PATCH.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/TEST_STRATEGY.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/VIDEO_PIPELINE.md",
+        "docs/qa/cjk-batch-evidence.json",
+        "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+        "docs/qa/editor01v-unit-receipts.json",
+        "docs/qa/handoff-verification.json",
+        "docs/qa/southeast-batch-evidence.json",
+        "docs/qa/verification-summary.json",
+        "package-lock.json",
+        "package.json",
+        "packages/core/linebreak.d.ts",
+        "packages/core/media.ts",
+        "packages/core/render-cjk-linebreak.ts",
+        "packages/core/render-cjk.ts",
+        "packages/core/render-font.ts",
+        "packages/core/render-scripts.ts",
+        "packages/core/render-shaping.ts",
+        "packages/core/render-text-layout.ts",
+        "packages/core/renderer.ts",
+        "scripts/install_test_cjk_fonts.py",
+        "scripts/verify-local.mjs",
+        "tests/fixtures/cjk-batch.ts",
+        "tests/fixtures/cjk-fonts.json",
+        "tests/fixtures/linebreak-reference.py",
+        "tests/fixtures/shaping-reference.py",
+        "tests/integration/media.test.ts",
+        "tests/render-cjk-batch.test.ts",
+        "tests/render-indic-batch.test.ts",
+        "tests/render-southeast-batch.test.ts",
+        "tests/ui/media.spec.ts",
+        "tests/ui/render-review.spec.ts"
+      ],
+      "immutableLocalReviewedSource": "3651e31beebc8b8949e473f50676f95b43c9f658",
+      "ownNativeCi": {
+        "runId": 37646367807,
+        "jobId": 112878071601,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37646367807",
+        "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+        "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+        "status": "completed",
+        "conclusion": "success",
+        "attempt": 1,
+        "startedAt": "2026-10-07T15:44:15Z",
+        "completedAt": "2026-10-07T15:56:20Z",
+        "unit": {
+          "tests": 168,
+          "passed": 168,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 306723.318004
+        },
+        "terminalReceiptsVerified": true,
+        "unitCaseReceipts": 168,
+        "unitSummaries": 19,
+        "unitReceipts": "docs/qa/editor01v-native-unit-receipts.json",
+        "unitCaseNamesAndFilesMatchReviewedSource": true,
+        "httpScenarios": 7,
+        "browserScenarios": 7,
+        "recoveryScenarios": 5,
+        "migrations": 12,
+        "apiBuild": true,
+        "webProductionBuild": true,
+        "productionAuditAdvisories": 0,
+        "fullAuditAdvisories": 0,
+        "upgradeRestore": {
+          "passed": true,
+          "engine": "PGlite WASM PostgreSQL",
+          "migrations": 12,
+          "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+          "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+          "archiveBytes": 4866048,
+          "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
+          "nativePostgresRestoreVerified": false,
+          "creditLedgerRestoreAndImmutabilityVerified": true,
+          "generatedMediaRequestAndProviderReceiptRestored": true
+        },
+        "naturalRedisLockMs": 119962,
+        "recoveryCaseDurationMs": 128326.279325,
+        "providerSubmissionsAsserted": 1,
+        "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+        "referenceDiagnostics": [
+          "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+          "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+          "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+        ],
+        "coveredCjkStrings": 14775,
+        "curatedCjkStrings": 42,
+        "modernHangulSyllables": 11172,
+        "newCjkExports": 72,
+        "newCjkTimedFrames": 216,
+        "priorFifteenScriptRegressionsPassed": true,
+        "artifact": {
+          "id": 11496000125,
+          "name": "browser-evidence",
+          "digest": "sha256:244992ff35aad8d63f7b6c986bc113f480d014d6182e79e23cee0d8c573fb7e1",
+          "bytes": 3750338,
+          "downloadedZipSha256Matched": true,
+          "crcVerified": true,
+          "pngs": [
+            {
+              "path": "test-results/asset-library-desktop.png",
+              "bytes": 141329,
+              "sha256": "eb1fad479de38d398c49725d660fedaf60e1ad071bf584a41920976dcf27068e"
+            },
+            {
+              "path": "test-results/asset-library-mobile.png",
+              "bytes": 109243,
+              "sha256": "1f5577c3e19ad44fb7528797a2fa7f533a1692d50b5c8338ba1d2b846ba1990c"
+            },
+            {
+              "path": "test-results/auth-mobile.png",
+              "bytes": 41513,
+              "sha256": "0f1e8105a673eefdfb122e8b7eddb2ae37916b20c710b60cbfe536f5b1661831"
+            },
+            {
+              "path": "test-results/content-mobile.png",
+              "bytes": 49700,
+              "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
+            },
+            {
+              "path": "test-results/content-review-desktop.png",
+              "bytes": 163217,
+              "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
+            },
+            {
+              "path": "test-results/credits-desktop.png",
+              "bytes": 225863,
+              "sha256": "d78c1eebbb461fada91b2a58b567f3007dfe4cb7d22d7b476ecc0ef8f8a6990f"
+            },
+            {
+              "path": "test-results/credits-mobile.png",
+              "bytes": 197486,
+              "sha256": "ea409665a43c534c05cf6151f4d3ccd44bcdb76f07565cadf30182f4735b661a"
+            },
+            {
+              "path": "test-results/generated-media-dark.png",
+              "bytes": 286608,
+              "sha256": "c6c075687912f9e48226860c8a9fead4f837dacef40176e26085d58f453b26b7"
+            },
+            {
+              "path": "test-results/generated-media-desktop.png",
+              "bytes": 283800,
+              "sha256": "2d009fe260758e62e230f12f38d6dd6478f3bad4af14f1e22990a2d4dfe8f392"
+            },
+            {
+              "path": "test-results/generated-media-mobile.png",
+              "bytes": 248046,
+              "sha256": "095b1c542e9b44fd9f85ed392b092a1f54b97706cce9255b5e8870a0fdcb9964"
+            },
+            {
+              "path": "test-results/render-review-desktop.png",
+              "bytes": 33431,
+              "sha256": "fbd203c4bf94f1048d1629ca4d4f153fcd9d5eb5c6a7137292f93a3b50bc3629"
+            },
+            {
+              "path": "test-results/render-review-mobile.png",
+              "bytes": 32691,
+              "sha256": "476845ea0dd17685ef34ab6e172eb391cb9c7618c6d8701795ca48f3a6932b89"
+            },
+            {
+              "path": "test-results/timed-caption-editor-desktop.png",
+              "bytes": 31997,
+              "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
+            },
+            {
+              "path": "test-results/timed-caption-editor-mobile.png",
+              "bytes": 31961,
+              "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+            },
+            {
+              "path": "test-results/video-studio-dark.png",
+              "bytes": 312411,
+              "sha256": "e76528425c3018e1e052a508b2faa1a2afffb81833ff2e0239df468ce4487772"
+            },
+            {
+              "path": "test-results/video-studio-desktop.png",
+              "bytes": 316460,
+              "sha256": "bad5f20525da050540e20b1b91025fcb88149a9421e2dbbfe6707bb882ce2a2b"
+            },
+            {
+              "path": "test-results/video-studio-mobile.png",
+              "bytes": 262957,
+              "sha256": "4ea44b514525c69da1e8aa9b58c3edbdaab73f95537edc7baf938a4ca4f97a0f"
+            },
+            {
+              "path": "test-results/workspace-dark.png",
+              "bytes": 160329,
+              "sha256": "fa2f93c98753a0d44e31c956733d876bd1f557e41d606c6e196f02a4c185d589"
+            },
+            {
+              "path": "test-results/workspace-health-dark.png",
+              "bytes": 249395,
+              "sha256": "d4d2ecdf54b097809adffaa77b253e240f46b471b5377e7bd1b0d0f6dd8051c7"
+            },
+            {
+              "path": "test-results/workspace-desktop.png",
+              "bytes": 162483,
+              "sha256": "ba0331ce5ae792d52b07e488fed4503d78842cf640160febfe282d6e6a587a49"
+            },
+            {
+              "path": "test-results/workspace-health-desktop.png",
+              "bytes": 254712,
+              "sha256": "b246a6aa838b87fb8d0fdae22b96b999156c12f71ccdedfb8bc6c991984de078"
+            },
+            {
+              "path": "test-results/workspace-health-mobile.png",
+              "bytes": 212917,
+              "sha256": "8ec891919edf5c0376a66193d736ec8ed6dab63dc60131b7df3289c2d8073bc9"
+            }
+          ],
+          "unitReceiptSha256": "140087ed89d9b6a662a7b26bc15ad6347f52c83dc7179a8f93c7e5766287d3e3"
+        },
+        "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
+        "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
+      },
+      "closurePublished": false,
+      "closureScope": "Publication/CI closure created after approved public source; retained locally in portable handoff."
+    },
+    "ownNativeCi": {
+      "runId": 37646367807,
+      "jobId": 112878071601,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37646367807",
+      "sourceCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+      "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "startedAt": "2026-10-07T15:44:15Z",
+      "completedAt": "2026-10-07T15:56:20Z",
+      "unit": {
+        "tests": 168,
+        "passed": 168,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 306723.318004
+      },
+      "terminalReceiptsVerified": true,
+      "unitCaseReceipts": 168,
+      "unitSummaries": 19,
+      "unitReceipts": "docs/qa/editor01v-native-unit-receipts.json",
+      "unitCaseNamesAndFilesMatchReviewedSource": true,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryScenarios": 5,
+      "migrations": 12,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0,
+      "upgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 12,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4866048,
+        "sha256": "6e787339495ebb3be01dff5bc9858365272c94ed36f408275e746909eef9be79",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true
+      },
+      "naturalRedisLockMs": 119962,
+      "recoveryCaseDurationMs": 128326.279325,
+      "providerSubmissionsAsserted": 1,
+      "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+      "referenceDiagnostics": [
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+        "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+        "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+      ],
+      "coveredCjkStrings": 14775,
+      "curatedCjkStrings": 42,
+      "modernHangulSyllables": 11172,
+      "newCjkExports": 72,
+      "newCjkTimedFrames": 216,
+      "priorFifteenScriptRegressionsPassed": true,
+      "artifact": {
+        "id": 11496000125,
+        "name": "browser-evidence",
+        "digest": "sha256:244992ff35aad8d63f7b6c986bc113f480d014d6182e79e23cee0d8c573fb7e1",
+        "bytes": 3750338,
+        "downloadedZipSha256Matched": true,
+        "crcVerified": true,
+        "pngs": [
+          {
+            "path": "test-results/asset-library-desktop.png",
+            "bytes": 141329,
+            "sha256": "eb1fad479de38d398c49725d660fedaf60e1ad071bf584a41920976dcf27068e"
+          },
+          {
+            "path": "test-results/asset-library-mobile.png",
+            "bytes": 109243,
+            "sha256": "1f5577c3e19ad44fb7528797a2fa7f533a1692d50b5c8338ba1d2b846ba1990c"
+          },
+          {
+            "path": "test-results/auth-mobile.png",
+            "bytes": 41513,
+            "sha256": "0f1e8105a673eefdfb122e8b7eddb2ae37916b20c710b60cbfe536f5b1661831"
+          },
+          {
+            "path": "test-results/content-mobile.png",
+            "bytes": 49700,
+            "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
+          },
+          {
+            "path": "test-results/content-review-desktop.png",
+            "bytes": 163217,
+            "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
+          },
+          {
+            "path": "test-results/credits-desktop.png",
+            "bytes": 225863,
+            "sha256": "d78c1eebbb461fada91b2a58b567f3007dfe4cb7d22d7b476ecc0ef8f8a6990f"
+          },
+          {
+            "path": "test-results/credits-mobile.png",
+            "bytes": 197486,
+            "sha256": "ea409665a43c534c05cf6151f4d3ccd44bcdb76f07565cadf30182f4735b661a"
+          },
+          {
+            "path": "test-results/generated-media-dark.png",
+            "bytes": 286608,
+            "sha256": "c6c075687912f9e48226860c8a9fead4f837dacef40176e26085d58f453b26b7"
+          },
+          {
+            "path": "test-results/generated-media-desktop.png",
+            "bytes": 283800,
+            "sha256": "2d009fe260758e62e230f12f38d6dd6478f3bad4af14f1e22990a2d4dfe8f392"
+          },
+          {
+            "path": "test-results/generated-media-mobile.png",
+            "bytes": 248046,
+            "sha256": "095b1c542e9b44fd9f85ed392b092a1f54b97706cce9255b5e8870a0fdcb9964"
+          },
+          {
+            "path": "test-results/render-review-desktop.png",
+            "bytes": 33431,
+            "sha256": "fbd203c4bf94f1048d1629ca4d4f153fcd9d5eb5c6a7137292f93a3b50bc3629"
+          },
+          {
+            "path": "test-results/render-review-mobile.png",
+            "bytes": 32691,
+            "sha256": "476845ea0dd17685ef34ab6e172eb391cb9c7618c6d8701795ca48f3a6932b89"
+          },
+          {
+            "path": "test-results/timed-caption-editor-desktop.png",
+            "bytes": 31997,
+            "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
+          },
+          {
+            "path": "test-results/timed-caption-editor-mobile.png",
+            "bytes": 31961,
+            "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+          },
+          {
+            "path": "test-results/video-studio-dark.png",
+            "bytes": 312411,
+            "sha256": "e76528425c3018e1e052a508b2faa1a2afffb81833ff2e0239df468ce4487772"
+          },
+          {
+            "path": "test-results/video-studio-desktop.png",
+            "bytes": 316460,
+            "sha256": "bad5f20525da050540e20b1b91025fcb88149a9421e2dbbfe6707bb882ce2a2b"
+          },
+          {
+            "path": "test-results/video-studio-mobile.png",
+            "bytes": 262957,
+            "sha256": "4ea44b514525c69da1e8aa9b58c3edbdaab73f95537edc7baf938a4ca4f97a0f"
+          },
+          {
+            "path": "test-results/workspace-dark.png",
+            "bytes": 160329,
+            "sha256": "fa2f93c98753a0d44e31c956733d876bd1f557e41d606c6e196f02a4c185d589"
+          },
+          {
+            "path": "test-results/workspace-health-dark.png",
+            "bytes": 249395,
+            "sha256": "d4d2ecdf54b097809adffaa77b253e240f46b471b5377e7bd1b0d0f6dd8051c7"
+          },
+          {
+            "path": "test-results/workspace-desktop.png",
+            "bytes": 162483,
+            "sha256": "ba0331ce5ae792d52b07e488fed4503d78842cf640160febfe282d6e6a587a49"
+          },
+          {
+            "path": "test-results/workspace-health-desktop.png",
+            "bytes": 254712,
+            "sha256": "b246a6aa838b87fb8d0fdae22b96b999156c12f71ccdedfb8bc6c991984de078"
+          },
+          {
+            "path": "test-results/workspace-health-mobile.png",
+            "bytes": 212917,
+            "sha256": "8ec891919edf5c0376a66193d736ec8ed6dab63dc60131b7df3289c2d8073bc9"
+          }
+        ],
+        "unitReceiptSha256": "140087ed89d9b6a662a7b26bc15ad6347f52c83dc7179a8f93c7e5766287d3e3"
+      },
+      "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
+      "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
     }
   },
   "priorLocalFullSuiteBeforeV": {
@@ -6468,5 +6821,439 @@
     },
     "scope": "Own CI-fix local application harness: disposable serialized PGlite, Redis 7.2.11, S3Proxy 4.1.1, real FFmpeg and synthetic providers. Native PostgreSQL CI requires publishing the separately reviewed fix payload; no Docker/full Compose/MinIO, native cross-store restore, live providers, physical devices or master acceptance established.",
     "unitFontSets": 2
+  },
+  "priorNativeFullSuiteBeforeV": {
+    "slice": "EDITOR-01U CI fix own native CI",
+    "verifiedDate": "2026-10-07",
+    "passed": {
+      "unit": 144,
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryAndConfigurationScenarios": 5,
+      "schemaMigrations": 12
+    },
+    "scope": "Own U CI-fix application CI uses disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers. Populated upgrade/archive restore separately uses PGlite. Docker/full Compose/MinIO, native PostgreSQL/private-media cross-store restore, live providers, physical-device readability and full master acceptance remain open.",
+    "sourceCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+    "actionsRunId": 37608908118
+  },
+  "priorGithubActionsBeforeV": {
+    "runId": 37608908118,
+    "jobId": 112751091986,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37608908118",
+    "sourceCommit": "ca7d7a34eddd791df55f0996c41b77d27179db9e",
+    "sourceTree": "d45e9e17d04a96cbbcb66654ae1958d216c5eb8e",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "startedAt": "2026-10-07T10:40:05Z",
+    "completedAt": "2026-10-07T10:50:25Z",
+    "unit": {
+      "tests": 144,
+      "passed": 144,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 223049.955562
+    },
+    "unitCaseReceipts": 144,
+    "unitSummaries": 18,
+    "unitReceipts": "docs/qa/editor01u-ci-fix-native-unit-receipts.json",
+    "unitCaseNamesAndFilesMatchReviewedSource": true,
+    "httpScenarios": 7,
+    "browserScenarios": 7,
+    "recoveryScenarios": 5,
+    "migrations": 12,
+    "harfbuzzVersion": "8.3.0",
+    "referenceDiagnostics": [
+      "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+      "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+    ],
+    "newScriptCoveredStrings": 7406,
+    "newScriptCuratedStrings": 115,
+    "newScriptExports": 90,
+    "newScriptDecodedTimedFrames": 270,
+    "priorIndicReferenceAndExportRegressionsPassed": true,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "productionAuditAdvisories": 0,
+    "fullAuditAdvisories": 0,
+    "upgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 12,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4865915,
+      "sha256": "a942ac68c590fab349553bcdab0fb9600f7f748eeaa8cf5eab1b77a51720bdd7",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "naturalRedisLockMs": 119952,
+    "recoveryCaseDurationMs": 128265.858989,
+    "providerSubmissionsAsserted": 1,
+    "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
+    "artifact": {
+      "id": 11477326448,
+      "name": "browser-evidence",
+      "digest": "sha256:7a24a7a3bb6dfd6e5bbf697b6dde53f1b21fd1b53c732599d3ef0bf6b7495db1",
+      "bytes": 3694321,
+      "downloadedZipSha256Matched": true,
+      "pngs": [
+        {
+          "path": "test-results/asset-library-desktop.png",
+          "bytes": 141329,
+          "sha256": "eb1fad479de38d398c49725d660fedaf60e1ad071bf584a41920976dcf27068e"
+        },
+        {
+          "path": "test-results/asset-library-mobile.png",
+          "bytes": 109243,
+          "sha256": "1f5577c3e19ad44fb7528797a2fa7f533a1692d50b5c8338ba1d2b846ba1990c"
+        },
+        {
+          "path": "test-results/auth-mobile.png",
+          "bytes": 41513,
+          "sha256": "0f1e8105a673eefdfb122e8b7eddb2ae37916b20c710b60cbfe536f5b1661831"
+        },
+        {
+          "path": "test-results/content-mobile.png",
+          "bytes": 49700,
+          "sha256": "92dad3060e773130ce17610db472e863fe87820c9602a452eae736801d1d57bc"
+        },
+        {
+          "path": "test-results/credits-desktop.png",
+          "bytes": 225956,
+          "sha256": "5f21905a2194d4a98ed1a4a666d6f85087015a7dd0da351e4786c5f9bed56690"
+        },
+        {
+          "path": "test-results/content-review-desktop.png",
+          "bytes": 163217,
+          "sha256": "e40c2bc81b00fda8f2ec20ab42685b934491e3c0b739f57d292d3bdcaf2c2ca2"
+        },
+        {
+          "path": "test-results/credits-mobile.png",
+          "bytes": 197119,
+          "sha256": "1f3ff1b8d246936ae73699d27faeabf59932f8e216487e84eff8fceeae18d157"
+        },
+        {
+          "path": "test-results/generated-media-dark.png",
+          "bytes": 287062,
+          "sha256": "485387975850c61694d7acab340589332d0208c8ffafd2f8ee11559f4ebd9b6f"
+        },
+        {
+          "path": "test-results/generated-media-desktop.png",
+          "bytes": 284322,
+          "sha256": "fd618b816e638d77ed8abcc5ac6bf6aa0323c1f9b124e5b5899677a561230327"
+        },
+        {
+          "path": "test-results/generated-media-mobile.png",
+          "bytes": 248448,
+          "sha256": "d7b3ce8cfe4f499ffe697b07199922f7979cbb50df3360ce7eb60719d91fce17"
+        },
+        {
+          "path": "test-results/render-review-desktop.png",
+          "bytes": 33426,
+          "sha256": "16bda90c2470cd6d4b80ca21a4eae6af5f002619824e716f75633d6b062941b7"
+        },
+        {
+          "path": "test-results/render-review-mobile.png",
+          "bytes": 32693,
+          "sha256": "fcd0ef8c1c6e15a0edff85016daa4d760606089877d0c7835b4deba5e7b61e3c"
+        },
+        {
+          "path": "test-results/timed-caption-editor-mobile.png",
+          "bytes": 31961,
+          "sha256": "41dbd4f7a8d98f09b12eaeedf173a075cd63b473ff353c6e5deebc6ec4836c8a"
+        },
+        {
+          "path": "test-results/timed-caption-editor-desktop.png",
+          "bytes": 31997,
+          "sha256": "13e09f1438ad017f86296f4c8e8e369e349eddf021622c51c598151ff8ed47ab"
+        },
+        {
+          "path": "test-results/video-studio-desktop.png",
+          "bytes": 296847,
+          "sha256": "33e689dc8305d94c429c39b3f33bb1f22f42efe3aaf6bbb1fa1194dc68d27881"
+        },
+        {
+          "path": "test-results/video-studio-mobile.png",
+          "bytes": 244823,
+          "sha256": "0954092b0033d18101f3ac7389055880d826fa6906f4c522e7dc47689e9e8118"
+        },
+        {
+          "path": "test-results/video-studio-dark.png",
+          "bytes": 292335,
+          "sha256": "c387de3d08d16ce277fe0a29fd4b5503743b56fdc3103abbc8679175f04647ab"
+        },
+        {
+          "path": "test-results/workspace-dark.png",
+          "bytes": 159993,
+          "sha256": "349aaf985640e756067b40514c33431e97499ccd98f48f1bf6486d0d905dc33d"
+        },
+        {
+          "path": "test-results/workspace-desktop.png",
+          "bytes": 162141,
+          "sha256": "d2c2904e07bc490a788bc49e27d8940d715c327548e633d9761b62535f383d11"
+        },
+        {
+          "path": "test-results/workspace-health-dark.png",
+          "bytes": 249372,
+          "sha256": "46eefe0e9d1375a157b12a4ba1cea1d390ac31f44b54aec9cb96d303818cae5e"
+        },
+        {
+          "path": "test-results/workspace-health-desktop.png",
+          "bytes": 254678,
+          "sha256": "3be6abc9dd7f605ea1c2a349f19e51eda9cd575a731c359131e56888783b73b1"
+        },
+        {
+          "path": "test-results/workspace-health-mobile.png",
+          "bytes": 213021,
+          "sha256": "6d5b924bf0db20868e3a5ad79e013c30b36d18f3a7bc9ea7bf3a6fff9329262b"
+        }
+      ]
+    },
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Initialize containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Check out source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Install dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Set up Java",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Install test object storage",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Install media dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Run unit tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Audit production dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Audit all dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Verify populated upgrade",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13
+      },
+      {
+        "name": "Verify native application flows",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14
+      },
+      {
+        "name": "Upload browser evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Post Set up Java",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 28
+      },
+      {
+        "name": "Post Check out source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 29
+      },
+      {
+        "name": "Stop containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 30
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 31
+      }
+    ],
+    "scope": "Own U fixed-source native PostgreSQL 17/Redis 7 application CI, disposable services/S3Proxy/FFmpeg/synthetic providers. Populated upgrade/archive restore separately uses PGlite; native cross-store restore/full Compose/MinIO/live/device/master acceptance remain open."
+  },
+  "priorEnvironmentBeforeV": {
+    "database": "Own U CI-fix native PostgreSQL 17 application CI; local and populated upgrade/archive restore separately use PGlite.",
+    "redis": "Own U CI-fix native Redis 7 CI; local native Redis 7.2.11.",
+    "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
+    "renderer": "real FFmpeg/ffprobe 6.1.1",
+    "email": "local SMTP capture",
+    "textAI": "isolated compatible HTTP provider fixture",
+    "stripe": "official SDK against isolated loopback Stripe-compatible fixture; no Stripe account",
+    "web": "production Next.js server",
+    "generatedMedia": "Isolated OpenAI-shape image/base64, ordered two-reference multipart edit (bounded to four), bounded image options, WAV/MP3 voice option contract and asynchronous video HTTP fixture; no live provider",
+    "shapingReference": "HarfBuzz 8.3.0 (emitted in all seven CI script diagnostics)"
+  },
+  "editor01wLocalVerification": {
+    "status": "complete_local_publication_not_approved",
+    "unitModern": {
+      "tests": 187,
+      "passed": 187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "files": 19,
+      "summaries": 20,
+      "durationMs": 541953.817412,
+      "logSha256": "8a8afca163e6830a01d6eebf96b53fd710c9945b77bf01b6ff6c17bf085cde88",
+      "receiptSha256": "05a7a5ad3969fa6a22cf0e90528507afcd971112910f30a5500d1cdbf16fc4c9"
+    },
+    "unitLegacyUbuntuNoto": {
+      "tests": 187,
+      "passed": 187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "files": 19,
+      "summaries": 20,
+      "durationMs": 543144.334221,
+      "logSha256": "8d8fd440d747f39c319f8a742d2a2786974993d8665c12f161e5be52799e066f",
+      "receiptSha256": "3ee71ab5d4b5033b6a912890c4a0a817f954da0320527aab414769f64b4c9056"
+    },
+    "application": {
+      "passed": true,
+      "http": 7,
+      "browser": 7,
+      "recovery": 5,
+      "migrations": 12,
+      "database": "PGlite WASM PostgreSQL",
+      "redis": "native Redis 7.2.11 test binary",
+      "web": "production Next.js server",
+      "logSha256": "15e8f176afc4cc7bd645ab532b219339396a493fbf181c92a384cf55334439a6"
+    },
+    "build": {
+      "passed": true,
+      "scope": "Prisma generation, API TypeScript and Next.js production build",
+      "logSha256": "f35c6cba39ad5b88a870ade1fbf7329ce21f8fecf0d6abb80116bfe8dc056c00"
+    },
+    "visualReview": {
+      "modernFrames": 15,
+      "legacyFrames": 15,
+      "minWhitePixelMargin": 124,
+      "zeroWhiteFrames": [],
+      "contactSheets": [
+        ".local/controls-modern-contact.png",
+        ".local/controls-ci-contact.png"
+      ],
+      "humanReviewedInWorkMode": true
+    },
+    "audits": {
+      "all": {
+        "vulnerabilities": {
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+          "high": 0,
+          "critical": 0,
+          "total": 0
+        },
+        "dependencies": {
+          "prod": 213,
+          "dev": 73,
+          "optional": 73,
+          "peer": 7,
+          "peerOptional": 0,
+          "total": 331
+        }
+      },
+      "production": {
+        "vulnerabilities": {
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+          "high": 0,
+          "critical": 0,
+          "total": 0
+        },
+        "dependencies": {
+          "prod": 213,
+          "dev": 73,
+          "optional": 73,
+          "peer": 7,
+          "peerOptional": 0,
+          "total": 331
+        }
+      },
+      "allSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11",
+      "productionSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+    },
+    "publicWriteAttempted": false
   }
 }

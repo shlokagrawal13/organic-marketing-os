@@ -84,7 +84,11 @@ test("Bengali has a separate opt-in, shared mixed-script boundaries and unchange
     assert.match(renderTextSupportIssue(text)!, /Separate Arabic, Hebrew/);
   assert.match(renderTextSupportIssue("বাংলা 新品")!, /CJK/);
   assert.match(renderTextSupportIssue("বাংলা ไทย")!, /Thai/);
-  assert.match(renderTextSupportIssue("ক্\u200dষ")!, /control characters/);
+  assert.equal(renderTextSupportIssue("ক্\u200dষ"), null);
+  assert.match(
+    renderTextSupportIssue("ক্\u200dষ\u200e")!,
+    /control characters/,
+  );
   const scene = { ...fixture, caption: "বাংলা שלום" };
   assert.throws(
     () => validateRenderScenes([scene], { captions: true }),
@@ -272,15 +276,11 @@ test("Bengali outline runtime has a distinct fingerprint and invalidates prior I
     );
   assert.equal(
     await check("শিক্ষা"),
-    sha256(
-      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
-    ),
+    sha256("fontkit-outlines-v4-joiner-controls\n" + runtime + decoders),
   );
   assert.equal(
     await check("हिंदी"),
-    sha256(
-      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
-    ),
+    sha256("fontkit-outlines-v4-joiner-controls\n" + runtime + decoders),
   );
   assert.equal(
     await checkRenderShaping(

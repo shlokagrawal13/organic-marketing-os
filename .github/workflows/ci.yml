@@ -64,6 +64,7 @@ jobs:
       RENDER_HIRAGANA_ENABLED: "true"
       RENDER_KATAKANA_ENABLED: "true"
       RENDER_HANGUL_ENABLED: "true"
+      MOS_CONTROL_QA_DIR: ".local/control-qa"
       RENDER_FONT_FALLBACK_PATHS: "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansGurmukhi-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansOriya-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTamil-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansTelugu-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMalayalam-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansLao-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansKhmer-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSansMyanmar-Regular.ttf:/usr/share/fonts/truetype/noto/NotoSerifTibetan-Regular.ttf:${{ github.workspace }}/.local/test-cjk-fonts/NotoSansCJKsc-Regular.otf"
 
     steps:
@@ -109,3 +110,4 @@ jobs:
           path: |
             test-results/
             .local/unit-receipts.json
+            .local/control-qa/

@@ -1,3 +1,4 @@
+import { controlLineBreakUnits } from "./render-controls";
 import type { RenderTextArea } from "./render-text-placement";
 import { RenderFontError, type RenderFontPlan } from "./render-font";
 
@@ -13,6 +14,8 @@ const dictionaryScript =
 export function renderLineBreakUnits(text: string) {
   const cjk = cjkLineBreakUnits(text);
   if (cjk) return cjk;
+  const controls = controlLineBreakUnits(text);
+  if (controls) return controls;
   if (!dictionaryScript.test(text)) return null;
   const units: string[] = [];
   for (const part of dictionaryWords.segment(text)) {

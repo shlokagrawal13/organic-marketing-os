@@ -1,3 +1,4 @@
+import { renderControlSupportIssue } from "./render-controls";
 import { z } from "zod";
 import {
   OUTLINE_SCRIPTS,
@@ -95,16 +96,10 @@ export function renderTextSupportIssue(
 ) {
   const cjkIssue = cjkTextIssue(text, label, cjkLanguage);
   if (cjkIssue) return cjkIssue;
-  if (/\p{Script=Sinhala}/u.test(text) && /[\u200c\u200d]/u.test(text))
-    return `${label} contains Sinhala joiner-based conjuncts outside the current shaping acceptance. Preserve the joiners and attach this text as an image until that coverage is verified.`;
-  if (
-    /[\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}\p{Script=Tibetan}]/u.test(
-      text,
-    ) &&
-    /\p{Cf}/u.test(text)
-  )
-    return `${label} contains shaping or word-break control characters outside current acceptance. Preserve legitimate joiners and word-break controls and attach this text as an image until that coverage is verified.`;
-  if (/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(text))
+  const controls = renderControlSupportIssue(text, label);
+  if (controls) return controls;
+  const visibleText = text.replace(/[\u200b\u200c\u200d\u2060]/gu, "");
+  if (/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(visibleText))
     return `${label} contains control characters. Remove them before rendering.`;
   if (emojiOrSymbol.test(text))
     return `${label} contains emoji or symbol glyphs that the current video font cannot guarantee. Remove them or attach that text as an image.`;
@@ -112,7 +107,7 @@ export function renderTextSupportIssue(
   for (const script of OUTLINE_SCRIPTS)
     if (script.pattern.test(text) && process.env[script.environment] !== "true")
       return `${label} contains ${script.name} text but ${script.name} rendering is not enabled. Ask an administrator to configure a covering font and a supported shaping runtime before enabling it, or attach this text as an image.`;
-  if (!supportedRenderCharacters.test(text))
+  if (!supportedRenderCharacters.test(visibleText))
     return `${label} contains characters outside the current render policy. Use Latin, Greek, Cyrillic, Arabic or Hebrew text with common punctuation, or attach the text as an image.`;
   return indicMixSupportIssue(text, label);
 }

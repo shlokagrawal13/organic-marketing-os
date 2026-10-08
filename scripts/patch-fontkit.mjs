@@ -15,6 +15,7 @@ import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 import { southeastReplacements } from "./fontkit-southeast.mjs";
+import { controlReplacements } from "./fontkit-controls.mjs";
 
 const root = new URL("../node_modules/fontkit/", import.meta.url);
 const pkg = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
@@ -69,6 +70,7 @@ const pending = [];
 for (const [path, hash] of Object.entries(upstream)) {
   const url = new URL(path, root);
   const current = await readFile(url, "utf8");
+  const controls = controlReplacements(current);
   const additions = southeastReplacements(current);
   const previousUAdditions = southeastReplacements(current, {
     previousU: true,
@@ -76,6 +78,8 @@ for (const [path, hash] of Object.entries(upstream)) {
   let original;
   for (const candidate of [additions, previousUAdditions]) {
     let input = current;
+    for (const [before, after] of [...controls].reverse())
+      input = input.split(after).join(before);
     for (const [before, after] of [...candidate].reverse())
       input = input.split(after).join(before);
     for (const [before, after] of replacements)
@@ -112,7 +116,21 @@ for (const [path, hash] of Object.entries(upstream)) {
   }
   // Accept pristine bytes, the complete prior R patch, or this complete patch.
   // Reject partial/mutated inputs rather than silently completing unknown edits.
-  if (![original, legacy, previous, previousU, patched].includes(current))
+  const previousV = patched;
+  for (const [before, after] of controls) {
+    const expected =
+      before === "markFilteringSet: lookup.markFilteringSet}" ? 2 : 1;
+    if (patched.split(before).length !== expected + 1)
+      throw new Error(
+        `Fontkit control patch target changed: ${path}: ${before.slice(0, 65)}`,
+      );
+    patched = patched.split(before).join(after);
+  }
+  if (
+    ![original, legacy, previous, previousU, previousV, patched].includes(
+      current,
+    )
+  )
     throw new Error(`Fontkit has an unexpected partial patch: ${path}`);
   pending.push({ url, patched, changed: current !== patched });
 }
@@ -120,5 +138,5 @@ for (const [path, hash] of Object.entries(upstream)) {
 for (const { url, patched, changed } of pending)
   if (changed) await writeFile(fileURLToPath(url), patched);
 console.log(
-  "Fontkit 2.0.4 Node shaping patches verified (CJS/ESM: null anchors, mark filtering, Sinhala marks, Southeast Asian/Tibetan shaping).",
+  "Fontkit 2.0.4 Node shaping patches verified (CJS/ESM: null anchors, mark filtering, Sinhala, Southeast Asian/Tibetan and bounded control shaping).",
 );

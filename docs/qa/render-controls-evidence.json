@@ -1,0 +1,129 @@
+{
+  "slice": "EDITOR-01W",
+  "status": "local_verification_complete_publication_not_approved",
+  "savedAtUtc": "2026-10-07T21:33:46.507816+00:00",
+  "recovery": {
+    "wipRecoveredFromLibrary": true,
+    "wipZipSha256": "da386ffab5b5f94d8229174eb6569ee5d7f472bcede5fdaf2e145d6fa7a35d04",
+    "priorWScratchAbsent": true,
+    "olderDirtyTreePreserved": true,
+    "noPriorWResultsReusedForFinalAcceptance": true,
+    "runtimeDepsRebuiltFromLockfile": true,
+    "modernFontsDownloadedAndShaVerified": 15,
+    "cjkFontsDownloadedAndShaVerified": 4,
+    "legacyFontsDebSha256": "4fee136cb12fc197703a340e010478f780a41044339fcefbd78ed9aa96c8b617"
+  },
+  "public": {
+    "baseCommit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
+    "approved": false,
+    "writeAttempted": false
+  },
+  "unitVerification": {
+    "modern": {
+      "tests": 187,
+      "passed": 187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "files": 19,
+      "summaries": 20,
+      "durationMs": 541953.817412,
+      "logSha256": "8a8afca163e6830a01d6eebf96b53fd710c9945b77bf01b6ff6c17bf085cde88",
+      "receiptSha256": "05a7a5ad3969fa6a22cf0e90528507afcd971112910f30a5500d1cdbf16fc4c9"
+    },
+    "legacyUbuntuNoto": {
+      "tests": 187,
+      "passed": 187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "files": 19,
+      "summaries": 20,
+      "durationMs": 543144.334221,
+      "logSha256": "8d8fd440d747f39c319f8a742d2a2786974993d8665c12f161e5be52799e066f",
+      "receiptSha256": "3ee71ab5d4b5033b6a912890c4a0a817f954da0320527aab414769f64b4c9056"
+    },
+    "combinedReceipts": 374,
+    "controlCorpusStrings": 284,
+    "controlExportsPerFontSet": 90,
+    "decodedFramesPerFontSet": 270,
+    "harfbuzzVersion": "8.3.0"
+  },
+  "build": {
+    "passed": true,
+    "scope": "Prisma generation, API TypeScript and Next.js production build",
+    "logSha256": "f35c6cba39ad5b88a870ade1fbf7329ce21f8fecf0d6abb80116bfe8dc056c00"
+  },
+  "applicationVerification": {
+    "passed": true,
+    "http": 7,
+    "browser": 7,
+    "recovery": 5,
+    "migrations": 12,
+    "database": "PGlite WASM PostgreSQL",
+    "redis": "native Redis 7.2.11 test binary",
+    "web": "production Next.js server",
+    "logSha256": "15e8f176afc4cc7bd645ab532b219339396a493fbf181c92a384cf55334439a6"
+  },
+  "visualReview": {
+    "modernFrames": 15,
+    "legacyFrames": 15,
+    "minWhitePixelMargin": 124,
+    "zeroWhiteFrames": [],
+    "contactSheets": [
+      ".local/controls-modern-contact.png",
+      ".local/controls-ci-contact.png"
+    ],
+    "humanReviewedInWorkMode": true
+  },
+  "audits": {
+    "all": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 213,
+        "dev": 73,
+        "optional": 73,
+        "peer": 7,
+        "peerOptional": 0,
+        "total": 331
+      }
+    },
+    "production": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 213,
+        "dev": 73,
+        "optional": 73,
+        "peer": 7,
+        "peerOptional": 0,
+        "total": 331
+      }
+    },
+    "allSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11",
+    "productionSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+  },
+  "historicalExcludedRuns": {
+    "preRecoveryApplicationRun": "exit1 after incomplete browser/recovery summary; excluded",
+    "preFinal186UnitRun": "source/helper changed during execution; excluded"
+  },
+  "openChecks": [
+    "own native W GitHub Actions after separately approved publication",
+    "broader device/font/browser/live-provider/master-spec gates remain outside W local scope"
+  ]
+}

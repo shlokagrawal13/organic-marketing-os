@@ -101,7 +101,11 @@ test("Gujarati has a separate opt-in, shared mixed-script boundaries and unchang
     assert.match(renderTextSupportIssue(text)!, /Separate Arabic, Hebrew/);
   assert.match(renderTextSupportIssue("ગુજરાતી 新品")!, /CJK/);
   assert.match(renderTextSupportIssue("ગુજરાતી ไทย")!, /Thai/);
-  assert.match(renderTextSupportIssue("ક્\u200dષ")!, /control characters/);
+  assert.equal(renderTextSupportIssue("ક્\u200dષ"), null);
+  assert.match(
+    renderTextSupportIssue("ક્\u200dષ\u200e")!,
+    /control characters/,
+  );
   assert.match(renderTextSupportIssue("ગુજરાતી 😀")!, /emoji/);
   const scene = { ...fixture, caption: "ગુજરાતી שלום" };
   assert.throws(
@@ -345,22 +349,16 @@ test("Gujarati outline runtime has a distinct fingerprint and invalidates prior 
     );
   assert.equal(
     await check("શિક્ષણ"),
-    sha256(
-      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
-    ),
+    sha256("fontkit-outlines-v4-joiner-controls\n" + runtime + decoders),
   );
   assert.equal(await check("ગુજરાતી বাংলা हिंदी"), await check("શિક્ષણ"));
   assert.equal(
     await check("বাংলা"),
-    sha256(
-      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
-    ),
+    sha256("fontkit-outlines-v4-joiner-controls\n" + runtime + decoders),
   );
   assert.equal(
     await check("हिंदी"),
-    sha256(
-      "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
-    ),
+    sha256("fontkit-outlines-v4-joiner-controls\n" + runtime + decoders),
   );
   assert.equal(
     await checkRenderShaping(

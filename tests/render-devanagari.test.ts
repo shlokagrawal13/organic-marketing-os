@@ -77,7 +77,11 @@ test("Devanagari is opt-in, unsupported scripts/controls stay blocked and ignore
     assert.equal(renderTextSupportIssue(text), null);
   assert.match(renderTextSupportIssue("নমস্কার")!, /Bengali/);
   assert.match(renderTextSupportIssue("新品上市")!, /CJK/);
-  assert.match(renderTextSupportIssue("क्\u200dष")!, /control characters/);
+  assert.equal(renderTextSupportIssue("क्\u200dष"), null);
+  assert.match(
+    renderTextSupportIssue("क्\u200dष\u200e")!,
+    /control characters/,
+  );
   const unburned = { ...fixture, caption: "हिंदी में वीडियो" };
   validateRenderScenes([unburned], { captions: false });
   assert.equal(

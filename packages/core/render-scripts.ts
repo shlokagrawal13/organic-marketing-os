@@ -1,6 +1,6 @@
 import { CJK_CHARACTERS, type CjkLanguage } from "./render-cjk";
 // One registry defines opt-ins, Unicode policy and outline font-run boundaries.
-// Common/inherited punctuation follows adjacent runs; controls remain blocked.
+// Common/inherited punctuation follows adjacent runs; bounded controls retain their separate acceptance policy.
 export const OUTLINE_SCRIPTS = [
   {
     name: "Devanagari",
@@ -190,11 +190,11 @@ export function outlinePipelineRevision(
 ) {
   if (texts.some((text) => CJK_CHARACTERS.test(text)))
     return (
-      "fontkit-outlines-v1-cjk-locale-uax14:" + (language || "unspecified")
+      "fontkit-outlines-v2-cjk-locale-controls:" + (language || "unspecified")
     );
   // U's CI follow-up fixes common coverage-sensitive mark-to-base attachment. Every
   // outline script must invalidate prior shaping, including the ten legacy scripts.
-  return "fontkit-outlines-v3-context-mark-base-coverage";
+  return "fontkit-outlines-v4-joiner-controls";
 }
 export function outlineLayoutTags(tag: string): string | string[] {
   const modern: Record<string, string[]> = {

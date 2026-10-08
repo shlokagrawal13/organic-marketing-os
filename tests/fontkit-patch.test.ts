@@ -22,7 +22,11 @@ test("Fontkit postinstall is idempotent and rejects partial/unknown/version inpu
   await mkdir(join(root, "dist"), { recursive: true });
   await mkdir(join(dir, "scripts"));
   await copyFile("scripts/patch-fontkit.mjs", script);
-  for (const name of ["fontkit-southeast.mjs", "fontkit-myanmar-data.json"])
+  for (const name of [
+    "fontkit-controls.mjs",
+    "fontkit-southeast.mjs",
+    "fontkit-myanmar-data.json",
+  ])
     await copyFile(`scripts/${name}`, join(dir, "scripts", name));
   const originals = await Promise.all(
     ["main.cjs", "module.mjs"].map((name) =>
@@ -91,6 +95,7 @@ test("OpenType mark filtering supports both coverage formats, supersedes attachm
       const font = { GDEF: { markGlyphSetsDef: { coverage: [coverage] } } };
       const glyph = {
         id: 50,
+        codePoints: [],
         isMark: true,
         isBase: false,
         isLigature: false,
@@ -169,6 +174,7 @@ test("Mark-to-base accepts unmultiplied bases and covered multiple outputs while
     };
     const glyph = (id: number, properties: object = {}) => ({
       id,
+      codePoints: [],
       isMark: false,
       isMultiplied: false,
       ligatureID: null,
@@ -288,6 +294,7 @@ test("OpenType chained backtrack arrays are nearest-first in glyph/class/coverag
       ]) {
         processor.glyphs = ids.map((id) => ({
           id,
+          codePoints: [],
           isMark: id === 99,
           features: { ccmp: true },
         }));
@@ -301,5 +308,53 @@ test("OpenType chained backtrack arrays are nearest-first in glyph/class/coverag
       assert.equal(JSON.stringify(table), snapshot);
     }
     assert.equal(applied, 3);
+  }
+});
+
+test("nested contextual lookups keep outer matched indices around controls and inserted multiple outputs", async () => {
+  const path =
+    process.env.TEST_KANNADA_FONT_PATH ||
+    "/usr/share/fonts/truetype/noto/NotoSansKannada-Regular.ttf";
+  const bytes = await readRenderFont(path);
+  const { create } = await import("fontkit");
+  for (const face of [
+    create(bytes),
+    createRequire(import.meta.url)("fontkit").create(bytes),
+  ] as any[]) {
+    face.layout("ಕ್ಷಿ");
+    const processor = face._layoutEngine.engine.GSUBProcessor;
+    const Iterator = processor.glyphIterator.constructor;
+    processor.glyphs = [10, 99, 20].map((id) => ({
+      id,
+      codePoints: [id === 99 ? 0x2060 : 0x0915],
+      features: { ccmp: true },
+    }));
+    processor.glyphIterator = new Iterator(processor.glyphs, {});
+    processor.mosInputIndices = [0, 2];
+    processor.table = {
+      lookupList: {
+        get: (i: number) => ({ lookupType: i, flags: {}, subTables: [{}] }),
+      },
+    };
+    const visits: number[] = [];
+    processor.applyLookup = (kind: number) => {
+      visits.push(processor.glyphIterator.cur.id);
+      if (kind === 0) {
+        processor.glyphs.splice(1, 0, {
+          id: 11,
+          codePoints: [],
+          features: { ccmp: true },
+        });
+        // A recursive input matcher must not replace the outer context map.
+        processor.mosInputIndices = [0, 1];
+      }
+      return true;
+    };
+    processor.applyLookupList([
+      { sequenceIndex: 0, lookupListIndex: 0 },
+      { sequenceIndex: 2, lookupListIndex: 1 },
+    ]);
+    assert.deepEqual(visits, [10, 20]);
+    assert.equal(processor.glyphIterator.index, 1);
   }
 });

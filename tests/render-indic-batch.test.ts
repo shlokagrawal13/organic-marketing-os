@@ -340,9 +340,7 @@ for (const sample of INDIC_BATCH_FIXTURES) {
     );
     assert.equal(
       current,
-      sha256(
-        "fontkit-outlines-v3-context-mark-base-coverage\n" + runtime + decoders,
-      ),
+      sha256("fontkit-outlines-v4-joiner-controls\n" + runtime + decoders),
     );
     for (const previous of [
       "fontkit-outlines-v1-gujarati-script-font-runs",
@@ -572,23 +570,26 @@ test("registry: all ten Indic scripts compose independently referenced font/scri
   assert.equal(index, outlined.paths.length);
   assert.ok(Math.abs(outlined.advanceWidth - advance) < 1e-8);
 });
-test("registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path", () => {
+test("registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path", (t) => {
+  environment(t);
   assert.equal(
     outlinePipelineRevision(["हिंदी"]),
-    "fontkit-outlines-v3-context-mark-base-coverage",
+    "fontkit-outlines-v4-joiner-controls",
   );
   assert.equal(
     outlinePipelineRevision(["বাংলা"]),
-    "fontkit-outlines-v3-context-mark-base-coverage",
+    "fontkit-outlines-v4-joiner-controls",
   );
   assert.equal(
     outlinePipelineRevision(["ગુજરાતી"]),
-    "fontkit-outlines-v3-context-mark-base-coverage",
+    "fontkit-outlines-v4-joiner-controls",
   );
   assert.equal(renderTextSupportIssue("Café Ελλάδα Привет مرحبا שלום"), null);
+  process.env.RENDER_SINHALA_ENABLED = "true";
+  assert.equal(renderTextSupportIssue("ශ්\u200dරී"), null);
   assert.match(
-    renderTextSupportIssue("ශ්\u200dරී")!,
-    /control characters|Sinhala joiner-based conjuncts/,
+    renderTextSupportIssue("ශ්\u200dරී\u200e")!,
+    /control characters/,
   );
 });
 

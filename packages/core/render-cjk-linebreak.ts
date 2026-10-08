@@ -15,7 +15,11 @@ export function cjkLineBreakUnits(text: string) {
     Array.from(graphemes.segment(text), (g) => g.index + g.segment.length),
   );
   const protectedWords = Array.from(words.segment(text))
-    .filter((w) => w.isWordLike && dictionaryScript.test(w.segment))
+    .filter(
+      (w) =>
+        w.isWordLike &&
+        (dictionaryScript.test(w.segment) || /[\u200c\u200d]/u.test(w.segment)),
+    )
     .map((w) => [w.index, w.index + w.segment.length]);
   const breaker = new LineBreaker(text),
     units: string[] = [];
