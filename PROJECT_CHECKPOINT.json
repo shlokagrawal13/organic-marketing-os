@@ -2,16 +2,17 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-08.04-EDITOR-01Y-readability-local-verified",
-  "savedAtUtc": "2026-10-08T16:34:20+00:00",
-  "currentMilestone": "EDITOR-01Y bounded frame/English OCR QA locally verified; exact public publication approval and own native CI pending",
+  "checkpointRevision": "2026-10-08.08-EDITOR-01AB-publication-approval-gate",
+  "savedAtUtc": "2026-10-08T18:15:42.446926+00:00",
+  "currentMilestone": "EDITOR-01AB: Reels/Shorts UI preset selects Device safe by default from Standard; bounded production browser verified locally",
   "activeTaskId": "EDITOR-01",
   "workInProgress": [
-    "EDITOR-01X's 10-file closure is public at e104cbea16a1e29af64f903c2511d0573397929b with exact tree c60ca91fa42b5acf29890db081f8823f5e5a8132 and own Actions 37772767654 successful (187/7/7/5, 12 migrations, both audits).",
-    "EDITOR-01Y adds device-safe real-frame containment/timing and an isolated English small-screen OCR gate to native CI. Clean local source passed 14 selected units, 72 timed Latin/mixed-Hindi frames, 36/36 English OCR samples/18 exports with blank negative control and API/web builds. Four PNGs and full sample report retained. Y is not public; physical devices, official app overlays and multilingual OCR remain open."
+    "EDITOR-01Y public main 62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee and own Actions 37811287207 passed. Z/AA/AB remain local and unpublished.",
+    "Six captured app UI recordings showed Standard portrait overlaps controls in YouTube Shorts and Instagram Reels; Extra margins/Device safe had no overlap in sampled playback. Raw account recordings are excluded from source.",
+    "AB web composer now selects Device safe for newly chosen Reels/Shorts preset when placement was Standard; explicit Extra margins remains, Standard may be reselected with warning. Web production build and isolated production browser 1/1 with 12 fresh migrations, real render/download and saved snapshot passed. Full unit/HTTP/recovery/audits not rerun for this UI-only delta."
   ],
   "nextTaskId": "EDITOR-01",
-  "nextAction": "Request exact approval for reviewed EDITOR-01Y source/config/docs/evidence delta, publish only after approval and verify its own native CI; then continue physical-device/platform UI and broader content/font/language readability acceptance.",
+  "nextAction": "Await explicit user approval for the exact cumulative Z+AA+AB 28 verified source/config/docs/evidence files on public shlokagrawal13/organic-marketing-os main; then recheck main, upload exact tree, verify blobs and own CI. Continue wider device/content acceptance separately.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -86,7 +87,14 @@
       "status": "completed",
       "conclusion": "success",
       "attempt": 1,
-      "unit": { "tests": 187, "passed": 187, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0 },
+      "unit": {
+        "tests": 187,
+        "passed": 187,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
       "httpScenarios": 7,
       "browserScenarios": 7,
       "recoveryScenarios": 5,
@@ -6478,6 +6486,31 @@
         }
       ],
       "scope": "Own U fixed-source native PostgreSQL 17/Redis 7 application CI, disposable services/S3Proxy/FFmpeg/synthetic providers. Populated upgrade/archive restore separately uses PGlite; native cross-store restore/full Compose/MinIO/live/device/master acceptance remain open."
+    },
+    "editor01z": {
+      "exportCount": 3,
+      "frameCount": 9,
+      "codecDimensionsAndDurationVerified": true,
+      "allExportAndFrameHashesVerified": true,
+      "syntheticVisualInspectionNoApparentCrop": true,
+      "actualPhoneOrAppVerified": false,
+      "source": "docs/qa/editor01z-device-review-evidence.json"
+    },
+    "editor01aa": {
+      "source": "docs/qa/editor01aa-platform-review-evidence.json",
+      "recordingHashes": 6,
+      "capturedPlatformCount": 2,
+      "standardFailures": 2,
+      "sampledNonstandardNoOverlap": 4,
+      "webProductionBuild": true,
+      "focusedProductionBrowser": {
+        "passed": 1,
+        "failed": 0,
+        "spec": "tests/ui/media.spec.ts",
+        "migrations": 12
+      },
+      "unitHttpRecoveryAuditsRerun": false,
+      "realFootageOrOtherDeviceAccepted": false
     }
   },
   "accessState": {
@@ -6489,8 +6522,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "96e1af064e8c6e2673c33260b157201f5ddfa3bd",
-    "status": "editor01v_published_and_own_native_ci_verified",
+    "commit": "62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee",
+    "status": "editor01y_published_and_own_native_ci_verified; z_aa_ab_local_unpublished",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6503,11 +6536,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "a7a3bee4048a80a23717a4269d00e057f7203083",
+    "sourceTree": "a80195549e83b491f26d795e508127b639e52941",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Exact approved 48-file V payload; own native CI verified. Later local closure is not included in public source.",
+    "commitMeaning": "Y approved public payload and own native CI; Z+AA+AB are local and not included in public source.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "3651e31beebc8b8949e473f50676f95b43c9f658",
+    "lastLocalCheckpointCommit": "a786faa9f80aab023f099ab66fc7c556f05db442",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -7719,7 +7752,7 @@
       "id": "EDITOR-01",
       "state": "ready_for_local_work",
       "title": "Advanced production editing",
-      "completedIncrement": "A through U and verified follow-ups published; U fixed-source own native CI passed 144/7/7/5. V saved CJK locale/font/readability locally verified with dual-font 168/168 units and 7/7/5 application checks; publication/own CI pending. Remaining Indic/SEA joiners/controls, CJK variations/per-overlay language/broader fonts/devices, ASR/audio/effects/platform/semantic and live/master acceptance."
+      "completedIncrement": "A through Y public and own native CI verified. Z+AA local: six captured Shorts/Reels recordings show Standard portrait UI overlap (known failure); Extra margins/Device safe have no sampled overlap; composer warning passes focused browser. Other devices/real content/ASR/audio/effects/platform/semantic, Compose/native cross-store restore, live/master gates remain open."
     },
     {
       "id": "RESEARCH-01",
@@ -7822,40 +7855,27 @@
     }
   ],
   "lastChanges": {
-    "slice": "EDITOR-01W recovery WIP",
+    "slice": "EDITOR-01AB local UI preset safety",
     "paths": [
-      "Dockerfile",
+      "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
+      "apps/web/app/media-workspace.tsx",
       "docs/CHANGELOG.md",
+      "docs/DEVICE_ACCEPTANCE.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
+      "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
       "docs/VIDEO_PIPELINE.md",
-      "packages/core/media.ts",
-      "packages/core/render-cjk-linebreak.ts",
-      "packages/core/render-font.ts",
-      "packages/core/render-scripts.ts",
-      "packages/core/render-text-layout.ts",
-      "packages/core/renderer.ts",
-      "scripts/patch-fontkit.mjs",
-      "tests/fontkit-patch.test.ts",
-      "tests/render-bengali.test.ts",
-      "tests/render-devanagari.test.ts",
-      "tests/render-gujarati.test.ts",
-      "tests/render-indic-batch.test.ts",
-      "tests/render-southeast-batch.test.ts",
-      "packages/core/render-controls.ts",
-      "scripts/fontkit-controls.mjs",
-      "tests/render-controls.test.ts",
-      "tests/fixtures/render-controls.ts",
-      "docs/qa/render-controls-evidence.json"
+      "docs/qa/verification-summary.json",
+      "tests/ui/media.spec.ts"
     ],
-    "verified": false
+    "verified": "Next production build and focused production browser media.spec.ts 1/1 with 12 migrations and render/download. Public Y tree matched local base, 28 changed paths; automatic approval review rejected first GitHub blob creation before remote write. Full application suites not rerun."
   },
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -7881,8 +7901,8 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "EDITOR-01Y bounded frame and English OCR verification is complete locally on clean X source. Selected 14/14 units, 72 decoded placement frames, 36/36 OCR samples, negative control and API/web builds passed. Physical-device and official app UI acceptance remain open; Y publication and own native CI pending.",
-  "activeTask": "EDITOR-01Y bounded readability QA — locally verified",
+  "latestStatus": "AB locally verified. Cumulative Z+AA+AB 28-file publication gate rejected by automatic approval review before any remote write. Public main remains Y; EDITOR-01 Partial.",
+  "activeTask": "EDITOR-01AB locally verified; public publication blocked by explicit approval review",
   "workspaceRecovery": {
     "sourceZipSha256": "2cdf22f352cae1356447a23bb956df85d1f9b81abb2c7ee4b6586ac281688582",
     "sourceRevision": "2026-10-07.06",
@@ -7903,19 +7923,20 @@
     }
   },
   "pendingPublication": {
-    "slice": "EDITOR-01Y",
+    "slice": "EDITOR-01Z + EDITOR-01AA + EDITOR-01AB cumulative local changes",
     "approved": false,
-    "writeAttempted": false,
-    "baseCommit": "e104cbea16a1e29af64f903c2511d0573397929b",
-    "scope": "locally verified source/config/docs/evidence delta pending separate public approval",
-    "fileCount": 23,
+    "writeAttempted": true,
+    "basePublicCommit": "62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee",
+    "scope": "synthetic review pack, account-free app review evidence, web UI warning/safe preset and tests/continuity; no raw user recordings",
+    "fileCount": 28,
     "paths": [
-      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
+      "apps/web/app/media-workspace.tsx",
       "docs/CHANGELOG.md",
+      "docs/DEVICE_ACCEPTANCE.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
@@ -7924,16 +7945,27 @@
       "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
       "docs/VIDEO_PIPELINE.md",
-      "docs/qa/editor01y-device-safe-landscape.png",
-      "docs/qa/editor01y-device-safe-portrait.png",
-      "docs/qa/editor01y-device-safe-square.png",
-      "docs/qa/editor01y-ocr-portrait-320.png",
-      "docs/qa/editor01y-readability-evidence.json",
+      "docs/qa/editor01aa-platform-review-evidence.json",
+      "docs/qa/editor01z-device-review-evidence.json",
+      "docs/qa/editor01z-device-review-manifest.json",
+      "docs/qa/editor01z-device-safe-mixed-hindi-320.png",
+      "docs/qa/editor01z-device-safe-portrait-720.mp4",
+      "docs/qa/editor01z-extra-margins-long-english-320.png",
+      "docs/qa/editor01z-extra-margins-portrait-720.mp4",
+      "docs/qa/editor01z-standard-long-english-320.png",
+      "docs/qa/editor01z-standard-portrait-720.mp4",
       "docs/qa/verification-summary.json",
       "package.json",
-      "scripts/verify-render-readability.ts",
-      "tests/render-placement.test.ts"
-    ]
+      "scripts/prepare-device-review.ts",
+      "tests/ui/media.spec.ts"
+    ],
+    "remoteWriteSucceeded": false,
+    "approvalReview": {
+      "status": "rejected",
+      "action": "First GitHub connector create_blob for package.json in cumulative 28-file payload",
+      "reason": "Current record lacks explicit user approval for cumulative Z+AA+AB public source scope",
+      "noRemoteWrite": true
+    }
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8266,15 +8298,96 @@
     "sampleReport": "docs/qa/editor01y-readability-evidence.json",
     "sampleReportSha256": "155f658fca8f82d2c58770263e83e67a134c1827268d4a6f1c52a577674605a9",
     "representativeImages": [
-      { "path": "docs/qa/editor01y-device-safe-portrait.png", "sha256": "5604e0e648744abfcf73ab95269bbd621da02a76a3f11343d85985d5cc404eb4" },
-      { "path": "docs/qa/editor01y-device-safe-landscape.png", "sha256": "5c2790de0ad4339097f0532af96719d3542c87be18194f0300ad384359d4c5ab" },
-      { "path": "docs/qa/editor01y-device-safe-square.png", "sha256": "64f71220bde2fda79e9743e7abd1e650d29dbc2ea338c5b871bad18a77c45930" },
-      { "path": "docs/qa/editor01y-ocr-portrait-320.png", "sha256": "cfb1ac0260f103dbdecede78c7442f9e2df5839de35d370607d8e8fd65779eea" }
+      {
+        "path": "docs/qa/editor01y-device-safe-portrait.png",
+        "sha256": "5604e0e648744abfcf73ab95269bbd621da02a76a3f11343d85985d5cc404eb4"
+      },
+      {
+        "path": "docs/qa/editor01y-device-safe-landscape.png",
+        "sha256": "5c2790de0ad4339097f0532af96719d3542c87be18194f0300ad384359d4c5ab"
+      },
+      {
+        "path": "docs/qa/editor01y-device-safe-square.png",
+        "sha256": "64f71220bde2fda79e9743e7abd1e650d29dbc2ea338c5b871bad18a77c45930"
+      },
+      {
+        "path": "docs/qa/editor01y-ocr-portrait-320.png",
+        "sha256": "cfb1ac0260f103dbdecede78c7442f9e2df5839de35d370607d8e8fd65779eea"
+      }
     ],
-    "nativeCiPending": true,
-    "publicWriteAttempted": false,
+    "nativeCiPending": false,
+    "publicWriteAttempted": true,
     "physicalDeviceVerified": false,
     "officialPlatformUiVerified": false,
-    "multilingualOcrVerified": false
+    "multilingualOcrVerified": false,
+    "publicCommit": "62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee",
+    "publicTree": "a80195549e83b491f26d795e508127b639e52941",
+    "ownNativeCiRun": 37811287207,
+    "ownNativeCiConclusion": "success",
+    "ownNativeCiUnitCases": 188,
+    "ownNativeCiOcrSamples": 36
+  },
+  "editor01zEvidence": {
+    "slice": "EDITOR-01Z",
+    "status": "local_review_pack_prepared",
+    "source": "scripts/prepare-device-review.ts",
+    "savedEvidence": "docs/qa/editor01z-device-review-evidence.json",
+    "savedManifest": "docs/qa/editor01z-device-review-manifest.json",
+    "reviewVideos": [
+      "docs/qa/editor01z-standard-portrait-720.mp4",
+      "docs/qa/editor01z-extra-margins-portrait-720.mp4",
+      "docs/qa/editor01z-device-safe-portrait-720.mp4"
+    ],
+    "portraitExports": 3,
+    "smallScreenFrames": 9,
+    "sha256Verified": true,
+    "ffprobeVerified": true,
+    "syntheticPatternOcrDiagnostic": "Noisy; partial Standard short read, no broad OCR pass",
+    "physicalDeviceVerified": false,
+    "officialPlatformUiVerified": false,
+    "realContentHumanReadabilityVerified": false,
+    "publicWriteAttempted": false
+  },
+  "editor01aaEvidence": {
+    "slice": "EDITOR-01AA",
+    "basePublicCommit": "62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee",
+    "priorLocalZCommit": "a39c072127e07efaea5292ab29dd5af8e6b7cd6d",
+    "sourceRecordings": 6,
+    "platforms": [
+      "YouTube Shorts",
+      "Instagram Reels"
+    ],
+    "report": "docs/qa/editor01aa-platform-review-evidence.json",
+    "standardPortrait": "failed captured UI overlap in both apps",
+    "extraMarginsPortrait": "no overlap in sampled playback",
+    "deviceSafePortrait": "no overlap in sampled playback",
+    "recordingsStoredInRepo": false,
+    "phoneModelKnown": false,
+    "appVersionsKnown": false,
+    "realFootageVerified": false,
+    "webProductionBuildPassed": true,
+    "focusedBrowserCases": 1,
+    "focusedBrowserPassed": 1,
+    "freshMigrations": 12,
+    "fullApplicationSuitesRerun": false,
+    "publicWriteAttempted": false
+  },
+  "editor01abEvidence": {
+    "slice": "EDITOR-01AB",
+    "basePublicCommit": "62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee",
+    "priorLocalAACommit": "fdebde0",
+    "webProductionBuildPassed": true,
+    "focusedBrowserCases": 1,
+    "focusedBrowserPassed": 1,
+    "freshMigrations": 12,
+    "realRenderDownloadPassed": true,
+    "safeSelectionVerified": true,
+    "explicitPlacementPreserved": true,
+    "standardWarningVerified": true,
+    "savedSnapshotUnchangedVerified": true,
+    "apiRendererSchemaDependencyChanged": false,
+    "fullApplicationSuitesRerun": false,
+    "publicWriteAttempted": true,
+    "publicWriteSucceeded": false
   }
 }

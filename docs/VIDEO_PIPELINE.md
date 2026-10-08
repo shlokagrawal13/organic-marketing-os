@@ -1,5 +1,17 @@
 # Video pipeline — 0.9.2
 
+## EDITOR-01AB Reels/Shorts preset selection — 2026-10-08 UTC
+
+The composer now selects Device safe when a user actively chooses the Reels / Shorts preset from Standard placement. A previously explicit Extra margins or Device safe choice is preserved. Users can still explicitly select Standard afterward; the captured app-overlap warning remains visible. The browser test covers these transitions, production render/download, and saved render snapshot isolation. `npm run build:web` and the isolated production `media.spec.ts` (1/1, 12 fresh migrations) pass on the final source. API, renderer, schema, dependencies and previously saved render options are unchanged. Full unit/HTTP/recovery/audits were not rerun for this UI-only change. This is local and unpublished; Z+AA+AB are pending exact public-scope approval. Wider devices, actual content, app versions and language/font readability remain open; EDITOR-01 is Partial.
+
+## EDITOR-01AA bounded real-app UI review — 2026-10-08 IST
+
+Six user-provided WhatsApp-transcoded Android screen recordings show the exact Z portrait fixtures in YouTube Shorts and Instagram Reels viewing UI. Standard placement **fails** in both: the long lower caption overlaps account/action text, and Instagram also shows the opening title near/under account/audio UI. Extra margins and Device safe show no overlap in the sampled playback. This is one captured phone/account/UI state (386×850 transcodes); phone model, native capture size, app versions, real footage and other devices remain unverified. Only recording SHA-256, timestamps and account-free observations are in `docs/qa/editor01aa-platform-review-evidence.json`; raw account videos are not packaged. The composer now warns when Standard 9:16 is selected and recommends Device safe for new social exports, while preserving existing saved settings. API/backend/renderer/schema/dependencies are unchanged. Web production build and isolated focused browser `media.spec.ts` passed (1 case, 12 fresh migrations, real render/download); full unit/HTTP/recovery/audits were not rerun for this UI/docs increment. AA is local and unpublished; EDITOR-01 stays Partial.
+
+## EDITOR-01Z device review fixtures — 2026-10-08 IST
+
+A separate QA script, `scripts/prepare-device-review.ts`, calls the real renderer for Standard, Extra margins and Device safe 9:16 720p video with short/long English and mixed Hindi scenes. It accepts a local image through `MOS_DEVICE_REVIEW_IMAGE`, defaulting to a synthetic high-detail test pattern; outputs remain local, while this bounded run's three videos and evidence are retained in `docs/qa/editor01z-*`. No production placement algorithm or media worker path changed. Actual phone/platform UI viewing remains pending; see `docs/DEVICE_ACCEPTANCE.md`.
+
 ## EDITOR-01Y bounded placement/readability QA — 2026-10-08 IST
 
 The real FFmpeg matrix now checks device-safe and inset title/caption containment and cue timing on 72 Latin/mixed-Hindi decoded frames across six geometries per placement. A separate 18-export English OCR matrix yields 36/36 exact reads after display-width rescaling and rejects a blank negative control. Four representative PNGs and the sample report are retained under `docs/qa/editor01y-*`. This is local automated evidence, not physical-device, official social-app UI or multilingual OCR acceptance. No render behavior changed.

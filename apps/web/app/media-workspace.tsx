@@ -622,6 +622,9 @@ export function RenderPanel({
       ...(preset
         ? { aspect: preset.aspect, resolution: preset.resolution }
         : {}),
+      ...(preset?.id === "vertical-social-v1" && !o.textPlacement
+        ? { textPlacement: DEVICE_SAFE_TEXT_PLACEMENT }
+        : {}),
     }));
   }
   return (
@@ -745,6 +748,13 @@ export function RenderPanel({
                     vertical exports. Review the exported video on your target
                     platform.
                   </p>
+                  {options.aspect === "9:16" && !options.textPlacement && (
+                    <p className="field-help" role="status">
+                      Standard portrait text can be covered by Reels or Shorts
+                      controls. Choose Device safe for social videos, then
+                      review the export in the target app.
+                    </p>
+                  )}
                   <label>
                     Chinese, Japanese or Korean language
                     <select

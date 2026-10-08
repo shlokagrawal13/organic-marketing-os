@@ -268,6 +268,15 @@ test("inspect workspace pages, upload private media, render and approve a playab
     "viewBox",
     "0 0 1080 1920",
   );
+  const placement = page.getByRole("combobox", {
+    name: "Text placement",
+    exact: true,
+  });
+  await expect(placement).toHaveValue("device-safe-v1");
+  await expect(guides).toContainText("Device safe");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toHaveCount(0);
   await expect(page.getByText(/Export size: 1080 × 1920 px/)).toBeVisible();
   await page
     .getByRole("combobox", { name: "Resolution", exact: true })
@@ -285,12 +294,23 @@ test("inspect workspace pages, upload private media, render and approve a playab
     .getByRole("combobox", { name: "Aspect ratio", exact: true })
     .selectOption("9:16");
   await expect(preset).toHaveValue("");
-  const placement = page.getByRole("combobox", {
-    name: "Text placement",
-    exact: true,
-  });
+  await placement.selectOption("");
   await expect(placement).toHaveValue("");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toBeVisible();
+  await preset.selectOption("vertical-social-v1");
+  await expect(placement).toHaveValue("device-safe-v1");
+  await placement.selectOption("");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toBeVisible();
   await placement.selectOption("inset-v1");
+  await preset.selectOption("vertical-social-v1");
+  await expect(placement).toHaveValue("inset-v1");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toHaveCount(0);
   await expect(guides).toContainText("Extra margins");
   await expect(
     guides.locator('[data-guide-kind="title"] > rect'),
@@ -299,6 +319,9 @@ test("inspect workspace pages, upload private media, render and approve a playab
     guides.locator('[data-guide-kind="title"] > rect'),
   ).toHaveAttribute("width", "734.4");
   await placement.selectOption("device-safe-v1");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toHaveCount(0);
   await expect(guides).toContainText("Device safe");
   await expect(
     guides.locator('[data-guide-kind="title"] > rect'),

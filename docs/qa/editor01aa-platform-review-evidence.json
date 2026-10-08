@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "slice": "EDITOR-01AA bounded real-app UI review",
+  "source": "Six user-uploaded WhatsApp-transcoded phone screen recordings; raw files and account identifiers are kept out of the public repository.",
+  "fixtureSource": "docs/qa/editor01z-device-review-evidence.json",
+  "reviewedSurfaces": [
+    "YouTube Shorts viewing UI",
+    "Instagram Reels viewing UI"
+  ],
+  "device": "Android UI visible; model, OS build, app versions and native capture dimensions unknown. Uploaded copies are 386x850 transcodes.",
+  "recordings": [
+    {
+      "platform": "YouTube Shorts",
+      "placement": "standard",
+      "recordingSha256": "6e0267fc36dcb9f6e3547a263c28fc5b910c706f234c23c86383388a1dce78da",
+      "whatsappEncodedSize": {
+        "width": 386,
+        "height": 850
+      },
+      "durationSeconds": 15.215456,
+      "verdict": "fail",
+      "observations": [
+        {
+          "atSeconds": 11.0,
+          "finding": "Long English caption overlaps the visible account/date/private area and share control."
+        }
+      ]
+    },
+    {
+      "platform": "YouTube Shorts",
+      "placement": "extra-margins",
+      "recordingSha256": "f97da488540d1a8385a788b5abed60dcc8f70b331381bfb9409bb7e05c426492",
+      "whatsappEncodedSize": {
+        "width": 386,
+        "height": 850
+      },
+      "durationSeconds": 9.780156,
+      "verdict": "bounded_pass",
+      "observations": [
+        {
+          "atSeconds": 5.0,
+          "finding": "Mixed Hindi title/caption clear of visible account and right-side controls."
+        },
+        {
+          "atSeconds": 3.5,
+          "finding": "Long English title stays clear of app controls."
+        }
+      ]
+    },
+    {
+      "platform": "YouTube Shorts",
+      "placement": "device-safe",
+      "recordingSha256": "103e8c8454580eb19f5d10c1a44fc42cc2b880b004e47fb9b1fa2c7fa56ae0ad",
+      "whatsappEncodedSize": {
+        "width": 386,
+        "height": 850
+      },
+      "durationSeconds": 9.115633,
+      "verdict": "bounded_pass",
+      "observations": [
+        {
+          "atSeconds": 3.5,
+          "finding": "Mixed Hindi title/caption clear of visible account and right-side controls."
+        }
+      ]
+    },
+    {
+      "platform": "Instagram Reels",
+      "placement": "standard",
+      "recordingSha256": "920da7f57719b94099a932c0d49a61d6f07573e20b9f93e203827ab2670cfe0b",
+      "whatsappEncodedSize": {
+        "width": 386,
+        "height": 850
+      },
+      "durationSeconds": 11.753433,
+      "verdict": "fail",
+      "observations": [
+        {
+          "atSeconds": 0.5,
+          "finding": "Opening title overlaps the visible account/original-audio area."
+        },
+        {
+          "atSeconds": 5.0,
+          "finding": "Long English caption overlaps the account/See more and bottom interface."
+        }
+      ]
+    },
+    {
+      "platform": "Instagram Reels",
+      "placement": "extra-margins",
+      "recordingSha256": "b5c5a6890c32fef597fd28ba69d2162643f6e4498288cb5fe8b499940f9ddf21",
+      "whatsappEncodedSize": {
+        "width": 386,
+        "height": 850
+      },
+      "durationSeconds": 11.008533,
+      "verdict": "bounded_pass",
+      "observations": [
+        {
+          "atSeconds": 3.5,
+          "finding": "Mixed Hindi title/caption clear of visible account and right-side controls."
+        }
+      ]
+    },
+    {
+      "platform": "Instagram Reels",
+      "placement": "device-safe",
+      "recordingSha256": "0846d08f3f36d31b43abbd179267a3ace917baef3b44a527948c1c760c0aa8c5",
+      "whatsappEncodedSize": {
+        "width": 386,
+        "height": 850
+      },
+      "durationSeconds": 10.248322,
+      "verdict": "bounded_pass",
+      "observations": [
+        {
+          "atSeconds": 2.0,
+          "finding": "Short English title/caption clear of visible account and action controls."
+        },
+        {
+          "atSeconds": 3.5,
+          "finding": "Long English title clear of top app controls."
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "standardPortrait": "fails captured Reels and Shorts UI overlap checks",
+    "extraMarginsPortrait": "no overlap observed on sampled app playback",
+    "deviceSafePortrait": "no overlap observed on sampled app playback",
+    "recommendation": "Use Device safe for new portrait social exports and review each destination. Preserve old Standard placement for existing renders."
+  },
+  "remaining": [
+    "Single uploaded phone and captured app/account states only",
+    "No native screen recording or phone model/app version",
+    "No representative photographic/video content or long platform description",
+    "No other aspect ratio, account state, phone or language/font matrix",
+    "Neither universal platform certification nor full EDITOR-01 master acceptance"
+  ],
+  "privacy": "No uploaded raw recording or account screenshot is included in this source checkpoint.",
+  "publicWriteAttempted": false
+}

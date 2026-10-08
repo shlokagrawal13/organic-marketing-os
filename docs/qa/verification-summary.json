@@ -93,7 +93,14 @@
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
-    "unit": { "tests": 187, "passed": 187, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0 },
+    "unit": {
+      "tests": 187,
+      "passed": 187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryScenarios": 5,
@@ -7322,5 +7329,63 @@
     "multilingualOcrVerified": false,
     "nativeCiPending": true,
     "publicWriteAttempted": false
+  },
+  "editor01yNativeCi": {
+    "commit": "62eb9393dfc68d6b15e4f1da2dbe296c772dd5ee",
+    "tree": "a80195549e83b491f26d795e508127b639e52941",
+    "runId": 37811287207,
+    "conclusion": "success",
+    "unit": 188,
+    "http": 7,
+    "browser": 7,
+    "recovery": 5,
+    "ocrEnglishExactSamples": 36,
+    "migrations": 12,
+    "auditAdvisories": 0
+  },
+  "editor01zLocal": {
+    "scope": "Synthetic-pattern device review pack preparation; not actual phone/app acceptance",
+    "videos": 3,
+    "sampleFrames": 9,
+    "hashesAndFfprobeVerified": true,
+    "visualSampleClippingObserved": false,
+    "busyBackgroundOcrDiagnostic": "Noise and partial Standard short read; no broad OCR pass",
+    "physicalPhoneOrAppVerified": false,
+    "evidence": "docs/qa/editor01z-device-review-evidence.json"
+  },
+  "editor01aaLocal": {
+    "reviewedSources": "Six user-uploaded screen recordings (account-free hashes only)",
+    "platforms": [
+      "YouTube Shorts",
+      "Instagram Reels"
+    ],
+    "standardPortrait": "Fail: app UI overlaps title/caption in captured playback",
+    "extraMarginsPortrait": "No overlap in sampled captured playback",
+    "deviceSafePortrait": "No overlap in sampled captured playback",
+    "webProductionBuildPassed": true,
+    "focusedProductionBrowserCases": 1,
+    "freshMigrations": 12,
+    "fullUnitHttpRecoveryAndAuditsRerun": false,
+    "publicWriteAttempted": false,
+    "evidence": "docs/qa/editor01aa-platform-review-evidence.json",
+    "limits": "Single Android UI capture, WhatsApp transcodes, unknown app/device version; real content and broader devices pending"
+  },
+  "editor01abLocal": {
+    "scope": "Web composer preset selection only; no API, renderer, schema or dependency change",
+    "reelsShortsSelection": "Device safe when prior placement is Standard",
+    "explicitExtraMarginsPreserved": true,
+    "explicitStandardStillSelectableWithWarning": true,
+    "savedRenderSnapshotVerified": true,
+    "webProductionBuildPassed": true,
+    "focusedProductionBrowserCases": 1,
+    "focusedProductionBrowserPassed": 1,
+    "freshMigrations": 12,
+    "realRenderDownloadInBrowser": true,
+    "fullUnitHttpRecoveryAndAuditsRerun": false,
+    "nativeCiPending": true,
+    "publicWriteAttempted": true,
+    "limits": "Captured app UI overlap applies to one phone state; other devices, real content and wider fonts/languages remain open",
+    "publicWriteSucceeded": false,
+    "publicationApprovalReview": "First GitHub create_blob rejected before remote write; explicit approval for cumulative Z+AA+AB 28-file public payload required."
   }
 }
