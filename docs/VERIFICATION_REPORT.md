@@ -1,5 +1,11 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## EDITOR-01X public publication and native CI closure — 2026-10-08 IST
+
+EDITOR-01X's approved 22 source/config/docs/evidence files are published on public main at `8fdb7efce7f866a0fafa6a9541a07f77d0372447`, tree `1086591e54ce63acecb073165c4d0037cd9f4fec`, matching the locally verified source tree. Own Actions run `37769888218`, job `113286580705`, attempt 1 completed successfully. Its logs confirm 187/187 unit cases with zero failed/cancelled/skipped/todo, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, 12 migrations, API/web builds, populated PGlite upgrade/restore and both zero-vulnerability npm audits. No runtime/source/schema change is made by this later closure record; it remains local and is not yet published. Earlier X publication/CI-pending text below is historical.
+
+Next: bounded physical-device/OCR readability and official platform UI acceptance for saved standard, inset and device-safe placement; separately track ASR/audio, custom effects, full Compose/MinIO, native cross-store restore, live providers and full master acceptance. EDITOR-01 remains Partial; passing CI is not physical-device acceptance.
+
 ## EDITOR-01X device-safe placement local verification — 2026-10-08 IST
 
 EDITOR-01W is published and own native CI verified at public main `51ec6015e79d5176699490e9968e115ec2766d27`; all 262 public blobs matched the verified source and Actions run 37738372169 completed successfully. EDITOR-01X adds optional `textPlacement: "device-safe-v1"` for stricter social-review text boxes while preserving legacy Standard placement and existing `inset-v1` Extra margins. The placement is saved in immutable render options/history, shown in selected/saved composition guides and included in rendered-text scene cache identity; no schema, dependency, provider or migration change is introduced.
