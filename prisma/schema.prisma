@@ -75,6 +75,8 @@ model Organization {
   billingInvoices     BillingInvoice[]
   mediaGenerations    MediaGeneration[]
   publicationIntents  PublicationIntent[]
+  socialConnections   SocialConnection[]
+  publicationAttempts PublicationAttempt[]
 }
 
 enum ContentStatus {
@@ -179,10 +181,72 @@ model PublicationIntent {
   createdAt       DateTime                @default(now())
   invalidatedAt   DateTime?
   canceledAt      DateTime?
+  attempt         PublicationAttempt?
 
   @@unique([organizationId, requestKey])
   @@index([organizationId, createdAt])
   @@index([organizationId, contentId, status])
+}
+
+enum SocialProvider {
+  YOUTUBE
+}
+
+model SocialConnection {
+  id                     String               @id @default(uuid())
+  organizationId         String
+  organization           Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  provider               SocialProvider
+  externalAccountId      String
+  accountLabel           String
+  scopes                 String[]
+  accessTokenCiphertext  String
+  refreshTokenCiphertext String?
+  tokenExpiresAt         DateTime?
+  revokedAt              DateTime?
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  attempts               PublicationAttempt[]
+
+  @@unique([organizationId, provider, externalAccountId])
+  @@index([organizationId, revokedAt])
+}
+
+enum PublicationAttemptStatus {
+  RESERVED
+  SUBMITTING
+  UNKNOWN
+  CONFIRMED
+  REJECTED
+  BLOCKED
+}
+
+// Only an authorized provider adapter may create a connection and enter SUBMITTING.
+// This release exposes no OAuth callback, dispatch route or provider sender.
+model PublicationAttempt {
+  id                String                   @id @default(uuid())
+  organizationId    String
+  organization      Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  intentId          String                   @unique
+  intent            PublicationIntent        @relation(fields: [intentId], references: [id], onDelete: Cascade)
+  connectionId      String
+  connection        SocialConnection         @relation(fields: [connectionId], references: [id], onDelete: Restrict)
+  contentId         String
+  contentRevision   Int
+  requestKey        String
+  requestHash       String
+  status            PublicationAttemptStatus @default(RESERVED)
+  version           Int                      @default(1)
+  providerRequestId String?
+  providerPostId    String?
+  outcomeCode       String?
+  createdAt         DateTime                 @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+
+  @@unique([organizationId, requestKey])
+  @@index([organizationId, contentId, contentRevision, status])
+  @@index([status, startedAt])
 }
 
 enum JobStatus {

@@ -83,7 +83,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01AC locally selects Device safe for initial new 9:16 browser composer; API/renderer defaults and saved render snapshots unchanged. Clean install, API/web build, focused production browser 1/1 with 12 migrations and render/download pass; full application suites/own native CI not rerun for AC. AB public own CI remains previous evidence.",
+  "latestIncrement": "AE + SOCIAL-01 cumulative 30 files published at 78b78a9; own native CI 37912786834 passed 188 unit, 8 HTTP, 7 browser, 5 recovery, 13 migrations, 36 + 8 bounded OCR, builds, populated PGlite restore and both audits 0. No social provider post.",
   "latestNativeRun": {
     "runId": 37823837950,
     "jobId": 113471418146,
@@ -7461,17 +7461,19 @@
     "scope": "Local synthetic loud narration/music AAC peak regression and isolated production media flow; not native own CI."
   },
   "latestPublicNativeCi": {
-    "commit": "470da707e0feb8fa5aaf8e2a829dbd32549f20b9",
-    "runId": 37906151524,
-    "jobId": 113739982715,
+    "commit": "78b78a9cc057d20815c67ca5af6e4c2e79a41ae0",
+    "runId": 37912786834,
+    "jobId": 113761672603,
     "conclusion": "success",
     "unit": 188,
-    "http": 7,
+    "http": 8,
     "browser": 7,
     "recovery": 5,
+    "migrations": 13,
     "englishReadabilitySamples": 36,
-    "artifactSha256": "8c36bc33d48f1948d01165e3dbe18c12c26162723613fecffae1e757826f10e2",
-    "evidence": "docs/qa/editor01ad-native-ci-evidence.json"
+    "busyReadabilitySamples": 8,
+    "artifactSha256": "ee141af48d4316b5effd77eff1c22bfbf725b307d19db2ef17022a8dd7bbb7af",
+    "evidence": "docs/qa/editor01ae-social01-native-ci-evidence.json"
   },
   "localEditor01AeBusyReadability": {
     "blackBackgroundOcrPassed": 36,
@@ -7486,5 +7488,110 @@
     "productionBrowserTotal": 1,
     "evidence": "docs/qa/editor01ae-busy-readability-evidence.json",
     "nativeOwnCiVerified": false
+  },
+  "social01PublicNativeCi": {
+    "schemaVersion": 1,
+    "slice": "EDITOR-01AE + SOCIAL-01 public and native CI closure",
+    "publicCommit": "78b78a9cc057d20815c67ca5af6e4c2e79a41ae0",
+    "parentCommit": "470da707e0feb8fa5aaf8e2a829dbd32549f20b9",
+    "treeSha": "70b9911ce96df9bc5cfe8183ac6ba97d5d6d8c1d",
+    "approvedChangedPaths": 30,
+    "publicBlobPathsModesShaMatched": 288,
+    "githubActions": {
+      "runId": 37912786834,
+      "jobId": 113761672603,
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37912786834",
+      "sourceCommit": "78b78a9cc057d20815c67ca5af6e4c2e79a41ae0"
+    },
+    "checks": {
+      "cleanInstall": true,
+      "apiWebProductionBuild": true,
+      "unit": {
+        "tests": 188,
+        "passed": 188,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "uniqueCaseFileReceipts": 188,
+        "summaries": 20
+      },
+      "http": {
+        "tests": 8,
+        "passed": 8
+      },
+      "browser": {
+        "tests": 7,
+        "passed": 7
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5
+      },
+      "freshNativeMigrations": 13,
+      "pglitePopulatedUpgradeRestore": true,
+      "pgliteArchiveBytes": 4873119,
+      "pgliteArchiveSha256": "6110f989ce36b7964b0a0c6282fc781273f82c9f4fbe8d445aebc91568e41216",
+      "smallScreenEnglishOcr": {
+        "samples": 36,
+        "passed": 36,
+        "blankNegativeControlPassed": true
+      },
+      "busyBackgroundOcr": {
+        "samples": 8,
+        "passed": 8
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "artifact": {
+      "id": 11609220090,
+      "name": "browser-evidence",
+      "bytes": 5694871,
+      "sha256": "ee141af48d4316b5effd77eff1c22bfbf725b307d19db2ef17022a8dd7bbb7af",
+      "zipEntries": 123,
+      "crcPassed": true,
+      "unitCaseFileReceiptsVerified": 188,
+      "unitSummariesVerified": 20,
+      "readabilityReportInspected": true,
+      "rawAccountRecordingsPublished": false
+    },
+    "limits": [
+      "Publication intents remain internal preparation only: no OAuth, live provider post, scheduler, attempt receipt or UNKNOWN-outcome recovery.",
+      "Bounded synthetic English OCR does not certify physical devices, arbitrary content, all scripts or platform UI.",
+      "Populated restore is PGlite, not native PostgreSQL/private-media cross-store restore; no complete Compose/MinIO or master acceptance claimed."
+    ],
+    "closureRecordPublicWriteAttempted": false
+  },
+  "social01AttemptLedgerLocal": {
+    "status": "locally_verified_not_published",
+    "evidence": "docs/qa/social01-attempt-ledger-evidence.json",
+    "basePublic": "78b78a9cc057d20815c67ca5af6e4c2e79a41ae0",
+    "unit": {
+      "passed": 189,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "summaries": 21
+    },
+    "http": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "migrations": 14,
+    "populatedPgliteUpgradeRestore": true,
+    "apiBuild": true,
+    "webBuild": true,
+    "providerCalls": 0,
+    "browserRerun": false,
+    "recoveryRerun": false,
+    "nativeCiForDelta": false
   }
 }

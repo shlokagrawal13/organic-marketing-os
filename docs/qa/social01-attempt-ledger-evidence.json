@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 local connection and attempt ledger",
+  "dateUtc": "2026-10-09",
+  "status": "locally_verified_not_published",
+  "publicBase": "78b78a9cc057d20815c67ca5af6e4c2e79a41ae0",
+  "behavior": {
+    "youtubeConnectionSchema": true,
+    "tenantAccountBoundAes256Gcm": true,
+    "tokenCiphertextExcludedFromList": true,
+    "ownerAdminLocalRevocation": true,
+    "scopeAndKnownFutureExpiryRequired": true,
+    "oneAttemptPerPreparation": true,
+    "unresolvedOrConfirmedRevisionAccountDuplicateBlocked": true,
+    "durableSubmittingBoundary": true,
+    "staleSubmissionBecomesUnknownWithoutRetry": true,
+    "unknownConfirmationRequiresReadOnlyLookupClaim": true,
+    "providerReceiptAuthenticityVerified": false,
+    "oauthCallback": false,
+    "externalRequest": false,
+    "scheduler": false,
+    "livePost": false
+  },
+  "verification": {
+    "cleanNpmCiAndFontkitPatch": true,
+    "prismaGenerateAndValidate": true,
+    "apiBuild": true,
+    "webBuild": true,
+    "tokenUnit": {
+      "passed": 1,
+      "failed": 0
+    },
+    "focusedHttp": {
+      "passed": 1,
+      "failed": 0,
+      "migrations": 14
+    },
+    "populatedPgliteUpgradeRestore": {
+      "passed": true,
+      "migrations": 14,
+      "nativePostgresRestore": false
+    },
+    "fullUnit": {
+      "tests": 189,
+      "passed": 189,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "summaries": 21,
+      "ciFontPackageSha256": "4fee136cb12fc197703a340e010478f780a41044339fcefbd78ed9aa96c8b617",
+      "pinnedCjkFonts": 4
+    },
+    "fullHttp": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "migrations": 14,
+      "actualFfmpegMedia": true
+    },
+    "browserRerun": false,
+    "recoveryRerun": false,
+    "nativeCiForDelta": false
+  },
+  "diagnostics": [
+    "First isolated focused harness ended during migrations without a test summary; it was rerun and passed.",
+    "The first broad unit run lacked required Noto/CJK font fixtures. Pinned CJK OTFs and SHA-verified Ubuntu fonts-noto-core 20201225-2 were restored outside source.",
+    "A sandboxed Unicode child-process test produced empty pipe output; the same 10 cases passed with local process I/O permission.",
+    "Initial broad reruns were interrupted after a review found unknown token expiry was incorrectly allowed; fixed to reject and added a negative fixture. They are not final evidence."
+  ],
+  "limits": [
+    "The test connection is a synthetic database fixture; no user or real provider token was stored.",
+    "No live OAuth, refresh rotation, provider revocation, platform metadata policy, verified receipt/lookup, scheduler or provider call exists.",
+    "Unknown reconciliation currently relies on an internal caller's evidence marker; a future provider adapter must verify the read-only lookup before calling it.",
+    "No native PostgreSQL CI, browser/recovery suite or authorized test post for this unpublished delta."
+  ]
+}

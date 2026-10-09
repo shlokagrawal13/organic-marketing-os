@@ -29,6 +29,7 @@ import { OperationsModule } from "./operations";
 import { CreditsModule } from "./credits";
 import { GeneratedMediaModule } from "./generated-media";
 import { PublicationsModule } from "./publications";
+import { SocialConnectionsModule } from "./social-connections";
 import { creditPolicy } from "../../../packages/core/credits";
 import { stripeBillingConfiguration } from "../../../packages/core/billing";
 
@@ -65,6 +66,7 @@ class HealthController {
     CreditsModule,
     GeneratedMediaModule,
     PublicationsModule,
+    SocialConnectionsModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: AuthGuard }],
