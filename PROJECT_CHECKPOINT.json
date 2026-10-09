@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-09.12-SOCIAL01-oauth-callback-local-verified",
-  "savedAtUtc": "2026-10-09T21:33:35.768228+00:00",
-  "currentMilestone": "SOCIAL-01 YouTube OAuth callback locally verified; native CI and live provider flow pending",
+  "checkpointRevision": "2026-10-09.13-SOCIAL01-callback-public-container-pull-fix-local",
+  "savedAtUtc": "2026-10-09T21:47:27.508352+00:00",
+  "currentMilestone": "SOCIAL-01 callback published at 44ff798; own native CI blocked before checkout by Docker Hub pull; registry fix local",
   "activeTaskId": "SOCIAL-01",
-  "workInProgress": "OAuth callback and encrypted persistence locally verified. Portable checkpoint and exact pending public scope frozen; no source test remains incomplete.",
+  "workInProgress": "Workflow service images changed locally to official ECR Public mirrors; YAML parsed and exact tags initially returned manifests. Own native CI for the fix requires publication. No application source change.",
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "After reviewing the exact cumulative local delta and obtaining scope-specific public approval, publish and run own native PostgreSQL CI. Then implement refresh rotation/provider revocation and verified read-only reconciliation before any authenticated dispatch or scheduler; live Google grant and test post require an authorized app/account and separate post authorization.",
+  "nextAction": "Review exact local workflow/docs/evidence scope and obtain explicit public approval, then publish the minimal follow-up and verify its own native CI. If service pulls still fail, retain logs and resolve registry access without disabling any application gate. Continue refresh/revocation/dispatch only after this CI closure.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -6563,8 +6563,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
-    "status": "social01_oauth_contract_published_native_ci_verified; callback_and_post_ci_closure_local",
+    "commit": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+    "status": "social01_callback_published_exact_tree; native_ci_container_pull_failed; portability_fix_local",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6577,7 +6577,7 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "78a843edf240c6f3ee1e9385d4faa567436f4b51",
+    "sourceTree": "649d5c3a9622b1eae6e09a587f9a13b3cb11f217",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Exact approved 28-file Z+AA+AB payload; own native CI verified. Later local closure not included in public source.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
@@ -7906,15 +7906,13 @@
     }
   ],
   "lastChanges": {
-    "slice": "SOCIAL-01 OAuth callback local verification and cumulative post-CI closure",
+    "slice": "SOCIAL-01 CI portability follow-up",
     "paths": [
+      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
-      "apps/api/src/common.ts",
-      "apps/api/src/social-connections.ts",
-      "docs/API.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -7923,18 +7921,13 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-oauth-callback-evidence.json",
-      "docs/qa/social01-oauth-contract-native-ci-evidence.json",
-      "docs/qa/social01-oauth-contract-native-unit-receipts.json",
-      "docs/qa/verification-summary.json",
-      "prisma/migrations/202610100001_youtube_oauth_refresh_expiry/migration.sql",
-      "prisma/schema.prisma",
-      "tests/integration/social-oauth.test.ts"
+      "docs/qa/social01-ci-portability-evidence.json",
+      "docs/qa/verification-summary.json"
     ],
-    "verified": "193/193 unit, 11/11 HTTP, 7/7 browser, 5/5 recovery, 15 fresh migrations, populated PGlite upgrade/archive restore, API/web builds, Prisma validate, clean npm ci, both npm audits zero. Public/native CI for new delta pending.",
+    "verified": "YAML parsed; Docker Official Images ECR Public postgres:17-alpine and redis:7-alpine manifest initially returned 200; exact public source tree previously passed 193 unit/11 HTTP/7 browser/5 recovery locally; native CI for registry change pending.",
     "knownFailures": [
-      "First restricted-sandbox unit attempt failed media subprocess I/O; standalone 10/10 and final full 193/193 passed with local process I/O.",
-      "First focused HTTP harness could not open loopback S3Proxy in restricted sandbox; focused 2/2 and full 11/11 reruns passed with local loopback permission."
+      "Actions run 37994847651 attempts 1 and 2 failed before checkout on Docker Hub postgres pull timeout/rate limit; no source test result.",
+      "A repeated local ECR metadata request for Redis returned HTTP 429 after an initial 200; CI registry pull success unverified."
     ],
     "publicWriteAttempted": false
   },
@@ -7962,8 +7955,8 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "SOCIAL-01 OAuth callback local: 193/193 unit, 11/11 HTTP, 7/7 browser, 5/5 recovery, 15 migrations, builds/upgrade and both audits pass. No live Google call or post; new source and prior closure unpublished. SOCIAL-01 Partial.",
-  "activeTask": "SOCIAL-01 YouTube OAuth callback local verification complete",
+  "latestStatus": "SOCIAL-01 callback 22 files public at 44ff798; all 306 blobs exact. Actions 37994847651 failed at container initialization on Docker Hub timeout/unauthenticated limit in two attempts; zero source checks ran. Local unchanged source passed 193/11/7/5; CI registry fix pending publication. SOCIAL-01 Partial.",
+  "activeTask": "SOCIAL-01 native CI container pull portability fix local verification",
   "workspaceRecovery": {
     "sourceZipSha256": "2cdf22f352cae1356447a23bb956df85d1f9b81abb2c7ee4b6586ac281688582",
     "sourceRevision": "2026-10-07.06",
@@ -7984,20 +7977,18 @@
     }
   },
   "pendingPublication": {
-    "slice": "SOCIAL-01 prior native CI closure plus local YouTube OAuth callback",
+    "slice": "SOCIAL-01 native CI container pull portability follow-up",
     "approved": false,
     "writeAttempted": false,
-    "basePublicCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
-    "scope": "Cumulative source/config/docs/evidence, including 15 prior unpublished closure paths and new OAuth callback/migration/HTTP fixture; no runtime logs, credentials, Google grant or live post.",
-    "fileCount": 22,
+    "basePublicCommit": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+    "scope": "Workflow service image registry change only, with publication/failed-run evidence and continuity docs. Application source/schema/tests/dependencies remain identical to public 44ff798.",
+    "fileCount": 15,
     "paths": [
+      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
-      "apps/api/src/common.ts",
-      "apps/api/src/social-connections.ts",
-      "docs/API.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -8006,13 +7997,8 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-oauth-callback-evidence.json",
-      "docs/qa/social01-oauth-contract-native-ci-evidence.json",
-      "docs/qa/social01-oauth-contract-native-unit-receipts.json",
-      "docs/qa/verification-summary.json",
-      "prisma/migrations/202610100001_youtube_oauth_refresh_expiry/migration.sql",
-      "prisma/schema.prisma",
-      "tests/integration/social-oauth.test.ts"
+      "docs/qa/social01-ci-portability-evidence.json",
+      "docs/qa/verification-summary.json"
     ]
   },
   "priorPendingPublication": {
@@ -8575,7 +8561,7 @@
     "nativeEvidence": "docs/qa/social01-oauth-contract-native-ci-evidence.json"
   },
   "social01OAuthCallback": {
-    "status": "locally_verified_not_published",
+    "status": "published_native_ci_container_pull_blocked",
     "publicBase": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
     "evidence": "docs/qa/social01-oauth-callback-evidence.json",
     "unitPassed": 193,
@@ -8585,6 +8571,18 @@
     "freshMigrations": 15,
     "nativeCiForDelta": false,
     "liveGoogleGrant": false,
-    "livePost": false
+    "livePost": false,
+    "publicCommit": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+    "publicTree": "649d5c3a9622b1eae6e09a587f9a13b3cb11f217",
+    "publicPathsMatched": 306
+  },
+  "social01CiPortability": {
+    "status": "locally_reviewed_not_published",
+    "evidence": "docs/qa/social01-ci-portability-evidence.json",
+    "publicBase": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+    "failedRunId": 37994847651,
+    "failedAttempts": 2,
+    "applicationTestsStarted": false,
+    "ownNativeCiForFix": false
   }
 }

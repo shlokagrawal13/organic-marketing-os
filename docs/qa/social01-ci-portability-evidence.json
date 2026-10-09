@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 native CI container registry portability follow-up",
+  "dateUtc": "2026-10-09",
+  "status": "locally_reviewed_not_published",
+  "publicBase": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+  "publicTree": "649d5c3a9622b1eae6e09a587f9a13b3cb11f217",
+  "publicBlobPathsModesShaMatched": 306,
+  "publishedPayloadPaths": 22,
+  "githubActions": {
+    "runId": 37994847651,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37994847651",
+    "headSha": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+    "attempts": [
+      {
+        "attempt": 1,
+        "jobId": 114038140143,
+        "failureStep": "Initialize containers",
+        "diagnostic": "postgres:17-alpine Docker Hub auth endpoint timed out on three pulls; checkout, build and tests skipped."
+      },
+      {
+        "attempt": 2,
+        "jobId": 114038774711,
+        "failureStep": "Initialize containers",
+        "diagnostic": "Docker Hub auth timeout and unauthenticated pull-rate limit for postgres:17-alpine; checkout, build and tests skipped."
+      }
+    ],
+    "nativeApplicationPassed": false
+  },
+  "change": {
+    "path": ".github/workflows/ci.yml",
+    "onlyServiceImagesChanged": true,
+    "postgresFrom": "postgres:17-alpine",
+    "postgresTo": "public.ecr.aws/docker/library/postgres:17-alpine",
+    "redisFrom": "redis:7-alpine",
+    "redisTo": "public.ecr.aws/docker/library/redis:7-alpine",
+    "applicationSourceSchemaDependenciesTestsChanged": false,
+    "verificationStepsDisabled": false
+  },
+  "sourceOfImages": [
+    "https://www.docker.com/blog/news-from-aws-reinvent-docker-official-images-on-amazon-ecr-public/",
+    "https://docs.aws.amazon.com/AmazonECR/latest/public/docker-pull-ecr-image.html"
+  ],
+  "checks": {
+    "yamlParsed": true,
+    "serviceNamesTagsAndOptionsUnchanged": true,
+    "bothEcrTagsAnonymousManifestInitiallyReturned200": true,
+    "postgresIndexLinuxAmd64": true,
+    "redisIndexLinuxAmd64": "not_recorded_in_first_probe",
+    "postgresIndexSha256": "b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "repeatedMetadataProbeRedis429": true,
+    "gitDiffCheck": true,
+    "ownNativeCiForFollowup": false
+  },
+  "priorSourceLocalChecks": {
+    "unit": 193,
+    "http": 11,
+    "browser": 7,
+    "recovery": 5,
+    "migrations": 15,
+    "fullAndProductionAuditVulnerabilities": 0
+  },
+  "limits": [
+    "Registry replacement is not yet verified by GitHub Actions. ECR Public supports anonymous pulls but may rate-limit; repeated local metadata checks observed HTTP 429.",
+    "The original public source is published, but both CI attempts failed before checkout; no native source verification is claimed.",
+    "No tests, provider calls, user data or live posts were changed or executed by this workflow-only fix."
+  ],
+  "publicWriteAttemptedForFollowup": false
+}

@@ -83,7 +83,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 OAuth callback local verification on public 02f8fb1 base: 193 unit, 11 HTTP, 7 browser, 5 recovery, 15 PGlite migrations, populated restore, builds and both audits zero. New delta unpublished; native CI and real Google grant/post pending.",
+  "latestIncrement": "SOCIAL-01 OAuth callback 22-file public tree 44ff798 matches 306 blobs. Own native Actions 37994847651 attempts 1/2 stopped before checkout on Docker Hub postgres service image timeout/rate limit; no native tests ran. Identical-tag ECR Public service-image portability fix local/unpublished; local 193 unit, 11 HTTP, 7 browser, 5 recovery, 15 migrations remain prior exact-source evidence.",
   "latestNativeRun": {
     "runId": 37989266829,
     "jobId": 114018963643,
@@ -7785,5 +7785,22 @@
     "bothAuditsZero": true,
     "nativeCiForDelta": false,
     "liveGoogleGrantOrPost": false
+  },
+  "social01CallbackPublicationCi": {
+    "dateUtc": "2026-10-09",
+    "publicCommit": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
+    "publicTree": "649d5c3a9622b1eae6e09a587f9a13b3cb11f217",
+    "publicBlobPathsModesShaMatched": 306,
+    "approvedChangedPaths": 22,
+    "runId": 37994847651,
+    "attempts": 2,
+    "jobIds": [
+      114038140143,
+      114038774711
+    ],
+    "conclusion": "failure_before_checkout_container_pull",
+    "nativeSourceChecksRun": false,
+    "localCiPortabilityEvidence": "docs/qa/social01-ci-portability-evidence.json",
+    "localFollowupPublished": false
   }
 }

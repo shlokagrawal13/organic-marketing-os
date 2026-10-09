@@ -1,5 +1,11 @@
 # Verification report — Organic Marketing OS 0.9.2
 
+## SOCIAL-01 OAuth callback publication and native CI container pull follow-up — 2026-10-09 UTC
+
+The user's approval for the cumulative 22 files was used to publish public `main` at `44ff798494f1d3fcf8bcb9a7c61199817e8d58d0` (parent `02f8fb1d8fc7052b249f305cfe9b7b4790a1e079`, tree `649d5c3a9622b1eae6e09a587f9a13b3cb11f217`). All 306 public blob paths, modes and Git SHAs match the reviewed local tree. Own Actions run `37994847651` failed twice before checkout: job `114038140143` timed out pulling Docker Hub `postgres:17-alpine`; rerun job `114038774711` hit the same auth timeout and unauthenticated pull limit. Build, unit, audits, upgrade and application cases were skipped in both attempts. The successful local 193 unit / 11 HTTP / 7 browser / 5 recovery / 15 PGlite migration evidence applies to the published source tree but is not native PostgreSQL CI evidence.
+
+A local, unpublished workflow-only fix changes the PostgreSQL and Redis service image addresses to Docker Official Images on ECR Public with identical tags and health checks. Both image tags returned manifests in an initial anonymous check; a repeated Redis metadata probe later received HTTP 429, so this remains a candidate pending its own GitHub CI run. No application source, schema, dependency, test or verification step is changed by the fix. See `docs/qa/social01-ci-portability-evidence.json`. No real Google grant or post occurred; SOCIAL-01 remains Partial. Earlier sections are dated history.
+
 ## SOCIAL-01 YouTube OAuth callback local verification — 2026-10-09 UTC
 
 The published `02f8fb1` provider contract is now wired locally to owner/admin OAuth start and session-bound, one-time callback routes. The callback exchanges a PKCE proof, checks one owned channel and stores tenant/account-bound encrypted access/refresh tokens, with a role/session recheck and safe metadata response. The isolated API fixtures cover cross-tenant/role denial, wrong session, replay/concurrency, denied grant, role demotion, provider failure, missing configuration and token/code non-disclosure. No real Google grant or post occurred; the UI and refresh/provider revocation/dispatch remain open.
