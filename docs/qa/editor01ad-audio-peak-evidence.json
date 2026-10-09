@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "slice": "EDITOR-01AD bounded final audio peak QA",
+  "dateUtc": "2026-10-09",
+  "basePublicCommit": "0d725bf221ae05b44d6343b5a316a04676a6dc92",
+  "fixtures": "Synthetic loud 48 kHz stereo 440 Hz narration and 660 Hz looping music WAVs, gain 8, musicVolume 0.5 maximum; no user audio or live provider.",
+  "initialFailure": {
+    "decodedStereoPeak48k": "Above full scale (1.01179 observed before final mix headroom).",
+    "meaning": "Original final music mix could exceed full scale after AAC decode on this bounded input."
+  },
+  "fix": {
+    "finalLimiter": 0.85,
+    "automaticMakeupGain": false,
+    "musicMixOutputGain": "0.9 / (1 + supported musicVolume)",
+    "narrationOnly": "Final limiter before AAC",
+    "sceneCacheChanged": false
+  },
+  "finalDecodedPeaks": {
+    "narrationStereo48k": 0.7893100380897522,
+    "narrationStereo192k": 0.7893100380897522,
+    "loudMixStereo48k": 0.5255735516548157,
+    "loudMixStereo192k": 0.5255735516548157,
+    "loudMixMono48k": 0.7432732582092285,
+    "acceptance": "Each measured absolute sample peak is below 1; signal RMS above 0.1 in both stress exports."
+  },
+  "verification": {
+    "selectedUnitCases": 16,
+    "selectedUnitPassed": 16,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "unitFiles": [
+      "tests/media.test.ts",
+      "tests/render-audio.test.ts",
+      "tests/render-placement.test.ts"
+    ],
+    "apiAndWebBuild": "passed",
+    "productionBrowser": {
+      "spec": "tests/ui/media.spec.ts",
+      "passed": 1,
+      "failed": 0,
+      "migrations": 12,
+      "scope": "Disposable PGlite, local Redis/S3Proxy, FFmpeg, browser real render/download/approval."
+    },
+    "firstBrowserAttempt": "Failed because default optional fallback paths were absent in this fresh checkout; same source passed with two present verified Noto fonts in the environment.",
+    "restrictedSandboxUnicodeSubprocess": "Returned empty stdout in restricted subprocess environment; same source tests/media.test.ts passed 10/10 elevated."
+  },
+  "limits": [
+    "4x resampled sample peaks are a bounded probe, not a standardized true-peak certificate.",
+    "Synthetic tones do not establish subjective speech/music balance or loudness normalization.",
+    "Arbitrary real narration/music, codec/channel variations, physical playback and full native CI on this unpublished increment remain open."
+  ],
+  "publicStatus": "Unpublished; cumulative public scope requires exact new approval. Raw test recordings and runtime logs excluded."
+}

@@ -66,6 +66,8 @@ const assetIds: Record<string, string> = {
   long: "00000000-0000-4000-8000-000000000002",
   music: "00000000-0000-4000-8000-000000000003",
   video: "00000000-0000-4000-8000-000000000004",
+  hot: "00000000-0000-4000-8000-000000000005",
+  hotMusic: "00000000-0000-4000-8000-000000000006",
 };
 function scene(id: string, audioAssetId?: string) {
   return sceneSchema.parse({
@@ -159,12 +161,14 @@ test(
       duration: number,
       rate: number,
       channels: number,
+      gain = 1,
     ) {
       await ffmpeg([
         "-f",
         "lavfi",
         "-i",
         `sine=frequency=${frequency}:sample_rate=${rate}:duration=${duration}`,
+        ...(gain === 1 ? [] : ["-af", `volume=${gain}`]),
         "-ac",
         String(channels),
         `${id}.wav`,
@@ -183,6 +187,7 @@ test(
       id: string,
       scenes: ReturnType<typeof scene>[],
       musicVolume?: number,
+      musicId = "music",
     ) {
       const result = await renderVideo({
         organizationId: "audio-qa",
@@ -195,7 +200,7 @@ test(
           captions: false,
           ...(musicVolume === undefined
             ? {}
-            : { musicAssetId: assetIds.music, musicVolume }),
+            : { musicAssetId: assetIds[musicId], musicVolume }),
         }),
         signal: new AbortController().signal,
         progress: async () => {},
@@ -230,6 +235,35 @@ test(
       assert.ok(Math.abs(samples.length / 48000 - scenes.length) < 0.05);
       assert.ok(samples.every(Number.isFinite));
       return { result, samples };
+    }
+    async function decodedStereoPeak(id: string, sampleRate: number) {
+      await ffmpeg([
+        "-i",
+        `${id}.mp4`,
+        "-map",
+        "0:a:0",
+        "-ac",
+        "2",
+        "-ar",
+        String(sampleRate),
+        "-f",
+        "f32le",
+        `${id}-${sampleRate}.pcm`,
+      ]);
+      const bytes = await readFile(join(dir, `${id}-${sampleRate}.pcm`));
+      const samples = new Float32Array(
+        bytes.buffer.slice(
+          bytes.byteOffset,
+          bytes.byteOffset + bytes.byteLength,
+        ),
+      );
+      assert.ok(samples.length > sampleRate, "stereo output was decoded");
+      let peak = 0;
+      for (const sample of samples) {
+        assert.ok(Number.isFinite(sample), "decoded sample is finite");
+        peak = Math.max(peak, Math.abs(sample));
+      }
+      return peak;
     }
     try {
       await input("short", 440, 0.35, 44100, 1);
@@ -343,6 +377,37 @@ test(
       assert.ok(
         tone(mixed.samples, 1.15, 1.8, 880) > 0.04,
         "mix retains narration",
+      );
+      // Stress the supported maximum music gain with loud narration and music.
+      // Check the exported AAC after 4x stereo resampling, not the limiter graph.
+      await input("hot", 440, 1, 48000, 2, 8);
+      await input("hotMusic", 660, 0.3, 48000, 2, 8);
+      const hotPlain = await render("hot-plain", [scene("hot-scene", "hot")]);
+      assert.ok(rms(hotPlain.samples, 0.2, 0.8) > 0.1);
+      const plainPeak = await decodedStereoPeak("hot-plain", 48000);
+      const plain4xPeak = await decodedStereoPeak("hot-plain", 192000);
+      assert.ok(plainPeak < 1, `48 kHz narration peak ${plainPeak} clips`);
+      assert.ok(
+        plain4xPeak < 1,
+        `4x resampled narration peak ${plain4xPeak} clips`,
+      );
+      const hot = await render(
+        "hot-mix",
+        [scene("hot-scene", "hot")],
+        0.5,
+        "hotMusic",
+      );
+      assert.ok(rms(hot.samples, 0.2, 0.8) > 0.1, "limited mix stays audible");
+      const mixPeak = await decodedStereoPeak("hot-mix", 48000);
+      const mix4xPeak = await decodedStereoPeak("hot-mix", 192000);
+      let monoPeak = 0;
+      for (const sample of hot.samples)
+        monoPeak = Math.max(monoPeak, Math.abs(sample));
+      assert.ok(mixPeak < 1, `48 kHz loud mix peak ${mixPeak} clips`);
+      assert.ok(mix4xPeak < 1, `4x resampled loud mix peak ${mix4xPeak} clips`);
+      assert.ok(monoPeak < 1, `48 kHz mono mix peak ${monoPeak} clips`);
+      console.log(
+        `48 kHz/4x stereo peaks: narration=${plainPeak}/${plain4xPeak}, music mix=${mixPeak}/${mix4xPeak}; mono mix=${monoPeak}`,
       );
     } finally {
       await rm(dir, { recursive: true, force: true });

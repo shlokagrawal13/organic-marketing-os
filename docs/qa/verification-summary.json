@@ -1,21 +1,21 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-08",
+  "verifiedDate": "2026-10-09",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 187,
+    "unit": 188,
     "httpScenarios": 7,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 12,
-    "unitFontSets": 2
+    "unitFontSets": 1
   },
   "environment": {
-    "database": "Own X native PostgreSQL 17 application CI; separate PGlite populated upgrade/archive restore.",
-    "redis": "Own X native Redis 7 CI; local native Redis 7.2.11.",
+    "database": "Own Z+AA+AB native PostgreSQL 17 application CI; separate PGlite populated upgrade/archive restore.",
+    "redis": "Own Z+AA+AB native Redis 7 CI; local native Redis 7.2.11 previously verified.",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "Real FFmpeg/ffprobe; native environment version retained in raw job logs.",
     "email": "local SMTP capture",
@@ -83,19 +83,19 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "EDITOR-01Y locally verifies 72 timed inset/device-safe placement frames and 36/36 small-screen English OCR samples from 18 exports plus blank negative control. Selected 14/14 units and API/web builds passed on clean X source. Physical devices, official platform app UI and multilingual OCR remain open; Y publication/own CI pending exact approval.",
+  "latestIncrement": "EDITOR-01AC locally selects Device safe for initial new 9:16 browser composer; API/renderer defaults and saved render snapshots unchanged. Clean install, API/web build, focused production browser 1/1 with 12 migrations and render/download pass; full application suites/own native CI not rerun for AC. AB public own CI remains previous evidence.",
   "latestNativeRun": {
-    "runId": 37769888218,
-    "jobId": 113286580705,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37769888218",
-    "sourceCommit": "8fdb7efce7f866a0fafa6a9541a07f77d0372447",
-    "sourceTree": "1086591e54ce63acecb073165c4d0037cd9f4fec",
+    "runId": 37823837950,
+    "jobId": 113471418146,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37823837950",
+    "sourceCommit": "0d725bf221ae05b44d6343b5a316a04676a6dc92",
+    "sourceTree": "6511bc0ea60af32dd2ae816b4438ebcdc4377b39",
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
     "unit": {
-      "tests": 187,
-      "passed": 187,
+      "tests": 188,
+      "passed": 188,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
@@ -105,6 +105,7 @@
     "browserScenarios": 7,
     "recoveryScenarios": 5,
     "migrations": 12,
+    "smallScreenEnglishOcrPasses": 36,
     "populatedPgliteUpgradeRestore": true,
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0
@@ -7382,10 +7383,81 @@
     "freshMigrations": 12,
     "realRenderDownloadInBrowser": true,
     "fullUnitHttpRecoveryAndAuditsRerun": false,
-    "nativeCiPending": true,
+    "nativeCiPending": false,
     "publicWriteAttempted": true,
     "limits": "Captured app UI overlap applies to one phone state; other devices, real content and wider fonts/languages remain open",
-    "publicWriteSucceeded": false,
+    "publicWriteSucceeded": true,
     "publicationApprovalReview": "First GitHub create_blob rejected before remote write; explicit approval for cumulative Z+AA+AB 28-file public payload required."
+  },
+  "editor01abNativeCi": {
+    "run": {
+      "runId": 37823837950,
+      "jobId": 113471418146,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37823837950",
+      "sourceCommit": "0d725bf221ae05b44d6343b5a316a04676a6dc92",
+      "sourceTree": "6511bc0ea60af32dd2ae816b4438ebcdc4377b39",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "unit": {
+        "tests": 188,
+        "passed": 188,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "httpScenarios": 7,
+      "browserScenarios": 7,
+      "recoveryScenarios": 5,
+      "migrations": 12,
+      "smallScreenEnglishOcrPasses": 36,
+      "populatedPgliteUpgradeRestore": true,
+      "productionAuditAdvisories": 0,
+      "fullAuditAdvisories": 0
+    },
+    "evidence": "docs/qa/editor01ab-native-ci-evidence.json",
+    "publicBlobInventoryExactMatch": 279,
+    "browserArtifactMetadataOnly": false,
+    "rawAccountRecordingsPublished": false,
+    "browserArtifactDigestAndCrcVerified": true,
+    "uniqueUnitCaseReceipts": 188,
+    "ocrSamplesInArtifact": 36
+  },
+  "editor01acLocal": {
+    "schemaVersion": 1,
+    "slice": "EDITOR-01AC",
+    "basePublicCommit": "0d725bf221ae05b44d6343b5a316a04676a6dc92",
+    "scope": "New browser composer initial 9:16 text placement; API, schema, renderer and existing saved render options unchanged",
+    "initialPortraitPlacement": "device-safe-v1",
+    "explicitStandardAllowedWithWarning": true,
+    "reselectReelsShortsRestoresDeviceSafe": true,
+    "explicitExtraMarginsPreserved": true,
+    "savedRenderSnapshotUnchangedInBrowser": true,
+    "cleanNpmCiAndGuardedPostinstallPassed": true,
+    "apiTypeScriptBuildPassed": true,
+    "nextProductionBuildPassed": true,
+    "focusedProductionBrowserCases": 1,
+    "focusedProductionBrowserPassed": 1,
+    "freshMigrations": 12,
+    "realRenderAndDownloadPassed": true,
+    "incompleteFirstBrowserAttempt": "Clean checkout lacked dist/packages/core/media.js; stopped before tests. API build and Prisma generation completed; final browser run passed.",
+    "fullUnitHttpRecoveryAuditsRerun": false,
+    "nativeCiForThisDelta": false,
+    "priorAbNativeCiRunId": 37823837950,
+    "publicWriteAttempted": false,
+    "limits": [
+      "One captured phone/account UI shows Standard portrait overlap on YouTube Shorts/Instagram Reels; no universal certification.",
+      "Additional devices, real backgrounds/footage, app versions/descriptions and wider language/font readability remain pending."
+    ]
+  },
+  "localEditor01AdAudioPeak": {
+    "selectedUnitPassed": 16,
+    "selectedUnitTotal": 16,
+    "productionBrowserPassed": 1,
+    "productionBrowserTotal": 1,
+    "migrationsApplied": 12,
+    "peakEvidence": "docs/qa/editor01ad-audio-peak-evidence.json",
+    "scope": "Local synthetic loud narration/music AAC peak regression and isolated production media flow; not native own CI."
   }
 }

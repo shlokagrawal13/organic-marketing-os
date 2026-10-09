@@ -258,20 +258,29 @@ test("inspect workspace pages, upload private media, render and approve a playab
     name: "Selected export composition",
     exact: true,
   });
-  await expect(guides).toContainText("Standard placement");
+  const placement = page.getByRole("combobox", {
+    name: "Text placement",
+    exact: true,
+  });
+  await expect(placement).toHaveValue("device-safe-v1");
+  await expect(guides).toContainText("Device safe");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toHaveCount(0);
   await expect(guides.locator("svg")).toHaveAttribute(
     "viewBox",
     "0 0 720 1280",
   );
+  await placement.selectOption("");
+  await expect(guides).toContainText("Standard placement");
+  await expect(
+    page.getByText(/Standard portrait text can be covered/),
+  ).toBeVisible();
   await preset.selectOption("vertical-social-v1");
   await expect(guides.locator("svg")).toHaveAttribute(
     "viewBox",
     "0 0 1080 1920",
   );
-  const placement = page.getByRole("combobox", {
-    name: "Text placement",
-    exact: true,
-  });
   await expect(placement).toHaveValue("device-safe-v1");
   await expect(guides).toContainText("Device safe");
   await expect(

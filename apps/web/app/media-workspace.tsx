@@ -539,7 +539,7 @@ export function RenderPanel({
     aspect: "9:16",
     resolution: "720",
     captions: true,
-    textPlacement: undefined as RenderTextPlacement | undefined,
+    textPlacement: DEVICE_SAFE_TEXT_PLACEMENT as RenderTextPlacement | undefined,
     cjkLanguage: undefined as CjkLanguage | undefined,
     musicAssetId: null as string | null,
     musicVolume: 0.12,

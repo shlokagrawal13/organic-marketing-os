@@ -12,7 +12,7 @@ Status: **one bounded phone/app review completed; wider device/content acceptanc
 
 The uploaded clips were WhatsApp-transcoded at 386 × 850. The phone model, native capture dimensions and app versions are unknown. These results apply to the captured UI only. The raw account recordings and unredacted screenshots are not in the public-source checkpoint; `docs/qa/editor01aa-platform-review-evidence.json` stores only hashes, observed timestamps and account-free findings. The YouTube screen showed a Private label; the Instagram screens showed Your reels and insights, but their audience setting was not established. No account visibility was changed here.
 
-For new portrait social exports, selecting the Reels / Shorts preset now selects Device safe when placement is still Standard. A previously chosen Extra margins/Device safe placement remains selected. Standard remains available after an explicit user choice, with an on-screen warning; saved render snapshots and backend defaults are unchanged. Review the export in its destination app. A second phone/layout, normal and long platform descriptions, real footage and wider language/font cases remain open.
+New browser composer sessions start with Device safe selected at 9:16/720. Selecting the Reels / Shorts preset also selects Device safe when placement was explicitly changed to Standard. A previously chosen Extra margins/Device safe placement remains selected. Standard remains available after an explicit user choice, with an on-screen warning; saved render snapshots and backend defaults are unchanged. Review the export in its destination app. A second phone/layout, normal and long platform descriptions, real footage and wider language/font cases remain open.
 
 ## Prepare the exact review videos
 

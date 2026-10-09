@@ -47,6 +47,8 @@ type RenderContext = {
   cachePut: (key: string, entry: CacheEntry) => Promise<void>;
 };
 const ffmpeg = () => process.env.FFMPEG_PATH || "ffmpeg";
+// Leave encoding headroom after the final AAC pass, including reused scenes.
+const FINAL_AUDIO_LIMIT = 0.85;
 export async function renderVideo(ctx: RenderContext) {
   const { store, signal, options, scenes } = ctx;
   validateRenderScenes(scenes, options);
@@ -425,7 +427,7 @@ export async function renderVideo(ctx: RenderContext) {
         "-i",
         music.path,
         "-filter_complex",
-        `[1:a]volume=${options.musicVolume}[music];[0:a][music]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,alimiter=limit=0.95,aresample=48000:async=1:first_pts=0,asetpts=N/SR/TB[a]`,
+        `[1:a]volume=${options.musicVolume}[music];[0:a][music]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,alimiter=limit=${FINAL_AUDIO_LIMIT}:level=false,aresample=48000:async=1:first_pts=0,volume=${0.9 / (1 + options.musicVolume)},asetpts=N/SR/TB[a]`,
         "-map",
         "0:v",
         "-map",
@@ -457,7 +459,7 @@ export async function renderVideo(ctx: RenderContext) {
         "-c:v",
         "copy",
         "-af",
-        "aresample=48000:async=1:first_pts=0,asetpts=N/SR/TB",
+        `aresample=48000:async=1:first_pts=0,alimiter=limit=${FINAL_AUDIO_LIMIT}:level=false,asetpts=N/SR/TB`,
         "-c:a",
         "aac",
         "-b:a",
