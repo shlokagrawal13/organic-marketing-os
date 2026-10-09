@@ -276,6 +276,26 @@ render options, queueing, approval, caption timing or scene caches. Review the
 playable export on the intended platform; device and official platform interface
 acceptance remains open.
 
+## Busy background text contrast QA (EDITOR-01AE)
+
+Burned titles/captions now use an 85% opaque black box behind white text in
+both FFmpeg drawtext and shaped SVG overlays. The prior 65% backdrop allowed a
+diagonal high-detail background to break OCR of the long Extra margins title
+at 320px. Text placement, font sizes, margins, cue timing and SRT are unchanged.
+Only scenes with burned text get a new backdrop component in the scene cache
+fingerprint; empty scenes keep their previous key. Existing saved videos are
+not silently altered; a new render uses the stronger backdrop.
+
+`npm run verify:readability` retains its 36 black-background samples and adds
+eight title/caption crops from two real MP4 exports using the same pinned
+synthetic high-detail portrait asset as the Z device review. It checks short
+and long English text under Extra margins and Device safe at a 320px display
+width. A full-frame OCR pass is unsuitable for this fixture because the
+background pattern contributes unrelated marks; fixed crops and frame hashes
+are recorded in `docs/qa/editor01ae-busy-readability-evidence.json`.
+These tests do not certify real footage, other colors/fonts/scripts, app UI
+overlays or physical-device readability.
+
 ## Loud narration and music mix peak QA (EDITOR-01AD)
 
 Final assembly limits the decoded scene mix with automatic makeup gain disabled,

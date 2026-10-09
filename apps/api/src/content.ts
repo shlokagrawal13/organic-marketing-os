@@ -174,6 +174,14 @@ export class ContentController {
         throw new ConflictException(
           "Content changed or is archived. Reload before editing.",
         );
+      await tx.publicationIntent.updateMany({
+        where: {
+          organizationId: req.organizationId,
+          contentId: id,
+          status: "PREPARED",
+        },
+        data: { status: "INVALIDATED", invalidatedAt: new Date() },
+      });
       await tx.renderJob.updateMany({
         where: {
           contentId: id,
@@ -259,6 +267,15 @@ export class ContentController {
         throw new ConflictException(
           "Content changed or is not in the required state. Reload and try again.",
         );
+      if (to !== "APPROVED")
+        await tx.publicationIntent.updateMany({
+          where: {
+            organizationId: req.organizationId,
+            contentId: id,
+            status: "PREPARED",
+          },
+          data: { status: "INVALIDATED", invalidatedAt: new Date() },
+        });
       if (to !== "APPROVED")
         await tx.renderJob.updateMany({
           where: {

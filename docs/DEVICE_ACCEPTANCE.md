@@ -24,6 +24,14 @@ The command creates `.local/device-review/`: three 720 × 1280 H.264 videos (Sta
 
 The initial synthetic fixture's three exact MP4s, three representative PNGs and hash manifest are saved under `docs/qa/editor01z-*`; see `docs/qa/editor01z-device-review-evidence.json`. A new run with a different background has different hashes and must have its own review receipt. Never use the synthetic receipt to claim acceptance for another video.
 
+EDITOR-01AE strengthens the burned-text backdrop on new renders. Its independent
+320px OCR gate uses the same pinned synthetic background SHA and eight exact
+English title/caption crops for Extra margins and Device safe; see
+`docs/qa/editor01ae-busy-readability-evidence.json`. The Z MP4 hashes identify
+the older backdrop, so those already uploaded phone clips are still evidence
+for their original bytes. New AE exports need a fresh phone/app review before
+any broader platform readability claim.
+
 ## Review on real apps
 
 Use the same hashed video for each placement. Check at least one small-screen phone and a second screen size/platform if available. In each target platform's current app, import into a draft or preview without public posting. Inspect **the viewing surface with its normal controls visible**, as well as the upload preview. Record a screenshot or screen recording at 0.5, 1.5, and 2.5 seconds; record app name/version, phone model, OS/version, screen size, aspect, video SHA-256, and whether the account name, description, action buttons, navigation, or captions cover text.

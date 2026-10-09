@@ -74,6 +74,7 @@ model Organization {
   billingEvents       BillingEvent[]
   billingInvoices     BillingInvoice[]
   mediaGenerations    MediaGeneration[]
+  publicationIntents  PublicationIntent[]
 }
 
 enum ContentStatus {
@@ -123,6 +124,7 @@ model ContentItem {
   versions       ContentVersion[]
   comments       ContentComment[]
   renders        RenderJob[]
+  publicationIntents PublicationIntent[]
 
   @@index([organizationId, status])
   @@index([organizationId, plannedAt])
@@ -151,6 +153,36 @@ model ContentComment {
   createdAt  DateTime    @default(now())
 
   @@index([contentId, createdAt])
+}
+
+enum PublicationIntentStatus {
+  PREPARED
+  INVALIDATED
+  CANCELED
+}
+
+// Preparation is internal only. No provider call, scheduled job or posted state exists.
+model PublicationIntent {
+  id              String                  @id @default(uuid())
+  organizationId  String
+  organization    Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contentId       String
+  content         ContentItem             @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  contentRevision Int
+  renderId        String?
+  platform        String
+  snapshot        Json
+  requestKey      String
+  requestHash     String
+  status          PublicationIntentStatus @default(PREPARED)
+  createdBy       String
+  createdAt       DateTime                @default(now())
+  invalidatedAt   DateTime?
+  canceledAt      DateTime?
+
+  @@unique([organizationId, requestKey])
+  @@index([organizationId, createdAt])
+  @@index([organizationId, contentId, status])
 }
 
 enum JobStatus {

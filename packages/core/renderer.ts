@@ -186,6 +186,7 @@ export async function renderVideo(ctx: RenderContext) {
           textPlacement: sceneOverlays[i].length
             ? options.textPlacement
             : undefined,
+          textBackdrop: sceneOverlays[i].length ? "black-0.85-v1" : undefined,
           captions: options.captions ? sceneCaptionCues(scene) : [],
           cjkLanguage: sceneOverlays[i].some((overlay) =>
             hasIndicOutlineText(overlay.text),
@@ -316,7 +317,7 @@ export async function renderVideo(ctx: RenderContext) {
           const file = `${type}-${i}.txt`;
           await writeFile(join(dir, file), text, "utf8");
           filters.push(
-            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=12:line_spacing=${RENDER_TEXT_LINE_SPACING}:x=${x}:y=${y}${enable}`,
+            `drawtext=fontfile=font-${fontIndex}.ttf:textfile=${file}:expansion=none:text_shaping=1:fontsize=${fontSize}:fontcolor=white:box=1:boxcolor=black@0.85:boxborderw=12:line_spacing=${RENDER_TEXT_LINE_SPACING}:x=${x}:y=${y}${enable}`,
           );
         }
         const fadeFilters: string[] = [];

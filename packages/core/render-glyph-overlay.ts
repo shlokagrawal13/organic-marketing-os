@@ -70,5 +70,5 @@ export function glyphOverlaySvg(
       });
     })
     .join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect x="${center - blockWidth / 2 - 12}" y="${top - 12}" width="${blockWidth + 24}" height="${blockHeight + 24}" fill="black" fill-opacity="0.65"/><g fill="white">${paths}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect x="${center - blockWidth / 2 - 12}" y="${top - 12}" width="${blockWidth + 24}" height="${blockHeight + 24}" fill="black" fill-opacity="0.85"/><g fill="white">${paths}</g></svg>`;
 }

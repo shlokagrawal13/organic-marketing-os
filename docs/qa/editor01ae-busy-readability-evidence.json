@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "slice": "EDITOR-01AE synthetic busy-background text contrast",
+  "dateUtc": "2026-10-09",
+  "basePublicCommit": "470da707e0feb8fa5aaf8e2a829dbd32549f20b9",
+  "backgroundSha256": "ac8454483163a3bb10b23b8e689a03db139f830b4f51cdb0294fe111073e6f93",
+  "before": {
+    "backdropOpacity": 0.65,
+    "publishedZVideos": {
+      "extra-margins": "a3386409f8549573af52e99dc814e3ae9dfa1a0ee3ccdac55de30d7f75a21377",
+      "device-safe": "014a21b9c4c660eff897ba898de82cc4ae3590ff68636314bde7072ce78474ac"
+    },
+    "sameEightCropOcrPassed": 7,
+    "sameEightCropOcrTotal": 8,
+    "failure": {
+      "placement": "extra-margins",
+      "scene": "long-english",
+      "area": "title",
+      "expected": "plan your next campaign with clear goals",
+      "recognized": "if urnext am pe with clear"
+    }
+  },
+  "after": {
+    "backdropOpacity": 0.85,
+    "prototypeVideos": {
+      "extra-margins": "521fc28ff8672e79329288d434a504dc61803f19fd7e2aaf749ae5fd3ccda662",
+      "device-safe": "4920d754c7a886b230825870223aec953944d3f5096ee96604f4b322fa22e44a"
+    },
+    "unchangedBlackBackgroundOcrPassed": 36,
+    "unchangedBlackBackgroundOcrTotal": 36,
+    "busyOcrPassed": 8,
+    "busyOcrTotal": 8,
+    "negativeBlankControlPassed": true,
+    "croppedSamples": [
+      {
+        "placement": "extra-margins",
+        "scene": "short",
+        "area": "title",
+        "file": "busy-extra-margins-short-title.png",
+        "frameSha256": "e8d542771fa7e834d0e9804c37f1199a547630e05e9eb7400ae15b3431a13d2a",
+        "sha256": "9d8ade022e490efbccfb169ae04f1959019d91f82ad9ce59acae2073161eaf18",
+        "expected": "clear video title",
+        "recognized": "clear video title",
+        "passed": true
+      },
+      {
+        "placement": "extra-margins",
+        "scene": "short",
+        "area": "caption",
+        "file": "busy-extra-margins-short-caption.png",
+        "frameSha256": "e8d542771fa7e834d0e9804c37f1199a547630e05e9eb7400ae15b3431a13d2a",
+        "sha256": "8f51bff82b5469cf01a27d04893bd2373ed839e8a2209cf8d3af9561b5561c5c",
+        "expected": "read every caption",
+        "recognized": "read every caption",
+        "passed": true
+      },
+      {
+        "placement": "extra-margins",
+        "scene": "long",
+        "area": "title",
+        "file": "busy-extra-margins-long-title.png",
+        "frameSha256": "835dbdab9e86110d6df402706db907e6f9ac43bf3464bc0aa938aac16094c8d8",
+        "sha256": "e6d313ec8a87fd6e9153e16e8621174afaf5486961510c858f538b48b7b1880c",
+        "expected": "plan your next campaign with clear goals",
+        "recognized": "plan your next campaign with clear goals",
+        "passed": true
+      },
+      {
+        "placement": "extra-margins",
+        "scene": "long",
+        "area": "caption",
+        "file": "busy-extra-margins-long-caption.png",
+        "frameSha256": "835dbdab9e86110d6df402706db907e6f9ac43bf3464bc0aa938aac16094c8d8",
+        "sha256": "c87e7923ac8ae1408b282fe717773fd9e81d69bd5fd07ae41d372e5fe55f131a",
+        "expected": "keep the key message easy to read on small screens",
+        "recognized": "keep the key message easy to read on small screens",
+        "passed": true
+      },
+      {
+        "placement": "device-safe",
+        "scene": "short",
+        "area": "title",
+        "file": "busy-device-safe-short-title.png",
+        "frameSha256": "5a2f0507e40718e1269d7c7f96d865b28b51fe824063a221d7ca27ee2d410411",
+        "sha256": "326ec4ed327a633231bd79816514a8d0da36395b0ead2f4548df455c677eddfa",
+        "expected": "clear video title",
+        "recognized": "clear video title",
+        "passed": true
+      },
+      {
+        "placement": "device-safe",
+        "scene": "short",
+        "area": "caption",
+        "file": "busy-device-safe-short-caption.png",
+        "frameSha256": "5a2f0507e40718e1269d7c7f96d865b28b51fe824063a221d7ca27ee2d410411",
+        "sha256": "797ae6cd2838a6396a19a537ed110c84eb628b7cfc20b3bec0e5c84c972714eb",
+        "expected": "read every caption",
+        "recognized": "read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe",
+        "scene": "long",
+        "area": "title",
+        "file": "busy-device-safe-long-title.png",
+        "frameSha256": "32d87a65c0b2d32b699fd118441c0aafee5f0f6c3a66279bf3083d5ef8e42a95",
+        "sha256": "537ad4e59c656f01e2c83702feda98c74152aecbf8ab43dd1593641fa69f810b",
+        "expected": "plan your next campaign with clear goals",
+        "recognized": "plan your next campaign with clear goals",
+        "passed": true
+      },
+      {
+        "placement": "device-safe",
+        "scene": "long",
+        "area": "caption",
+        "file": "busy-device-safe-long-caption.png",
+        "frameSha256": "32d87a65c0b2d32b699fd118441c0aafee5f0f6c3a66279bf3083d5ef8e42a95",
+        "sha256": "1c0a2082659f84acadceba9f2b8502de612318a77a9daaa2f0f642aa897f85c3",
+        "expected": "keep the key message easy to read on small screens",
+        "recognized": "keep the key message easy to read on small screens",
+        "passed": true
+      }
+    ],
+    "cache": "Burned-text scenes carry black-0.85-v1 component; no-text cache keys retain prior identity."
+  },
+  "verification": {
+    "selectedUnitPassed": 16,
+    "selectedUnitTotal": 16,
+    "unitFailedCancelledSkippedTodo": 0,
+    "apiAndWebBuild": "passed",
+    "productionBrowserMediaPassed": 1,
+    "productionBrowserMediaTotal": 1,
+    "freshMigrationsApplied": 12,
+    "realRenderDownloadApproval": true,
+    "mixedHindiFrameVisuallyInspected": true,
+    "fullNativeCiOnAE": false
+  },
+  "scope": "Exact synthetic testsrc2 720x1280 visual, decoded 320px English text boxes for two placements, two scene lengths; 2 busy exports plus 18 black exports. No user media or live provider.",
+  "limits": [
+    "The saved Z phone videos retain their original bytes and earlier one-phone observations; AE needs separate app review.",
+    "Fixed OCR crops omit unrelated background marks and do not establish whole-frame OCR, real-content readability, all fonts/scripts, other resolutions, or physical-device acceptance.",
+    "Darker boxes alter export style and can cover more visual detail; subjective review remains open."
+  ],
+  "rawLogsAndRuntimeMediaExcluded": true,
+  "publication": "Local and unpublished; cumulative prior 14-file closure plus AE needs exact future approval."
+}

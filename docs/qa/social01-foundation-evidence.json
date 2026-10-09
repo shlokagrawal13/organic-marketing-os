@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 local publication preparation",
+  "dateUtc": "2026-10-09",
+  "status": "locally_verified_not_published",
+  "publicBase": "470da707e0feb8fa5aaf8e2a829dbd32549f20b9",
+  "behavior": {
+    "approvedRevisionSnapshot": true,
+    "videoRequiresApprovedExactRevisionRender": true,
+    "workspaceIdempotencyAndConflict": true,
+    "concurrentRequestDeduplication": true,
+    "editArchiveApprovalRemovalInvalidation": true,
+    "historicalSnapshotPreserved": true,
+    "tenantAndRoleChecks": true,
+    "cancelPrepared": true,
+    "providerDispatch": false,
+    "oauth": false,
+    "scheduledOrPublishedState": false
+  },
+  "verification": {
+    "prismaClientGenerated": true,
+    "prismaSchemaValid": true,
+    "apiTypeScriptBuildPassed": true,
+    "disposablePgliteMigrationsApplied": 13,
+    "focusedHttpFinal": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "includesVideoWithoutApprovedRenderRejection": true
+    },
+    "fullHttpRun": {
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "actualFfmpegMedia": true,
+      "pinnedFontsVerified": 19
+    },
+    "uiSuiteRerun": false,
+    "recoverySuiteRerun": false,
+    "unitSuiteRerun": false,
+    "nativeCiRun": false
+  },
+  "failedAttempt": "Earlier full HTTP run passed 7 of 8; media render failed because this checkout lacked configured render fonts. Restored 15 pinned Noto TTF and four pinned CJK OTF in ignored test paths and reran full suite: 8/8. First independent Prisma validate lacked DATABASE_URL; rerun with validation-only URL passed.",
+  "limitations": [
+    "No live social provider, developer app, test account, token or external post.",
+    "Per-platform policy metadata and immutable external attempt/unknown-outcome recovery remain to implement.",
+    "Web UI, recovery/unit and native CI are not evidence for this local delta."
+  ]
+}

@@ -36,6 +36,14 @@ async function main() {
     samples,
     negativeControlPassed: false,
   };
+  const busySamples: Record<string, unknown>[] = [];
+  report.busy = {
+    scope:
+      "Fixed 720p synthetic high-detail portrait asset; OCR on reviewed 320px title/caption regions for Extra margins and Device safe. Not physical-device or arbitrary content acceptance.",
+    expectedSamples: 8,
+    exports: 0,
+    samples: busySamples,
+  };
   try {
     report.ffmpeg = (await runProcess(ffmpeg, ["-version"])).split("\n")[0];
     report.tesseract = (await runProcess(tesseract, ["--version"])).split(
@@ -165,6 +173,169 @@ async function main() {
       samples.filter((sample) => !sample.passed).length,
       0,
       "OCR mismatches remain failures",
+    );
+    const visualAssetId = "00000000-0000-4000-8000-000000000001";
+    const background = join(dir, "busy-background.png");
+    await runProcess(ffmpeg, [
+      "-v",
+      "error",
+      "-y",
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=720x1280:rate=1",
+      "-frames:v",
+      "1",
+      background,
+    ]);
+    const backgroundBytes = await readFile(background);
+    (report.busy as Record<string, unknown>).backgroundSha256 =
+      hash(backgroundBytes);
+    const busyCases = [
+      { label: "short", title, caption },
+      {
+        label: "long",
+        title: "Plan your next campaign with clear goals",
+        caption: "Keep the key message easy to read on small screens",
+      },
+    ];
+    // Fixed text-box crops are tied to this exact 720p fixture at a 320px
+    // display width. Full-frame OCR also reads the test pattern's decorations.
+    const crops: Record<
+      string,
+      Record<string, Record<string, [number, number, number, number]>>
+    > = {
+      "extra-margins": {
+        short: { title: [72, 101, 220, 128], caption: [80, 384, 213, 412] },
+        long: { title: [53, 102, 242, 177], caption: [53, 370, 242, 412] },
+      },
+      "device-safe": {
+        short: { title: [65, 111, 215, 139], caption: [72, 349, 210, 376] },
+        long: { title: [68, 110, 215, 189], caption: [61, 316, 216, 377] },
+      },
+    };
+    for (const [placement, textPlacement] of [
+      ["extra-margins", "inset-v1"],
+      ["device-safe", "device-safe-v1"],
+    ] as const) {
+      const video = join(dir, `busy-${placement}.mp4`);
+      await renderVideo({
+        organizationId: "busy-readability-test",
+        id: placement,
+        scenes: busyCases.map(({ label, title, caption }) =>
+          sceneSchema.parse({
+            id: label,
+            purpose: "",
+            duration: 1,
+            voiceover: "",
+            visual: "",
+            visualAssetId,
+            visualFit: "cover",
+            onScreenText: title,
+            caption: "",
+            captionCues: [{ start: 0.25, end: 0.85, text: caption }],
+            transition: "Cut",
+            music: "",
+            sfx: "",
+            cta: "",
+          }),
+        ),
+        options: renderOptions.parse({
+          aspect: "9:16",
+          resolution: "720",
+          textPlacement,
+        }),
+        assets: [
+          {
+            id: visualAssetId,
+            objectKey: "busy-background",
+            sha256: hash(backgroundBytes),
+            kind: "IMAGE",
+            bytes: backgroundBytes.length,
+          },
+        ],
+        store: {
+          ready: async () => {},
+          download: async (_key: string, path: string) =>
+            writeFile(path, backgroundBytes),
+          putFile: async (key: string, path: string) => {
+            if (key.endsWith("/video.mp4"))
+              await writeFile(video, await readFile(path));
+          },
+          remove: async () => {},
+        } as unknown as ObjectStore,
+        signal: new AbortController().signal,
+        progress: async () => {},
+        cacheGet: async () => null,
+        cachePut: async () => {},
+      });
+      (report.busy as Record<string, unknown>).exports =
+        Number((report.busy as Record<string, unknown>).exports) + 1;
+      for (const [index, fixture] of busyCases.entries()) {
+        const frame = join(dir, `busy-${placement}-${fixture.label}-320.png`);
+        await runProcess(ffmpeg, [
+          "-v",
+          "error",
+          "-y",
+          "-ss",
+          String(index + 0.5),
+          "-i",
+          video,
+          "-frames:v",
+          "1",
+          "-vf",
+          "scale=320:-1:flags=lanczos",
+          frame,
+        ]);
+        for (const area of ["title", "caption"] as const) {
+          const [left, top, right, bottom] =
+            crops[placement][fixture.label][area];
+          const file = `busy-${placement}-${fixture.label}-${area}.png`;
+          const path = join(dir, file);
+          await runProcess(ffmpeg, [
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            frame,
+            "-frames:v",
+            "1",
+            "-vf",
+            `crop=${right - left}:${bottom - top}:${left}:${top},scale=iw*2:ih*2:flags=lanczos`,
+            path,
+          ]);
+          const recognized = normalize(
+            await runProcess(
+              tesseract,
+              [path, "stdout", "-l", "eng", "--oem", "1", "--psm", "6"],
+              { timeout: 30000 },
+            ),
+          );
+          const passed = recognized === normalize(fixture[area]);
+          busySamples.push({
+            placement,
+            scene: fixture.label,
+            area,
+            file,
+            frameSha256: hash(await readFile(frame)),
+            sha256: hash(await readFile(path)),
+            expected: normalize(fixture[area]),
+            recognized,
+            passed,
+          });
+          console.log(`${passed ? "PASS" : "FAIL"} ${file}: ${recognized}`);
+        }
+      }
+    }
+    assert.equal(
+      busySamples.length,
+      8,
+      "complete busy-background matrix required",
+    );
+    assert.equal(
+      busySamples.filter((sample) => !sample.passed).length,
+      0,
+      "busy-background text-box OCR mismatches remain failures",
     );
     report.passed = true;
   } catch (error) {

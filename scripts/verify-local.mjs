@@ -138,8 +138,13 @@ const uiOnly = process.argv.includes("--ui-only");
 const uiSpec = process.argv
   .find((arg) => arg.startsWith("--ui-spec="))
   ?.slice(10);
+const httpSpec = process.argv
+  .find((arg) => arg.startsWith("--http-spec="))
+  ?.slice(12);
 if (uiSpec && !/^[a-z-]+\.spec\.ts$/.test(uiSpec))
   throw new Error("Select a test filename such as generated-media.spec.ts.");
+if (httpSpec && !/^[a-z-]+\.test\.ts$/.test(httpSpec))
+  throw new Error("Select an HTTP test filename such as publications.test.ts.");
 process.env.MOS_TEST_DATABASE = native ? "native" : "pglite";
 if (native && process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
@@ -482,7 +487,9 @@ try {
       "tsx",
       "--test",
       "--test-concurrency=1",
-      "tests/integration/*.test.ts",
+      httpSpec
+        ? `tests/integration/${httpSpec}`
+        : "tests/integration/*.test.ts",
     ]);
   if (!process.argv.includes("--skip-ui")) {
     const { readFileSync, writeFileSync, chmodSync } = await import("node:fs");
@@ -500,7 +507,7 @@ try {
       ...(uiSpec ? [`tests/ui/${uiSpec}`] : []),
     ]);
   }
-  if (!uiOnly)
+  if (!uiOnly && !process.argv.includes("--skip-recovery"))
     await run("node", [
       "--import",
       "tsx",
@@ -511,9 +518,13 @@ try {
   console.log(
     uiOnly
       ? `Selected UI verification passed (${uiSpec || "all browser specs"}); HTTP/recovery suites skipped.`
-      : native
-        ? "Verification passed against configured native PostgreSQL and Redis."
-        : "Local verification passed. Database: PGlite WASM PostgreSQL; Redis: native test binary.",
+      : httpSpec ||
+          process.argv.includes("--skip-ui") ||
+          process.argv.includes("--skip-recovery")
+        ? `Selected verification passed (HTTP: ${httpSpec || "all"}; UI: ${process.argv.includes("--skip-ui") ? "skipped" : "all"}; recovery: ${process.argv.includes("--skip-recovery") ? "skipped" : "all"}).`
+        : native
+          ? "Verification passed against configured native PostgreSQL and Redis."
+          : "Local verification passed. Database: PGlite WASM PostgreSQL; Redis: native test binary.",
   );
 } catch (e) {
   failed = true;
