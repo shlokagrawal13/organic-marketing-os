@@ -1,5 +1,13 @@
 # API reference
 
+## YouTube connection (local, unpublished)
+
+- `POST /api/workspaces/:organizationId/social-connections/youtube/authorize`: signed-in workspace OWNER/ADMIN, standard request verification header; returns `{authorizationUrl, expiresInSeconds: 600}`. The URL must be opened in the same browser session. Server OAuth credentials, exact registered callback URI and token encryption key are required.
+- `GET /api/social/youtube/callback?state=...&code=...`: same signed-in session, single-use state, current OWNER/ADMIN membership and provider-owned channel; redirects with 303 to the web origin with `youtube=connected` or `youtube=failed`. Missing/expired login returns 401. The redirect never includes code/state/token.
+- `GET /api/workspaces/:organizationId/social-connections`: safe metadata only. `POST /:id/revoke` is local revocation, not Google token revocation.
+
+The callback stores encrypted access/refresh tokens and optional refresh expiry. No UI, refresh rotation, provider revocation, dispatch or live post is wired.
+
 Prefix: `/api`. JSON mutations use `X-Requested-With: MarketingOS`. Session cookie: `mos_session`. API responses never return password hashes/session tokens. Error envelope: `{error:{message,issues?,requestId?}}`. Validation rejects unrecognized mutation fields. Most creates/actions return 201, reads/updates 200, invalid input 400, unauthenticated 401, forbidden role 403, absent/inaccessible resource 404, stale state 409, rate limit 429, unavailable dependency 503.
 
 | Domain | Endpoints |

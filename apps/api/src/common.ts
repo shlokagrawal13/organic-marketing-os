@@ -168,6 +168,11 @@ export function installSecurity(app: any, cache: Cache) {
   app.use((req: AuthedRequest, res: Response, next: () => void) => {
     req.requestId = randomUUID();
     res.setHeader("X-Request-Id", req.requestId);
+    if (req.path === "/api/social/youtube/callback") {
+      // Also applies when authentication rejects before the callback controller.
+      res.setHeader("Cache-Control", "no-store");
+      res.setHeader("Referrer-Policy", "no-referrer");
+    }
     const signedBillingWebhook = [
       "/api/billing/webhooks/test",
       "/api/billing/webhooks/stripe",

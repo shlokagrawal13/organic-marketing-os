@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 native CI closure plus YouTube OAuth provider contract publication",
+  "approvedChangedPaths": 19,
+  "publicCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+  "parentCommit": "d5cd5767d9000ad4ff0b959219904f4259b6c3de",
+  "treeSha": "78a843edf240c6f3ee1e9385d4faa567436f4b51",
+  "publicBlobPathsModesShaMatched": 301,
+  "githubActions": {
+    "runId": 37989266829,
+    "jobId": 114018963643,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37989266829",
+    "sourceCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079"
+  },
+  "checks": {
+    "cleanInstall": true,
+    "apiWebProductionBuild": true,
+    "unit": {
+      "tests": 193,
+      "passed": 193,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "uniqueCaseFileReceipts": 193,
+      "summariesIncludingFinal": 22
+    },
+    "http": {
+      "tests": 9,
+      "passed": 9
+    },
+    "browser": {
+      "tests": 7,
+      "passed": 7
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5
+    },
+    "freshNativeMigrations": 14,
+    "pglitePopulatedUpgradeRestore": true,
+    "pgliteArchiveBytes": 4899226,
+    "pgliteArchiveSha256": "ebdd3f48a960201eebfca2bbd898acc3f063ea6692efae78ebdf476d1a89c10c",
+    "smallScreenEnglishOcr": {
+      "samples": 36,
+      "passed": 36,
+      "blankNegativeControlPassed": true
+    },
+    "busyBackgroundOcr": {
+      "samples": 8,
+      "passed": 8
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "artifact": {
+    "id": 11644413628,
+    "name": "browser-evidence",
+    "bytes": 5695441,
+    "sha256": "95610e4f1f71e16d05d198b6c9d6e79ec5729968701e79c727f4b698b2d35ab4",
+    "zipEntries": 123,
+    "crcPassed": true,
+    "unitReceiptSha256": "21ec370ca8e13d1c0c8f6aadfa4a3fa7662c813a90c11a2f0be0727e1472994d",
+    "unitCaseFileReceiptsVerified": 193,
+    "unitSummariesVerified": 22,
+    "readabilityReportSha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+    "ocrSampleImageHashesVerified": 44,
+    "rawAccountRecordingsPublished": false
+  },
+  "unitReceipts": "docs/qa/social01-oauth-contract-native-unit-receipts.json",
+  "limits": [
+    "Provider OAuth helper is published and CI-verified but is not wired to start/callback routes or durable account tokens; no live Google call or post occurred.",
+    "One-time session-bound state, verified callback, token rotation/provider revocation transitions, policy, authenticated dispatch/reconciliation and scheduler remain.",
+    "Synthetic English OCR does not establish physical-device, arbitrary-content, platform UI or multilingual acceptance.",
+    "Populated restore used PGlite; native PostgreSQL/private-media cross-store restore and full Compose/MinIO acceptance remain open."
+  ],
+  "closureRecordPublicWriteAttempted": false
+}

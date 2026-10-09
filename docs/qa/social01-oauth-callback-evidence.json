@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 session-bound YouTube OAuth callback and encrypted channel persistence",
+  "dateUtc": "2026-10-09",
+  "status": "locally_verified_not_published",
+  "publicBase": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+  "localBranch": "social01-public-closure",
+  "sourceSha256": {
+    "apps/api/src/common.ts": "dbfd757f81980984d7e847213814cd599c99c6636491f0752a0f4d8d80cfba5f",
+    "apps/api/src/social-connections.ts": "b71b49bbae8f88a84e54f307bc58bad5ceeaa6aa67716f2a12412be8fb16beb3",
+    "prisma/schema.prisma": "fbe96501548f5c7155cde4312897b50a3868a2e3fd66d79a6067c20dbe5c6d13",
+    "prisma/migrations/202610100001_youtube_oauth_refresh_expiry/migration.sql": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749",
+    "tests/integration/social-oauth.test.ts": "005f016abc4bc9e2e6252b48e919ac365f2529a864a5a08be14ed049ffe1015b"
+  },
+  "behavior": {
+    "ownerAdminAuthorization": true,
+    "sessionBoundOneTimeRedisStateAndPkce": true,
+    "atomicStateConsumption": true,
+    "currentMembershipRecheckBeforePersistence": true,
+    "oneOwnedChannelRequired": true,
+    "tenantAccountBoundEncryptedAccessAndRefreshTokens": true,
+    "safeListExcludesCiphertext": true,
+    "reconnectUpsertsSameChannel": true,
+    "localRevokeOnly": true,
+    "liveGoogleGrant": false,
+    "livePost": false
+  },
+  "verification": {
+    "cleanNpmCiAndFontkitPostinstall": true,
+    "prismaGenerateValidate": true,
+    "apiWebProductionBuild": true,
+    "fullUnit": {
+      "tests": 193,
+      "passed": 193,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "uniqueCaseFileReceipts": 193,
+      "summariesIncludingFinal": 22,
+      "localReceiptSha256": "e3f18ce65332d5a605f7d1581cf83a27f737575533647d9c4755ff2864f881b4"
+    },
+    "fullHttp": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "oauthScenarios": 2,
+      "realFfmpegMedia": true
+    },
+    "productionBrowser": {
+      "passed": 7,
+      "failed": 0
+    },
+    "recovery": {
+      "passed": 5,
+      "failed": 0,
+      "activePollNaturalRedisLockExpiry": true
+    },
+    "freshPgliteMigrations": 15,
+    "populatedPgliteUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 15,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4899236,
+      "sha256": "6aea52c54145e04cc745d7b66c2142899c6a70014dc2f819c5deca01a709f590",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "fullApplicationLogSha256": "e76c0dd390ab9f8a83fe174194eecf146f5d948c6438f594a03094d17d5b3c4e",
+    "shaVerifiedUbuntuNotoPackage": "4fee136cb12fc197703a340e010478f780a41044339fcefbd78ed9aa96c8b617",
+    "pinnedCjkFonts": 4,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "nativeCiForNewDelta": false
+  },
+  "negativeScenarios": [
+    "EDITOR and cross-tenant authorization refused",
+    "callback with another session fails without consuming original state",
+    "callback replay and concurrent duplicate permit one exchange only",
+    "consent denial consumes state without exchange",
+    "role demotion fails before exchange",
+    "provider failure creates no connection and redirects generically",
+    "missing OAuth configuration returns 503",
+    "expired session returns 401 with no-store and no-referrer",
+    "ciphertext absent from list and provider code absent from redirect"
+  ],
+  "diagnostics": [
+    "The first broad unit run in a restricted sandbox reported media.test.ts file failure. Its ten cases passed under local process I/O permission, and the complete final 193-case suite passed with zero failed/skipped/cancelled/todo.",
+    "The first focused HTTP attempt could not bind local S3Proxy sockets under restricted sandbox; isolated loopback execution passed 2/2, followed by the complete application verifier."
+  ],
+  "limits": [
+    "No real Google account, OAuth grant, token or outbound post was used; the provider adapter was replaced only in an isolated HTTP test instance.",
+    "The local callback route has no account-connect UI. Refresh rotation, Google revocation, provider receipt/read-only reconciliation, policy, dispatch and scheduler are not wired.",
+    "Existing local :id/revoke does not revoke the Google grant.",
+    "Final application database is disposable PGlite; native PostgreSQL CI for this new source, native cross-store restore, Compose/MinIO and live/device/master acceptance remain open."
+  ],
+  "publicWriteAttemptedForDelta": false
+}

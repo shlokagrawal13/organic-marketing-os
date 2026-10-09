@@ -83,29 +83,30 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "Published SOCIAL-01 ledger at d5cd576 native CI passed 189/9/7/5; next YouTube OAuth provider contract is local only, focused 4/4 and API build passed, no live calls or new CI.",
+  "latestIncrement": "SOCIAL-01 OAuth callback local verification on public 02f8fb1 base: 193 unit, 11 HTTP, 7 browser, 5 recovery, 15 PGlite migrations, populated restore, builds and both audits zero. New delta unpublished; native CI and real Google grant/post pending.",
   "latestNativeRun": {
-    "runId": 37823837950,
-    "jobId": 113471418146,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37823837950",
-    "sourceCommit": "0d725bf221ae05b44d6343b5a316a04676a6dc92",
-    "sourceTree": "6511bc0ea60af32dd2ae816b4438ebcdc4377b39",
+    "runId": 37989266829,
+    "jobId": 114018963643,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37989266829",
+    "sourceCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+    "sourceTree": "78a843edf240c6f3ee1e9385d4faa567436f4b51",
     "status": "completed",
     "conclusion": "success",
     "attempt": 1,
     "unit": {
-      "tests": 188,
-      "passed": 188,
+      "tests": 193,
+      "passed": 193,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0
     },
-    "httpScenarios": 7,
+    "httpScenarios": 9,
     "browserScenarios": 7,
     "recoveryScenarios": 5,
-    "migrations": 12,
+    "migrations": 14,
     "smallScreenEnglishOcrPasses": 36,
+    "busyBackgroundOcrPasses": 8,
     "populatedPgliteUpgradeRestore": true,
     "productionAuditAdvisories": 0,
     "fullAuditAdvisories": 0
@@ -7461,19 +7462,19 @@
     "scope": "Local synthetic loud narration/music AAC peak regression and isolated production media flow; not native own CI."
   },
   "latestPublicNativeCi": {
-    "commit": "d5cd5767d9000ad4ff0b959219904f4259b6c3de",
-    "runId": 37944332517,
-    "jobId": 113866571278,
+    "commit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+    "runId": 37989266829,
+    "jobId": 114018963643,
     "conclusion": "success",
-    "unit": 189,
+    "unit": 193,
     "http": 9,
     "browser": 7,
     "recovery": 5,
     "migrations": 14,
     "englishReadabilitySamples": 36,
     "busyReadabilitySamples": 8,
-    "artifactSha256": "bc5fd96b675666ba4db45a426a3b066db38074e50d1e0bb518088bf61b112e4a",
-    "evidence": "docs/qa/social01-attempt-ledger-native-ci-evidence.json"
+    "artifactSha256": "95610e4f1f71e16d05d198b6c9d6e79ec5729968701e79c727f4b698b2d35ab4",
+    "evidence": "docs/qa/social01-oauth-contract-native-ci-evidence.json"
   },
   "localEditor01AeBusyReadability": {
     "blackBackgroundOcrPassed": 36,
@@ -7677,14 +7678,112 @@
     "closureRecordPublicWriteAttempted": false
   },
   "social01OAuthContractLocal": {
-    "status": "locally_verified_not_published",
+    "status": "published_native_ci_verified",
     "evidence": "docs/qa/social01-youtube-oauth-contract-evidence.json",
     "publicBase": "d5cd5767d9000ad4ff0b959219904f4259b6c3de",
     "focusedPassed": 4,
     "apiBuild": true,
     "liveGoogleCalls": 0,
     "apiRoutesWired": false,
-    "fullRegressionRerun": false,
-    "nativeCiForDelta": false
+    "fullRegressionRerun": true,
+    "nativeCiForDelta": true,
+    "publicCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+    "ownNativeCiRun": 37989266829
+  },
+  "social01OAuthContractPublicNativeCi": {
+    "schemaVersion": 1,
+    "slice": "SOCIAL-01 native CI closure plus YouTube OAuth provider contract publication",
+    "approvedChangedPaths": 19,
+    "publicCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+    "parentCommit": "d5cd5767d9000ad4ff0b959219904f4259b6c3de",
+    "treeSha": "78a843edf240c6f3ee1e9385d4faa567436f4b51",
+    "publicBlobPathsModesShaMatched": 301,
+    "githubActions": {
+      "runId": 37989266829,
+      "jobId": 114018963643,
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37989266829",
+      "sourceCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079"
+    },
+    "checks": {
+      "cleanInstall": true,
+      "apiWebProductionBuild": true,
+      "unit": {
+        "tests": 193,
+        "passed": 193,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "uniqueCaseFileReceipts": 193,
+        "summariesIncludingFinal": 22
+      },
+      "http": {
+        "tests": 9,
+        "passed": 9
+      },
+      "browser": {
+        "tests": 7,
+        "passed": 7
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5
+      },
+      "freshNativeMigrations": 14,
+      "pglitePopulatedUpgradeRestore": true,
+      "pgliteArchiveBytes": 4899226,
+      "pgliteArchiveSha256": "ebdd3f48a960201eebfca2bbd898acc3f063ea6692efae78ebdf476d1a89c10c",
+      "smallScreenEnglishOcr": {
+        "samples": 36,
+        "passed": 36,
+        "blankNegativeControlPassed": true
+      },
+      "busyBackgroundOcr": {
+        "samples": 8,
+        "passed": 8
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "artifact": {
+      "id": 11644413628,
+      "name": "browser-evidence",
+      "bytes": 5695441,
+      "sha256": "95610e4f1f71e16d05d198b6c9d6e79ec5729968701e79c727f4b698b2d35ab4",
+      "zipEntries": 123,
+      "crcPassed": true,
+      "unitReceiptSha256": "21ec370ca8e13d1c0c8f6aadfa4a3fa7662c813a90c11a2f0be0727e1472994d",
+      "unitCaseFileReceiptsVerified": 193,
+      "unitSummariesVerified": 22,
+      "readabilityReportSha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+      "ocrSampleImageHashesVerified": 44,
+      "rawAccountRecordingsPublished": false
+    },
+    "unitReceipts": "docs/qa/social01-oauth-contract-native-unit-receipts.json",
+    "limits": [
+      "Provider OAuth helper is published and CI-verified but is not wired to start/callback routes or durable account tokens; no live Google call or post occurred.",
+      "One-time session-bound state, verified callback, token rotation/provider revocation transitions, policy, authenticated dispatch/reconciliation and scheduler remain.",
+      "Synthetic English OCR does not establish physical-device, arbitrary-content, platform UI or multilingual acceptance.",
+      "Populated restore used PGlite; native PostgreSQL/private-media cross-store restore and full Compose/MinIO acceptance remain open."
+    ],
+    "closureRecordPublicWriteAttempted": false
+  },
+  "social01OAuthCallbackLocal": {
+    "dateUtc": "2026-10-09",
+    "status": "locally_verified_not_published",
+    "publicBase": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
+    "evidence": "docs/qa/social01-oauth-callback-evidence.json",
+    "unitPassed": 193,
+    "httpPassed": 11,
+    "browserPassed": 7,
+    "recoveryPassed": 5,
+    "migrations": 15,
+    "populatedPgliteRestore": true,
+    "bothAuditsZero": true,
+    "nativeCiForDelta": false,
+    "liveGoogleGrantOrPost": false
   }
 }

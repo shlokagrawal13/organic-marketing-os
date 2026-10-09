@@ -203,6 +203,7 @@ model SocialConnection {
   accessTokenCiphertext  String
   refreshTokenCiphertext String?
   tokenExpiresAt         DateTime?
+  refreshTokenExpiresAt  DateTime?
   revokedAt              DateTime?
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
