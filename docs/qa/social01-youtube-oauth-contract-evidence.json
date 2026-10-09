@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 YouTube OAuth provider contract, local only",
+  "publicBase": "d5cd5767d9000ad4ff0b959219904f4259b6c3de",
+  "source": "packages/core/youtube-oauth.ts",
+  "tests": "tests/youtube-oauth.test.ts",
+  "focusedCases": 4,
+  "focusedPassed": 4,
+  "apiTypeScriptBuildPassed": true,
+  "cleanLockedInstallPassed": true,
+  "fontkitPostinstallVerified": true,
+  "checks": [
+    "Fixed Google OAuth token/revocation and YouTube channel endpoints, no caller-controlled URL.",
+    "Production HTTPS exact callback and local-only HTTP validation; 32-byte random state and S256 PKCE proof.",
+    "Offline consent for YouTube read-only identity and upload scopes; granted-scope and refresh-token checks.",
+    "Channel lookup rejects zero/multiple channels; refresh preserves rotated refresh token response and rejects scope downgrade.",
+    "Revocation sends refresh token in POST form body and requires a confirmed success response.",
+    "Provider errors are generic and do not expose tokens or codes in thrown messages."
+  ],
+  "officialReferences": [
+    "https://developers.google.com/youtube/v3/guides/auth/server-side-web-apps",
+    "https://developers.google.com/identity/protocols/oauth2/web-server",
+    "https://developers.google.com/youtube/v3/docs/channels/list"
+  ],
+  "limits": [
+    "Pure provider protocol helper only; no start/callback route, one-time state store, session binding or connected account persisted yet.",
+    "No application token refresh/remote revoke transition or verified provider reconciliation wired.",
+    "No live Google call, developer credentials, UI, scheduler, provider send or test post.",
+    "Focused cases and API build only; prior 189/9/7/5 native CI belongs to published base, not this local source delta."
+  ],
+  "publicWriteAttempted": false
+}
