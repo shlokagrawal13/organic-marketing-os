@@ -17,6 +17,9 @@ after(async () => {
   await db.publicationAttempt.deleteMany({
     where: { organizationId: { in: orgs } },
   });
+  await db.publicationPolicyReview.deleteMany({
+    where: { organizationId: { in: orgs } },
+  });
   await db.socialConnection.deleteMany({
     where: { organizationId: { in: orgs } },
   });
@@ -65,6 +68,9 @@ test("local connection revocation and durable unknown attempts never resubmit", 
       tokenExpiresAt: new Date(Date.now() + 3600000),
     },
   });
+  await db.socialConnection.update({ where: { id: connection.id }, data: { refreshPendingAt: new Date() } });
+  // A process-death marker must block the internal ledger even with an unexpired access token.
+  // The rest of this scenario uses a fresh confirmed OAuth state.
   const listed = await owner.call(root + "/social-connections");
   assert.equal(listed.status, 200);
   assert.equal(listed.body[0].externalAccountId, identity.externalAccountId);
@@ -147,6 +153,25 @@ test("local connection revocation and durable unknown attempts never resubmit", 
     return prep.body;
   }
 
+  const reviewInput = {
+    connectionId: connection.id,
+    privacyStatus: "private",
+    selfDeclaredMadeForKids: false,
+    containsSyntheticMedia: true,
+    metadataReviewed: true,
+    audienceReviewed: true,
+    syntheticMediaReviewed: true,
+    rightsAndPlatformRulesReviewed: true,
+  };
+  async function reviewVideo(intentId: string) {
+    const reviewed = await owner.call(root + `/publication-intents/${intentId}/youtube-policy-review`, "POST", reviewInput);
+    assert.equal(reviewed.status, 201);
+    assert.equal(reviewed.body.metadata.status.privacyStatus, "private");
+    assert.equal(reviewed.body.metadata.status.containsSyntheticMedia, true);
+    assert.equal("snapshotHash" in reviewed.body, false);
+    return reviewed.body;
+  }
+
   const intent = await preparedVideo("YouTube ledger fixture one");
   const args = {
     organizationId: org.id,
@@ -155,12 +180,36 @@ test("local connection revocation and durable unknown attempts never resubmit", 
     requestKey: randomUUID(),
     actorId: owner.id,
   };
+  await assert.rejects(() => reservePublicationAttempt(db, args), /authorized YouTube upload connection/);
+  await db.socialConnection.update({ where: { id: connection.id }, data: { refreshPendingAt: null } });
   const [attempt, replay] = await Promise.all([
     reservePublicationAttempt(db, args),
     reservePublicationAttempt(db, args),
   ]);
   assert.equal(attempt.id, replay.id);
   assert.equal(attempt.status, "RESERVED");
+  await assert.rejects(() => enterPublicationSubmission(db, {
+    organizationId: org.id, attemptId: attempt.id, expectedVersion: 1, actorId: owner.id,
+  }), /current reviewed YouTube upload policy/);
+  const reviewPath = root + `/publication-intents/${intent.id}/youtube-policy-review`;
+  const previewPath = root + `/publication-intents/${intent.id}/youtube-policy-preview`;
+  assert.equal((await creator.call(previewPath)).status, 403);
+  assert.equal((await outsider.call(`/workspaces/${otherOrg.id}/publication-intents/${intent.id}/youtube-policy-preview`)).status, 404);
+  const preview = await owner.call(previewPath);
+  assert.equal(preview.status, 200);
+  assert.equal(preview.body.snippet.title, "YouTube ledger fixture one");
+  assert.equal(preview.body.externallySubmitted, false);
+  assert.equal((await creator.call(reviewPath, "POST", reviewInput)).status, 403);
+  assert.equal((await outsider.call(`/workspaces/${otherOrg.id}/publication-intents/${intent.id}/youtube-policy-review`, "POST", reviewInput)).status, 404);
+  assert.equal((await owner.call(reviewPath, "POST", { ...reviewInput, metadataReviewed: false })).status, 400);
+  const reviewed = await reviewVideo(intent.id);
+  assert.equal((await owner.call(reviewPath, "POST", reviewInput)).body.id, reviewed.id);
+  assert.equal((await owner.call(reviewPath, "POST", { ...reviewInput, privacyStatus: "public" })).status, 409);
+  await db.publicationPolicyReview.update({ where: { id: reviewed.id }, data: { expiresAt: new Date(Date.now() - 1000) } });
+  await assert.rejects(() => enterPublicationSubmission(db, {
+    organizationId: org.id, attemptId: attempt.id, expectedVersion: 1, actorId: owner.id,
+  }), /current reviewed YouTube upload policy/);
+  await db.publicationPolicyReview.update({ where: { id: reviewed.id }, data: { expiresAt: new Date(Date.now() + 3600000) } });
   await assert.rejects(
     () => reservePublicationAttempt(db, { ...args, requestKey: randomUUID() }),
     /already has an attempt/,
@@ -172,6 +221,8 @@ test("local connection revocation and durable unknown attempts never resubmit", 
     actorId: owner.id,
   });
   assert.equal(started.status, "SUBMITTING");
+  assert.equal((started.policySnapshot as any).reviewId, reviewed.id);
+  assert.equal((started.policySnapshot as any).metadata.snippet.title, "YouTube ledger fixture one");
   await assert.rejects(
     () =>
       enterPublicationSubmission(db, {
@@ -260,12 +311,18 @@ test("local connection revocation and durable unknown attempts never resubmit", 
     intentId: pending.id,
     requestKey: randomUUID(),
   });
+  const pendingReview = await reviewVideo(pending.id);
+  await db.publicationPolicyReview.update({ where: { id: pendingReview.id }, data: { metadata: { unsafe: "tampered" } } });
+  await assert.rejects(() => enterPublicationSubmission(db, {
+    organizationId: org.id, attemptId: reserved.id, expectedVersion: 1, actorId: owner.id,
+  }), /current reviewed YouTube upload policy/);
   const inflight = await preparedVideo("YouTube ledger fixture three");
   const reservedInflight = await reservePublicationAttempt(db, {
     ...args,
     intentId: inflight.id,
     requestKey: randomUUID(),
   });
+  await reviewVideo(inflight.id);
   const submitting = await enterPublicationSubmission(db, {
     organizationId: org.id,
     attemptId: reservedInflight.id,

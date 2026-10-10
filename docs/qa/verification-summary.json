@@ -83,18 +83,21 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 token lifecycle reconstructed from public f191899 after scratch reset; clean install, Prisma/API build, 2 focused unit files, 3 isolated OAuth HTTP cases passed. Full 193 unit cases passed. Own native CI for new source pending publication. Public f191899 own native CI 37996256399 passed 193/11/7/5. Full reconstructed local HTTP: pending or failed. Public publication blocked by automatic review of large handoff; no main ref update.",
+  "latestIncrement": "SOCIAL-01 cumulative 20-file token lifecycle source public at 18a4c2d, exact tree 4892d4e. Own native Actions 38044868624 passed 193 unit, 12 HTTP, 7 browser, 5 recovery, 15 migrations, 36+8 OCR, populated PGlite restore and zero audits. Live Google/dispatch remain open. Later closure local.",
   "latestNativeRun": {
-    "runId": 37996256399,
-    "jobId": 114042996492,
-    "sourceCommit": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+    "runId": 38044868624,
+    "jobId": 114192249500,
+    "attempt": 1,
+    "sourceCommit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
+    "sourceTree": "4892d4ec3a8b67e0161e1a34442ed042c3dc6485",
+    "status": "completed",
     "conclusion": "success",
     "unitPassed": 193,
-    "httpPassed": 11,
+    "httpPassed": 12,
     "browserPassed": 7,
     "recoveryPassed": 5,
     "freshNativeMigrations": 15,
-    "evidence": "docs/qa/social01-callback-native-ci-evidence.json"
+    "evidence": "docs/qa/social01-token-lifecycle-native-ci-evidence.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -7797,5 +7800,90 @@
     "nativeCiForNewSource": false,
     "liveProvider": false,
     "publicationGate": "auto_review_blocked_handoff_explicit_disclosure_approval_required"
+  },
+  "social01TokenLifecyclePublicNativeCi": {
+    "schemaVersion": 1,
+    "slice": "SOCIAL-01 token lifecycle public native CI closure",
+    "dateUtc": "2026-10-10",
+    "status": "public_exact_tree_own_native_ci_verified",
+    "publicCommit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
+    "parentCommit": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+    "publicTree": "4892d4ec3a8b67e0161e1a34442ed042c3dc6485",
+    "changedPaths": 20,
+    "publicBlobPaths": 310,
+    "githubActions": {
+      "runId": 38044868624,
+      "jobId": 114192249500,
+      "attempt": 1,
+      "conclusion": "success",
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38044868624"
+    },
+    "checks": {
+      "unit": {
+        "tests": 193,
+        "passed": 193,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "uniqueReceipts": 193,
+        "summaries": 22
+      },
+      "http": {
+        "tests": 12,
+        "passed": 12,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "passed": 7
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "freshNativeMigrations": 15,
+      "apiWebProductionBuild": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "boundedEnglishOcr": {
+        "passed": 36,
+        "expected": 36,
+        "blankNegativeControl": true
+      },
+      "busyBackgroundOcr": {
+        "passed": 8,
+        "expected": 8
+      },
+      "pglitePopulatedUpgradeRestore": true,
+      "pgliteArchiveBytes": 4899231,
+      "pgliteArchiveSha256": "911621a55a6101553fe1864aeedb67c1e503693d0941abb0684f96eb56207ebc"
+    },
+    "artifact": {
+      "id": 11667099038,
+      "name": "browser-evidence",
+      "bytes": 5694119,
+      "sha256": "92ec1afe1bf8f5b419296c510873b169ac1d43b1e4a67b5c623d385baf454f53",
+      "zipEntries": 123,
+      "crcPassed": true,
+      "unitReceiptsSha256": "c1ae624944e22acad878ef0d4342e90ad55bf43297843e430fa21e7e67e21325",
+      "readabilityReportSha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+      "ocrSampleImageHashesVerified": 44
+    },
+    "unitReceipts": "docs/qa/social01-token-lifecycle-native-unit-receipts.json",
+    "limits": [
+      "No live Google OAuth grant, token rotation/revocation or actual post was exercised; isolated fixtures only.",
+      "Ambiguous refresh rotation after remote success and local crash requires manual recovery; no durable pre-call intent exists.",
+      "Dispatch, platform policy reconciliation, scheduler, provider receipt/lookup and real authorized post are still open.",
+      "Populated restore was PGlite; native PostgreSQL/private-media cross-store restore and full Compose/MinIO acceptance remain open.",
+      "OCR samples are synthetic; broader devices, content, platform overlays and languages remain unverified."
+    ],
+    "closureRecordPublicWriteAttempted": false
   }
 }

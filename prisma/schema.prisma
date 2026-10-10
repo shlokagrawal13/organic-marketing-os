@@ -77,6 +77,7 @@ model Organization {
   publicationIntents  PublicationIntent[]
   socialConnections   SocialConnection[]
   publicationAttempts PublicationAttempt[]
+  publicationPolicyReviews PublicationPolicyReview[]
 }
 
 enum ContentStatus {
@@ -182,6 +183,7 @@ model PublicationIntent {
   invalidatedAt   DateTime?
   canceledAt      DateTime?
   attempt         PublicationAttempt?
+  policyReview    PublicationPolicyReview?
 
   @@unique([organizationId, requestKey])
   @@index([organizationId, createdAt])
@@ -204,10 +206,12 @@ model SocialConnection {
   refreshTokenCiphertext String?
   tokenExpiresAt         DateTime?
   refreshTokenExpiresAt  DateTime?
+  refreshPendingAt       DateTime?
   revokedAt              DateTime?
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
   attempts               PublicationAttempt[]
+  policyReviews          PublicationPolicyReview[]
 
   @@unique([organizationId, provider, externalAccountId])
   @@index([organizationId, revokedAt])
@@ -241,6 +245,7 @@ model PublicationAttempt {
   providerRequestId String?
   providerPostId    String?
   outcomeCode       String?
+  policySnapshot    Json?
   createdAt         DateTime                 @default(now())
   startedAt         DateTime?
   completedAt       DateTime?
@@ -248,6 +253,25 @@ model PublicationAttempt {
   @@unique([organizationId, requestKey])
   @@index([organizationId, contentId, contentRevision, status])
   @@index([status, startedAt])
+}
+
+model PublicationPolicyReview {
+  id                String            @id @default(uuid())
+  organizationId    String
+  organization      Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  intentId          String            @unique
+  intent            PublicationIntent @relation(fields: [intentId], references: [id], onDelete: Cascade)
+  connectionId      String
+  connection        SocialConnection  @relation(fields: [connectionId], references: [id], onDelete: Restrict)
+  contentRevision   Int
+  policyVersion     String
+  metadata          Json
+  snapshotHash      String
+  reviewedBy        String
+  reviewedAt        DateTime          @default(now())
+  expiresAt         DateTime
+
+  @@index([organizationId, expiresAt])
 }
 
 enum JobStatus {

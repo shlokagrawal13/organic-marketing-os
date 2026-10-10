@@ -76,6 +76,7 @@ const metadata = {
   scopes: true,
   tokenExpiresAt: true,
   refreshTokenExpiresAt: true,
+  refreshPendingAt: true,
   revokedAt: true,
   createdAt: true,
 } as const;
@@ -270,27 +271,55 @@ export class SocialConnectionsController {
     @Param("id") id: string,
   ) {
     idSchema.parse(id);
-    let providerReturned = false;
-    let priorRefreshCiphertext: string | null = null;
+    // Persist the uncertain boundary before leaving the database. A process may
+    // die after Google rotates the grant; a stale marker then blocks refresh
+    // and the internal submission ledger until a fresh OAuth grant replaces it.
+    const pending = await this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+      const row = await tx.socialConnection.findFirst({
+        where: { id, organizationId: req.organizationId },
+      });
+      if (!row) throw new NotFoundException("Social connection not found.");
+      if (row.refreshPendingAt)
+        throw new ConflictException("Refresh outcome is uncertain. Reconnect the channel.");
+      if (row.revokedAt || !row.refreshTokenCiphertext ||
+          (row.refreshTokenExpiresAt && row.refreshTokenExpiresAt <= new Date()))
+        throw new ConflictException("Connection requires reconnect or revocation.");
+      const session = await tx.session.findUnique({ where: { id: req.sessionId } });
+      const member = await tx.membership.findUnique({
+        where: { userId_organizationId: { userId: req.userId, organizationId: req.organizationId } },
+      });
+      if (!session || session.userId !== req.userId || session.expiresAt <= new Date() ||
+          !member || !["OWNER", "ADMIN"].includes(member.role))
+        throw new ConflictException("Workspace authorization changed.");
+      const context = {
+        organizationId: req.organizationId,
+        provider: "YOUTUBE" as const,
+        externalAccountId: row.externalAccountId,
+      };
+      const refreshToken = decryptSocialToken(row.refreshTokenCiphertext, context);
+      const marker = new Date();
+      await tx.socialConnection.update({
+        where: { id }, data: { refreshPendingAt: marker },
+      });
+      await tx.auditLog.create({
+        data: { organizationId: req.organizationId, actorId: req.userId,
+          action: "social_connection.refresh_boundary", entityId: id,
+          detail: { provider: row.provider, externalAccountId: row.externalAccountId } },
+      });
+      return { marker, refreshToken, priorCiphertext: row.refreshTokenCiphertext, context };
+    });
     try {
+      const granted = await this.provider.refresh(pending.refreshToken);
       return await this.db.$transaction(async (tx) => {
         await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
         const row = await tx.socialConnection.findFirst({
           where: { id, organizationId: req.organizationId },
         });
-        if (!row) throw new NotFoundException("Social connection not found.");
-        if (row.revokedAt || !row.refreshTokenCiphertext ||
-            (row.refreshTokenExpiresAt && row.refreshTokenExpiresAt <= new Date()))
-          throw new ConflictException("Connection requires reconnect or revocation.");
-        priorRefreshCiphertext = row.refreshTokenCiphertext;
-        const context = {
-          organizationId: req.organizationId,
-          provider: "YOUTUBE" as const,
-          externalAccountId: row.externalAccountId,
-        };
-        const refreshToken = decryptSocialToken(row.refreshTokenCiphertext, context);
-        const granted = await this.provider.refresh(refreshToken);
-        providerReturned = true;
+        if (!row || row.revokedAt ||
+            row.refreshPendingAt?.getTime() !== pending.marker.getTime() ||
+            row.refreshTokenCiphertext !== pending.priorCiphertext)
+          throw new ConflictException("Connection changed during token refresh.");
         const session = await tx.session.findUnique({ where: { id: req.sessionId } });
         const member = await tx.membership.findUnique({
           where: { userId_organizationId: { userId: req.userId, organizationId: req.organizationId } },
@@ -302,10 +331,11 @@ export class SocialConnectionsController {
         const updated = await tx.socialConnection.update({
           where: { id },
           data: {
-            accessTokenCiphertext: encryptSocialToken(granted.access_token, context),
+            accessTokenCiphertext: encryptSocialToken(granted.access_token, pending.context),
             refreshTokenCiphertext: granted.refresh_token
-              ? encryptSocialToken(granted.refresh_token, context)
+              ? encryptSocialToken(granted.refresh_token, pending.context)
               : row.refreshTokenCiphertext,
+            refreshPendingAt: null,
             tokenExpiresAt: new Date(now + Math.max(1, granted.expires_in - 60) * 1000),
             refreshTokenExpiresAt: granted.refresh_token_expires_in
               ? new Date(now + granted.refresh_token_expires_in * 1000)
@@ -326,15 +356,9 @@ export class SocialConnectionsController {
         };
       }, { timeout: 20000, maxWait: 5000 });
     } catch (error) {
-      if (providerReturned && priorRefreshCiphertext) {
-        // A rotated grant may have invalidated the old token. Fail closed for dispatch.
-        await this.db.socialConnection.updateMany({
-          where: { id, organizationId: req.organizationId, revokedAt: null,
-            refreshTokenCiphertext: priorRefreshCiphertext },
-          data: { tokenExpiresAt: null },
-        }).catch(() => undefined);
-      }
-      if (error instanceof NotFoundException || error instanceof ConflictException) throw error;
+      // The marker survives provider failure, timeout, DB error or process death.
+      // We cannot know whether Google rotated the old token; require fresh OAuth.
+      if (error instanceof ConflictException) throw error;
       throw new ServiceUnavailableException("YouTube token refresh was not completed.");
     }
   }
@@ -420,6 +444,7 @@ export class YoutubeOAuthCallbackController {
         refreshTokenExpiresAt: granted.refresh_token_expires_in
           ? new Date(now + granted.refresh_token_expires_in * 1000)
           : null,
+        refreshPendingAt: null,
         revokedAt: null,
       };
       await this.db.$transaction(async (tx) => {

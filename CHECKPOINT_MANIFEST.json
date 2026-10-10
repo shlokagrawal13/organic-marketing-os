@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-10.16-SOCIAL01-publication-auto-review-blocked",
-  "createdAtUtc": "2026-10-10T06:47:34.971154+00:00",
+  "checkpointRevision": "2026-10-10.19-SOCIAL01-policy-review-local",
+  "createdAtUtc": "2026-10-10T11:09:27.852077+00:00",
   "scope": "Portable source and saved project context; not runtime/database/media backup.",
   "hashAlgorithm": "sha256",
   "manifestIsSelfExcluded": true,
@@ -16,8 +16,8 @@
       "sha256": "6b9a055c3ca18510df5f991237b63a9eb4446ac834c60c5303d4d385c645ce9d"
     },
     ".git": {
-      "bytes": 133,
-      "sha256": "d76ea2892fd6cd3cbf1a7e5341adfc758b4832718934fc8ace98fcadf78cabc9"
+      "bytes": 132,
+      "sha256": "f04290b6752659640038460b8db4cd3928aa9cd05164419528035a5212de4a4b"
     },
     ".github/workflows/ci.yml": {
       "bytes": 4700,
@@ -44,12 +44,12 @@
       "sha256": "11477a3664bbdea5a5e2d66c777b2efff17bb1ae5e217627329b985183d6ff82"
     },
     "PROJECT_CHECKPOINT.json": {
-      "bytes": 362456,
-      "sha256": "87777585b65440069f8d5dde821011b2950548c4476eeb7468ceb3498385abb3"
+      "bytes": 363570,
+      "sha256": "c8c2885ac1ca9a9efef9848e9a24f67a8bc806708e0bb8b06031bbd049745b6f"
     },
     "PROJECT_STATUS.md": {
-      "bytes": 98311,
-      "sha256": "90731ff6f4fadd4abcaf1eb66c1cb143351bc81d78d090734dc4fc9c81254656"
+      "bytes": 103145,
+      "sha256": "f6a74a144c5fcc5d887398cf413fd3594a0e8a33ebbeb447a46a9f2663bbdbfa"
     },
     "README.md": {
       "bytes": 35196,
@@ -64,8 +64,8 @@
       "sha256": "8ec4fe77c19c31f53bddf91a406165f5b91614c8a658744aa0f1f20c15118b94"
     },
     "START_HERE.md": {
-      "bytes": 89216,
-      "sha256": "3a01b5f31bbae11001866ec6a747dc39a1be8750fd33317549edb76233bea74b"
+      "bytes": 94050,
+      "sha256": "6dd3c45a1e9f200ed8e5b88ba60b0f4628874fd53cdf0a6ccfa5322ceceeba34"
     },
     "apps/api/src/ai.ts": {
       "bytes": 11385,
@@ -116,12 +116,12 @@
       "sha256": "c2c86f9913a61c0e97b566a4d624218cd4e194896bdf48e490904f0b82b65828"
     },
     "apps/api/src/publication-attempts.ts": {
-      "bytes": 11541,
-      "sha256": "865f8fe09a7cfb1166c89556a134687f5aa6bc5b8ee661516905fdf0bea35137"
+      "bytes": 12777,
+      "sha256": "dd1db6166eaf2511dba2cb9d7e993e748a50907b960c66a90c2f6d63c5b0eb4e"
     },
     "apps/api/src/publications.ts": {
-      "bytes": 6548,
-      "sha256": "4562e0c79d67492c309650da02ddb1f155b66d289b61d5ef89daf35eef9f80f4"
+      "bytes": 10630,
+      "sha256": "72f0558cba82c30d31756461bd68acda4d6fa8f2256a15f648fbdbcbd74e029c"
     },
     "apps/api/src/render-worker.ts": {
       "bytes": 7829,
@@ -132,8 +132,8 @@
       "sha256": "c3dc00c47cba8731864338bead762c505571ec476c8bc4b1257d113115620221"
     },
     "apps/api/src/social-connections.ts": {
-      "bytes": 16774,
-      "sha256": "e53abac300e0183a1f816f3f8307a4b446af67fba8e7c9bc2e6129aef3a21121"
+      "bytes": 18310,
+      "sha256": "dc7d16f6d5e7c836896cefcaa261fde32ded90ca4e5ec75179f65dd598e56389"
     },
     "apps/api/src/worker.ts": {
       "bytes": 13281,
@@ -264,8 +264,8 @@
       "sha256": "56d99699cb53ef8e428d57093ec77eb897a16c0f3767a94cad6cb2eafb0b938a"
     },
     "docs/CHANGELOG.md": {
-      "bytes": 110663,
-      "sha256": "d5399c844435b902d3377c9dd3209e371ba5cb06655c1ea0e6425202a069fd4d"
+      "bytes": 115497,
+      "sha256": "410e591f1bb3e63ca55b8bc402ff3318e126c577662f66818f39877734a3b255"
     },
     "docs/CJK_RENDERING.md": {
       "bytes": 5367,
@@ -312,8 +312,8 @@
       "sha256": "b8c752cddf374e4fcefa95febb15923d76dba5d0f69ddfa8cd9bbf461c17feee"
     },
     "docs/HANDOFF.md": {
-      "bytes": 96359,
-      "sha256": "1600317c94598be716cc06221966f4adb5e4a0bac56f79b262b7b70c6fed034b"
+      "bytes": 101193,
+      "sha256": "25e5324dbea87180de5b869f7a2dea56fd9f6d46b70c80cea60118597daba906"
     },
     "docs/IMPLEMENTATION_PLAN.md": {
       "bytes": 4581,
@@ -332,44 +332,44 @@
       "sha256": "9f4a3cfae8d1e51cfda5f0075109056c1a786f664a65b5d0d1c682576944cbae"
     },
     "docs/POLICY_ENGINE.md": {
-      "bytes": 1605,
-      "sha256": "e300094795283baf00b32b0750aec7e8a3189ec1c7effb248a4ab98eb06dafc2"
+      "bytes": 3613,
+      "sha256": "7d3eef15503a364339d01d04afa4d4c6b7fcf88035298299a8648f997dd99145"
     },
     "docs/PRODUCT_OPERATIONS_GUIDE.md": {
       "bytes": 2896,
       "sha256": "a23631f1f0891df57e4d594a845ac7d60d6ab7f0e98955c6d3fd251612f91c4d"
     },
     "docs/PROJECT_STATUS.md": {
-      "bytes": 98311,
-      "sha256": "90731ff6f4fadd4abcaf1eb66c1cb143351bc81d78d090734dc4fc9c81254656"
+      "bytes": 103145,
+      "sha256": "f6a74a144c5fcc5d887398cf413fd3594a0e8a33ebbeb447a46a9f2663bbdbfa"
     },
     "docs/PROVIDER_CATALOG.md": {
       "bytes": 2320,
       "sha256": "f5a1c96704ce96c35c246f751a2464c421f2e45299a11f7b33db67d1163acecb"
     },
     "docs/PUBLISHING.md": {
-      "bytes": 12863,
-      "sha256": "82937b7f43d859eb20801ca4e3da53dafd2ae8cbffd4a52c4e14c67eaa58b595"
+      "bytes": 17697,
+      "sha256": "71d80b276c69ad636cae51748b9099d1934f8ec68a0815402ce3a4e8c1b7720b"
     },
     "docs/REQUIREMENTS_MATRIX.md": {
-      "bytes": 134054,
-      "sha256": "9c8a214b1084b1f1d28914b379b5149dcc3badac61af9d95f7a0bf11df71319b"
+      "bytes": 138888,
+      "sha256": "83e4ad2d3b3a9e918ce1a2926cdce5d0a0a77e509ca40d82e374bb9b3afcbb0a"
     },
     "docs/SECURITY.md": {
       "bytes": 5892,
       "sha256": "f955408f7522bc86cdce6ff85873b636cb73f3ce7dc1e469fc41b9994d74a015"
     },
     "docs/SESSION_LOG.md": {
-      "bytes": 155583,
-      "sha256": "2164768dc6df0f461c87c82bc7cfab3568744303ab46a5824f0f90a9e5a1fecf"
+      "bytes": 160417,
+      "sha256": "07d18ffd4a214c7002d8d97e6b30408a3cdfc407553961f7e78482949c59c81d"
     },
     "docs/SETUP.md": {
       "bytes": 3627,
       "sha256": "02f9341e6e068abfae7ed05892cab8b343e9b2520061713383ada134ba8b24f0"
     },
     "docs/TASK_BOARD.md": {
-      "bytes": 103979,
-      "sha256": "3b69bc39789f43b6ca59dfd2ba7aa24a311b8b1f91a6b458a2081a6192a6962a"
+      "bytes": 108800,
+      "sha256": "30b8100590cfc10cc786b4873b9db17714de961673d718d3582380e40ba0fd45"
     },
     "docs/TEST_STRATEGY.md": {
       "bytes": 58957,
@@ -412,8 +412,8 @@
       "sha256": "4049fa10acac00b0353b9d3cc58a04729d7ef1fc66cde1c4859d1306a369f4d9"
     },
     "docs/VERIFICATION_REPORT.md": {
-      "bytes": 131076,
-      "sha256": "915db4e50e9773f33b5cb3409c01393fc9d17c6ae206dd366e7ada6ec21eb3ee"
+      "bytes": 135910,
+      "sha256": "bfa242c9b0ddc61875c4fa0b56421be375073f66576437034ea6d2d9df58b892"
     },
     "docs/VIDEO_PIPELINE.md": {
       "bytes": 79356,
@@ -739,9 +739,25 @@
       "bytes": 39049,
       "sha256": "1fceab199647575b439c20002d20069d9305dcda904b1b70216a399e5de540ec"
     },
+    "docs/qa/social01-policy-review-evidence.json": {
+      "bytes": 2962,
+      "sha256": "13a53741ee84edb117cd626222d0c39b148f7d41145c14983b6c66a8b099286a"
+    },
+    "docs/qa/social01-refresh-boundary-evidence.json": {
+      "bytes": 2464,
+      "sha256": "4df8bce74e6b370506d5c5de953a609b64bc6a57241a8a462414bd98c5e4aaf7"
+    },
     "docs/qa/social01-token-lifecycle-evidence.json": {
       "bytes": 3902,
       "sha256": "d52237c70185bf1acc95321cdbe9c39c23e764adbabd3e917cc91cd6d3282cc5"
+    },
+    "docs/qa/social01-token-lifecycle-native-ci-evidence.json": {
+      "bytes": 2873,
+      "sha256": "c67638756b1d7fb74f9ad655a74a095418be638180636a4c523128dc499c00a9"
+    },
+    "docs/qa/social01-token-lifecycle-native-unit-receipts.json": {
+      "bytes": 61246,
+      "sha256": "c1ae624944e22acad878ef0d4342e90ad55bf43297843e430fa21e7e67e21325"
     },
     "docs/qa/social01-youtube-oauth-contract-evidence.json": {
       "bytes": 1824,
@@ -756,8 +772,8 @@
       "sha256": "362d2704d40c49d7a1c3d83f7c22ce34e4a4e64d63d3b3ec41cfff7820cdcc8b"
     },
     "docs/qa/verification-summary.json": {
-      "bytes": 311555,
-      "sha256": "fd25bab706ad2c1b67f2ef64bc60f770b625ee9caf78bec8236b98b42cd001aa"
+      "bytes": 314601,
+      "sha256": "ee1f4dc8f1ae9196bd29cafb37ac0d0c6a526deaf783a3b44c6bac9d70144a91"
     },
     "docs/qa/video-studio-dark.png": {
       "bytes": 199675,
@@ -911,6 +927,10 @@
       "bytes": 7048,
       "sha256": "652ae9876e6af3bd0ba9b4af5e440982aea99ce157b1b5665d45c097035b3ab8"
     },
+    "packages/core/youtube-policy.ts": {
+      "bytes": 3190,
+      "sha256": "abb5ceb8da2b5865158462d010196a91628a642f4542f16e489aecc1b159c8ad"
+    },
     "playwright.config.ts": {
       "bytes": 597,
       "sha256": "af264fd7e8ca0a420d4b55efedeb5de0a34dc352ed30bb75b5cace2ec5c9f49e"
@@ -975,13 +995,21 @@
       "bytes": 80,
       "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
     },
+    "prisma/migrations/202610100002_social_refresh_boundary/migration.sql": {
+      "bytes": 75,
+      "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+    },
+    "prisma/migrations/202610100003_youtube_policy_review/migration.sql": {
+      "bytes": 1400,
+      "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+    },
     "prisma/migrations/migration_lock.toml": {
       "bytes": 24,
       "sha256": "1db17a8d051aa136110736752c5e1f8b7ed92b6ea8e803112fbbe2497047c210"
     },
     "prisma/schema.prisma": {
-      "bytes": 22632,
-      "sha256": "26e9350734da069fe42527258a799b0e54a51485447311d324cc6c9ccbdb80f8"
+      "bytes": 23613,
+      "sha256": "76b48cde9cdc52791ebcacca8a2c149464f3570050c3d0f5ca9bdc42419fa51f"
     },
     "scripts/fontkit-controls.mjs": {
       "bytes": 16996,
@@ -1132,12 +1160,12 @@
       "sha256": "276b18474d4d74c08d2384ceb81c53cfdc7987373a1eb7dd45f2ada49f9c5fe6"
     },
     "tests/integration/social-attempts.test.ts": {
-      "bytes": 10707,
-      "sha256": "b79ebcbf37ae6482c6471d41ed273e54f7825054883e1ed9c5ee4a86f9a5c49d"
+      "bytes": 14480,
+      "sha256": "a18bb38ab72a5974ff198813ed98e1d4b86aaf12ef6fb01c117eae0bbab5d473"
     },
     "tests/integration/social-oauth.test.ts": {
-      "bytes": 13811,
-      "sha256": "1174274f73169153bb3773a2cf37b2b7210ed7ed603caab154963bcf4dfd8b93"
+      "bytes": 16506,
+      "sha256": "df1dc527633179d18bc0924f818c858e04fbee795d1644069ea4bc24970f08c1"
     },
     "tests/media.test.ts": {
       "bytes": 10823,
@@ -1246,6 +1274,10 @@
     "tests/youtube-oauth.test.ts": {
       "bytes": 6245,
       "sha256": "0f4a5d3dca95993bade695cf2cf8386cbec6a2b8378dbef87119d9a159e5f4b3"
+    },
+    "tests/youtube-policy.test.ts": {
+      "bytes": 2204,
+      "sha256": "17659ddb0d967489126c3d64e38101886831003a68270e1fe68b834de45c142b"
     }
   }
 }

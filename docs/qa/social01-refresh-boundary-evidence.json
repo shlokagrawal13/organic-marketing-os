@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 durable refresh boundary",
+  "dateUtc": "2026-10-10",
+  "basePublicCommit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
+  "status": "local_verified_not_published",
+  "behavior": [
+    "Owner/admin session and membership are rechecked before a durable refreshPendingAt marker commits.",
+    "The provider refresh runs only after that commit; a pending marker blocks repeated refresh and internal attempt reservation/submission even when the old access token appears unexpired.",
+    "A successful provider response clears the marker in the same transaction that stores encrypted rotated tokens, after a second session/membership and connection-state check.",
+    "Provider ambiguity, local transaction failure or process death leaves the marker; fresh OAuth for the same channel clears it. No automatic retry of the old grant occurs."
+  ],
+  "checks": {
+    "cleanLockfileInstallAndFontkitPatch": "passed; 273 packages",
+    "prismaGenerateAndSchemaValidate": "passed with disposable DATABASE_URL for validation",
+    "apiTypescriptBuild": "passed on final source",
+    "freshDisposablePgliteMigrations": 16,
+    "focusedOAuthHttp": { "passed": 4, "failed": 0, "skipped": 0 },
+    "focusedAttemptLedgerHttp": { "passed": 1, "failed": 0, "skipped": 0 },
+    "remoteSuccessLocalFailure": "fixture provider returns rotated grant; role change prevents persistence; durable marker and old encrypted token remain, retry conflicts, fresh OAuth clears marker",
+    "priorPublicNativeCi": "38044868624; applies only to published base, not this local change"
+  },
+  "excluded": [
+    "An initial schema validation lacked DATABASE_URL; validation with a disposable URL passed.",
+    "An initial restricted-sandbox HTTP attempt could not start Redis/S3Proxy; the isolated local-service reruns passed.",
+    "A browser suite was interrupted after three passing cases; it is not counted as final UI evidence for this change."
+  ],
+  "limits": [
+    "No actual process-kill or Google token rotation was exercised; the test injects provider success plus local authorization failure.",
+    "No live Google grant/revoke/post, production-native CI, full unit/browser/recovery rerun or cross-store restore for this local delta.",
+    "Current platform policy, authenticated dispatch/read-only reconciliation, scheduler, connect UI and authorized test post remain open."
+  ],
+  "externalProviderCalls": 0,
+  "publicWriteAttempted": false
+}

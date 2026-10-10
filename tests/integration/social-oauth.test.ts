@@ -320,9 +320,15 @@ test("owner refresh rotates encrypted grants and provider revocation blocks reco
   assert.equal((await request(route + "/refresh", outsider, "POST")).status, 404);
   failRefresh = true;
   assert.equal((await request(route + "/refresh", owner, "POST")).status, 503);
-  assert.equal((await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } })).accessTokenCiphertext,
-    connected.accessTokenCiphertext);
+  const ambiguous = await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } });
+  assert.equal(ambiguous.accessTokenCiphertext, connected.accessTokenCiphertext);
+  assert.ok(ambiguous.refreshPendingAt, "durable marker survives a remote error");
   failRefresh = false;
+  assert.equal((await request(route + "/refresh", owner, "POST")).status, 409);
+  assert.equal(refreshCalls, 1, "an uncertain grant must never be retried");
+  const reconnectState = await begin(org.id, owner);
+  assert.equal(new URL((await callback(reconnectState, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+  assert.equal((await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } })).refreshPendingAt, null);
   const refreshed = await request(route + "/refresh", owner, "POST");
   assert.equal(refreshed.status, 201);
   const safe = await refreshed.json();
@@ -332,6 +338,7 @@ test("owner refresh rotates encrypted grants and provider revocation blocks reco
   assert.equal(decryptSocialToken(rotated.accessTokenCiphertext, context, key), "rotated-access");
   assert.equal(decryptSocialToken(rotated.refreshTokenCiphertext!, context, key), "rotated-refresh");
   assert.notEqual(rotated.refreshTokenCiphertext, connected.refreshTokenCiphertext);
+  assert.equal(rotated.refreshPendingAt, null);
   assert.equal(refreshCalls, 2);
   assert.equal((await request(route + "/revoke-provider", editor, "POST")).status, 403);
   assert.equal((await request(route + "/revoke-provider", owner, "POST")).status, 503);
@@ -351,4 +358,41 @@ test("owner refresh rotates encrypted grants and provider revocation blocks reco
   assert.equal((await request(route + "/revoke-provider", owner, "POST")).status, 201);
   const reconnect = await begin(org.id, owner);
   assert.equal(new URL((await callback(reconnect, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+});
+
+test("remote refresh success followed by local authorization failure remains blocked until a fresh grant", async () => {
+  const org = await db.organization.create({ data: { name: "Ambiguous rotation fixture" } });
+  orgs.push(org.id);
+  const owner = await actor(org.id);
+  users.push(owner.id);
+  const state = await begin(org.id, owner);
+  assert.equal(new URL((await callback(state, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+  const connected = await db.socialConnection.findFirstOrThrow({ where: { organizationId: org.id } });
+  const route = `/workspaces/${org.id}/social-connections/${connected.id}`;
+  const provider = app.get(YoutubeOAuthProvider);
+  let calls = 0;
+  provider.refresh = async () => {
+    calls++;
+    await db.membership.update({
+      where: { userId_organizationId: { userId: owner.id, organizationId: org.id } },
+      data: { role: "EDITOR" },
+    });
+    return { access_token: "remote-rotated-access", refresh_token: "remote-rotated-refresh",
+      token_type: "Bearer" as const, expires_in: 3600, scope: youtubeScopes.join(" ") };
+  };
+  assert.equal((await request(route + "/refresh", owner, "POST")).status, 503);
+  const uncertain = await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } });
+  assert.ok(uncertain.refreshPendingAt);
+  assert.equal(uncertain.refreshTokenCiphertext, connected.refreshTokenCiphertext);
+  await db.membership.update({
+    where: { userId_organizationId: { userId: owner.id, organizationId: org.id } },
+    data: { role: "OWNER" },
+  });
+  assert.equal((await request(route + "/refresh", owner, "POST")).status, 409);
+  assert.equal(calls, 1);
+  const reconnect = await begin(org.id, owner);
+  assert.equal(new URL((await callback(reconnect, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+  const recovered = await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } });
+  assert.equal(recovered.refreshPendingAt, null);
+  assert.notEqual(recovered.refreshTokenCiphertext, connected.refreshTokenCiphertext);
 });

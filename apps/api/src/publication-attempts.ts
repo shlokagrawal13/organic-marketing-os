@@ -5,11 +5,12 @@ import {
 } from "@nestjs/common";
 import { PrismaClient, Prisma } from "@prisma/client";
 import { digest } from "../../../packages/core/security";
+import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 
 type Tx = Prisma.TransactionClient;
 const unresolved = ["RESERVED", "SUBMITTING", "UNKNOWN", "CONFIRMED"] as const;
 
-async function currentApproval(tx: Tx, org: string, intentId: string) {
+export async function currentApproval(tx: Tx, org: string, intentId: string) {
   await tx.$queryRaw`SELECT id FROM "PublicationIntent" WHERE id=${intentId} AND "organizationId"=${org} FOR UPDATE`;
   const intent = await tx.publicationIntent.findFirst({
     where: { id: intentId, organizationId: org },
@@ -58,11 +59,12 @@ async function currentApproval(tx: Tx, org: string, intentId: string) {
   return intent;
 }
 
-function activeConnection(
+export function activeConnection(
   connection: {
     organizationId: string;
     provider: string;
     revokedAt: Date | null;
+    refreshPendingAt: Date | null;
     tokenExpiresAt: Date | null;
     scopes: string[];
   },
@@ -72,6 +74,7 @@ function activeConnection(
     connection.organizationId !== org ||
     connection.provider !== "YOUTUBE" ||
     connection.revokedAt ||
+    connection.refreshPendingAt ||
     !connection.tokenExpiresAt ||
     connection.tokenExpiresAt <= new Date() ||
     !connection.scopes.includes(
@@ -193,13 +196,29 @@ export async function enterPublicationSubmission(
       throw new ConflictException(
         "Attempt already started or changed. Never submit it twice.",
       );
-    await currentApproval(tx, org, attempt.intentId);
+    const intent = await currentApproval(tx, org, attempt.intentId);
     const connection = await tx.socialConnection.findFirst({
       where: { id: attempt.connectionId, organizationId: org },
     });
     if (!connection)
       throw new ConflictException("Authorized connection is unavailable.");
     activeConnection(connection, org);
+    const review = await tx.publicationPolicyReview.findUnique({
+      where: { intentId: attempt.intentId },
+    });
+    if (!review || review.organizationId !== org ||
+        review.connectionId !== connection.id ||
+        review.contentRevision !== intent.contentRevision ||
+        review.policyVersion !== youtubePolicyVersion ||
+        review.expiresAt <= new Date() ||
+        review.snapshotHash !== youtubePolicyFingerprint({
+          intentId: intent.id,
+          connectionId: connection.id,
+          contentRevision: intent.contentRevision,
+          renderId: intent.renderId,
+          metadata: review.metadata,
+        }))
+      throw new ConflictException("A current reviewed YouTube upload policy and metadata snapshot is required.");
     const changed = await tx.publicationAttempt.updateMany({
       where: {
         id: attempt.id,
@@ -209,6 +228,13 @@ export async function enterPublicationSubmission(
       },
       data: {
         status: "SUBMITTING",
+        policySnapshot: {
+          reviewId: review.id,
+          reviewedBy: review.reviewedBy,
+          reviewedAt: review.reviewedAt.toISOString(),
+          policyVersion: review.policyVersion,
+          metadata: review.metadata as Prisma.InputJsonObject,
+        },
         startedAt: new Date(),
         version: { increment: 1 },
       },

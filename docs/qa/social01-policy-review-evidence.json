@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 bounded YouTube policy review",
+  "dateUtc": "2026-10-10",
+  "basePublicCommit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
+  "status": "local_verified_not_published",
+  "officialReferences": [
+    "https://developers.google.com/youtube/v3/docs/videos/insert",
+    "https://developers.google.com/youtube/v3/docs/videos"
+  ],
+  "policyVersion": "youtube-videos-insert-2026-10-08",
+  "behavior": [
+    "Read-only tenant/role-gated preview derives exact title and description from the approved video preparation.",
+    "Owner/admin/editor must submit explicit privacy, child-audience and realistic synthetic-media choices plus metadata, audience, disclosure, rights and platform-rule acknowledgments.",
+    "Only approved YouTube Video content with the matching approved render and a current authorized connection can create an immutable, tenant-scoped review.",
+    "Review is bound to intent, account, revision, render, canonical metadata fingerprint and policy version; a different/expired review needs a fresh preparation.",
+    "Internal SUBMITTING transition rejects absent, expired, mismatched or tampered review and atomically stores the reviewed metadata in the attempt. No HTTP submission/worker/provider sender is enabled."
+  ],
+  "checks": {
+    "prismaGenerateAndValidate": "passed",
+    "apiTypescriptBuildFinalSource": "passed",
+    "freshDisposablePgliteMigrations": 17,
+    "focusedPolicyUnit": { "passed": 1, "failed": 0 },
+    "focusedPolicyAndAttemptHttp": { "passed": 1, "failed": 0 },
+    "existingPreparationHttp": { "passed": 1, "failed": 0 },
+    "coveredBoundaries": [
+      "cross-tenant and role denial",
+      "missing/changed human acknowledgments",
+      "read-only metadata preview",
+      "no review at submission",
+      "expired review",
+      "immutable changed privacy choice",
+      "JSONB key-order canonical fingerprint after database round trip",
+      "tampered metadata",
+      "private privacy and explicit audience/synthetic disclosures in attempt snapshot"
+    ]
+  },
+  "excluded": [
+    "Initial policy integration failed because JSONB reordered nested keys; canonical object-key hashing fixed it, and the final focused suite passed.",
+    "An intermediate API build failed after a misplaced import; the import was fixed and the final API build passed."
+  ],
+  "limits": [
+    "This is a bounded, manually acknowledged metadata gate, not automated semantic truth, rights, platform policy, quota or frequency certification.",
+    "The source policy version requires a maintainer update when the official platform reference changes; a 24-hour local review TTL alone cannot detect a remote policy change.",
+    "There is no account-connect/policy-review UI, authenticated upload sender, read-only reconciliation, scheduler or real account/post; full regression/native CI and live acceptance remain open."
+  ],
+  "externalProviderCalls": 0,
+  "publicWriteAttempted": false
+}

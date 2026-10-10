@@ -25,6 +25,15 @@ import {
 import { digest } from "../../../packages/core/security";
 import { checkContent } from "../../../packages/core/content";
 import { draftSchema } from "../../../packages/core/ai";
+import {
+  youtubeBaseMetadata,
+  youtubePolicyFingerprint,
+  youtubePolicyReviewLifetimeMs,
+  youtubePolicyVersion,
+  youtubeReviewInput,
+  youtubeUploadMetadata,
+} from "../../../packages/core/youtube-policy";
+import { activeConnection, currentApproval } from "./publication-attempts";
 
 const prepareInput = z
   .object({
@@ -46,6 +55,7 @@ const view = ({
   ...intent,
   externallySubmitted: false as const,
 });
+const policyView = ({ snapshotHash, ...review }: { snapshotHash: string; [key: string]: any }) => review;
 
 @Controller("workspaces/:organizationId/publication-intents")
 @UseGuards(TenantGuard)
@@ -76,6 +86,91 @@ export class PublicationIntentsController {
     if (!intent)
       throw new NotFoundException("Publication preparation not found.");
     return view(intent);
+  }
+
+  @Get(":id/youtube-policy-preview") @Roles(...approverRoles) async previewYoutube(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+  ) {
+    const intentId = idSchema.parse(id);
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+      const intent = await currentApproval(tx, req.organizationId, intentId);
+      try {
+        return {
+          intentId,
+          contentRevision: intent.contentRevision,
+          renderId: intent.renderId,
+          snippet: youtubeBaseMetadata(intent.snapshot),
+          requiredChoices: ["connectionId", "privacyStatus", "selfDeclaredMadeForKids", "containsSyntheticMedia"],
+          policyVersion: youtubePolicyVersion,
+          externallySubmitted: false as const,
+        };
+      } catch (error) {
+        throw new BadRequestException(error instanceof Error ? error.message : "Invalid YouTube metadata.");
+      }
+    });
+  }
+
+  @Post(":id/youtube-policy-review") @Roles(...approverRoles) async reviewYoutube(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Body() body: unknown,
+  ) {
+    const intentId = idSchema.parse(id);
+    const reviewInput = youtubeReviewInput.parse(body);
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+      const intent = await currentApproval(tx, req.organizationId, intentId);
+      const connection = await tx.socialConnection.findFirst({
+        where: { id: reviewInput.connectionId, organizationId: req.organizationId },
+      });
+      if (!connection) throw new NotFoundException("Social connection not found.");
+      activeConnection(connection, req.organizationId);
+      let metadata;
+      try {
+        metadata = youtubeUploadMetadata(intent.snapshot, reviewInput);
+      } catch (error) {
+        throw new BadRequestException(error instanceof Error ? error.message : "Invalid YouTube metadata.");
+      }
+      const fingerprint = youtubePolicyFingerprint({
+        intentId, connectionId: connection.id,
+        contentRevision: intent.contentRevision,
+        renderId: intent.renderId, metadata,
+      });
+      const existing = await tx.publicationPolicyReview.findUnique({ where: { intentId } });
+      if (existing) {
+        if (existing.snapshotHash !== fingerprint || existing.expiresAt <= new Date())
+          throw new ConflictException("The policy review is immutable or expired. Prepare a new publication.");
+        return policyView(existing);
+      }
+      const now = new Date();
+      const review = await tx.publicationPolicyReview.create({
+        data: {
+          organizationId: req.organizationId,
+          intentId, connectionId: connection.id,
+          contentRevision: intent.contentRevision,
+          policyVersion: youtubePolicyVersion,
+          metadata,
+          snapshotHash: fingerprint,
+          reviewedBy: req.userId,
+          reviewedAt: now,
+          expiresAt: new Date(now.getTime() + youtubePolicyReviewLifetimeMs),
+        },
+      });
+      await tx.auditLog.create({
+        data: {
+          organizationId: req.organizationId, actorId: req.userId,
+          action: "publication.youtube_policy_reviewed", entityId: intentId,
+          detail: { reviewId: review.id, connectionId: connection.id,
+            policyVersion: youtubePolicyVersion,
+            privacyStatus: reviewInput.privacyStatus,
+            selfDeclaredMadeForKids: reviewInput.selfDeclaredMadeForKids,
+            containsSyntheticMedia: reviewInput.containsSyntheticMedia },
+        },
+      });
+      return policyView(review);
+    });
   }
 
   @Post() @Roles(...approverRoles) async prepare(
