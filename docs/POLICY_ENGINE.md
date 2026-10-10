@@ -1,5 +1,9 @@
 # Policy and quality checks
 
+## SOCIAL-01 YouTube connections and upload-review UI (local) — 2026-10-10 UTC
+
+The local approved-video panel makes the bounded YouTube metadata and declaration review available to workspace approvers. It has no preselected visibility/audience/synthetic choice, shows server-derived title/description read-only, and requires all four acknowledgments. The new GET for a saved review is tenant and approver gated and excludes its fingerprint. UI declarations are human review inputs, not verified legal or platform compliance; no upload occurs. See `docs/qa/social01-review-ui-evidence.json`. Previous dated sections are historical.
+
 ## Bounded YouTube upload review — local, 2026-10-10
 
 `GET /api/workspaces/:organizationId/publication-intents/:id/youtube-policy-preview` shows title/description derived from the approved Video revision; it does not post. A workspace approver (OWNER, ADMIN or EDITOR) can submit `POST .../:id/youtube-policy-review` for one authorized YouTube channel with explicit `privacyStatus`, `selfDeclaredMadeForKids`, `containsSyntheticMedia` and true metadata/audience/synthetic/rights/platform-rule acknowledgments. The title is limited to 100 characters; the description is limited to 5000 UTF-8 bytes; angle brackets are rejected. The service never relies on YouTube's public privacy default. It accepts no client-provided title/description or `publishAt` in this bounded contract. Official references reviewed: https://developers.google.com/youtube/v3/docs/videos/insert and https://developers.google.com/youtube/v3/docs/videos (both checked 2026-10-10; local version `youtube-videos-insert-2026-10-08`).

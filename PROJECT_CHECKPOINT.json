@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-10.19-SOCIAL01-policy-review-local",
-  "savedAtUtc": "2026-10-10T11:09:13Z",
-  "currentMilestone": "SOCIAL-01 durable refresh boundary and bounded YouTube policy review locally verified; earlier token lifecycle public/native CI verified",
+  "checkpointRevision": "2026-10-10.21-SOCIAL01-review-ui-local",
+  "savedAtUtc": "2026-10-10T17:19:59Z",
+  "currentMilestone": "SOCIAL-01 refresh and YouTube policy-review source public/native CI verified; connection/review UI locally verified; full SOCIAL-01 Partial",
   "activeTaskId": "SOCIAL-01",
-  "workInProgress": "Durable refresh boundary and bounded YouTube policy preview/review gate locally verified with 17 fresh PGlite migrations. Policy-review UI, authenticated provider dispatch/read-only reconciliation, scheduler and live authorized post remain open. Local source and prior closure are not public.",
+  "workInProgress": "Local connection and YouTube review UI verified with production builds, focused tenant/role HTTP and 3 browser cases. Public source remains 100fba3; UI delta has no own native CI.",
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Build account connection and policy-review UI, then authenticated provider dispatch with exact policy snapshot and verified read-only reconciliation without blind retries. Separately authorize any live Google test post; retain native CI and wider policy/semantic gates as open.",
+  "nextAction": "After review/publication of this local UI delta, obtain own native CI. Then build authenticated provider dispatch and verified read-only reconciliation with no blind retry; separately authorize any live Google post.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -21,9 +21,12 @@
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
-    "apps/api/src/publication-attempts.ts",
     "apps/api/src/publications.ts",
-    "apps/api/src/social-connections.ts",
+    "apps/web/app/content-workspace.tsx",
+    "apps/web/app/globals.css",
+    "apps/web/app/social-connections-panel.tsx",
+    "apps/web/app/workspace.tsx",
+    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/POLICY_ENGINE.md",
@@ -33,15 +36,12 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/social01-policy-review-evidence.json",
-    "docs/qa/social01-refresh-boundary-evidence.json",
-    "packages/core/youtube-policy.ts",
-    "prisma/migrations/202610100002_social_refresh_boundary/migration.sql",
-    "prisma/migrations/202610100003_youtube_policy_review/migration.sql",
-    "prisma/schema.prisma",
+    "docs/qa/social01-policy-review-native-ci-evidence.json",
+    "docs/qa/social01-policy-review-native-unit-receipts.json",
+    "docs/qa/social01-review-ui-evidence.json",
+    "docs/qa/verification-summary.json",
     "tests/integration/social-attempts.test.ts",
-    "tests/integration/social-oauth.test.ts",
-    "tests/youtube-policy.test.ts"
+    "tests/ui/social-policy-review.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -70,16 +70,19 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-10-09",
+    "date": "2026-10-10",
     "applicationSuites": {
       "unitPerFontSet": 187,
       "unitFontSets": 2,
       "http": 7,
       "browser": 7,
       "recovery": 5,
-      "latestNativeUnit": 193
+      "latestNativeUnit": 194,
+      "latestNativeHttp": 13,
+      "latestNativeBrowser": 7,
+      "latestNativeRecovery": 5
     },
-    "migrationsApplied": 14,
+    "migrationsApplied": 17,
     "database": "Local W final verifier used PGlite WASM PostgreSQL; prior V native PostgreSQL CI remains prior evidence only.",
     "populatedUpgradeRestore": {
       "passed": true,
@@ -101,33 +104,20 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "SOCIAL-01 OAuth protocol helper is public/native CI verified, but API callback, live provider token, remote revoke/refresh persistence, dispatch, scheduler and authorized post are not. Broader physical-device/content/language and full master acceptance remain open.",
+    "scopeWarning": "SOCIAL-01 refresh and bounded policy review are public/native CI verified; connection/review UI is local only. Provider dispatch/reconciliation, scheduler, live Google test and broader acceptance remain open.",
     "latestGithubActions": {
-      "runId": 37989266829,
-      "jobId": 114018963643,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37989266829",
-      "sourceCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
-      "sourceTree": "78a843edf240c6f3ee1e9385d4faa567436f4b51",
-      "status": "completed",
+      "runId": 38047795536,
+      "jobId": 114200731782,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38047795536",
+      "sourceCommit": "100fba333da214ffac5683b26506860c9f2ff648",
+      "sourceTree": "eb2efe2a4cbcc07c5b6637fe1edc1433bc23af20",
       "conclusion": "success",
-      "attempt": 1,
-      "unit": {
-        "tests": 193,
-        "passed": 193,
-        "failed": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0
-      },
-      "httpScenarios": 9,
-      "browserScenarios": 7,
-      "recoveryScenarios": 5,
-      "migrations": 14,
-      "smallScreenEnglishOcrPasses": 36,
-      "busyBackgroundOcrPasses": 8,
-      "populatedPgliteUpgradeRestore": true,
-      "productionAuditAdvisories": 0,
-      "fullAuditAdvisories": 0
+      "unitPassed": 194,
+      "httpPassed": 13,
+      "browserPassed": 7,
+      "recoveryPassed": 5,
+      "nativeMigrations": 17,
+      "evidence": "docs/qa/social01-policy-review-native-ci-evidence.json"
     },
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "EDITOR-01X focused local and own native CI production/full npm audits: zero vulnerabilities.",
@@ -6579,6 +6569,17 @@
       ],
       "evidence": "docs/qa/editor01ae-busy-readability-evidence.json",
       "nativeOwnCiVerified": false
+    },
+    "latestLocalUi": {
+      "builds": [
+        "API TypeScript",
+        "Next.js production"
+      ],
+      "http": 1,
+      "browser": 3,
+      "migrations": 17,
+      "evidence": "docs/qa/social01-review-ui-evidence.json",
+      "nativeCiOnDelta": false
     }
   },
   "accessState": {
@@ -6590,8 +6591,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
-    "status": "social01_token_lifecycle_published_exact_tree_native_ci_success",
+    "commit": "100fba333da214ffac5683b26506860c9f2ff648",
+    "status": "social01_refresh_policy_review_published_exact_tree_native_ci_success_ui_local",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6604,9 +6605,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "4892d4ec3a8b67e0161e1a34442ed042c3dc6485",
+    "sourceTree": "eb2efe2a4cbcc07c5b6637fe1edc1433bc23af20",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Exact approved 28-file Z+AA+AB payload; own native CI verified. Later local closure not included in public source.",
+    "commitMeaning": "Approved cumulative 28-file refresh/policy review payload. Current UI and later CI closure records are local and not yet public.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "1bb6562",
     "uploadGate": {
@@ -7933,25 +7934,35 @@
     }
   ],
   "lastChanges": {
-    "slice": "SOCIAL-01 public/native CI closure local",
+    "slice": "SOCIAL-01 YouTube connection/review UI and recovered public native CI closure",
     "paths": [
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
+      "apps/api/src/publications.ts",
+      "apps/web/app/content-workspace.tsx",
+      "apps/web/app/globals.css",
+      "apps/web/app/social-connections-panel.tsx",
+      "apps/web/app/workspace.tsx",
+      "apps/web/app/youtube-policy-review.tsx",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
+      "docs/POLICY_ENGINE.md",
       "docs/PROJECT_STATUS.md",
       "docs/PUBLISHING.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-token-lifecycle-native-ci-evidence.json",
-      "docs/qa/social01-token-lifecycle-native-unit-receipts.json",
-      "docs/qa/verification-summary.json"
+      "docs/qa/social01-policy-review-native-ci-evidence.json",
+      "docs/qa/social01-policy-review-native-unit-receipts.json",
+      "docs/qa/social01-review-ui-evidence.json",
+      "docs/qa/verification-summary.json",
+      "tests/integration/social-attempts.test.ts",
+      "tests/ui/social-policy-review.spec.ts"
     ],
-    "verified": "Own public native Actions 38044868624 success; artifact SHA/CRC/193 receipts/44 OCR hashes checked; local handoff package integrity pending."
+    "verified": "Public native Actions 38047795536 success with artifact SHA/CRC/194 receipts/44 OCR hashes; UI local API/web build, 1 HTTP, 3 browser, 17 PGlite migrations; handoff integrity passed (323 included files)."
   },
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",

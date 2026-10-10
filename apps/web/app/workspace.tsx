@@ -42,6 +42,7 @@ import Team from "./team";
 import MediaWorkspace from "./media-workspace";
 import OperationsWorkspace from "./operations-workspace";
 import CreditsWorkspace from "./credits-workspace";
+import SocialConnectionsPanel from "./social-connections-panel";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -202,6 +203,15 @@ export default function Workspace({
   useEffect(() => {
     load();
   }, [load]);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const youtube = url.searchParams.get("youtube");
+    if (youtube !== "connected" && youtube !== "failed") return;
+    setView("integrations");
+    setNotice(youtube === "connected" ? "YouTube authorization returned. Verify the channel status below." : "YouTube connection was not completed. Check configuration or retry from Connections.");
+    url.searchParams.delete("youtube");
+    window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+  }, []);
   useEffect(() => {
     const value = localStorage.getItem("organic-theme") === "dark";
     setDark(value);
@@ -1140,9 +1150,11 @@ export default function Workspace({
                   <div className="alert">
                     AI providers and billing are configured by your
                     administrator. Generated media is available when its
-                    provider is enabled. Social publishing and external
-                    analytics are still pending.
+                    provider is enabled. YouTube account connection and upload
+                    review are available; video posting and external analytics
+                    are still pending.
                   </div>
+                  <SocialConnectionsPanel key={base} base={base} role={member.role} />
                   <section className="panel connection-list">
                     <div>
                       <div className="connection-icon">
@@ -1162,7 +1174,7 @@ export default function Workspace({
                     {[
                       "AI text generation",
                       "Image, video & voice generation",
-                      "Social publishing",
+                      "Other social publishing",
                       "Performance analytics",
                       "Stripe billing",
                     ].map((label, i) => (
@@ -1184,7 +1196,7 @@ export default function Workspace({
                               : i === 1
                                 ? "Generate private media from the Asset library when your administrator enables a model and price."
                                 : i === 2
-                                  ? "Requires official platform authorization and a publishing adapter."
+                                  ? "Other platforms require official authorization and a publishing adapter. YouTube posting is also pending."
                                   : i === 4
                                     ? "Plans, credit history and invoices are available with configured billing credentials."
                                     : "External analytics connectors are not implemented yet."}

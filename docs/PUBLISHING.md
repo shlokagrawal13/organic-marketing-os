@@ -1,5 +1,9 @@
 # Publishing status
 
+## SOCIAL-01 YouTube connections and upload-review UI (local) — 2026-10-10 UTC
+
+The local Connections screen starts OAuth only on an owner/admin click and shows safe channel and refresh state; it does not grant permission to post by itself. The approved-video review UI calls internal preparation, preview, and immutable review endpoints for an exact approved render. A saved review remains internal, expires after 24 hours, and can be reloaded through a tenant/approver-gated read endpoint. A newer preparation is needed for changed choices or expired review. No sender, scheduler or externally submitted state is exposed. See `docs/qa/social01-review-ui-evidence.json`. Previous dated sections are historical.
+
 ## SOCIAL-01 bounded YouTube policy review (local) — 2026-10-10 UTC
 
 A tenant- and role-gated read-only preview derives YouTube title/description from the exact approved Video preparation. A reviewer then binds an explicit private/unlisted/public choice, child-audience and realistic synthetic-media declarations, and metadata/rights/platform acknowledgments to one connection and revision. The immutable review records a versioned metadata fingerprint, actor, audit entry and 24-hour expiry. The internal SUBMITTING transition rejects missing, stale, altered or mismatched reviews and durably snapshots reviewed metadata. No sender or scheduler invokes the transition. Google's videos.insert and video-resource references (https://developers.google.com/youtube/v3/docs/videos/insert and https://developers.google.com/youtube/v3/docs/videos) were checked for supported fields and bounds; this local rule version is `youtube-videos-insert-2026-10-08`.

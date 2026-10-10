@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 YouTube connection and immutable upload-review UI",
+  "dateUtc": "2026-10-10",
+  "status": "local_focused_verified_publication_pending",
+  "sourceBaseCommit": "100fba333da214ffac5683b26506860c9f2ff648",
+  "behavior": [
+    "Owner/admin connection screen starts official OAuth only on explicit click, shows safe account and refresh uncertainty, and offers confirmed provider revocation",
+    "Approved YouTube video/revision selects an approved finished render, prepares an internal immutable snapshot, previews server-derived metadata, requires explicit channel/privacy/audience/synthetic/rights choices, and saves an expiring review",
+    "Tenant- and role-gated GET of existing review omits internal fingerprint; reloading the editor retrieves the immutable review",
+    "No HTTP sender, scheduler or provider post route is exposed by this UI"
+  ],
+  "checks": {
+    "lockedInstallPackages": 273,
+    "fontkitPostinstall": "passed",
+    "prismaGenerate": "passed",
+    "apiTypeScriptBuild": "passed",
+    "webProductionBuild": "passed",
+    "isolatedMigrations": 17,
+    "socialAttemptHttp": {
+      "passed": 1,
+      "failed": 0
+    },
+    "socialReviewBrowser": {
+      "passed": 1,
+      "failed": 0,
+      "productionWeb": true,
+      "realGoogleRequests": 0,
+      "publicationAttempts": 0
+    },
+    "foundationBrowser": {
+      "passed": 2,
+      "failed": 0,
+      "productionWeb": true
+    },
+    "visualReview": "Production-browser screenshot inspected; review panel moved ahead of render studio and linked from approval notice",
+    "diffWhitespace": "passed",
+    "checkpointIntegrity": "323 included files; no drift after packaging"
+  },
+  "testServices": {
+    "database": "disposable PGlite PostgreSQL socket",
+    "redis": "test-only Redis 7.2.11 built from official GitHub tag archive sha256:95f9d5c0d44e1f21599a300f6a950fc9d128dfb12066e92886da9cd67c299d7b",
+    "storage": "S3Proxy 4.1.1 checksum-pinned release",
+    "web": "production Next.js server"
+  },
+  "earlierFailures": [
+    "First browser selector matched two same-title buttons; changed to exact accessible name. It was not a product failure.",
+    "Next browser assertion matched the title checkbox as well as the title textbox; changed to exact textbox role. Final browser run passed."
+  ],
+  "limits": [
+    "No real Google OAuth consent or external post tested",
+    "No authenticated provider dispatch, read-only reconciliation or scheduler",
+    "No native CI on this local UI delta until its own public commit",
+    "No real-account or platform/device acceptance"
+  ],
+  "publicWriteAttempted": false
+}

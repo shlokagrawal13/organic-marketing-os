@@ -193,6 +193,9 @@ test("local connection revocation and durable unknown attempts never resubmit", 
   }), /current reviewed YouTube upload policy/);
   const reviewPath = root + `/publication-intents/${intent.id}/youtube-policy-review`;
   const previewPath = root + `/publication-intents/${intent.id}/youtube-policy-preview`;
+  assert.equal((await owner.call(reviewPath)).status, 404);
+  assert.equal((await creator.call(reviewPath)).status, 403);
+  assert.equal((await outsider.call(`/workspaces/${otherOrg.id}/publication-intents/${intent.id}/youtube-policy-review`)).status, 404);
   assert.equal((await creator.call(previewPath)).status, 403);
   assert.equal((await outsider.call(`/workspaces/${otherOrg.id}/publication-intents/${intent.id}/youtube-policy-preview`)).status, 404);
   const preview = await owner.call(previewPath);
@@ -203,6 +206,11 @@ test("local connection revocation and durable unknown attempts never resubmit", 
   assert.equal((await outsider.call(`/workspaces/${otherOrg.id}/publication-intents/${intent.id}/youtube-policy-review`, "POST", reviewInput)).status, 404);
   assert.equal((await owner.call(reviewPath, "POST", { ...reviewInput, metadataReviewed: false })).status, 400);
   const reviewed = await reviewVideo(intent.id);
+  const savedReview = await owner.call(reviewPath);
+  assert.equal(savedReview.status, 200);
+  assert.equal(savedReview.body.id, reviewed.id);
+  assert.equal(savedReview.body.metadata.status.privacyStatus, "private");
+  assert.equal("snapshotHash" in savedReview.body, false);
   assert.equal((await owner.call(reviewPath, "POST", reviewInput)).body.id, reviewed.id);
   assert.equal((await owner.call(reviewPath, "POST", { ...reviewInput, privacyStatus: "public" })).status, 409);
   await db.publicationPolicyReview.update({ where: { id: reviewed.id }, data: { expiresAt: new Date(Date.now() - 1000) } });

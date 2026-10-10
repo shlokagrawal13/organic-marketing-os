@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { api, download } from "./api-client";
 import { RenderPanel } from "./media-workspace";
+import YoutubePolicyReview from "./youtube-policy-review";
 import { CaptionEditor } from "./caption-editor";
 import {
   sceneTimeline as timeline,
@@ -995,8 +996,9 @@ export default function ContentWorkspace({
                 )}
                 {detail.item.status === "APPROVED" && (
                   <div className="alert">
-                    Approved for this revision. Export the content to publish
-                    manually. Automatic publishing is not connected.
+                    Approved for this revision. {draft.platform === "YouTube" && draft.format === "Video"
+                      ? <span>An upload review can be prepared after approving a render. No video is posted automatically. {approver && <a href="#youtube-upload-review">Open YouTube upload review</a>}</span>
+                      : "Export the content to publish manually. Automatic publishing is not connected."}
                   </div>
                 )}
               </section>
@@ -1093,6 +1095,15 @@ export default function ContentWorkspace({
                 )}
             </aside>
           </div>
+          {detail.item.id && detail.item.status === "APPROVED" &&
+            draft.platform === "YouTube" && draft.format === "Video" && approver && !dirty && (
+              <YoutubePolicyReview
+                base={base}
+                contentId={detail.item.id}
+                revision={detail.item.revision}
+                onNavigate={onNavigate}
+              />
+            )}
           {draft.format === "Video" && (
             <RenderPanel
               base={base}

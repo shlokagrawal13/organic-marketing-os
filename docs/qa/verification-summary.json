@@ -1,21 +1,21 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-09",
+  "verifiedDate": "2026-10-10",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 188,
-    "httpScenarios": 7,
+    "unit": 194,
+    "httpScenarios": 13,
     "browserScenarios": 7,
     "recoveryAndConfigurationScenarios": 5,
-    "schemaMigrations": 12,
+    "schemaMigrations": 17,
     "unitFontSets": 1
   },
   "environment": {
-    "database": "Own Z+AA+AB native PostgreSQL 17 application CI; separate PGlite populated upgrade/archive restore.",
-    "redis": "Own Z+AA+AB native Redis 7 CI; local native Redis 7.2.11 previously verified.",
+    "database": "Public SOCIAL-01 policy-review native PostgreSQL CI with 17 migrations; local UI focused PGlite fixtures and populated PGlite upgrade/restore.",
+    "redis": "Public SOCIAL-01 policy-review native Redis CI; local UI focused test-only Redis 7.2.11.",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "Real FFmpeg/ffprobe; native environment version retained in raw job logs.",
     "email": "local SMTP capture",
@@ -83,21 +83,21 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 cumulative 20-file token lifecycle source public at 18a4c2d, exact tree 4892d4e. Own native Actions 38044868624 passed 193 unit, 12 HTTP, 7 browser, 5 recovery, 15 migrations, 36+8 OCR, populated PGlite restore and zero audits. Live Google/dispatch remain open. Later closure local.",
+  "latestIncrement": "SOCIAL-01 connection/review UI locally verified (API/web build, 1 HTTP, 3 browser, 17 disposable migrations) on public 100fba3 base; not published. Public source own native Actions 38047795536 passed 194 unit, 13 HTTP, 7 browser, 5 recovery, 17 migrations, 36+8 bounded OCR and both zero audits. No live Google post.",
   "latestNativeRun": {
-    "runId": 38044868624,
-    "jobId": 114192249500,
+    "runId": 38047795536,
+    "jobId": 114200731782,
     "attempt": 1,
-    "sourceCommit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
-    "sourceTree": "4892d4ec3a8b67e0161e1a34442ed042c3dc6485",
+    "sourceCommit": "100fba333da214ffac5683b26506860c9f2ff648",
+    "sourceTree": "eb2efe2a4cbcc07c5b6637fe1edc1433bc23af20",
     "status": "completed",
     "conclusion": "success",
-    "unitPassed": 193,
-    "httpPassed": 12,
+    "unitPassed": 194,
+    "httpPassed": 13,
     "browserPassed": 7,
     "recoveryPassed": 5,
-    "freshNativeMigrations": 15,
-    "evidence": "docs/qa/social01-token-lifecycle-native-ci-evidence.json"
+    "freshNativeMigrations": 17,
+    "evidence": "docs/qa/social01-policy-review-native-ci-evidence.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -129,7 +129,7 @@
     "liveProviderVerified": false,
     "nativeConcurrencyVerified": false
   },
-  "dependencyAuditDate": "2026-10-08",
+  "dependencyAuditDate": "2026-10-10",
   "media01dEvidence": {
     "planSpecificMediaRouting": true,
     "sourceReferenceOwnershipGate": true,
@@ -7885,5 +7885,6 @@
       "OCR samples are synthetic; broader devices, content, platform overlays and languages remain unverified."
     ],
     "closureRecordPublicWriteAttempted": false
-  }
+  },
+  "latestLocalUiEvidence": "docs/qa/social01-review-ui-evidence.json"
 }

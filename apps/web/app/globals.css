@@ -2872,3 +2872,66 @@ details > .form-grid {
     white-space: normal;
   }
 }
+
+.social-panel-heading,
+.social-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.social-panel-heading p,
+.social-account p,
+.policy-review p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+.social-account {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--line);
+}
+.social-account > div {
+  display: grid;
+  justify-items: start;
+  gap: 0.4rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.social-account small { color: var(--muted); }
+.social-account p { margin: 0; }
+.policy-review {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.9rem;
+}
+.policy-review > label,
+.policy-saved > label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+.policy-review select,
+.policy-review input[readonly],
+.policy-review textarea[readonly] {
+  width: 100%;
+  min-width: 0;
+  padding: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.policy-saved {
+  display: grid;
+  gap: 0.8rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  min-width: 0;
+}
+.policy-saved h4 { margin: 0; }
+.policy-saved .review-ack { display: flex; margin: 0.25rem 0; }
+.policy-review .button { justify-self: start; }
+@media (max-width: 600px) {
+  .social-panel-heading,
+  .social-account { flex-direction: column; gap: 0.8rem; }
+}

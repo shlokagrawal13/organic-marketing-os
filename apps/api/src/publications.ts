@@ -112,6 +112,23 @@ export class PublicationIntentsController {
     });
   }
 
+  @Get(":id/youtube-policy-review") @Roles(...approverRoles) async getYoutubeReview(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+  ) {
+    const intentId = idSchema.parse(id);
+    const intent = await this.db.publicationIntent.findFirst({
+      where: { id: intentId, organizationId: req.organizationId },
+      select: { id: true },
+    });
+    if (!intent) throw new NotFoundException("Publication preparation not found.");
+    const review = await this.db.publicationPolicyReview.findFirst({
+      where: { intentId, organizationId: req.organizationId },
+    });
+    if (!review) throw new NotFoundException("YouTube policy review not found.");
+    return policyView(review);
+  }
+
   @Post(":id/youtube-policy-review") @Roles(...approverRoles) async reviewYoutube(
     @Req() req: AuthedRequest,
     @Param("id") id: string,
