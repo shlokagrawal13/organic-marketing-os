@@ -16,10 +16,12 @@ import {
 import { Response } from "express";
 import { z } from "zod";
 import { digest } from "../../../packages/core/security";
-import { encryptSocialToken } from "../../../packages/core/social-tokens";
+import { decryptSocialToken, encryptSocialToken } from "../../../packages/core/social-tokens";
 import {
   exchangeYoutubeCode,
   newYoutubeOAuthProof,
+  refreshYoutubeToken,
+  revokeYoutubeGrant,
   youtubeAuthorizationUrl,
   youtubeOAuthConfig,
   youtubeOwnChannel,
@@ -58,6 +60,12 @@ export class YoutubeOAuthProvider {
   channel(accessToken: string) {
     return youtubeOwnChannel(accessToken);
   }
+  refresh(refreshToken: string) {
+    return refreshYoutubeToken(youtubeOAuthConfig(), refreshToken);
+  }
+  revoke(refreshToken: string) {
+    return revokeYoutubeGrant(refreshToken);
+  }
 }
 
 const metadata = {
@@ -78,6 +86,7 @@ export class SocialConnectionsController {
   constructor(
     private db: Db,
     private cache: Cache,
+    private provider: YoutubeOAuthProvider,
   ) {}
 
   @Get() @Roles(...writerRoles) list(@Req() req: AuthedRequest) {
@@ -107,6 +116,17 @@ export class SocialConnectionsController {
         "YouTube connection is not configured.",
       );
     }
+    const pendingRevocation = await this.db.socialConnection.findFirst({
+      where: {
+        organizationId: req.organizationId,
+        provider: "YOUTUBE",
+        revokedAt: { not: null },
+        refreshTokenCiphertext: { not: null },
+      },
+      select: { id: true },
+    });
+    if (pendingRevocation)
+      throw new ConflictException("Complete provider revocation before reconnecting.");
     const proof = newYoutubeOAuthProof();
     const saved = await this.cache.client.set(
       oauthStateKey(proof.state, req.sessionId),
@@ -136,6 +156,11 @@ export class SocialConnectionsController {
     @Req() req: AuthedRequest,
     @Param("id") id: string,
   ) {
+    await this.revokeLocally(req, id, false);
+    return { ok: true, providerRevocation: "NOT_CONFIRMED" };
+  }
+
+  private async revokeLocally(req: AuthedRequest, id: string, allowAlready: boolean) {
     idSchema.parse(id);
     return this.db.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
@@ -143,8 +168,9 @@ export class SocialConnectionsController {
         where: { id, organizationId: req.organizationId },
       });
       if (!row) throw new NotFoundException("Social connection not found.");
-      if (row.revokedAt)
+      if (row.revokedAt && !allowAlready)
         throw new ConflictException("Connection already revoked.");
+      if (row.revokedAt) return row;
       const now = new Date();
       await tx.socialConnection.update({
         where: { id },
@@ -188,8 +214,129 @@ export class SocialConnectionsController {
           },
         },
       });
-      return { ok: true };
+      return row;
     });
+  }
+
+  @Post(":id/revoke-provider") @Roles("OWNER", "ADMIN") async revokeProvider(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+  ) {
+    const original = await this.revokeLocally(req, id, true);
+    const row = await this.db.socialConnection.findFirst({
+      where: { id, organizationId: req.organizationId },
+    });
+    if (!row || !row.revokedAt)
+      throw new ServiceUnavailableException("Provider revocation was not confirmed.");
+    if (!row.refreshTokenCiphertext)
+      return { ok: true, providerRevocation: "CONFIRMED" };
+    const context = {
+      organizationId: req.organizationId,
+      provider: "YOUTUBE" as const,
+      externalAccountId: row.externalAccountId,
+    };
+    try {
+      const token = decryptSocialToken(row.refreshTokenCiphertext, context);
+      await this.provider.revoke(token);
+    } catch {
+      throw new ServiceUnavailableException("Provider revocation was not confirmed.");
+    }
+    await this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+      const current = await tx.socialConnection.findFirst({
+        where: { id, organizationId: req.organizationId },
+      });
+      if (!current?.revokedAt || current.refreshTokenCiphertext !== row.refreshTokenCiphertext)
+        throw new ConflictException("Connection changed during revocation.");
+      await tx.socialConnection.update({
+        where: { id },
+        data: { refreshTokenCiphertext: null, tokenExpiresAt: null },
+      });
+      await tx.auditLog.create({
+        data: {
+          organizationId: req.organizationId,
+          actorId: req.userId,
+          action: "social_connection.provider_revocation_confirmed",
+          entityId: id,
+          detail: { provider: original.provider, externalAccountId: original.externalAccountId },
+        },
+      });
+    });
+    return { ok: true, providerRevocation: "CONFIRMED" };
+  }
+
+  @Post(":id/refresh") @Roles("OWNER", "ADMIN") async refresh(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+  ) {
+    idSchema.parse(id);
+    let providerReturned = false;
+    let priorRefreshCiphertext: string | null = null;
+    try {
+      return await this.db.$transaction(async (tx) => {
+        await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+        const row = await tx.socialConnection.findFirst({
+          where: { id, organizationId: req.organizationId },
+        });
+        if (!row) throw new NotFoundException("Social connection not found.");
+        if (row.revokedAt || !row.refreshTokenCiphertext ||
+            (row.refreshTokenExpiresAt && row.refreshTokenExpiresAt <= new Date()))
+          throw new ConflictException("Connection requires reconnect or revocation.");
+        priorRefreshCiphertext = row.refreshTokenCiphertext;
+        const context = {
+          organizationId: req.organizationId,
+          provider: "YOUTUBE" as const,
+          externalAccountId: row.externalAccountId,
+        };
+        const refreshToken = decryptSocialToken(row.refreshTokenCiphertext, context);
+        const granted = await this.provider.refresh(refreshToken);
+        providerReturned = true;
+        const session = await tx.session.findUnique({ where: { id: req.sessionId } });
+        const member = await tx.membership.findUnique({
+          where: { userId_organizationId: { userId: req.userId, organizationId: req.organizationId } },
+        });
+        if (!session || session.userId !== req.userId || session.expiresAt <= new Date() ||
+            !member || !["OWNER", "ADMIN"].includes(member.role))
+          throw new Error("Workspace authorization changed.");
+        const now = Date.now();
+        const updated = await tx.socialConnection.update({
+          where: { id },
+          data: {
+            accessTokenCiphertext: encryptSocialToken(granted.access_token, context),
+            refreshTokenCiphertext: granted.refresh_token
+              ? encryptSocialToken(granted.refresh_token, context)
+              : row.refreshTokenCiphertext,
+            tokenExpiresAt: new Date(now + Math.max(1, granted.expires_in - 60) * 1000),
+            refreshTokenExpiresAt: granted.refresh_token_expires_in
+              ? new Date(now + granted.refresh_token_expires_in * 1000)
+              : row.refreshTokenExpiresAt,
+            scopes: granted.scope ? granted.scope.trim().split(/\s+/) : row.scopes,
+          },
+        });
+        await tx.auditLog.create({
+          data: { organizationId: req.organizationId, actorId: req.userId,
+            action: "social_connection.refreshed", entityId: id,
+            detail: { provider: row.provider, externalAccountId: row.externalAccountId } },
+        });
+        return {
+          id: updated.id, provider: updated.provider,
+          externalAccountId: updated.externalAccountId,
+          tokenExpiresAt: updated.tokenExpiresAt,
+          refreshTokenExpiresAt: updated.refreshTokenExpiresAt,
+        };
+      }, { timeout: 20000, maxWait: 5000 });
+    } catch (error) {
+      if (providerReturned && priorRefreshCiphertext) {
+        // A rotated grant may have invalidated the old token. Fail closed for dispatch.
+        await this.db.socialConnection.updateMany({
+          where: { id, organizationId: req.organizationId, revokedAt: null,
+            refreshTokenCiphertext: priorRefreshCiphertext },
+          data: { tokenExpiresAt: null },
+        }).catch(() => undefined);
+      }
+      if (error instanceof NotFoundException || error instanceof ConflictException) throw error;
+      throw new ServiceUnavailableException("YouTube token refresh was not completed.");
+    }
   }
 }
 
@@ -296,6 +443,11 @@ export class YoutubeOAuthCallbackController {
           !["OWNER", "ADMIN"].includes(member.role)
         )
           throw new Error("OAuth authorization changed.");
+        const prior = await tx.socialConnection.findUnique({
+          where: { organizationId_provider_externalAccountId: context },
+        });
+        if (prior?.revokedAt && prior.refreshTokenCiphertext)
+          throw new Error("Provider revocation must complete before reconnecting.");
         const connection = await tx.socialConnection.upsert({
           where: { organizationId_provider_externalAccountId: context },
           create: { ...context, ...data },

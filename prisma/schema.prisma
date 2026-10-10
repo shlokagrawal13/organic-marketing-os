@@ -223,7 +223,7 @@ enum PublicationAttemptStatus {
 }
 
 // Only an authorized provider adapter may create a connection and enter SUBMITTING.
-// This release exposes no OAuth callback, dispatch route or provider sender.
+// OAuth connection and token lifecycle routes exist; dispatch and provider posting are not wired.
 model PublicationAttempt {
   id                String                   @id @default(uuid())
   organizationId    String

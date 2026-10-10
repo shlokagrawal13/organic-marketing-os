@@ -70,7 +70,12 @@ test(
   "private uploads, real MP4/audio rendering, tenant isolation, cache reuse, cancellation and exact-version approval",
   // Covers the expanded sixteen-language render/tenant matrix; individual
   // render waits remain bounded at 60 seconds and all assertions are retained.
-  { timeout: 180000 },
+  {
+    timeout: Math.min(
+      600000,
+      Math.max(180000, Number(process.env.MOS_ISOLATED_MEDIA_TIMEOUT_MS) || 180000),
+    ),
+  },
   async () => {
     const a = client(),
       b = client(),

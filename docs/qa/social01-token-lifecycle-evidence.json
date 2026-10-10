@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 token refresh and provider revocation",
+  "dateUtc": "2026-10-10",
+  "status": "reconstructed_local_verification_pending_publication",
+  "publicBase": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+  "cumulativeApprovedPaths": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "START_HERE.md",
+    "apps/api/src/social-connections.ts",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/PUBLISHING.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/social01-callback-native-ci-evidence.json",
+    "docs/qa/social01-callback-native-unit-receipts.json",
+    "docs/qa/social01-token-lifecycle-evidence.json",
+    "docs/qa/verification-summary.json",
+    "prisma/schema.prisma",
+    "tests/integration/media.test.ts",
+    "tests/integration/social-oauth.test.ts"
+  ],
+  "sourceSha256": {
+    "apps/api/src/social-connections.ts": "e53abac300e0183a1f816f3f8307a4b446af67fba8e7c9bc2e6129aef3a21121",
+    "prisma/schema.prisma": "26e9350734da069fe42527258a799b0e54a51485447311d324cc6c9ccbdb80f8",
+    "tests/integration/media.test.ts": "1fd12da65927a4f9c7d74477d8ae8f321e342cc354a14d16d7ed5a08fe725700",
+    "tests/integration/social-oauth.test.ts": "1174274f73169153bb3773a2cf37b2b7210ed7ed603caab154963bcf4dfd8b93"
+  },
+  "checks": {
+    "cleanNpmCiAndFontkitPatch": true,
+    "prismaGenerateValidate": true,
+    "apiTypeScriptBuild": true,
+    "tokenFocusedUnitFilesPassed": 2,
+    "oauthFocusedHttpPassed": 3,
+    "freshPgliteMigrations": 15,
+    "fullLocalUnitPassed": 193,
+    "fullLocalUnitStatus": "passed",
+    "fullLocalHttpPassed": null,
+    "fullLocalHttpStatus": "pending_or_failed; inspect retained local log",
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "broaderHttpAttempts": "Incomplete: two harness runs ended without a final test receipt; not counted as passes."
+  },
+  "behavior": [
+    "Owner/admin refresh under organization row lock, encrypted access and rotated offline grant; safe metadata response.",
+    "Owner/admin provider revoke first durably blocks local publishing attempts; unconfirmed provider result retains encrypted grant for explicit retry.",
+    "Confirmed provider revocation clears stored refresh grant and access expiry. Pending revoked grants block OAuth reconnect.",
+    "Tenant and role denials, provider failures, refresh rotation, retry and reconnect are isolated HTTP tested."
+  ],
+  "limits": [
+    "No live Google grant, revocation or test post; provider methods are isolated fixtures.",
+    "Provider refresh network call holds organization transaction lock for up to ten seconds; process crash or database failure after remote rotation may require manual recovery. A best-effort fail-closed expiry clear is not durable intent.",
+    "A provider may have revoked a token even when its response is lost; 503 retains pending state for explicit retry. No automatic remote reconciliation.",
+    "Public base native CI does not cover this new local source; own CI must run after publication.",
+    "Outbound publishing, policy reconciliation, scheduler, real-provider receipt, UI and full acceptance remain open."
+  ],
+  "publicationGate": {
+    "mainRefUpdated": false,
+    "publicCommit": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+    "automaticReviewBlocked": true,
+    "reason": "Automatic publication review rejected the large docs/HANDOFF.md upload as a private handoff document without explicit approval for this SOCIAL-01 20-file payload; its diff adds four lines to the already public file. A redundant identical docs/PROJECT_STATUS.md upload was also rejected. No tree, commit or main ref update was created; public main remains f191899. Explicit disclosure approval is required before retry."
+  }
+}

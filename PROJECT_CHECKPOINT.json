@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-09.13-SOCIAL01-callback-public-container-pull-fix-local",
-  "savedAtUtc": "2026-10-09T21:47:27.508352+00:00",
-  "currentMilestone": "SOCIAL-01 callback published at 44ff798; own native CI blocked before checkout by Docker Hub pull; registry fix local",
+  "checkpointRevision": "2026-10-10.16-SOCIAL01-publication-auto-review-blocked",
+  "savedAtUtc": "2026-10-10T06:39:21.830387+00:00",
+  "currentMilestone": "SOCIAL-01 callback public/native CI at f191899; token lifecycle reconstructed locally",
   "activeTaskId": "SOCIAL-01",
-  "workInProgress": "Workflow service images changed locally to official ECR Public mirrors; YAML parsed and exact tags initially returned manifests. Own native CI for the fix requires publication. No application source change.",
+  "workInProgress": "Exact 20-path local commit and checkpoint verified; public write blocked by automatic review of large handoff disclosure.",
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Review exact local workflow/docs/evidence scope and obtain explicit public approval, then publish the minimal follow-up and verify its own native CI. If service pulls still fail, retain logs and resolve registry access without disabling any application gate. Continue refresh/revocation/dispatch only after this CI closure.",
+  "nextAction": "Obtain explicit approval naming SOCIAL-01 cumulative 20 paths, including docs/HANDOFF.md and docs/PROJECT_STATUS.md for public shlokagrawal13/organic-marketing-os main; then publish exact scope, verify remote tree and own native CI.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -6563,8 +6563,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
-    "status": "social01_callback_published_exact_tree; native_ci_container_pull_failed; portability_fix_local",
+    "commit": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+    "status": "public_callback_native_ci_verified; token_lifecycle_reconstructed_local",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6577,7 +6577,7 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "649d5c3a9622b1eae6e09a587f9a13b3cb11f217",
+    "sourceTree": "8b2083b7c2ca5a83a8b6430f5d3c97377c8bd1c4",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Exact approved 28-file Z+AA+AB payload; own native CI verified. Later local closure not included in public source.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
@@ -7906,13 +7906,12 @@
     }
   ],
   "lastChanges": {
-    "slice": "SOCIAL-01 CI portability follow-up",
+    "slice": "SOCIAL-01 token lifecycle reconstruction",
     "paths": [
-      ".github/workflows/ci.yml",
-      "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
+      "apps/api/src/social-connections.ts",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -7921,15 +7920,15 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-ci-portability-evidence.json",
-      "docs/qa/verification-summary.json"
+      "docs/qa/social01-callback-native-ci-evidence.json",
+      "docs/qa/social01-callback-native-unit-receipts.json",
+      "docs/qa/social01-token-lifecycle-evidence.json",
+      "docs/qa/verification-summary.json",
+      "prisma/schema.prisma",
+      "tests/integration/media.test.ts",
+      "tests/integration/social-oauth.test.ts"
     ],
-    "verified": "YAML parsed; Docker Official Images ECR Public postgres:17-alpine and redis:7-alpine manifest initially returned 200; exact public source tree previously passed 193 unit/11 HTTP/7 browser/5 recovery locally; native CI for registry change pending.",
-    "knownFailures": [
-      "Actions run 37994847651 attempts 1 and 2 failed before checkout on Docker Hub postgres pull timeout/rate limit; no source test result.",
-      "A repeated local ECR metadata request for Redis returned HTTP 429 after an initial 200; CI registry pull success unverified."
-    ],
-    "publicWriteAttempted": false
+    "verified": "Rebuilt source: clean install/Prisma/API, 2 focused unit files and 3 isolated OAuth HTTP cases; full unit 193 pass, full HTTP pending. Prior public native CI applies only to f191899."
   },
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -7955,8 +7954,8 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "SOCIAL-01 callback 22 files public at 44ff798; all 306 blobs exact. Actions 37994847651 failed at container initialization on Docker Hub timeout/unauthenticated limit in two attempts; zero source checks ran. Local unchanged source passed 193/11/7/5; CI registry fix pending publication. SOCIAL-01 Partial.",
-  "activeTask": "SOCIAL-01 native CI container pull portability fix local verification",
+  "latestStatus": "Local 20-path commit passed full 193 unit, focused OAuth 3 HTTP, Prisma/API and audits; broader HTTP attempts ended without complete receipts. Public main remains f191899. Automatic approval review blocked handoff disclosure; no ref updated. SOCIAL-01 Partial.",
+  "activeTask": "SOCIAL-01 token lifecycle verification and public publication",
   "workspaceRecovery": {
     "sourceZipSha256": "2cdf22f352cae1356447a23bb956df85d1f9b81abb2c7ee4b6586ac281688582",
     "sourceRevision": "2026-10-07.06",
@@ -7977,18 +7976,18 @@
     }
   },
   "pendingPublication": {
-    "slice": "SOCIAL-01 native CI container pull portability follow-up",
-    "approved": false,
-    "writeAttempted": false,
-    "basePublicCommit": "44ff798494f1d3fcf8bcb9a7c61199817e8d58d0",
-    "scope": "Workflow service image registry change only, with publication/failed-run evidence and continuity docs. Application source/schema/tests/dependencies remain identical to public 44ff798.",
-    "fileCount": 15,
+    "slice": "SOCIAL-01 token lifecycle and callback CI closure",
+    "approved": true,
+    "approval": "User said continue immediately after the exact cumulative 20-file publication request.",
+    "writeAttempted": true,
+    "basePublicCommit": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+    "fileCount": 20,
     "paths": [
-      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
+      "apps/api/src/social-connections.ts",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -7997,9 +7996,17 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-ci-portability-evidence.json",
-      "docs/qa/verification-summary.json"
-    ]
+      "docs/qa/social01-callback-native-ci-evidence.json",
+      "docs/qa/social01-callback-native-unit-receipts.json",
+      "docs/qa/social01-token-lifecycle-evidence.json",
+      "docs/qa/verification-summary.json",
+      "prisma/schema.prisma",
+      "tests/integration/media.test.ts",
+      "tests/integration/social-oauth.test.ts"
+    ],
+    "mainRefUpdated": false,
+    "blockedByAutoReview": true,
+    "blockedReason": "Automatic publication review rejected the large docs/HANDOFF.md upload as a private handoff document without explicit approval for this SOCIAL-01 20-file payload; its diff adds four lines to the already public file. A redundant identical docs/PROJECT_STATUS.md upload was also rejected. No tree, commit or main ref update was created; public main remains f191899. Explicit disclosure approval is required before retry."
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8584,5 +8591,12 @@
     "failedAttempts": 2,
     "applicationTestsStarted": false,
     "ownNativeCiForFix": false
+  },
+  "social01TokenLifecycle": {
+    "status": "reconstructed_locally_verified_not_published",
+    "publicBase": "f191899aea2c889b2c5e4bb249acae7989f40f54",
+    "evidence": "docs/qa/social01-token-lifecycle-evidence.json",
+    "nativeCiForNewSource": false,
+    "liveGoogleGrantOrPost": false
   }
 }

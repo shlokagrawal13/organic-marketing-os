@@ -83,33 +83,18 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 OAuth callback 22-file public tree 44ff798 matches 306 blobs. Own native Actions 37994847651 attempts 1/2 stopped before checkout on Docker Hub postgres service image timeout/rate limit; no native tests ran. Identical-tag ECR Public service-image portability fix local/unpublished; local 193 unit, 11 HTTP, 7 browser, 5 recovery, 15 migrations remain prior exact-source evidence.",
+  "latestIncrement": "SOCIAL-01 token lifecycle reconstructed from public f191899 after scratch reset; clean install, Prisma/API build, 2 focused unit files, 3 isolated OAuth HTTP cases passed. Full 193 unit cases passed. Own native CI for new source pending publication. Public f191899 own native CI 37996256399 passed 193/11/7/5. Full reconstructed local HTTP: pending or failed. Public publication blocked by automatic review of large handoff; no main ref update.",
   "latestNativeRun": {
-    "runId": 37989266829,
-    "jobId": 114018963643,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/37989266829",
-    "sourceCommit": "02f8fb1d8fc7052b249f305cfe9b7b4790a1e079",
-    "sourceTree": "78a843edf240c6f3ee1e9385d4faa567436f4b51",
-    "status": "completed",
+    "runId": 37996256399,
+    "jobId": 114042996492,
+    "sourceCommit": "f191899aea2c889b2c5e4bb249acae7989f40f54",
     "conclusion": "success",
-    "attempt": 1,
-    "unit": {
-      "tests": 193,
-      "passed": 193,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0
-    },
-    "httpScenarios": 9,
-    "browserScenarios": 7,
-    "recoveryScenarios": 5,
-    "migrations": 14,
-    "smallScreenEnglishOcrPasses": 36,
-    "busyBackgroundOcrPasses": 8,
-    "populatedPgliteUpgradeRestore": true,
-    "productionAuditAdvisories": 0,
-    "fullAuditAdvisories": 0
+    "unitPassed": 193,
+    "httpPassed": 11,
+    "browserPassed": 7,
+    "recoveryPassed": 5,
+    "freshNativeMigrations": 15,
+    "evidence": "docs/qa/social01-callback-native-ci-evidence.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -7802,5 +7787,15 @@
     "nativeSourceChecksRun": false,
     "localCiPortabilityEvidence": "docs/qa/social01-ci-portability-evidence.json",
     "localFollowupPublished": false
+  },
+  "social01TokenLifecycleLocal": {
+    "status": "reconstructed_locally_verified_not_published",
+    "evidence": "docs/qa/social01-token-lifecycle-evidence.json",
+    "focusedHttpPassed": 3,
+    "fullUnitPassed": 193,
+    "fullHttpPassed": null,
+    "nativeCiForNewSource": false,
+    "liveProvider": false,
+    "publicationGate": "auto_review_blocked_handoff_explicit_disclosure_approval_required"
   }
 }

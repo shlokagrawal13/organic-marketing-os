@@ -285,3 +285,70 @@ test("provider failure does not overwrite a connected channel or leak the code",
   assert.equal(unauthenticated.headers.get("cache-control"), "no-store");
   assert.equal(exchanges, 3);
 });
+
+test("owner refresh rotates encrypted grants and provider revocation blocks reconnect until confirmed", async () => {
+  const org = await db.organization.create({ data: { name: "Lifecycle fixture" } });
+  const other = await db.organization.create({ data: { name: "Lifecycle outsider" } });
+  orgs.push(org.id, other.id);
+  const owner = await actor(org.id), editor = await actor(org.id, "EDITOR"),
+    outsider = await actor(other.id);
+  users.push(owner.id, editor.id, outsider.id);
+  const state = await begin(org.id, owner);
+  assert.equal(new URL((await callback(state, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+  const connected = await db.socialConnection.findFirstOrThrow({
+    where: { organizationId: org.id, externalAccountId: "UC-isolated-channel" },
+  });
+  const route = `/workspaces/${org.id}/social-connections/${connected.id}`;
+  const context = { organizationId: org.id, provider: "YOUTUBE" as const,
+    externalAccountId: connected.externalAccountId };
+  const provider = app.get(YoutubeOAuthProvider);
+  let failRefresh = false, failRevoke = true, refreshCalls = 0, revokeCalls = 0;
+  provider.refresh = async (token) => {
+    refreshCalls++;
+    assert.equal(token, "fixture-refresh-token");
+    if (failRefresh) throw new Error("provider unavailable");
+    return { access_token: "rotated-access", refresh_token: "rotated-refresh",
+      token_type: "Bearer" as const, expires_in: 3600,
+      refresh_token_expires_in: 7200, scope: youtubeScopes.join(" ") };
+  };
+  provider.revoke = async (token) => {
+    revokeCalls++;
+    assert.equal(token, "rotated-refresh");
+    if (failRevoke) throw new Error("unconfirmed");
+  };
+  assert.equal((await request(route + "/refresh", editor, "POST")).status, 403);
+  assert.equal((await request(route + "/refresh", outsider, "POST")).status, 404);
+  failRefresh = true;
+  assert.equal((await request(route + "/refresh", owner, "POST")).status, 503);
+  assert.equal((await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } })).accessTokenCiphertext,
+    connected.accessTokenCiphertext);
+  failRefresh = false;
+  const refreshed = await request(route + "/refresh", owner, "POST");
+  assert.equal(refreshed.status, 201);
+  const safe = await refreshed.json();
+  assert.equal(JSON.stringify(safe).includes("Ciphertext"), false);
+  assert.equal(safe.externalAccountId, connected.externalAccountId);
+  const rotated = await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } });
+  assert.equal(decryptSocialToken(rotated.accessTokenCiphertext, context, key), "rotated-access");
+  assert.equal(decryptSocialToken(rotated.refreshTokenCiphertext!, context, key), "rotated-refresh");
+  assert.notEqual(rotated.refreshTokenCiphertext, connected.refreshTokenCiphertext);
+  assert.equal(refreshCalls, 2);
+  assert.equal((await request(route + "/revoke-provider", editor, "POST")).status, 403);
+  assert.equal((await request(route + "/revoke-provider", owner, "POST")).status, 503);
+  const pending = await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } });
+  assert.ok(pending.revokedAt);
+  assert.equal(pending.refreshTokenCiphertext, rotated.refreshTokenCiphertext);
+  assert.equal((await request(route + "/refresh", owner, "POST")).status, 409);
+  assert.equal((await request(`/workspaces/${org.id}/social-connections/youtube/authorize`, owner, "POST")).status, 409);
+  failRevoke = false;
+  const confirmed = await request(route + "/revoke-provider", owner, "POST");
+  assert.equal(confirmed.status, 201);
+  assert.deepEqual(await confirmed.json(), { ok: true, providerRevocation: "CONFIRMED" });
+  const cleared = await db.socialConnection.findUniqueOrThrow({ where: { id: connected.id } });
+  assert.equal(cleared.refreshTokenCiphertext, null);
+  assert.equal(cleared.tokenExpiresAt, null);
+  assert.equal(revokeCalls, 2);
+  assert.equal((await request(route + "/revoke-provider", owner, "POST")).status, 201);
+  const reconnect = await begin(org.id, owner);
+  assert.equal(new URL((await callback(reconnect, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+});
