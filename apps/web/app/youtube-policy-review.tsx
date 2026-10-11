@@ -5,10 +5,11 @@ import { api } from "./api-client";
 
 type Render = { id: string; contentRevision: number; status: string; approvedAt: string | null; hasOutput: boolean; createdAt: string };
 type Intent = { id: string; contentRevision: number; renderId: string | null; status: string; createdAt: string; externallySubmitted: false };
-type Channel = { id: string; provider: string; accountLabel: string; scopes: string[]; revokedAt: string | null; refreshPendingAt: string | null; tokenExpiresAt: string | null; refreshTokenExpiresAt: string | null };
+type Channel = { id: string; provider: string; accountLabel: string; externalAccountId: string; scopes: string[]; revokedAt: string | null; refreshPendingAt: string | null; tokenExpiresAt: string | null; refreshTokenExpiresAt: string | null };
 type Preview = { intentId: string; snippet: { title: string; description: string }; policyVersion: string; externallySubmitted: false };
 type Review = { id: string; connectionId: string; metadata: { snippet: { title: string; description: string }; status: { privacyStatus: string; selfDeclaredMadeForKids: boolean; containsSyntheticMedia: boolean } }; expiresAt: string; reviewedAt: string; policyVersion: string };
 type Choice = "" | "yes" | "no";
+type Attempt = { id: string; status: string; outcomeCode: string | null; providerPostId: string | null; canCheckStatus: boolean; createdAt: string; completedAt: string | null };
 
 export default function YoutubePolicyReview({ base, contentId, revision, onNavigate }: {
   base: string; contentId: string; revision: number; onNavigate: (view: string) => void;
@@ -20,6 +21,10 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
   const [intent, setIntent] = useState<Intent | null>(null);
   const [preview, setPreview] = useState<Preview | null>(null);
   const [review, setReview] = useState<Review | null>(null);
+  const [attempt, setAttempt] = useState<Attempt | null>(null);
+  const [canPublish, setCanPublish] = useState(false);
+  const [publishPhrase, setPublishPhrase] = useState("");
+  const [publishAck, setPublishAck] = useState(false);
   const [connectionId, setConnectionId] = useState("");
   const [privacyStatus, setPrivacyStatus] = useState("");
   const [madeForKids, setMadeForKids] = useState<Choice>("");
@@ -45,7 +50,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       const eligible = (r as Render[]).filter((item) => item.contentRevision === revision && item.status === "SUCCEEDED" && item.approvedAt && item.hasOutput);
       setRenders(eligible);
       setRenderId((old) => eligible.some((item) => item.id === old) ? old : eligible[0]?.id || "");
-      setIntents((i as Intent[]).filter((item) => item.contentRevision === revision && item.status === "PREPARED"));
+      setIntents(i as Intent[]);
       setChannels(c);
       setError("");
     } catch (err) {
@@ -63,8 +68,16 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
     setIntent(null);
     setPreview(null);
     setReview(null);
+    setAttempt(null);
+    setPublishPhrase("");
+    setPublishAck(false);
     try {
-      const nextPreview = await api(path + `/${saved.id}/youtube-policy-preview`);
+      const state = await api(path + `/${saved.id}/youtube-attempt`);
+      let nextPreview: Preview | null = null;
+      if (saved.contentRevision === revision && saved.status === "PREPARED") {
+        try { nextPreview = await api(path + `/${saved.id}/youtube-policy-preview`); }
+        catch { setNotice("This preparation is no longer eligible for a new upload. Its saved attempt status is still shown below."); }
+      }
       let nextReview: Review | null = null;
       try {
         nextReview = await api(path + `/${saved.id}/youtube-policy-review`);
@@ -74,6 +87,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       setIntent(saved);
       setPreview(nextPreview);
       setReview(nextReview);
+      setAttempt(state.attempt);
+      setCanPublish(state.canPublish);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -93,6 +108,9 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       setIntent(saved);
       setPreview(nextPreview);
       setReview(null);
+      setAttempt(null);
+      setPublishPhrase("");
+      setPublishAck(false);
       setConnectionId("");
       setPrivacyStatus("");
       setMadeForKids("");
@@ -123,12 +141,61 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
         rightsAndPlatformRulesReviewed: true,
       });
       setReview(saved);
+      const state = await api(path + `/${intent.id}/youtube-attempt`);
+      setAttempt(state.attempt);
+      setCanPublish(state.canPublish);
       setNotice("Policy review saved for this exact video, revision and channel. Nothing was posted.");
     } catch (err) {
       setError((err as Error).message);
     } finally {
       setBusy(false);
     }
+  }
+
+  async function refreshAttempt() {
+    if (!intent) return;
+    setBusy(true); setError("");
+    try {
+      const state = await api(path + `/${intent.id}/youtube-attempt`);
+      setAttempt(state.attempt);
+      setCanPublish(state.canPublish);
+    } catch (err) { setError((err as Error).message); }
+    finally { setBusy(false); }
+  }
+
+  async function publish() {
+    if (!intent || !review || !canPublish || attempt || reviewExpired ||
+      publishPhrase !== "PUBLISH TO YOUTUBE" || !publishAck) return;
+    setBusy(true); setError(""); setNotice("");
+    try {
+      const saved: Attempt = await api(path + `/${intent.id}/youtube-dispatch`, "POST", {
+        connectionId: review.connectionId, requestKey: crypto.randomUUID(),
+        confirmation: "PUBLISH_TO_YOUTUBE",
+      });
+      setAttempt(saved);
+      setNotice(saved.status === "CONFIRMED" ? "YouTube confirmed this upload." :
+        "Upload outcome needs review. Do not submit another video.");
+    } catch (err) {
+      setError((err as Error).message);
+      // A lost response may follow a successful external send. Read the ledger;
+      // never replay a media POST automatically from the client.
+      try {
+        const state = await api(path + `/${intent.id}/youtube-attempt`);
+        setAttempt(state.attempt);
+      } catch {}
+    } finally { setBusy(false); setPublishPhrase(""); setPublishAck(false); }
+  }
+
+  async function checkStatus() {
+    if (!intent || !attempt?.canCheckStatus || !canPublish) return;
+    setBusy(true); setError(""); setNotice("");
+    try {
+      const state = await api(path + `/${intent.id}/youtube-attempt/${attempt.id}/check-status`, "POST");
+      setAttempt(state.attempt);
+      setNotice(state.attempt?.status === "CONFIRMED" ? "YouTube confirmed this upload." :
+        "The upload is still uncertain. Do not submit another video.");
+    } catch (err) { setError((err as Error).message); }
+    finally { setBusy(false); }
   }
 
   const activeChannels = channels.filter((channel) => channel.provider === "YOUTUBE" && !channel.revokedAt && !channel.refreshPendingAt &&
@@ -138,7 +205,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
   const reviewExpired = Boolean(review && Date.parse(review.expiresAt) <= Date.now());
   return <section id="youtube-upload-review" className="panel policy-review" aria-label="YouTube publication review">
     <h3>YouTube upload review</h3>
-    <p>Prepare the approved video and review its upload settings. This does not schedule or send a video to YouTube.</p>
+    <p>Prepare the approved video and review its upload settings. Sending requires a separate explicit confirmation when live posting is enabled.</p>
     {error && <div className="alert error" role="alert">{error}</div>}
     {notice && <div className="inline-notice" role="status">{notice}</div>}
     {loading ? <p>Loading approved renders and channels…</p> : <>
@@ -150,23 +217,26 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       </label>
       {renders.length === 0 && <p>Finish and approve a video render of this exact content revision first.</p>}
       <button className="button" disabled={busy || !renderId} onClick={() => void prepare()}>Create new upload preparation</button>
-      {intents.filter((row) => row.renderId === renderId).length > 0 && <div className="policy-saved">
-        <h4>Existing preparations</h4>
-        {intents.filter((row) => row.renderId === renderId).slice(0, 5).map((row) =>
+      {intents.length > 0 && <div className="policy-saved">
+        <h4>Existing and historical preparations</h4>
+        {intents.slice(0, 50).map((row) =>
           <button key={row.id} className="button" disabled={busy} onClick={() => void open(row)}>
-            Open {new Date(row.createdAt).toLocaleString()} · {row.id.slice(0, 8)}
+            Open {new Date(row.createdAt).toLocaleString()} · revision {row.contentRevision} · {row.status} · {row.id.slice(0, 8)}
           </button>)}
       </div>}
-      {intent && preview && <div className="policy-saved">
+      {intent && (preview || review || attempt) && <div className="policy-saved">
         <h4>Exact upload metadata</h4>
-        <p>Preparation {intent.id.slice(0, 8)} · Rule {preview.policyVersion}</p>
-        <label>Title<input readOnly value={preview.snippet.title} /></label>
-        <label>Description<textarea readOnly rows={5} value={preview.snippet.description} /></label>
+        <p>Preparation {intent.id.slice(0, 8)} · revision {intent.contentRevision} · {intent.status}</p>
+        {preview ? <>
+          <p>Rule {preview.policyVersion}</p>
+          <label>Title<input readOnly value={preview.snippet.title} /></label>
+          <label>Description<textarea readOnly rows={5} value={preview.snippet.description} /></label>
+        </> : <p>This preparation is historical. Its current upload status remains available below; it cannot start a new upload.</p>}
         {review ? <div className="alert" role="status">
           <b>{reviewExpired ? "Review expired" : "Review saved"}</b> for {channels.find((c) => c.id === review.connectionId)?.accountLabel || "selected channel"}.<br />
           Privacy: {review.metadata.status.privacyStatus}; made for kids: {review.metadata.status.selfDeclaredMadeForKids ? "yes" : "no"}; realistic synthetic media: {review.metadata.status.containsSyntheticMedia ? "yes" : "no"}.<br />
-          {reviewExpired ? "Create a new preparation and review to continue." : `Expires ${new Date(review.expiresAt).toLocaleString()}.`} No video was posted.
-        </div> : <>
+          {reviewExpired ? "Create a new preparation and review to continue." : `Expires ${new Date(review.expiresAt).toLocaleString()}.`}
+        </div> : preview ? <>
           <label>Channel
             <select value={connectionId} onChange={(event) => setConnectionId(event.target.value)}>
               <option value="">Select a connected channel</option>
@@ -190,7 +260,25 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
           <label className="review-ack"><input type="checkbox" checked={syntheticAck} onChange={(e) => setSyntheticAck(e.target.checked)} />I checked the realistic synthetic-media declaration.</label>
           <label className="review-ack"><input type="checkbox" checked={rightsAck} onChange={(e) => setRightsAck(e.target.checked)} />I checked usage rights and current YouTube rules for this video.</label>
           <button className="button primary" disabled={busy || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck} onClick={() => void saveReview()}>Save policy review</button>
-        </>}
+        </> : null}
+        {review && <div className="policy-saved">
+          <h4>Upload status</h4>
+          {attempt ? <>
+            <p>Status: <b>{attempt.status}</b>{attempt.providerPostId ? ` · YouTube video ${attempt.providerPostId}` : ""}</p>
+            {attempt.status === "UNKNOWN" && <p>The video may already exist. Do not create another upload attempt. {attempt.canCheckStatus ? "Check the saved upload session for a receipt." : "A manual channel review is needed."}</p>}
+            {attempt.status === "SUBMITTING" && <p>An upload is in progress or interrupted. Refresh the status before taking any action.</p>}
+            <button className="button" disabled={busy} onClick={() => void refreshAttempt()}>Refresh local status</button>
+            {attempt.status === "UNKNOWN" && attempt.canCheckStatus && canPublish &&
+              <button className="button" disabled={busy} onClick={() => void checkStatus()}>Check saved YouTube session status</button>}
+          </> : canPublish && preview && !reviewExpired ? <>
+            <p>This sends the approved render to {channels.find((c) => c.id === review.connectionId)?.accountLabel || "the reviewed channel"} ({channels.find((c) => c.id === review.connectionId)?.externalAccountId || "channel unavailable"}) with the visibility and declarations shown above. YouTube publishing cannot be undone here.</p>
+            <label>Type PUBLISH TO YOUTUBE to confirm
+              <input value={publishPhrase} onChange={(event) => setPublishPhrase(event.target.value)} autoComplete="off" />
+            </label>
+            <label className="review-ack"><input type="checkbox" checked={publishAck} onChange={(event) => setPublishAck(event.target.checked)} />I approve sending this exact video to the reviewed channel now.</label>
+            <button className="button primary" disabled={busy || publishPhrase !== "PUBLISH TO YOUTUBE" || !publishAck} onClick={() => void publish()}>Publish reviewed video to YouTube</button>
+          </> : <p>Live YouTube posting is not available for this account or deployment. The policy review remains saved; no video was sent.</p>}
+        </div>}
       </div>}
     </>}
   </section>;

@@ -5,7 +5,9 @@ import {
 } from "@nestjs/common";
 import { PrismaClient, Prisma } from "@prisma/client";
 import { digest } from "../../../packages/core/security";
+import { decryptSocialToken, encryptSocialToken } from "../../../packages/core/social-tokens";
 import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
+import { verifiedYoutubeSessionUri } from "../../../packages/core/youtube-resumable";
 
 type Tx = Prisma.TransactionClient;
 const unresolved = ["RESERVED", "SUBMITTING", "UNKNOWN", "CONFIRMED"] as const;
@@ -180,6 +182,7 @@ export async function enterPublicationSubmission(
     attemptId: string;
     expectedVersion: number;
     actorId: string;
+    media?: { sha256: string; bytes: number; outputKey: string };
   },
 ) {
   const { organizationId: org } = input;
@@ -197,6 +200,18 @@ export async function enterPublicationSubmission(
         "Attempt already started or changed. Never submit it twice.",
       );
     const intent = await currentApproval(tx, org, attempt.intentId);
+    if (input.media) {
+      const media = input.media;
+      if (!/^[a-f0-9]{64}$/u.test(media.sha256) ||
+          !Number.isSafeInteger(media.bytes) || media.bytes <= 0)
+        throw new BadRequestException("A verified video digest and size are required.");
+      const render = await tx.renderJob.findFirst({
+        where: { id: intent.renderId!, organizationId: org },
+        select: { outputKey: true, outputBytes: true },
+      });
+      if (!render || render.outputKey !== media.outputKey || render.outputBytes !== media.bytes)
+        throw new ConflictException("The approved video output changed before submission.");
+    }
     const connection = await tx.socialConnection.findFirst({
       where: { id: attempt.connectionId, organizationId: org },
     });
@@ -235,6 +250,8 @@ export async function enterPublicationSubmission(
           policyVersion: review.policyVersion,
           metadata: review.metadata as Prisma.InputJsonObject,
         },
+        mediaSha256: input.media?.sha256 ?? null,
+        mediaBytes: input.media?.bytes ?? null,
         startedAt: new Date(),
         version: { increment: 1 },
       },
@@ -252,6 +269,70 @@ export async function enterPublicationSubmission(
       where: { id: attempt.id },
     });
   });
+}
+
+function sessionContext(attemptId: string, connection: {
+  organizationId: string; externalAccountId: string;
+}) {
+  return { organizationId: connection.organizationId, provider: "YOUTUBE" as const,
+    externalAccountId: `${connection.externalAccountId}:attempt:${attemptId}` };
+}
+
+// Commit the encrypted URI before the first media byte. A failed commit leaves
+// the durable SUBMITTING attempt uncertain; never start another session blindly.
+export async function persistYoutubeUploadSession(db: PrismaClient, input: {
+  organizationId: string; attemptId: string; expectedVersion: number;
+  actorId: string; sessionUri: string;
+}) {
+  const uri = verifiedYoutubeSessionUri(input.sessionUri);
+  return db.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${input.organizationId} FOR UPDATE`;
+    const attempt = await tx.publicationAttempt.findFirst({
+      where: { id: input.attemptId, organizationId: input.organizationId },
+    });
+    if (!attempt) throw new NotFoundException("Publication attempt not found.");
+    if (attempt.status !== "SUBMITTING" || attempt.version !== input.expectedVersion ||
+        attempt.uploadSessionCiphertext || !attempt.mediaSha256 || !attempt.mediaBytes)
+      throw new ConflictException("Upload session cannot be attached to this attempt.");
+    const connection = await tx.socialConnection.findFirst({
+      where: { id: attempt.connectionId, organizationId: input.organizationId },
+    });
+    if (!connection) throw new ConflictException("Authorized connection is unavailable.");
+    activeConnection(connection, input.organizationId);
+    const cipher = encryptSocialToken(uri, sessionContext(attempt.id, connection));
+    const changed = await tx.publicationAttempt.updateMany({
+      where: { id: attempt.id, organizationId: input.organizationId,
+        status: "SUBMITTING", version: input.expectedVersion,
+        uploadSessionCiphertext: null },
+      data: { uploadSessionCiphertext: cipher, version: { increment: 1 } },
+    });
+    if (!changed.count) throw new ConflictException("Upload session changed concurrently.");
+    await tx.auditLog.create({ data: { organizationId: input.organizationId,
+      actorId: input.actorId, action: "publication.upload_session_saved",
+      entityId: attempt.id } });
+    return { attemptId: attempt.id, version: attempt.version + 1 };
+  });
+}
+
+export async function ownedYoutubeUploadSession(db: PrismaClient, input: {
+  organizationId: string; attemptId: string;
+}) {
+  const attempt = await db.publicationAttempt.findFirst({
+    where: { id: input.attemptId, organizationId: input.organizationId },
+  });
+  if (!attempt) throw new NotFoundException("Publication attempt not found.");
+  if (!attempt.uploadSessionCiphertext || !attempt.mediaBytes || !attempt.mediaSha256 ||
+      !["SUBMITTING", "UNKNOWN"].includes(attempt.status))
+    throw new ConflictException("No resumable upload session is available.");
+  const connection = await db.socialConnection.findFirst({
+    where: { id: attempt.connectionId, organizationId: input.organizationId },
+  });
+  if (!connection) throw new ConflictException("Authorized connection is unavailable.");
+  activeConnection(connection, input.organizationId);
+  return { attempt, connection,
+    sessionUri: verifiedYoutubeSessionUri(decryptSocialToken(
+      attempt.uploadSessionCiphertext, sessionContext(attempt.id, connection))),
+  };
 }
 
 type Outcome =

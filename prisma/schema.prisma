@@ -226,8 +226,8 @@ enum PublicationAttemptStatus {
   BLOCKED
 }
 
-// Only an authorized provider adapter may create a connection and enter SUBMITTING.
-// OAuth connection and token lifecycle routes exist; dispatch and provider posting are not wired.
+// The guarded owner/admin dispatcher enters SUBMITTING before a single upload.
+// An uncertain outcome is retained; no automatic scheduler or retry is wired.
 model PublicationAttempt {
   id                String                   @id @default(uuid())
   organizationId    String
@@ -246,6 +246,9 @@ model PublicationAttempt {
   providerPostId    String?
   outcomeCode       String?
   policySnapshot    Json?
+  mediaSha256       String?
+  mediaBytes        Int?
+  uploadSessionCiphertext String?
   createdAt         DateTime                 @default(now())
   startedAt         DateTime?
   completedAt       DateTime?

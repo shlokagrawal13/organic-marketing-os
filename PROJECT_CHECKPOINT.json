@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-10.21-SOCIAL01-review-ui-local",
-  "savedAtUtc": "2026-10-10T17:19:59Z",
-  "currentMilestone": "SOCIAL-01 refresh and YouTube policy-review source public/native CI verified; connection/review UI locally verified; full SOCIAL-01 Partial",
+  "checkpointRevision": "2026-10-11.03-SOCIAL01-publication-gate",
+  "savedAtUtc": "2026-10-11",
+  "currentMilestone": "SOCIAL-01 guarded YouTube dispatch reconstructed and focused local checks passed; unpublished",
   "activeTaskId": "SOCIAL-01",
-  "workInProgress": "Local connection and YouTube review UI verified with production builds, focused tenant/role HTTP and 3 browser cases. Public source remains 100fba3; UI delta has no own native CI.",
+  "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "After review/publication of this local UI delta, obtain own native CI. Then build authenticated provider dispatch and verified read-only reconciliation with no blind retry; separately authorize any live Google post.",
+  "nextAction": "Obtain explicit disclosure approval for the exact 26-file SOCIAL-01 guarded dispatch payload to public shlokagrawal13/organic-marketing-os main. Auto-review rejected first create_blob; do not retry or reroute without this approval. Then publish exact tree and inspect own CI.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -17,31 +17,32 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".env.example",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
+    "apps/api/src/publication-attempts.ts",
     "apps/api/src/publications.ts",
-    "apps/web/app/content-workspace.tsx",
-    "apps/web/app/globals.css",
-    "apps/web/app/social-connections-panel.tsx",
-    "apps/web/app/workspace.tsx",
+    "apps/api/src/youtube-dispatch.ts",
     "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
-    "docs/POLICY_ENGINE.md",
     "docs/PROJECT_STATUS.md",
     "docs/PUBLISHING.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/social01-policy-review-native-ci-evidence.json",
-    "docs/qa/social01-policy-review-native-unit-receipts.json",
-    "docs/qa/social01-review-ui-evidence.json",
+    "docs/qa/social01-guarded-dispatch-evidence.json",
     "docs/qa/verification-summary.json",
-    "tests/integration/social-attempts.test.ts",
-    "tests/ui/social-policy-review.spec.ts"
+    "packages/core/youtube-resumable.ts",
+    "prisma/migrations/202610100004_youtube_upload_session/migration.sql",
+    "prisma/schema.prisma",
+    "scripts/verify-local.mjs",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/ui/social-policy-review.spec.ts",
+    "tests/youtube-resumable.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -70,7 +71,7 @@
     "lastTestProvider": "Isolated local HTTP fixture; no paid call"
   },
   "verification": {
-    "date": "2026-10-10",
+    "date": "2026-10-11",
     "applicationSuites": {
       "unitPerFontSet": 187,
       "unitFontSets": 2,
@@ -82,7 +83,7 @@
       "latestNativeBrowser": 7,
       "latestNativeRecovery": 5
     },
-    "migrationsApplied": 17,
+    "migrationsApplied": 18,
     "database": "Local W final verifier used PGlite WASM PostgreSQL; prior V native PostgreSQL CI remains prior evidence only.",
     "populatedUpgradeRestore": {
       "passed": true,
@@ -104,7 +105,7 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "SOCIAL-01 refresh and bounded policy review are public/native CI verified; connection/review UI is local only. Provider dispatch/reconciliation, scheduler, live Google test and broader acceptance remain open.",
+    "scopeWarning": "Public d6e6ecf connection/review UI and earlier native CI are prior evidence. New default-off guarded dispatch is locally focused verified only; own native CI, live Google, scheduler and broader acceptance remain open.",
     "latestGithubActions": {
       "runId": 38047795536,
       "jobId": 114200731782,
@@ -6591,8 +6592,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "100fba333da214ffac5683b26506860c9f2ff648",
-    "status": "social01_refresh_policy_review_published_exact_tree_native_ci_success_ui_local",
+    "commit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+    "status": "social01_connection_policy_ui_public_guarded_dispatch_local_unpublished",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6605,9 +6606,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "eb2efe2a4cbcc07c5b6637fe1edc1433bc23af20",
+    "sourceTree": "d0b8bc8c0a4fb1120d3a1d419d350c2a407ffa6c",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Approved cumulative 28-file refresh/policy review payload. Current UI and later CI closure records are local and not yet public.",
+    "commitMeaning": "Published YouTube connection and policy review UI; reconstructed guarded default-off dispatch is local only.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "1bb6562",
     "uploadGate": {
@@ -7933,37 +7934,7 @@
       "title": "Authorized live generated-media quality and billing acceptance"
     }
   ],
-  "lastChanges": {
-    "slice": "SOCIAL-01 YouTube connection/review UI and recovered public native CI closure",
-    "paths": [
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "START_HERE.md",
-      "apps/api/src/publications.ts",
-      "apps/web/app/content-workspace.tsx",
-      "apps/web/app/globals.css",
-      "apps/web/app/social-connections-panel.tsx",
-      "apps/web/app/workspace.tsx",
-      "apps/web/app/youtube-policy-review.tsx",
-      "docs/CHANGELOG.md",
-      "docs/HANDOFF.md",
-      "docs/POLICY_ENGINE.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/PUBLISHING.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-policy-review-native-ci-evidence.json",
-      "docs/qa/social01-policy-review-native-unit-receipts.json",
-      "docs/qa/social01-review-ui-evidence.json",
-      "docs/qa/verification-summary.json",
-      "tests/integration/social-attempts.test.ts",
-      "tests/ui/social-policy-review.spec.ts"
-    ],
-    "verified": "Public native Actions 38047795536 success with artifact SHA/CRC/194 receipts/44 OCR hashes; UI local API/web build, 1 HTTP, 3 browser, 17 PGlite migrations; handoff integrity passed (323 included files)."
-  },
+  "lastChanges": "26-file guarded dispatch local commit prepared and checked. GitHub create_blob was rejected by automatic approval review before a public write; main remains d6e6ecf. No alternative route used.",
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
     "Read start/checkpoint/task files before asking about history.",
@@ -8010,14 +7981,41 @@
     }
   },
   "pendingPublication": {
-    "slice": "SOCIAL-01 token lifecycle public 20 paths",
-    "approved": true,
-    "published": true,
-    "commit": "18a4c2de86e504ded867b0011a5f755dce2e8217",
-    "tree": "4892d4ec3a8b67e0161e1a34442ed042c3dc6485",
-    "ownCiRunId": 38044868624,
-    "ownCiConclusion": "success",
-    "closureRecordPublic": false
+    "scope": "SOCIAL-01 guarded dispatch reconstructed local delta",
+    "basePublicCommit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+    "changedPaths": [
+      ".env.example",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "START_HERE.md",
+      "apps/api/src/publication-attempts.ts",
+      "apps/api/src/publications.ts",
+      "apps/api/src/youtube-dispatch.ts",
+      "apps/web/app/youtube-policy-review.tsx",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/PUBLISHING.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/qa/social01-guarded-dispatch-evidence.json",
+      "docs/qa/verification-summary.json",
+      "packages/core/youtube-resumable.ts",
+      "prisma/migrations/202610100004_youtube_upload_session/migration.sql",
+      "prisma/schema.prisma",
+      "scripts/verify-local.mjs",
+      "tests/integration/social-dispatch.test.ts",
+      "tests/ui/social-policy-review.spec.ts",
+      "tests/youtube-resumable.test.ts"
+    ],
+    "approvedByUser": false,
+    "publicWriteAttempted": true,
+    "containsDefaultOffProviderRoute": true,
+    "publicWriteSucceeded": false,
+    "autoReviewRejection": "First create_blob was rejected before any public object/ref write because continue was not explicit authorization for new 26-file payload and destination."
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8616,16 +8614,20 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "scope": "SOCIAL-01 refresh boundary plus bounded YouTube policy review local delta on public 18a4c2d",
-    "schemaAndApiBuild": "passed",
-    "freshPgliteMigrations": 17,
-    "focusedOAuthHttp": "4/4 passed",
-    "focusedAttemptLedgerHttp": "1/1 passed",
-    "focusedPolicyUnit": "1/1 passed",
-    "focusedPreparationHttp": "1/1 passed",
-    "priorPublishedSourceNativeCi": "38044868624 succeeded; 193 unit, 12 HTTP, 7 browser, 5 recovery",
-    "localDeltaNativeCi": "not run; unpublished",
-    "liveProviderPost": "not run"
+    "scope": "SOCIAL-01 guarded dispatch reconstructed from public d6e6ecf; local and unpublished",
+    "cleanLockedInstallAndPatch": "passed",
+    "prismaGenerate": "passed",
+    "apiBuild": "passed",
+    "webBuild": "passed",
+    "protocolUnit": "4/4 passed",
+    "focusedHttp": "3/3 passed (dispatch, attempt ledger, preparation; each with 18 disposable migrations)",
+    "focusedBrowser": "1/1 passed with 18 disposable migrations; historical UNKNOWN visible",
+    "fullRegression": "not rerun for this reconstructed delta",
+    "ownNativeCi": "not run; unpublished",
+    "liveGoogleGrantOrPost": "not run",
+    "publicBaseCommit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+    "evidence": "docs/qa/social01-guarded-dispatch-evidence.json",
+    "publication": "blocked by automatic disclosure approval review; public main unchanged"
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -8646,5 +8648,17 @@
     "evidence": "docs/qa/social01-token-lifecycle-native-ci-evidence.json",
     "nativeCiRunId": 38044868624,
     "liveGoogleGrantOrPost": false
+  },
+  "social01GuardedDispatch": {
+    "status": "local_focused_verified_not_published",
+    "basePublicCommit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+    "evidence": "docs/qa/social01-guarded-dispatch-evidence.json",
+    "defaultOff": true,
+    "automaticRetry": false,
+    "livePost": false,
+    "nativeCiForDelta": false,
+    "focusedHttpPassed": 3,
+    "publicWriteAttempted": true,
+    "publicWriteSucceeded": false
   }
 }

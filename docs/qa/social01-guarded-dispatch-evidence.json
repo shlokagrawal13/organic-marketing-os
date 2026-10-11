@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 guarded YouTube resumable dispatch reconstruction",
+  "dateUtc": "2026-10-11",
+  "publicBaseCommit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+  "status": "local_focused_verified_not_published",
+  "reconstruction": "Prior transient WIP checkout disappeared. Source was reconstructed from exact public main; vanished WIP test outcomes are excluded.",
+  "behavior": [
+    "Owner/admin signed-in route is off by default and requires a separate exact confirmation string.",
+    "Exact approved private media is staged and size/SHA-256 recorded before a durable SUBMITTING boundary.",
+    "One resumable session URI is validated and stored encrypted and attempt-bound before one media PUT.",
+    "Ambiguous outcomes remain UNKNOWN; a saved session may be probed by a status-only empty PUT without resending bytes.",
+    "Safe tenant-scoped status can be viewed after a preparation is invalidated; tokens, upload URI and ciphertext are not returned."
+  ],
+  "checks": {
+    "cleanLockedInstallAndFontkitPatch": "passed",
+    "prismaGenerate": "passed",
+    "apiBuild": "passed",
+    "webProductionBuild": "passed",
+    "protocolUnit": {
+      "passed": 4,
+      "failed": 0
+    },
+    "focusedDisposableHttp": {
+      "passed": 3,
+      "failed": 0,
+      "freshMigrationsPerRun": 18,
+      "specs": [
+        "social-dispatch.test.ts",
+        "social-attempts.test.ts",
+        "publications.test.ts"
+      ]
+    },
+    "focusedProductionBrowser": {
+      "passed": 1,
+      "failed": 0,
+      "freshMigrations": 18
+    },
+    "httpBoundaries": [
+      "owner/editor/cross-tenant route guards and default-off no-attempt behavior",
+      "synthetic one-session one-media send with encrypted URI and same-channel receipt",
+      "duplicate send rejection and ambiguous send UNKNOWN",
+      "status-only 308 progress and confirmed receipt without media replay",
+      "Existing revocation/UNKNOWN attempt and revision-bound preparation regressions pass on the new migration."
+    ],
+    "browserBoundaries": [
+      "review saved without posting under default-off flag",
+      "historical invalidated preparation retains visible UNKNOWN warning and no publish button"
+    ]
+  },
+  "interruptedOrExcluded": [
+    "An initial browser rerun stopped before tests because sandbox denied the isolated S3Proxy bind. The final rerun with local loopback access passed.",
+    "Prior vanished scratch WIP and its logs do not establish verification for this reconstructed source."
+  ],
+  "limits": [
+    "No live Google grant, upload or provider-account processing confirmation.",
+    "Flag-on HTTP route was not exercised against a live account; internal dispatcher used a synthetic provider.",
+    "No full regression, native CI, scheduler, automated policy maintenance or cross-store recovery for this delta.",
+    "A confirmed upload receipt means the provider accepted a video resource; platform processing and public visibility require separate verification."
+  ],
+  "liveGoogleCalls": 0,
+  "publicWriteAttempted": true,
+  "officialProtocolReference": "https://developers.google.com/youtube/v3/guides/using_resumable_upload_protocol",
+  "publicWriteSucceeded": false,
+  "publicationGate": {
+    "action": "GitHub create_blob of packages/core/youtube-resumable.ts for the new 26-file public payload",
+    "result": "automatic approval review rejected before blob creation",
+    "reason": "The latest user reply said continue but did not explicitly authorize this new 26-file payload and public destination; sensitive egress is not authorized.",
+    "remoteMainUnchanged": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+    "next": "Obtain explicit disclosure approval for exact 26-file payload and public repository main before retry."
+  }
+}

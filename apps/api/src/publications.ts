@@ -10,6 +10,7 @@ import {
   Post,
   Query,
   Req,
+  ServiceUnavailableException,
   UseGuards,
 } from "@nestjs/common";
 import { z } from "zod";
@@ -34,6 +35,8 @@ import {
   youtubeUploadMetadata,
 } from "../../../packages/core/youtube-policy";
 import { activeConnection, currentApproval } from "./publication-attempts";
+import { ObjectStore } from "../../../packages/core/object-store";
+import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "./youtube-dispatch";
 
 const prepareInput = z
   .object({
@@ -56,10 +59,28 @@ const view = ({
   externallySubmitted: false as const,
 });
 const policyView = ({ snapshotHash, ...review }: { snapshotHash: string; [key: string]: any }) => review;
+const dispatchInput = z.object({
+  connectionId: z.string().uuid(), requestKey: z.string().uuid(),
+  confirmation: z.literal("PUBLISH_TO_YOUTUBE"),
+}).strict();
+const liveDispatch = () => process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true";
+const attemptView = (attempt: {
+  id: string; intentId: string; status: string; outcomeCode: string | null;
+  providerPostId: string | null; createdAt: Date; startedAt: Date | null;
+  completedAt: Date | null; uploadSessionCiphertext: string | null;
+} | null) => attempt && ({
+  id: attempt.id, intentId: attempt.intentId, status: attempt.status,
+  outcomeCode: attempt.outcomeCode,
+  providerPostId: attempt.status === "CONFIRMED" ? attempt.providerPostId : null,
+  createdAt: attempt.createdAt, startedAt: attempt.startedAt,
+  completedAt: attempt.completedAt,
+  canCheckStatus: attempt.status === "UNKNOWN" && Boolean(attempt.uploadSessionCiphertext),
+});
 
 @Controller("workspaces/:organizationId/publication-intents")
 @UseGuards(TenantGuard)
 export class PublicationIntentsController {
+  private readonly media = new ObjectStore();
   constructor(private db: Db) {}
 
   @Get() async list(@Req() req: AuthedRequest, @Query() query: unknown) {
@@ -188,6 +209,61 @@ export class PublicationIntentsController {
       });
       return policyView(review);
     });
+  }
+
+  // Read-only status. Never expose ciphertext, upload URI, token or request key.
+  @Get(":id/youtube-attempt") @Roles(...approverRoles) async youtubeAttempt(
+    @Req() req: AuthedRequest, @Param("id") id: string,
+  ) {
+    const intentId = idSchema.parse(id);
+    const intent = await this.db.publicationIntent.findFirst({
+      where: { id: intentId, organizationId: req.organizationId }, select: { id: true },
+    });
+    if (!intent) throw new NotFoundException("Publication preparation not found.");
+    const attempt = await this.db.publicationAttempt.findFirst({
+      where: { intentId, organizationId: req.organizationId },
+    });
+    return { attempt: attemptView(attempt),
+      canPublish: liveDispatch() && ["OWNER", "ADMIN"].includes(req.role) };
+  }
+
+  // Off by default; explicit confirmation and a current signed-in owner/admin
+  // are required before any provider request. The ledger blocks duplicate sends.
+  @Post(":id/youtube-dispatch") @Roles("OWNER", "ADMIN") async youtubeDispatch(
+    @Req() req: AuthedRequest, @Param("id") id: string, @Body() body: unknown,
+  ) {
+    const intentId = idSchema.parse(id);
+    const input = dispatchInput.parse(body);
+    if (!liveDispatch()) throw new ServiceUnavailableException("YouTube dispatch is not enabled.");
+    if (!this.media.configured)
+      throw new ServiceUnavailableException("Private video storage is not configured.");
+    const attempt = await dispatchReviewedYoutubeVideo(this.db, this.media, {
+      organizationId: req.organizationId, actorId: req.userId,
+      intentId, connectionId: input.connectionId, requestKey: input.requestKey,
+    });
+    return attemptView(attempt);
+  }
+
+  // Status-only empty PUT to the saved session; never sends media or starts a
+  // second upload. An expired/ambiguous session remains UNKNOWN.
+  @Post(":id/youtube-attempt/:attemptId/check-status") @Roles("OWNER", "ADMIN") async checkYoutubeAttempt(
+    @Req() req: AuthedRequest, @Param("id") id: string,
+    @Param("attemptId") attemptId: string,
+  ) {
+    const intentId = idSchema.parse(id), ownedAttemptId = idSchema.parse(attemptId);
+    if (!liveDispatch()) throw new ServiceUnavailableException("YouTube status checks are not enabled.");
+    const owned = await this.db.publicationAttempt.findFirst({
+      where: { id: ownedAttemptId, intentId, organizationId: req.organizationId },
+      select: { id: true },
+    });
+    if (!owned) throw new NotFoundException("Publication attempt not found.");
+    const outcome = await reconcileUnknownYoutubeUpload(this.db, {
+      organizationId: req.organizationId, actorId: req.userId, attemptId: ownedAttemptId,
+    });
+    if (outcome.status === "UNKNOWN") return { attempt: attemptView(
+      await this.db.publicationAttempt.findUnique({ where: { id: ownedAttemptId } })),
+    };
+    return { attempt: attemptView(outcome) };
   }
 
   @Post() @Roles(...approverRoles) async prepare(

@@ -62,6 +62,8 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   await expect(save).toBeEnabled();
   await save.click();
   await expect(panel.getByText("Review saved", { exact: true })).toBeVisible();
+  await expect(panel.getByText(/Live YouTube posting is not available/)).toBeVisible();
+  await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toHaveCount(0);
   const reviews = await db.publicationPolicyReview.findMany({ where: { organizationId: org.id } });
   expect(reviews).toHaveLength(1);
   expect((reviews[0].metadata as any).status).toEqual({ privacyStatus: "unlisted", selfDeclaredMadeForKids: false, containsSyntheticMedia: true });
@@ -73,6 +75,24 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   const reopened = page.getByRole("region", { name: "YouTube publication review" });
   await reopened.getByRole("button", { name: /Open .*·/ }).click();
   await expect(reopened.getByText("Review saved", { exact: true })).toBeVisible();
+  await expect(reopened.getByText(/Live YouTube posting is not available/)).toBeVisible();
   expect(await db.publicationAttempt.count({ where: { organizationId: org.id } })).toBe(0);
+  const prepared = await db.publicationIntent.findFirstOrThrow({ where: { organizationId: org.id } });
+  await db.publicationAttempt.create({ data: {
+    organizationId: org.id, intentId: prepared.id, connectionId: connection.id,
+    contentId: content.id, contentRevision: 1, requestKey: randomUUID(),
+    requestHash: "test-only-historical-attempt", status: "UNKNOWN",
+    outcomeCode: "UPLOAD_OUTCOME_UNCERTAIN", startedAt: new Date(),
+  } });
+  await db.publicationIntent.update({ where: { id: prepared.id },
+    data: { status: "INVALIDATED", invalidatedAt: new Date() } });
+  await page.reload();
+  await page.getByRole("navigation").getByRole("button", { name: "Content library" }).click();
+  await page.getByRole("button", { name: `Open ${title}`, exact: true }).click();
+  const historical = page.getByRole("region", { name: "YouTube publication review" });
+  await historical.getByRole("button", { name: /revision 1 · INVALIDATED/ }).click();
+  await expect(historical.getByText("Status: UNKNOWN")).toBeVisible();
+  await expect(historical.getByText(/may already exist/)).toBeVisible();
+  await expect(historical.getByRole("button", { name: "Publish reviewed video to YouTube" })).toHaveCount(0);
   await db.$disconnect();
 });

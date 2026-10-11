@@ -1,5 +1,14 @@
 # Start here — Organic Marketing OS 0.9.2
 
+## SOCIAL-01 guarded YouTube dispatch (local, unpublished) — 2026-10-11 UTC
+
+Publication gate: the first GitHub blob upload for this new 26-file scope was rejected by automatic approval review before any public object/ref update. It stated that “continue” did not explicitly authorize this payload and public destination. Public `main` remains `d6e6ecf`; no alternative upload route was used. Explicit disclosure approval for this exact scope is required before retry.
+
+Reconstructed the lost transient WIP from exact public `d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9`. A signed-in owner/admin may explicitly submit one reviewed, exact approved video only when `YOUTUBE_LIVE_DISPATCH_ENABLED=true`; the default is false and the disposable verifier forces false. The dispatcher stages private media, records SHA-256/size, commits SUBMITTING, saves an encrypted attempt-bound resumable session before one media PUT, and retains ambiguous outcomes as UNKNOWN. An UNKNOWN saved session has a status-only empty-PUT check. The UI keeps historical UNKNOWN status visible even after preparation invalidation; no scheduler or automatic retry is wired.
+
+On this reconstructed source: clean locked install/Fontkit patch, Prisma generate, API/web production builds, 4/4 protocol units, 3/3 isolated social-dispatch, existing attempt-ledger and preparation HTTP scenarios, each with 18 fresh disposable migrations, and 1/1 focused production browser flow with 18 migrations passed. The HTTP fixture tested roles/tenant, disabled route, single send, encrypted session, duplicate rejection, ambiguous outcome, 308 progress and receipt-only reconciliation. The browser fixture covered default-off review and historical UNKNOWN visibility. A sandbox-denied local S3 bind stopped one intermediate rerun before tests; final isolated rerun passed. No live Google account/post, full suite, native CI or public push occurred for this local delta. Public main remains `d6e6ecf`; SOCIAL-01 remains Partial. See `docs/qa/social01-guarded-dispatch-evidence.json`. Older dated sections are historical.
+
+
 ## SOCIAL-01 YouTube connections and upload-review UI (local) — 2026-10-10 UTC
 
 A signed-in owner/admin can open the official YouTube OAuth start from Connections, inspect safe channel/refresh status, and explicitly revoke a grant. An approved YouTube Video now exposes an upload-review panel for its exact approved render/revision. The panel previews server-derived title/description, requires explicit channel, privacy, child-audience and realistic synthetic-media choices plus four acknowledgments, and saves an immutable 24-hour review. It reads a saved review after reload through a new tenant/approver-gated GET endpoint that omits the internal fingerprint. The panel cannot schedule, dispatch or post.

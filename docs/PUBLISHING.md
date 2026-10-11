@@ -1,5 +1,12 @@
 # Publishing status
 
+## SOCIAL-01 guarded YouTube dispatch (local, unpublished) — 2026-10-11 UTC
+
+Publication gate: the first GitHub blob upload for this new 26-file scope was rejected by automatic approval review before any public object/ref update. It stated that “continue” did not explicitly authorize this payload and public destination. Public `main` remains `d6e6ecf`; no alternative upload route was used. Explicit disclosure approval for this exact scope is required before retry.
+
+Posting is guarded by a default-off deployment flag and separate owner/admin UI confirmation. Enabling it makes a real external upload possible; this local fixture verification did not enable it or use a Google account. There is no scheduled send or automatic retry. UNKNOWN requires status-only saved-session review or manual channel inspection; do not create a new upload based on a failed response. Public main remains at `d6e6ecf`; exact new scope needs review and disclosure approval before publication. See `docs/qa/social01-guarded-dispatch-evidence.json`.
+
+
 ## SOCIAL-01 YouTube connections and upload-review UI (local) — 2026-10-10 UTC
 
 The local Connections screen starts OAuth only on an owner/admin click and shows safe channel and refresh state; it does not grant permission to post by itself. The approved-video review UI calls internal preparation, preview, and immutable review endpoints for an exact approved render. A saved review remains internal, expires after 24 hours, and can be reloaded through a tenant/approver-gated read endpoint. A newer preparation is needed for changed choices or expired review. No sender, scheduler or externally submitted state is exposed. See `docs/qa/social01-review-ui-evidence.json`. Previous dated sections are historical.
