@@ -7,12 +7,21 @@ import { db, actor, draft, scene } from "../support/http";
 import { encryptSocialToken } from "../../packages/core/social-tokens";
 import { ObjectStore } from "../../packages/core/object-store";
 import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "../../apps/api/src/youtube-dispatch";
+import { youtubePolicyVersion } from "../../packages/core/youtube-policy";
 
 const orgs: string[] = [], users: string[] = [];
 const priorKey = process.env.SOCIAL_TOKEN_ENCRYPTION_KEY;
+const priorDispatch = process.env.YOUTUBE_LIVE_DISPATCH_ENABLED;
+const priorReviewVersion = process.env.YOUTUBE_POLICY_REVIEWED_VERSION;
+const priorReviewAt = process.env.YOUTUBE_POLICY_REVIEWED_AT;
 after(async () => {
   if (priorKey === undefined) delete process.env.SOCIAL_TOKEN_ENCRYPTION_KEY;
   else process.env.SOCIAL_TOKEN_ENCRYPTION_KEY = priorKey;
+  for (const [key, value] of Object.entries({
+    YOUTUBE_LIVE_DISPATCH_ENABLED: priorDispatch,
+    YOUTUBE_POLICY_REVIEWED_VERSION: priorReviewVersion,
+    YOUTUBE_POLICY_REVIEWED_AT: priorReviewAt,
+  })) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }
   await db.publicationAttempt.deleteMany({ where: { organizationId: { in: orgs } } });
   await db.publicationPolicyReview.deleteMany({ where: { organizationId: { in: orgs } } });
   await db.socialConnection.deleteMany({ where: { organizationId: { in: orgs } } });
@@ -80,9 +89,9 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   const first = await prepared("One upload fixture");
   const path = root + `/publication-intents/${first.intentId}`;
   assert.deepEqual((await owner.call(path + "/youtube-attempt")).body,
-    { attempt: null, canPublish: false });
+    { attempt: null, canPublish: false, canReconcile: false });
   assert.deepEqual((await editor.call(path + "/youtube-attempt")).body,
-    { attempt: null, canPublish: false });
+    { attempt: null, canPublish: false, canReconcile: false });
   assert.equal((await outsider.call(`/workspaces/${other.id}/publication-intents/${first.intentId}/youtube-attempt`)).status, 404);
   assert.equal((await owner.call(path + "/youtube-dispatch", "POST", {
     connectionId: connection.id, requestKey: first.requestKey, confirmation: "send",
@@ -96,6 +105,19 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
     confirmation: "PUBLISH_TO_YOUTUBE",
   })).status, 503);
   assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 0);
+
+  process.env.YOUTUBE_LIVE_DISPATCH_ENABLED = "true";
+  assert.equal((await owner.call(path + "/youtube-attempt")).body.canPublish, false);
+  let blockedCalls = 0;
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, first,
+    (async () => { blockedCalls++; throw new Error("should not call provider"); }) as typeof fetch),
+    /current platform policy review/u);
+  assert.equal(blockedCalls, 0);
+  assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 0);
+  process.env.YOUTUBE_POLICY_REVIEWED_VERSION = youtubePolicyVersion;
+  process.env.YOUTUBE_POLICY_REVIEWED_AT = new Date().toISOString();
+  // The harness's API server stays default-off; only this test process uses
+  // synthetic provider requests through the internal dispatcher.
 
   const uri = "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&upload_id=secret-fixture";
   const receipt = () => Response.json({ id: "abcDEF01234", snippet: { channelId } }, { status: 201 });

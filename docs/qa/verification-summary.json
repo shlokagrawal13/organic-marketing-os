@@ -1,16 +1,16 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-10",
+  "verifiedDate": "2026-10-11",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 194,
-    "httpScenarios": 13,
-    "browserScenarios": 7,
+    "unit": 198,
+    "httpScenarios": 14,
+    "browserScenarios": 8,
     "recoveryAndConfigurationScenarios": 5,
-    "schemaMigrations": 17,
+    "schemaMigrations": 18,
     "unitFontSets": 1
   },
   "environment": {
@@ -83,21 +83,21 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 guarded YouTube resumable dispatch reconstructed locally on public d6e6ecf: 4/4 focused protocol, 3/3 isolated HTTP (dispatch, attempt ledger, preparation) and 1/1 focused production browser, 18 disposable migrations, API/web builds. New delta unpublished and no live Google calls; prior full/native counts are for older public source only. First GitHub blob upload was rejected by automatic approval review; public main unchanged.",
+  "latestIncrement": "Public 3ee9ed7 native CI passed 198 unit / 14 HTTP / 8 browser / 5 recovery and 18 migrations. New local unpublished SOCIAL-01 policy-maintenance gate/required upload notice passed 2 focused unit files, 1 isolated HTTP and 1 production browser case with 18 disposable migrations plus API/web builds; no own native CI, deployed policy receipt or live Google call. An unrelated broad local render/recovery attempt was excluded after required test fonts were absent.",
   "latestNativeRun": {
-    "runId": 38047795536,
-    "jobId": 114200731782,
+    "runId": 38128508694,
+    "jobId": 114437792062,
     "attempt": 1,
-    "sourceCommit": "100fba333da214ffac5683b26506860c9f2ff648",
-    "sourceTree": "eb2efe2a4cbcc07c5b6637fe1edc1433bc23af20",
+    "sourceCommit": "3ee9ed7069ce813fccb2bd30e7e8d2374ff9855d",
+    "sourceTree": "c02f5775ae14b6083afff819cf7c93ae784f2087",
     "status": "completed",
     "conclusion": "success",
-    "unitPassed": 194,
-    "httpPassed": 13,
-    "browserPassed": 7,
+    "unitPassed": 198,
+    "httpPassed": 14,
+    "browserPassed": 8,
     "recoveryPassed": 5,
-    "freshNativeMigrations": 17,
-    "evidence": "docs/qa/social01-policy-review-native-ci-evidence.json"
+    "freshNativeMigrations": 18,
+    "evidence": "docs/qa/social01-guarded-native-ci-evidence.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -7901,5 +7901,15 @@
     "published": false,
     "publicWriteAttempted": true,
     "publicWriteSucceeded": false
+  },
+  "social01PolicyMaintenance": {
+    "localEvidence": "docs/qa/social01-policy-maintenance-evidence.json",
+    "operatorReviewReceiptRequired": true,
+    "defaultLiveDispatchEnabled": false,
+    "localFocusedUnits": 2,
+    "localFocusedHttp": 1,
+    "localFocusedBrowser": 1,
+    "ownNativeCi": false,
+    "liveGoogleUpload": false
   }
 }

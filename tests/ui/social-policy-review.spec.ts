@@ -68,6 +68,23 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   expect(reviews).toHaveLength(1);
   expect((reviews[0].metadata as any).status).toEqual({ privacyStatus: "unlisted", selfDeclaredMadeForKids: false, containsSyntheticMedia: true });
   expect(await db.publicationAttempt.count({ where: { organizationId: org.id } })).toBe(0);
+  // Browser-only readiness fixture exercises the notice without enabling the
+  // isolated API's live dispatch flag or sending a provider request.
+  const attemptUrl = `**/publication-intents/${reviews[0].intentId}/youtube-attempt`;
+  await page.route(attemptUrl, (route) => route.fulfill({ status: 200,
+    contentType: "application/json", body: JSON.stringify({ attempt: null,
+      canPublish: true, canReconcile: false }) }));
+  await panel.getByRole("button", { name: /Open .*revision 1/ }).first().click();
+  await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toBeVisible();
+  await expect(panel.getByText(/By clicking 'upload,' you certify/)).toBeVisible();
+  await expect(panel.locator(".youtube-terms-desktop")).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(panel.locator(".youtube-terms-mobile")).toBeVisible();
+  await expect(panel.locator(".youtube-terms-desktop")).toBeHidden();
+  await page.unroute(attemptUrl);
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await panel.getByRole("button", { name: /Open .*revision 1/ }).first().click();
+  await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toHaveCount(0);
   await page.screenshot({ path: "test-results/social-policy-review.png", fullPage: true });
   await page.reload();
   await page.getByRole("navigation").getByRole("button", { name: "Content library" }).click();

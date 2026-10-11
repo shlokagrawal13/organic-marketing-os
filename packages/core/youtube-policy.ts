@@ -7,6 +7,23 @@ import { digest } from "./security";
 // a local review expires after 24 hours even when the code version is unchanged.
 export const youtubePolicyVersion = "youtube-videos-insert-2026-10-08";
 export const youtubePolicyReviewLifetimeMs = 24 * 60 * 60 * 1000;
+export const youtubePolicyMaintenanceLifetimeMs = 7 * 24 * 60 * 60 * 1000;
+
+// A deployment operator must explicitly record a recent review of the API
+// reference, required upload functionality, Terms and Developer Policies.
+// This is an operational stop switch, not a claim of platform certification.
+export function youtubePolicyMaintenanceCurrent(
+  config: { YOUTUBE_POLICY_REVIEWED_VERSION?: string; YOUTUBE_POLICY_REVIEWED_AT?: string },
+  now = new Date(),
+) {
+  const at = config.YOUTUBE_POLICY_REVIEWED_AT;
+  if (config.YOUTUBE_POLICY_REVIEWED_VERSION !== youtubePolicyVersion ||
+      !at || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/u.test(at)) return false;
+  const reviewed = Date.parse(at), current = now.getTime();
+  return Number.isFinite(reviewed) && Number.isFinite(current) &&
+    new Date(reviewed).toISOString() === (at.length === 20 ? at.replace("Z", ".000Z") : at) &&
+    reviewed <= current && current - reviewed < youtubePolicyMaintenanceLifetimeMs;
+}
 export const youtubeReviewInput = z.object({
   connectionId: z.string().uuid(),
   privacyStatus: z.enum(["private", "unlisted", "public"]),

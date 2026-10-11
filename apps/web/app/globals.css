@@ -2931,6 +2931,12 @@ details > .form-grid {
 .policy-saved h4 { margin: 0; }
 .policy-saved .review-ack { display: flex; margin: 0.25rem 0; }
 .policy-review .button { justify-self: start; }
+.youtube-upload-notice { padding: 0.8rem; border: 1px solid var(--line); border-radius: 8px; }
+.youtube-terms-mobile { display: none; }
+@media (max-width: 767px) {
+  .youtube-terms-desktop { display: none; }
+  .youtube-terms-mobile { display: inline; }
+}
 @media (max-width: 600px) {
   .social-panel-heading,
   .social-account { flex-direction: column; gap: 0.8rem; }

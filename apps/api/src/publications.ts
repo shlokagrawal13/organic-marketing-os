@@ -31,6 +31,7 @@ import {
   youtubePolicyFingerprint,
   youtubePolicyReviewLifetimeMs,
   youtubePolicyVersion,
+  youtubePolicyMaintenanceCurrent,
   youtubeReviewInput,
   youtubeUploadMetadata,
 } from "../../../packages/core/youtube-policy";
@@ -63,7 +64,8 @@ const dispatchInput = z.object({
   connectionId: z.string().uuid(), requestKey: z.string().uuid(),
   confirmation: z.literal("PUBLISH_TO_YOUTUBE"),
 }).strict();
-const liveDispatch = () => process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true";
+const liveDispatch = () => process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
+  youtubePolicyMaintenanceCurrent(process.env);
 const attemptView = (attempt: {
   id: string; intentId: string; status: string; outcomeCode: string | null;
   providerPostId: string | null; createdAt: Date; startedAt: Date | null;
@@ -224,7 +226,10 @@ export class PublicationIntentsController {
       where: { intentId, organizationId: req.organizationId },
     });
     return { attempt: attemptView(attempt),
-      canPublish: liveDispatch() && ["OWNER", "ADMIN"].includes(req.role) };
+      canPublish: liveDispatch() && ["OWNER", "ADMIN"].includes(req.role),
+      canReconcile: process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
+        ["OWNER", "ADMIN"].includes(req.role) &&
+        attempt?.status === "UNKNOWN" && Boolean(attempt.uploadSessionCiphertext) };
   }
 
   // Off by default; explicit confirmation and a current signed-in owner/admin
@@ -234,7 +239,7 @@ export class PublicationIntentsController {
   ) {
     const intentId = idSchema.parse(id);
     const input = dispatchInput.parse(body);
-    if (!liveDispatch()) throw new ServiceUnavailableException("YouTube dispatch is not enabled.");
+    if (!liveDispatch()) throw new ServiceUnavailableException("YouTube dispatch requires an enabled deployment and current platform policy review.");
     if (!this.media.configured)
       throw new ServiceUnavailableException("Private video storage is not configured.");
     const attempt = await dispatchReviewedYoutubeVideo(this.db, this.media, {
@@ -251,7 +256,8 @@ export class PublicationIntentsController {
     @Param("attemptId") attemptId: string,
   ) {
     const intentId = idSchema.parse(id), ownedAttemptId = idSchema.parse(attemptId);
-    if (!liveDispatch()) throw new ServiceUnavailableException("YouTube status checks are not enabled.");
+    if (process.env.YOUTUBE_LIVE_DISPATCH_ENABLED !== "true")
+      throw new ServiceUnavailableException("YouTube status checks are not enabled.");
     const owned = await this.db.publicationAttempt.findFirst({
       where: { id: ownedAttemptId, intentId, organizationId: req.organizationId },
       select: { id: true },

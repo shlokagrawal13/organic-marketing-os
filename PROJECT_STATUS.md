@@ -1,5 +1,15 @@
 # Project status — Organic Marketing OS 0.9.2
 
+## SOCIAL-01 policy maintenance and upload notice (local, unpublished) — 2026-10-11 UTC
+
+New uploads require the default-off live flag plus an exact policy-version operator receipt with a UTC review timestamp less than seven days old. Missing, stale, future and invalid receipts block both the API route and internal dispatcher before provider traffic. Existing UNKNOWN sessions can still receive a status-only check under the enabled flag and owner/admin role when maintenance is stale; the UI separates this from new publishing. The upload screen now shows YouTube's required certification notice with desktop/mobile Terms links, and the rights checkbox is required to save review. This is an operational safeguard, not a platform compliance certificate. Clean locked install and Fontkit patch, Prisma generate, API/web production builds, 2/2 focused unit test files, 1/1 isolated HTTP scenario with 18 disposable migrations and 1/1 production browser scenario passed. An unrelated broad recovery attempt failed because this recovered checkout lacks test fonts; those results are excluded. No live Google upload or new public push occurred. SOCIAL-01 remains Partial. See `docs/qa/social01-policy-maintenance-evidence.json`. Earlier dated sections are historical.
+
+
+## SOCIAL-01 guarded dispatch publication and native CI — 2026-10-11 UTC
+
+The approved 26-file scope is public at `3ee9ed7069ce813fccb2bd30e7e8d2374ff9855d` (parent `d6e6ecf`, tree `c02f5775ae14b6083afff819cf7c93ae784f2087`). Its own native Actions run `38128508694` / job `114437792062` succeeded: 198/198 unique unit receipts with 24 summaries and zero failed/cancelled/skipped/todo, 14 HTTP, 8 browser, 5 recovery, 18 native migrations, builds, populated upgrade, 36/36 bounded English plus 8/8 busy-background OCR with blank negative control, and both dependency audits at zero vulnerabilities. Browser artifact `11698087790` SHA-256 matched GitHub metadata; ZIP CRC passed for 124 entries and all 44 OCR PNG hashes matched. No live Google grant/upload or real account processing check occurred. The deployment posting flag defaults off; scheduler, current policy maintenance and separately authorized live acceptance remain. SOCIAL-01 is Partial. This closure record and sanitized receipts are local and unpublished. See `docs/qa/social01-guarded-native-ci-evidence.json`. Older dated sections are historical.
+
+
 ## SOCIAL-01 guarded YouTube dispatch (local, unpublished) — 2026-10-11 UTC
 
 Publication gate: the first GitHub blob upload for this new 26-file scope was rejected by automatic approval review before any public object/ref update. It stated that “continue” did not explicitly authorize this payload and public destination. Public `main` remains `d6e6ecf`; no alternative upload route was used. Explicit disclosure approval for this exact scope is required before retry.

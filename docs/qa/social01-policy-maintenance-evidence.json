@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 policy maintenance and upload notice, local unpublished",
+  "dateUtc": "2026-10-11",
+  "basePublicCommit": "3ee9ed7069ce813fccb2bd30e7e8d2374ff9855d",
+  "sourceReview": {
+    "officialReferences": [
+      "https://developers.google.com/youtube/v3/docs/videos/insert",
+      "https://developers.google.com/youtube/v3/docs/videos",
+      "https://developers.google.com/youtube/terms/required-minimum-functionality",
+      "https://developers.google.com/youtube/terms/api-services-terms-of-service/",
+      "https://developers.google.com/youtube/terms/developer-policies",
+      "https://developers.google.com/youtube/terms/revision-history"
+    ],
+    "scope": "Documented upload fields, title/description/privacy controls, required upload-screen notice and review cadence; not a legal compliance certification",
+    "policyContractVersion": "youtube-videos-insert-2026-10-08",
+    "deploymentReviewReceipt": "YOUTUBE_POLICY_REVIEWED_VERSION exact match plus YOUTUBE_POLICY_REVIEWED_AT UTC within seven days; unset/future/stale/invalid blocks new dispatch",
+    "statusOnlyReconciliation": "An already UNKNOWN saved session can be checked under owner/admin with dispatch flag enabled even if maintenance receipt is stale; no media resend"
+  },
+  "localChecks": {
+    "lockedInstallAndFontkitPatch": "passed",
+    "prismaGenerate": "passed",
+    "apiBuild": "passed",
+    "webProductionBuild": "passed",
+    "focusedUnit": {
+      "testFiles": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "focusedHttp": {
+      "scenarios": 1,
+      "passed": 1,
+      "disposablePgliteMigrations": 18,
+      "syntheticProvider": true
+    },
+    "focusedProductionBrowser": {
+      "scenarios": 1,
+      "passed": 1,
+      "uploadNoticeDesktopMobileFixture": true,
+      "realPost": false
+    },
+    "finalHarnessCommand": "node scripts/verify-local.mjs --http-spec=social-dispatch.test.ts --ui-spec=social-policy-review.spec.ts --production-web --skip-recovery",
+    "unrelatedBroadAttempt": "A prior broad UI/recovery run used a recovered checkout without required test fonts. Two render-dependent browser/recovery cases failed before the targeted rerun; this is not a pass receipt for those suites."
+  },
+  "limits": [
+    "No live Google account/grant/upload or deployed policy review receipt.",
+    "The gate requires a human operator to check current platform rules; it cannot detect an immediate policy change.",
+    "New source lacks own native CI until separately approved publication; prior 198/14/8/5 native CI applies to 3ee9ed7 only.",
+    "Scheduler, broader semantic/frequency policy and full master acceptance remain."
+  ],
+  "published": false
+}

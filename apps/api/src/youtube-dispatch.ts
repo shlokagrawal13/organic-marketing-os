@@ -5,10 +5,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable } from "node:stream";
 import { once } from "node:events";
-import { ConflictException, ForbiddenException, NotFoundException } from "@nestjs/common";
+import { ConflictException, ForbiddenException, NotFoundException, ServiceUnavailableException } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import { ObjectStore } from "../../../packages/core/object-store";
+import { youtubePolicyMaintenanceCurrent } from "../../../packages/core/youtube-policy";
 import { decryptSocialToken } from "../../../packages/core/social-tokens";
 import { YoutubeVideoMetadata, probeYoutubeUpload, sendYoutubeUploadBytes,
   startYoutubeUploadSession } from "../../../packages/core/youtube-resumable";
@@ -78,10 +79,17 @@ async function stageRender(store: ObjectStore, key: string,
 type DispatchInput = { organizationId: string; actorId: string;
   intentId: string; connectionId: string; requestKey: string };
 
+function requireCurrentPolicy() {
+  if (process.env.YOUTUBE_LIVE_DISPATCH_ENABLED !== "true" ||
+      !youtubePolicyMaintenanceCurrent(process.env))
+    throw new ServiceUnavailableException("YouTube dispatch requires an enabled deployment and current platform policy review.");
+}
+
 // A controller gates this internal service behind an explicit user action.
 // Tests inject a synthetic provider; there is no scheduler or automatic retry.
 export async function dispatchReviewedYoutubeVideo(db: PrismaClient, store: ObjectStore,
   input: DispatchInput, providerRequest: typeof fetch = fetch) {
+  requireCurrentPolicy();
   await approver(db, input.organizationId, input.actorId);
   const intent = await db.publicationIntent.findFirst({
     where: { id: input.intentId, organizationId: input.organizationId },
@@ -118,6 +126,7 @@ export async function dispatchReviewedYoutubeVideo(db: PrismaClient, store: Obje
       }
     }
     try {
+      requireCurrentPolicy();
       const first = await activeToken(db, input.organizationId, input.connectionId, input.actorId);
       const snapshot = started.policySnapshot as { metadata?: unknown } | null;
       const metadata = metadataSchema.parse(snapshot?.metadata) as YoutubeVideoMetadata;

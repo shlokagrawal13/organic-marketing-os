@@ -23,6 +23,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
   const [review, setReview] = useState<Review | null>(null);
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [canPublish, setCanPublish] = useState(false);
+  const [canReconcile, setCanReconcile] = useState(false);
   const [publishPhrase, setPublishPhrase] = useState("");
   const [publishAck, setPublishAck] = useState(false);
   const [connectionId, setConnectionId] = useState("");
@@ -69,6 +70,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
     setPreview(null);
     setReview(null);
     setAttempt(null);
+    setCanPublish(false);
+    setCanReconcile(false);
     setPublishPhrase("");
     setPublishAck(false);
     try {
@@ -89,6 +92,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       setReview(nextReview);
       setAttempt(state.attempt);
       setCanPublish(state.canPublish);
+      setCanReconcile(state.canReconcile);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -109,6 +113,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       setPreview(nextPreview);
       setReview(null);
       setAttempt(null);
+      setCanPublish(false);
+      setCanReconcile(false);
       setPublishPhrase("");
       setPublishAck(false);
       setConnectionId("");
@@ -144,6 +150,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       const state = await api(path + `/${intent.id}/youtube-attempt`);
       setAttempt(state.attempt);
       setCanPublish(state.canPublish);
+      setCanReconcile(state.canReconcile);
       setNotice("Policy review saved for this exact video, revision and channel. Nothing was posted.");
     } catch (err) {
       setError((err as Error).message);
@@ -159,6 +166,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       const state = await api(path + `/${intent.id}/youtube-attempt`);
       setAttempt(state.attempt);
       setCanPublish(state.canPublish);
+      setCanReconcile(state.canReconcile);
     } catch (err) { setError((err as Error).message); }
     finally { setBusy(false); }
   }
@@ -173,6 +181,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
         confirmation: "PUBLISH_TO_YOUTUBE",
       });
       setAttempt(saved);
+      if (saved.status === "UNKNOWN" && saved.canCheckStatus) setCanReconcile(true);
       setNotice(saved.status === "CONFIRMED" ? "YouTube confirmed this upload." :
         "Upload outcome needs review. Do not submit another video.");
     } catch (err) {
@@ -182,12 +191,14 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       try {
         const state = await api(path + `/${intent.id}/youtube-attempt`);
         setAttempt(state.attempt);
+        setCanPublish(state.canPublish);
+        setCanReconcile(state.canReconcile);
       } catch {}
     } finally { setBusy(false); setPublishPhrase(""); setPublishAck(false); }
   }
 
   async function checkStatus() {
-    if (!intent || !attempt?.canCheckStatus || !canPublish) return;
+    if (!intent || !attempt?.canCheckStatus || !canReconcile) return;
     setBusy(true); setError(""); setNotice("");
     try {
       const state = await api(path + `/${intent.id}/youtube-attempt/${attempt.id}/check-status`, "POST");
@@ -259,7 +270,7 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
           <label className="review-ack"><input type="checkbox" checked={audienceAck} onChange={(e) => setAudienceAck(e.target.checked)} />I checked the child-audience declaration.</label>
           <label className="review-ack"><input type="checkbox" checked={syntheticAck} onChange={(e) => setSyntheticAck(e.target.checked)} />I checked the realistic synthetic-media declaration.</label>
           <label className="review-ack"><input type="checkbox" checked={rightsAck} onChange={(e) => setRightsAck(e.target.checked)} />I checked usage rights and current YouTube rules for this video.</label>
-          <button className="button primary" disabled={busy || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck} onClick={() => void saveReview()}>Save policy review</button>
+          <button className="button primary" disabled={busy || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck || !rightsAck} onClick={() => void saveReview()}>Save policy review</button>
         </> : null}
         {review && <div className="policy-saved">
           <h4>Upload status</h4>
@@ -268,10 +279,11 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
             {attempt.status === "UNKNOWN" && <p>The video may already exist. Do not create another upload attempt. {attempt.canCheckStatus ? "Check the saved upload session for a receipt." : "A manual channel review is needed."}</p>}
             {attempt.status === "SUBMITTING" && <p>An upload is in progress or interrupted. Refresh the status before taking any action.</p>}
             <button className="button" disabled={busy} onClick={() => void refreshAttempt()}>Refresh local status</button>
-            {attempt.status === "UNKNOWN" && attempt.canCheckStatus && canPublish &&
+            {attempt.status === "UNKNOWN" && attempt.canCheckStatus && canReconcile &&
               <button className="button" disabled={busy} onClick={() => void checkStatus()}>Check saved YouTube session status</button>}
           </> : canPublish && preview && !reviewExpired ? <>
             <p>This sends the approved render to {channels.find((c) => c.id === review.connectionId)?.accountLabel || "the reviewed channel"} ({channels.find((c) => c.id === review.connectionId)?.externalAccountId || "channel unavailable"}) with the visibility and declarations shown above. YouTube publishing cannot be undone here.</p>
+            <p className="youtube-upload-notice">By clicking &apos;upload,&apos; you certify that the content you are uploading complies with the YouTube Terms of Service (including the YouTube Community Guidelines) at <a className="youtube-terms-desktop" href="https://www.youtube.com/t/terms" target="_blank" rel="noreferrer">https://www.youtube.com/t/terms</a><a className="youtube-terms-mobile" href="http://m.youtube.com/terms" target="_blank" rel="noreferrer">http://m.youtube.com/terms</a>. Please be sure not to violate others&apos; copyright or privacy rights.</p>
             <label>Type PUBLISH TO YOUTUBE to confirm
               <input value={publishPhrase} onChange={(event) => setPublishPhrase(event.target.value)} autoComplete="off" />
             </label>

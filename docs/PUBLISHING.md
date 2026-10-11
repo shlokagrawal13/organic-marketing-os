@@ -1,5 +1,15 @@
 # Publishing status
 
+## SOCIAL-01 policy maintenance and upload notice (local, unpublished) — 2026-10-11 UTC
+
+New uploads require the default-off live flag plus an exact policy-version operator receipt with a UTC review timestamp less than seven days old. Missing, stale, future and invalid receipts block both the API route and internal dispatcher before provider traffic. Existing UNKNOWN sessions can still receive a status-only check under the enabled flag and owner/admin role when maintenance is stale; the UI separates this from new publishing. The upload screen now shows YouTube's required certification notice with desktop/mobile Terms links, and the rights checkbox is required to save review. This is an operational safeguard, not a platform compliance certificate. Clean locked install and Fontkit patch, Prisma generate, API/web production builds, 2/2 focused unit test files, 1/1 isolated HTTP scenario with 18 disposable migrations and 1/1 production browser scenario passed. An unrelated broad recovery attempt failed because this recovered checkout lacks test fonts; those results are excluded. No live Google upload or new public push occurred. SOCIAL-01 remains Partial. See `docs/qa/social01-policy-maintenance-evidence.json`. Earlier dated sections are historical.
+
+
+## SOCIAL-01 guarded dispatch publication and native CI — 2026-10-11 UTC
+
+The approved source is public at `3ee9ed7` and own native Actions run `38128508694` succeeded. Live posting remains default off and requires a signed-in owner/admin with a reviewed exact video and separate typed confirmation when enabled. Native CI used synthetic provider fixtures and made no live Google upload. This local closure evidence is not part of the approved 26 paths. See `docs/qa/social01-guarded-native-ci-evidence.json`.
+
+
 ## SOCIAL-01 guarded YouTube dispatch (local, unpublished) — 2026-10-11 UTC
 
 Publication gate: the first GitHub blob upload for this new 26-file scope was rejected by automatic approval review before any public object/ref update. It stated that “continue” did not explicitly authorize this payload and public destination. Public `main` remains `d6e6ecf`; no alternative upload route was used. Explicit disclosure approval for this exact scope is required before retry.
