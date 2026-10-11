@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-11.05-SOCIAL01-policy-maintenance-local",
+  "checkpointRevision": "2026-10-11.06-SOCIAL01-policy-native-closure",
   "savedAtUtc": "2026-10-11",
-  "currentMilestone": "Guarded dispatch public and native CI closed; local policy maintenance and required upload notice focused verified but unpublished",
+  "currentMilestone": "SOCIAL-01 policy maintenance and upload notice public; own native CI verified; closure docs local",
   "activeTaskId": "SOCIAL-01",
   "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Review exact local SOCIAL-01 policy-maintenance source/config/docs/evidence diff and obtain explicit approval before any public GitHub main update. Then inspect own native CI. Scheduler, broader POLICY-01 checks and separately authorized live account acceptance remain.",
+  "nextAction": "Publish the already approved exact 15-file SOCIAL-01 native-CI closure to public main, verify remote tree and own CI, then advance scheduler and broader POLICY-01 checks without live Google calls.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -17,15 +17,10 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    ".env.example",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
-    "apps/api/src/publications.ts",
-    "apps/api/src/youtube-dispatch.ts",
-    "apps/web/app/globals.css",
-    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -34,14 +29,9 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/social01-guarded-native-ci-evidence.json",
-    "docs/qa/social01-guarded-native-unit-receipts.json",
-    "docs/qa/social01-policy-maintenance-evidence.json",
-    "docs/qa/verification-summary.json",
-    "packages/core/youtube-policy.ts",
-    "tests/integration/social-dispatch.test.ts",
-    "tests/ui/social-policy-review.spec.ts",
-    "tests/youtube-policy-maintenance.test.ts"
+    "docs/qa/social01-policy-native-ci-evidence.json",
+    "docs/qa/social01-policy-native-unit-receipts.json",
+    "docs/qa/verification-summary.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -77,7 +67,7 @@
       "http": 7,
       "browser": 7,
       "recovery": 5,
-      "latestNativeUnit": 198,
+      "latestNativeUnit": 199,
       "latestNativeHttp": 14,
       "latestNativeBrowser": 8,
       "latestNativeRecovery": 5
@@ -104,20 +94,20 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "Public 3ee9ed7 own native CI passed. New local policy-maintenance/notice source passed only focused unit/HTTP/browser plus builds; no own native CI or live Google account. Broader render/recovery local attempt failed for missing test fonts and is excluded.",
+    "scopeWarning": "Public 448be264 policy-maintenance source own native CI passed; closure docs and sanitized receipts are local/unpublished. Live Google, deployed operator review and full master acceptance remain open. Previous local missing-font broad attempt is excluded.",
     "latestGithubActions": {
-      "runId": 38128508694,
-      "jobId": 114437792062,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38128508694",
-      "sourceCommit": "3ee9ed7069ce813fccb2bd30e7e8d2374ff9855d",
-      "sourceTree": "c02f5775ae14b6083afff819cf7c93ae784f2087",
+      "runId": 38148069398,
+      "jobId": 114495510162,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38148069398",
+      "sourceCommit": "448be2647718ed689fd56b7f6f0829e250044f55",
+      "sourceTree": "169d0448e087497d2693bcbf5705d8bf1f9a7672",
       "conclusion": "success",
-      "unitPassed": 198,
+      "unitPassed": 199,
       "httpPassed": 14,
       "browserPassed": 8,
       "recoveryPassed": 5,
       "nativeMigrations": 18,
-      "evidence": "docs/qa/social01-guarded-native-ci-evidence.json"
+      "evidence": "docs/qa/social01-policy-native-ci-evidence.json"
     },
     "objectStorage": "S3Proxy 4.1.1; checksum-pinned official artifact; loopback private SigV4",
     "auditScope": "EDITOR-01X focused local and own native CI production/full npm audits: zero vulnerabilities.",
@@ -6589,7 +6579,9 @@
       "apiBuild": true,
       "webBuild": true,
       "evidence": "docs/qa/social01-policy-maintenance-evidence.json",
-      "published": false
+      "published": true,
+      "ownNativeCi": true,
+      "nativeEvidence": "docs/qa/social01-policy-native-ci-evidence.json"
     }
   },
   "accessState": {

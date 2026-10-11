@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 198,
+    "unit": 199,
     "httpScenarios": 14,
     "browserScenarios": 8,
     "recoveryAndConfigurationScenarios": 5,
@@ -83,21 +83,21 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "Public 3ee9ed7 native CI passed 198 unit / 14 HTTP / 8 browser / 5 recovery and 18 migrations. New local unpublished SOCIAL-01 policy-maintenance gate/required upload notice passed 2 focused unit files, 1 isolated HTTP and 1 production browser case with 18 disposable migrations plus API/web builds; no own native CI, deployed policy receipt or live Google call. An unrelated broad local render/recovery attempt was excluded after required test fonts were absent.",
+  "latestIncrement": "Approved 25-file SOCIAL-01 policy maintenance/notice source published at 448be264; own native CI 38148069398 passed 199 unit, 14 HTTP, 8 browser, 5 recovery, 18 migrations, API/web builds, populated upgrade, 36+8 bounded OCR and both zero-vulnerability audits. GitHub artifact SHA/CRC and 44 PNG hashes verified. Live Google upload, deployed operator review, scheduler and broader acceptance remain open. New CI closure docs/receipts are local and unpublished.",
   "latestNativeRun": {
-    "runId": 38128508694,
-    "jobId": 114437792062,
+    "runId": 38148069398,
+    "jobId": 114495510162,
     "attempt": 1,
-    "sourceCommit": "3ee9ed7069ce813fccb2bd30e7e8d2374ff9855d",
-    "sourceTree": "c02f5775ae14b6083afff819cf7c93ae784f2087",
+    "sourceCommit": "448be2647718ed689fd56b7f6f0829e250044f55",
+    "sourceTree": "169d0448e087497d2693bcbf5705d8bf1f9a7672",
     "status": "completed",
     "conclusion": "success",
-    "unitPassed": 198,
+    "unitPassed": 199,
     "httpPassed": 14,
     "browserPassed": 8,
     "recoveryPassed": 5,
     "freshNativeMigrations": 18,
-    "evidence": "docs/qa/social01-guarded-native-ci-evidence.json"
+    "evidence": "docs/qa/social01-policy-native-ci-evidence.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -7909,7 +7909,9 @@
     "localFocusedUnits": 2,
     "localFocusedHttp": 1,
     "localFocusedBrowser": 1,
-    "ownNativeCi": false,
-    "liveGoogleUpload": false
+    "ownNativeCi": true,
+    "liveGoogleUpload": false,
+    "nativeEvidence": "docs/qa/social01-policy-native-ci-evidence.json",
+    "publishedCommit": "448be2647718ed689fd56b7f6f0829e250044f55"
   }
 }
