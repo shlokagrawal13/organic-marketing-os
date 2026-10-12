@@ -88,9 +88,8 @@ export function activeConnection(
     );
 }
 
-// Internal only. The future OAuth adapter must validate platform policy immediately
-// before calling this and must decrypt the token only after rechecking revocation.
-// No HTTP route, scheduler or provider sender invokes these functions yet.
+// Internal ledger transitions are also used by the guarded manual and scheduled
+// sender. Authorization, policy and revocation are rechecked before outbound work.
 export async function reservePublicationAttempt(
   db: PrismaClient,
   input: {

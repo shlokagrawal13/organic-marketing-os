@@ -85,8 +85,8 @@ function requireCurrentPolicy() {
     throw new ServiceUnavailableException("YouTube dispatch requires an enabled deployment and current platform policy review.");
 }
 
-// A controller gates this internal service behind an explicit user action.
-// Tests inject a synthetic provider; there is no scheduler or automatic retry.
+// Manual sending requires an explicit user action. The scheduler invokes this
+// only after its durable claim and reviewed guidance; neither path retries.
 export async function dispatchReviewedYoutubeVideo(db: PrismaClient, store: ObjectStore,
   input: DispatchInput, providerRequest: typeof fetch = fetch) {
   requireCurrentPolicy();

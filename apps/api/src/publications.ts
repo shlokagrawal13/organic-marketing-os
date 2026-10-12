@@ -38,7 +38,7 @@ import {
 import { activeConnection, currentApproval } from "./publication-attempts";
 import { ObjectStore } from "../../../packages/core/object-store";
 import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "./youtube-dispatch";
-import { cancelPublicationSchedule, createPublicationSchedule, scheduleView,
+import { cancelPublicationSchedule, createPublicationSchedule, previewPublicationScheduleGuidance, scheduleView,
   scheduledDispatchEnabled } from "./publication-scheduler";
 
 const prepareInput = z
@@ -69,7 +69,13 @@ const dispatchInput = z.object({
 const scheduleInput = z.object({
   connectionId: z.string().uuid(), requestKey: z.string().uuid(),
   scheduledAt: z.string().datetime({ offset: true }),
+  guidanceFingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
+  guidanceAcknowledged: z.literal(true),
   confirmation: z.literal("SCHEDULE_YOUTUBE_UPLOAD"),
+}).strict();
+const scheduleGuidanceQuery = z.object({
+  connectionId: z.string().uuid(),
+  scheduledAt: z.string().datetime({ offset: true }),
 }).strict();
 const liveDispatch = () => process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
   youtubePolicyMaintenanceCurrent(process.env);
@@ -246,6 +252,19 @@ export class PublicationIntentsController {
       organizationId: req.organizationId, actorId: req.userId,
       intentId: idSchema.parse(id), connectionId: input.connectionId,
       requestKey: input.requestKey, dueAt: new Date(input.scheduledAt),
+      guidanceFingerprint: input.guidanceFingerprint,
+      guidanceAcknowledged: input.guidanceAcknowledged,
+    });
+  }
+
+  @Get(":id/youtube-posting-guidance") @Roles("OWNER", "ADMIN") async postingGuidance(
+    @Req() req: AuthedRequest, @Param("id") id: string, @Query() query: unknown,
+  ) {
+    const input = scheduleGuidanceQuery.parse(query);
+    return previewPublicationScheduleGuidance(this.db, {
+      organizationId: req.organizationId, actorId: req.userId,
+      intentId: idSchema.parse(id), connectionId: input.connectionId,
+      dueAt: new Date(input.scheduledAt),
     });
   }
 

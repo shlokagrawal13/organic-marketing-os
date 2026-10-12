@@ -495,6 +495,22 @@ try {
         : "tests/integration/*.test.ts",
     ]);
   if (!process.argv.includes("--skip-ui")) {
+    // HTTP and browser suites are separate disposable phases but share one
+    // loopback IP. Reset only their accumulated API rate counter so the last
+    // browser case does not inherit hundreds of fixture calls from HTTP tests.
+    // Production rate limiting stays enabled throughout both phases.
+    if (!uiOnly) {
+      const { default: Redis } = await import("ioredis");
+      const redis = new Redis(process.env.REDIS_URL);
+      try {
+        let cursor = "0";
+        do {
+          const [next, keys] = await redis.scan(cursor, "MATCH", "rate:api:*", "COUNT", 100);
+          cursor = next;
+          if (keys.length) await redis.del(...keys);
+        } while (cursor !== "0");
+      } finally { redis.disconnect(); }
+    }
     const { readFileSync, writeFileSync, chmodSync } = await import("node:fs");
     const { brotliDecompressSync } = await import("node:zlib");
     writeFileSync(

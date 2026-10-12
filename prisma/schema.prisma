@@ -165,7 +165,7 @@ enum PublicationIntentStatus {
   CANCELED
 }
 
-// Preparation is internal only. No provider call, scheduled job or posted state exists.
+// Preparation is internal only; the separate schedule/attempt records track sends.
 model PublicationIntent {
   id              String                  @id @default(uuid())
   organizationId  String
@@ -250,6 +250,7 @@ model PublicationSchedule {
   actorId        String
   requestKey     String
   dueAt          DateTime
+  guidanceFingerprint String?
   status         PublicationScheduleStatus @default(SCHEDULED)
   claimedAt      DateTime?
   completedAt    DateTime?
@@ -262,8 +263,8 @@ model PublicationSchedule {
   @@index([organizationId, connectionId, dueAt])
 }
 
-// The guarded owner/admin dispatcher enters SUBMITTING before a single upload.
-// An uncertain outcome is retained; no automatic scheduler or retry is wired.
+// The guarded dispatcher enters SUBMITTING before a single upload.
+// An uncertain outcome is retained; a due schedule never retries it.
 model PublicationAttempt {
   id                String                   @id @default(uuid())
   organizationId    String
@@ -291,6 +292,7 @@ model PublicationAttempt {
 
   @@unique([organizationId, requestKey])
   @@index([organizationId, contentId, contentRevision, status])
+  @@index([organizationId, connectionId, createdAt])
   @@index([status, startedAt])
 }
 

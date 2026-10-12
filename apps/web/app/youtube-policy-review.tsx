@@ -11,6 +11,8 @@ type Review = { id: string; connectionId: string; metadata: { snippet: { title: 
 type Choice = "" | "yes" | "no";
 type Attempt = { id: string; status: string; outcomeCode: string | null; providerPostId: string | null; canCheckStatus: boolean; createdAt: string; completedAt: string | null };
 type Schedule = { id: string; status: string; dueAt: string; outcomeCode: string | null; attemptId: string | null; completedAt: string | null };
+type PostingGuidance = { fingerprint: string; warnings: { code: string; message: string }[];
+  guidance: { dailyCount: number; gapMinutes: number; window: string }; disclaimer: string };
 
 export default function YoutubePolicyReview({ base, contentId, revision, onNavigate }: {
   base: string; contentId: string; revision: number; onNavigate: (view: string) => void;
@@ -28,6 +30,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
   const [scheduleTime, setScheduleTime] = useState("");
   const [schedulePhrase, setSchedulePhrase] = useState("");
   const [scheduleAck, setScheduleAck] = useState(false);
+  const [postingGuidance, setPostingGuidance] = useState<PostingGuidance | null>(null);
+  const [guidanceTime, setGuidanceTime] = useState("");
   const [canPublish, setCanPublish] = useState(false);
   const [canReconcile, setCanReconcile] = useState(false);
   const [publishPhrase, setPublishPhrase] = useState("");
@@ -77,6 +81,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
     setReview(null);
     setAttempt(null);
     setSchedule(null);
+    setPostingGuidance(null);
+    setGuidanceTime("");
     setCanSchedule(false);
     setCanPublish(false);
     setCanReconcile(false);
@@ -127,6 +133,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       setReview(null);
       setAttempt(null);
       setSchedule(null);
+      setPostingGuidance(null);
+      setGuidanceTime("");
       setCanSchedule(false);
       setScheduleTime("");
       setSchedulePhrase("");
@@ -165,6 +173,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
         rightsAndPlatformRulesReviewed: true,
       });
       setReview(saved);
+      setPostingGuidance(null);
+      setGuidanceTime("");
       const state = await api(path + `/${intent.id}/youtube-attempt`);
       setAttempt(state.attempt);
       setCanPublish(state.canPublish);
@@ -226,7 +236,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
 
   async function createSchedule() {
     if (!intent || !review || !canSchedule || attempt || schedule || reviewExpired ||
-        schedulePhrase !== "SCHEDULE YOUTUBE UPLOAD" || !scheduleAck || !scheduleTime) return;
+        schedulePhrase !== "SCHEDULE YOUTUBE UPLOAD" || !scheduleAck || !scheduleTime ||
+        !postingGuidance || guidanceTime !== scheduleTime) return;
     setBusy(true); setError(""); setNotice("");
     try {
       const when = new Date(scheduleTime);
@@ -234,16 +245,33 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
       const saved: Schedule = await api(path + `/${intent.id}/youtube-schedule`, "POST", {
         connectionId: review.connectionId, requestKey: crypto.randomUUID(),
         scheduledAt: when.toISOString(), confirmation: "SCHEDULE_YOUTUBE_UPLOAD",
+        guidanceFingerprint: postingGuidance.fingerprint, guidanceAcknowledged: true,
       });
       setSchedule(saved);
       setNotice("Schedule saved for this reviewed video. No upload has started.");
     } catch (err) {
       setError((err as Error).message);
+      setPostingGuidance(null);
       try {
         const state = await api(path + `/${intent.id}/youtube-schedule`);
         setSchedule(state.schedule);
       } catch {}
     } finally { setBusy(false); setSchedulePhrase(""); setScheduleAck(false); }
+  }
+
+  async function checkPostingGuidance() {
+    if (!intent || !review || !scheduleTime || !canSchedule) return;
+    setBusy(true); setError(""); setPostingGuidance(null); setScheduleAck(false);
+    try {
+      const when = new Date(scheduleTime);
+      if (!Number.isFinite(when.getTime())) throw new Error("Choose a valid future time.");
+      const query = new URLSearchParams({ connectionId: review.connectionId,
+        scheduledAt: when.toISOString() });
+      const result: PostingGuidance = await api(path + `/${intent.id}/youtube-posting-guidance?${query}`);
+      setPostingGuidance(result);
+      setGuidanceTime(scheduleTime);
+    } catch (err) { setError((err as Error).message); }
+    finally { setBusy(false); }
   }
 
   async function cancelSchedule() {
@@ -363,14 +391,23 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
             <h4>Schedule this reviewed upload</h4>
             <p>The reviewed channel, visibility and declarations above will be used at the chosen time. The worker rechecks approval, authorization and current policy before sending. A canceled or uncertain schedule will not retry automatically.</p>
             <label>Local date and time (one minute to 24 hours ahead, before review and channel access expire)
-              <input type="datetime-local" value={scheduleTime} onChange={(event) => setScheduleTime(event.target.value)} />
+              <input type="datetime-local" value={scheduleTime} onChange={(event) => {
+                setScheduleTime(event.target.value); setPostingGuidance(null); setScheduleAck(false);
+              }} />
             </label>
+            <button className="button" disabled={busy || !scheduleTime} onClick={() => void checkPostingGuidance()}>Review posting guidance</button>
+            {postingGuidance && guidanceTime === scheduleTime && <div className="alert" role="status">
+              <p>Guidance: {postingGuidance.guidance.dailyCount} uploads per 24-hour window and {postingGuidance.guidance.gapMinutes} minutes apart. These are workspace recommendations.</p>
+              {postingGuidance.warnings.length ? <ul>{postingGuidance.warnings.map((warning) =>
+                <li key={warning.code}>{warning.message}</li>)}</ul> : <p>No nearby schedule or repeated title warning found in this workspace/channel.</p>}
+              <p>{postingGuidance.disclaimer}</p>
+            </div>}
             <p className="youtube-upload-notice">By scheduling this upload, you certify that this content complies with the YouTube Terms of Service (including the YouTube Community Guidelines) at <a href="https://www.youtube.com/t/terms" target="_blank" rel="noreferrer">https://www.youtube.com/t/terms</a>, and does not violate others&apos; copyright or privacy rights.</p>
             <label>Type SCHEDULE YOUTUBE UPLOAD to confirm
               <input value={schedulePhrase} onChange={(event) => setSchedulePhrase(event.target.value)} autoComplete="off" />
             </label>
-            <label className="review-ack"><input type="checkbox" checked={scheduleAck} onChange={(event) => setScheduleAck(event.target.checked)} />I approve sending this exact video to the reviewed channel at the chosen time.</label>
-            <button className="button primary" disabled={busy || !scheduleTime || schedulePhrase !== "SCHEDULE YOUTUBE UPLOAD" || !scheduleAck} onClick={() => void createSchedule()}>Schedule reviewed YouTube upload</button>
+            <label className="review-ack"><input type="checkbox" checked={scheduleAck} disabled={!postingGuidance || guidanceTime !== scheduleTime} onChange={(event) => setScheduleAck(event.target.checked)} />I reviewed the current posting guidance and approve sending this exact video to the reviewed channel at the chosen time.</label>
+            <button className="button primary" disabled={busy || !scheduleTime || !postingGuidance || guidanceTime !== scheduleTime || schedulePhrase !== "SCHEDULE YOUTUBE UPLOAD" || !scheduleAck} onClick={() => void createSchedule()}>Schedule reviewed YouTube upload</button>
           </div>}
         </div>}
       </div>}

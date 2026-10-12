@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-12.04-SOCIAL01-scheduler-native-closure",
+  "checkpointRevision": "2026-10-12.05-SOCIAL01-posting-guidance-local",
   "savedAtUtc": "2026-10-12",
-  "currentMilestone": "SOCIAL-01 guarded scheduler public; own native CI passed; closure evidence local",
+  "currentMilestone": "SOCIAL-01 scheduled posting guidance locally verified; native CI pending",
   "activeTaskId": "SOCIAL-01",
   "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Record this exact native closure publicly after separate disclosure approval, then implement bounded semantic/frequency gates and separately authorized live acceptance.",
+  "nextAction": "Review exact cumulative source/config/docs/evidence diff, obtain specific public disclosure approval, publish and verify its own native CI before closure; manual immediate-send guidance and broader semantic/policy engine remain separate.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -17,10 +17,17 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".env.example",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
+    "apps/api/src/posting-guidance.ts",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/publication-scheduler.ts",
+    "apps/api/src/publications.ts",
+    "apps/api/src/youtube-dispatch.ts",
+    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -29,9 +36,13 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/social01-scheduler-evidence.json",
-    "docs/qa/social01-scheduler-native-ci-evidence.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/social01-posting-guidance-evidence.json",
+    "docs/qa/verification-summary.json",
+    "prisma/migrations/202610120002_posting_guidance/migration.sql",
+    "prisma/schema.prisma",
+    "scripts/verify-local.mjs",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/ui/social-policy-review.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -94,7 +105,7 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "Public scheduler own native CI passed 199/14/8/5 with 19 native migrations. No live Google grant/upload, deployed operator receipt, broader semantic/frequency acceptance or full master acceptance.",
+    "scopeWarning": "Public scheduler closure at 7335fbbb has own 199/14/8/5 native CI. This local guidance increment passed 199 unit, 14 HTTP, 8 browser, 5 recovery with 20 PGlite migrations and two zero-vulnerability audits, but has no own native CI or live Google send.",
     "latestGithubActions": {
       "runId": 38245464175,
       "jobId": 114798093335,
@@ -6583,6 +6594,14 @@
       "published": true,
       "ownNativeCi": true,
       "nativeEvidence": "docs/qa/social01-policy-native-ci-evidence.json"
+    },
+    "latestLocalPostingGuidance": {
+      "unit": 199,
+      "http": 14,
+      "browser": 8,
+      "recovery": 5,
+      "PGliteMigrations": 20,
+      "nativeCi": false
     }
   },
   "accessState": {

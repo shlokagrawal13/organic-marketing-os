@@ -4,7 +4,7 @@ import { db, scene } from "../support/http";
 import { encryptSocialToken } from "../../packages/core/social-tokens";
 
 test("an owner reviews one approved YouTube render without scheduling or posting", async ({ page }) => {
-  test.setTimeout(60000);
+  test.setTimeout(90000);
   const headers = { "X-Requested-With": "MarketingOS" };
   expect((await page.request.post("/api/auth/register", { headers, data: {
     name: "Policy UI QA", email: `policy-ui-${randomUUID()}@example.test`, password: "Isolated browser password 123",
@@ -93,6 +93,32 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   await reopened.getByRole("button", { name: /Open .*·/ }).click();
   await expect(reopened.getByText("Review saved", { exact: true })).toBeVisible();
   await expect(reopened.getByText(/Live YouTube posting is not available/)).toBeVisible();
+  // Browser-only guidance fixture: no live deployment flag or provider send.
+  const scheduleUrl = `**/publication-intents/${reviews[0].intentId}/youtube-schedule`;
+  const guidanceUrl = `**/publication-intents/${reviews[0].intentId}/youtube-posting-guidance?*`;
+  await page.route(scheduleUrl, (route) => route.fulfill({ status: 200,
+    contentType: "application/json", body: JSON.stringify({ schedule: null, canSchedule: true }) }));
+  await page.route(guidanceUrl, (route) => route.fulfill({ status: 200,
+    contentType: "application/json", body: JSON.stringify({
+      fingerprint: "a".repeat(64), warnings: [{ code: "CLOSE_SPACING",
+        message: "Another upload may be close to this time." }],
+      guidance: { dailyCount: 2, gapMinutes: 120, window: "24h-centered" },
+      disclaimer: "Workspace guidance only; no platform guarantee.",
+    }) }));
+  await reopened.getByRole("button", { name: /Open .*·/ }).click();
+  const time = reopened.getByLabel(/Local date and time/);
+  await time.fill(new Date(Date.now() + 5 * 60000).toISOString().slice(0, 16));
+  const guidanceAck = reopened.getByRole("checkbox", { name: /I reviewed the current posting guidance/ });
+  await expect(guidanceAck).toBeDisabled();
+  await reopened.getByRole("button", { name: "Review posting guidance" }).click();
+  await expect(reopened.getByText("Another upload may be close to this time.")).toBeVisible();
+  await expect(guidanceAck).toBeEnabled();
+  await guidanceAck.check();
+  await time.fill(new Date(Date.now() + 6 * 60000).toISOString().slice(0, 16));
+  await expect(guidanceAck).toBeDisabled();
+  await expect(reopened.getByRole("button", { name: "Schedule reviewed YouTube upload" })).toBeDisabled();
+  await page.unroute(scheduleUrl);
+  await page.unroute(guidanceUrl);
   expect(await db.publicationAttempt.count({ where: { organizationId: org.id } })).toBe(0);
   const prepared = await db.publicationIntent.findFirstOrThrow({ where: { organizationId: org.id } });
   await db.publicationAttempt.create({ data: {

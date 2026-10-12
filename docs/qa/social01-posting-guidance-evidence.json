@@ -1,0 +1,48 @@
+{
+  "milestone": "SOCIAL-01 bounded scheduled posting guidance",
+  "date": "2026-10-12",
+  "public": false,
+  "basePublicCommit": "7335fbbb53a32359dcbace1752170ffb800f2c1c",
+  "scope": "Scheduled YouTube uploads only; no manual immediate-send guidance and no AI semantic guarantee.",
+  "defaults": {
+    "guidance24HourCount": 2,
+    "guidanceGapMinutes": 120,
+    "platformBanClaim": false
+  },
+  "controls": {
+    "tenantChannelScoped": true,
+    "ownerAdminPreview": true,
+    "currentFingerprintAcknowledgedUnderLock": true,
+    "dueTimeGuidanceRecheck": true,
+    "legacyScheduleWithoutFingerprintNeedsReview": true,
+    "liveAndScheduledFlagsDefaultOff": true,
+    "noAutomaticRetry": true
+  },
+  "localPassed": {
+    "unit": 199,
+    "unitFailed": 0,
+    "unitSkipped": 0,
+    "unitCancelled": 0,
+    "unitTodo": 0,
+    "http": 14,
+    "browser": 8,
+    "recovery": 5,
+    "freshPGliteMigrations": 20,
+    "apiBuild": true,
+    "webBuild": true,
+    "prismaGenerateValidate": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "focusedLegacyScheduleHttp": 1
+  },
+  "excluded": {
+    "initialBroadBrowser": "7 passed; last UI case timed out on accumulated test-IP API rate counter. Test harness isolated phase counter reset; complete rerun 8/8 passed."
+  },
+  "pending": [
+    "Own native PostgreSQL/Redis CI after approved publication",
+    "Manual immediate-send guidance",
+    "Broader semantic and configurable policy engine",
+    "Live Google grant/upload and deployed operator receipt",
+    "Full master acceptance"
+  ]
+}

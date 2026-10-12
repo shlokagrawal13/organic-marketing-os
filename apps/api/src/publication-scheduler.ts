@@ -1,14 +1,16 @@
 import { BadRequestException, ConflictException, NotFoundException, ServiceUnavailableException } from "@nestjs/common";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { digest } from "../../../packages/core/security";
 import { ObjectStore } from "../../../packages/core/object-store";
 import { youtubePolicyFingerprint, youtubePolicyMaintenanceCurrent, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 import { activeConnection, currentApproval } from "./publication-attempts";
 import { dispatchReviewedYoutubeVideo } from "./youtube-dispatch";
+import { evaluateScheduleGuidance } from "./posting-guidance";
 
 const maxFutureMs = 24 * 60 * 60 * 1000;
 const minFutureMs = 60 * 1000;
 const claimTimeoutMs = 5 * 60 * 1000;
+type Tx = Prisma.TransactionClient;
 
 export function scheduledDispatchEnabled() {
   return process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED === "true" &&
@@ -27,9 +29,63 @@ export function scheduleView(row: {
     completedAt: row.completedAt };
 }
 
+async function currentSchedulerActor(tx: Tx, organizationId: string, actorId: string) {
+  const member = await tx.membership.findUnique({ where: {
+    userId_organizationId: { userId: actorId, organizationId },
+  } });
+  if (!member || !["OWNER", "ADMIN"].includes(member.role))
+    throw new ConflictException("A current workspace owner or admin is required.");
+}
+
+async function candidate(tx: Tx, input: { organizationId: string; actorId: string;
+  intentId: string; connectionId: string; dueAt: Date }) {
+  if (!Number.isFinite(input.dueAt.getTime()) ||
+      input.dueAt.getTime() < Date.now() + minFutureMs ||
+      input.dueAt.getTime() > Date.now() + maxFutureMs)
+    throw new BadRequestException("Choose a time from one minute to 24 hours in the future.");
+  await currentSchedulerActor(tx, input.organizationId, input.actorId);
+  const intent = await currentApproval(tx, input.organizationId, input.intentId);
+  const connection = await tx.socialConnection.findFirst({ where: {
+    id: input.connectionId, organizationId: input.organizationId,
+  } });
+  if (!connection) throw new NotFoundException("Social connection not found.");
+  activeConnection(connection, input.organizationId);
+  if (!connection.tokenExpiresAt ||
+      connection.tokenExpiresAt.getTime() <= input.dueAt.getTime() + minFutureMs)
+    throw new ConflictException("Reconnect the channel closer to the chosen time; the current access token expires first.");
+  const review = await tx.publicationPolicyReview.findUnique({ where: { intentId: intent.id } });
+  if (!review || review.organizationId !== input.organizationId ||
+      review.connectionId !== connection.id ||
+      review.contentRevision !== intent.contentRevision ||
+      review.policyVersion !== youtubePolicyVersion ||
+      review.expiresAt <= input.dueAt ||
+      review.snapshotHash !== youtubePolicyFingerprint({
+        intentId: intent.id, connectionId: connection.id,
+        contentRevision: intent.contentRevision, renderId: intent.renderId,
+        metadata: review.metadata,
+      }))
+    throw new ConflictException("A reviewed policy snapshot must remain current through the scheduled time.");
+  return evaluateScheduleGuidance(tx, { organizationId: input.organizationId,
+    connectionId: connection.id, intentId: intent.id, dueAt: input.dueAt,
+    metadata: review.metadata });
+}
+
+export async function previewPublicationScheduleGuidance(db: PrismaClient, input: {
+  organizationId: string; actorId: string; intentId: string;
+  connectionId: string; dueAt: Date;
+}) {
+  if (!scheduledDispatchEnabled())
+    throw new ServiceUnavailableException("Scheduled YouTube dispatch is not available.");
+  return db.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${input.organizationId} FOR UPDATE`;
+    return candidate(tx, input);
+  });
+}
+
 export async function createPublicationSchedule(db: PrismaClient, input: {
   organizationId: string; actorId: string; intentId: string;
   connectionId: string; requestKey: string; dueAt: Date;
+  guidanceFingerprint: string; guidanceAcknowledged: boolean;
 }) {
   if (!scheduledDispatchEnabled())
     throw new ServiceUnavailableException("Scheduled YouTube dispatch requires enabled deployment and current platform policy review.");
@@ -39,6 +95,7 @@ export async function createPublicationSchedule(db: PrismaClient, input: {
     connectionId: input.connectionId, dueAt: input.dueAt.toISOString() }));
   return db.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${input.organizationId} FOR UPDATE`;
+    await currentSchedulerActor(tx, input.organizationId, input.actorId);
     const replay = await tx.publicationSchedule.findUnique({ where: {
       organizationId_requestKey: { organizationId: input.organizationId, requestKey: input.requestKey },
     } });
@@ -48,47 +105,24 @@ export async function createPublicationSchedule(db: PrismaClient, input: {
       if (!same) throw new ConflictException("Schedule key belongs to different input.");
       return scheduleView(replay);
     }
-    if (input.dueAt.getTime() < Date.now() + minFutureMs ||
-        input.dueAt.getTime() > Date.now() + maxFutureMs)
-      throw new BadRequestException("Choose a time from one minute to 24 hours in the future.");
-    const member = await tx.membership.findUnique({ where: {
-      userId_organizationId: { userId: input.actorId, organizationId: input.organizationId },
-    } });
-    if (!member || !["OWNER", "ADMIN"].includes(member.role))
-      throw new ConflictException("A current workspace owner or admin is required.");
-    const intent = await currentApproval(tx, input.organizationId, input.intentId);
-    const connection = await tx.socialConnection.findFirst({ where: {
-      id: input.connectionId, organizationId: input.organizationId,
-    } });
-    if (!connection) throw new NotFoundException("Social connection not found.");
-    activeConnection(connection, input.organizationId);
-    if (!connection.tokenExpiresAt ||
-        connection.tokenExpiresAt.getTime() <= input.dueAt.getTime() + minFutureMs)
-      throw new ConflictException("Reconnect the channel closer to the chosen time; the current access token expires first.");
-    const review = await tx.publicationPolicyReview.findUnique({ where: { intentId: intent.id } });
-    if (!review || review.organizationId !== input.organizationId ||
-        review.connectionId !== connection.id ||
-        review.contentRevision !== intent.contentRevision ||
-        review.policyVersion !== youtubePolicyVersion ||
-        review.expiresAt <= input.dueAt ||
-        review.snapshotHash !== youtubePolicyFingerprint({
-          intentId: intent.id, connectionId: connection.id,
-          contentRevision: intent.contentRevision, renderId: intent.renderId,
-          metadata: review.metadata,
-        }))
-      throw new ConflictException("A reviewed policy snapshot must remain current through the scheduled time.");
-    if (await tx.publicationAttempt.findUnique({ where: { intentId: intent.id } }) ||
-        await tx.publicationSchedule.findUnique({ where: { intentId: intent.id } }))
+    const guidance = await candidate(tx, input);
+    if (!input.guidanceAcknowledged ||
+        input.guidanceFingerprint !== guidance.fingerprint)
+      throw new ConflictException("Posting guidance changed. Review and acknowledge the current warnings before scheduling.");
+    if (await tx.publicationAttempt.findUnique({ where: { intentId: input.intentId } }) ||
+        await tx.publicationSchedule.findUnique({ where: { intentId: input.intentId } }))
       throw new ConflictException("This preparation already has an attempt or schedule.");
     const created = await tx.publicationSchedule.create({ data: {
       organizationId: input.organizationId, actorId: input.actorId,
-      intentId: intent.id, connectionId: connection.id,
+      intentId: input.intentId, connectionId: input.connectionId,
       requestKey: input.requestKey, dueAt: input.dueAt,
+      guidanceFingerprint: guidance.fingerprint,
     } });
     await tx.auditLog.create({ data: { organizationId: input.organizationId,
       actorId: input.actorId, action: "publication.scheduled", entityId: created.id,
-      detail: { intentId: intent.id, connectionId: connection.id,
-        dueAt: input.dueAt.toISOString(), requestHash } } });
+      detail: { intentId: input.intentId, connectionId: input.connectionId,
+        dueAt: input.dueAt.toISOString(), requestHash,
+        guidanceWarningCodes: guidance.warnings.map((warning) => warning.code) } } });
     return scheduleView(created);
   });
 }
@@ -166,6 +200,14 @@ export async function runDuePublicationSchedules(db: PrismaClient, store: Object
             review.snapshotHash !== youtubePolicyFingerprint({ intentId: intent.id,
               connectionId: row.connectionId, contentRevision: intent.contentRevision,
               renderId: intent.renderId, metadata: review.metadata })) blocked = "POLICY_REVIEW_CHANGED";
+        if (!blocked && review) {
+          const guidance = await evaluateScheduleGuidance(tx, {
+            organizationId: row.organizationId, connectionId: row.connectionId,
+            intentId: row.intentId, dueAt: row.dueAt, metadata: review.metadata,
+          });
+          if (!row.guidanceFingerprint || row.guidanceFingerprint !== guidance.fingerprint)
+            blocked = "POSTING_GUIDANCE_CHANGED";
+        }
       } catch { blocked = blocked || "PRECHECK_FAILED"; }
       await tx.publicationSchedule.updateMany({ where: { id: row.id, status: "SCHEDULED" },
         data: blocked ? { status: "NEEDS_REVIEW", completedAt: now, outcomeCode: blocked }
