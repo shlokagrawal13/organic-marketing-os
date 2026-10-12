@@ -1,7 +1,7 @@
 {
   "milestone": "SOCIAL-01 manual immediate-send posting guidance",
   "dateUtc": "2026-10-12",
-  "public": false,
+  "public": true,
   "basePublicCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
   "scope": "Manual immediate YouTube video sends only; scheduled sends retain their existing guidance path. No live provider request was made.",
   "controls": {
@@ -92,7 +92,7 @@
     "tests/integration/social-dispatch.test.ts",
     "tests/ui/social-policy-review.spec.ts"
   ],
-  "nativeCiOnThisSource": false,
+  "nativeCiOnThisSource": true,
   "liveGoogleGrantOrUpload": false,
   "finalDependencyAudit": {
     "production": {
@@ -118,5 +118,13 @@
     "publicMainCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
     "publicMainTree": "8003a0774b4406cfea7db838dda7a0f21807766d",
     "approvalRequiredBeforePublicPush": true
-  }
+  },
+  "publicCommit": "fc1a646f708db5590bba9b1ac5e516bcc3ce5a44",
+  "publicTree": "8c8a25d51c6ae72a6b2e7d51044c75e3ee58cfe2",
+  "publicationRun": {
+    "method": "GitHub connector git tree/commit/ref update after local HTTPS push lacked credentials",
+    "remoteCompareMatchedApprovedPaths": true,
+    "remoteTreeMatchedLocalTree": true
+  },
+  "nativeCiEvidence": "docs/qa/social01-manual-posting-guidance-native-ci-evidence.json"
 }
