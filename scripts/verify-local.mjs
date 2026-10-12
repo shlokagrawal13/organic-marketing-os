@@ -21,6 +21,7 @@ try {
 process.env.NODE_ENV = "development";
 // The disposable verifier must never post to a real YouTube channel.
 process.env.YOUTUBE_LIVE_DISPATCH_ENABLED = "false";
+process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED = "false";
 process.env.WEB_ORIGIN = "http://localhost:3000";
 process.env.COOKIE_SECURE = "false";
 process.env.SMTP_SECURE = "false";

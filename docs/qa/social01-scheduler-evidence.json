@@ -1,0 +1,45 @@
+{
+  "milestone": "SOCIAL-01 bounded scheduled dispatch",
+  "date": "2026-10-12",
+  "public": false,
+  "sourceBase": "641fa1378701f1ea0e9fd3d47768912a547ba82c",
+  "safety": {
+    "scheduledFlagDefaultOff": true,
+    "requiresLiveFlag": true,
+    "tenantAndOwnerAdmin": true,
+    "exactApprovedRenderAndReview": true,
+    "futureWindowMinutes": [
+      1,
+      1440
+    ],
+    "durableClaim": true,
+    "automaticRetry": false,
+    "isolatedHarnessForcesOff": true
+  },
+  "localPassed": [
+    "npm ci 273 packages and guarded Fontkit patch",
+    "Prisma generate and schema validation",
+    "19 fresh disposable PGlite migrations",
+    "scheduler HTTP 1/1",
+    "existing attempt HTTP 1/1",
+    "policy browser 1/1",
+    "focused policy/contract unit 3/3",
+    "API TypeScript build",
+    "Next.js production build",
+    "full unit 199/199 zero failed/skipped/cancelled/todo with restored fonts",
+    "complete verifier HTTP 14/14",
+    "complete verifier production browser 8/8",
+    "complete verifier recovery 5/5 with 19 PGlite migrations"
+  ],
+  "excluded": {
+    "initialFullUnitAttempt": "13 test files passed and 11 font/media test files failed before restoring documented fonts and process access; superseded by final 199/199 pass",
+    "redirectedBrowserAttempt": "ended without final test receipt; excluded; visible complete rerun 1/1 and full browser 8/8 passed"
+  },
+  "pending": [
+    "native PostgreSQL CI for scheduler source",
+    "live Google grant/upload",
+    "deployed operator receipt",
+    "semantic/frequency checks",
+    "full master acceptance"
+  ]
+}

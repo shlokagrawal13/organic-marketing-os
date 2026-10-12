@@ -3,6 +3,8 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import { Queue, Worker } from "bullmq";
 import Redis from "ioredis";
 import { randomUUID } from "node:crypto";
+import { ObjectStore } from "../../../packages/core/object-store";
+import { runDuePublicationSchedules } from "./publication-scheduler";
 import {
   ModelRouter,
   providersFromEnv,
@@ -36,6 +38,15 @@ const router = new ModelRouter(
 );
 const billingPolicy = creditPolicy();
 const active = new Set<AbortController>();
+const scheduleStore = new ObjectStore();
+let scheduling = false;
+async function pollSchedules() {
+  if (scheduling || closing) return;
+  scheduling = true;
+  try { await runDuePublicationSchedules(db, scheduleStore); }
+  catch { console.error(JSON.stringify({ event: "publication.schedule_scan_failed" })); }
+  finally { scheduling = false; }
+}
 let dispatching = false,
   closing = false;
 
@@ -392,10 +403,13 @@ worker.on("failed", (job) =>
 connection.on("error", () => {});
 const timer = setInterval(dispatch, 2000);
 void dispatch();
+const scheduleTimer = setInterval(pollSchedules, 10000);
+void pollSchedules();
 async function close() {
   if (closing) return;
   closing = true;
   clearInterval(timer);
+  clearInterval(scheduleTimer);
   for (const abort of active) abort.abort();
   await worker.close();
   await queue.close();

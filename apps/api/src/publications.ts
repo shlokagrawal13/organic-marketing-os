@@ -38,6 +38,8 @@ import {
 import { activeConnection, currentApproval } from "./publication-attempts";
 import { ObjectStore } from "../../../packages/core/object-store";
 import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "./youtube-dispatch";
+import { cancelPublicationSchedule, createPublicationSchedule, scheduleView,
+  scheduledDispatchEnabled } from "./publication-scheduler";
 
 const prepareInput = z
   .object({
@@ -63,6 +65,11 @@ const policyView = ({ snapshotHash, ...review }: { snapshotHash: string; [key: s
 const dispatchInput = z.object({
   connectionId: z.string().uuid(), requestKey: z.string().uuid(),
   confirmation: z.literal("PUBLISH_TO_YOUTUBE"),
+}).strict();
+const scheduleInput = z.object({
+  connectionId: z.string().uuid(), requestKey: z.string().uuid(),
+  scheduledAt: z.string().datetime({ offset: true }),
+  confirmation: z.literal("SCHEDULE_YOUTUBE_UPLOAD"),
 }).strict();
 const liveDispatch = () => process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
   youtubePolicyMaintenanceCurrent(process.env);
@@ -214,6 +221,41 @@ export class PublicationIntentsController {
   }
 
   // Read-only status. Never expose ciphertext, upload URI, token or request key.
+  @Get(":id/youtube-schedule") @Roles(...approverRoles) async youtubeSchedule(
+    @Req() req: AuthedRequest, @Param("id") id: string,
+  ) {
+    const intentId = idSchema.parse(id);
+    const intent = await this.db.publicationIntent.findFirst({ where: {
+      id: intentId, organizationId: req.organizationId,
+    }, select: { id: true } });
+    if (!intent) throw new NotFoundException("Publication preparation not found.");
+    const row = await this.db.publicationSchedule.findFirst({ where: {
+      intentId, organizationId: req.organizationId,
+    } });
+    return { schedule: row ? scheduleView(row) : null,
+      canSchedule: scheduledDispatchEnabled() && ["OWNER", "ADMIN"].includes(req.role) };
+  }
+
+  @Post(":id/youtube-schedule") @Roles("OWNER", "ADMIN") async scheduleYoutube(
+    @Req() req: AuthedRequest, @Param("id") id: string, @Body() body: unknown,
+  ) {
+    const input = scheduleInput.parse(body);
+    if (!this.media.configured)
+      throw new ServiceUnavailableException("Private video storage is not configured.");
+    return createPublicationSchedule(this.db, {
+      organizationId: req.organizationId, actorId: req.userId,
+      intentId: idSchema.parse(id), connectionId: input.connectionId,
+      requestKey: input.requestKey, dueAt: new Date(input.scheduledAt),
+    });
+  }
+
+  @Post(":id/youtube-schedule/cancel") @Roles("OWNER", "ADMIN") async cancelYoutubeSchedule(
+    @Req() req: AuthedRequest, @Param("id") id: string,
+  ) {
+    return cancelPublicationSchedule(this.db, { organizationId: req.organizationId,
+      actorId: req.userId, intentId: idSchema.parse(id) });
+  }
+
   @Get(":id/youtube-attempt") @Roles(...approverRoles) async youtubeAttempt(
     @Req() req: AuthedRequest, @Param("id") id: string,
   ) {
@@ -242,6 +284,10 @@ export class PublicationIntentsController {
     if (!liveDispatch()) throw new ServiceUnavailableException("YouTube dispatch requires an enabled deployment and current platform policy review.");
     if (!this.media.configured)
       throw new ServiceUnavailableException("Private video storage is not configured.");
+    if (await this.db.publicationSchedule.findFirst({ where: {
+      intentId, organizationId: req.organizationId,
+      status: { in: ["SCHEDULED", "CLAIMED"] },
+    } })) throw new ConflictException("Cancel or review the existing schedule before a manual send.");
     const attempt = await dispatchReviewedYoutubeVideo(this.db, this.media, {
       organizationId: req.organizationId, actorId: req.userId,
       intentId, connectionId: input.connectionId, requestKey: input.requestKey,

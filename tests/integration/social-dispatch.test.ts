@@ -7,11 +7,14 @@ import { db, actor, draft, scene } from "../support/http";
 import { encryptSocialToken } from "../../packages/core/social-tokens";
 import { ObjectStore } from "../../packages/core/object-store";
 import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "../../apps/api/src/youtube-dispatch";
+import { cancelPublicationSchedule, createPublicationSchedule,
+  runDuePublicationSchedules } from "../../apps/api/src/publication-scheduler";
 import { youtubePolicyVersion } from "../../packages/core/youtube-policy";
 
 const orgs: string[] = [], users: string[] = [];
 const priorKey = process.env.SOCIAL_TOKEN_ENCRYPTION_KEY;
 const priorDispatch = process.env.YOUTUBE_LIVE_DISPATCH_ENABLED;
+const priorScheduledDispatch = process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED;
 const priorReviewVersion = process.env.YOUTUBE_POLICY_REVIEWED_VERSION;
 const priorReviewAt = process.env.YOUTUBE_POLICY_REVIEWED_AT;
 after(async () => {
@@ -19,10 +22,12 @@ after(async () => {
   else process.env.SOCIAL_TOKEN_ENCRYPTION_KEY = priorKey;
   for (const [key, value] of Object.entries({
     YOUTUBE_LIVE_DISPATCH_ENABLED: priorDispatch,
+    YOUTUBE_SCHEDULED_DISPATCH_ENABLED: priorScheduledDispatch,
     YOUTUBE_POLICY_REVIEWED_VERSION: priorReviewVersion,
     YOUTUBE_POLICY_REVIEWED_AT: priorReviewAt,
   })) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }
   await db.publicationAttempt.deleteMany({ where: { organizationId: { in: orgs } } });
+  await db.publicationSchedule.deleteMany({ where: { organizationId: { in: orgs } } });
   await db.publicationPolicyReview.deleteMany({ where: { organizationId: { in: orgs } } });
   await db.socialConnection.deleteMany({ where: { organizationId: { in: orgs } } });
   await db.renderJob.deleteMany({ where: { organizationId: { in: orgs } } });
@@ -57,7 +62,7 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
     const body = rendered.get(key);
     assert.ok(body);
     return { Body: Readable.from([body]) };
-  } } as ObjectStore;
+  }, configured: true } as ObjectStore;
   async function prepared(label: string, video = bytes) {
     const c = await owner.call(root + "/content", "POST", {
       ...draft, title: label, platform: "YouTube", format: "Video", scenes: [scene],
@@ -196,4 +201,95 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   assert.equal(completed.status, "CONFIRMED");
   assert.equal(completed.outcomeCode, "read_only_lookup");
   assert.deepEqual([starts, sends, probes], [1, 1, 2]);
+
+  const scheduledBytes = Buffer.from("third-unique-video-for-scheduled-send");
+  const planned = await prepared("Scheduled video fixture", scheduledBytes);
+  const plannedPath = root + `/publication-intents/${planned.intentId}`;
+  const scheduledAt = new Date(Date.now() + 120000);
+  const scheduleBody = { connectionId: connection.id, requestKey: randomUUID(),
+    scheduledAt: scheduledAt.toISOString(), confirmation: "SCHEDULE_YOUTUBE_UPLOAD" };
+  assert.equal((await owner.call(plannedPath + "/youtube-schedule", "POST", scheduleBody)).status, 503);
+  assert.equal((await editor.call(plannedPath + "/youtube-schedule", "POST", scheduleBody)).status, 403);
+  assert.equal((await outsider.call(`/workspaces/${other.id}/publication-intents/${planned.intentId}/youtube-schedule`)).status, 404);
+  assert.deepEqual((await owner.call(plannedPath + "/youtube-schedule")).body.schedule, null);
+  process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED = "true";
+  const scheduleInput = { organizationId: org.id, actorId: owner.id,
+    intentId: planned.intentId, connectionId: connection.id,
+    requestKey: scheduleBody.requestKey, dueAt: scheduledAt };
+  await assert.rejects(() => createPublicationSchedule(db, {
+    ...scheduleInput, dueAt: new Date(Date.now() + 2 * 60 * 60 * 1000),
+  }), /access token expires first/u);
+  const plannedSchedule = await createPublicationSchedule(db, scheduleInput);
+  assert.equal(plannedSchedule.status, "SCHEDULED");
+  assert.equal((await createPublicationSchedule(db, scheduleInput)).id, plannedSchedule.id);
+  assert.equal(await runDuePublicationSchedules(db, store,
+    (async () => { throw new Error("not due"); }) as typeof fetch), 0);
+  await assert.rejects(() => createPublicationSchedule(db, {
+    ...scheduleInput, dueAt: new Date(scheduledAt.getTime() + 60000),
+  }), /Schedule key belongs/u);
+  assert.equal(await db.publicationAttempt.count({ where: { intentId: planned.intentId } }), 0);
+  // Move only the disposable fixture's due time. The production endpoint requires
+  // a future time and its reviewed policy snapshot must still be valid then.
+  await db.publicationSchedule.update({ where: { id: plannedSchedule.id },
+    data: { dueAt: new Date(Date.now() - 1000) } });
+  let scheduledCalls = 0;
+  const scheduledProvider = async (_url: URL | RequestInfo, init?: RequestInit) => {
+    scheduledCalls++;
+    if (init?.method === "POST") return new Response(null, { status: 200,
+      headers: { location: uri } });
+    assert.equal(Buffer.from(await new Response(init?.body).arrayBuffer()).toString(),
+      scheduledBytes.toString());
+    return receipt();
+  };
+  const concurrentClaims = await Promise.all([
+    runDuePublicationSchedules(db, store, scheduledProvider as typeof fetch),
+    runDuePublicationSchedules(db, store, scheduledProvider as typeof fetch),
+  ]);
+  assert.equal(concurrentClaims.reduce((sum, count) => sum + count, 0), 1);
+  assert.equal(scheduledCalls, 2);
+  assert.equal((await db.publicationSchedule.findUniqueOrThrow({
+    where: { id: plannedSchedule.id } })).status, "CONFIRMED");
+  assert.equal(await runDuePublicationSchedules(db, store,
+    scheduledProvider as typeof fetch), 0);
+  assert.equal(scheduledCalls, 2);
+
+  const canceled = await prepared("Canceled schedule fixture", Buffer.from("canceled-video-bytes"));
+  const cancelInput = { ...scheduleInput, intentId: canceled.intentId,
+    requestKey: randomUUID(), dueAt: new Date(Date.now() + 120000) };
+  const cancelRow = await createPublicationSchedule(db, cancelInput);
+  assert.equal((await cancelPublicationSchedule(db, { organizationId: org.id,
+    actorId: owner.id, intentId: canceled.intentId })).status, "CANCELED");
+  await assert.rejects(() => cancelPublicationSchedule(db, { organizationId: org.id,
+    actorId: owner.id, intentId: canceled.intentId }), /already claimed or closed/u);
+  assert.equal((await db.publicationSchedule.findUniqueOrThrow({ where: { id: cancelRow.id } })).status, "CANCELED");
+
+  const interrupted = await prepared("Interrupted claim fixture", Buffer.from("claim-video-bytes"));
+  const interruptedInput = { ...scheduleInput, intentId: interrupted.intentId,
+    requestKey: randomUUID(), dueAt: new Date(Date.now() + 120000) };
+  const interruptedRow = await createPublicationSchedule(db, interruptedInput);
+  await db.publicationSchedule.update({ where: { id: interruptedRow.id }, data: {
+    status: "CLAIMED", claimedAt: new Date(Date.now() - 10 * 60 * 1000),
+  } });
+  assert.equal(await runDuePublicationSchedules(db, store,
+    scheduledProvider as typeof fetch), 0);
+  assert.equal((await db.publicationSchedule.findUniqueOrThrow({
+    where: { id: interruptedRow.id } })).status, "NEEDS_REVIEW");
+  assert.equal(await db.publicationAttempt.count({ where: { intentId: interrupted.intentId } }), 0);
+  assert.equal(scheduledCalls, 2);
+
+  const demoted = await prepared("Demoted scheduler fixture", Buffer.from("demoted-video-bytes"));
+  const demotedInput = { ...scheduleInput, intentId: demoted.intentId,
+    requestKey: randomUUID(), dueAt: new Date(Date.now() + 120000) };
+  const demotedRow = await createPublicationSchedule(db, demotedInput);
+  await db.membership.update({ where: { userId_organizationId: {
+    userId: owner.id, organizationId: org.id,
+  } }, data: { role: "EDITOR" } });
+  await db.publicationSchedule.update({ where: { id: demotedRow.id },
+    data: { dueAt: new Date(Date.now() - 1000) } });
+  assert.equal(await runDuePublicationSchedules(db, store,
+    scheduledProvider as typeof fetch), 0);
+  assert.equal((await db.publicationSchedule.findUniqueOrThrow({
+    where: { id: demotedRow.id } })).status, "NEEDS_REVIEW");
+  assert.equal(await db.publicationAttempt.count({ where: { intentId: demoted.intentId } }), 0);
+  assert.equal(scheduledCalls, 2);
 });

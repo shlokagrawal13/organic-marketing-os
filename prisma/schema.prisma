@@ -78,6 +78,7 @@ model Organization {
   socialConnections   SocialConnection[]
   publicationAttempts PublicationAttempt[]
   publicationPolicyReviews PublicationPolicyReview[]
+  publicationSchedules PublicationSchedule[]
 }
 
 enum ContentStatus {
@@ -184,6 +185,7 @@ model PublicationIntent {
   canceledAt      DateTime?
   attempt         PublicationAttempt?
   policyReview    PublicationPolicyReview?
+  schedule        PublicationSchedule?
 
   @@unique([organizationId, requestKey])
   @@index([organizationId, createdAt])
@@ -212,6 +214,7 @@ model SocialConnection {
   updatedAt              DateTime             @updatedAt
   attempts               PublicationAttempt[]
   policyReviews          PublicationPolicyReview[]
+  schedules              PublicationSchedule[]
 
   @@unique([organizationId, provider, externalAccountId])
   @@index([organizationId, revokedAt])
@@ -224,6 +227,39 @@ enum PublicationAttemptStatus {
   CONFIRMED
   REJECTED
   BLOCKED
+}
+
+enum PublicationScheduleStatus {
+  SCHEDULED
+  CLAIMED
+  CANCELED
+  NEEDS_REVIEW
+  CONFIRMED
+  REJECTED
+}
+
+// A due schedule is claimed once. A crashed or uncertain claim is never sent again.
+model PublicationSchedule {
+  id             String                    @id @default(uuid())
+  organizationId String
+  organization   Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  intentId       String                    @unique
+  intent         PublicationIntent         @relation(fields: [intentId], references: [id], onDelete: Cascade)
+  connectionId   String
+  connection     SocialConnection          @relation(fields: [connectionId], references: [id], onDelete: Restrict)
+  actorId        String
+  requestKey     String
+  dueAt          DateTime
+  status         PublicationScheduleStatus @default(SCHEDULED)
+  claimedAt      DateTime?
+  completedAt    DateTime?
+  outcomeCode    String?
+  attemptId      String?
+  createdAt      DateTime                  @default(now())
+
+  @@unique([organizationId, requestKey])
+  @@index([status, dueAt])
+  @@index([organizationId, connectionId, dueAt])
 }
 
 // The guarded owner/admin dispatcher enters SUBMITTING before a single upload.
