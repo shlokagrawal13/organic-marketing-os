@@ -10,12 +10,12 @@
     "httpScenarios": 14,
     "browserScenarios": 8,
     "recoveryAndConfigurationScenarios": 5,
-    "schemaMigrations": 19,
+    "schemaMigrations": 20,
     "unitFontSets": 1
   },
   "environment": {
-    "database": "Public SOCIAL-01 scheduler own native PostgreSQL CI with 19 migrations; local complete verifier used 19 disposable PGlite migrations. Native database plus private-media restore remains pending.",
-    "redis": "Public SOCIAL-01 scheduler own native Redis CI; local isolated verifier used test-only Redis 7.2.11.",
+    "database": "SOCIAL-01 posting-guidance own native PostgreSQL CI applied 20 migrations; local isolated verifier used 20 disposable PGlite migrations. Native database plus private-media restore remains pending.",
+    "redis": "SOCIAL-01 posting-guidance own native Redis CI passed; local isolated verifier used test-only Redis 7.2.11.",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "Real FFmpeg/ffprobe; native environment version retained in raw job logs.",
     "email": "local SMTP capture",
@@ -7941,6 +7941,22 @@
     "recovery": 5,
     "freshPGliteMigrations": 20,
     "auditsZeroVulnerabilities": true,
-    "nativeCiOnThisSource": false
+    "nativeCiOnThisSource": true,
+    "publicCommit": "7fa79838953b4fe80a8d18a957ab69205e903686"
+  },
+  "latestNativePostingGuidance": {
+    "commit": "7fa79838953b4fe80a8d18a957ab69205e903686",
+    "runId": 38254675262,
+    "successfulAttempt": 2,
+    "jobId": 114830114374,
+    "unit": 199,
+    "http": 14,
+    "browser": 8,
+    "recovery": 5,
+    "nativeMigrations": 20,
+    "auditsVulnerabilities": 0,
+    "artifactId": 11749738694,
+    "artifactSha256": "011a23f8cd7d4dc9994b5b5f732430294aa4c2c2514a165798c360459c75bd22",
+    "source": "docs/qa/social01-posting-guidance-native-ci-evidence.json"
   }
 }

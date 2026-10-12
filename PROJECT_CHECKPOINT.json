@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-12.05-SOCIAL01-posting-guidance-local",
+  "checkpointRevision": "2026-10-12.06-SOCIAL01-posting-guidance-native-closure-local",
   "savedAtUtc": "2026-10-12",
-  "currentMilestone": "SOCIAL-01 scheduled posting guidance locally verified; native CI pending",
+  "currentMilestone": "SOCIAL-01 scheduled posting guidance published and own native CI verified; closure docs local",
   "activeTaskId": "SOCIAL-01",
   "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Review exact cumulative source/config/docs/evidence diff, obtain specific public disclosure approval, publish and verify its own native CI before closure; manual immediate-send guidance and broader semantic/policy engine remain separate.",
+  "nextAction": "Review and authorize exact post-publication closure docs/evidence separately, then continue manual immediate-send guidance and broader semantic/configurable policy engine; live Google acceptance remains separately gated.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -17,17 +17,10 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    ".env.example",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
-    "apps/api/src/posting-guidance.ts",
-    "apps/api/src/publication-attempts.ts",
-    "apps/api/src/publication-scheduler.ts",
-    "apps/api/src/publications.ts",
-    "apps/api/src/youtube-dispatch.ts",
-    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -37,12 +30,8 @@
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/social01-posting-guidance-evidence.json",
-    "docs/qa/verification-summary.json",
-    "prisma/migrations/202610120002_posting_guidance/migration.sql",
-    "prisma/schema.prisma",
-    "scripts/verify-local.mjs",
-    "tests/integration/social-dispatch.test.ts",
-    "tests/ui/social-policy-review.spec.ts"
+    "docs/qa/social01-posting-guidance-native-ci-evidence.json",
+    "docs/qa/verification-summary.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -83,7 +72,7 @@
       "latestNativeBrowser": 8,
       "latestNativeRecovery": 5
     },
-    "migrationsApplied": 19,
+    "migrationsApplied": 20,
     "database": "Local W final verifier used PGlite WASM PostgreSQL; prior V native PostgreSQL CI remains prior evidence only.",
     "populatedUpgradeRestore": {
       "passed": true,
@@ -6613,8 +6602,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
-    "status": "social01_connection_policy_ui_public_guarded_dispatch_local_unpublished",
+    "commit": "7fa79838953b4fe80a8d18a957ab69205e903686",
+    "status": "social01_posting_guidance_public_native_ci_verified_closure_local",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6627,9 +6616,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "d0b8bc8c0a4fb1120d3a1d419d350c2a407ffa6c",
+    "sourceTree": "e7faa978cbce46c1f2635ddfd54036bd7f95bc7c",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published YouTube connection and policy review UI; reconstructed guarded default-off dispatch is local only.",
+    "commitMeaning": "Reviewed scheduled posting guidance publicly published; own native CI success on retry. Later closure docs local only.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "1bb6562",
     "uploadGate": {
@@ -7955,7 +7944,7 @@
       "title": "Authorized live generated-media quality and billing acceptance"
     }
   ],
-  "lastChanges": "26-file guarded dispatch local commit prepared and checked. GitHub create_blob was rejected by automatic approval review before a public write; main remains d6e6ecf. No alternative route used.",
+  "lastChanges": "Approved 26-path posting-guidance source published at 7fa7983. First native attempt had public ECR image rate limit before checkout; retry passed. Artifact SHA/CRC, unit receipts and 44 OCR hashes verified. New closure record remains local.",
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
     "Read start/checkpoint/task files before asking about history.",
@@ -7980,7 +7969,7 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "Public 18a4c2d exact 20-path tree; own Actions 38044868624 success 193/12/7/5, 15 migrations, 36+8 OCR, audits zero; closure docs local/unpublished. SOCIAL-01 Partial.",
+  "latestStatus": "SOCIAL-01 posting guidance public commit 7fa7983, exact 26 paths and tree; own Actions run 38254675262 attempt 2 success (199 unit, 14 HTTP, 8 browser, 5 recovery, 20 migrations, zero-vulnerability audits); closure docs local/unpublished. SOCIAL-01 Partial.",
   "activeTask": "SOCIAL-01 token lifecycle verification and public publication",
   "workspaceRecovery": {
     "sourceZipSha256": "2cdf22f352cae1356447a23bb956df85d1f9b81abb2c7ee4b6586ac281688582",
@@ -8002,18 +7991,15 @@
     }
   },
   "pendingPublication": {
-    "scope": "SOCIAL-01 guarded dispatch reconstructed local delta",
-    "basePublicCommit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
+    "scope": "SOCIAL-01 posting guidance native CI closure docs/evidence only",
+    "approvedByUser": false,
+    "publicWriteAttempted": false,
+    "basePublicCommit": "7fa79838953b4fe80a8d18a957ab69205e903686",
     "changedPaths": [
-      ".env.example",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
-      "apps/api/src/publication-attempts.ts",
-      "apps/api/src/publications.ts",
-      "apps/api/src/youtube-dispatch.ts",
-      "apps/web/app/youtube-policy-review.tsx",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -8022,21 +8008,10 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-guarded-dispatch-evidence.json",
-      "docs/qa/verification-summary.json",
-      "packages/core/youtube-resumable.ts",
-      "prisma/migrations/202610100004_youtube_upload_session/migration.sql",
-      "prisma/schema.prisma",
-      "scripts/verify-local.mjs",
-      "tests/integration/social-dispatch.test.ts",
-      "tests/ui/social-policy-review.spec.ts",
-      "tests/youtube-resumable.test.ts"
-    ],
-    "approvedByUser": false,
-    "publicWriteAttempted": true,
-    "containsDefaultOffProviderRoute": true,
-    "publicWriteSucceeded": false,
-    "autoReviewRejection": "First create_blob was rejected before any public object/ref write because continue was not explicit authorization for new 26-file payload and destination."
+      "docs/qa/social01-posting-guidance-evidence.json",
+      "docs/qa/social01-posting-guidance-native-ci-evidence.json",
+      "docs/qa/verification-summary.json"
+    ]
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8635,20 +8610,20 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "scope": "SOCIAL-01 guarded dispatch reconstructed from public d6e6ecf; local and unpublished",
-    "cleanLockedInstallAndPatch": "passed",
-    "prismaGenerate": "passed",
+    "scope": "SOCIAL-01 posting guidance public commit 7fa7983; own native CI success on attempt 2",
+    "unit": "199/199 unique receipts, 25 summaries, zero failed/skipped/cancelled/todo",
+    "http": "14/14",
+    "browser": "8/8",
+    "recovery": "5/5",
+    "freshNativeMigrations": 20,
     "apiBuild": "passed",
     "webBuild": "passed",
-    "protocolUnit": "4/4 passed",
-    "focusedHttp": "3/3 passed (dispatch, attempt ledger, preparation; each with 18 disposable migrations)",
-    "focusedBrowser": "1/1 passed with 18 disposable migrations; historical UNKNOWN visible",
-    "fullRegression": "not rerun for this reconstructed delta",
-    "ownNativeCi": "not run; unpublished",
+    "populatedUpgrade": "passed",
+    "bothAuditsVulnerabilities": 0,
+    "artifact": "11749738694 SHA-256 and 124 ZIP entries verified; 44 OCR hashes matched",
+    "initialAttempt": "container image registry data limit before checkout; retry passed",
     "liveGoogleGrantOrPost": "not run",
-    "publicBaseCommit": "d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9",
-    "evidence": "docs/qa/social01-guarded-dispatch-evidence.json",
-    "publication": "blocked by automatic disclosure approval review; public main unchanged"
+    "publication": "26 source paths public; post-publication closure docs local"
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -8681,5 +8656,22 @@
     "focusedHttpPassed": 3,
     "publicWriteAttempted": true,
     "publicWriteSucceeded": false
+  },
+  "social01PostingGuidanceNativeCi": {
+    "publicCommit": "7fa79838953b4fe80a8d18a957ab69205e903686",
+    "tree": "e7faa978cbce46c1f2635ddfd54036bd7f95bc7c",
+    "exactChangedPaths": 26,
+    "runId": 38254675262,
+    "successfulJobId": 114830114374,
+    "attempt": 2,
+    "unit": 199,
+    "http": 14,
+    "browser": 8,
+    "recovery": 5,
+    "nativeMigrations": 20,
+    "artifactId": 11749738694,
+    "artifactSha256": "011a23f8cd7d4dc9994b5b5f732430294aa4c2c2514a165798c360459c75bd22",
+    "evidence": "docs/qa/social01-posting-guidance-native-ci-evidence.json",
+    "closurePublic": false
   }
 }
