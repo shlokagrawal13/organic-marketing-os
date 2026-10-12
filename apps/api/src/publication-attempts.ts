@@ -8,6 +8,7 @@ import { digest } from "../../../packages/core/security";
 import { decryptSocialToken, encryptSocialToken } from "../../../packages/core/social-tokens";
 import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 import { verifiedYoutubeSessionUri } from "../../../packages/core/youtube-resumable";
+import { evaluateManualGuidance, manualGuidanceLifetimeMs } from "./posting-guidance";
 
 type Tx = Prisma.TransactionClient;
 const unresolved = ["RESERVED", "SUBMITTING", "UNKNOWN", "CONFIRMED"] as const;
@@ -99,6 +100,7 @@ export async function reservePublicationAttempt(
     requestKey: string;
     actorId: string;
     media?: { sha256: string; bytes: number; outputKey: string };
+    manualGuidance?: { fingerprint: string; checkedAt: Date; acknowledged: boolean };
   },
 ) {
   const { organizationId: org } = input;
@@ -144,6 +146,11 @@ export async function reservePublicationAttempt(
       throw new ConflictException(
         "This preparation already has an attempt. Review its outcome first.",
       );
+    if (input.manualGuidance && await tx.publicationSchedule.findFirst({ where: {
+      organizationId: org, intentId: intent.id,
+      status: { in: ["SCHEDULED", "CLAIMED"] },
+    } }))
+      throw new ConflictException("Cancel or review the existing schedule before a manual send.");
     const connection = await tx.socialConnection.findFirst({
       where: { id: input.connectionId, organizationId: org },
     });
@@ -176,6 +183,20 @@ export async function reservePublicationAttempt(
       if (duplicate)
         throw new ConflictException("This exact video may already exist on this channel. Review its outcome first.");
     }
+    if (input.manualGuidance) {
+      const checkedAt = input.manualGuidance.checkedAt;
+      const age = Date.now() - checkedAt.getTime();
+      if (!input.manualGuidance.acknowledged || !Number.isFinite(age) || age < 0 ||
+          age > manualGuidanceLifetimeMs)
+        throw new ConflictException("Posting guidance expired. Review and acknowledge it again before sending.");
+      const current = await evaluateManualGuidance(tx, {
+        organizationId: org, connectionId: connection.id, intentId: intent.id,
+        contentRevision: intent.contentRevision, renderId: intent.renderId,
+        checkedAt,
+      });
+      if (current.fingerprint !== input.manualGuidance.fingerprint)
+        throw new ConflictException("Posting guidance changed. Review and acknowledge the current warnings before sending.");
+    }
     const attempt = await tx.publicationAttempt.create({
       data: {
         organizationId: org,
@@ -195,7 +216,8 @@ export async function reservePublicationAttempt(
         actorId: input.actorId,
         action: "publication.attempt_reserved",
         entityId: attempt.id,
-        detail: { intentId: intent.id, connectionId: connection.id },
+        detail: { intentId: intent.id, connectionId: connection.id,
+          ...(input.manualGuidance ? { manualGuidanceAcknowledged: true } : {}) },
       },
     });
     return attempt;

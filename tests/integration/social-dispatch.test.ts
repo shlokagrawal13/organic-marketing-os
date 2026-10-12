@@ -10,6 +10,7 @@ import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "../
 import { cancelPublicationSchedule, createPublicationSchedule,
   previewPublicationScheduleGuidance, runDuePublicationSchedules } from "../../apps/api/src/publication-scheduler";
 import { youtubePolicyVersion } from "../../packages/core/youtube-policy";
+import { evaluateManualGuidance } from "../../apps/api/src/posting-guidance";
 
 const orgs: string[] = [], users: string[] = [];
 const priorKey = process.env.SOCIAL_TOKEN_ENCRYPTION_KEY;
@@ -115,6 +116,15 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   assert.equal((await owner.call(path + "/youtube-dispatch", "POST", {
     connectionId: connection.id, requestKey: first.requestKey,
     confirmation: "PUBLISH_TO_YOUTUBE",
+  })).status, 400);
+  const manualQuery = `/youtube-manual-posting-guidance?connectionId=${connection.id}`;
+  assert.equal((await owner.call(path + manualQuery)).status, 503);
+  assert.equal((await editor.call(path + manualQuery)).status, 403);
+  assert.equal((await outsider.call(`/workspaces/${other.id}/publication-intents/${first.intentId}${manualQuery}`)).status, 404);
+  assert.equal((await owner.call(path + "/youtube-dispatch", "POST", {
+    connectionId: connection.id, requestKey: first.requestKey,
+    guidanceFingerprint: "0".repeat(64), guidanceCheckedAt: new Date().toISOString(),
+    guidanceAcknowledged: true, confirmation: "PUBLISH_TO_YOUTUBE",
   })).status, 503);
   assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 0);
 
@@ -130,6 +140,20 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   process.env.YOUTUBE_POLICY_REVIEWED_AT = new Date().toISOString();
   // The harness's API server stays default-off; only this test process uses
   // synthetic provider requests through the internal dispatcher.
+  async function manualGuidance(input: typeof first, checkedAt = new Date()) {
+    const intent = await db.publicationIntent.findUniqueOrThrow({ where: { id: input.intentId } });
+    return db.$transaction((tx) => evaluateManualGuidance(tx, {
+      organizationId: input.organizationId, connectionId: input.connectionId,
+      intentId: input.intentId, contentRevision: intent.contentRevision,
+      renderId: intent.renderId, checkedAt,
+    }));
+  }
+  const firstGuidance = await manualGuidance(first);
+  assert.deepEqual(firstGuidance.warnings, []);
+  const firstWithGuidance = { ...first, manualGuidance: {
+    fingerprint: firstGuidance.fingerprint,
+    checkedAt: new Date(firstGuidance.checkedAt), acknowledged: true,
+  } };
 
   const uri = "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&upload_id=secret-fixture";
   const receipt = () => Response.json({ id: "abcDEF01234", snippet: { channelId } }, { status: 201 });
@@ -146,7 +170,13 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   };
   await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store,
     { ...first, actorId: editor.id }, successful as typeof fetch), /owner or admin/u);
-  const confirmed = await dispatchReviewedYoutubeVideo(db, store, first, successful as typeof fetch);
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, {
+    ...firstWithGuidance, manualGuidance: { ...firstWithGuidance.manualGuidance,
+      fingerprint: "0".repeat(64) },
+  }, successful as typeof fetch), /guidance changed/u);
+  assert.equal(calls, 0);
+  assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 0);
+  const confirmed = await dispatchReviewedYoutubeVideo(db, store, firstWithGuidance, successful as typeof fetch);
   assert.equal(confirmed?.status, "CONFIRMED");
   assert.equal(confirmed?.mediaSha256, createHash("sha256").update(bytes).digest("hex"));
   assert.equal(confirmed?.mediaBytes, bytes.length);
@@ -169,8 +199,40 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
 
   const uncertainBytes = Buffer.from("another-private-video-for-uncertain-send");
   const second = await prepared("Ambiguous response fixture", uncertainBytes);
+  const secondGuidance = await manualGuidance(second);
+  assert.ok(secondGuidance.warnings.some((warning) => warning.code === "CLOSE_SPACING"));
+  const manualNeighbor = await prepared("Neighbor schedule fixture", Buffer.from("neighbor-unique-video"));
+  const neighborSchedule = await db.publicationSchedule.create({ data: {
+    organizationId: org.id, actorId: owner.id, intentId: manualNeighbor.intentId,
+    connectionId: connection.id, requestKey: randomUUID(),
+    dueAt: new Date(Date.now() + 30 * 60000),
+  } });
+  const competingSchedule = await db.publicationSchedule.create({ data: {
+    organizationId: org.id, actorId: owner.id, intentId: second.intentId,
+    connectionId: connection.id, requestKey: randomUUID(),
+    dueAt: new Date(Date.now() + 45 * 60000),
+  } });
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, {
+    ...second, manualGuidance: { fingerprint: secondGuidance.fingerprint,
+      checkedAt: new Date(secondGuidance.checkedAt), acknowledged: true },
+  }, successful as typeof fetch), /existing schedule/u);
+  await db.publicationSchedule.delete({ where: { id: competingSchedule.id } });
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, {
+    ...second, manualGuidance: { fingerprint: secondGuidance.fingerprint,
+      checkedAt: new Date(secondGuidance.checkedAt), acknowledged: true },
+  }, successful as typeof fetch), /guidance changed/u);
+  assert.equal(calls, 2);
+  assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 1);
+  await db.publicationSchedule.delete({ where: { id: neighborSchedule.id } });
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, {
+    ...second, manualGuidance: { fingerprint: secondGuidance.fingerprint,
+      checkedAt: new Date(Date.now() - 3 * 60000), acknowledged: true },
+  }, successful as typeof fetch), /guidance expired/u);
   let starts = 0, sends = 0, probes = 0;
-  const unknown = await dispatchReviewedYoutubeVideo(db, store, second,
+  const unknown = await dispatchReviewedYoutubeVideo(db, store, {
+    ...second, manualGuidance: { fingerprint: secondGuidance.fingerprint,
+      checkedAt: new Date(secondGuidance.checkedAt), acknowledged: true },
+  },
     (async (_url: URL | RequestInfo, init?: RequestInit) => {
       if (init?.method === "POST") { starts++; return new Response(null, {
         status: 200, headers: { location: uri },

@@ -77,7 +77,8 @@ async function stageRender(store: ObjectStore, key: string,
 }
 
 type DispatchInput = { organizationId: string; actorId: string;
-  intentId: string; connectionId: string; requestKey: string };
+  intentId: string; connectionId: string; requestKey: string;
+  manualGuidance?: { fingerprint: string; checkedAt: Date; acknowledged: boolean } };
 
 function requireCurrentPolicy() {
   if (process.env.YOUTUBE_LIVE_DISPATCH_ENABLED !== "true" ||

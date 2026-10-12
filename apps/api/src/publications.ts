@@ -38,6 +38,7 @@ import {
 import { activeConnection, currentApproval } from "./publication-attempts";
 import { ObjectStore } from "../../../packages/core/object-store";
 import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "./youtube-dispatch";
+import { evaluateManualGuidance } from "./posting-guidance";
 import { cancelPublicationSchedule, createPublicationSchedule, previewPublicationScheduleGuidance, scheduleView,
   scheduledDispatchEnabled } from "./publication-scheduler";
 
@@ -64,8 +65,12 @@ const view = ({
 const policyView = ({ snapshotHash, ...review }: { snapshotHash: string; [key: string]: any }) => review;
 const dispatchInput = z.object({
   connectionId: z.string().uuid(), requestKey: z.string().uuid(),
+  guidanceFingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
+  guidanceCheckedAt: z.string().datetime({ offset: true }),
+  guidanceAcknowledged: z.literal(true),
   confirmation: z.literal("PUBLISH_TO_YOUTUBE"),
 }).strict();
+const manualGuidanceQuery = z.object({ connectionId: z.string().uuid() }).strict();
 const scheduleInput = z.object({
   connectionId: z.string().uuid(), requestKey: z.string().uuid(),
   scheduledAt: z.string().datetime({ offset: true }),
@@ -268,6 +273,35 @@ export class PublicationIntentsController {
     });
   }
 
+  @Get(":id/youtube-manual-posting-guidance") @Roles("OWNER", "ADMIN") async manualPostingGuidance(
+    @Req() req: AuthedRequest, @Param("id") id: string, @Query() query: unknown,
+  ) {
+    const input = manualGuidanceQuery.parse(query);
+    const intentId = idSchema.parse(id);
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+      const intent = await currentApproval(tx, req.organizationId, intentId);
+      if (!liveDispatch())
+        throw new ServiceUnavailableException("YouTube dispatch is not available.");
+      const connection = await tx.socialConnection.findFirst({ where: {
+        id: input.connectionId, organizationId: req.organizationId,
+      } });
+      if (!connection) throw new NotFoundException("Social connection not found.");
+      activeConnection(connection, req.organizationId);
+      if (await tx.publicationAttempt.findUnique({ where: { intentId } }) ||
+          await tx.publicationSchedule.findFirst({ where: {
+            intentId, organizationId: req.organizationId,
+            status: { in: ["SCHEDULED", "CLAIMED"] },
+          } }))
+        throw new ConflictException("Review the existing upload attempt or schedule first.");
+      return evaluateManualGuidance(tx, {
+        organizationId: req.organizationId, connectionId: connection.id,
+        intentId, contentRevision: intent.contentRevision,
+        renderId: intent.renderId, checkedAt: new Date(),
+      });
+    });
+  }
+
   @Post(":id/youtube-schedule/cancel") @Roles("OWNER", "ADMIN") async cancelYoutubeSchedule(
     @Req() req: AuthedRequest, @Param("id") id: string,
   ) {
@@ -310,6 +344,9 @@ export class PublicationIntentsController {
     const attempt = await dispatchReviewedYoutubeVideo(this.db, this.media, {
       organizationId: req.organizationId, actorId: req.userId,
       intentId, connectionId: input.connectionId, requestKey: input.requestKey,
+      manualGuidance: { fingerprint: input.guidanceFingerprint,
+        checkedAt: new Date(input.guidanceCheckedAt),
+        acknowledged: input.guidanceAcknowledged },
     });
     return attemptView(attempt);
   }

@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-12.06-SOCIAL01-posting-guidance-native-closure-local",
+  "checkpointRevision": "2026-10-12.08-SOCIAL01-manual-guidance-local",
   "savedAtUtc": "2026-10-12",
-  "currentMilestone": "SOCIAL-01 scheduled posting guidance published and own native CI verified; closure docs local",
+  "currentMilestone": "SOCIAL-01 manual immediate-send guidance locally verified; publication approval pending",
   "activeTaskId": "SOCIAL-01",
   "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Review and authorize exact post-publication closure docs/evidence separately, then continue manual immediate-send guidance and broader semantic/configurable policy engine; live Google acceptance remains separately gated.",
+  "nextAction": "Get explicit approval for the exact 21-file SOCIAL-01 manual guidance payload before public GitHub publication; after publication, run own native CI and record closure evidence. Continue broader semantic/configurable policy, live Google acceptance and master acceptance afterward.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -21,6 +21,11 @@
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
+    "apps/api/src/posting-guidance.ts",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/publications.ts",
+    "apps/api/src/youtube-dispatch.ts",
+    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -29,9 +34,10 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/social01-posting-guidance-evidence.json",
-    "docs/qa/social01-posting-guidance-native-ci-evidence.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/social01-manual-posting-guidance-evidence.json",
+    "docs/qa/verification-summary.json",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/ui/social-policy-review.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -73,7 +79,7 @@
       "latestNativeRecovery": 5
     },
     "migrationsApplied": 20,
-    "database": "Local W final verifier used PGlite WASM PostgreSQL; prior V native PostgreSQL CI remains prior evidence only.",
+    "database": "SOCIAL-01 manual guidance final verifier used PGlite WASM PostgreSQL with 20 migrations; last published posting-guidance closure has separate native CI. Native database plus private-media restore remains pending.",
     "populatedUpgradeRestore": {
       "passed": true,
       "engine": "PGlite WASM PostgreSQL",
@@ -94,7 +100,7 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "Public scheduler closure at 7335fbbb has own 199/14/8/5 native CI. This local guidance increment passed 199 unit, 14 HTTP, 8 browser, 5 recovery with 20 PGlite migrations and two zero-vulnerability audits, but has no own native CI or live Google send.",
+    "scopeWarning": "Manual immediate-send guidance passed final local exact-source verification (199 unit, 14 HTTP, 8 browser, 5 recovery, 20 PGlite migrations and two zero-vulnerability audits). Public main remains at the prior closure commit; this increment has no own native CI or live Google send.",
     "latestGithubActions": {
       "runId": 38245464175,
       "jobId": 114798093335,
@@ -162,24 +168,24 @@
       "providerSubmissionsAsserted": 1,
       "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
       "referenceDiagnostics": [
-        "\u2139 HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
-        "\u2139 HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
-        "\u2139 HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+        "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+        "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
       ],
       "coveredCjkStrings": 14775,
       "curatedCjkStrings": 42,
@@ -404,7 +410,7 @@
       "actionsConclusion": "success",
       "actionsCompletedAtUtc": "2026-10-04T14:08:27Z",
       "nativeTestsExecuted": true,
-      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+      "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "editor01fEvidence": {
       "scope": "Conservative rendered-text script/character preflight; not configured-font glyph coverage",
@@ -486,7 +492,7 @@
       "actionsCompletedAtUtc": "2026-10-05T07:24:09Z",
       "actionsJobsStarted": 1,
       "nativeTestsExecuted": true,
-      "userApproval": "I explicitly approve publishing EDITOR-01G\u2019s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "userApproval": "I explicitly approve publishing EDITOR-01G’s 25 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "upgradeLastRerunSlice": "EDITOR-01V",
     "editor01hEvidence": {
@@ -1825,7 +1831,7 @@
           "resolution": "Complete 197228-byte font verified against table directory bounds; production font preflight now rejects truncated tables."
         },
         {
-          "finding": "Kannada \u0c95\u0ccd\u0cb7\u0cbf yielded glyphs 206/128 instead of reference glyph 288",
+          "finding": "Kannada ಕ್ಷಿ yielded glyphs 206/128 instead of reference glyph 288",
           "status": "resolved",
           "resolution": "Implement OpenType GDEF mark filtering, including nested lookups and attachment-class precedence; independent CJS/ESM/outline references and both coverage formats pass."
         },
@@ -2709,7 +2715,7 @@
             "resolution": "Explicitly disable and restore Thai inside their test environment; retain the disabled-script rejection assertion."
           },
           {
-            "case": "Myanmar \u1000\u103c\u103d\u102d",
+            "case": "Myanmar ကြွိ",
             "cause": "NotoSansMyanmar 2.001 supplies ligature-component metadata on an unmultiplied base; U skipped the valid base and missed the -27 offset",
             "resolution": "Coverage-sensitive HarfBuzz mark-to-base candidate rule; unmultiplied bases accepted, contiguous uncovered MultipleSubst outputs skipped, covered outputs retained. Mark first MultipleSubst output multiplied too."
           }
@@ -3707,18 +3713,18 @@
           "migrations": 12,
           "harfbuzzVersion": "8.3.0",
           "referenceDiagnostics": [
-            "\u2139 HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
-            "\u2139 HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+            "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+            "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
           ],
           "newScriptCoveredStrings": 7406,
           "newScriptCuratedStrings": 115,
@@ -4034,18 +4040,18 @@
         "migrations": 12,
         "harfbuzzVersion": "8.3.0",
         "referenceDiagnostics": [
-          "\u2139 HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+          "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
         ],
         "newScriptCoveredStrings": 7406,
         "newScriptCuratedStrings": 115,
@@ -6117,7 +6123,7 @@
         {
           "run": "Initial Japanese reference probe",
           "result": "3 passed / 1 failed",
-          "problem": "Common prolonged mark in \u30a2\u30fc\u3002 split the script run and lost contextual kerning.",
+          "problem": "Common prolonged mark in アー。 split the script run and lost contextual kerning.",
           "resolution": "Common CJK punctuation inherits adjacent CJK script; all inputs retained and complete suite rerun."
         },
         {
@@ -6213,18 +6219,18 @@
       "migrations": 12,
       "harfbuzzVersion": "8.3.0",
       "referenceDiagnostics": [
-        "\u2139 HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+        "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
       ],
       "newScriptCoveredStrings": 7406,
       "newScriptCuratedStrings": 115,
@@ -6602,8 +6608,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "7fa79838953b4fe80a8d18a957ab69205e903686",
-    "status": "social01_posting_guidance_public_native_ci_verified_closure_local",
+    "commit": "6d62e6045368c305e761779d42571c01a2c63c7d",
+    "status": "social01_posting_guidance_native_ci_closure_public_manual_guidance_local_verified",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6616,16 +6622,16 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "e7faa978cbce46c1f2635ddfd54036bd7f95bc7c",
+    "sourceTree": "8003a0774b4406cfea7db838dda7a0f21807766d",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Reviewed scheduled posting guidance publicly published; own native CI success on retry. Later closure docs local only.",
+    "commitMeaning": "Public main contains the approved SOCIAL-01 posting-guidance native CI closure. The manual immediate-send guidance increment is locally verified only and awaits exact-scope public approval.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "1bb6562",
+    "lastLocalCheckpointCommit": "uncommitted-social01-manual-guidance-local",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
       "destination": "shlokagrawal13/organic-marketing-os main",
-      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
+      "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
       "bypassed": false,
       "resolved": true
     },
@@ -6740,24 +6746,24 @@
         "providerSubmissionsAsserted": 1,
         "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
         "referenceDiagnostics": [
-          "\u2139 HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
-          "\u2139 HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
-          "\u2139 HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
-          "\u2139 HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+          "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+          "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+          "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+          "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
         ],
         "coveredCjkStrings": 14775,
         "curatedCjkStrings": 42,
@@ -7035,7 +7041,7 @@
       "verifiedRemoteParent": "c90f9117063cab026fc63dcd7b5a5fa11b83a6ae",
       "actionsRunId": 37207895511,
       "actionsConclusion": "success",
-      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
+      "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "docsEvidencePublicationGate": {
       "slice": "EDITOR-01U CI-fix publication/CI closure",
@@ -7147,7 +7153,7 @@
       "verifiedRemoteParent": "27aaf5cd752ad3fb83c5127523eff01416ace53a",
       "actionsRunId": 37317283904,
       "actionsConclusion": "success",
-      "userApproval": "I explicitly approve publishing EDITOR-01I\u2019s 11-file CI portability fix/source-docs payload to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "userApproval": "I explicitly approve publishing EDITOR-01I’s 11-file CI portability fix/source-docs payload to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "editor01jUploadGate": {
       "slice": "EDITOR-01J",
@@ -7178,7 +7184,7 @@
         "tests/integration/media.test.ts",
         "tests/render-layout.test.ts"
       ],
-      "userApproval": "I explicitly approve publishing EDITOR-01J\u2019s 18 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
+      "userApproval": "I explicitly approve publishing EDITOR-01J’s 18 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main."
     },
     "editor01gPublication": {
       "publishedAtUtc": "2026-10-05T07:19:47Z",
@@ -7238,7 +7244,7 @@
         "tests/render-devanagari.test.ts"
       ],
       "changedFiles": 18,
-      "userApproval": "User explicitly approved publishing EDITOR-01M\u2019s 18 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "User explicitly approved publishing EDITOR-01M’s 18 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "eb8196e594889984651e9b93eb3ffe1bd2e195c2",
       "remoteTree": "2504d062d94c7691d05365353d2746659c1b9f14"
     },
@@ -7277,7 +7283,7 @@
       "changedFiles": 23,
       "baseCommit": "eb8196e594889984651e9b93eb3ffe1bd2e195c2",
       "includes": "N source/tests/docs plus local M publication closure evidence.",
-      "userApproval": "I explicitly approve publishing EDITOR-01N\u2019s 23 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01N’s 23 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "c33dc6fd43ffed8e8ed85d78c5fa9b77972bca38",
       "remoteTree": "1e404024f8f8c86d0b3a344c569552bf6711979d"
     },
@@ -7329,7 +7335,7 @@
       "changedFiles": 19,
       "baseCommit": "eb9c02338bc62ab38aadafd713586f4b80f35a79",
       "includes": "P UI/component/styles/browser tests, reviewed screenshots and updated source/docs continuity including O publication closure.",
-      "userApproval": "I explicitly approve publishing EDITOR-01P\u2019s 19 verified source/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01P’s 19 verified source/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "c2936113616522db099771684226276e91976957",
       "remoteTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa"
     },
@@ -7377,7 +7383,7 @@
       "baseTree": "1dc3dd5c2078ea93f9f7d863f48ed9791db0e6fa",
       "localEquivalentBase": "f1705bd04be6a7c74e053328353a3a3e90092cc5",
       "includes": "Isolated provider/recovery tests, test strategy/domain docs, local P publication closure and new local verification evidence.",
-      "userApproval": "I explicitly approve publishing EDITOR-01P\u2019s 16 verified recovery-fix/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01P’s 16 verified recovery-fix/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "981dd237c4a4d30bc7ed6b6a897c6617c09255f7",
       "remoteTree": "312e5ce9efa1f78fef47a4a06d1037beb6eebbbb"
     },
@@ -7432,7 +7438,7 @@
       "baseTree": "312e5ce9efa1f78fef47a4a06d1037beb6eebbbb",
       "localEquivalentBase": "a530be09f0e2e7dc89f40ace758431c3d732b728",
       "includes": "Mixed LTR policy/font/shaping changes, unit/HTTP tests, actual decoded frame evidence and continuity docs including P recovery publication closure.",
-      "userApproval": "I explicitly approve publishing EDITOR-01Q\u2019s 22 verified source/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01Q’s 22 verified source/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "8c3267ac77fa6833aee1e6099cb042ff44fad345",
       "remoteTree": "36c2de112243b98234e8845310c33cd0af200db3"
     },
@@ -7483,7 +7489,7 @@
       "baseTree": "36c2de112243b98234e8845310c33cd0af200db3",
       "localEquivalentBase": "f9f052fc32a930bc88d0b9e6dd0d29212b3189fa",
       "includes": "Sharp package override/lockfile, Q publication/audit failure closure and own local patch verification evidence.",
-      "userApproval": "I explicitly approve publishing EDITOR-01Q\u2019s 16 verified dependency-fix/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01Q’s 16 verified dependency-fix/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
       "remoteTree": "9a2d9f68bb9c235dce50c106bba29272660f68f9"
     },
@@ -7568,7 +7574,7 @@
       "baseCommit": "3834a452011c6a942fdcd8bc0c11699305380831",
       "baseTree": "9a2d9f68bb9c235dce50c106bba29272660f68f9",
       "localEquivalentBase": "0c1627938a5c77bf7a210328e28c311729225822",
-      "userApproval": "I explicitly approve publishing EDITOR-01R\u2019s 32 verified source/config/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01R’s 32 verified source/config/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
       "remoteTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0"
     },
@@ -7646,7 +7652,7 @@
       "baseCommit": "acbec7b9d04ff064fafe27675d7822b3d19ca135",
       "baseTree": "7027772a44ea9b64ad0b20c14fe6012366de9ee0",
       "localEquivalentBase": "5962cbfe755b26d61d28b8ab50ec6142c816b559",
-      "userApproval": "I explicitly approve publishing EDITOR-01S\u2019s 25 verified source/config/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
+      "userApproval": "I explicitly approve publishing EDITOR-01S’s 25 verified source/config/docs/evidence files to public GitHub repo shlokagrawal13/organic-marketing-os main.",
       "remoteCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
       "remoteTree": "42abf968e0c0ab64fdfe0a665afd580e3b71f3fa"
     },
@@ -7740,7 +7746,7 @@
       "localEvidenceCommit": "800ec51bf5464fcaecd23c615331efa0a4d7efa1",
       "verifiedRemoteParent": "06e5da96ec4e811b0a95510247db25c3d54ac669",
       "verifiedRemoteParentTree": "092b502cca399cfe732d9743202f310b0c80d994",
-      "userApproval": "User explicitly approved publishing EDITOR-01E\u2019s 13 publication evidence/continuity docs to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
+      "userApproval": "User explicitly approved publishing EDITOR-01E’s 13 publication evidence/continuity docs to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST.",
       "remoteCommit": "3348ee27b4338c6403ac7a70234d56cd94e9b354",
       "remoteTree": "ef47a192649746b0257dfc44c8d52a8d2c48b7c2",
       "remoteBlobCount": 185,
@@ -7852,7 +7858,8 @@
     {
       "id": "SOCIAL-01",
       "state": "partial_public",
-      "title": "Official social OAuth and publishing"
+      "title": "Official social OAuth and publishing",
+      "completedIncrement": "OAuth callback/refresh/revocation, single-send internal dispatch, policy review, exact-video guard, scheduler, scheduled posting guidance and manual immediate-send guidance are locally/publicly progressed as recorded. Manual guidance is locally verified and unpublished; live Google acceptance, native CI for this increment after publication, broader semantic/configurable policy and master acceptance remain."
     },
     {
       "id": "ANALYTICS-01",
@@ -7969,8 +7976,8 @@
     "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
   },
   "checkpointVerificationEvidence": "docs/qa/handoff-verification.json",
-  "latestStatus": "SOCIAL-01 posting guidance public commit 7fa7983, exact 26 paths and tree; own Actions run 38254675262 attempt 2 success (199 unit, 14 HTTP, 8 browser, 5 recovery, 20 migrations, zero-vulnerability audits); closure docs local/unpublished. SOCIAL-01 Partial.",
-  "activeTask": "SOCIAL-01 token lifecycle verification and public publication",
+  "latestStatus": "SOCIAL-01 manual immediate-send posting guidance is locally verified and unpublished. Owner/admin preview must use current immutable policy review, exact server guidance acknowledgement, typed send confirmation and video checkbox; reservation rechecks the fingerprint and same-channel schedule conflict under the organization lock before any provider call. Final source checks passed: clean locked install/Fontkit patch, Prisma generate, API/web production builds, 199/199 unit receipts with 25 summaries, 14/14 HTTP, 8/8 browser, 5/5 recovery, 20 fresh PGlite migrations and production/full npm audits with zero vulnerabilities. Public main remains 6d62e6045368c305e761779d42571c01a2c63c7d; no live Google send or own native CI for this unpublished increment.",
+  "activeTask": "Manual immediate YouTube send guidance; do not call live provider in tests.",
   "workspaceRecovery": {
     "sourceZipSha256": "2cdf22f352cae1356447a23bb956df85d1f9b81abb2c7ee4b6586ac281688582",
     "sourceRevision": "2026-10-07.06",
@@ -7991,15 +7998,22 @@
     }
   },
   "pendingPublication": {
-    "scope": "SOCIAL-01 posting guidance native CI closure docs/evidence only",
+    "scope": "SOCIAL-01 manual immediate-send posting guidance source/docs/evidence/checkpoint payload",
     "approvedByUser": false,
     "publicWriteAttempted": false,
-    "basePublicCommit": "7fa79838953b4fe80a8d18a957ab69205e903686",
+    "basePublicCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
+    "basePublicTree": "8003a0774b4406cfea7db838dda7a0f21807766d",
+    "changedPathCount": 21,
     "changedPaths": [
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
+      "apps/api/src/posting-guidance.ts",
+      "apps/api/src/publication-attempts.ts",
+      "apps/api/src/publications.ts",
+      "apps/api/src/youtube-dispatch.ts",
+      "apps/web/app/youtube-policy-review.tsx",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -8008,10 +8022,12 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/social01-posting-guidance-evidence.json",
-      "docs/qa/social01-posting-guidance-native-ci-evidence.json",
-      "docs/qa/verification-summary.json"
-    ]
+      "docs/qa/social01-manual-posting-guidance-evidence.json",
+      "docs/qa/verification-summary.json",
+      "tests/integration/social-dispatch.test.ts",
+      "tests/ui/social-policy-review.spec.ts"
+    ],
+    "requiresUserApprovalText": "I explicitly approve publishing SOCIAL-01 manual immediate-send posting-guidance’s 21 verified source/config/docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8169,24 +8185,24 @@
       "providerSubmissionsAsserted": 1,
       "retainedProviderReceiptPrivateOutputAndCompletedJobAsserted": true,
       "referenceDiagnostics": [
-        "\u2139 HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
-        "\u2139 HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
-        "\u2139 HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
-        "\u2139 HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 9 curated, 521 covered CJK reference strings, 2 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 556 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated, 13177 covered CJK reference strings, 0 missing-font strings rejected; CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz localized Han: 4 fonts x 4 locales x 10 cases matched in CJS/ESM/runtime outlines.",
+        "ℹ HarfBuzz mixed CJK: four saved locales x seven known font/script runs matched emitted paths, advances and offsets.",
+        "ℹ HarfBuzz 8.3.0: 16 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 12 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 17 curated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 19 curated + 656 generated strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 383 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 21 curated, 230 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 23 curated, 2113 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 3477 unique total reference strings, CJS/ESM/outlines matched.",
+        "ℹ HarfBuzz 8.3.0: 24 curated, 1203 unique total reference strings, CJS/ESM/outlines matched."
       ],
       "coveredCjkStrings": 14775,
       "curatedCjkStrings": 42,
@@ -8610,20 +8626,21 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "scope": "SOCIAL-01 posting guidance public commit 7fa7983; own native CI success on attempt 2",
+    "scope": "SOCIAL-01 manual immediate-send posting guidance local exact-source verification; unpublished",
     "unit": "199/199 unique receipts, 25 summaries, zero failed/skipped/cancelled/todo",
-    "http": "14/14",
-    "browser": "8/8",
-    "recovery": "5/5",
-    "freshNativeMigrations": 20,
+    "http": "14/14 isolated HTTP",
+    "browser": "8/8 production browser",
+    "recovery": "5/5 recovery/configuration",
+    "freshPGliteMigrations": 20,
     "apiBuild": "passed",
     "webBuild": "passed",
-    "populatedUpgrade": "passed",
-    "bothAuditsVulnerabilities": 0,
-    "artifact": "11749738694 SHA-256 and 124 ZIP entries verified; 44 OCR hashes matched",
-    "initialAttempt": "container image registry data limit before checkout; retry passed",
+    "prismaGenerate": "passed",
+    "cleanInstallAndFontkitPatch": "passed",
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "nativeCiOnThisSource": false,
     "liveGoogleGrantOrPost": "not run",
-    "publication": "26 source paths public; post-publication closure docs local"
+    "publication": "pending exact user approval; public main unchanged at 6d62e6045368c305e761779d42571c01a2c63c7d"
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -8658,8 +8675,8 @@
     "publicWriteSucceeded": false
   },
   "social01PostingGuidanceNativeCi": {
-    "publicCommit": "7fa79838953b4fe80a8d18a957ab69205e903686",
-    "tree": "e7faa978cbce46c1f2635ddfd54036bd7f95bc7c",
+    "publicCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
+    "tree": "8003a0774b4406cfea7db838dda7a0f21807766d",
     "exactChangedPaths": 26,
     "runId": 38254675262,
     "successfulJobId": 114830114374,
@@ -8672,6 +8689,57 @@
     "artifactId": 11749738694,
     "artifactSha256": "011a23f8cd7d4dc9994b5b5f732430294aa4c2c2514a165798c360459c75bd22",
     "evidence": "docs/qa/social01-posting-guidance-native-ci-evidence.json",
-    "closurePublic": false
+    "closurePublic": true
+  },
+  "social01ManualGuidanceLocal": {
+    "basePublicCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
+    "basePublicTree": "8003a0774b4406cfea7db838dda7a0f21807766d",
+    "public": false,
+    "changedPathCount": 21,
+    "changedPaths": [
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "START_HERE.md",
+      "apps/api/src/posting-guidance.ts",
+      "apps/api/src/publication-attempts.ts",
+      "apps/api/src/publications.ts",
+      "apps/api/src/youtube-dispatch.ts",
+      "apps/web/app/youtube-policy-review.tsx",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/PUBLISHING.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/qa/social01-manual-posting-guidance-evidence.json",
+      "docs/qa/verification-summary.json",
+      "tests/integration/social-dispatch.test.ts",
+      "tests/ui/social-policy-review.spec.ts"
+    ],
+    "evidence": "docs/qa/social01-manual-posting-guidance-evidence.json",
+    "unit": 199,
+    "unitUniqueReceipts": 199,
+    "unitSummaries": 25,
+    "http": 14,
+    "browser": 8,
+    "recovery": 5,
+    "freshPGliteMigrations": 20,
+    "apiBuild": true,
+    "webBuild": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "nativeCiOnThisSource": false,
+    "liveGoogleGrantOrPost": false,
+    "qualityGuards": [
+      "current immutable policy-review required",
+      "server guidance acknowledgement required",
+      "fingerprint expires after 120 seconds",
+      "fingerprint and schedule conflict rechecked under organization lock",
+      "invalid/stale/changed guidance rejects before provider call",
+      "live and scheduled posting forced off in verifier"
+    ]
   }
 }

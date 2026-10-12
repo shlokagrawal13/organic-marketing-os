@@ -1,10 +1,12 @@
-import { ServiceUnavailableException } from "@nestjs/common";
+import { ConflictException, ServiceUnavailableException } from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { digest } from "../../../packages/core/security";
+import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 
 type DbReader = PrismaClient | Prisma.TransactionClient;
 const dayMs = 24 * 60 * 60 * 1000;
 export const postingGuidanceVersion = "youtube-schedule-guidance-1";
+export const manualGuidanceLifetimeMs = 2 * 60 * 1000;
 
 function setting(value: string | undefined, fallback: number, maximum: number) {
   if (value === undefined || value === "") return fallback;
@@ -39,7 +41,7 @@ function similarTitle(first: string, second: string) {
 // and due time. A changed snapshot stops a scheduled send for human review.
 export async function evaluateScheduleGuidance(db: DbReader, input: {
   organizationId: string; connectionId: string; intentId: string;
-  dueAt: Date; metadata: unknown;
+  dueAt: Date; metadata: unknown; mode?: "schedule" | "manual";
 }) {
   const dailyCount = setting(process.env.YOUTUBE_GUIDANCE_24H_COUNT, 2, 50);
   const gapMinutes = setting(process.env.YOUTUBE_GUIDANCE_GAP_MINUTES, 120, 1440);
@@ -86,7 +88,8 @@ export async function evaluateScheduleGuidance(db: DbReader, input: {
     message: `This would exceed your guidance of ${dailyCount} uploads in the 24-hour window centered on this time.` });
   if (repeated.length) warnings.push({ code: "SIMILAR_TITLE",
     message: "A recent or scheduled upload has a very similar title. Check for repetitive content." });
-  const fingerprint = digest(JSON.stringify({ version: postingGuidanceVersion,
+  const fingerprint = digest(JSON.stringify({ version: input.mode === "manual" ?
+    "youtube-manual-guidance-1" : postingGuidanceVersion,
     organizationId: input.organizationId, connectionId: input.connectionId,
     intentId: input.intentId, dueAt: input.dueAt.toISOString(),
     dailyCount, gapMinutes, currentTitle,
@@ -95,4 +98,27 @@ export async function evaluateScheduleGuidance(db: DbReader, input: {
   }));
   return { fingerprint, warnings, guidance: { dailyCount, gapMinutes, window: "24h-centered" },
     disclaimer: "Workspace guidance only; no posting frequency guarantees platform approval or prevents enforcement." };
+}
+
+export async function evaluateManualGuidance(db: DbReader, input: {
+  organizationId: string; connectionId: string; intentId: string;
+  contentRevision: number; renderId: string | null; checkedAt: Date;
+}) {
+  const review = await db.publicationPolicyReview.findUnique({ where: { intentId: input.intentId } });
+  if (!review || review.organizationId !== input.organizationId ||
+      review.connectionId !== input.connectionId ||
+      review.contentRevision !== input.contentRevision ||
+      review.policyVersion !== youtubePolicyVersion ||
+      review.expiresAt <= new Date() ||
+      review.snapshotHash !== youtubePolicyFingerprint({
+        intentId: input.intentId, connectionId: input.connectionId,
+        contentRevision: input.contentRevision, renderId: input.renderId,
+        metadata: review.metadata,
+      }))
+    throw new ConflictException("A current reviewed YouTube upload policy and metadata snapshot is required.");
+  return { ...(await evaluateScheduleGuidance(db, {
+    organizationId: input.organizationId, connectionId: input.connectionId,
+    intentId: input.intentId, dueAt: input.checkedAt,
+    metadata: review.metadata, mode: "manual",
+  })), checkedAt: input.checkedAt.toISOString() };
 }

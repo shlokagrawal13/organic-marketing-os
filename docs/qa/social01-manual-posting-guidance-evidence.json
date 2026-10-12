@@ -1,0 +1,122 @@
+{
+  "milestone": "SOCIAL-01 manual immediate-send posting guidance",
+  "dateUtc": "2026-10-12",
+  "public": false,
+  "basePublicCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
+  "scope": "Manual immediate YouTube video sends only; scheduled sends retain their existing guidance path. No live provider request was made.",
+  "controls": {
+    "tenantChannelScopedPreview": true,
+    "ownerAdminOnly": true,
+    "requiresCurrentImmutablePolicyReview": true,
+    "explicitGuidanceAcknowledgement": true,
+    "fingerprintRecheckedUnderOrganizationLockAtReservation": true,
+    "previewLifetimeSeconds": 120,
+    "activeSameIntentScheduleBlocksManualReservation": true,
+    "invalidPreviewRejectsBeforeProviderCall": true,
+    "liveFlagDefaultOff": true,
+    "advisoryOnly": true
+  },
+  "guidance": {
+    "default24HourCenteredCount": 2,
+    "defaultGapMinutes": 120,
+    "similarTitle": "Conservative normalized title overlap; not semantic/AI content analysis.",
+    "platformBanClaim": false
+  },
+  "finalLocalVerification": {
+    "cleanLockedInstall": true,
+    "fontkitPostinstallVerified": true,
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "unit": 199,
+    "unitUniqueReceipts": 199,
+    "unitSummaries": 25,
+    "unitFailed": 0,
+    "unitSkipped": 0,
+    "unitCancelled": 0,
+    "unitTodo": 0,
+    "focusedSocialHttp": 1,
+    "fullHttp": 14,
+    "browser": 8,
+    "recovery": 5,
+    "freshPGliteMigrations": 20,
+    "productionAuditVulnerabilities": 0,
+    "allDependencyAuditVulnerabilities": 0,
+    "finalUnitLog": "/tmp/mos-social01-manual-unit-final.log",
+    "finalAppLog": "/tmp/mos-social01-manual-full-app-postguard.log",
+    "unitDurationMs": 364176.714812,
+    "httpDurationMs": 142490.731027,
+    "browserDuration": "40.4s",
+    "recoveryDurationMs": 146644.978247
+  },
+  "isolation": {
+    "redis": "Official Redis 7.2.11 Git tag d4c381df built in the private test directory after the documented redis.io archive returned HTTP 403.",
+    "storage": "Checksum-verified S3Proxy 4.1.1 private filesystem fixture.",
+    "fonts": "SHA-verified Ubuntu fonts-noto-core 20201225-2 extracted privately; four pinned CJK OTFs SHA-verified; no system font change.",
+    "youtubeLiveAndScheduledFlagsForcedOffByVerifier": true
+  },
+  "excludedAttempts": [
+    "A first focused HTTP run found a preview route order issue: foreign intent returned 503 while deployment was off. The tenant lookup was moved before the availability check and the focused suite passed.",
+    "A focused test edit briefly duplicated a local variable and failed to transform; it was corrected before the successful test run.",
+    "The first full app verifier returned success but its log redirect did not retain final reporter lines; a separate full rerun with a durable /tmp log captured 14 HTTP, 8 browser and 5 recovery pass counts.",
+    "The final exact-source full verifier rerun after the schedule-race guard captured 14 HTTP, 8 browser and 5 recovery passes with zero failed/skipped/cancelled/todo."
+  ],
+  "notVerified": [
+    "Own native PostgreSQL CI on this unpublished increment",
+    "Live Google grant/upload and deployed operator policy receipt",
+    "Broader semantic similarity, configurable policy engine and platform acceptance",
+    "Full master acceptance"
+  ],
+  "basePublicTree": "8003a0774b4406cfea7db838dda7a0f21807766d",
+  "changedPathCount": 21,
+  "changedPaths": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "START_HERE.md",
+    "apps/api/src/posting-guidance.ts",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/publications.ts",
+    "apps/api/src/youtube-dispatch.ts",
+    "apps/web/app/youtube-policy-review.tsx",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/PUBLISHING.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/social01-manual-posting-guidance-evidence.json",
+    "docs/qa/verification-summary.json",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/ui/social-policy-review.spec.ts"
+  ],
+  "nativeCiOnThisSource": false,
+  "liveGoogleGrantOrUpload": false,
+  "finalDependencyAudit": {
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "full": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "rerunReason": "Initial audit rerun was blocked by the restricted sandbox network; the same npm audit commands were rerun with registry access and returned zero vulnerabilities."
+  },
+  "publicationStatus": {
+    "publicMainUnchanged": true,
+    "publicMainCommit": "6d62e6045368c305e761779d42571c01a2c63c7d",
+    "publicMainTree": "8003a0774b4406cfea7db838dda7a0f21807766d",
+    "approvalRequiredBeforePublicPush": true
+  }
+}

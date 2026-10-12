@@ -71,17 +71,33 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   // Browser-only readiness fixture exercises the notice without enabling the
   // isolated API's live dispatch flag or sending a provider request.
   const attemptUrl = `**/publication-intents/${reviews[0].intentId}/youtube-attempt`;
+  const manualGuidanceUrl = `**/publication-intents/${reviews[0].intentId}/youtube-manual-posting-guidance?*`;
   await page.route(attemptUrl, (route) => route.fulfill({ status: 200,
     contentType: "application/json", body: JSON.stringify({ attempt: null,
       canPublish: true, canReconcile: false }) }));
+  await page.route(manualGuidanceUrl, (route) => route.fulfill({ status: 200,
+    contentType: "application/json", body: JSON.stringify({
+      fingerprint: "b".repeat(64), checkedAt: new Date().toISOString(),
+      warnings: [{ code: "CLOSE_SPACING", message: "Another upload may be close to now." }],
+      guidance: { dailyCount: 2, gapMinutes: 120, window: "24h-centered" },
+      disclaimer: "Workspace guidance only; no platform guarantee.",
+    }) }));
   await panel.getByRole("button", { name: /Open .*revision 1/ }).first().click();
   await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toBeVisible();
+  await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toBeDisabled();
+  await panel.getByRole("button", { name: "Review immediate posting guidance" }).click();
+  await expect(panel.getByText("Another upload may be close to now.")).toBeVisible();
+  await panel.getByRole("checkbox", { name: "I reviewed the current immediate posting guidance for this channel." }).check();
+  await panel.getByRole("checkbox", { name: "I approve sending this exact video to the reviewed channel now." }).check();
+  await panel.getByRole("textbox", { name: "Type PUBLISH TO YOUTUBE to confirm" }).fill("PUBLISH TO YOUTUBE");
+  await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toBeEnabled();
   await expect(panel.getByText(/By clicking 'upload,' you certify/)).toBeVisible();
   await expect(panel.locator(".youtube-terms-desktop")).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(panel.locator(".youtube-terms-mobile")).toBeVisible();
   await expect(panel.locator(".youtube-terms-desktop")).toBeHidden();
   await page.unroute(attemptUrl);
+  await page.unroute(manualGuidanceUrl);
   await page.setViewportSize({ width: 1280, height: 800 });
   await panel.getByRole("button", { name: /Open .*revision 1/ }).first().click();
   await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toHaveCount(0);
