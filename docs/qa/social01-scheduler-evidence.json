@@ -1,7 +1,7 @@
 {
   "milestone": "SOCIAL-01 bounded scheduled dispatch",
   "date": "2026-10-12",
-  "public": false,
+  "public": true,
   "sourceBase": "641fa1378701f1ea0e9fd3d47768912a547ba82c",
   "safety": {
     "scheduledFlagDefaultOff": true,
@@ -36,10 +36,11 @@
     "redirectedBrowserAttempt": "ended without final test receipt; excluded; visible complete rerun 1/1 and full browser 8/8 passed"
   },
   "pending": [
-    "native PostgreSQL CI for scheduler source",
     "live Google grant/upload",
     "deployed operator receipt",
     "semantic/frequency checks",
     "full master acceptance"
-  ]
+  ],
+  "publicCommit": "9c528961da0a4d6c5952a294cc3333a6e77d3048",
+  "nativeCiEvidence": "docs/qa/social01-scheduler-native-ci-evidence.json"
 }
