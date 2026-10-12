@@ -51,11 +51,14 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
     tokenExpiresAt: new Date(Date.now() + 3600000),
   } });
   const bytes = Buffer.from("synthetic-private-video-bytes");
+  const rendered = new Map<string, Buffer>();
   const store = { async get(key: string) {
     assert.match(key, /private-video/u);
-    return { Body: Readable.from([bytes]) };
+    const body = rendered.get(key);
+    assert.ok(body);
+    return { Body: Readable.from([body]) };
   } } as ObjectStore;
-  async function prepared(label: string) {
+  async function prepared(label: string, video = bytes) {
     const c = await owner.call(root + "/content", "POST", {
       ...draft, title: label, platform: "YouTube", format: "Video", scenes: [scene],
     });
@@ -64,12 +67,14 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
     assert.equal((await owner.call(root + `/content/${c.body.id}/approve`, "POST", {
       revision: 1, factsAndRightsReviewed: true,
     })).status, 201);
+    const outputKey = `${org.id}/private-video/${randomUUID()}`;
+    rendered.set(outputKey, video);
     const render = await db.renderJob.create({ data: {
       organizationId: org.id, contentId: c.body.id, contentRevision: 1,
       actorId: owner.id, requestKey: randomUUID(), requestHash: "synthetic-only",
       snapshot: { ...draft, format: "Video", scenes: [scene] }, options: {},
       totalScenes: 1, status: "SUCCEEDED",
-      outputKey: `${org.id}/private-video/${randomUUID()}`, outputBytes: bytes.length,
+      outputKey, outputBytes: video.length,
       approvedAt: new Date(), approvedBy: owner.id,
     } });
     const p = await owner.call(root + "/publication-intents", "POST", {
@@ -149,7 +154,14 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
     successful as typeof fetch), /previous upload attempt/u);
   assert.equal(calls, 2);
 
-  const second = await prepared("Ambiguous response fixture");
+  const sameConfirmed = await prepared("Another preparation with identical confirmed bytes");
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, sameConfirmed,
+    successful as typeof fetch), /exact video may already exist/u);
+  assert.equal(calls, 2);
+  assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 1);
+
+  const uncertainBytes = Buffer.from("another-private-video-for-uncertain-send");
+  const second = await prepared("Ambiguous response fixture", uncertainBytes);
   let starts = 0, sends = 0, probes = 0;
   const unknown = await dispatchReviewedYoutubeVideo(db, store, second,
     (async (_url: URL | RequestInfo, init?: RequestInit) => {
@@ -160,13 +172,20 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
     }) as typeof fetch);
   assert.equal(unknown?.status, "UNKNOWN");
   assert.deepEqual([starts, sends], [1, 1]);
+  assert.equal(unknown?.mediaSha256, createHash("sha256").update(uncertainBytes).digest("hex"));
+  const sameUnknown = await prepared("Another preparation with identical uncertain bytes", uncertainBytes);
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, sameUnknown,
+    (async () => { starts++; throw new Error("duplicate must not call provider"); }) as typeof fetch),
+    /exact video may already exist/u);
+  assert.deepEqual([starts, sends], [1, 1]);
+  assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 2);
   assert.equal((await owner.call(root + `/publication-intents/${second.intentId}/youtube-attempt`)).body.attempt.canCheckStatus, true);
   assert.equal((await owner.call(root + `/publication-intents/${second.intentId}/youtube-attempt/${unknown!.id}/check-status`, "POST")).status, 503);
   const incomplete = await reconcileUnknownYoutubeUpload(db, {
     organizationId: org.id, actorId: owner.id, attemptId: unknown!.id,
   }, (async (_url: URL | RequestInfo, init?: RequestInit) => {
     assert.equal(init?.body, undefined);
-    assert.equal((init?.headers as Record<string,string>)["Content-Range"], `bytes */${bytes.length}`);
+    assert.equal((init?.headers as Record<string,string>)["Content-Range"], `bytes */${uncertainBytes.length}`);
     probes++;
     return new Response(null, { status: 308, headers: { Range: "bytes=0-10" } });
   }) as typeof fetch);

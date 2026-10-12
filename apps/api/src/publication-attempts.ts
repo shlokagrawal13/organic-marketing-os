@@ -99,13 +99,18 @@ export async function reservePublicationAttempt(
     connectionId: string;
     requestKey: string;
     actorId: string;
+    media?: { sha256: string; bytes: number; outputKey: string };
   },
 ) {
   const { organizationId: org } = input;
+  if (input.media && (!/^[a-f0-9]{64}$/u.test(input.media.sha256) ||
+      !Number.isSafeInteger(input.media.bytes) || input.media.bytes <= 0))
+    throw new BadRequestException("A verified video digest and size are required.");
   const requestHash = digest(
     JSON.stringify({
       intentId: input.intentId,
       connectionId: input.connectionId,
+      ...(input.media ? { mediaSha256: input.media.sha256, mediaBytes: input.media.bytes } : {}),
     }),
   );
   return db.$transaction(async (tx) => {
@@ -124,6 +129,15 @@ export async function reservePublicationAttempt(
       return replay;
     }
     const intent = await currentApproval(tx, org, input.intentId);
+    if (input.media) {
+      const render = await tx.renderJob.findFirst({
+        where: { id: intent.renderId!, organizationId: org },
+        select: { outputKey: true, outputBytes: true },
+      });
+      if (!render || render.outputKey !== input.media.outputKey ||
+          render.outputBytes !== input.media.bytes)
+        throw new ConflictException("The approved video output changed before reservation.");
+    }
     const existing = await tx.publicationAttempt.findUnique({
       where: { intentId: intent.id },
     });
@@ -150,6 +164,19 @@ export async function reservePublicationAttempt(
       throw new ConflictException(
         "A post for this revision and account may already exist. Reconcile it before another attempt.",
       );
+    if (input.media) {
+      const duplicate = await tx.publicationAttempt.findFirst({
+        where: {
+          organizationId: org,
+          connectionId: connection.id,
+          mediaSha256: input.media.sha256,
+          mediaBytes: input.media.bytes,
+          status: { in: [...unresolved] },
+        },
+      });
+      if (duplicate)
+        throw new ConflictException("This exact video may already exist on this channel. Review its outcome first.");
+    }
     const attempt = await tx.publicationAttempt.create({
       data: {
         organizationId: org,
@@ -159,6 +186,8 @@ export async function reservePublicationAttempt(
         contentRevision: intent.contentRevision,
         requestKey: input.requestKey,
         requestHash,
+        mediaSha256: input.media?.sha256 ?? null,
+        mediaBytes: input.media?.bytes ?? null,
       },
     });
     await tx.auditLog.create({
@@ -211,6 +240,21 @@ export async function enterPublicationSubmission(
       });
       if (!render || render.outputKey !== media.outputKey || render.outputBytes !== media.bytes)
         throw new ConflictException("The approved video output changed before submission.");
+      if (attempt.mediaSha256 !== null &&
+          (attempt.mediaSha256 !== media.sha256 || attempt.mediaBytes !== media.bytes))
+        throw new ConflictException("The reserved video bytes changed before submission.");
+      const duplicate = await tx.publicationAttempt.findFirst({
+        where: {
+          organizationId: org,
+          connectionId: attempt.connectionId,
+          id: { not: attempt.id },
+          mediaSha256: media.sha256,
+          mediaBytes: media.bytes,
+          status: { in: [...unresolved] },
+        },
+      });
+      if (duplicate)
+        throw new ConflictException("This exact video may already exist on this channel. Review its outcome first.");
     }
     const connection = await tx.socialConnection.findFirst({
       where: { id: attempt.connectionId, organizationId: org },

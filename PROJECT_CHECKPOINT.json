@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-11.06-SOCIAL01-policy-native-closure",
-  "savedAtUtc": "2026-10-11",
-  "currentMilestone": "SOCIAL-01 policy maintenance and upload notice public; own native CI verified; closure docs local",
+  "checkpointRevision": "2026-10-12.01-SOCIAL01-exact-video-reconstructed",
+  "savedAtUtc": "2026-10-12",
+  "currentMilestone": "SOCIAL-01 exact video duplicate guard reconstructed and locally verified; public publication and own CI pending",
   "activeTaskId": "SOCIAL-01",
   "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Publish the already approved exact 15-file SOCIAL-01 native-CI closure to public main, verify remote tree and own CI, then advance scheduler and broader POLICY-01 checks without live Google calls.",
+  "nextAction": "Publish the approved exact 18-file SOCIAL-01 guard update to public main with expected-head lease; verify remote tree and its own native CI, then continue scheduler and POLICY-01 checks without live Google calls.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -21,6 +21,8 @@
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "START_HERE.md",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/youtube-dispatch.ts",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -29,9 +31,10 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
+    "docs/qa/social01-exact-video-guard-evidence.json",
     "docs/qa/social01-policy-native-ci-evidence.json",
-    "docs/qa/social01-policy-native-unit-receipts.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/verification-summary.json",
+    "tests/integration/social-dispatch.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -94,7 +97,7 @@
     "fullMasterAcceptanceVerified": false,
     "productionAdvisories": 0,
     "developmentAdvisories": 0,
-    "scopeWarning": "Public 448be264 policy-maintenance source own native CI passed; closure docs and sanitized receipts are local/unpublished. Live Google, deployed operator review and full master acceptance remain open. Previous local missing-font broad attempt is excluded.",
+    "scopeWarning": "Exact video guard reconstructed after transient workspace reset. Local 2/2 focused isolated HTTP and API build passed; exploratory broad browser render failed without local test fonts. New-source native CI and live Google remain unverified until public publication and CI.",
     "latestGithubActions": {
       "runId": 38148069398,
       "jobId": 114495510162,
@@ -310,7 +313,7 @@
       "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
       "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
     },
-    "latestIncrement": "SOCIAL-01 cumulative 19 files published at 02f8fb1; own native CI 37989266829 passed 193 unit, 9 HTTP, 7 browser, 5 recovery, 14 migrations, builds, 36+8 OCR, populated PGlite restore and both audits zero. No provider call/post.",
+    "latestIncrement": "Rebuilt after transient workspace reset from exact public base 102a9e3f6700837a52e65298ce45df3fa6ebed6f. The dispatcher stages the approved private video and binds its SHA-256 and byte count at reservation under the organization lock. On the same connected channel, an existing RESERVED, SUBMITTING, UNKNOWN or CONFIRMED attempt for identical bytes blocks another preparation before any provider request. The request key binds the media fingerprint and the submission transition rechecks it. Known REJECTED attempts are excluded. The default-off live flag and explicit owner/admin action remain required. Clean npm ci (273 packages, Fontkit patch), Prisma generate, API TypeScript build, and 2/2 isolated HTTP cases passed, each with 18 fresh PGlite migrations and disposable Redis 7.2.11/S3Proxy 4.1.1. The dispatch fixture proves zero extra attempts/provider calls for both confirmed and uncertain identical bytes; UNKNOWN status-only reconciliation remains available. An exploratory broad browser run had render failures with missing local test fonts and was interrupted; it does not count as passed. Full new-source native CI, live Google upload, deployed policy receipt, scheduler, broader semantic/frequency checks and master acceptance remain open. SOCIAL-01 stays Partial.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-07",
     "nativePostgresVerifiedMeaning": "Own X application CI uses disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers. Populated upgrade/archive restore separately uses PGlite. Docker/full Compose/MinIO, native PostgreSQL/private-media cross-store restore, live providers, physical-device readability and full master acceptance remain open.",

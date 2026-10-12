@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 exact approved-video duplicate guard, reconstructed after lost scratch checkout",
+  "dateUtc": "2026-10-12",
+  "publicBase": "102a9e3f6700837a52e65298ce45df3fa6ebed6f",
+  "reconstruction": "Previous 18-file local ZIP and commit were lost on workspace reset; source and docs were rebuilt from the same public base and independently reverified. This is a new tree, not the prior frozen tree.",
+  "scopePaths": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "START_HERE.md",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/youtube-dispatch.ts",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/PUBLISHING.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/social01-exact-video-guard-evidence.json",
+    "docs/qa/social01-policy-native-ci-evidence.json",
+    "docs/qa/verification-summary.json",
+    "tests/integration/social-dispatch.test.ts"
+  ],
+  "implementation": {
+    "sha256AndByteCountPinnedAtReservation": true,
+    "requestKeyBoundToMediaFingerprint": true,
+    "sameChannelExactBytesBlockedFor": [
+      "RESERVED",
+      "SUBMITTING",
+      "UNKNOWN",
+      "CONFIRMED"
+    ],
+    "knownRejectedExcluded": true,
+    "submissionRechecksMedia": true,
+    "stagedOutputSizeAndKeyComparedWithApprovedRender": true,
+    "defaultOffAndExplicitHumanActionPreserved": true
+  },
+  "localVerification": {
+    "lockedInstallPackages": 273,
+    "fontkitPatch": "passed",
+    "prismaGenerate": "passed",
+    "apiTypeScriptBuild": "passed",
+    "focusedHttpScenarios": 2,
+    "freshDisposableMigrationsPerScenario": 18,
+    "disposableDatabase": "PGlite WASM PostgreSQL",
+    "redis": "Redis 7.2.11 official Git tag d4c381df7a729c06a5207c4f18d804febe956dc4 compiled locally",
+    "objectStorage": "S3Proxy 4.1.1 checksum-pinned",
+    "syntheticProviderCallsForDuplicates": 0,
+    "liveGoogleCalls": 0,
+    "exploratoryBrowser": "failed/interrupted in unrelated media render without local test fonts; excluded",
+    "newSourceFullUnitSuite": "not run",
+    "newSourceNativeCi": "pending publication"
+  },
+  "limits": [
+    "No live Google upload or real channel acceptance.",
+    "Native CI and full browser/recovery suites have not yet completed for this rebuilt tree.",
+    "Direct internal reserve callers without media fingerprint retain their older ledger contract; actual reviewed video dispatch always supplies fingerprint.",
+    "Policy maintenance receipt, scheduler and broader semantic/frequency checks remain open."
+  ],
+  "publication": {
+    "approvedByUser": true,
+    "publicRefUpdated": false,
+    "expectedParent": "102a9e3f6700837a52e65298ce45df3fa6ebed6f",
+    "exactChangedPaths": 18
+  }
+}

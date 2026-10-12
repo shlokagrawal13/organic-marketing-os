@@ -106,7 +106,7 @@ export async function dispatchReviewedYoutubeVideo(db: PrismaClient, store: Obje
   try {
     const media = await stageRender(store, render.outputKey,
       render.outputBytes, join(dir, "video.mp4"));
-    const reserved = await reservePublicationAttempt(db, input);
+    const reserved = await reservePublicationAttempt(db, { ...input, media });
     if (reserved.status !== "RESERVED")
       throw new ConflictException("A previous upload attempt needs review before any new send.");
     const started = await enterPublicationSubmission(db, {
