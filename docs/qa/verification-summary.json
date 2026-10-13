@@ -6,7 +6,7 @@
     "Next.js 16.3.8 production build"
   ],
   "passed": {
-    "unit": 199,
+    "unit": 201,
     "httpScenarios": 14,
     "browserScenarios": 8,
     "recoveryAndConfigurationScenarios": 5,
@@ -14,8 +14,8 @@
     "unitFontSets": 1
   },
   "environment": {
-    "database": "SOCIAL-01 manual guidance own native PostgreSQL CI applied 20 migrations; local isolated verifier used 20 disposable PGlite migrations. Native database plus private-media restore remains pending.",
-    "redis": "SOCIAL-01 manual guidance own native Redis CI passed; local isolated verifier used a native Redis 7.2.11 test binary.",
+    "database": "SOCIAL-01 configurable posting-policy own native PostgreSQL CI applied 20 migrations; local selected verifier also used 20 disposable PGlite migrations.",
+    "redis": "SOCIAL-01 configurable posting-policy own native Redis CI passed; local selected verifier used native Redis test tooling.",
     "objectStorage": "S3Proxy 4.1.1 filesystem backend; loopback SigV4 with per-run random credentials",
     "renderer": "Real FFmpeg/ffprobe; native environment version retained in raw job logs.",
     "email": "local SMTP capture",
@@ -84,21 +84,23 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 configurable semantic posting-policy guidance is locally verified and unpublished. It adds a deterministic shared posting-policy engine for similar metadata, repeated topic clusters and repeated CTA patterns. Policy signals/fingerprint use normalized hashed signatures and match IDs, not raw title/description text. Local checks passed: clean npm ci with Fontkit patch, focused policy unit, API build, 4 pinned CJK fonts, selected social-dispatch HTTP 1/1, browser 8/8, recovery 5/5 and 20 fresh PGlite migrations. No native CI or live Google grant/upload occurred for this increment.",
+  "latestIncrement": "SOCIAL-01 configurable posting-policy engine is public and own native CI verified at b2813e104cd685e555cc1083972d94e630b0e1c2. GitHub Actions run 38426472356/job 115397065948 attempt 1 passed 201/201 unit, 14/14 HTTP, 8/8 production browser, 5/5 recovery, 20 fresh native PostgreSQL migrations, API/web build, populated upgrade and zero-vulnerability dependency audits. Closure docs/evidence/checkpoint are local and unpublished until separately approved. No live Google grant/upload or full master acceptance occurred.",
   "latestNativeRun": {
-    "runId": 38214259597,
-    "jobId": 114695181678,
+    "runId": 38426472356,
+    "jobId": 115397065948,
     "attempt": 1,
-    "sourceCommit": "641fa1378701f1ea0e9fd3d47768912a547ba82c",
-    "sourceTree": "dfc0708cabd38daa31f72a3bc092641f517d85d9",
+    "sourceCommit": "b2813e104cd685e555cc1083972d94e630b0e1c2",
+    "sourceTree": "5eb31d650bdcc8a26f7607bd23837d240b4aa0d8",
     "status": "completed",
     "conclusion": "success",
-    "unitPassed": 199,
+    "unitPassed": 201,
     "httpPassed": 14,
     "browserPassed": 8,
     "recoveryPassed": 5,
-    "freshNativeMigrations": 18,
-    "evidence": "docs/qa/social01-exact-video-native-ci-evidence.json"
+    "freshNativeMigrations": 20,
+    "artifactId": 11830470967,
+    "artifactSha256": "68c66164f7dd6d140c1695426b9ebd0e489db59f92793b1c050ed15d66d853e6",
+    "evidence": "docs/qa/social01-configurable-posting-policy-native-ci-evidence.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -8016,5 +8018,54 @@
     "nativeCiForDelta": false,
     "liveGoogleGrantOrPost": false,
     "public": false
+  },
+  "social01ConfigurablePostingPolicyNativeCi": {
+    "status": "local_closure_docs_not_published",
+    "publicSourceCommit": "b2813e104cd685e555cc1083972d94e630b0e1c2",
+    "publicSourceTree": "5eb31d650bdcc8a26f7607bd23837d240b4aa0d8",
+    "nativeCi": {
+      "runId": 38426472356,
+      "jobId": 115397065948,
+      "attempt": 1,
+      "workflow": "Core and recovery verification",
+      "jobName": "Native application verification",
+      "sourceCommit": "b2813e104cd685e555cc1083972d94e630b0e1c2",
+      "sourceTree": "5eb31d650bdcc8a26f7607bd23837d240b4aa0d8",
+      "parentCommit": "b622c9243f65f978d3366aeaa6d9dcb4b72be39c",
+      "status": "completed",
+      "conclusion": "success",
+      "createdAt": "2026-10-13T15:57:25Z",
+      "completedAt": "2026-10-13T16:11:19Z",
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38426472356",
+      "jobUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38426472356/job/115397065948",
+      "unitPassed": 201,
+      "unitFailed": 0,
+      "unitSkipped": 0,
+      "unitCancelled": 0,
+      "unitTodo": 0,
+      "httpPassed": 14,
+      "httpFailed": 0,
+      "browserPassed": 8,
+      "browserDuration": "43.6s",
+      "recoveryPassed": 5,
+      "recoveryFailed": 0,
+      "freshNativeMigrations": 20,
+      "populatedUpgrade": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "artifactId": 11830470967,
+      "artifactName": "browser-evidence",
+      "artifactSizeBytes": 6189825,
+      "artifactSha256": "68c66164f7dd6d140c1695426b9ebd0e489db59f92793b1c050ed15d66d853e6",
+      "artifactDigest": "sha256:68c66164f7dd6d140c1695426b9ebd0e489db59f92793b1c050ed15d66d853e6",
+      "artifactExpiresAt": "2027-01-11T15:57:25Z",
+      "evidence": "docs/qa/social01-configurable-posting-policy-native-ci-evidence.json"
+    },
+    "closureEvidence": "docs/qa/social01-configurable-posting-policy-native-ci-evidence.json",
+    "pending": [
+      "Exact approval for 7 closure docs/evidence/checkpoint files",
+      "Live Google grant/upload and deployed operator policy receipt",
+      "Full master acceptance"
+    ]
   }
 }

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "milestone": "SOCIAL-01 configurable posting-policy engine native CI closure",
+  "dateUtc": "2026-10-13",
+  "status": "public_native_ci_verified_closure_local_not_published",
+  "publicCommit": "b2813e104cd685e555cc1083972d94e630b0e1c2",
+  "publicTree": "5eb31d650bdcc8a26f7607bd23837d240b4aa0d8",
+  "parentCommit": "b622c9243f65f978d3366aeaa6d9dcb4b72be39c",
+  "approvedPathCount": 15,
+  "remoteCompareMatchedApprovedPaths": true,
+  "remoteTreeMatchedLocalTree": true,
+  "approvedPaths": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "apps/api/src/posting-guidance.ts",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/qa/social01-configurable-posting-policy-evidence.json",
+    "docs/qa/verification-summary.json",
+    "packages/core/posting-policy.ts",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/posting-policy.test.ts",
+    "tests/ui/foundation.spec.ts",
+    "tests/ui/generated-media.spec.ts",
+    "tests/ui/media.spec.ts",
+    "tests/ui/social-policy-review.spec.ts"
+  ],
+  "githubActions": {
+    "runId": 38426472356,
+    "jobId": 115397065948,
+    "attempt": 1,
+    "workflow": "Core and recovery verification",
+    "jobName": "Native application verification",
+    "status": "completed",
+    "conclusion": "success",
+    "createdAt": "2026-10-13T15:57:25Z",
+    "completedAt": "2026-10-13T16:11:19Z",
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38426472356",
+    "jobUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38426472356/job/115397065948"
+  },
+  "checks": {
+    "checkout": true,
+    "installDependencies": true,
+    "mediaDependencies": true,
+    "pinnedCjkFonts": true,
+    "apiAndWebBuild": true,
+    "unit": {
+      "tests": 201,
+      "pass": 201,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "http": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 8,
+      "pass": 8,
+      "duration": "43.6s"
+    },
+    "recovery": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "freshNativePostgresMigrations": 20,
+    "populatedUpgrade": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "artifact": {
+    "id": 11830470967,
+    "name": "browser-evidence",
+    "sizeBytes": 6189825,
+    "digest": "sha256:68c66164f7dd6d140c1695426b9ebd0e489db59f92793b1c050ed15d66d853e6",
+    "expiresAt": "2027-01-11T15:57:25Z"
+  },
+  "notVerified": [
+    "Live Google grant/upload and deployed operator policy receipt",
+    "Full master acceptance",
+    "This closure docs/evidence/checkpoint update is local and unpublished until separately approved"
+  ],
+  "closurePublication": {
+    "public": false,
+    "requiresApproval": true
+  }
+}
