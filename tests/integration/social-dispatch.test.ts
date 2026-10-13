@@ -19,6 +19,11 @@ const priorScheduledDispatch = process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED;
 const priorReviewVersion = process.env.YOUTUBE_POLICY_REVIEWED_VERSION;
 const priorReviewAt = process.env.YOUTUBE_POLICY_REVIEWED_AT;
 const priorGuidanceCount = process.env.YOUTUBE_GUIDANCE_24H_COUNT;
+const priorMetadataSimilarity = process.env.YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT;
+const priorTopicOverlap = process.env.YOUTUBE_GUIDANCE_TOPIC_OVERLAP_PERCENT;
+const priorTopicRepeat = process.env.YOUTUBE_GUIDANCE_TOPIC_REPEAT_COUNT;
+const priorCtaRepeat = process.env.YOUTUBE_GUIDANCE_CTA_REPEAT_COUNT;
+const priorMinTopicTokens = process.env.YOUTUBE_GUIDANCE_MIN_TOPIC_TOKENS;
 after(async () => {
   if (priorKey === undefined) delete process.env.SOCIAL_TOKEN_ENCRYPTION_KEY;
   else process.env.SOCIAL_TOKEN_ENCRYPTION_KEY = priorKey;
@@ -28,6 +33,11 @@ after(async () => {
     YOUTUBE_POLICY_REVIEWED_VERSION: priorReviewVersion,
     YOUTUBE_POLICY_REVIEWED_AT: priorReviewAt,
     YOUTUBE_GUIDANCE_24H_COUNT: priorGuidanceCount,
+    YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT: priorMetadataSimilarity,
+    YOUTUBE_GUIDANCE_TOPIC_OVERLAP_PERCENT: priorTopicOverlap,
+    YOUTUBE_GUIDANCE_TOPIC_REPEAT_COUNT: priorTopicRepeat,
+    YOUTUBE_GUIDANCE_CTA_REPEAT_COUNT: priorCtaRepeat,
+    YOUTUBE_GUIDANCE_MIN_TOPIC_TOKENS: priorMinTopicTokens,
   })) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }
   await db.publicationAttempt.deleteMany({ where: { organizationId: { in: orgs } } });
   await db.publicationSchedule.deleteMany({ where: { organizationId: { in: orgs } } });
@@ -291,11 +301,16 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   const scheduleInput = await acknowledged(scheduleBase);
   const preview = await previewPublicationScheduleGuidance(db, scheduleBase);
   assert.ok(preview.warnings.some((warning) => warning.code === "HIGH_24H_VOLUME"));
+  assert.equal(preview.guidance.metadataSimilarityPercent, 70);
   assert.ok(!JSON.stringify(preview).includes("fixture-token"));
   process.env.YOUTUBE_GUIDANCE_24H_COUNT = "invalid";
   await assert.rejects(() => previewPublicationScheduleGuidance(db, scheduleBase),
     /configuration needs review/u);
   delete process.env.YOUTUBE_GUIDANCE_24H_COUNT;
+  process.env.YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT = "101";
+  await assert.rejects(() => previewPublicationScheduleGuidance(db, scheduleBase),
+    /configuration needs review/u);
+  delete process.env.YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT;
   await assert.rejects(() => createPublicationSchedule(db, {
     ...scheduleInput, guidanceFingerprint: "0".repeat(64),
   }), /guidance changed/u);
@@ -351,7 +366,7 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   assert.equal(neighborRow.status, "SCHEDULED");
   await assert.rejects(() => createPublicationSchedule(db, oldGuidance), /guidance changed/u);
   const changedGuidance = await previewPublicationScheduleGuidance(db, changedBase);
-  assert.ok(changedGuidance.warnings.some((warning) => warning.code === "SIMILAR_TITLE"));
+  assert.ok(changedGuidance.warnings.some((warning) => warning.code === "SIMILAR_METADATA"));
   assert.ok(changedGuidance.warnings.some((warning) => warning.code === "CLOSE_SPACING"));
   const changedRow = await createPublicationSchedule(db, {
     ...changedBase, guidanceFingerprint: changedGuidance.fingerprint,

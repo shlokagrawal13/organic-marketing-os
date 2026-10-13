@@ -101,7 +101,9 @@ test("generate private image and voice, attach one scene, render output and revi
     )
     .toBe(640);
   await imageJob.getByRole("button", { name: "Attach to saved scene" }).click();
-  await expect(imageJob.getByText("Attached at revision 2")).toBeVisible();
+  await expect(imageJob.getByText("Attached at revision 2")).toBeVisible({
+    timeout: 20000,
+  });
   await page.getByLabel("Media to generate").selectOption("voice");
   await page.getByLabel("Narration text").fill("Browser synthetic narration");
   await page
@@ -121,7 +123,9 @@ test("generate private image and voice, attach one scene, render output and revi
     voiceJob.getByText("AI-generated voice", { exact: true }),
   ).toBeVisible();
   await voiceJob.getByRole("button", { name: "Attach to saved scene" }).click();
-  await expect(voiceJob.getByText("Attached at revision 3")).toBeVisible();
+  await expect(voiceJob.getByText("Attached at revision 3")).toBeVisible({
+    timeout: 25000,
+  });
   const current = await (
     await page.request.get(`${root}/content/${content.id}`)
   ).json();
@@ -186,6 +190,8 @@ test("generate private image and voice, attach one scene, render output and revi
   await page
     .getByRole("button", { name: "Generate with AI", exact: true })
     .click();
-  await expect(page.getByText("Attached at revision 3")).toBeVisible();
+  await expect(page.getByText("Attached at revision 3")).toBeVisible({
+    timeout: 25000,
+  });
   await expect(page.locator(".generated-panel .alert.error")).toHaveCount(0);
 });

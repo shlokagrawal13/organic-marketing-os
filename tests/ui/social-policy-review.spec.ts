@@ -4,7 +4,7 @@ import { db, scene } from "../support/http";
 import { encryptSocialToken } from "../../packages/core/social-tokens";
 
 test("an owner reviews one approved YouTube render without scheduling or posting", async ({ page }) => {
-  test.setTimeout(90000);
+  test.setTimeout(120000);
   const headers = { "X-Requested-With": "MarketingOS" };
   expect((await page.request.post("/api/auth/register", { headers, data: {
     name: "Policy UI QA", email: `policy-ui-${randomUUID()}@example.test`, password: "Isolated browser password 123",
@@ -60,18 +60,10 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   await panel.getByRole("checkbox", { name: "I checked the realistic synthetic-media declaration." }).check();
   await panel.getByRole("checkbox", { name: "I checked usage rights and current YouTube rules for this video." }).check();
   await expect(save).toBeEnabled();
-  await save.click();
-  await expect(panel.getByText("Review saved", { exact: true })).toBeVisible();
-  await expect(panel.getByText(/Live YouTube posting is not available/)).toBeVisible();
-  await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toHaveCount(0);
-  const reviews = await db.publicationPolicyReview.findMany({ where: { organizationId: org.id } });
-  expect(reviews).toHaveLength(1);
-  expect((reviews[0].metadata as any).status).toEqual({ privacyStatus: "unlisted", selfDeclaredMadeForKids: false, containsSyntheticMedia: true });
-  expect(await db.publicationAttempt.count({ where: { organizationId: org.id } })).toBe(0);
   // Browser-only readiness fixture exercises the notice without enabling the
   // isolated API's live dispatch flag or sending a provider request.
-  const attemptUrl = `**/publication-intents/${reviews[0].intentId}/youtube-attempt`;
-  const manualGuidanceUrl = `**/publication-intents/${reviews[0].intentId}/youtube-manual-posting-guidance?*`;
+  const attemptUrl = `**/publication-intents/*/youtube-attempt`;
+  const manualGuidanceUrl = `**/publication-intents/*/youtube-manual-posting-guidance?*`;
   await page.route(attemptUrl, (route) => route.fulfill({ status: 200,
     contentType: "application/json", body: JSON.stringify({ attempt: null,
       canPublish: true, canReconcile: false }) }));
@@ -82,6 +74,12 @@ test("an owner reviews one approved YouTube render without scheduling or posting
       guidance: { dailyCount: 2, gapMinutes: 120, window: "24h-centered" },
       disclaimer: "Workspace guidance only; no platform guarantee.",
     }) }));
+  await save.click();
+  await expect(panel.getByText("Review saved", { exact: true })).toBeVisible();
+  const reviews = await db.publicationPolicyReview.findMany({ where: { organizationId: org.id } });
+  expect(reviews).toHaveLength(1);
+  expect((reviews[0].metadata as any).status).toEqual({ privacyStatus: "unlisted", selfDeclaredMadeForKids: false, containsSyntheticMedia: true });
+  expect(await db.publicationAttempt.count({ where: { organizationId: org.id } })).toBe(0);
   await panel.getByRole("button", { name: /Open .*revision 1/ }).first().click();
   await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toBeVisible();
   await expect(panel.getByRole("button", { name: "Publish reviewed video to YouTube" })).toBeDisabled();

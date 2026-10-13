@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-12.09-SOCIAL01-manual-guidance-native-ci-closure-local",
-  "createdAtUtc": "2026-10-12T22:51:35.220998+00:00",
+  "checkpointRevision": "2026-10-13.01-SOCIAL01-configurable-posting-policy-local",
+  "createdAtUtc": "2026-10-13T15:51:47.896157+00:00",
   "scope": "Portable source and saved project context; not runtime/database/media backup.",
   "hashAlgorithm": "sha256",
   "manifestIsSelfExcluded": true,
@@ -40,12 +40,12 @@
       "sha256": "11477a3664bbdea5a5e2d66c777b2efff17bb1ae5e217627329b985183d6ff82"
     },
     "PROJECT_CHECKPOINT.json": {
-      "bytes": 370431,
-      "sha256": "68c6a347ec2936e5257be10b202529434d5848538d3ac4b2209f7ba5ad86736c"
+      "bytes": 371578,
+      "sha256": "3932c59539a9812f2f86efc83528ac2b01367f13ccdc4684302a943767d14b3b"
     },
     "PROJECT_STATUS.md": {
-      "bytes": 123506,
-      "sha256": "53c82ca13088057a2b6d4f0e1950a80fe8747a8ea802a547bc5d75d8a97877d0"
+      "bytes": 125130,
+      "sha256": "06392660777bc736844c4c733191d2fb3d30d9980b7c6bd24f7e44f480a4270f"
     },
     "README.md": {
       "bytes": 35196,
@@ -112,8 +112,8 @@
       "sha256": "c2c86f9913a61c0e97b566a4d624218cd4e194896bdf48e490904f0b82b65828"
     },
     "apps/api/src/posting-guidance.ts": {
-      "bytes": 7139,
-      "sha256": "454e13a0360d47a15ce652a9fa4c928e1cc6c31168e2cf0bb2c3023c512d0cbd"
+      "bytes": 7093,
+      "sha256": "5b24d3a6b5606eef673d8c06eeaadfaee6ddd302e90d2b283d542e33d71365c5"
     },
     "apps/api/src/publication-attempts.ts": {
       "bytes": 20527,
@@ -328,8 +328,8 @@
       "sha256": "b8c752cddf374e4fcefa95febb15923d76dba5d0f69ddfa8cd9bbf461c17feee"
     },
     "docs/HANDOFF.md": {
-      "bytes": 121554,
-      "sha256": "9319c0ce30438ad28e4f9185c765a4ecf0f4ae8bdf6b66bf8afdc5ec52c235de"
+      "bytes": 123178,
+      "sha256": "9958b5fd70e817bf0864d386e677225378271b51acdbbd5b8cc971e210b1be36"
     },
     "docs/IMPLEMENTATION_PLAN.md": {
       "bytes": 4581,
@@ -356,8 +356,8 @@
       "sha256": "a23631f1f0891df57e4d594a845ac7d60d6ab7f0e98955c6d3fd251612f91c4d"
     },
     "docs/PROJECT_STATUS.md": {
-      "bytes": 123506,
-      "sha256": "53c82ca13088057a2b6d4f0e1950a80fe8747a8ea802a547bc5d75d8a97877d0"
+      "bytes": 125130,
+      "sha256": "06392660777bc736844c4c733191d2fb3d30d9980b7c6bd24f7e44f480a4270f"
     },
     "docs/PROVIDER_CATALOG.md": {
       "bytes": 2320,
@@ -739,6 +739,10 @@
       "bytes": 2865,
       "sha256": "f62c0fa51e3b49db17d18eb8ac4c14d7be689a2e582fb1dcffc81317875ed298"
     },
+    "docs/qa/social01-configurable-posting-policy-evidence.json": {
+      "bytes": 4176,
+      "sha256": "a4351a070101d31af87ea305ab93ac8c05ccdb211d882ec24ca2e3e20d5f0b25"
+    },
     "docs/qa/social01-exact-video-guard-evidence.json": {
       "bytes": 3132,
       "sha256": "7df4776db96be1dcbe3b639cddcedaa431b820c2ee5179a85c6ebfa85aae01ec"
@@ -856,8 +860,8 @@
       "sha256": "362d2704d40c49d7a1c3d83f7c22ce34e4a4e64d63d3b3ec41cfff7820cdcc8b"
     },
     "docs/qa/verification-summary.json": {
-      "bytes": 319646,
-      "sha256": "303446792e863a3099f7edd4d86cc17e2c5ae04ee96bbf82f685947a8384a9fc"
+      "bytes": 319740,
+      "sha256": "4f0a506fb3ee580f5dc44ddd44d82299c312481c8d9539c76abbe89882630c97"
     },
     "docs/qa/video-studio-dark.png": {
       "bytes": 199675,
@@ -950,6 +954,10 @@
     "packages/core/openai-media.ts": {
       "bytes": 13365,
       "sha256": "3bd8f86da7011d77a18bed39b5b0a3fa28dba0f02f203428336775800bd6be1e"
+    },
+    "packages/core/posting-policy.ts": {
+      "bytes": 5693,
+      "sha256": "11a643dbba6b9533868b6b12227f87d2b36f23605fbcfd611a4ce697b20b9435"
     },
     "packages/core/render-cjk-linebreak.ts": {
       "bytes": 2017,
@@ -1264,8 +1272,8 @@
       "sha256": "d52d614620495e89a1fe61250e2860ba01d5dc49dd42a40e8c0f7fbc396fbfc4"
     },
     "tests/integration/social-dispatch.test.ts": {
-      "bytes": 26181,
-      "sha256": "7dd07869eb6f91b3f08ff334d6d4a9dc71d3b346365bc875d4fe568aba13f647"
+      "bytes": 27201,
+      "sha256": "173af2f09103f377a8e9f446873e51d521a295d9577c72edd2222399b1c29f6a"
     },
     "tests/integration/social-oauth.test.ts": {
       "bytes": 16506,
@@ -1278,6 +1286,10 @@
     "tests/openai-media.test.ts": {
       "bytes": 11517,
       "sha256": "b620c54307b91e2fa6072fc896f133a1593bebcfa99c1198a6bbea4911b31712"
+    },
+    "tests/posting-policy.test.ts": {
+      "bytes": 2535,
+      "sha256": "ec05b798b3bb8bd759d4938a05bf03e1423c70c6fe06d0266fd65ad73f5c8f07"
     },
     "tests/recovery/configuration.test.ts": {
       "bytes": 4237,
@@ -1356,16 +1368,16 @@
       "sha256": "610a0e466a7e5f3d50be667747d211cb0cec6f1e83fa8eb4fa914c502c9c8626"
     },
     "tests/ui/foundation.spec.ts": {
-      "bytes": 7927,
-      "sha256": "3c09a193a800ea4171c7d3fe0ccc173badf8c89a3abd8314d5c9213e8f6b624a"
+      "bytes": 7953,
+      "sha256": "bf75d58d43f99d03c81bb827de73fb3aae6abfef9c95efffe2bb8fc183f180d7"
     },
     "tests/ui/generated-media.spec.ts": {
-      "bytes": 6476,
-      "sha256": "c7385fb69dbecfe1bc94aac0571ab0b7ae92a050228ac05479b9fadb57936d2a"
+      "bytes": 6551,
+      "sha256": "46de8eec9e3f992ff28382c613e9432f4755e8f1ce2e177867fd5106257e67c1"
     },
     "tests/ui/media.spec.ts": {
-      "bytes": 19986,
-      "sha256": "2237fd0d8a4d91f9acc11a4464c042462a4b2af4ad0e6777da4c613eb122e790"
+      "bytes": 20040,
+      "sha256": "569cd7164363d4a284f49bf72df1d86e76b97046e7a4b06e852712119c09c571"
     },
     "tests/ui/operations.spec.ts": {
       "bytes": 2704,
@@ -1376,8 +1388,8 @@
       "sha256": "be296a7ac860445c303a88edd28d9c85a23c8ff65d7e4a910a85d85fe431b7d7"
     },
     "tests/ui/social-policy-review.spec.ts": {
-      "bytes": 11526,
-      "sha256": "532a44cb83757472d76eed0099355e91145e5610d5e2da610a03c15c3a364e0f"
+      "bytes": 11292,
+      "sha256": "678a45f9d90a7a868bcbafc40a63cd5879fc540d15bde522716f6ba6c8fb4a56"
     },
     "tests/youtube-oauth.test.ts": {
       "bytes": 6245,

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "slice": "SOCIAL-01 configurable posting-policy engine",
+  "dateUtc": "2026-10-13",
+  "status": "local_verified_not_published",
+  "basePublicCommit": "b622c9243f65f978d3366aeaa6d9dcb4b72be39c",
+  "basePublicBranch": "main",
+  "summary": "Adds a deterministic shared posting-policy engine for semantic YouTube guidance. Scheduled and manual posting guidance now include configurable similar metadata, repeated topic-cluster and repeated CTA-pattern warnings, with fingerprints based on normalized hashed signatures and match IDs rather than raw metadata text.",
+  "sourceChanges": [
+    "packages/core/posting-policy.ts",
+    "apps/api/src/posting-guidance.ts",
+    "tests/posting-policy.test.ts",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/ui/foundation.spec.ts",
+    "tests/ui/generated-media.spec.ts",
+    "tests/ui/media.spec.ts",
+    "tests/ui/social-policy-review.spec.ts"
+  ],
+  "configuration": {
+    "YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT": {
+      "default": 70,
+      "maximum": 100
+    },
+    "YOUTUBE_GUIDANCE_TOPIC_OVERLAP_PERCENT": {
+      "default": 60,
+      "maximum": 100
+    },
+    "YOUTUBE_GUIDANCE_TOPIC_REPEAT_COUNT": {
+      "default": 2,
+      "maximum": 50
+    },
+    "YOUTUBE_GUIDANCE_CTA_REPEAT_COUNT": {
+      "default": 3,
+      "maximum": 50
+    },
+    "YOUTUBE_GUIDANCE_MIN_TOPIC_TOKENS": {
+      "default": 3,
+      "maximum": 20
+    }
+  },
+  "warnings": [
+    "SIMILAR_METADATA",
+    "REPEATED_TOPIC_CLUSTER",
+    "REPEATED_CTA_PATTERN"
+  ],
+  "privacyAndIntegrity": {
+    "rawMetadataTextInSignals": false,
+    "rawMetadataTextInFingerprint": false,
+    "signalsUseHashedNormalizedTokens": true,
+    "tenantChannelScoped": true,
+    "guidanceOnly": true,
+    "platformGuaranteeClaimed": false
+  },
+  "localVerification": {
+    "cleanInstall": {
+      "command": "npm ci --cache ./.npm-cache --prefer-offline",
+      "result": "passed",
+      "packages": 273,
+      "fontkitPatch": "verified"
+    },
+    "focusedPolicyUnit": {
+      "command": "node --import tsx --test --test-reporter=./scripts/unit-reporter.mjs tests/posting-policy.test.ts",
+      "result": "passed",
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "apiBuild": {
+      "command": "npm run build:api",
+      "result": "passed"
+    },
+    "cjkFonts": {
+      "command": "python3 scripts/install_test_cjk_fonts.py --destination .local/test-cjk-fonts",
+      "result": "passed",
+      "shaVerifiedFonts": 4
+    },
+    "selectedApplicationVerifier": {
+      "command": "env RENDER_FONT_FALLBACK_PATHS=/workspace/scratch/ccfb410af43f/organic-marketing-os-social01-policy/.local/test-cjk-fonts/NotoSansCJKjp-Regular.otf node scripts/verify-local.mjs --http-spec=social-dispatch.test.ts",
+      "result": "passed",
+      "http": {
+        "selectedSpec": "social-dispatch.test.ts",
+        "passed": 1,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "passed": 8,
+        "failed": 0
+      },
+      "recovery": {
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "freshPgliteMigrations": 20,
+      "finalLine": "Selected verification passed (HTTP: social-dispatch.test.ts; UI: all; recovery: all)."
+    }
+  },
+  "recoveryNotes": [
+    "The previous transient SOCIAL-01 policy checkout was missing after connection interruption, so this increment was reconstructed from the exact public main commit b622c9243f65f978d3366aeaa6d9dcb4b72be39c.",
+    "The old EDITOR-era dirty checkout was not modified; only local test-tool cache bytes were copied into .local for verification.",
+    "Initial S3Proxy startup was blocked by sandbox permissions; the selected verifier was rerun with local service permissions and completed successfully."
+  ],
+  "excludedOrPending": [
+    "No public GitHub publication has occurred for this increment.",
+    "No own native PostgreSQL GitHub Actions run has occurred for this increment.",
+    "No live Google grant, upload or deployed operator policy receipt occurred.",
+    "Full master acceptance remains open."
+  ]
+}

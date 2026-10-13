@@ -1,5 +1,6 @@
 import { ConflictException, ServiceUnavailableException } from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
+import { evaluatePostingPolicy, PostingPolicyConfig } from "../../../packages/core/posting-policy";
 import { digest } from "../../../packages/core/security";
 import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 
@@ -15,25 +16,14 @@ function setting(value: string | undefined, fallback: number, maximum: number) {
   return Number(value);
 }
 
-function normalized(value: unknown) {
-  return typeof value === "string" ? value.normalize("NFKC").toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, " ").trim().replace(/\s+/gu, " ") : "";
-}
-
-function titleOf(metadata: unknown) {
-  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) return "";
-  const snippet = (metadata as { snippet?: unknown }).snippet;
-  if (!snippet || typeof snippet !== "object" || Array.isArray(snippet)) return "";
-  return normalized((snippet as { title?: unknown }).title);
-}
-
-function similarTitle(first: string, second: string) {
-  if (!first || !second) return false;
-  if (first === second) return true;
-  const a = new Set(first.split(" ")), b = new Set(second.split(" "));
-  if (a.size < 3 || b.size < 3) return false;
-  const shared = [...a].filter((word) => b.has(word)).length;
-  return shared / Math.max(a.size, b.size) >= 0.8;
+function policyConfig(): PostingPolicyConfig {
+  return {
+    metadataSimilarityPercent: setting(process.env.YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT, 70, 100),
+    topicOverlapPercent: setting(process.env.YOUTUBE_GUIDANCE_TOPIC_OVERLAP_PERCENT, 60, 100),
+    topicRepeatCount: setting(process.env.YOUTUBE_GUIDANCE_TOPIC_REPEAT_COUNT, 2, 50),
+    ctaRepeatCount: setting(process.env.YOUTUBE_GUIDANCE_CTA_REPEAT_COUNT, 3, 50),
+    minTopicTokens: setting(process.env.YOUTUBE_GUIDANCE_MIN_TOPIC_TOKENS, 3, 20),
+  };
 }
 
 // Advisory only: these numbers are workspace guidance, not a YouTube limit.
@@ -45,6 +35,7 @@ export async function evaluateScheduleGuidance(db: DbReader, input: {
 }) {
   const dailyCount = setting(process.env.YOUTUBE_GUIDANCE_24H_COUNT, 2, 50);
   const gapMinutes = setting(process.env.YOUTUBE_GUIDANCE_GAP_MINUTES, 120, 1440);
+  const semanticConfig = policyConfig();
   const from = new Date(input.dueAt.getTime() - dayMs);
   const to = new Date(input.dueAt.getTime() + dayMs);
   const [schedules, attempts] = await Promise.all([
@@ -74,29 +65,36 @@ export async function evaluateScheduleGuidance(db: DbReader, input: {
     organizationId: input.organizationId, connectionId: input.connectionId,
     intentId: { in: ordered.map((event) => event.intentId) },
   }, select: { intentId: true, metadata: true } }) : [];
-  const titles = new Map(reviews.map((review) => [review.intentId, titleOf(review.metadata)]));
-  const currentTitle = titleOf(input.metadata);
+  const metadataByIntent = new Map(reviews.map((review) => [review.intentId, review.metadata]));
   const nearby = ordered.filter((event) =>
     Math.abs(event.at.getTime() - input.dueAt.getTime()) < gapMinutes * 60000);
   const volume = ordered.filter((event) =>
     Math.abs(event.at.getTime() - input.dueAt.getTime()) < dayMs / 2);
-  const repeated = ordered.filter((event) => similarTitle(currentTitle, titles.get(event.intentId) ?? ""));
+  const semanticPolicy = evaluatePostingPolicy({
+    config: semanticConfig,
+    currentMetadata: input.metadata,
+    priors: ordered.map((event) => ({ ...event,
+      metadata: metadataByIntent.get(event.intentId) ?? {} })),
+  });
   const warnings: { code: string; message: string }[] = [];
   if (nearby.length) warnings.push({ code: "CLOSE_SPACING",
     message: `Another upload may be within ${gapMinutes} minutes of this time. Review your posting cadence.` });
   if (volume.length >= dailyCount) warnings.push({ code: "HIGH_24H_VOLUME",
     message: `This would exceed your guidance of ${dailyCount} uploads in the 24-hour window centered on this time.` });
-  if (repeated.length) warnings.push({ code: "SIMILAR_TITLE",
-    message: "A recent or scheduled upload has a very similar title. Check for repetitive content." });
+  warnings.push(...semanticPolicy.warnings);
   const fingerprint = digest(JSON.stringify({ version: input.mode === "manual" ?
     "youtube-manual-guidance-1" : postingGuidanceVersion,
     organizationId: input.organizationId, connectionId: input.connectionId,
     intentId: input.intentId, dueAt: input.dueAt.toISOString(),
-    dailyCount, gapMinutes, currentTitle,
+    dailyCount, gapMinutes, semanticPolicy: semanticPolicy.signals,
     events: ordered.map((event) => ({ id: event.id, intentId: event.intentId,
-      status: event.status, at: event.at.toISOString(), title: titles.get(event.intentId) ?? "" })),
+      status: event.status, at: event.at.toISOString() })),
   }));
-  return { fingerprint, warnings, guidance: { dailyCount, gapMinutes, window: "24h-centered" },
+  return { fingerprint, warnings, guidance: { dailyCount, gapMinutes, window: "24h-centered",
+    metadataSimilarityPercent: semanticConfig.metadataSimilarityPercent,
+    topicOverlapPercent: semanticConfig.topicOverlapPercent,
+    topicRepeatCount: semanticConfig.topicRepeatCount,
+    ctaRepeatCount: semanticConfig.ctaRepeatCount },
     disclaimer: "Workspace guidance only; no posting frequency guarantees platform approval or prevents enforcement." };
 }
 

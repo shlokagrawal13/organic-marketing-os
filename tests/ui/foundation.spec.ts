@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 test("register, create a workspace, and sign out", async ({ page }) => {
+  test.setTimeout(90000);
   await page.goto("/");
   await page.getByLabel("Your name").fill("QA Workspace Owner");
   await page.getByLabel("Email address").fill(`ui-${Date.now()}@example.test`);

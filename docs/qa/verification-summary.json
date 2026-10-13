@@ -1,6 +1,6 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-12",
+  "verifiedDate": "2026-10-13",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
@@ -84,7 +84,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "The approved 21-file manual immediate-send posting-guidance payload is public on `main` at `fc1a646f708db5590bba9b1ac5e516bcc3ce5a44` (parent `6d62e6045368c305e761779d42571c01a2c63c7d`, tree `8c8a25d51c6ae72a6b2e7d51044c75e3ee58cfe2`). Remote compare showed exactly the approved 21 paths, and the GitHub tree matched the locally verified source tree. Its own Actions run `38317432181`, job `115037307043`, attempt 1 succeeded: 199/199 unit receipts with 25 summaries and zero failed/cancelled/skipped/todo, 14/14 HTTP, 8/8 production browser, 5/5 recovery, 20 fresh native PostgreSQL migrations, API/web build, populated upgrade and production/full dependency audits with zero vulnerabilities. Browser artifact `11777514792` digest `sha256:b95d6dda317f4deb8c43673284204d50396a81d9131dcee08665e26bc402a264` was published by the workflow. No live Google grant/upload or deployed operator policy receipt occurred. Broader semantic similarity, configurable policy engine, live Google acceptance and full master acceptance remain open; SOCIAL-01 stays Partial. This later closure record is local and unpublished. See `docs/qa/social01-manual-posting-guidance-native-ci-evidence.json`. Earlier dated sections below are historical.",
+  "latestIncrement": "SOCIAL-01 configurable semantic posting-policy guidance is locally verified and unpublished. It adds a deterministic shared posting-policy engine for similar metadata, repeated topic clusters and repeated CTA patterns. Policy signals/fingerprint use normalized hashed signatures and match IDs, not raw title/description text. Local checks passed: clean npm ci with Fontkit patch, focused policy unit, API build, 4 pinned CJK fonts, selected social-dispatch HTTP 1/1, browser 8/8, recovery 5/5 and 20 fresh PGlite migrations. No native CI or live Google grant/upload occurred for this increment.",
   "latestNativeRun": {
     "runId": 38214259597,
     "jobId": 114695181678,
@@ -1948,7 +1948,7 @@
       "batch": "fontkit-outlines-v1-indic-registry-mark-filter-sinhala"
     },
     "plainOverlayFingerprintUnchanged": true,
-    "fractionalEdgeTolerancePixels": 1e-07,
+    "fractionalEdgeTolerancePixels": 1e-7,
     "realOverflowStillRejected": true,
     "sinhalaJoinerConjunctsVerified": false,
     "sinhalaJoinersPreservedWithImageFallback": true,
@@ -7994,5 +7994,27 @@
     "artifactDigest": "sha256:b95d6dda317f4deb8c43673284204d50396a81d9131dcee08665e26bc402a264",
     "closureDocsPublic": false,
     "nativeCiEvidence": "docs/qa/social01-manual-posting-guidance-native-ci-evidence.json"
+  },
+  "social01ConfigurablePostingPolicy": {
+    "status": "local_verified_not_published",
+    "basePublicCommit": "b622c9243f65f978d3366aeaa6d9dcb4b72be39c",
+    "evidence": "docs/qa/social01-configurable-posting-policy-evidence.json",
+    "focusedPolicyUnitPassed": true,
+    "apiBuildPassed": true,
+    "selectedHttpPassed": 1,
+    "browserPassed": 8,
+    "recoveryPassed": 5,
+    "freshPgliteMigrations": 20,
+    "cjkFontsShaVerified": 4,
+    "warnings": [
+      "SIMILAR_METADATA",
+      "REPEATED_TOPIC_CLUSTER",
+      "REPEATED_CTA_PATTERN"
+    ],
+    "rawMetadataTextInSignals": false,
+    "rawMetadataTextInFingerprint": false,
+    "nativeCiForDelta": false,
+    "liveGoogleGrantOrPost": false,
+    "public": false
   }
 }

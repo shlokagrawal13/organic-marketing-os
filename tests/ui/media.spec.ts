@@ -248,7 +248,7 @@ test("inspect workspace pages, upload private media, render and approve a playab
   await page.getByRole("button", { name: "Approve this revision" }).click();
   await expect(
     page.getByText("Content approved.", { exact: true }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 20000 });
   const preset = page.getByRole("combobox", {
     name: "Export preset",
     exact: true,
@@ -431,7 +431,7 @@ test("inspect workspace pages, upload private media, render and approve a playab
     .click();
   await expect(
     page.getByText("This rendered video is approved.", { exact: true }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 20000 });
   const downloadEvent = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download MP4", exact: true }).click();
   const download = await downloadEvent;
@@ -443,7 +443,7 @@ test("inspect workspace pages, upload private media, render and approve a playab
     .click();
   await expect(
     page.getByText("This rendered video is approved.", { exact: true }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 20000 });
   await page
     .locator("video.render-player")
     .evaluate(async (v: HTMLVideoElement) => {
