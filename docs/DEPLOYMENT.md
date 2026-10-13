@@ -11,7 +11,7 @@
 5. Install supported FFmpeg/ffprobe and fonts in API (upload probing) and render-worker runtimes. Set CPU/memory/temp-disk limits and monitor worker capacity. Compose limits render-worker to 2 CPUs/1536 MiB and one job at a time; production sizing is not benchmarked.
 6. Configure HTTPS ingress, HTTPS WEB_ORIGIN, COOKIE_SECURE=true and NODE_ENV=production. API startup checks these settings. Restrict direct API access if configuring trusted proxy hops. Allow at least 27 MiB request bodies through ingress for a 25 MiB upload plus multipart metadata, with appropriate rate/time limits.
 7. Precreate a private bucket and validate read/write/range behavior with least-privilege credentials. Keep public access disabled; configure encryption and backup/retention. Compose auto-creation is a development convenience.
-8. Through the deployed origin verify API/storage/worker health, auth/email/tenant isolation, large upload, render, playback/download and approval invalidation. Run authorized live text-provider tests with agreed spend limits.
+8. Through the deployed origin verify API/storage/worker health, auth/email/tenant isolation, large upload, render, playback/download and approval invalidation. Run `npm run verify:youtube-live-readiness` before any authorized live YouTube upload test; it must pass with the deployed secret configuration and current operator policy receipt. Run authorized live text-provider tests with agreed spend limits.
 9. Finish remaining modules and full master acceptance before claiming product production readiness.
 
 ## Rollback and data

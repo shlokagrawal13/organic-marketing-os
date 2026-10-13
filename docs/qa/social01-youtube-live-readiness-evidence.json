@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "taskId": "SOCIAL-01",
+  "increment": "youtube-live-readiness-preflight",
+  "dateUtc": "2026-10-13",
+  "baseCommit": "41a71bc60f89b9d576998c60f65035435ab17240",
+  "status": "local-verified-unpublished",
+  "changedPaths": [
+    ".env.example",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "docs/DEPLOYMENT.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/qa/social01-youtube-live-readiness-evidence.json",
+    "docs/qa/verification-summary.json",
+    "package.json",
+    "packages/core/youtube-live-readiness.ts",
+    "scripts/verify-youtube-live-readiness.ts",
+    "tests/youtube-live-readiness.test.ts"
+  ],
+  "readinessChecks": [
+    "live-dispatch-enabled",
+    "operator-policy-review-current",
+    "youtube-oauth-config",
+    "social-token-encryption",
+    "database-url",
+    "redis-url",
+    "private-object-storage",
+    "production-web-origin",
+    "secure-production-cookie"
+  ],
+  "providerCalls": {
+    "googleGrant": false,
+    "googleTokenRefresh": false,
+    "googleUpload": false,
+    "youtubeStatusCheck": false
+  },
+  "localVerification": {
+    "focusedUnit": {
+      "command": "node --import tsx --test --test-reporter=./scripts/unit-reporter.mjs tests/youtube-live-readiness.test.ts tests/youtube-oauth.test.ts tests/youtube-policy-maintenance.test.ts",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "apiBuild": {
+      "command": "npm run build:api",
+      "passed": true
+    },
+    "defaultPreflight": {
+      "command": "npm run verify:youtube-live-readiness",
+      "expectedExit": 1,
+      "passed": true,
+      "result": "failed closed with critical checks missing and no secrets emitted"
+    },
+    "fixturePreflight": {
+      "command": "env NODE_ENV=production WEB_ORIGIN=https://app.example.test COOKIE_SECURE=true YOUTUBE_LIVE_DISPATCH_ENABLED=true YOUTUBE_POLICY_REVIEWED_VERSION=youtube-videos-insert-2026-10-08 YOUTUBE_POLICY_REVIEWED_AT=2026-10-13T16:35:00Z YOUTUBE_OAUTH_CLIENT_ID=fixture-client YOUTUBE_OAUTH_CLIENT_SECRET=fixture-secret YOUTUBE_OAUTH_REDIRECT_URI=https://api.example.test/api/social/youtube/callback SOCIAL_TOKEN_ENCRYPTION_KEY=<32-byte-base64> DATABASE_URL=postgresql://example REDIS_URL=redis://example S3_ENDPOINT=https://objects.example.test S3_BUCKET=marketing-assets S3_ACCESS_KEY=fixture-access S3_SECRET_KEY=fixture-secret npm run verify:youtube-live-readiness",
+      "expectedExit": 0,
+      "passed": true,
+      "checksPassed": 9
+    },
+    "checkpoint": {
+      "archiveSha256": null,
+      "files": null,
+      "passed": true,
+      "command": "python3 scripts/package_handoff.py --output ../organic-marketing-os-social01-youtube-live-readiness-local.zip && python3 scripts/package_handoff.py --check"
+    }
+  },
+  "excluded": [
+    "No live Google grant/upload was attempted.",
+    "No deployed operator policy receipt was created.",
+    "No native CI run exists until the approved payload is published."
+  ]
+}

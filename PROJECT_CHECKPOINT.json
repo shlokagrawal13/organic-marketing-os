@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-13.02-SOCIAL01-configurable-posting-policy-native-ci-closure-local",
+  "checkpointRevision": "2026-10-13.03-SOCIAL01-youtube-live-readiness-preflight-local",
   "savedAtUtc": "2026-10-13",
-  "currentMilestone": "SOCIAL-01 configurable posting-policy engine public and native CI verified; closure docs local and unpublished",
+  "currentMilestone": "SOCIAL-01 YouTube live readiness preflight locally verified; approved 13-file publication pending",
   "activeTaskId": "SOCIAL-01",
   "workInProgress": false,
   "nextTaskId": "SOCIAL-01",
-  "nextAction": "Get exact approval for the 7-file SOCIAL-01 configurable posting-policy native-CI closure docs/evidence/checkpoint payload before public GitHub publication. Then proceed to live Google acceptance and full master acceptance.",
+  "nextAction": "Publish the approved 13-file SOCIAL-01 YouTube live readiness preflight payload, then wait for its own native CI closure before proceeding to deployed operator receipt, authorized live Google acceptance and full master acceptance.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -17,13 +17,19 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".env.example",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
+    "docs/DEPLOYMENT.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
-    "docs/qa/social01-configurable-posting-policy-native-ci-evidence.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/social01-youtube-live-readiness-evidence.json",
+    "docs/qa/verification-summary.json",
+    "package.json",
+    "packages/core/youtube-live-readiness.ts",
+    "scripts/verify-youtube-live-readiness.ts",
+    "tests/youtube-live-readiness.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -326,7 +332,7 @@
       "jobLogSha256": "29cd1b01e8017e6668f998981b9382c43bf36a0eba401bbfc39233311048a744",
       "scope": "Own V native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; separate populated PGlite upgrade/archive restore. No full Compose/MinIO, native cross-store restore, live provider, physical-device or master acceptance."
     },
-    "latestIncrement": "The approved 18-path exact-video guard was published on public main at `641fa1378701f1ea0e9fd3d47768912a547ba82c` (parent `102a9e3f6700837a52e65298ce45df3fa6ebed6f`, tree `dfc0708cabd38daa31f72a3bc092641f517d85d9`). Remote tree and exact changed paths matched the rebuilt local source. Its own native Actions run `38214259597`, job `114695181678`, attempt 1 succeeded: 199/199 unique unit receipts with 25 summaries and zero failed/cancelled/skipped/todo, 14 HTTP, 8 browser, 5 recovery, 18 native PostgreSQL migrations, API/web builds, populated upgrade, 36/36 bounded English and 8/8 busy-background OCR samples with blank negative control, and both audits at zero vulnerabilities. Artifact `11731422292` SHA-256 matched GitHub metadata; all 124 ZIP entries passed CRC and all 44 OCR PNG hashes matched their report. The prior local exploratory browser failure without test fonts is excluded; native CI passed on the published source. No live Google grant/upload, deployed policy receipt, scheduler, broader semantic/frequency checks or full master acceptance occurred; SOCIAL-01 remains Partial.",
+    "latestIncrement": "SOCIAL-01 YouTube live readiness preflight locally verified on public parent 41a71bc60f89b9d576998c60f65035435ab17240. Focused unit passed 3/3, API build passed, default preflight failed closed, production fixture preflight passed 9/9 checks. No Google grant, token refresh, upload, deployed operator receipt, public push or native CI occurred yet.",
     "billingInvoiceViewsVerified": true,
     "dependencyAuditDate": "2026-10-07",
     "nativePostgresVerifiedMeaning": "Own X application CI uses disposable native PostgreSQL 17/Redis 7, S3Proxy, real FFmpeg and synthetic providers. Populated upgrade/archive restore separately uses PGlite. Docker/full Compose/MinIO, native PostgreSQL/private-media cross-store restore, live providers, physical-device readability and full master acceptance remain open.",
