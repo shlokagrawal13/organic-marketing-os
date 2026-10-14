@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "taskId": "SOCIAL-01",
+  "increment": "deployed-readiness-capture-runner-native-ci-closure",
+  "dateUtc": "2026-10-14",
+  "status": "source_public_native_ci_verified_closure_local",
+  "publicCommit": "73416a696c1d577c9d51bbb5c15d58c01169b539",
+  "parentCommit": "fa00ecdc6a82a0d1d214e093c885693a36d1b2f7",
+  "treeSha": "07577386ce2f9f88c10045d54aebed240dcb7321",
+  "approvedSourcePaths": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "docs/DEPLOYMENT.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/qa/social01-deployed-readiness-capture-evidence.json",
+    "docs/qa/verification-summary.json",
+    "package.json",
+    "scripts/capture-youtube-deployed-readiness-receipt.ts",
+    "tests/deployed-readiness-receipt.test.ts"
+  ],
+  "exact11Paths": true,
+  "fullPublicTreeMatchesLocal": true,
+  "run": {
+    "id": 38600843120,
+    "number": 71,
+    "workflow": "Core and recovery verification",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38600843120",
+    "headSha": "73416a696c1d577c9d51bbb5c15d58c01169b539",
+    "startedAtUtc": "2026-10-14T16:45:55Z",
+    "updatedAtUtc": "2026-10-14T17:00:16Z"
+  },
+  "job": {
+    "id": 115979380528,
+    "name": "Native application verification",
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 38600843120,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Initialize containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Check out source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Install dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Set up Java",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Install test object storage",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Install media dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Install pinned test CJK fonts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Run unit tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Verify bounded small-screen English readability",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Audit production dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13
+      },
+      {
+        "name": "Audit all dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14
+      },
+      {
+        "name": "Verify populated upgrade",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Verify native application flows",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16
+      },
+      {
+        "name": "Upload browser evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17
+      },
+      {
+        "name": "Post Set up Java",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 31
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 32
+      },
+      {
+        "name": "Post Check out source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 33
+      },
+      {
+        "name": "Stop containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 34
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 35
+      }
+    ]
+  },
+  "verification": {
+    "unit": {
+      "tests": 205,
+      "pass": 205,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "http": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    "recovery": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "freshNativePostgresMigrations": 20,
+    "nativePostgres": true,
+    "nativeRedis": true,
+    "apiBuild": true,
+    "webBuild": true,
+    "populatedUpgrade": true,
+    "upgradeEngine": "PGlite WASM PostgreSQL",
+    "nativePostgresRestoreVerified": false,
+    "productionDependencyAuditVulnerabilities": 0,
+    "allDependencyAuditVulnerabilities": 0
+  },
+  "unitReceipts": "docs/qa/social01-deployed-readiness-capture-native-unit-receipts.json",
+  "sourceReconstructed": true,
+  "originalLostCommitNotReused": "5825465c76cfa7def093a849e046601fe03eed1a",
+  "deployedProductionReceipt": false,
+  "liveGoogleGrantOrPost": false,
+  "fullMasterAcceptance": false,
+  "closurePublication": false,
+  "sourceUnchangedByClosure": true,
+  "limits": [
+    "Readiness capture is authenticated config receipt, not live Google/provider or production health acceptance.",
+    "Upgrade/restore verification used PGlite; native PostgreSQL plus private-media backup/restore is still open.",
+    "OCR evidence is bounded synthetic English/readability regression, not physical-device or arbitrary content acceptance."
+  ],
+  "artifact": {
+    "id": 11914890980,
+    "sizeBytes": 6187360,
+    "digest": "sha256:b5e067202f395b00c1c0d50f03a410d877f76ce5a1a728136b839f742f10d77b",
+    "entries": 124,
+    "crcVerified": true,
+    "unitPassedReceipts": 205,
+    "unitUniqueReceipts": 205,
+    "summaries": 28,
+    "finalSummary": {
+      "success": true,
+      "counts": {
+        "tests": 205,
+        "failed": 0,
+        "passed": 205,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 205,
+        "suites": 0
+      },
+      "duration_ms": 405210.833262
+    },
+    "ocrSamplesShaVerified": 44,
+    "readabilitySamples": 36,
+    "busySamples": 8,
+    "blankNegativeControlPassed": true,
+    "name": "browser-evidence",
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38600843120/artifacts/11914890980"
+  },
+  "unitReceiptSha256": "f793aa9520f2f7f9de82ffb9f539d8bca85ea2f3fd72cea555db6f3fc8045d75"
+}

@@ -1,0 +1,1492 @@
+{
+  "passed": [
+    {
+      "name": "all 18 specified agents have explicit responsibilities and are mapped into a task graph",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/agents.test.ts",
+      "durationMs": 1.264661
+    },
+    {
+      "name": "agent context is frozen and research/community agents disclose absent external evidence",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/agents.test.ts",
+      "durationMs": 0.405222
+    },
+    {
+      "name": "agent critique blocks obvious guarantees and always requires a human gate",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/agents.test.ts",
+      "durationMs": 2.046749
+    },
+    {
+      "name": "model router validates output and records primary failure, fallback, tokens and estimates",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 32.367492
+    },
+    {
+      "name": "invalid model output never becomes successful generated content",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 2.174598
+    },
+    {
+      "name": "invalid task output does not disable the provider for the next job, but an outage does",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 3.933945
+    },
+    {
+      "name": "empty content and unsupported guarantees block approval; structural passes still require human review",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.91983
+    },
+    {
+      "name": "usage-record failure cannot trigger another paid provider request",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 2.562262
+    },
+    {
+      "name": "aborted jobs cannot start a fallback and oversized provider output is rejected",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 3.587324
+    },
+    {
+      "name": "critical routing never downgrades quality and ambiguous transport failures never duplicate a paid call",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.942127
+    },
+    {
+      "name": "routing enforces plan, capability and maximum estimated cost before calling a provider",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.431424
+    },
+    {
+      "name": "shared health removes an unavailable provider from selection and records the configured fallback",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 1.061397
+    },
+    {
+      "name": "Redis health adapter shares failure cooldown and clears it after success",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.797368
+    },
+    {
+      "name": "deployed receipt config and sanitizer reject unsafe origins, cookies, incomplete checks and false success",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/deployed-readiness-receipt.test.ts",
+      "durationMs": 3.689308
+    },
+    {
+      "name": "deployed capture CLI performs authenticated GET, saves private sanitized proof and fails closed on readiness/transport errors",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/deployed-readiness-receipt.test.ts",
+      "durationMs": 1843.446711
+    },
+    {
+      "name": "Fontkit postinstall is idempotent and rejects partial/unknown/version inputs without modifying another export",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 1006.174022
+    },
+    {
+      "name": "OpenType mark filtering supports both coverage formats, supersedes attachment class and respects IgnoreMarks in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 156.960928
+    },
+    {
+      "name": "Mark-to-base accepts unmultiplied bases and covered multiple outputs while preserving contiguous uncovered-output boundaries in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 45.349953
+    },
+    {
+      "name": "OpenType chained backtrack arrays are nearest-first in glyph/class/coverage formats, including skipped marks, without mutating font tables",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 59.06738
+    },
+    {
+      "name": "nested contextual lookups keep outer matched indices around controls and inserted multiple outputs",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 42.607011
+    },
+    {
+      "name": "concurrent generation workers submit once and polling does not invent zero cost or bypass private ingestion",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 6.428175
+    },
+    {
+      "name": "ambiguous provider acceptance and failed persistence cannot replay an expensive generation",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 1.64645
+    },
+    {
+      "name": "generation capability, unknown quote and cost ceiling stop before the paid boundary",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 2.193648
+    },
+    {
+      "name": "cancellation requires provider confirmation and a completed race retains the billable result",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 2.119558
+    },
+    {
+      "name": "poll transport errors retry only polling and malformed output cannot become ready",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 2.983092
+    },
+    {
+      "name": "generation payloads retain targeted revision, reject rights/component mismatch and isolate replay",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 1.086413
+    },
+    {
+      "name": "named render presets normalize geometry, reject conflicts and preserve legacy hashes",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 7.526317
+    },
+    {
+      "name": "scene motion defaults to static and accepts only bounded presets",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 2.093506
+    },
+    {
+      "name": "scene framing defaults legacy inputs to fit and accepts only bounded modes",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 0.485411
+    },
+    {
+      "name": "caption cues preserve legacy scenes and export exact ordered scene-relative timing",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 1.00873
+    },
+    {
+      "name": "caption validation rejects invalid, overlapping, unordered and excessive cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 4.207283
+    },
+    {
+      "name": "uploads reject executable/text formats and rendering options reject filter injection",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 0.736715
+    },
+    {
+      "name": "render bounds and scene captions have deterministic, accurate timing",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 5.815704
+    },
+    {
+      "name": "render text preflight accepts configured RTL scripts and reports unsupported shaping cases",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 7.280171
+    },
+    {
+      "name": "media subprocess cancellation closes a running child promptly",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 121.118428
+    },
+    {
+      "name": "media process output preserves Unicode split across UTF-8 pipe chunks",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 169.310387
+    },
+    {
+      "name": "media configuration requires explicit prices; presets reject unsupported references and budget/model mismatch",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 6.891235
+    },
+    {
+      "name": "bounded provider reads enforce declared and streamed size without trusting headers",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 31.732879
+    },
+    {
+      "name": "image editing uses a separately quoted preset and sends owned bytes as multipart",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 5.767
+    },
+    {
+      "name": "source preflight checks tenant ownership and private byte integrity before submission",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 1.313226
+    },
+    {
+      "name": "provider adapter fixes request shape, disables redirects and refuses remote URLs or malformed image encodings",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 36.552895
+    },
+    {
+      "name": "voice options are bounded and sent in the saved provider request",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 1.304496
+    },
+    {
+      "name": "semantic posting policy flags metadata, topic and CTA repetition",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/posting-policy.test.ts",
+      "durationMs": 4.38383
+    },
+    {
+      "name": "posting policy normalizes URLs, punctuation and filler words",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/posting-policy.test.ts",
+      "durationMs": 0.540323
+    },
+    {
+      "name": "render output rejects malformed duration, audio timing and incompatible cached audio",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-audio.test.ts",
+      "durationMs": 2.088917
+    },
+    {
+      "name": "decoded narration is padded/trimmed at scene boundaries, silent scenes stay silent and audio caches are validated",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-audio.test.ts",
+      "durationMs": 6080.258782
+    },
+    {
+      "name": "Bengali has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 9.978195
+    },
+    {
+      "name": "Bengali conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 481.096881
+    },
+    {
+      "name": "Bengali mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 2273.971748
+    },
+    {
+      "name": "Bengali outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 254.667254
+    },
+    {
+      "name": "decoded pure/mixed Bengali titles/cues remain bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 24919.154864
+    },
+    {
+      "name": "Simplified Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 9.90415
+    },
+    {
+      "name": "Simplified Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1296.199209
+    },
+    {
+      "name": "Simplified Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1477.361189
+    },
+    {
+      "name": "Simplified Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 193.235443
+    },
+    {
+      "name": "Simplified Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 27860.457237
+    },
+    {
+      "name": "Traditional Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 3.73237
+    },
+    {
+      "name": "Traditional Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1146.627454
+    },
+    {
+      "name": "Traditional Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1477.128042
+    },
+    {
+      "name": "Traditional Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 184.593941
+    },
+    {
+      "name": "Traditional Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 28037.235939
+    },
+    {
+      "name": "Japanese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 2.627448
+    },
+    {
+      "name": "Japanese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1134.815837
+    },
+    {
+      "name": "Japanese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1532.459435
+    },
+    {
+      "name": "Japanese: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 211.299299
+    },
+    {
+      "name": "Japanese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 28137.361667
+    },
+    {
+      "name": "Korean: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 3.504091
+    },
+    {
+      "name": "Korean: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 18372.843314
+    },
+    {
+      "name": "Korean: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 876.114442
+    },
+    {
+      "name": "Korean: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 193.000209
+    },
+    {
+      "name": "Korean: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 27618.573593
+    },
+    {
+      "name": "CJK wrapping yields only independent ICU strict boundaries and preserves all complete graphemes",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 67.663328
+    },
+    {
+      "name": "CJK localized Han glyphs independently match across all four configured font variants",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 2889.390942
+    },
+    {
+      "name": "CJK saved locale and trusted font bytes separate scene caches while unchanged renders reuse them",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 3307.732806
+    },
+    {
+      "name": "CJK mixed Latin Greek Cyrillic and three Indic font runs match independent HarfBuzz placement",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1970.140556
+    },
+    {
+      "name": "Devanagari: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 456.939162
+    },
+    {
+      "name": "Bengali: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 248.91447
+    },
+    {
+      "name": "Gujarati: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 286.74405
+    },
+    {
+      "name": "Gurmukhi: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 200.910388
+    },
+    {
+      "name": "Odia: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 226.59042
+    },
+    {
+      "name": "Tamil: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 158.718275
+    },
+    {
+      "name": "Telugu: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 225.080678
+    },
+    {
+      "name": "Kannada: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 304.8101
+    },
+    {
+      "name": "Malayalam: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 215.237237
+    },
+    {
+      "name": "Sinhala: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 544.716212
+    },
+    {
+      "name": "Khmer: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 252.951596
+    },
+    {
+      "name": "Myanmar: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 281.939491
+    },
+    {
+      "name": "Tibetan: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 761.930636
+    },
+    {
+      "name": "Thai: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 120.272643
+    },
+    {
+      "name": "Lao: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 118.093266
+    },
+    {
+      "name": "bounded control rejection happens before storage/cache while original unburned SRT is preserved",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 9.693614
+    },
+    {
+      "name": "wrapping preserves joiner font units, explicit ZWSP breaks and WJ words across mixed scripts",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 4041.498123
+    },
+    {
+      "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 122247.179697
+    },
+    {
+      "name": "Devanagari is opt-in, unsupported scripts/controls stay blocked and ignored captions need no shaping runtime",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 9.080751
+    },
+    {
+      "name": "Devanagari runtime guard rejects legacy/missing shaping before fonts, storage or cache work",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 23.627349
+    },
+    {
+      "name": "Devanagari font fallback keeps conjunct graphemes intact and missing coverage fails safely while Latin/Devanagari font runs compose",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 502.768181
+    },
+    {
+      "name": "decoded Hindi and mixed Latin title/caption frames are bounded and timed across all six output geometries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 18362.778159
+    },
+    {
+      "name": "Hindi outlines apply conjunct substitution and never embed user text as SVG markup",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 14.247924
+    },
+    {
+      "name": "mixed-script wrapping preserves complete Latin combining and Hindi conjunct clusters",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 804.694027
+    },
+    {
+      "name": "mixed overlay reuses valid scene cache and changing configured fonts rebuilds it",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 1764.141825
+    },
+    {
+      "name": "configured font maps real Latin, Greek, Cyrillic, accents and normalized whitespace",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 28.831224
+    },
+    {
+      "name": "font coverage rejects missing glyphs in effective titles/cues, preserving unburned SRT and fallback overrides",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 7.516144
+    },
+    {
+      "name": "configured fallback fonts cover allowed multilingual text missing from the primary font",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 4.988495
+    },
+    {
+      "name": "readRenderFonts loads unique primary and fallback font paths from configuration",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 1.601435
+    },
+    {
+      "name": "font inspection rejects malformed, collection, web, oversized and unreadable files without exposing paths",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 3.036307
+    },
+    {
+      "name": "renderer checks the configured font before storage, cache or media work",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 14.280529
+    },
+    {
+      "name": "renderer uses explicit text shaping and fallback fonts for readable Arabic and Hebrew text",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 703.989093
+    },
+    {
+      "name": "Gujarati has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 9.975493
+    },
+    {
+      "name": "Gujarati conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 978.782784
+    },
+    {
+      "name": "Gujarati mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 2915.461123
+    },
+    {
+      "name": "Gujarati outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 551.98062
+    },
+    {
+      "name": "decoded pure/mixed Gujarati titles/cues remain bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 25170.365755
+    },
+    {
+      "name": "Gurmukhi: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 10.414706
+    },
+    {
+      "name": "Gurmukhi: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 251.004746
+    },
+    {
+      "name": "Gurmukhi: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1354.766283
+    },
+    {
+      "name": "Gurmukhi: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 170.912222
+    },
+    {
+      "name": "Gurmukhi: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 25884.572396
+    },
+    {
+      "name": "Odia: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.447914
+    },
+    {
+      "name": "Odia: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 105.672047
+    },
+    {
+      "name": "Odia: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1050.893499
+    },
+    {
+      "name": "Odia: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 191.525736
+    },
+    {
+      "name": "Odia: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 25459.579236
+    },
+    {
+      "name": "Tamil: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1.67717
+    },
+    {
+      "name": "Tamil: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 87.765236
+    },
+    {
+      "name": "Tamil: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 894.663679
+    },
+    {
+      "name": "Tamil: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 184.371219
+    },
+    {
+      "name": "Tamil: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 26091.225768
+    },
+    {
+      "name": "Telugu: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.04243
+    },
+    {
+      "name": "Telugu: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 96.356681
+    },
+    {
+      "name": "Telugu: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 975.465701
+    },
+    {
+      "name": "Telugu: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 178.942801
+    },
+    {
+      "name": "Telugu: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 25503.008616
+    },
+    {
+      "name": "Kannada: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.153958
+    },
+    {
+      "name": "Kannada: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 115.017213
+    },
+    {
+      "name": "Kannada: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1442.350112
+    },
+    {
+      "name": "Kannada: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 200.387586
+    },
+    {
+      "name": "Kannada: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 26075.572042
+    },
+    {
+      "name": "Malayalam: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.405831
+    },
+    {
+      "name": "Malayalam: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 102.482018
+    },
+    {
+      "name": "Malayalam: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 870.633797
+    },
+    {
+      "name": "Malayalam: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 197.189003
+    },
+    {
+      "name": "Malayalam: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 26738.226371
+    },
+    {
+      "name": "Sinhala: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1.996673
+    },
+    {
+      "name": "Sinhala: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 817.477305
+    },
+    {
+      "name": "Sinhala: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 888.781669
+    },
+    {
+      "name": "Sinhala: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 200.882816
+    },
+    {
+      "name": "Sinhala: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 26050.371631
+    },
+    {
+      "name": "registry: all ten Indic scripts compose independently referenced font/script runs in one overlay",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 656.385246
+    },
+    {
+      "name": "registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.599196
+    },
+    {
+      "name": "fractional inset caption bounds accept Telugu/Sinhala edge rounding while rejecting real overflow",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 115.99489
+    },
+    {
+      "name": "font-aware wrapping bounds wide text and preserves combining graphemes across output geometries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-layout.test.ts",
+      "durationMs": 845.33096
+    },
+    {
+      "name": "overfull captions fail before storage/cache/media work but unburned SRT and cue overrides stay usable",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-layout.test.ts",
+      "durationMs": 1230.35194
+    },
+    {
+      "name": "decoded titles and captions stay in separate bounded bands at 720/1080 in all three aspects",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-layout.test.ts",
+      "durationMs": 12241.8577
+    },
+    {
+      "name": "mixed LTR preflight permits configured Hindi/Greek/Cyrillic but rejects mixed RTL in effective titles and cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 8.54781
+    },
+    {
+      "name": "mixed LTR runs preserve combining/conjunct clusters and use each script's covering font",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 1787.369444
+    },
+    {
+      "name": "LTR outline pipeline invalidates preceding Devanagari segments without changing plain-script runtime identity",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 179.222246
+    },
+    {
+      "name": "decoded mixed LTR titles/cues remain bounded and timed at six geometries with standard and extra margins",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 16366.22069
+    },
+    {
+      "name": "placement is strict/optional, legacy serialization stays stable and inset overflow fails before media work",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 354.181326
+    },
+    {
+      "name": "decoded inset-v1 Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 13042.809912
+    },
+    {
+      "name": "decoded device-safe-v1 Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 13191.740622
+    },
+    {
+      "name": "placement changes rebuild text scenes while empty scenes and unchanged placement reuse cache",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 2884.130871
+    },
+    {
+      "name": "Thai: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 10.010483
+    },
+    {
+      "name": "Thai: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 636.498086
+    },
+    {
+      "name": "Thai: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 454.698144
+    },
+    {
+      "name": "Thai: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 196.083976
+    },
+    {
+      "name": "Thai: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 25391.079199
+    },
+    {
+      "name": "Lao: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 2.71938
+    },
+    {
+      "name": "Lao: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 312.398512
+    },
+    {
+      "name": "Lao: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 368.360415
+    },
+    {
+      "name": "Lao: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 178.397244
+    },
+    {
+      "name": "Lao: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 25719.480125
+    },
+    {
+      "name": "Khmer: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 2.09705
+    },
+    {
+      "name": "Khmer: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 4914.347415
+    },
+    {
+      "name": "Khmer: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 516.723966
+    },
+    {
+      "name": "Khmer: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 194.256761
+    },
+    {
+      "name": "Khmer: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 26519.36459
+    },
+    {
+      "name": "Myanmar: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 2.706012
+    },
+    {
+      "name": "Myanmar: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 4828.732658
+    },
+    {
+      "name": "Myanmar: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 310.603412
+    },
+    {
+      "name": "Myanmar: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 201.628085
+    },
+    {
+      "name": "Myanmar: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 26007.936369
+    },
+    {
+      "name": "Tibetan: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 1.899804
+    },
+    {
+      "name": "Tibetan: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 4705.740837
+    },
+    {
+      "name": "Tibetan: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 733.006029
+    },
+    {
+      "name": "Tibetan: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 172.007455
+    },
+    {
+      "name": "Tibetan: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 23790.511411
+    },
+    {
+      "name": "Southeast Asian word wrapping protects dictionary words, leading vowels and Tibetan tsheg while oversized words fail readably",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 306.470598
+    },
+    {
+      "name": "Derived Sara Am glyph coverage selects a complete fallback and rejects missing glyphs before cache/storage",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 98.720152
+    },
+    {
+      "name": "All fifteen registered scripts compose independently referenced runs without changing Unicode SRT",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 872.187107
+    },
+    {
+      "name": "password hashes are salted; correct password succeeds and incorrect fails",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/security.test.ts",
+      "durationMs": 197.771354
+    },
+    {
+      "name": "session tokens have independent entropy and hashes hide the raw token",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/security.test.ts",
+      "durationMs": 0.512547
+    },
+    {
+      "name": "creators cannot approve and analysts cannot mutate content",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/security.test.ts",
+      "durationMs": 0.161807
+    },
+    {
+      "name": "social tokens are authenticated to a workspace and exact external account",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/social-tokens.test.ts",
+      "durationMs": 3.511697
+    },
+    {
+      "name": "YouTube live readiness passes only with current policy, OAuth, storage and secure production config",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-live-readiness.test.ts",
+      "durationMs": 3.009973
+    },
+    {
+      "name": "YouTube live readiness fails closed without exposing secret values",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-live-readiness.test.ts",
+      "durationMs": 0.486275
+    },
+    {
+      "name": "YouTube OAuth uses a fixed registered callback, offline consent, state and PKCE",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 2.357065
+    },
+    {
+      "name": "code exchange validates granted scopes/offline token and sends proof only to Google",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 26.160585
+    },
+    {
+      "name": "refresh handles rotation and rejects scope downgrade",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 0.965056
+    },
+    {
+      "name": "channel lookup rejects ambiguity and revocation requires a confirmed response",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 2.935912
+    },
+    {
+      "name": "live YouTube dispatch needs a current, exact policy maintenance receipt",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-policy-maintenance.test.ts",
+      "durationMs": 1.11264
+    },
+    {
+      "name": "YouTube upload metadata is derived only from approved snapshot and explicit disclosures",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-policy.test.ts",
+      "durationMs": 3.887028
+    },
+    {
+      "name": "only the fixed videos.insert endpoint starts a validated session",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 28.299474
+    },
+    {
+      "name": "status query sends no media and reads only a bounded 308 offset",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 3.184556
+    },
+    {
+      "name": "a completed receipt must carry an exact connected-channel video ID",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 3.507787
+    },
+    {
+      "name": "one media send never replays an ambiguous response or redirect",
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 1.159138
+    }
+  ],
+  "failed": [],
+  "summaries": [
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 18.356181,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/agents.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/agents.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 10,
+        "failed": 0,
+        "passed": 10,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 10,
+        "suites": 0
+      },
+      "duration_ms": 72.9259,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/ai.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 1853.563105,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/deployed-readiness-receipt.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/deployed-readiness-receipt.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 1317.720721,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/fontkit-patch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 38.053561,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/generated-media.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 10,
+        "failed": 0,
+        "passed": 10,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 10,
+        "suites": 0
+      },
+      "duration_ms": 327.024559,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/media.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 101.470186,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/openai-media.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 22.396986,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/posting-policy.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/posting-policy.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 6089.992098,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-audio.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-audio.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 27943.939074,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-bengali.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 24,
+        "failed": 0,
+        "passed": 24,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 24,
+        "suites": 0
+      },
+      "duration_ms": 148014.242547,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-cjk-batch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 18,
+        "failed": 0,
+        "passed": 18,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 18,
+        "suites": 0
+      },
+      "duration_ms": 130709.237078,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-controls.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 7,
+        "failed": 0,
+        "passed": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 7,
+        "suites": 0
+      },
+      "duration_ms": 21488.239193,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-devanagari.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 7,
+        "failed": 0,
+        "passed": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 7,
+        "suites": 0
+      },
+      "duration_ms": 769.472758,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-font.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 29631.823274,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-gujarati.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 38,
+        "failed": 0,
+        "passed": 38,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 38,
+        "suites": 0
+      },
+      "duration_ms": 192988.216817,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-indic-batch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 14332.008641,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-layout.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-layout.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 18346.285876,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-ltr-mixed.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 29478.213631,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-placement.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-placement.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 28,
+        "failed": 0,
+        "passed": 28,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 28,
+        "suites": 0
+      },
+      "duration_ms": 147457.265427,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/render-southeast-batch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 205.66778,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/security.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/security.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 1,
+        "failed": 0,
+        "passed": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 1,
+        "suites": 0
+      },
+      "duration_ms": 20.730814,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/social-tokens.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/social-tokens.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 20.360806,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-live-readiness.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-live-readiness.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 48.437915,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-oauth.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 1,
+        "failed": 0,
+        "passed": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 1,
+        "suites": 0
+      },
+      "duration_ms": 16.131685,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-policy-maintenance.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-policy-maintenance.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 1,
+        "failed": 0,
+        "passed": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 1,
+        "suites": 0
+      },
+      "duration_ms": 21.1594,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-policy.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-policy.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 54.21749,
+      "file": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "entryFile": "/home/runner/work/organic-marketing-os/organic-marketing-os/tests/youtube-resumable.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 205,
+        "failed": 0,
+        "passed": 205,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 205,
+        "suites": 0
+      },
+      "duration_ms": 405210.833262
+    }
+  ],
+  "finalSummary": {
+    "success": true,
+    "counts": {
+      "tests": 205,
+      "failed": 0,
+      "passed": 205,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "topLevel": 205,
+      "suites": 0
+    },
+    "duration_ms": 405210.833262
+  }
+}
