@@ -3,7 +3,7 @@
   "taskId": "SOCIAL-01",
   "increment": "deployed-readiness-receipt-endpoint",
   "dateUtc": "2026-10-14",
-  "status": "local_verified_not_published",
+  "status": "public_native_ci_verified",
   "basePublicCommit": "0d479e59b317531968c209c3831b90e77471148e",
   "changedPaths": [
     "apps/api/src/operations.ts",
@@ -12,7 +12,10 @@
   ],
   "implementation": {
     "endpoint": "GET /api/workspaces/:organizationId/operations/youtube-live-readiness",
-    "roles": ["OWNER", "ADMIN"],
+    "roles": [
+      "OWNER",
+      "ADMIN"
+    ],
     "tenantGuarded": true,
     "usesSharedReadinessEvaluator": true,
     "secretsIncluded": false,
@@ -31,13 +34,23 @@
     "httpPassed": 1,
     "httpFailed": 0,
     "freshPgliteMigrations": 20,
-    "gitDiffCheck": true
+    "gitDiffCheck": true,
+    "nativeCiRunId": 38550389464,
+    "nativeCiJobId": 115806636303,
+    "nativeCiPassed": true,
+    "nativeCiUnitPassed": 203,
+    "nativeCiHttpPassed": 14,
+    "nativeCiBrowserPassed": 8,
+    "nativeCiRecoveryPassed": 5,
+    "nativeCiFreshPostgresMigrations": 20
   },
   "excluded": [
     "No deployed production environment was reached.",
     "No live Google grant or upload was attempted.",
-    "No native PostgreSQL CI was run for this local delta.",
     "No browser or recovery suite was rerun for this endpoint-only delta.",
-    "An accidental broad npm-test invocation failed 94 optional font-heavy cases because this clean checkout lacked configured Noto test fonts; it is excluded and not acceptance evidence."
-  ]
+    "An accidental broad npm-test invocation failed 94 optional font-heavy cases because this clean checkout lacked configured Noto test fonts; it is excluded and not acceptance evidence.",
+    "Native PostgreSQL/Redis CI passed after publication; no deployed production environment or live Google upload was attempted."
+  ],
+  "publicCommit": "d9e271695ed29b73633690f5f601a823f40d906a",
+  "nativeCiEvidence": "docs/qa/social01-deployed-readiness-receipt-native-ci-evidence.json"
 }

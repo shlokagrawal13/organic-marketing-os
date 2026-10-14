@@ -85,23 +85,50 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 deployed readiness receipt endpoint is locally verified on public base 0d479e59b317531968c209c3831b90e77471148e. Added OWNER/ADMIN operations endpoint GET /api/workspaces/:organizationId/operations/youtube-live-readiness using the shared sanitized evaluator. Clean npm ci/Fontkit postinstall, Prisma generate, API build, direct readiness unit 2/2, git diff --check and focused hardening HTTP 1/1 with 20 fresh PGlite migrations passed. No deployed production environment, live Google grant/upload, browser/recovery suite or native CI ran for this local delta.",
+  "latestIncrement": "SOCIAL-01 deployed readiness receipt endpoint is public at d9e271695ed29b73633690f5f601a823f40d906a and own native CI verified. GitHub Actions run 38550389464/job 115806636303 attempt 1 passed 203/203 unit, 14/14 HTTP, 8/8 browser, 5/5 recovery, 20 fresh native PostgreSQL migrations, native Redis, API/web build, populated upgrade and zero-vulnerability dependency audits. No deployed production environment, live Google grant/upload or full master acceptance occurred.",
   "latestNativeRun": {
-    "runId": 38472532805,
-    "jobId": 115554995370,
-    "attempt": 1,
-    "sourceCommit": "d8e47b643e82f4d3044b8c5e7649aa67c60463eb",
-    "sourceTree": "e4af87d774cb8633c892c091d99c5fc9a75ac2e6",
-    "status": "completed",
+    "runId": 38550389464,
+    "runNumber": 68,
+    "jobId": 115806636303,
+    "commit": "d9e271695ed29b73633690f5f601a823f40d906a",
     "conclusion": "success",
-    "unitPassed": 203,
-    "httpPassed": 14,
-    "browserPassed": 8,
-    "recoveryPassed": 5,
-    "freshNativeMigrations": 20,
-    "artifactId": 11852849075,
-    "artifactSha256": "b954828393249a128a547a5c4618bc10be01dffad9180b0f90e661cfa9db371d",
-    "evidence": "docs/qa/social01-youtube-live-readiness-native-ci-evidence.json"
+    "unit": {
+      "tests": 203,
+      "pass": 203,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "http": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    "recovery": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "migrations": 20,
+    "artifactId": 11887660347,
+    "artifactDigest": "sha256:68406adab4fe4c804d4440a1895de8766ba8dc004e5f42ea8e553921b8aebace",
+    "artifactSizeBytes": 6189271,
+    "artifactFileCount": 124,
+    "productionDependencyAuditVulnerabilities": 0,
+    "allDependencyAuditVulnerabilities": 0,
+    "scope": "Own deployed-readiness receipt endpoint native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; no deployed production environment, live Google grant/upload or full master acceptance."
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -8070,7 +8097,7 @@
     ]
   },
   "social01DeployedReadinessReceipt": {
-    "status": "local_verified_not_published",
+    "status": "public_native_ci_verified",
     "basePublicCommit": "0d479e59b317531968c209c3831b90e77471148e",
     "evidence": "docs/qa/social01-deployed-readiness-receipt-evidence.json",
     "endpoint": "GET /api/workspaces/:organizationId/operations/youtube-live-readiness",
@@ -8089,8 +8116,17 @@
     "freshPgliteMigrations": 20,
     "gitDiffCheck": true,
     "accidentalBroadUnitFailureExcluded": true,
-    "nativeCiForDelta": false,
+    "nativeCiForDelta": true,
     "deployedProductionReceipt": false,
-    "liveGoogleGrantOrPost": false
+    "liveGoogleGrantOrPost": false,
+    "publicCommit": "d9e271695ed29b73633690f5f601a823f40d906a",
+    "parentCommit": "0d479e59b317531968c209c3831b90e77471148e",
+    "treeSha": "5ea7bc173c8f07b24c51bcf0aa9b0b7dec6848f3",
+    "nativeCiEvidence": "docs/qa/social01-deployed-readiness-receipt-native-ci-evidence.json",
+    "nativeCiRunId": 38550389464,
+    "nativeCiJobId": 115806636303,
+    "artifactId": 11887660347,
+    "artifactDigest": "sha256:68406adab4fe4c804d4440a1895de8766ba8dc004e5f42ea8e553921b8aebace",
+    "fullMasterAcceptance": false
   }
 }
