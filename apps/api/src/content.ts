@@ -12,6 +12,7 @@ import {
   BadRequestException,
   NotFoundException,
   ConflictException,
+  ForbiddenException,
 } from "@nestjs/common";
 import { z } from "zod";
 import {
@@ -27,6 +28,13 @@ import {
 import { contentInput, checkContent } from "../../../packages/core/content";
 import { draftSchema } from "../../../packages/core/ai";
 import { assertSceneAssets } from "./assets";
+import {
+  claimReviewInput,
+  claimReviewView,
+  currentClaimPolicy,
+  requireCurrentClaimReview,
+  validateClaimReviewSubmission,
+} from "./claim-reviews";
 const change = z.object({ revision: z.number().int().positive() }).strict();
 @Controller("workspaces/:organizationId/content")
 @UseGuards(TenantGuard)
@@ -126,9 +134,22 @@ export class ContentController {
   }
   @Get(":id") async get(@Req() req: AuthedRequest, @Param("id") id: string) {
     const item = await this.owned(req.organizationId, id);
+    const claimPolicy = await currentClaimPolicy(
+      this.db,
+      req.organizationId,
+      item,
+    );
     return {
       item,
       quality: checkContent(draftSchema.strip().parse(item)),
+      claimPolicy: {
+        policyVersion: claimPolicy.policyVersion,
+        claimSetFingerprint: claimPolicy.claimSetFingerprint,
+        claims: claimPolicy.claims,
+        disclaimer: claimPolicy.disclaimer,
+        complete: claimPolicy.complete,
+      },
+      claimReview: claimPolicy.review,
       versions: await this.db.contentVersion.findMany({
         where: { contentId: id },
         orderBy: { revision: "desc" },
@@ -140,6 +161,86 @@ export class ContentController {
         take: 200,
       }),
     };
+  }
+  @Post(":id/claim-review") @Roles(...approverRoles) async reviewClaims(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Body() body: unknown,
+  ) {
+    const contentId = idSchema.parse(id);
+    const data = parse(claimReviewInput, body);
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "ContentItem" WHERE id=${contentId} AND "organizationId"=${req.organizationId} FOR UPDATE`;
+      const content = await tx.contentItem.findFirst({
+        where: { id: contentId, organizationId: req.organizationId },
+      });
+      if (!content) throw new NotFoundException("Content not found.");
+      if (content.revision !== data.revision || content.status !== "REVIEW")
+        throw new ConflictException(
+          "Content changed or is not awaiting review. Reload and try again.",
+        );
+      const { policy, resolutions } = validateClaimReviewSubmission(
+        content,
+        data,
+      );
+      if (
+        req.role !== "OWNER" &&
+        resolutions.some(
+          (resolution) => resolution.disposition === "OWNER_OVERRIDE",
+        )
+      )
+        throw new ForbiddenException(
+          "Only a workspace owner can document a claim override.",
+        );
+      const now = new Date();
+      const review = await tx.contentClaimReview.upsert({
+        where: {
+          contentId_contentRevision: {
+            contentId,
+            contentRevision: content.revision,
+          },
+        },
+        create: {
+          organizationId: req.organizationId,
+          contentId,
+          contentRevision: content.revision,
+          policyVersion: policy.policyVersion,
+          claimSetFingerprint: policy.claimSetFingerprint,
+          resolutions,
+          reviewedBy: req.userId,
+          reviewedAt: now,
+        },
+        update: {
+          organizationId: req.organizationId,
+          policyVersion: policy.policyVersion,
+          claimSetFingerprint: policy.claimSetFingerprint,
+          resolutions,
+          reviewedBy: req.userId,
+          reviewedAt: now,
+        },
+      });
+      await tx.auditLog.create({
+        data: {
+          organizationId: req.organizationId,
+          actorId: req.userId,
+          action: "content.claim_reviewed",
+          entityId: contentId,
+          detail: {
+            reviewId: review.id,
+            revision: content.revision,
+            policyVersion: policy.policyVersion,
+            claimSetFingerprint: policy.claimSetFingerprint,
+            evidenceCount: resolutions.filter(
+              (resolution) => resolution.disposition === "EVIDENCE",
+            ).length,
+            ownerOverrideCount: resolutions.filter(
+              (resolution) => resolution.disposition === "OWNER_OVERRIDE",
+            ).length,
+          },
+        },
+      });
+      return claimReviewView(review);
+    });
   }
   @Put(":id") @Roles(...writerRoles) async update(
     @Req() req: AuthedRequest,
@@ -246,8 +347,25 @@ export class ContentController {
     to: any,
     action: string,
     detail: any = {},
+    requireClaims = false,
   ) {
     return this.db.$transaction(async (tx) => {
+      if (requireClaims) {
+        await tx.$queryRaw`SELECT id FROM "ContentItem" WHERE id=${id} AND "organizationId"=${req.organizationId} FOR UPDATE`;
+        const content = await tx.contentItem.findFirst({
+          where: {
+            id,
+            organizationId: req.organizationId,
+            revision,
+            status: from,
+          },
+        });
+        if (!content)
+          throw new ConflictException(
+            "Content changed or is not in the required state. Reload and try again.",
+          );
+        await requireCurrentClaimReview(tx, req.organizationId, content);
+      }
       const r = await tx.contentItem.updateMany({
         where: {
           id,
@@ -326,6 +444,7 @@ export class ContentController {
       "APPROVED",
       "content.approved",
       { factsAndRightsReviewed: true },
+      true,
     );
   }
   @Post(":id/reject") @Roles(...approverRoles) async reject(

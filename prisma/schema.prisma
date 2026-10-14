@@ -50,35 +50,36 @@ model AuthToken {
 }
 
 model Organization {
-  id                  String               @id @default(uuid())
-  name                String
-  timezone            String               @default("Asia/Kolkata")
-  createdAt           DateTime             @default(now())
-  memberships         Membership[]
-  invitations         Invitation[]
-  audits              AuditLog[]
-  brand               BrandBrain?
-  brandVersions       BrandVersion[]
-  jobs                AIJob[]
-  aiUsage             AIUsage[]
-  agentRuns           AIAgentRun[]
-  campaigns           Campaign[]
-  content             ContentItem[]
-  assets              Asset[]
-  renders             RenderJob[]
-  renderSegments      RenderSegment[]
-  creditAccount       CreditAccount?
-  creditEntries       CreditEntry[]
-  creditReservations  CreditReservation[]
-  billingSubscription BillingSubscription?
-  billingEvents       BillingEvent[]
-  billingInvoices     BillingInvoice[]
-  mediaGenerations    MediaGeneration[]
-  publicationIntents  PublicationIntent[]
-  socialConnections   SocialConnection[]
-  publicationAttempts PublicationAttempt[]
+  id                       String                    @id @default(uuid())
+  name                     String
+  timezone                 String                    @default("Asia/Kolkata")
+  createdAt                DateTime                  @default(now())
+  memberships              Membership[]
+  invitations              Invitation[]
+  audits                   AuditLog[]
+  brand                    BrandBrain?
+  brandVersions            BrandVersion[]
+  jobs                     AIJob[]
+  aiUsage                  AIUsage[]
+  agentRuns                AIAgentRun[]
+  campaigns                Campaign[]
+  content                  ContentItem[]
+  assets                   Asset[]
+  renders                  RenderJob[]
+  renderSegments           RenderSegment[]
+  creditAccount            CreditAccount?
+  creditEntries            CreditEntry[]
+  creditReservations       CreditReservation[]
+  billingSubscription      BillingSubscription?
+  billingEvents            BillingEvent[]
+  billingInvoices          BillingInvoice[]
+  mediaGenerations         MediaGeneration[]
+  publicationIntents       PublicationIntent[]
+  socialConnections        SocialConnection[]
+  publicationAttempts      PublicationAttempt[]
   publicationPolicyReviews PublicationPolicyReview[]
-  publicationSchedules PublicationSchedule[]
+  publicationSchedules     PublicationSchedule[]
+  contentClaimReviews      ContentClaimReview[]
 }
 
 enum ContentStatus {
@@ -105,33 +106,53 @@ model Campaign {
 }
 
 model ContentItem {
-  id             String           @id @default(uuid())
-  organizationId String
-  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  campaignId     String?
-  campaign       Campaign?        @relation(fields: [campaignId], references: [id], onDelete: SetNull)
-  title          String
-  platform       String
-  format         String
-  hook           String           @default("")
-  body           String           @default("")
-  cta            String           @default("")
-  scenes         Json             @default("[]")
-  status         ContentStatus    @default(DRAFT)
-  revision       Int              @default(1)
-  plannedAt      DateTime?
-  approvedAt     DateTime?
-  approvedBy     String?
-  createdBy      String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  versions       ContentVersion[]
-  comments       ContentComment[]
-  renders        RenderJob[]
+  id                 String               @id @default(uuid())
+  organizationId     String
+  organization       Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  campaignId         String?
+  campaign           Campaign?            @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  title              String
+  platform           String
+  format             String
+  hook               String               @default("")
+  body               String               @default("")
+  cta                String               @default("")
+  scenes             Json                 @default("[]")
+  status             ContentStatus        @default(DRAFT)
+  revision           Int                  @default(1)
+  plannedAt          DateTime?
+  approvedAt         DateTime?
+  approvedBy         String?
+  createdBy          String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  versions           ContentVersion[]
+  comments           ContentComment[]
+  renders            RenderJob[]
   publicationIntents PublicationIntent[]
+  claimReviews       ContentClaimReview[]
 
   @@index([organizationId, status])
   @@index([organizationId, plannedAt])
+}
+
+model ContentClaimReview {
+  id                  String       @id @default(uuid())
+  organizationId      String
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contentId           String
+  content             ContentItem  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  contentRevision     Int
+  policyVersion       String
+  claimSetFingerprint String
+  resolutions         Json
+  reviewedBy          String
+  reviewedAt          DateTime
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@unique([contentId, contentRevision])
+  @@index([organizationId, contentId, contentRevision])
 }
 
 model ContentVersion {
@@ -167,20 +188,20 @@ enum PublicationIntentStatus {
 
 // Preparation is internal only; the separate schedule/attempt records track sends.
 model PublicationIntent {
-  id              String                  @id @default(uuid())
+  id              String                   @id @default(uuid())
   organizationId  String
-  organization    Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization    Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   contentId       String
-  content         ContentItem             @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  content         ContentItem              @relation(fields: [contentId], references: [id], onDelete: Cascade)
   contentRevision Int
   renderId        String?
   platform        String
   snapshot        Json
   requestKey      String
   requestHash     String
-  status          PublicationIntentStatus @default(PREPARED)
+  status          PublicationIntentStatus  @default(PREPARED)
   createdBy       String
-  createdAt       DateTime                @default(now())
+  createdAt       DateTime                 @default(now())
   invalidatedAt   DateTime?
   canceledAt      DateTime?
   attempt         PublicationAttempt?
@@ -197,9 +218,9 @@ enum SocialProvider {
 }
 
 model SocialConnection {
-  id                     String               @id @default(uuid())
+  id                     String                    @id @default(uuid())
   organizationId         String
-  organization           Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization           Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   provider               SocialProvider
   externalAccountId      String
   accountLabel           String
@@ -210,8 +231,8 @@ model SocialConnection {
   refreshTokenExpiresAt  DateTime?
   refreshPendingAt       DateTime?
   revokedAt              DateTime?
-  createdAt              DateTime             @default(now())
-  updatedAt              DateTime             @updatedAt
+  createdAt              DateTime                  @default(now())
+  updatedAt              DateTime                  @updatedAt
   attempts               PublicationAttempt[]
   policyReviews          PublicationPolicyReview[]
   schedules              PublicationSchedule[]
@@ -240,23 +261,23 @@ enum PublicationScheduleStatus {
 
 // A due schedule is claimed once. A crashed or uncertain claim is never sent again.
 model PublicationSchedule {
-  id             String                    @id @default(uuid())
-  organizationId String
-  organization   Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  intentId       String                    @unique
-  intent         PublicationIntent         @relation(fields: [intentId], references: [id], onDelete: Cascade)
-  connectionId   String
-  connection     SocialConnection          @relation(fields: [connectionId], references: [id], onDelete: Restrict)
-  actorId        String
-  requestKey     String
-  dueAt          DateTime
+  id                  String                    @id @default(uuid())
+  organizationId      String
+  organization        Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  intentId            String                    @unique
+  intent              PublicationIntent         @relation(fields: [intentId], references: [id], onDelete: Cascade)
+  connectionId        String
+  connection          SocialConnection          @relation(fields: [connectionId], references: [id], onDelete: Restrict)
+  actorId             String
+  requestKey          String
+  dueAt               DateTime
   guidanceFingerprint String?
-  status         PublicationScheduleStatus @default(SCHEDULED)
-  claimedAt      DateTime?
-  completedAt    DateTime?
-  outcomeCode    String?
-  attemptId      String?
-  createdAt      DateTime                  @default(now())
+  status              PublicationScheduleStatus @default(SCHEDULED)
+  claimedAt           DateTime?
+  completedAt         DateTime?
+  outcomeCode         String?
+  attemptId           String?
+  createdAt           DateTime                  @default(now())
 
   @@unique([organizationId, requestKey])
   @@index([status, dueAt])
@@ -266,29 +287,29 @@ model PublicationSchedule {
 // The guarded dispatcher enters SUBMITTING before a single upload.
 // An uncertain outcome is retained; a due schedule never retries it.
 model PublicationAttempt {
-  id                String                   @id @default(uuid())
-  organizationId    String
-  organization      Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  intentId          String                   @unique
-  intent            PublicationIntent        @relation(fields: [intentId], references: [id], onDelete: Cascade)
-  connectionId      String
-  connection        SocialConnection         @relation(fields: [connectionId], references: [id], onDelete: Restrict)
-  contentId         String
-  contentRevision   Int
-  requestKey        String
-  requestHash       String
-  status            PublicationAttemptStatus @default(RESERVED)
-  version           Int                      @default(1)
-  providerRequestId String?
-  providerPostId    String?
-  outcomeCode       String?
-  policySnapshot    Json?
-  mediaSha256       String?
-  mediaBytes        Int?
+  id                      String                   @id @default(uuid())
+  organizationId          String
+  organization            Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  intentId                String                   @unique
+  intent                  PublicationIntent        @relation(fields: [intentId], references: [id], onDelete: Cascade)
+  connectionId            String
+  connection              SocialConnection         @relation(fields: [connectionId], references: [id], onDelete: Restrict)
+  contentId               String
+  contentRevision         Int
+  requestKey              String
+  requestHash             String
+  status                  PublicationAttemptStatus @default(RESERVED)
+  version                 Int                      @default(1)
+  providerRequestId       String?
+  providerPostId          String?
+  outcomeCode             String?
+  policySnapshot          Json?
+  mediaSha256             String?
+  mediaBytes              Int?
   uploadSessionCiphertext String?
-  createdAt         DateTime                 @default(now())
-  startedAt         DateTime?
-  completedAt       DateTime?
+  createdAt               DateTime                 @default(now())
+  startedAt               DateTime?
+  completedAt             DateTime?
 
   @@unique([organizationId, requestKey])
   @@index([organizationId, contentId, contentRevision, status])
@@ -297,20 +318,20 @@ model PublicationAttempt {
 }
 
 model PublicationPolicyReview {
-  id                String            @id @default(uuid())
-  organizationId    String
-  organization      Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  intentId          String            @unique
-  intent            PublicationIntent @relation(fields: [intentId], references: [id], onDelete: Cascade)
-  connectionId      String
-  connection        SocialConnection  @relation(fields: [connectionId], references: [id], onDelete: Restrict)
-  contentRevision   Int
-  policyVersion     String
-  metadata          Json
-  snapshotHash      String
-  reviewedBy        String
-  reviewedAt        DateTime          @default(now())
-  expiresAt         DateTime
+  id              String            @id @default(uuid())
+  organizationId  String
+  organization    Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  intentId        String            @unique
+  intent          PublicationIntent @relation(fields: [intentId], references: [id], onDelete: Cascade)
+  connectionId    String
+  connection      SocialConnection  @relation(fields: [connectionId], references: [id], onDelete: Restrict)
+  contentRevision Int
+  policyVersion   String
+  metadata        Json
+  snapshotHash    String
+  reviewedBy      String
+  reviewedAt      DateTime          @default(now())
+  expiresAt       DateTime
 
   @@index([organizationId, expiresAt])
 }

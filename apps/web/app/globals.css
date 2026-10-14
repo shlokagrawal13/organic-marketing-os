@@ -2174,6 +2174,62 @@ details > .form-grid {
   margin: 0.2rem 0 0;
   accent-color: var(--accent);
 }
+.claim-review {
+  border-top: 1px solid var(--line);
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+}
+.claim-review h4 {
+  font-size: 0.85rem;
+  margin: 0 0 0.45rem;
+}
+.claim-card {
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+  padding: 0.9rem;
+}
+.claim-card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.claim-card-heading b {
+  color: var(--text);
+  font-size: 0.7rem;
+}
+.claim-card blockquote {
+  border-left: 2px solid var(--accent);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  margin: 0;
+  overflow-wrap: anywhere;
+  padding-left: 0.65rem;
+}
+.claim-card label:not(.review-ack) {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+}
+.claim-card input,
+.claim-card select,
+.claim-card textarea {
+  font-size: 0.76rem;
+  min-width: 0;
+  width: 100%;
+}
+.claim-card .review-ack {
+  margin: 0;
+}
+.claim-disclaimer {
+  margin-top: 0.9rem;
+}
 .reject-label {
   font-size: 0.75rem;
   font-weight: 400;
@@ -2897,8 +2953,12 @@ details > .form-grid {
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.social-account small { color: var(--muted); }
-.social-account p { margin: 0; }
+.social-account small {
+  color: var(--muted);
+}
+.social-account p {
+  margin: 0;
+}
 .policy-review {
   margin-top: 1.5rem;
   display: grid;
@@ -2928,16 +2988,36 @@ details > .form-grid {
   padding-top: 1rem;
   min-width: 0;
 }
-.policy-saved h4 { margin: 0; }
-.policy-saved .review-ack { display: flex; margin: 0.25rem 0; }
-.policy-review .button { justify-self: start; }
-.youtube-upload-notice { padding: 0.8rem; border: 1px solid var(--line); border-radius: 8px; }
-.youtube-terms-mobile { display: none; }
+.policy-saved h4 {
+  margin: 0;
+}
+.policy-saved .review-ack {
+  display: flex;
+  margin: 0.25rem 0;
+}
+.policy-review .button {
+  justify-self: start;
+}
+.youtube-upload-notice {
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.youtube-terms-mobile {
+  display: none;
+}
 @media (max-width: 767px) {
-  .youtube-terms-desktop { display: none; }
-  .youtube-terms-mobile { display: inline; }
+  .youtube-terms-desktop {
+    display: none;
+  }
+  .youtube-terms-mobile {
+    display: inline;
+  }
 }
 @media (max-width: 600px) {
   .social-panel-heading,
-  .social-account { flex-direction: column; gap: 0.8rem; }
+  .social-account {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 }

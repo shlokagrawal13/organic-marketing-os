@@ -37,10 +37,22 @@ import {
 } from "../../../packages/core/youtube-policy";
 import { activeConnection, currentApproval } from "./publication-attempts";
 import { ObjectStore } from "../../../packages/core/object-store";
-import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "./youtube-dispatch";
+import {
+  dispatchReviewedYoutubeVideo,
+  reconcileUnknownYoutubeUpload,
+} from "./youtube-dispatch";
 import { evaluateManualGuidance } from "./posting-guidance";
-import { cancelPublicationSchedule, createPublicationSchedule, previewPublicationScheduleGuidance, scheduleView,
-  scheduledDispatchEnabled } from "./publication-scheduler";
+import {
+  publicationClaimReviewSnapshot,
+  requireCurrentClaimReview,
+} from "./claim-reviews";
+import {
+  cancelPublicationSchedule,
+  createPublicationSchedule,
+  previewPublicationScheduleGuidance,
+  scheduleView,
+  scheduledDispatchEnabled,
+} from "./publication-scheduler";
 
 const prepareInput = z
   .object({
@@ -62,40 +74,71 @@ const view = ({
   ...intent,
   externallySubmitted: false as const,
 });
-const policyView = ({ snapshotHash, ...review }: { snapshotHash: string; [key: string]: any }) => review;
-const dispatchInput = z.object({
-  connectionId: z.string().uuid(), requestKey: z.string().uuid(),
-  guidanceFingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
-  guidanceCheckedAt: z.string().datetime({ offset: true }),
-  guidanceAcknowledged: z.literal(true),
-  confirmation: z.literal("PUBLISH_TO_YOUTUBE"),
-}).strict();
-const manualGuidanceQuery = z.object({ connectionId: z.string().uuid() }).strict();
-const scheduleInput = z.object({
-  connectionId: z.string().uuid(), requestKey: z.string().uuid(),
-  scheduledAt: z.string().datetime({ offset: true }),
-  guidanceFingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
-  guidanceAcknowledged: z.literal(true),
-  confirmation: z.literal("SCHEDULE_YOUTUBE_UPLOAD"),
-}).strict();
-const scheduleGuidanceQuery = z.object({
-  connectionId: z.string().uuid(),
-  scheduledAt: z.string().datetime({ offset: true }),
-}).strict();
-const liveDispatch = () => process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
+const policyView = ({
+  snapshotHash,
+  ...review
+}: {
+  snapshotHash: string;
+  [key: string]: any;
+}) => review;
+const dispatchInput = z
+  .object({
+    connectionId: z.string().uuid(),
+    requestKey: z.string().uuid(),
+    guidanceFingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
+    guidanceCheckedAt: z.string().datetime({ offset: true }),
+    guidanceAcknowledged: z.literal(true),
+    confirmation: z.literal("PUBLISH_TO_YOUTUBE"),
+  })
+  .strict();
+const manualGuidanceQuery = z
+  .object({ connectionId: z.string().uuid() })
+  .strict();
+const scheduleInput = z
+  .object({
+    connectionId: z.string().uuid(),
+    requestKey: z.string().uuid(),
+    scheduledAt: z.string().datetime({ offset: true }),
+    guidanceFingerprint: z.string().regex(/^[a-f0-9]{64}$/u),
+    guidanceAcknowledged: z.literal(true),
+    confirmation: z.literal("SCHEDULE_YOUTUBE_UPLOAD"),
+  })
+  .strict();
+const scheduleGuidanceQuery = z
+  .object({
+    connectionId: z.string().uuid(),
+    scheduledAt: z.string().datetime({ offset: true }),
+  })
+  .strict();
+const liveDispatch = () =>
+  process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
   youtubePolicyMaintenanceCurrent(process.env);
-const attemptView = (attempt: {
-  id: string; intentId: string; status: string; outcomeCode: string | null;
-  providerPostId: string | null; createdAt: Date; startedAt: Date | null;
-  completedAt: Date | null; uploadSessionCiphertext: string | null;
-} | null) => attempt && ({
-  id: attempt.id, intentId: attempt.intentId, status: attempt.status,
-  outcomeCode: attempt.outcomeCode,
-  providerPostId: attempt.status === "CONFIRMED" ? attempt.providerPostId : null,
-  createdAt: attempt.createdAt, startedAt: attempt.startedAt,
-  completedAt: attempt.completedAt,
-  canCheckStatus: attempt.status === "UNKNOWN" && Boolean(attempt.uploadSessionCiphertext),
-});
+const attemptView = (
+  attempt: {
+    id: string;
+    intentId: string;
+    status: string;
+    outcomeCode: string | null;
+    providerPostId: string | null;
+    createdAt: Date;
+    startedAt: Date | null;
+    completedAt: Date | null;
+    uploadSessionCiphertext: string | null;
+  } | null,
+) =>
+  attempt && {
+    id: attempt.id,
+    intentId: attempt.intentId,
+    status: attempt.status,
+    outcomeCode: attempt.outcomeCode,
+    providerPostId:
+      attempt.status === "CONFIRMED" ? attempt.providerPostId : null,
+    createdAt: attempt.createdAt,
+    startedAt: attempt.startedAt,
+    completedAt: attempt.completedAt,
+    canCheckStatus:
+      attempt.status === "UNKNOWN" && Boolean(attempt.uploadSessionCiphertext),
+  };
 
 @Controller("workspaces/:organizationId/publication-intents")
 @UseGuards(TenantGuard)
@@ -129,10 +172,9 @@ export class PublicationIntentsController {
     return view(intent);
   }
 
-  @Get(":id/youtube-policy-preview") @Roles(...approverRoles) async previewYoutube(
-    @Req() req: AuthedRequest,
-    @Param("id") id: string,
-  ) {
+  @Get(":id/youtube-policy-preview")
+  @Roles(...approverRoles)
+  async previewYoutube(@Req() req: AuthedRequest, @Param("id") id: string) {
     const intentId = idSchema.parse(id);
     return this.db.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
@@ -143,34 +185,44 @@ export class PublicationIntentsController {
           contentRevision: intent.contentRevision,
           renderId: intent.renderId,
           snippet: youtubeBaseMetadata(intent.snapshot),
-          requiredChoices: ["connectionId", "privacyStatus", "selfDeclaredMadeForKids", "containsSyntheticMedia"],
+          requiredChoices: [
+            "connectionId",
+            "privacyStatus",
+            "selfDeclaredMadeForKids",
+            "containsSyntheticMedia",
+          ],
           policyVersion: youtubePolicyVersion,
           externallySubmitted: false as const,
         };
       } catch (error) {
-        throw new BadRequestException(error instanceof Error ? error.message : "Invalid YouTube metadata.");
+        throw new BadRequestException(
+          error instanceof Error ? error.message : "Invalid YouTube metadata.",
+        );
       }
     });
   }
 
-  @Get(":id/youtube-policy-review") @Roles(...approverRoles) async getYoutubeReview(
-    @Req() req: AuthedRequest,
-    @Param("id") id: string,
-  ) {
+  @Get(":id/youtube-policy-review")
+  @Roles(...approverRoles)
+  async getYoutubeReview(@Req() req: AuthedRequest, @Param("id") id: string) {
     const intentId = idSchema.parse(id);
     const intent = await this.db.publicationIntent.findFirst({
       where: { id: intentId, organizationId: req.organizationId },
       select: { id: true },
     });
-    if (!intent) throw new NotFoundException("Publication preparation not found.");
+    if (!intent)
+      throw new NotFoundException("Publication preparation not found.");
     const review = await this.db.publicationPolicyReview.findFirst({
       where: { intentId, organizationId: req.organizationId },
     });
-    if (!review) throw new NotFoundException("YouTube policy review not found.");
+    if (!review)
+      throw new NotFoundException("YouTube policy review not found.");
     return policyView(review);
   }
 
-  @Post(":id/youtube-policy-review") @Roles(...approverRoles) async reviewYoutube(
+  @Post(":id/youtube-policy-review")
+  @Roles(...approverRoles)
+  async reviewYoutube(
     @Req() req: AuthedRequest,
     @Param("id") id: string,
     @Body() body: unknown,
@@ -181,32 +233,48 @@ export class PublicationIntentsController {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
       const intent = await currentApproval(tx, req.organizationId, intentId);
       const connection = await tx.socialConnection.findFirst({
-        where: { id: reviewInput.connectionId, organizationId: req.organizationId },
+        where: {
+          id: reviewInput.connectionId,
+          organizationId: req.organizationId,
+        },
       });
-      if (!connection) throw new NotFoundException("Social connection not found.");
+      if (!connection)
+        throw new NotFoundException("Social connection not found.");
       activeConnection(connection, req.organizationId);
       let metadata;
       try {
         metadata = youtubeUploadMetadata(intent.snapshot, reviewInput);
       } catch (error) {
-        throw new BadRequestException(error instanceof Error ? error.message : "Invalid YouTube metadata.");
+        throw new BadRequestException(
+          error instanceof Error ? error.message : "Invalid YouTube metadata.",
+        );
       }
       const fingerprint = youtubePolicyFingerprint({
-        intentId, connectionId: connection.id,
+        intentId,
+        connectionId: connection.id,
         contentRevision: intent.contentRevision,
-        renderId: intent.renderId, metadata,
+        renderId: intent.renderId,
+        metadata,
       });
-      const existing = await tx.publicationPolicyReview.findUnique({ where: { intentId } });
+      const existing = await tx.publicationPolicyReview.findUnique({
+        where: { intentId },
+      });
       if (existing) {
-        if (existing.snapshotHash !== fingerprint || existing.expiresAt <= new Date())
-          throw new ConflictException("The policy review is immutable or expired. Prepare a new publication.");
+        if (
+          existing.snapshotHash !== fingerprint ||
+          existing.expiresAt <= new Date()
+        )
+          throw new ConflictException(
+            "The policy review is immutable or expired. Prepare a new publication.",
+          );
         return policyView(existing);
       }
       const now = new Date();
       const review = await tx.publicationPolicyReview.create({
         data: {
           organizationId: req.organizationId,
-          intentId, connectionId: connection.id,
+          intentId,
+          connectionId: connection.id,
           contentRevision: intent.contentRevision,
           policyVersion: youtubePolicyVersion,
           metadata,
@@ -218,13 +286,18 @@ export class PublicationIntentsController {
       });
       await tx.auditLog.create({
         data: {
-          organizationId: req.organizationId, actorId: req.userId,
-          action: "publication.youtube_policy_reviewed", entityId: intentId,
-          detail: { reviewId: review.id, connectionId: connection.id,
+          organizationId: req.organizationId,
+          actorId: req.userId,
+          action: "publication.youtube_policy_reviewed",
+          entityId: intentId,
+          detail: {
+            reviewId: review.id,
+            connectionId: connection.id,
             policyVersion: youtubePolicyVersion,
             privacyStatus: reviewInput.privacyStatus,
             selfDeclaredMadeForKids: reviewInput.selfDeclaredMadeForKids,
-            containsSyntheticMedia: reviewInput.containsSyntheticMedia },
+            containsSyntheticMedia: reviewInput.containsSyntheticMedia,
+          },
         },
       });
       return policyView(review);
@@ -233,48 +306,77 @@ export class PublicationIntentsController {
 
   // Read-only status. Never expose ciphertext, upload URI, token or request key.
   @Get(":id/youtube-schedule") @Roles(...approverRoles) async youtubeSchedule(
-    @Req() req: AuthedRequest, @Param("id") id: string,
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
   ) {
     const intentId = idSchema.parse(id);
-    const intent = await this.db.publicationIntent.findFirst({ where: {
-      id: intentId, organizationId: req.organizationId,
-    }, select: { id: true } });
-    if (!intent) throw new NotFoundException("Publication preparation not found.");
-    const row = await this.db.publicationSchedule.findFirst({ where: {
-      intentId, organizationId: req.organizationId,
-    } });
-    return { schedule: row ? scheduleView(row) : null,
-      canSchedule: scheduledDispatchEnabled() && ["OWNER", "ADMIN"].includes(req.role) };
+    const intent = await this.db.publicationIntent.findFirst({
+      where: {
+        id: intentId,
+        organizationId: req.organizationId,
+      },
+      select: { id: true },
+    });
+    if (!intent)
+      throw new NotFoundException("Publication preparation not found.");
+    const row = await this.db.publicationSchedule.findFirst({
+      where: {
+        intentId,
+        organizationId: req.organizationId,
+      },
+    });
+    return {
+      schedule: row ? scheduleView(row) : null,
+      canSchedule:
+        scheduledDispatchEnabled() && ["OWNER", "ADMIN"].includes(req.role),
+    };
   }
 
   @Post(":id/youtube-schedule") @Roles("OWNER", "ADMIN") async scheduleYoutube(
-    @Req() req: AuthedRequest, @Param("id") id: string, @Body() body: unknown,
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Body() body: unknown,
   ) {
     const input = scheduleInput.parse(body);
     if (!this.media.configured)
-      throw new ServiceUnavailableException("Private video storage is not configured.");
+      throw new ServiceUnavailableException(
+        "Private video storage is not configured.",
+      );
     return createPublicationSchedule(this.db, {
-      organizationId: req.organizationId, actorId: req.userId,
-      intentId: idSchema.parse(id), connectionId: input.connectionId,
-      requestKey: input.requestKey, dueAt: new Date(input.scheduledAt),
+      organizationId: req.organizationId,
+      actorId: req.userId,
+      intentId: idSchema.parse(id),
+      connectionId: input.connectionId,
+      requestKey: input.requestKey,
+      dueAt: new Date(input.scheduledAt),
       guidanceFingerprint: input.guidanceFingerprint,
       guidanceAcknowledged: input.guidanceAcknowledged,
     });
   }
 
-  @Get(":id/youtube-posting-guidance") @Roles("OWNER", "ADMIN") async postingGuidance(
-    @Req() req: AuthedRequest, @Param("id") id: string, @Query() query: unknown,
+  @Get(":id/youtube-posting-guidance")
+  @Roles("OWNER", "ADMIN")
+  async postingGuidance(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Query() query: unknown,
   ) {
     const input = scheduleGuidanceQuery.parse(query);
     return previewPublicationScheduleGuidance(this.db, {
-      organizationId: req.organizationId, actorId: req.userId,
-      intentId: idSchema.parse(id), connectionId: input.connectionId,
+      organizationId: req.organizationId,
+      actorId: req.userId,
+      intentId: idSchema.parse(id),
+      connectionId: input.connectionId,
       dueAt: new Date(input.scheduledAt),
     });
   }
 
-  @Get(":id/youtube-manual-posting-guidance") @Roles("OWNER", "ADMIN") async manualPostingGuidance(
-    @Req() req: AuthedRequest, @Param("id") id: string, @Query() query: unknown,
+  @Get(":id/youtube-manual-posting-guidance")
+  @Roles("OWNER", "ADMIN")
+  async manualPostingGuidance(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Query() query: unknown,
   ) {
     const input = manualGuidanceQuery.parse(query);
     const intentId = idSchema.parse(id);
@@ -282,95 +384,161 @@ export class PublicationIntentsController {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
       const intent = await currentApproval(tx, req.organizationId, intentId);
       if (!liveDispatch())
-        throw new ServiceUnavailableException("YouTube dispatch is not available.");
-      const connection = await tx.socialConnection.findFirst({ where: {
-        id: input.connectionId, organizationId: req.organizationId,
-      } });
-      if (!connection) throw new NotFoundException("Social connection not found.");
+        throw new ServiceUnavailableException(
+          "YouTube dispatch is not available.",
+        );
+      const connection = await tx.socialConnection.findFirst({
+        where: {
+          id: input.connectionId,
+          organizationId: req.organizationId,
+        },
+      });
+      if (!connection)
+        throw new NotFoundException("Social connection not found.");
       activeConnection(connection, req.organizationId);
-      if (await tx.publicationAttempt.findUnique({ where: { intentId } }) ||
-          await tx.publicationSchedule.findFirst({ where: {
-            intentId, organizationId: req.organizationId,
+      if (
+        (await tx.publicationAttempt.findUnique({ where: { intentId } })) ||
+        (await tx.publicationSchedule.findFirst({
+          where: {
+            intentId,
+            organizationId: req.organizationId,
             status: { in: ["SCHEDULED", "CLAIMED"] },
-          } }))
-        throw new ConflictException("Review the existing upload attempt or schedule first.");
+          },
+        }))
+      )
+        throw new ConflictException(
+          "Review the existing upload attempt or schedule first.",
+        );
       return evaluateManualGuidance(tx, {
-        organizationId: req.organizationId, connectionId: connection.id,
-        intentId, contentRevision: intent.contentRevision,
-        renderId: intent.renderId, checkedAt: new Date(),
+        organizationId: req.organizationId,
+        connectionId: connection.id,
+        intentId,
+        contentRevision: intent.contentRevision,
+        renderId: intent.renderId,
+        checkedAt: new Date(),
       });
     });
   }
 
-  @Post(":id/youtube-schedule/cancel") @Roles("OWNER", "ADMIN") async cancelYoutubeSchedule(
-    @Req() req: AuthedRequest, @Param("id") id: string,
+  @Post(":id/youtube-schedule/cancel")
+  @Roles("OWNER", "ADMIN")
+  async cancelYoutubeSchedule(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
   ) {
-    return cancelPublicationSchedule(this.db, { organizationId: req.organizationId,
-      actorId: req.userId, intentId: idSchema.parse(id) });
+    return cancelPublicationSchedule(this.db, {
+      organizationId: req.organizationId,
+      actorId: req.userId,
+      intentId: idSchema.parse(id),
+    });
   }
 
   @Get(":id/youtube-attempt") @Roles(...approverRoles) async youtubeAttempt(
-    @Req() req: AuthedRequest, @Param("id") id: string,
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
   ) {
     const intentId = idSchema.parse(id);
     const intent = await this.db.publicationIntent.findFirst({
-      where: { id: intentId, organizationId: req.organizationId }, select: { id: true },
+      where: { id: intentId, organizationId: req.organizationId },
+      select: { id: true },
     });
-    if (!intent) throw new NotFoundException("Publication preparation not found.");
+    if (!intent)
+      throw new NotFoundException("Publication preparation not found.");
     const attempt = await this.db.publicationAttempt.findFirst({
       where: { intentId, organizationId: req.organizationId },
     });
-    return { attempt: attemptView(attempt),
+    return {
+      attempt: attemptView(attempt),
       canPublish: liveDispatch() && ["OWNER", "ADMIN"].includes(req.role),
-      canReconcile: process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
+      canReconcile:
+        process.env.YOUTUBE_LIVE_DISPATCH_ENABLED === "true" &&
         ["OWNER", "ADMIN"].includes(req.role) &&
-        attempt?.status === "UNKNOWN" && Boolean(attempt.uploadSessionCiphertext) };
+        attempt?.status === "UNKNOWN" &&
+        Boolean(attempt.uploadSessionCiphertext),
+    };
   }
 
   // Off by default; explicit confirmation and a current signed-in owner/admin
   // are required before any provider request. The ledger blocks duplicate sends.
   @Post(":id/youtube-dispatch") @Roles("OWNER", "ADMIN") async youtubeDispatch(
-    @Req() req: AuthedRequest, @Param("id") id: string, @Body() body: unknown,
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+    @Body() body: unknown,
   ) {
     const intentId = idSchema.parse(id);
     const input = dispatchInput.parse(body);
-    if (!liveDispatch()) throw new ServiceUnavailableException("YouTube dispatch requires an enabled deployment and current platform policy review.");
+    if (!liveDispatch())
+      throw new ServiceUnavailableException(
+        "YouTube dispatch requires an enabled deployment and current platform policy review.",
+      );
     if (!this.media.configured)
-      throw new ServiceUnavailableException("Private video storage is not configured.");
-    if (await this.db.publicationSchedule.findFirst({ where: {
-      intentId, organizationId: req.organizationId,
-      status: { in: ["SCHEDULED", "CLAIMED"] },
-    } })) throw new ConflictException("Cancel or review the existing schedule before a manual send.");
+      throw new ServiceUnavailableException(
+        "Private video storage is not configured.",
+      );
+    if (
+      await this.db.publicationSchedule.findFirst({
+        where: {
+          intentId,
+          organizationId: req.organizationId,
+          status: { in: ["SCHEDULED", "CLAIMED"] },
+        },
+      })
+    )
+      throw new ConflictException(
+        "Cancel or review the existing schedule before a manual send.",
+      );
     const attempt = await dispatchReviewedYoutubeVideo(this.db, this.media, {
-      organizationId: req.organizationId, actorId: req.userId,
-      intentId, connectionId: input.connectionId, requestKey: input.requestKey,
-      manualGuidance: { fingerprint: input.guidanceFingerprint,
+      organizationId: req.organizationId,
+      actorId: req.userId,
+      intentId,
+      connectionId: input.connectionId,
+      requestKey: input.requestKey,
+      manualGuidance: {
+        fingerprint: input.guidanceFingerprint,
         checkedAt: new Date(input.guidanceCheckedAt),
-        acknowledged: input.guidanceAcknowledged },
+        acknowledged: input.guidanceAcknowledged,
+      },
     });
     return attemptView(attempt);
   }
 
   // Status-only empty PUT to the saved session; never sends media or starts a
   // second upload. An expired/ambiguous session remains UNKNOWN.
-  @Post(":id/youtube-attempt/:attemptId/check-status") @Roles("OWNER", "ADMIN") async checkYoutubeAttempt(
-    @Req() req: AuthedRequest, @Param("id") id: string,
+  @Post(":id/youtube-attempt/:attemptId/check-status")
+  @Roles("OWNER", "ADMIN")
+  async checkYoutubeAttempt(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
     @Param("attemptId") attemptId: string,
   ) {
-    const intentId = idSchema.parse(id), ownedAttemptId = idSchema.parse(attemptId);
+    const intentId = idSchema.parse(id),
+      ownedAttemptId = idSchema.parse(attemptId);
     if (process.env.YOUTUBE_LIVE_DISPATCH_ENABLED !== "true")
-      throw new ServiceUnavailableException("YouTube status checks are not enabled.");
+      throw new ServiceUnavailableException(
+        "YouTube status checks are not enabled.",
+      );
     const owned = await this.db.publicationAttempt.findFirst({
-      where: { id: ownedAttemptId, intentId, organizationId: req.organizationId },
+      where: {
+        id: ownedAttemptId,
+        intentId,
+        organizationId: req.organizationId,
+      },
       select: { id: true },
     });
     if (!owned) throw new NotFoundException("Publication attempt not found.");
     const outcome = await reconcileUnknownYoutubeUpload(this.db, {
-      organizationId: req.organizationId, actorId: req.userId, attemptId: ownedAttemptId,
+      organizationId: req.organizationId,
+      actorId: req.userId,
+      attemptId: ownedAttemptId,
     });
-    if (outcome.status === "UNKNOWN") return { attempt: attemptView(
-      await this.db.publicationAttempt.findUnique({ where: { id: ownedAttemptId } })),
-    };
+    if (outcome.status === "UNKNOWN")
+      return {
+        attempt: attemptView(
+          await this.db.publicationAttempt.findUnique({
+            where: { id: ownedAttemptId },
+          }),
+        ),
+      };
     return { attempt: attemptView(outcome) };
   }
 
@@ -423,6 +591,11 @@ export class PublicationIntentsController {
         throw new BadRequestException(
           "Content did not pass structural checks.",
         );
+      const currentClaims = await requireCurrentClaimReview(
+        tx,
+        req.organizationId,
+        content,
+      );
       if (draft.format === "Video" && !data.renderId)
         throw new BadRequestException(
           "Choose an approved render of this content revision.",
@@ -459,6 +632,7 @@ export class PublicationIntentsController {
             ...draft,
             revision: data.revision,
             renderId: data.renderId ?? null,
+            claimReview: publicationClaimReviewSnapshot(currentClaims),
           },
           requestKey: data.requestKey,
           requestHash,

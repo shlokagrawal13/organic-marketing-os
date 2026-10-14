@@ -1,5 +1,22 @@
 # Policy and quality checks
 
+## POLICY-01A bounded claim evidence gate (local, unpublished) — 2026-10-14 UTC
+
+Policy version `bounded-claims-2026-10-14` deterministically inspects the saved title, hook, body, CTA and each scene's voiceover, on-screen text, caption and CTA. It emits at most 50 field-bound signals for numeric results, selected superlative/comparative phrases and selected proof assertions. Signal IDs and the ordered claim-set fingerprint are SHA-256 bound to the policy version and exact field occurrence.
+
+Approval behavior:
+
+- Claim-free revisions keep the existing structural and human-review flow.
+- Every detected claim requires exactly one acknowledged resolution for the current revision.
+- OWNER, ADMIN and EDITOR may save an HTTPS evidence URL, a human-readable label and review time.
+- Only OWNER may save a documented override of at least 20 characters; role failures return 403.
+- The current content row is locked for review save and approval. Revision, workspace, policy version and fingerprint mismatches fail closed.
+- Every review save creates an audit event with counts and identifiers, but without source URL/label or override reason.
+- Publication preparation re-evaluates the current claim set under the content lock and stores only review ID, revision, policy version, fingerprint, reviewer, timestamp and claim dispositions. It excludes evidence URLs/labels and override reasons.
+- Any content edit creates a new revision, clears approval and makes the prior review ineligible.
+
+The detector is intentionally bounded. It does not fetch or authenticate sources, judge truth, rank source quality, decide legal/platform compliance, or identify every factual implication. Human facts, rights, brand and platform review remains mandatory. Verification and limitations are recorded in `docs/qa/policy01-claim-evidence.json`.
+
 ## SOCIAL-01 YouTube connections and upload-review UI (local) — 2026-10-10 UTC
 
 The local approved-video panel makes the bounded YouTube metadata and declaration review available to workspace approvers. It has no preselected visibility/audience/synthetic choice, shows server-derived title/description read-only, and requires all four acknowledgments. The new GET for a saved review is tenant and approver gated and excludes its fingerprint. UI declarations are human review inputs, not verified legal or platform compliance; no upload occurs. See `docs/qa/social01-review-ui-evidence.json`. Previous dated sections are historical.

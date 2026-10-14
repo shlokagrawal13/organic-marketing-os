@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "taskId": "POLICY-01A",
+  "title": "Bounded claim evidence gate",
+  "status": "local_verified_unpublished",
+  "verifiedAtUtc": "2026-10-14T22:10:55Z",
+  "basePublicCommit": "64eb751c243496035604a1e08478866d6718a381",
+  "basePublicTree": "3913a13765cff6bf60eae0de387e6d6408dedf1b",
+  "policyVersion": "bounded-claims-2026-10-14",
+  "scope": {
+    "signals": [
+      "NUMERIC_RESULT",
+      "COMPARATIVE",
+      "PROOF_ASSERTION"
+    ],
+    "fields": [
+      "title",
+      "hook",
+      "body",
+      "cta",
+      "scene.voiceover",
+      "scene.onScreenText",
+      "scene.caption",
+      "scene.cta"
+    ],
+    "maximumSignalsPerRevision": 50,
+    "approvalGate": true,
+    "publicationRecheck": true,
+    "ownerOnlyOverride": true
+  },
+  "securityAndPrivacy": {
+    "tenantScoped": true,
+    "contentRevisionBound": true,
+    "policyVersionBound": true,
+    "claimSetFingerprintBound": true,
+    "organizationAndContentRowsLockedForCriticalTransitions": true,
+    "evidenceUrlsExcludedFromAuditDetails": true,
+    "evidenceLabelsExcludedFromPublicationSnapshot": true,
+    "overrideReasonsExcludedFromAuditDetailsAndPublicationSnapshot": true,
+    "publicationSnapshotContainsOnlyReviewIdentityAndDispositions": true
+  },
+  "verification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "focused": {
+      "unitPassed": 2,
+      "httpPassed": 1,
+      "browserPassed": 1
+    },
+    "completeLocal": {
+      "unitPassed": 207,
+      "unitFailed": 0,
+      "unitSkipped": 0,
+      "unitCancelled": 0,
+      "unitTodo": 0,
+      "httpPassed": 15,
+      "httpFailed": 0,
+      "browserPassed": 9,
+      "browserFailed": 0,
+      "recoveryPassed": 5,
+      "recoveryFailed": 0,
+      "freshPgliteMigrations": 21
+    },
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 21,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4941164,
+      "sha256": "37a75c04753204b900f8e8d20db2104a22e261f3bbea08fb0ed0b586c72550e3",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "dependencyAudits": {
+      "productionVulnerabilities": 0,
+      "fullVulnerabilities": 0
+    },
+    "fontFixtures": {
+      "modernNotoShaVerified": 15,
+      "pinnedCjkShaVerified": 4,
+      "harfbuzzVersion": "8.3.0"
+    }
+  },
+  "excludedAttempts": [
+    "The interrupted scratch-only POLICY-01 checkout disappeared. Its uncommitted code was not claimed as recovered; the increment was freshly reconstructed from the exact public base and fully rerun.",
+    "An early broad verifier attempt used an out-of-date compiled API and lacked the complete pinned font set. Its policy selector and three media/render failures are excluded; the corrected build and 15/15 plus 4/4 font set reran cleanly.",
+    "The first focused policy browser attempt exposed a percent-pattern boundary bug. The detector was corrected, rebuilt and the focused plus complete browser suites passed."
+  ],
+  "limitations": [
+    "The detector covers only the listed bounded patterns and does not discover every factual or legal claim.",
+    "A saved HTTPS URL is human-supplied. The system does not fetch it or prove truth, source quality, legal compliance or platform compliance.",
+    "Native PostgreSQL and Redis CI for this exact source requires publication and has not run.",
+    "No deployed production receipt, live Google or YouTube operation, physical-device review, native private-media restore or full master acceptance is established by this increment."
+  ],
+  "changedSourcePaths": [
+    "apps/api/src/claim-reviews.ts",
+    "apps/api/src/content.ts",
+    "apps/api/src/publications.ts",
+    "apps/web/app/content-workspace.tsx",
+    "apps/web/app/globals.css",
+    "packages/core/claim-policy.ts",
+    "prisma/migrations/202610140001_content_claim_review/migration.sql",
+    "prisma/schema.prisma",
+    "tests/claim-policy.test.ts",
+    "tests/integration/claim-policy.test.ts",
+    "tests/ui/claim-policy.spec.ts"
+  ]
+}

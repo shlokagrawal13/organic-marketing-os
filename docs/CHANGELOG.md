@@ -1,3 +1,14 @@
+<!-- POLICY01A_LOCAL_START -->
+## POLICY-01A bounded claim evidence gate (local, unpublished) — 2026-10-14 UTC
+
+Bounded numeric-result, comparative and proof-assertion signals now require revision-bound evidence before content approval. OWNER/ADMIN/EDITOR may link an HTTPS source; only OWNER may document an override. The review is tenant-, revision-, policy- and fingerprint-bound, is audited without source URLs or override reasons, and is rechecked before publication. Publication snapshots contain only sanitized review identity and dispositions. Editing prevents reuse of the prior review.
+
+Fresh reconstruction from public `64eb751c243496035604a1e08478866d6718a381` passed Prisma generation, API/web builds, 207/207 unit, 15/15 HTTP, 9/9 browser, 5/5 recovery, 21 migrations, populated PGlite upgrade/archive restore and two zero-vulnerability audits; all reported fail/skip/cancel/todo counts are zero. See `docs/qa/policy01-claim-evidence.json`. This bounded detector does not fetch sources or prove truth, source quality, legal/platform compliance or every possible claim. Native CI for this exact source is pending publication; no public write, live provider action or full master acceptance occurred. POLICY-01 remains Partial.
+
+Next: publish only after exact approval, confirm the public tree, and inspect its own native PostgreSQL/Redis CI before the next policy increment.
+<!-- POLICY01A_LOCAL_END -->
+
+
 <!-- SOCIAL01_CAPTURE_NATIVE_CLOSURE_START -->
 ## SOCIAL-01 reconstructed capture runner publication and native CI — 2026-10-14 UTC
 

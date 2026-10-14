@@ -36,6 +36,14 @@ import {
   timelineTime,
 } from "../../../packages/core/captions";
 type Any = Record<string, any>;
+type ClaimResolutionState = {
+  disposition: "EVIDENCE" | "OWNER_OVERRIDE";
+  sourceUrl?: string;
+  sourceLabel?: string;
+  checkedAt?: string;
+  overrideReason?: string;
+  acknowledged: boolean;
+};
 const draftFields = [
   "title",
   "platform",
@@ -135,6 +143,9 @@ export default function ContentWorkspace({
     [filter, setFilter] = useState("All"),
     [query, setQuery] = useState(""),
     [ack, setAck] = useState(false),
+    [claimResolutions, setClaimResolutions] = useState<
+      Record<string, ClaimResolutionState>
+    >({}),
     [comment, setComment] = useState(""),
     [rejection, setRejection] = useState("");
   const [prompt, setPrompt] = useState(""),
@@ -218,10 +229,32 @@ export default function ContentWorkspace({
     setDirty(true);
     setAck(false);
   }
+  function hydrateClaimResolutions(data: Any) {
+    const saved = new Map(
+      (data.claimReview?.resolutions || []).map((resolution: Any) => [
+        resolution.claimId,
+        resolution,
+      ]),
+    );
+    setClaimResolutions(
+      Object.fromEntries(
+        (data.claimPolicy?.claims || []).map((claim: Any) => [
+          claim.id,
+          saved.get(claim.id) || {
+            disposition: "EVIDENCE",
+            sourceUrl: "",
+            sourceLabel: "",
+            acknowledged: false,
+          },
+        ]),
+      ),
+    );
+  }
   async function open(id: string) {
     const data = await api(base + `/content/${id}`);
     setDetail(data);
     setDraft(pick(data.item));
+    hydrateClaimResolutions(data);
     setDirty(false);
     setAck(false);
   }
@@ -235,6 +268,7 @@ export default function ContentWorkspace({
     });
     setDirty(true);
     setAck(false);
+    setClaimResolutions({});
   }
   async function save(e?: React.FormEvent) {
     e?.preventDefault();
@@ -269,6 +303,61 @@ export default function ContentWorkspace({
             ? "Draft returned with feedback."
             : "Content archived.",
     );
+  }
+  function setClaimResolution(
+    claimId: string,
+    patch: Partial<ClaimResolutionState>,
+  ) {
+    setClaimResolutions((current) => ({
+      ...current,
+      [claimId]: { ...current[claimId], ...patch },
+    }));
+  }
+  const claimsReady = (detail?.claimPolicy?.claims || []).every(
+    (claim: Any) => {
+      const resolution = claimResolutions[claim.id];
+      if (!resolution?.acknowledged) return false;
+      if (resolution.disposition === "OWNER_OVERRIDE")
+        return (resolution.overrideReason || "").trim().length >= 20;
+      try {
+        return (
+          new URL(resolution.sourceUrl || "").protocol === "https:" &&
+          (resolution.sourceLabel || "").trim().length >= 3
+        );
+      } catch {
+        return false;
+      }
+    },
+  );
+  async function saveClaimReview() {
+    if (!detail) return;
+    const current = detail;
+    await run(async () => {
+      await api(base + `/content/${current.item.id}/claim-review`, "POST", {
+        revision: current.item.revision,
+        policyVersion: current.claimPolicy.policyVersion,
+        claimSetFingerprint: current.claimPolicy.claimSetFingerprint,
+        resolutions: current.claimPolicy.claims.map((claim: Any) => {
+          const resolution = claimResolutions[claim.id];
+          return resolution.disposition === "OWNER_OVERRIDE"
+            ? {
+                claimId: claim.id,
+                disposition: "OWNER_OVERRIDE",
+                overrideReason: resolution.overrideReason,
+                acknowledged: true,
+              }
+            : {
+                claimId: claim.id,
+                disposition: "EVIDENCE",
+                sourceUrl: resolution.sourceUrl,
+                sourceLabel: resolution.sourceLabel,
+                checkedAt: resolution.checkedAt || new Date().toISOString(),
+                acknowledged: true,
+              };
+        }),
+      });
+      await open(current.item.id);
+    }, "Claim evidence saved for this revision.");
   }
   async function generate(kind: string, text: string, scene?: Any) {
     await run(async () => {
@@ -944,6 +1033,138 @@ export default function ContentWorkspace({
                     </div>
                   ))
                 )}
+                {!dirty &&
+                  detail.item.status === "REVIEW" &&
+                  approver &&
+                  detail.claimPolicy?.claims?.length > 0 && (
+                    <div className="claim-review">
+                      <h4>Claim evidence</h4>
+                      <p className="small-copy">
+                        Resolve every detected claim for this exact revision.
+                        Source links are saved in the workspace but excluded
+                        from publication snapshots and audit details.
+                      </p>
+                      {detail.claimPolicy.claims.map(
+                        (claim: Any, index: number) => {
+                          const resolution = claimResolutions[claim.id];
+                          if (!resolution) return null;
+                          const lockedOwnerOverride =
+                            resolution.disposition === "OWNER_OVERRIDE" &&
+                            role !== "OWNER";
+                          return (
+                            <div className="claim-card" key={claim.id}>
+                              <div className="claim-card-heading">
+                                <b>{claim.kind.replaceAll("_", " ")}</b>
+                                <span>{claim.location}</span>
+                              </div>
+                              <blockquote>{claim.excerpt}</blockquote>
+                              {lockedOwnerOverride ? (
+                                <p className="small-copy">
+                                  A workspace owner documented an override for
+                                  this claim.
+                                </p>
+                              ) : (
+                                <>
+                                  <label>
+                                    Resolution
+                                    <select
+                                      aria-label={`Resolution for claim ${index + 1}`}
+                                      value={resolution.disposition}
+                                      onChange={(event) =>
+                                        setClaimResolution(claim.id, {
+                                          disposition: event.target.value as
+                                            "EVIDENCE" | "OWNER_OVERRIDE",
+                                          acknowledged: false,
+                                        })
+                                      }
+                                    >
+                                      <option value="EVIDENCE">
+                                        Link supporting evidence
+                                      </option>
+                                      {role === "OWNER" && (
+                                        <option value="OWNER_OVERRIDE">
+                                          Document owner override
+                                        </option>
+                                      )}
+                                    </select>
+                                  </label>
+                                  {resolution.disposition === "EVIDENCE" ? (
+                                    <>
+                                      <label>
+                                        Evidence URL
+                                        <input
+                                          type="url"
+                                          inputMode="url"
+                                          placeholder="https://example.com/source"
+                                          value={resolution.sourceUrl || ""}
+                                          onChange={(event) =>
+                                            setClaimResolution(claim.id, {
+                                              sourceUrl: event.target.value,
+                                              acknowledged: false,
+                                            })
+                                          }
+                                        />
+                                      </label>
+                                      <label>
+                                        Evidence label
+                                        <input
+                                          placeholder="Study, report or first-party record"
+                                          value={resolution.sourceLabel || ""}
+                                          onChange={(event) =>
+                                            setClaimResolution(claim.id, {
+                                              sourceLabel: event.target.value,
+                                              acknowledged: false,
+                                            })
+                                          }
+                                        />
+                                      </label>
+                                    </>
+                                  ) : (
+                                    <label>
+                                      Owner override reason
+                                      <textarea
+                                        placeholder="Explain why publication may proceed without linked evidence."
+                                        value={resolution.overrideReason || ""}
+                                        onChange={(event) =>
+                                          setClaimResolution(claim.id, {
+                                            overrideReason: event.target.value,
+                                            acknowledged: false,
+                                          })
+                                        }
+                                      />
+                                    </label>
+                                  )}
+                                  <label className="review-ack">
+                                    <input
+                                      type="checkbox"
+                                      checked={resolution.acknowledged}
+                                      onChange={(event) =>
+                                        setClaimResolution(claim.id, {
+                                          acknowledged: event.target.checked,
+                                        })
+                                      }
+                                    />
+                                    I checked this resolution for claim{" "}
+                                    {index + 1}.
+                                  </label>
+                                </>
+                              )}
+                            </div>
+                          );
+                        },
+                      )}
+                      <p className="small-copy claim-disclaimer">
+                        {detail.claimPolicy.disclaimer}
+                      </p>
+                      <button
+                        className="button wide"
+                        disabled={busy || !claimsReady}
+                        onClick={saveClaimReview}
+                      >
+                        Save claim evidence
+                      </button>
+                    </div>
+                  )}
                 {detail.item.id && detail.item.status === "DRAFT" && (
                   <button
                     className="button primary wide"
@@ -968,7 +1189,9 @@ export default function ContentWorkspace({
                     </label>
                     <button
                       className="button primary wide"
-                      disabled={busy || dirty || !ack}
+                      disabled={
+                        busy || dirty || !ack || !detail.claimPolicy?.complete
+                      }
                       onClick={() =>
                         transition("approve", { factsAndRightsReviewed: true })
                       }
@@ -996,9 +1219,21 @@ export default function ContentWorkspace({
                 )}
                 {detail.item.status === "APPROVED" && (
                   <div className="alert">
-                    Approved for this revision. {draft.platform === "YouTube" && draft.format === "Video"
-                      ? <span>An upload review can be prepared after approving a render. No video is posted automatically. {approver && <a href="#youtube-upload-review">Open YouTube upload review</a>}</span>
-                      : "Export the content to publish manually. Automatic publishing is not connected."}
+                    Approved for this revision.{" "}
+                    {draft.platform === "YouTube" &&
+                    draft.format === "Video" ? (
+                      <span>
+                        An upload review can be prepared after approving a
+                        render. No video is posted automatically.{" "}
+                        {approver && (
+                          <a href="#youtube-upload-review">
+                            Open YouTube upload review
+                          </a>
+                        )}
+                      </span>
+                    ) : (
+                      "Export the content to publish manually. Automatic publishing is not connected."
+                    )}
                   </div>
                 )}
               </section>
@@ -1095,8 +1330,12 @@ export default function ContentWorkspace({
                 )}
             </aside>
           </div>
-          {detail.item.id && detail.item.status === "APPROVED" &&
-            draft.platform === "YouTube" && draft.format === "Video" && approver && !dirty && (
+          {detail.item.id &&
+            detail.item.status === "APPROVED" &&
+            draft.platform === "YouTube" &&
+            draft.format === "Video" &&
+            approver &&
+            !dirty && (
               <YoutubePolicyReview
                 base={base}
                 contentId={detail.item.id}

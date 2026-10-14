@@ -1,3 +1,14 @@
+<!-- POLICY01A_LOCAL_START -->
+## POLICY-01A bounded claim evidence gate (local, unpublished) — 2026-10-14 UTC
+
+The content review flow now detects bounded numeric-result, comparative and proof-assertion language across saved copy and scene text. Each signal is deterministically bound to the tenant, exact content revision, policy version and claim-set fingerprint. Approval requires one resolution per signal: an OWNER/ADMIN/EDITOR may link an HTTPS evidence source, while only an OWNER may record a documented override. Every save creates a sanitized audit event; evidence URLs, source labels and override reasons are excluded from audit details and publication snapshots. Publication preparation rechecks the current review under the content lock and snapshots only review identity, fingerprint, reviewer, time and dispositions. Editing creates a new revision and prevents reuse of the prior review.
+
+Final local verification on freshly reconstructed public base `64eb751c243496035604a1e08478866d6718a381`: Prisma generation, API/web production builds, 207/207 unit cases, 15/15 HTTP, 9/9 production browser, 5/5 recovery and 21 fresh PGlite migrations passed with zero failed/skipped/cancelled/todo. Populated upgrade/archive restore passed (4,941,164 bytes, SHA-256 `37a75c04753204b900f8e8d20db2104a22e261f3bbea08fb0ed0b586c72550e3`), and production/full audits each reported zero vulnerabilities. The interrupted scratch-only checkout was not claimed as recovered; reconstruction and all acceptance checks were rerun. Invalid early browser/font attempts are explicitly excluded in `docs/qa/policy01-claim-evidence.json`.
+
+This is a bounded review aid, not automated fact-checking. It does not fetch links or prove truth, source quality, legal compliance or platform compliance; human review remains required. Native PostgreSQL/Redis CI for this exact source requires publication and is still pending. No deployed production receipt, live Google/YouTube operation, native private-media restore or full master acceptance occurred. POLICY-01 remains Partial. The exact source/docs/evidence scope is local and no public write has been attempted.
+<!-- POLICY01A_LOCAL_END -->
+
+
 <!-- SOCIAL01_CAPTURE_NATIVE_CLOSURE_START -->
 ## SOCIAL-01 reconstructed capture runner publication and native CI — 2026-10-14 UTC
 
