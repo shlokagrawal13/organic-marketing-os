@@ -55,6 +55,11 @@ test(
         ["OWNER", "ADMIN"].includes(role) ? 200 : 403,
         role,
       );
+      assert.equal(
+        (await a.call(root + "/operations/youtube-live-readiness")).status,
+        ["OWNER", "ADMIN"].includes(role) ? 200 : 403,
+        role,
+      );
       if (writer) {
         const id = created.body.id;
         assert.equal(
@@ -96,9 +101,32 @@ test(
       404,
     );
     assert.equal(
+      (await outsider.call(root + "/operations/youtube-live-readiness")).status,
+      404,
+    );
+    assert.equal(
       (await outsider.call(root + "/operations/export")).status,
       404,
     );
+    const readiness = await owner.call(root + "/operations/youtube-live-readiness");
+    assert.equal(readiness.status, 200);
+    assert.equal(readiness.body.ok, false);
+    assert.equal(readiness.body.receipt.type, "youtube-live-readiness");
+    assert.equal(readiness.body.receipt.secretValuesIncluded, false);
+    assert.equal(readiness.body.receipt.liveGoogleCallAttempted, false);
+    assert.equal(readiness.body.receipt.externalPostAttempted, false);
+    assert.deepEqual(readiness.body.checks.map((item: any) => item.id), [
+      "live-dispatch-enabled",
+      "operator-policy-review-current",
+      "youtube-oauth-config",
+      "social-token-encryption",
+      "database-url",
+      "redis-url",
+      "private-object-storage",
+      "production-web-origin",
+      "secure-production-cookie",
+    ]);
+    assert.doesNotMatch(JSON.stringify(readiness.body), /GENERATE_WITH_SETUP|test-fixture|marketing-assets/u);
     const brand = {
       profile: { name: "Original brand" },
       creativeDna: {},

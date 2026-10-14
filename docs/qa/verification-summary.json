@@ -1,6 +1,6 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-13",
+  "verifiedDate": "2026-10-14",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
@@ -40,7 +40,7 @@
     "allTwelveMigrationsUnchangedByV": true
   },
   "gatesNotVerified": [
-    "Live Google grant/upload and deployed operator policy receipt",
+    "Live Google grant/upload and actual deployed production readiness receipt",
     "YouTube live readiness payload publication and own native CI",
     "Native PostgreSQL concurrency and restore",
     "Docker/MinIO execution",
@@ -85,7 +85,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 YouTube live readiness preflight is public and own native CI verified at d8e47b643e82f4d3044b8c5e7649aa67c60463eb. GitHub Actions run 38472532805/job 115554995370 attempt 1 passed 203/203 unit, 14/14 HTTP, 8/8 production browser, 5/5 recovery, 20 fresh native PostgreSQL migrations, native Redis, API/web build, populated upgrade and zero-vulnerability dependency audits. Closure docs/evidence/checkpoint are local and unpublished until separately approved. No live Google grant/upload, deployed operator policy receipt or full master acceptance occurred.",
+  "latestIncrement": "SOCIAL-01 deployed readiness receipt endpoint is locally verified on public base 0d479e59b317531968c209c3831b90e77471148e. Added OWNER/ADMIN operations endpoint GET /api/workspaces/:organizationId/operations/youtube-live-readiness using the shared sanitized evaluator. Clean npm ci/Fontkit postinstall, Prisma generate, API build, direct readiness unit 2/2, git diff --check and focused hardening HTTP 1/1 with 20 fresh PGlite migrations passed. No deployed production environment, live Google grant/upload, browser/recovery suite or native CI ran for this local delta.",
   "latestNativeRun": {
     "runId": 38472532805,
     "jobId": 115554995370,
@@ -8068,5 +8068,29 @@
       "Live Google grant/upload and deployed operator policy receipt",
       "Full master acceptance"
     ]
+  },
+  "social01DeployedReadinessReceipt": {
+    "status": "local_verified_not_published",
+    "basePublicCommit": "0d479e59b317531968c209c3831b90e77471148e",
+    "evidence": "docs/qa/social01-deployed-readiness-receipt-evidence.json",
+    "endpoint": "GET /api/workspaces/:organizationId/operations/youtube-live-readiness",
+    "changedPathCount": 9,
+    "ownerAdminOnly": true,
+    "tenantGuarded": true,
+    "secretValuesIncluded": false,
+    "liveGoogleCallAttempted": false,
+    "externalPostAttempted": false,
+    "npmCi": true,
+    "fontkitPostinstallVerified": true,
+    "prismaGenerate": true,
+    "apiBuild": true,
+    "readinessUnitPassed": 2,
+    "focusedHttpPassed": 1,
+    "freshPgliteMigrations": 20,
+    "gitDiffCheck": true,
+    "accidentalBroadUnitFailureExcluded": true,
+    "nativeCiForDelta": false,
+    "deployedProductionReceipt": false,
+    "liveGoogleGrantOrPost": false
   }
 }

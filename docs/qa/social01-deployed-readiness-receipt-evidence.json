@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "taskId": "SOCIAL-01",
+  "increment": "deployed-readiness-receipt-endpoint",
+  "dateUtc": "2026-10-14",
+  "status": "local_verified_not_published",
+  "basePublicCommit": "0d479e59b317531968c209c3831b90e77471148e",
+  "changedPaths": [
+    "apps/api/src/operations.ts",
+    "tests/integration/hardening.test.ts",
+    "docs/qa/social01-deployed-readiness-receipt-evidence.json"
+  ],
+  "implementation": {
+    "endpoint": "GET /api/workspaces/:organizationId/operations/youtube-live-readiness",
+    "roles": ["OWNER", "ADMIN"],
+    "tenantGuarded": true,
+    "usesSharedReadinessEvaluator": true,
+    "secretsIncluded": false,
+    "liveGoogleCallAttempted": false,
+    "externalPostAttempted": false
+  },
+  "verification": {
+    "npmCi": true,
+    "fontkitPostinstallVerified": true,
+    "prismaGenerate": true,
+    "apiTypeScriptBuild": true,
+    "unitCommand": "node --import tsx --test tests/youtube-live-readiness.test.ts",
+    "unitPassed": 2,
+    "unitFailed": 0,
+    "httpCommand": "TEST_REDIS_BINARY=/workspace/scratch/ccfb410af43f/organic-marketing-os/.local/test-tools/redis-7.2.11/src/redis-server TEST_S3_JAR=/workspace/scratch/ccfb410af43f/organic-marketing-os/.local/test-tools/s3proxy-4.1.1.jar node scripts/verify-local.mjs --http-spec=hardening.test.ts --skip-ui --skip-recovery",
+    "httpPassed": 1,
+    "httpFailed": 0,
+    "freshPgliteMigrations": 20,
+    "gitDiffCheck": true
+  },
+  "excluded": [
+    "No deployed production environment was reached.",
+    "No live Google grant or upload was attempted.",
+    "No native PostgreSQL CI was run for this local delta.",
+    "No browser or recovery suite was rerun for this endpoint-only delta.",
+    "An accidental broad npm-test invocation failed 94 optional font-heavy cases because this clean checkout lacked configured Noto test fonts; it is excluded and not acceptance evidence."
+  ]
+}

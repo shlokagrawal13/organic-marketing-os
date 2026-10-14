@@ -20,6 +20,7 @@ import {
   providersFromEnv,
   RedisProviderHealthStore,
 } from "../../../packages/core/ai";
+import { evaluateYoutubeLiveReadiness } from "../../../packages/core/youtube-live-readiness";
 
 @Controller("workspaces/:organizationId/operations")
 @UseGuards(TenantGuard)
@@ -131,6 +132,19 @@ export class OperationsController {
       },
       jobs: { ai, renders, media },
       unavailable: ["Social connections and publishing", "External analytics"],
+    };
+  }
+  @Get("youtube-live-readiness") youtubeLiveReadiness() {
+    const readiness = evaluateYoutubeLiveReadiness(process.env);
+    return {
+      ...readiness,
+      receipt: {
+        type: "youtube-live-readiness",
+        generatedBy: "operations",
+        secretValuesIncluded: false,
+        liveGoogleCallAttempted: false,
+        externalPostAttempted: false,
+      },
     };
   }
   @Get("export") async export(@Req() req: AuthedRequest, @Res() res: Response) {
