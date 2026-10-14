@@ -24,6 +24,7 @@
     "start:render": "node dist/apps/api/src/render-worker.js",
     "verify": "node scripts/verify-local.mjs --production-web",
     "verify:youtube-live-readiness": "node --import tsx scripts/verify-youtube-live-readiness.ts",
+    "capture:youtube-deployed-readiness": "node --import tsx scripts/capture-youtube-deployed-readiness-receipt.ts",
     "verify:upgrade": "node scripts/verify-upgrade.mjs",
     "verify:readability": "node --import tsx scripts/verify-render-readability.ts",
     "prepare:device-review": "node --import tsx scripts/prepare-device-review.ts",
