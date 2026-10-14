@@ -85,12 +85,12 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "SOCIAL-01 deployed readiness receipt endpoint is public at d9e271695ed29b73633690f5f601a823f40d906a and own native CI verified. GitHub Actions run 38550389464/job 115806636303 attempt 1 passed 203/203 unit, 14/14 HTTP, 8/8 browser, 5/5 recovery, 20 fresh native PostgreSQL migrations, native Redis, API/web build, populated upgrade and zero-vulnerability dependency audits. No deployed production environment, live Google grant/upload or full master acceptance occurred.",
+  "latestIncrement": "SOCIAL-01 deployed readiness receipt endpoint source and closure docs are public and CI verified. Source commit d9e271695ed29b73633690f5f601a823f40d906a passed run 38550389464/job 115806636303; closure publication commit 99a0c3e96e8cc0b8dc05038ac4f82c1499483f5e passed run 38555549806/job 115823658995. Latest run passed 203/203 unit, 14/14 HTTP, 8/8 browser, 5/5 recovery, 20 fresh native PostgreSQL migrations, native Redis, API/web build, populated upgrade and zero-vulnerability dependency audits. No deployed production environment, live Google grant/upload or full master acceptance occurred.",
   "latestNativeRun": {
-    "runId": 38550389464,
-    "runNumber": 68,
-    "jobId": 115806636303,
-    "commit": "d9e271695ed29b73633690f5f601a823f40d906a",
+    "runId": 38555549806,
+    "runNumber": 69,
+    "jobId": 115823658995,
+    "commit": "99a0c3e96e8cc0b8dc05038ac4f82c1499483f5e",
     "conclusion": "success",
     "unit": {
       "tests": 203,
@@ -122,13 +122,13 @@
       "todo": 0
     },
     "migrations": 20,
-    "artifactId": 11887660347,
-    "artifactDigest": "sha256:68406adab4fe4c804d4440a1895de8766ba8dc004e5f42ea8e553921b8aebace",
-    "artifactSizeBytes": 6189271,
+    "artifactId": 11890588644,
+    "artifactDigest": "sha256:397c49a18da979eb086fa49cc18669f0ef63766904529f4172565036eda2336a",
+    "artifactSizeBytes": 6194597,
     "artifactFileCount": 124,
     "productionDependencyAuditVulnerabilities": 0,
     "allDependencyAuditVulnerabilities": 0,
-    "scope": "Own deployed-readiness receipt endpoint native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; no deployed production environment, live Google grant/upload or full master acceptance."
+    "scope": "Own deployed-readiness receipt closure publication native PostgreSQL 17/Redis 7/S3Proxy/FFmpeg application CI with synthetic providers; no deployed production environment, live Google grant/upload or full master acceptance."
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -8097,7 +8097,7 @@
     ]
   },
   "social01DeployedReadinessReceipt": {
-    "status": "public_native_ci_verified",
+    "status": "closure_publication_native_ci_verified",
     "basePublicCommit": "0d479e59b317531968c209c3831b90e77471148e",
     "evidence": "docs/qa/social01-deployed-readiness-receipt-evidence.json",
     "endpoint": "GET /api/workspaces/:organizationId/operations/youtube-live-readiness",
@@ -8127,6 +8127,18 @@
     "nativeCiJobId": 115806636303,
     "artifactId": 11887660347,
     "artifactDigest": "sha256:68406adab4fe4c804d4440a1895de8766ba8dc004e5f42ea8e553921b8aebace",
-    "fullMasterAcceptance": false
+    "fullMasterAcceptance": false,
+    "sourceNativeCiRunId": 38550389464,
+    "sourceNativeCiJobId": 115806636303,
+    "sourceArtifactId": 11887660347,
+    "sourceArtifactDigest": "sha256:68406adab4fe4c804d4440a1895de8766ba8dc004e5f42ea8e553921b8aebace",
+    "closurePublicCommit": "99a0c3e96e8cc0b8dc05038ac4f82c1499483f5e",
+    "closureParentCommit": "d9e271695ed29b73633690f5f601a823f40d906a",
+    "closureTreeSha": "ccff3e7744daf6b6b1863b0d51cedac23d91cd10",
+    "closureNativeCiRunId": 38555549806,
+    "closureNativeCiJobId": 115823658995,
+    "closureArtifactId": 11890588644,
+    "closureArtifactDigest": "sha256:397c49a18da979eb086fa49cc18669f0ef63766904529f4172565036eda2336a",
+    "closurePublicationNativeCi": true
   }
 }

@@ -3,7 +3,7 @@
   "taskId": "SOCIAL-01",
   "increment": "deployed-readiness-receipt-native-ci-closure",
   "dateUtc": "2026-10-14",
-  "status": "public_native_ci_verified",
+  "status": "closure_publication_native_ci_verified",
   "publicCommit": "d9e271695ed29b73633690f5f601a823f40d906a",
   "parentCommit": "0d479e59b317531968c209c3831b90e77471148e",
   "treeSha": "5ea7bc173c8f07b24c51bcf0aa9b0b7dec6848f3",
@@ -75,5 +75,81 @@
     "No deployed production environment was reached.",
     "No live Google grant or upload was attempted.",
     "Full master acceptance remains open."
-  ]
+  ],
+  "publication": {
+    "status": "public",
+    "commit": "99a0c3e96e8cc0b8dc05038ac4f82c1499483f5e",
+    "parentCommit": "d9e271695ed29b73633690f5f601a823f40d906a",
+    "treeSha": "ccff3e7744daf6b6b1863b0d51cedac23d91cd10",
+    "changedPathCount": 8,
+    "run": {
+      "id": 38555549806,
+      "number": 69,
+      "workflow": "Core and recovery verification",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38555549806"
+    },
+    "job": {
+      "id": 115823658995,
+      "name": "Native application verification",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "verification": {
+      "unit": {
+        "tests": 203,
+        "pass": 203,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "http": {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0
+      },
+      "recovery": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "freshNativePostgresMigrations": 20,
+      "nativePostgres": true,
+      "nativeRedis": true,
+      "apiBuild": true,
+      "webBuild": true,
+      "populatedUpgrade": true,
+      "productionDependencyAuditVulnerabilities": 0,
+      "allDependencyAuditVulnerabilities": 0
+    },
+    "artifact": {
+      "id": 11890588644,
+      "name": "browser-evidence",
+      "sizeBytes": 6194597,
+      "digest": "sha256:397c49a18da979eb086fa49cc18669f0ef63766904529f4172565036eda2336a",
+      "fileCount": 124,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38555549806/artifacts/11890588644"
+    },
+    "scope": [
+      "Verifies publication of the native-CI closure docs/evidence/checkpoint payload.",
+      "No deployed production environment was reached.",
+      "No live Google grant or upload was attempted.",
+      "Full master acceptance remains open."
+    ]
+  }
 }
