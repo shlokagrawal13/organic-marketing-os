@@ -2,10 +2,12 @@
   "schemaVersion": 1,
   "taskId": "POLICY-01A",
   "title": "Bounded claim evidence gate",
-  "status": "local_verified_unpublished",
+  "status": "source_public_native_ci_verified_closure_local",
   "verifiedAtUtc": "2026-10-14T22:10:55Z",
   "basePublicCommit": "64eb751c243496035604a1e08478866d6718a381",
   "basePublicTree": "3913a13765cff6bf60eae0de387e6d6408dedf1b",
+  "publicCommit": "45ff3f37f3b79995e7ea7f63135ff1d485792d08",
+  "publicTree": "e0451bc13b8b976c27e42cd7592cdaf2514374bc",
   "policyVersion": "bounded-claims-2026-10-14",
   "scope": {
     "signals": [
@@ -82,6 +84,20 @@
       "modernNotoShaVerified": 15,
       "pinnedCjkShaVerified": 4,
       "harfbuzzVersion": "8.3.0"
+    },
+    "nativeCi": {
+      "runId": 38647602608,
+      "jobId": 116138233284,
+      "conclusion": "success",
+      "unitPassed": 207,
+      "httpPassed": 15,
+      "browserPassed": 9,
+      "recoveryPassed": 5,
+      "freshNativePostgresMigrations": 21,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "evidence": "docs/qa/policy01-claim-native-ci-evidence.json",
+      "unitReceipts": "docs/qa/policy01-claim-native-unit-receipts.json"
     }
   },
   "excludedAttempts": [
@@ -92,7 +108,7 @@
   "limitations": [
     "The detector covers only the listed bounded patterns and does not discover every factual or legal claim.",
     "A saved HTTPS URL is human-supplied. The system does not fetch it or prove truth, source quality, legal compliance or platform compliance.",
-    "Native PostgreSQL and Redis CI for this exact source requires publication and has not run.",
+    "Native PostgreSQL and Redis CI passed for the exact published source; this closure record remains local until separately approved for publication.",
     "No deployed production receipt, live Google or YouTube operation, physical-device review, native private-media restore or full master acceptance is established by this increment."
   ],
   "changedSourcePaths": [
@@ -107,5 +123,6 @@
     "tests/claim-policy.test.ts",
     "tests/integration/claim-policy.test.ts",
     "tests/ui/claim-policy.spec.ts"
-  ]
+  ],
+  "closurePublication": false
 }

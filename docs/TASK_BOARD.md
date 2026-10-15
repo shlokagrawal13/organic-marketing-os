@@ -1,12 +1,10 @@
-<!-- POLICY01A_LOCAL_START -->
-## POLICY-01A bounded claim evidence gate (local, unpublished) — 2026-10-14 UTC
+<!-- POLICY01A_NATIVE_CLOSURE_START -->
+## POLICY-01A bounded claim evidence gate publication and native CI — 2026-10-14 UTC
 
-Bounded numeric-result, comparative and proof-assertion signals now require revision-bound evidence before content approval. OWNER/ADMIN/EDITOR may link an HTTPS source; only OWNER may document an override. The review is tenant-, revision-, policy- and fingerprint-bound, is audited without source URLs or override reasons, and is rechecked before publication. Publication snapshots contain only sanitized review identity and dispositions. Editing prevents reuse of the prior review.
+The approved 25 paths are public on `main` at `45ff3f37f3b79995e7ea7f63135ff1d485792d08` with exact tree `e0451bc13b8b976c27e42cd7592cdaf2514374bc`; no extra path or deletion was published. Native Actions run `38647602608`, job `116138233284`, attempt 1 succeeded: 207/207 unit, 15/15 HTTP, 9/9 browser, 5/5 recovery, API/web builds, bounded readability, 21 native PostgreSQL migrations, native Redis, populated upgrade and both zero-vulnerability audits passed with zero failed/skipped/cancelled/todo.
 
-Fresh reconstruction from public `64eb751c243496035604a1e08478866d6718a381` passed Prisma generation, API/web builds, 207/207 unit, 15/15 HTTP, 9/9 browser, 5/5 recovery, 21 migrations, populated PGlite upgrade/archive restore and two zero-vulnerability audits; all reported fail/skip/cancel/todo counts are zero. See `docs/qa/policy01-claim-evidence.json`. This bounded detector does not fetch sources or prove truth, source quality, legal/platform compliance or every possible claim. Native CI for this exact source is pending publication; no public write, live provider action or full master acceptance occurred. POLICY-01 remains Partial.
-
-Next: publish only after exact approval, confirm the public tree, and inspect its own native PostgreSQL/Redis CI before the next policy increment.
-<!-- POLICY01A_LOCAL_END -->
+Artifact `11933492847` is 6,194,977 bytes with digest `sha256:4ba67e5320992c8febdd71248602e3482c257dfa3cc0feb7f485c8847b59ead6`; all 124 entries passed CRC, 207 unit receipts are unique, 36/36 readability samples and blank negative control passed. A transient Redis image rate limit retried successfully, and the GitHub action Node deprecation warning was non-blocking. The bounded detector remains human-review support and does not prove truth, source quality or legal/platform compliance. No live provider action, deployed acceptance, native private-media restore or full master acceptance occurred; POLICY-01 remains Partial. This closure record is local pending separate publication approval. See `docs/qa/policy01-claim-native-ci-evidence.json`.
+<!-- POLICY01A_NATIVE_CLOSURE_END -->
 
 
 <!-- SOCIAL01_CAPTURE_NATIVE_CLOSURE_START -->
