@@ -1,3 +1,15 @@
+## POLICY-01B evidence source and freshness gate — locally verified, unpublished (2026-10-15 UTC)
+
+Public `main` was confirmed at POLICY-01A closure `d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938`. POLICY-01B was reconstructed from that verified base after the prior transient worktree was lost. The missing source and incomplete runs are not treated as recovered or verified. Local Git commits preserve the reconstruction; this increment has not been published.
+
+Evidence references now require HTTPS and reject credentials, custom ports, direct IPs, malformed/single-label domains and the listed special-use suffixes. URLs are normalized without fragments. Evidence must have been checked within 30 days, with at most five minutes of future clock skew. Save, content approval and publication preparation recheck this bound; the advanced policy version invalidates older reviews. Tenant/role/revision checks, owner-only audited override and sanitized publication snapshots remain active. The UI explains the source and age requirement.
+
+Current verification: clean locked install/Fontkit, Prisma generation, API/web builds, 210/210 unit receipts (zero failed/cancelled/skipped/todo), 15/15 HTTP, 9/9 production browser and 5/5 recovery passed with 21 fresh disposable PGlite migrations, native Redis and S3Proxy. The broad application run preceded the final malformed-host hardening; that fix then passed the API rebuild, 5 focused units, claim-policy HTTP 1/1 and production browser 1/1 on final source. No second full application rerun is claimed. Populated PGlite upgrade/archive restore passed and both audits reported zero vulnerabilities. All 90 controls exports remain tested; local wall-time allowance was 600 seconds, with the existing 360-second default and individual process deadlines retained. See `docs/qa/policy01b-evidence-source-evidence.json` and `docs/qa/policy01b-evidence-source-unit-receipts.json` for exact scope and receipts.
+
+This gate records human review; it does not fetch URLs, resolve DNS, establish source truth/quality or prove legal/platform compliance. Freshness is checked through publication preparation; later scheduled/live dispatch freshness is not added by this increment. Native CI for this source, real deployment/live-provider acceptance, native PostgreSQL/private-media restore and full master acceptance remain open. POLICY-01 is Partial.
+
+Next: approve and publish the exact frozen POLICY-01B source/docs/evidence delta, verify the public tree and its native CI, then continue the remaining bounded policy work. Earlier dated sections below are historical; their old “pending closure” statements do not override the confirmed public base above.
+
 <!-- POLICY01A_NATIVE_CLOSURE_START -->
 ## POLICY-01A bounded claim evidence gate publication and native CI — 2026-10-14 UTC
 

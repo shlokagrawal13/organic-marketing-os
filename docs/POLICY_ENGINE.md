@@ -1,5 +1,13 @@
 # Policy and quality checks
 
+## POLICY-01B evidence source and review freshness (local, unpublished)
+
+Policy `bounded-claims-2026-10-15-evidence-2` advances the existing bounded claim gate. Evidence-source policy `claim-evidence-source-2026-10-15` permits HTTPS references without userinfo or nondefault ports, rejects IP addresses and malformed/single-label hosts, and excludes `example`, `internal`, `invalid`, `local`, `localhost`, `onion`, `test`, and `home.arpa` suffixes. Default HTTPS port, casing and fragments are canonicalized; path and query are preserved. This is syntax checking only: no DNS lookup or URL fetch occurs and public reachability or credibility is not certified.
+
+Every EVIDENCE resolution must declare a review timestamp within the last 30 days; at most five minutes of future clock skew is accepted. The boundary is inclusive to the millisecond. Saving a review, approving content and preparing publication all validate the current policy version, exact claim set and fresh evidence. A stale review becomes incomplete and must be saved again. The review view exposes the earliest evidence expiry, or null for an all-owner-override review. OWNER-only overrides remain explicitly acknowledged and audited. Source URLs, labels and reasons stay out of publication snapshots and audit details. No schema migration is needed.
+
+The 30-day rule is a versioned application choice, not automated fact-checking or a platform rule. Later scheduled/live dispatch revalidation is outside this increment. Human facts/rights/platform review, broader semantic policy and authorized live acceptance remain required. See `docs/qa/policy01b-evidence-source-evidence.json` for current-source checks and limits. Earlier sections describe historical increments.
+
 ## POLICY-01A bounded claim evidence gate (local, unpublished) — 2026-10-14 UTC
 
 Policy version `bounded-claims-2026-10-14` deterministically inspects the saved title, hook, body, CTA and each scene's voiceover, on-screen text, caption and CTA. It emits at most 50 field-bound signals for numeric results, selected superlative/comparative phrases and selected proof assertions. Signal IDs and the ordered claim-set fingerprint are SHA-256 bound to the policy version and exact field occurrence.

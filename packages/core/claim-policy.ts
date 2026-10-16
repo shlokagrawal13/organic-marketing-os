@@ -1,6 +1,6 @@
 import { digest } from "./security";
 
-export const claimPolicyVersion = "bounded-claims-2026-10-14";
+export const claimPolicyVersion = "bounded-claims-2026-10-15-evidence-2";
 export const claimPolicyDisclaimer =
   "This bounded detector only flags selected claim patterns. A source link does not prove truth, source quality, legal compliance or platform compliance; human review remains required.";
 

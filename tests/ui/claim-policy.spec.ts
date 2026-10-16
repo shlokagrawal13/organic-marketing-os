@@ -66,7 +66,10 @@ test("claim evidence blocks approval until the exact revision is resolved", asyn
     .check();
   await expect(approval).toBeDisabled();
   const card = page.locator(".claim-card").first();
-  await card.getByLabel("Evidence URL").fill("https://example.test/report");
+  await expect(
+    page.getByText(/public HTTPS source checked within the last 30 days/u),
+  ).toBeVisible();
+  await card.getByLabel("Evidence URL").fill("https://example.com/report");
   await card.getByLabel("Evidence label").fill("Test-only source report");
   await card.getByRole("checkbox").check();
   await page.getByRole("button", { name: "Save claim evidence" }).click();

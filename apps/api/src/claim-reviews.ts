@@ -1,5 +1,12 @@
 import { BadRequestException, ConflictException } from "@nestjs/common";
 import { z } from "zod";
+import {
+  canonicalEvidenceSourceUrl,
+  claimEvidenceExpiresAt,
+  claimEvidenceMaximumAgeDays,
+  claimEvidencePolicyVersion,
+  claimEvidenceTimeStatus,
+} from "../../../packages/core/evidence-source";
 import { draftSchema } from "../../../packages/core/ai";
 import {
   claimPolicyVersion,
@@ -13,10 +20,17 @@ const evidenceResolution = z
     disposition: z.literal("EVIDENCE"),
     sourceUrl: z
       .string()
-      .url()
       .max(2000)
-      .refine((value) => new URL(value).protocol === "https:", {
-        message: "Evidence links must use HTTPS.",
+      .transform((value, context) => {
+        try {
+          return canonicalEvidenceSourceUrl(value);
+        } catch (error) {
+          context.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: (error as Error).message,
+          });
+          return z.NEVER;
+        }
       }),
     sourceLabel: z.string().trim().min(3).max(200),
     checkedAt: z.string().datetime({ offset: true }),
@@ -63,21 +77,30 @@ function validateResolutionSet(claims: ClaimSignal[], value: unknown) {
     throw new BadRequestException(
       "Resolve every detected claim exactly once for this content revision.",
     );
-  if (
-    resolutions.some(
-      (resolution) =>
-        resolution.disposition === "EVIDENCE" &&
-        new Date(resolution.checkedAt).getTime() > Date.now() + 5 * 60_000,
-    )
-  )
-    throw new BadRequestException(
-      "Evidence review time cannot be in the future.",
-    );
+  const now = new Date();
+  for (const resolution of resolutions) {
+    if (resolution.disposition !== "EVIDENCE") continue;
+    const status = claimEvidenceTimeStatus(resolution.checkedAt, now);
+    if (status === "FUTURE")
+      throw new BadRequestException(
+        "Evidence review time cannot be more than five minutes in the future.",
+      );
+    if (status === "EXPIRED")
+      throw new BadRequestException(
+        `Evidence must have been checked within the last ${claimEvidenceMaximumAgeDays} days.`,
+      );
+  }
   return resolutions;
 }
 
-export const claimPolicyForContent = (content: unknown) =>
-  evaluateClaimPolicy(draftFromContent(content));
+export const claimPolicyForContent = (content: unknown) => ({
+  ...evaluateClaimPolicy(draftFromContent(content)),
+  evidencePolicy: {
+    version: claimEvidencePolicyVersion,
+    maximumAgeDays: claimEvidenceMaximumAgeDays,
+    publicHttpsOnly: true,
+  },
+});
 
 export function validateClaimReviewSubmission(
   content: unknown,
@@ -111,6 +134,11 @@ export const claimReviewView = (review: any) =>
     resolutions: review.resolutions,
     reviewedBy: review.reviewedBy,
     reviewedAt: review.reviewedAt,
+    evidenceExpiresAt:
+      (review.resolutions as ClaimResolution[])
+        .filter((r) => r.disposition === "EVIDENCE")
+        .map((r) => claimEvidenceExpiresAt(r.checkedAt))
+        .sort()[0] || null,
   };
 
 export async function currentClaimPolicy(

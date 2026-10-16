@@ -293,7 +293,14 @@ test("wrapping preserves joiner font units, explicit ZWSP breaks and WJ words ac
 
 test(
   "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
-  { timeout: 360000 },
+  // Slow isolated hosts may need more wall time; keep all 90 exports and the
+  // per-process deadlines, and retain the existing six-minute default in CI.
+  {
+    timeout: Math.min(
+      600000,
+      Math.max(360000, Number(process.env.MOS_CONTROL_EXPORT_TIMEOUT_MS) || 360000),
+    ),
+  },
   async (t) => {
     environment(t);
     for (const sample of CONTROL_FIXTURES) {

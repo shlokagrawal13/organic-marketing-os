@@ -1041,6 +1041,8 @@ export default function ContentWorkspace({
                       <h4>Claim evidence</h4>
                       <p className="small-copy">
                         Resolve every detected claim for this exact revision.
+                        Evidence must use a public HTTPS source checked within
+                        the last 30 days.
                         Source links are saved in the workspace but excluded
                         from publication snapshots and audit details.
                       </p>

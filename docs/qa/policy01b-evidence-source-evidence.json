@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "taskId": "POLICY-01B",
+  "title": "Evidence source syntax and review freshness",
+  "status": "recovered_exact_source_locally_verified_approved_unpublished",
+  "verifiedAtUtc": "2026-10-16T13:43:31.955699+00:00",
+  "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
+  "publicCommit": null,
+  "policyVersion": "bounded-claims-2026-10-15-evidence-2",
+  "evidencePolicyVersion": "claim-evidence-source-2026-10-15",
+  "behavior": [
+    "HTTPS only; reject userinfo, nondefault ports, direct IPs, single-label hosts, malformed DNS labels and specified special-use suffixes; canonicalize URL and remove fragment.",
+    "Evidence review age is at most 30 days with at most five minutes future skew; stale or changed-policy reviews fail closed at approval and publication preparation.",
+    "Expose the earliest evidence expiry on a valid saved review; require renewed review after policy version changes; retain tenant, role and revision binding.",
+    "Source URLs, labels and owner override reasons remain excluded from audit details and publication snapshots."
+  ],
+  "verification": {
+    "scope": "POLICY-01B exact-source recovery verification; native CI still pending publication",
+    "sourceRecovery": {
+      "publicBaseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
+      "originalManifestRevision": "2026-10-15-POLICY01B-local-verified",
+      "sourceAndTestFilesExact": 8,
+      "statusAndPolicyDocsExact": 10,
+      "originalScratchResultsInvented": false,
+      "generatedEvidenceRecreated": true
+    },
+    "freshUnit": {
+      "tests": 210,
+      "failed": 0,
+      "passed": 210,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "topLevel": 210,
+      "suites": 0
+    },
+    "unitDurationMs": 407991.837716,
+    "uniqueUnitReceipts": 210,
+    "unitFileCount": 29,
+    "unitSummaryCount": 30,
+    "cleanNpmCi": true,
+    "installedPackages": 273,
+    "fontkitPostinstallVerified": true,
+    "prismaGenerate": true,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "controlExportCase": {
+      "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
+      "file": "tests/render-controls.test.ts",
+      "durationMs": 127983.588054
+    },
+    "controlExportTimeout": {
+      "defaultMs": 360000,
+      "localOverrideMs": 600000,
+      "maximumMs": 600000,
+      "exportCount": 90,
+      "perProcessTimeoutsUnchanged": true
+    },
+    "fontSet": "SHA-verified Ubuntu fonts-noto-core 20201225-2 and four SHA-pinned Noto CJK OTF fonts",
+    "nodeVersion": "v24.19.0",
+    "receipts": "docs/qa/policy01b-evidence-source-unit-receipts.json",
+    "receiptsSha256": "48f56e72e0da7601e451286fe789d876d823306e813e0fa66a3ac5b25b8c7b26",
+    "priorApplicationVerification": {
+      "httpPassed": 15,
+      "browserPassed": 9,
+      "recoveryPassed": 5,
+      "status": "Recovered from the exact original checkpoint and bound to byte-identical source/test hashes; not rerun during evidence recovery."
+    },
+    "nativePostgres": false,
+    "fullMasterAcceptanceVerified": false,
+    "liveProviderVerification": false
+  },
+  "sourceSha256": {
+    "apps/api/src/claim-reviews.ts": "a1378b2fd398277c1cba2bee323ad23fa10986bbc3347088683f7bcded23d307",
+    "apps/web/app/content-workspace.tsx": "5c599872b681c683ca8ba7125d50351b0614ebc24ae9ad523e1accfed64e322e",
+    "packages/core/claim-policy.ts": "2592df1907f9122acacfefd50f9c2116f1ba19eb44277cbfc00089e746240d7d",
+    "packages/core/evidence-source.ts": "36bdb6c280d7d259df6c16584ad43518dbb44c90898f3b12ecfbb8777261f0a8",
+    "tests/evidence-source.test.ts": "84588e44135e30035360c996fad297190ae88170ed9c0fcb0a90718303779a20",
+    "tests/integration/claim-policy.test.ts": "ef08ec948cec86be291f644bc7c20a777ebdb7397876b7bc620328920c1b1475",
+    "tests/render-controls.test.ts": "ad06ee9b33177d4cd4707723ea279b33686365128ac40f3f0b29167f55b3ee16",
+    "tests/ui/claim-policy.spec.ts": "9bd7b4d06d15f6fb6ea84d9f9c56736a727682d49fde281e09257b57106365bc"
+  },
+  "recovery": {
+    "reason": "The transient checkout reset after publication approval and before main was updated.",
+    "mainWasUnchanged": true,
+    "orphanTreeDidNotMoveMain": true,
+    "exactOriginalSourceAndDocsRecoveredFromManifest": true,
+    "freshUnitReceiptsGenerated": true
+  },
+  "limitations": [
+    "This is syntactic evidence-reference validation and an operator-declared review-age gate, not automated source or factual verification. No URL fetch, DNS resolution, source quality assessment or claim truth verification occurs.",
+    "A public-looking domain can resolve privately, not exist, redirect or change. The gate does not certify reachability, availability, public routing or credibility.",
+    "Thirty days and five minutes of future clock skew are versioned application policy bounds, not legal or platform compliance guarantees.",
+    "Freshness is rechecked when saving review, approving content and preparing publication. This increment does not add claim freshness revalidation at later scheduled or live dispatch boundaries.",
+    "Native CI on this source, production readiness, authorized live providers, native PostgreSQL/private-media restore and full master acceptance remain pending. POLICY-01 remains Partial."
+  ],
+  "privateRecoveryLogSha256": {
+    "unit": "5fe73c51965116c65e0767a9462044527cf2b9e6a5cb93fc3a85002444bcbede",
+    "build": "4b6ebb4fc78d27c124af495b10ead456f9bb1d9415d9d59422287a73d573e3c8",
+    "productionAudit": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11",
+    "fullAudit": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+  },
+  "publication": {
+    "approved": true,
+    "target": "shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "pathCount": 23,
+    "status": "approved and ready; main not updated when this receipt was written"
+  }
+}

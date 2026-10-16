@@ -66,7 +66,7 @@ test("claim evidence is tenant and revision bound, owner overrides are audited, 
     (claim: { id: string }) => ({
       claimId: claim.id,
       disposition: "EVIDENCE",
-      sourceUrl: "https://example.test/source",
+      sourceUrl: "https://Example.COM:443/source#fragment",
       sourceLabel: "Test-only source record",
       checkedAt: new Date().toISOString(),
       acknowledged: true,
@@ -83,6 +83,29 @@ test("claim evidence is tenant and revision bound, owner overrides are audited, 
         }
       : resolution,
   );
+  const staleTime = new Date(Date.now() - 31 * 86400000).toISOString();
+  for (const patch of [
+    { sourceUrl: "https://localhost./source" },
+    { sourceUrl: "https://a.local../source" },
+    { sourceUrl: "https://127.0.0.1/source" },
+    { sourceUrl: "https://u:p@example.com/source" },
+    { checkedAt: staleTime },
+    { checkedAt: new Date(Date.now() + 600000).toISOString() },
+  ]) {
+    const rejected = await owner.call(
+      root + `/content/${contentId}/claim-review`,
+      "POST",
+      {
+        ...base,
+        resolutions: evidence.map((r: any) => ({ ...r, ...patch })),
+      },
+    );
+    assert.equal(rejected.status, 400, JSON.stringify(patch));
+    assert.equal(
+      await db.contentClaimReview.count({ where: { contentId } }),
+      0,
+    );
+  }
   assert.equal(
     (
       await editor.call(root + `/content/${contentId}/claim-review`, "POST", {
@@ -111,6 +134,39 @@ test("claim evidence is tenant and revision bound, owner overrides are audited, 
     ).status,
     201,
   );
+  const saved = await db.contentClaimReview.findFirstOrThrow({
+    where: { contentId },
+  });
+  assert.equal(
+    (saved.resolutions as any[]).find((r) => r.disposition === "EVIDENCE")
+      .sourceUrl,
+    "https://example.com/source",
+  );
+  const expired = (saved.resolutions as any[]).map((r) =>
+    r.disposition === "EVIDENCE" ? { ...r, checkedAt: staleTime } : r,
+  );
+  for (const data of [
+    { resolutions: expired },
+    { policyVersion: "bounded-claims-2026-10-14" },
+  ]) {
+    await db.contentClaimReview.update({ where: { id: saved.id }, data });
+    assert.equal(
+      (
+        await owner.call(root + `/content/${contentId}/approve`, "POST", {
+          revision: 1,
+          factsAndRightsReviewed: true,
+        })
+      ).status,
+      409,
+    );
+    await db.contentClaimReview.update({
+      where: { id: saved.id },
+      data: {
+        resolutions: saved.resolutions as any,
+        policyVersion: saved.policyVersion,
+      },
+    });
+  }
   const audit = await db.auditLog.findFirstOrThrow({
     where: {
       organizationId: organization.id,
@@ -119,7 +175,7 @@ test("claim evidence is tenant and revision bound, owner overrides are audited, 
     },
     orderBy: { createdAt: "desc" },
   });
-  assert.equal(JSON.stringify(audit.detail).includes("example.test"), false);
+  assert.equal(JSON.stringify(audit.detail).includes("example.com"), false);
   assert.equal(
     JSON.stringify(audit.detail).includes("pending a stronger"),
     false,
@@ -134,6 +190,24 @@ test("claim evidence is tenant and revision bound, owner overrides are audited, 
     ).status,
     201,
   );
+  await db.contentClaimReview.update({
+    where: { id: saved.id },
+    data: { resolutions: expired },
+  });
+  assert.equal(
+    (
+      await owner.call(root + "/publication-intents", "POST", {
+        contentId,
+        revision: 1,
+        requestKey: randomUUID(),
+      })
+    ).status,
+    409,
+  );
+  await db.contentClaimReview.update({
+    where: { id: saved.id },
+    data: { resolutions: saved.resolutions as any },
+  });
   const prepared = await owner.call(root + "/publication-intents", "POST", {
     contentId,
     revision: 1,

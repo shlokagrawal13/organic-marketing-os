@@ -1,3 +1,11 @@
+## POLICY-01B evidence source and freshness gate — locally verified, unpublished (2026-10-15 UTC)
+
+Recovered from public POLICY-01A closure `d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938`. The new gate validates evidence URL syntax and a 30-day review window at save, approval and publication preparation; older policy reviews require renewal. Source truth/reachability and later dispatch freshness remain outside this increment. POLICY-01 remains Partial.
+
+Clean install/Fontkit, API/web builds, 210/210 units, 15/15 HTTP, 9/9 production browser, 5/5 recovery, 21 PGlite migrations, populated upgrade/restore and zero-vulnerability audits passed. The final malformed-host hardening additionally passed rebuilt API, 5 focused units, claim HTTP 1/1 and browser 1/1; the full app regression preceded that final hardening. Exact receipts, bounds and excluded interrupted runs are in `docs/qa/policy01b-evidence-source-evidence.json`. Native CI on this source and full product acceptance remain pending.
+
+Next: publish only the frozen POLICY-01B delta after exact approval, verify remote tree/native CI, then continue remaining policy work. This section supersedes historical pending-publication statements below.
+
 <!-- POLICY01A_NATIVE_CLOSURE_START -->
 ## POLICY-01A bounded claim evidence gate publication and native CI — 2026-10-14 UTC
 
