@@ -1,10 +1,12 @@
-## POLICY-01B evidence source and freshness gate — locally verified, unpublished (2026-10-15 UTC)
+<!-- POLICY01B_NATIVE_CLOSURE_START -->
+## POLICY-01B evidence source and freshness gate publication and native CI — 2026-10-16 UTC
 
-Recovered from public POLICY-01A closure `d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938`. The new gate validates evidence URL syntax and a 30-day review window at save, approval and publication preparation; older policy reviews require renewal. Source truth/reachability and later dispatch freshness remain outside this increment. POLICY-01 remains Partial.
+The approved recovered 23-path payload is public on `main` at `590a9b22e853638c0b4beae0d3bb98554a8ec5cf` (parent `d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938`, tree `15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca`). Remote compare showed exactly 23 approved paths, no deletion or extra path, and the remote tree matches the frozen recovered source.
 
-Clean install/Fontkit, API/web builds, 210/210 units, 15/15 HTTP, 9/9 production browser, 5/5 recovery, 21 PGlite migrations, populated upgrade/restore and zero-vulnerability audits passed. The final malformed-host hardening additionally passed rebuilt API, 5 focused units, claim HTTP 1/1 and browser 1/1; the full app regression preceded that final hardening. Exact receipts, bounds and excluded interrupted runs are in `docs/qa/policy01b-evidence-source-evidence.json`. Native CI on this source and full product acceptance remain pending.
+Its own Actions run `38911616401` (#75), job `117008589097`, attempt 1 succeeded: 210/210 unit, 15/15 HTTP, 9/9 production browser and 5/5 recovery passed with zero failed/skipped/cancelled/todo; API/web builds, bounded readability, 21 fresh native PostgreSQL migrations, native Redis, populated PGlite upgrade/archive restore and both zero-vulnerability audits passed. Artifact `12051471346` is 6,184,174 bytes with digest `sha256:9eff37bb21c3ffdd7a5a25d96989ceb64210f8d52e3fc6e3042f7049ae7f888f`; all 124 ZIP entries passed CRC, 210 unit receipts are unique, all 44 OCR image hashes matched, and the blank negative control passed.
 
-Next: publish only the frozen POLICY-01B delta after exact approval, verify remote tree/native CI, then continue remaining policy work. This section supersedes historical pending-publication statements below.
+This gate validates source-reference syntax and operator-declared review age; it does not fetch URLs, resolve DNS or prove claim truth, source quality, legal compliance or platform compliance. Later scheduled/live dispatch freshness, deployed/live-provider acceptance, native PostgreSQL plus private-media restore and full master acceptance remain open. POLICY-01 remains Partial. This closure/docs/evidence payload is local and unpublished pending separate approval; implementation is unchanged. See `docs/qa/policy01b-evidence-source-native-ci-evidence.json`.
+<!-- POLICY01B_NATIVE_CLOSURE_END -->
 
 <!-- POLICY01A_NATIVE_CLOSURE_START -->
 ## POLICY-01A bounded claim evidence gate publication and native CI — 2026-10-14 UTC
