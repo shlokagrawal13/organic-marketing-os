@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "taskId": "POLICY-01C",
+  "title": "Dispatch-time claim-evidence freshness guard",
+  "status": "local_verified_unpublished",
+  "verifiedAtUtc": "2026-10-16T19:36:10Z",
+  "basePublicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+  "basePublicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
+  "policyVersion": "bounded-claims-2026-10-15-evidence-2",
+  "evidencePolicyVersion": "claim-evidence-source-2026-10-15",
+  "behavior": [
+    "Schedule preview and creation require the live claim review to remain current through the selected due time.",
+    "The due worker rechecks at claim time and records CLAIM_EVIDENCE_CHANGED before creating an attempt or calling the provider.",
+    "Manual and scheduled dispatch recheck at attempt reservation and again in the durable SUBMITTING transaction immediately before provider work.",
+    "A successful submission stores only a sanitized claim-review receipt with the YouTube policy snapshot; evidence URLs, labels and override reasons are excluded.",
+    "Claim-free content and complete owner-override-only reviews retain existing behavior.",
+    "Portable checkpoint packaging excludes linked-worktree .git metadata files as well as normal .git directories."
+  ],
+  "focusedProof": {
+    "test": "claim evidence is rechecked at scheduling, reservation, due claim, and submission",
+    "file": "tests/integration/claim-policy.test.ts",
+    "passed": true,
+    "assertions": [
+      "Evidence current at review time but expired by the requested due time blocks schedule preview.",
+      "Evidence expired after schedule creation moves the due row to NEEDS_REVIEW with CLAIM_EVIDENCE_CHANGED.",
+      "Expired evidence blocks the manual dispatcher with zero provider calls and zero attempt rows.",
+      "Evidence expiring after reservation blocks SUBMITTING and leaves policySnapshot and startedAt unset.",
+      "After freshness restoration the same pre-provider RESERVED attempt can enter SUBMITTING.",
+      "The stored claim-review receipt contains no sourceUrl or source hostname."
+    ],
+    "providerCallsWhenStale": 0
+  },
+  "verification": {
+    "cleanNpmCi": true,
+    "installedPackages": 273,
+    "fontkitPostinstallVerified": true,
+    "prismaGenerate": true,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "unit": {
+      "tests": 210,
+      "passed": 210,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 354415.970576,
+      "files": 29,
+      "summaries": 30,
+      "receipts": "docs/qa/policy01c-dispatch-freshness-unit-receipts.json",
+      "receiptsSha256": "ee13cab82ef7ba6aaa7bed2820e0c55b8fbdf06840d8ff880cdbd830016a8db9"
+    },
+    "application": {
+      "httpPassed": 16,
+      "httpFailed": 0,
+      "browserPassed": 9,
+      "browserFailed": 0,
+      "browserDuration": "45.9s",
+      "recoveryPassed": 5,
+      "recoveryFailed": 0,
+      "freshPgliteMigrations": 21,
+      "nativePostgres": false,
+      "nativeRedis": true
+    },
+    "dependencyAudits": {
+      "productionVulnerabilities": 0,
+      "allVulnerabilities": 0
+    },
+    "upgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 21,
+      "archiveBytes": 4940358,
+      "archiveSha256": "123c44038b1d43528ac6da1945992b0a64ed70a0d39b37610b60eadd27742f6a",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true
+    },
+    "readability": {
+      "passed": true,
+      "standardSamples": 36,
+      "busyBackgroundSamples": 8,
+      "blankNegativeControlPassed": true,
+      "privateReportSha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5"
+    },
+    "nodeVersion": "v24.19.0",
+    "fontSet": "SHA-verified Ubuntu fonts-noto-core 20201225-2 and four SHA-pinned Noto CJK OTF fonts"
+  },
+  "sourceSha256": {
+    "apps/api/src/claim-reviews.ts": "706a5b2c5fa6b0b73160196679edeb7afc012b882fee0806613ecd7ed504e3b3",
+    "apps/api/src/publication-attempts.ts": "25eacea3349dcf6405c35dbe00c990787d74c1cf9a465000dd93ba3d32efadfd",
+    "apps/api/src/publication-scheduler.ts": "04949c8097591e3b02d7541e0b1c7462a4fa9fd57fbfabbe79510557b1c461f4",
+    "packages/core/evidence-source.ts": "36bdb6c280d7d259df6c16584ad43518dbb44c90898f3b12ecfbb8777261f0a8",
+    "scripts/package_handoff.py": "e8674ceadd27e68720b39fe85564ced04318acf570ab9ced8c5c65a73d597834",
+    "tests/integration/claim-policy.test.ts": "f03a1a09da7ba5e52179ee7916f1d25c4c677a9e27c0540045cbaa75c5d87e82"
+  },
+  "excludedExploratoryRun": {
+    "reason": "The first focused harness run lacked the documented local Noto font set and failed two render recovery cases before final verification.",
+    "sourceFailure": false,
+    "finalIdenticalSourceRecoveryRerun": "5/5 passed after restoring the checksum-matched font package"
+  },
+  "priorClosure": {
+    "taskId": "POLICY-01B",
+    "publicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+    "publicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
+    "nativeCiRunId": 38915220310,
+    "nativeCiJobId": 117020826982,
+    "nativeCiConclusion": "success",
+    "artifactId": 12052926546,
+    "artifactSizeBytes": 6189677,
+    "artifactDigest": "sha256:a328f1d3402a880e6322dad02605959d9313386d0749509a523cd77ca7e39b9e"
+  },
+  "limitations": [
+    "No evidence URL is fetched and no DNS lookup occurs; reachability, public routing, availability and credibility are not certified.",
+    "The guard does not establish claim truth, source quality, legal compliance or platform compliance.",
+    "No live Google request or deployed production acceptance was performed.",
+    "Local database verification used PGlite; POLICY-01C has no own native PostgreSQL CI yet.",
+    "Native PostgreSQL plus private-media backup/restore and full master acceptance remain open. POLICY-01 remains Partial."
+  ],
+  "publication": {
+    "approved": false,
+    "target": "shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "status": "local verified; explicit publication approval not yet requested"
+  }
+}

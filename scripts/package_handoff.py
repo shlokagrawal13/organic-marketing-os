@@ -60,7 +60,7 @@ def source_files():
         for name in names:
             path = base / name
             rel = path.relative_to(ROOT).as_posix()
-            if rel == MANIFEST or name == ".DS_Store" or name.startswith(".handoff-manifest-"):
+            if rel in {MANIFEST, ".git"} or name == ".DS_Store" or name.startswith(".handoff-manifest-"):
                 continue
             if name.startswith(".env") and rel != ".env.example":
                 continue

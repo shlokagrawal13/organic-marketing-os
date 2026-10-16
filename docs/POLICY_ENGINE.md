@@ -1,5 +1,22 @@
 # Policy and quality checks
 
+## POLICY-01C dispatch-time evidence freshness (local, unpublished)
+
+The application now evaluates the current `ContentClaimReview` again at every outbound eligibility boundary. It does not trust the sanitized review snapshot captured when the publication intent was prepared.
+
+- Schedule preview and creation evaluate evidence at the requested due time. Evidence that is current now but will expire before that time cannot be scheduled.
+- The due worker evaluates evidence at its claim time. A stale, changed-policy, changed-fingerprint, wrong-tenant or otherwise incomplete review moves the schedule to `NEEDS_REVIEW` with `CLAIM_EVIDENCE_CHANGED`, before creating an attempt or calling the provider.
+- Attempt reservation evaluates evidence at the current server time. Manual and scheduled dispatch therefore fail before a ledger attempt when the review is already stale.
+- The durable `SUBMITTING` transaction evaluates evidence again using the same timestamp used for the YouTube policy-expiry check and `startedAt`. This is the last database boundary before a resumable-upload provider request.
+- A successful transition stores a sanitized claim-review receipt inside the attempt policy snapshot. It contains review ID, content revision, policy version, claim-set fingerprint, reviewer, review time and dispositions only. Source URLs, labels and override reasons are excluded.
+- A pre-provider `RESERVED` attempt remains safely retryable with the same ledger record after the underlying review is restored; it cannot enter `SUBMITTING` while the review is stale.
+
+Claim-free content remains complete without a review. A complete owner-override-only review has no evidence timestamp to expire, but remains bound to the exact tenant, revision, policy version and claim-set fingerprint. The existing 30-day age and five-minute future-skew semantics are unchanged; no schema migration is needed.
+
+Verification on the final local source passed 210/210 unit/export cases, 16/16 isolated HTTP cases (including the new dispatch-boundary case), 9/9 production browser cases, 5/5 recovery cases and 21 fresh PGlite migrations. The regression proves zero provider requests for stale evidence and no sensitive evidence fields in the submission snapshot. Native PostgreSQL CI has not yet run on POLICY-01C.
+
+This remains a review-age and continuity gate. It does not fetch a URL, resolve DNS, prove reachability, assess source quality, verify claim truth, or establish legal/platform compliance. Live Google acceptance, deployed acceptance, native PostgreSQL plus private-media restore and full master acceptance remain open. POLICY-01 remains Partial. See `docs/qa/policy01c-dispatch-freshness-evidence.json`.
+
 ## POLICY-01B evidence source and review freshness (local, unpublished)
 
 Policy `bounded-claims-2026-10-15-evidence-2` advances the existing bounded claim gate. Evidence-source policy `claim-evidence-source-2026-10-15` permits HTTPS references without userinfo or nondefault ports, rejects IP addresses and malformed/single-label hosts, and excludes `example`, `internal`, `invalid`, `local`, `localhost`, `onion`, `test`, and `home.arpa` suffixes. Default HTTPS port, casing and fragments are canonicalized; path and query are preserved. This is syntax checking only: no DNS lookup or URL fetch occurs and public reachability or credibility is not certified.

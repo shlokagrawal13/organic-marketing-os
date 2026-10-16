@@ -4,6 +4,10 @@ import { digest } from "../../../packages/core/security";
 import { ObjectStore } from "../../../packages/core/object-store";
 import { youtubePolicyFingerprint, youtubePolicyMaintenanceCurrent, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 import { activeConnection, currentApproval } from "./publication-attempts";
+import {
+  claimEvidenceChangedCode,
+  PublicationClaimReviewChangedException,
+} from "./claim-reviews";
 import { dispatchReviewedYoutubeVideo } from "./youtube-dispatch";
 import { evaluateScheduleGuidance } from "./posting-guidance";
 
@@ -44,7 +48,12 @@ async function candidate(tx: Tx, input: { organizationId: string; actorId: strin
       input.dueAt.getTime() > Date.now() + maxFutureMs)
     throw new BadRequestException("Choose a time from one minute to 24 hours in the future.");
   await currentSchedulerActor(tx, input.organizationId, input.actorId);
-  const intent = await currentApproval(tx, input.organizationId, input.intentId);
+  const intent = await currentApproval(
+    tx,
+    input.organizationId,
+    input.intentId,
+    input.dueAt,
+  );
   const connection = await tx.socialConnection.findFirst({ where: {
     id: input.connectionId, organizationId: input.organizationId,
   } });
@@ -186,7 +195,12 @@ export async function runDuePublicationSchedules(db: PrismaClient, store: Object
           userId_organizationId: { userId: row.actorId, organizationId: row.organizationId },
         } });
         if (!member || !["OWNER", "ADMIN"].includes(member.role)) blocked = "APPROVER_CHANGED";
-        const intent = await currentApproval(tx, row.organizationId, row.intentId);
+        const intent = await currentApproval(
+          tx,
+          row.organizationId,
+          row.intentId,
+          now,
+        );
         const connection = await tx.socialConnection.findFirst({ where: {
           id: row.connectionId, organizationId: row.organizationId,
         } });
@@ -208,7 +222,12 @@ export async function runDuePublicationSchedules(db: PrismaClient, store: Object
           if (!row.guidanceFingerprint || row.guidanceFingerprint !== guidance.fingerprint)
             blocked = "POSTING_GUIDANCE_CHANGED";
         }
-      } catch { blocked = blocked || "PRECHECK_FAILED"; }
+      } catch (error) {
+        blocked = blocked ||
+          (error instanceof PublicationClaimReviewChangedException
+            ? claimEvidenceChangedCode
+            : "PRECHECK_FAILED");
+      }
       await tx.publicationSchedule.updateMany({ where: { id: row.id, status: "SCHEDULED" },
         data: blocked ? { status: "NEEDS_REVIEW", completedAt: now, outcomeCode: blocked }
           : { status: "CLAIMED", claimedAt: now } });

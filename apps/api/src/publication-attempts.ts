@@ -8,12 +8,21 @@ import { digest } from "../../../packages/core/security";
 import { decryptSocialToken, encryptSocialToken } from "../../../packages/core/social-tokens";
 import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
 import { verifiedYoutubeSessionUri } from "../../../packages/core/youtube-resumable";
+import {
+  publicationClaimReviewSnapshot,
+  requireCurrentPublicationClaimReview,
+} from "./claim-reviews";
 import { evaluateManualGuidance, manualGuidanceLifetimeMs } from "./posting-guidance";
 
 type Tx = Prisma.TransactionClient;
 const unresolved = ["RESERVED", "SUBMITTING", "UNKNOWN", "CONFIRMED"] as const;
 
-export async function currentApproval(tx: Tx, org: string, intentId: string) {
+export async function currentApproval(
+  tx: Tx,
+  org: string,
+  intentId: string,
+  now = new Date(),
+) {
   await tx.$queryRaw`SELECT id FROM "PublicationIntent" WHERE id=${intentId} AND "organizationId"=${org} FOR UPDATE`;
   const intent = await tx.publicationIntent.findFirst({
     where: { id: intentId, organizationId: org },
@@ -35,6 +44,12 @@ export async function currentApproval(tx: Tx, org: string, intentId: string) {
     throw new ConflictException(
       "Approve the current content revision before submission.",
     );
+  const currentClaims = await requireCurrentPublicationClaimReview(
+    tx,
+    org,
+    content,
+    now,
+  );
   if (
     content.platform !== "YouTube" ||
     intent.platform !== "YouTube" ||
@@ -59,7 +74,10 @@ export async function currentApproval(tx: Tx, org: string, intentId: string) {
     throw new ConflictException(
       "The exact approved video render is unavailable.",
     );
-  return intent;
+  return {
+    ...intent,
+    dispatchClaimReview: publicationClaimReviewSnapshot(currentClaims),
+  };
 }
 
 export function activeConnection(
@@ -249,7 +267,13 @@ export async function enterPublicationSubmission(
       throw new ConflictException(
         "Attempt already started or changed. Never submit it twice.",
       );
-    const intent = await currentApproval(tx, org, attempt.intentId);
+    const submissionAt = new Date();
+    const intent = await currentApproval(
+      tx,
+      org,
+      attempt.intentId,
+      submissionAt,
+    );
     if (input.media) {
       const media = input.media;
       if (!/^[a-f0-9]{64}$/u.test(media.sha256) ||
@@ -290,7 +314,7 @@ export async function enterPublicationSubmission(
         review.connectionId !== connection.id ||
         review.contentRevision !== intent.contentRevision ||
         review.policyVersion !== youtubePolicyVersion ||
-        review.expiresAt <= new Date() ||
+        review.expiresAt <= submissionAt ||
         review.snapshotHash !== youtubePolicyFingerprint({
           intentId: intent.id,
           connectionId: connection.id,
@@ -314,10 +338,11 @@ export async function enterPublicationSubmission(
           reviewedAt: review.reviewedAt.toISOString(),
           policyVersion: review.policyVersion,
           metadata: review.metadata as Prisma.InputJsonObject,
+          claimReview: intent.dispatchClaimReview,
         },
         mediaSha256: input.media?.sha256 ?? null,
         mediaBytes: input.media?.bytes ?? null,
-        startedAt: new Date(),
+        startedAt: submissionAt,
         version: { increment: 1 },
       },
     });

@@ -7,13 +7,13 @@
   ],
   "passed": {
     "unit": 210,
-    "httpScenarios": 15,
+    "httpScenarios": 16,
     "browserScenarios": 9,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 21,
     "unitFontSets": 1
   },
-  "environment": "POLICY-01B exact-source recovery plus exact published-source native PostgreSQL/Redis CI; synthetic/local services only",
+  "environment": "POLICY-01C local verification on exact POLICY-01B public-closure base; disposable PGlite/native Redis/S3Proxy/FFmpeg and synthetic providers only",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -29,7 +29,7 @@
     "allTwelveMigrationsUnchangedByV": true
   },
   "gatesNotVerified": [
-    "Native CI for the unpublished POLICY-01B source",
+    "Native PostgreSQL/Redis CI for the unpublished POLICY-01C source",
     "Live Google grant/upload and actual deployed production readiness receipt",
     "Native PostgreSQL concurrency and restore",
     "Docker/MinIO execution",
@@ -74,12 +74,47 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "POLICY-01B's exact approved recovered 23-path source is public at 590a9b22e853638c0b4beae0d3bb98554a8ec5cf with tree 15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca. Its own native Actions run 38911616401, job 117008589097, attempt 1 succeeded: 210/210 unit, 15/15 HTTP, 9/9 browser, 5/5 recovery, 21 native PostgreSQL migrations, native Redis, API/web builds, bounded readability, populated upgrade and both zero-vulnerability audits. Artifact 12051471346 has 124 CRC-valid entries, 210 unique unit receipts and 44 verified OCR image hashes. The gate does not prove truth, source quality or legal/platform compliance. Closure publication, later dispatch freshness, deployed/live-provider acceptance, native private-media restore and full master acceptance remain open.",
+  "latestIncrement": "POLICY-01C is locally verified and unpublished on public base d223c5b27b2a3996150e5b430bda6ab82e600a8b. Live claim evidence is rechecked through schedule due time, due-worker claim, attempt reservation and the durable SUBMITTING boundary; stale evidence blocks before provider traffic and due schedules record CLAIM_EVIDENCE_CHANGED. Final current-source verification passed 210/210 unit, 16/16 HTTP, 9/9 production browser, 5/5 recovery, 21 fresh PGlite migrations, API/web builds, populated upgrade, bounded readability and two zero-vulnerability audits. POLICY-01B's closure is public and its follow-up native run 38915220310 passed. POLICY-01C native CI, live/deployed providers, native private-media restore and full master acceptance remain open.",
+  "policy01cDispatchFreshness": {
+    "schemaVersion": 1,
+    "taskId": "POLICY-01C",
+    "status": "local_verified_unpublished",
+    "basePublicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+    "basePublicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
+    "boundaries": [
+      "schedule eligibility through dueAt",
+      "due-worker claim at supplied now",
+      "attempt reservation at current time",
+      "durable SUBMITTING transition immediately before provider work"
+    ],
+    "staleOutcomeCode": "CLAIM_EVIDENCE_CHANGED",
+    "staleProviderCalls": 0,
+    "sanitizedSubmissionReceipt": true,
+    "verification": {
+      "unitPassed": 210,
+      "unitFailed": 0,
+      "httpPassed": 16,
+      "browserPassed": 9,
+      "recoveryPassed": 5,
+      "freshPgliteMigrations": 21,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "populatedUpgradeRestore": true,
+      "readabilitySamples": 36,
+      "busyReadabilitySamples": 8,
+      "blankNegativeControlPassed": true,
+      "productionAuditVulnerabilities": 0,
+      "allDependencyAuditVulnerabilities": 0,
+      "nativePostgres": false
+    },
+    "evidence": "docs/qa/policy01c-dispatch-freshness-evidence.json",
+    "unitReceipts": "docs/qa/policy01c-dispatch-freshness-unit-receipts.json"
+  },
   "latestNativeRun": {
-    "runId": 38911616401,
-    "jobId": 117008589097,
-    "publicCommit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-    "publicTree": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
+    "runId": 38915220310,
+    "jobId": 117020826982,
+    "publicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+    "publicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
     "conclusion": "success",
     "verification": {
       "unit": {
@@ -102,7 +137,7 @@
         "tests": 9,
         "pass": 9,
         "fail": 0,
-        "duration": "43.4s"
+        "duration": "43.8s"
       },
       "recovery": {
         "tests": 5,
@@ -127,10 +162,10 @@
       "allDependencyAuditVulnerabilities": 0
     },
     "artifact": {
-      "id": 12051471346,
+      "id": 12052926546,
       "name": "browser-evidence",
-      "sizeBytes": 6184174,
-      "digest": "sha256:9eff37bb21c3ffdd7a5a25d96989ceb64210f8d52e3fc6e3042f7049ae7f888f",
+      "sizeBytes": 6189677,
+      "digest": "sha256:a328f1d3402a880e6322dad02605959d9313386d0749509a523cd77ca7e39b9e",
       "entries": 124,
       "crcVerified": true,
       "unitPassedReceipts": 210,
@@ -148,17 +183,17 @@
           "topLevel": 210,
           "suites": 0
         },
-        "durationMs": 410475.622523
+        "durationMs": 372209.030545
       },
       "readabilitySamples": 36,
       "busySamples": 8,
       "ocrSampleHashesVerified": 44,
       "blankNegativeControlPassed": true,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401/artifacts/12051471346",
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38915220310/artifacts/12052926546",
       "expiresAtUtc": "2027-01-14T13:55:20Z"
     },
-    "unitReceipts": "docs/qa/policy01b-evidence-source-native-unit-receipts.json",
-    "unitReceiptSha256": "4364e791f3a35b0e6470b881682ae7d198d12b6baa9a238cfee5f30c067dbb06"
+    "unitReceipts": "browser-evidence/.local/unit-receipts.json",
+    "unitReceiptSha256": "ba4fb20ab78426c6c678003b8190637fba42e87cd1fb1a9b0af8781d09098337"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",

@@ -65,7 +65,11 @@ export type ClaimResolution = z.infer<typeof claimResolutionSchema>;
 const draftFromContent = (content: unknown) =>
   draftSchema.strip().parse(content);
 
-function validateResolutionSet(claims: ClaimSignal[], value: unknown) {
+function validateResolutionSet(
+  claims: ClaimSignal[],
+  value: unknown,
+  now = new Date(),
+) {
   const resolutions = z.array(claimResolutionSchema).max(50).parse(value);
   const expected = new Set(claims.map((claim) => claim.id));
   if (
@@ -77,7 +81,6 @@ function validateResolutionSet(claims: ClaimSignal[], value: unknown) {
     throw new BadRequestException(
       "Resolve every detected claim exactly once for this content revision.",
     );
-  const now = new Date();
   for (const resolution of resolutions) {
     if (resolution.disposition !== "EVIDENCE") continue;
     const status = claimEvidenceTimeStatus(resolution.checkedAt, now);
@@ -145,6 +148,7 @@ export async function currentClaimPolicy(
   tx: any,
   organizationId: string,
   content: any,
+  now = new Date(),
 ) {
   const policy = claimPolicyForContent(content);
   if (!policy.claims.length) return { ...policy, complete: true, review: null };
@@ -163,7 +167,7 @@ export async function currentClaimPolicy(
     review.claimSetFingerprint === policy.claimSetFingerprint
   ) {
     try {
-      validateResolutionSet(policy.claims, review.resolutions);
+      validateResolutionSet(policy.claims, review.resolutions, now);
       complete = true;
     } catch {
       complete = false;
@@ -180,12 +184,49 @@ export async function requireCurrentClaimReview(
   tx: any,
   organizationId: string,
   content: any,
+  now = new Date(),
 ) {
-  const current = await currentClaimPolicy(tx, organizationId, content);
+  const current = await currentClaimPolicy(
+    tx,
+    organizationId,
+    content,
+    now,
+  );
   if (!current.complete)
     throw new ConflictException(
       "Link evidence for every detected claim, or have an owner document an override, before approval.",
     );
+  return current;
+}
+
+export const claimEvidenceChangedCode = "CLAIM_EVIDENCE_CHANGED";
+
+export class PublicationClaimReviewChangedException extends ConflictException {
+  readonly code = claimEvidenceChangedCode;
+
+  constructor() {
+    super({
+      code: claimEvidenceChangedCode,
+      message:
+        "Claim evidence is no longer current. Refresh the content review and approval before sending.",
+    });
+  }
+}
+
+export async function requireCurrentPublicationClaimReview(
+  tx: any,
+  organizationId: string,
+  content: any,
+  now = new Date(),
+) {
+  const current = await currentClaimPolicy(
+    tx,
+    organizationId,
+    content,
+    now,
+  );
+  if (!current.complete)
+    throw new PublicationClaimReviewChangedException();
   return current;
 }
 
