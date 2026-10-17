@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "POLICY-01C",
   "title": "Dispatch-time claim-evidence freshness guard",
-  "status": "local_verified_unpublished",
+  "status": "source_public_native_ci_verified_closure_local",
   "verifiedAtUtc": "2026-10-16T19:36:10Z",
   "basePublicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
   "basePublicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
@@ -118,9 +118,17 @@
     "Native PostgreSQL plus private-media backup/restore and full master acceptance remain open. POLICY-01 remains Partial."
   ],
   "publication": {
-    "approved": false,
-    "target": "shlokagrawal13/organic-marketing-os",
-    "branch": "main",
-    "status": "local verified; explicit publication approval not yet requested"
+    "approvedPaths": 20,
+    "commit": "da352cb78355ca98a985288d82ca84995018b382",
+    "parent": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+    "tree": "71563c7c27216d0ffc3ef32233998821881b157f",
+    "exactApprovedPaths": true,
+    "fullTreeMatchesFrozenSource": true
+  },
+  "nativeCi": {
+    "runId": 38957638173,
+    "jobId": 117164412489,
+    "conclusion": "success",
+    "evidence": "docs/qa/policy01c-dispatch-freshness-native-ci-evidence.json"
   }
 }

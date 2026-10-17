@@ -13,7 +13,7 @@
     "schemaMigrations": 21,
     "unitFontSets": 1
   },
-  "environment": "POLICY-01C local verification on exact POLICY-01B public-closure base; disposable PGlite/native Redis/S3Proxy/FFmpeg and synthetic providers only",
+  "environment": "POLICY-01C exact published source plus native PostgreSQL/Redis GitHub Actions verification; no live provider or deployed acceptance",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -74,11 +74,11 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "POLICY-01C is locally verified and unpublished on public base d223c5b27b2a3996150e5b430bda6ab82e600a8b. Live claim evidence is rechecked through schedule due time, due-worker claim, attempt reservation and the durable SUBMITTING boundary; stale evidence blocks before provider traffic and due schedules record CLAIM_EVIDENCE_CHANGED. Final current-source verification passed 210/210 unit, 16/16 HTTP, 9/9 production browser, 5/5 recovery, 21 fresh PGlite migrations, API/web builds, populated upgrade, bounded readability and two zero-vulnerability audits. POLICY-01B's closure is public and its follow-up native run 38915220310 passed. POLICY-01C native CI, live/deployed providers, native private-media restore and full master acceptance remain open.",
+  "latestIncrement": "POLICY-01C approved 20-path source is public at da352cb with exact tree 71563c7; own native Actions run 38957638173 passed 210 unit, 16 HTTP, 9 browser, 5 recovery, 21 migrations, builds, readability, populated upgrade and both zero-vulnerability audits. The 16-path closure payload is local pending separate approval; no live Google/deployed/master acceptance occurred.",
   "policy01cDispatchFreshness": {
     "schemaVersion": 1,
     "taskId": "POLICY-01C",
-    "status": "local_verified_unpublished",
+    "status": "source_public_native_ci_verified_closure_local",
     "basePublicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
     "basePublicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
     "boundaries": [
@@ -105,95 +105,27 @@
       "blankNegativeControlPassed": true,
       "productionAuditVulnerabilities": 0,
       "allDependencyAuditVulnerabilities": 0,
-      "nativePostgres": false
+      "nativePostgres": true
     },
     "evidence": "docs/qa/policy01c-dispatch-freshness-evidence.json",
-    "unitReceipts": "docs/qa/policy01c-dispatch-freshness-unit-receipts.json"
+    "unitReceipts": "docs/qa/policy01c-dispatch-freshness-unit-receipts.json",
+    "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
+    "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f",
+    "nativeCiEvidence": "docs/qa/policy01c-dispatch-freshness-native-ci-evidence.json",
+    "nativeUnitReceipts": "docs/qa/policy01c-dispatch-freshness-native-unit-receipts.json"
   },
   "latestNativeRun": {
-    "runId": 38915220310,
-    "jobId": 117020826982,
-    "publicCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
-    "publicTree": "e08764bd35ef3462c5ea65bff9cf7ff21bdc4cb9",
+    "id": 38957638173,
+    "number": 77,
+    "workflow": "Core and recovery verification",
+    "event": "push",
+    "status": "completed",
     "conclusion": "success",
-    "verification": {
-      "unit": {
-        "tests": 210,
-        "pass": 210,
-        "fail": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0
-      },
-      "http": {
-        "tests": 15,
-        "pass": 15,
-        "fail": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0
-      },
-      "browser": {
-        "tests": 9,
-        "pass": 9,
-        "fail": 0,
-        "duration": "43.8s"
-      },
-      "recovery": {
-        "tests": 5,
-        "pass": 5,
-        "fail": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0
-      },
-      "freshNativePostgresMigrations": 21,
-      "nativePostgres": true,
-      "nativeRedis": true,
-      "apiBuild": true,
-      "webBuild": true,
-      "boundedReadability": true,
-      "populatedUpgrade": true,
-      "upgradeEngine": "PGlite WASM PostgreSQL",
-      "upgradeArchiveBytes": 4940642,
-      "upgradeArchiveSha256": "0b11a0d42e9aabba818e18bb5415dbe430d8873f09eb09581f3c6caa2ac403ad",
-      "nativePostgresRestoreVerified": false,
-      "productionDependencyAuditVulnerabilities": 0,
-      "allDependencyAuditVulnerabilities": 0
-    },
-    "artifact": {
-      "id": 12052926546,
-      "name": "browser-evidence",
-      "sizeBytes": 6189677,
-      "digest": "sha256:a328f1d3402a880e6322dad02605959d9313386d0749509a523cd77ca7e39b9e",
-      "entries": 124,
-      "crcVerified": true,
-      "unitPassedReceipts": 210,
-      "unitUniqueReceipts": 210,
-      "summaries": 30,
-      "finalSummary": {
-        "success": true,
-        "counts": {
-          "tests": 210,
-          "failed": 0,
-          "passed": 210,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "topLevel": 210,
-          "suites": 0
-        },
-        "durationMs": 372209.030545
-      },
-      "readabilitySamples": 36,
-      "busySamples": 8,
-      "ocrSampleHashesVerified": 44,
-      "blankNegativeControlPassed": true,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38915220310/artifacts/12052926546",
-      "expiresAtUtc": "2027-01-14T13:55:20Z"
-    },
-    "unitReceipts": "browser-evidence/.local/unit-receipts.json",
-    "unitReceiptSha256": "ba4fb20ab78426c6c678003b8190637fba42e87cd1fb1a9b0af8781d09098337"
+    "attempt": 1,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38957638173",
+    "headSha": "da352cb78355ca98a985288d82ca84995018b382",
+    "startedAtUtc": "2026-10-16T19:48:36Z",
+    "updatedAtUtc": "2026-10-16T20:03:52Z"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -7513,20 +7445,21 @@
   },
   "latestPublicNativeCi": {
     "schemaVersion": 1,
-    "taskId": "POLICY-01B",
-    "increment": "evidence-source-and-freshness-native-ci-closure",
+    "taskId": "POLICY-01C",
+    "increment": "dispatch-time-evidence-freshness-native-ci-closure",
     "dateUtc": "2026-10-16",
     "status": "source_public_native_ci_verified_closure_local",
-    "publicCommit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-    "parentCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
-    "treeSha": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
+    "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
+    "parentCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+    "treeSha": "71563c7c27216d0ffc3ef32233998821881b157f",
     "approvedSourcePaths": [
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "START_HERE.md",
       "apps/api/src/claim-reviews.ts",
-      "apps/web/app/content-workspace.tsx",
+      "apps/api/src/publication-attempts.ts",
+      "apps/api/src/publication-scheduler.ts",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/POLICY_ENGINE.md",
@@ -7535,37 +7468,32 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/policy01b-evidence-source-evidence.json",
-      "docs/qa/policy01b-evidence-source-unit-receipts.json",
+      "docs/qa/policy01c-dispatch-freshness-evidence.json",
+      "docs/qa/policy01c-dispatch-freshness-unit-receipts.json",
       "docs/qa/verification-summary.json",
-      "packages/core/claim-policy.ts",
-      "packages/core/evidence-source.ts",
-      "tests/evidence-source.test.ts",
-      "tests/integration/claim-policy.test.ts",
-      "tests/render-controls.test.ts",
-      "tests/ui/claim-policy.spec.ts"
+      "scripts/package_handoff.py",
+      "tests/integration/claim-policy.test.ts"
     ],
-    "exact23Paths": true,
     "fullPublicTreeMatchesLocal": true,
     "run": {
-      "id": 38911616401,
-      "number": 75,
+      "id": 38957638173,
+      "number": 77,
       "workflow": "Core and recovery verification",
       "event": "push",
       "status": "completed",
       "conclusion": "success",
       "attempt": 1,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401",
-      "headSha": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-      "startedAtUtc": "2026-10-16T13:55:20Z",
-      "updatedAtUtc": "2026-10-16T14:10:15Z"
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38957638173",
+      "headSha": "da352cb78355ca98a985288d82ca84995018b382",
+      "startedAtUtc": "2026-10-16T19:48:36Z",
+      "updatedAtUtc": "2026-10-16T20:03:52Z"
     },
     "job": {
-      "id": 117008589097,
+      "id": 117164412489,
       "name": "Native application verification",
       "status": "completed",
       "conclusion": "success",
-      "runId": 38911616401,
+      "runId": 38957638173,
       "steps": [
         {
           "name": "Set up job",
@@ -7711,8 +7639,8 @@
         "todo": 0
       },
       "http": {
-        "tests": 15,
-        "pass": 15,
+        "tests": 16,
+        "pass": 16,
         "fail": 0,
         "cancelled": 0,
         "skipped": 0,
@@ -7722,7 +7650,7 @@
         "tests": 9,
         "pass": 9,
         "fail": 0,
-        "duration": "43.4s"
+        "duration": "42.8s"
       },
       "recovery": {
         "tests": 5,
@@ -7740,19 +7668,19 @@
       "boundedReadability": true,
       "populatedUpgrade": true,
       "upgradeEngine": "PGlite WASM PostgreSQL",
-      "upgradeArchiveBytes": 4940642,
-      "upgradeArchiveSha256": "0b11a0d42e9aabba818e18bb5415dbe430d8873f09eb09581f3c6caa2ac403ad",
+      "upgradeArchiveBytes": 4940688,
+      "upgradeArchiveSha256": "464e11432ef9d3b54f190a0fc7b0d8d4f4cca163b54b451a1d58c396f8171ba1",
       "nativePostgresRestoreVerified": false,
       "productionDependencyAuditVulnerabilities": 0,
       "allDependencyAuditVulnerabilities": 0
     },
-    "unitReceipts": "docs/qa/policy01b-evidence-source-native-unit-receipts.json",
-    "unitReceiptSha256": "4364e791f3a35b0e6470b881682ae7d198d12b6baa9a238cfee5f30c067dbb06",
+    "unitReceipts": "docs/qa/policy01c-dispatch-freshness-native-unit-receipts.json",
+    "unitReceiptSha256": "4fdfef3fdcc65f6eea80392b839d806b86bf6d5a6080002a708a4ae0029d33e8",
     "artifact": {
-      "id": 12051471346,
+      "id": 12071464008,
       "name": "browser-evidence",
-      "sizeBytes": 6184174,
-      "digest": "sha256:9eff37bb21c3ffdd7a5a25d96989ceb64210f8d52e3fc6e3042f7049ae7f888f",
+      "sizeBytes": 6189816,
+      "digest": "sha256:89d93b9e52d95c3a2210c143c9d32266ae7c4c782a36b74416a597268809ad36",
       "entries": 124,
       "crcVerified": true,
       "unitPassedReceipts": 210,
@@ -7770,14 +7698,14 @@
           "topLevel": 210,
           "suites": 0
         },
-        "durationMs": 410475.622523
+        "durationMs": 438315.143477
       },
       "readabilitySamples": 36,
       "busySamples": 8,
       "ocrSampleHashesVerified": 44,
       "blankNegativeControlPassed": true,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401/artifacts/12051471346",
-      "expiresAtUtc": "2027-01-14T13:55:20Z"
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38957638173/artifacts/12071464008",
+      "expiresAtUtc": "2027-01-14T19:48:36Z"
     },
     "nonBlockingRunnerWarnings": [
       "GitHub warned that Node.js 20 actions are deprecated and forced the referenced actions to Node.js 24; all affected steps passed."
@@ -7788,12 +7716,13 @@
     "fullMasterAcceptance": false,
     "closurePublication": false,
     "limits": [
-      "The gate validates source-reference syntax and operator-declared review age; it does not fetch URLs, resolve DNS or establish claim truth, source quality, legal compliance or platform compliance.",
-      "Freshness is rechecked through publication preparation, not at later scheduled or live dispatch boundaries.",
+      "The guard validates operator-declared review age and policy/revision/fingerprint continuity; it does not fetch evidence URLs, resolve DNS, establish source reachability or quality, verify claim truth, or decide legal/platform compliance.",
+      "No live Google upload or deployed production acceptance was performed.",
       "Upgrade/restore verification used PGlite; native PostgreSQL plus private-media backup/restore remains open.",
       "OCR evidence is bounded synthetic English/readability regression, not physical-device or arbitrary-content acceptance.",
-      "No live provider operation, deployed production acceptance or full master acceptance was performed. POLICY-01 remains Partial."
-    ]
+      "No live provider operation or full master acceptance was performed. POLICY-01 remains Partial."
+    ],
+    "exact20Paths": true
   },
   "localEditor01AeBusyReadability": {
     "blackBackgroundOcrPassed": 36,
@@ -9468,5 +9397,286 @@
       "OCR evidence is bounded synthetic English/readability regression, not physical-device or arbitrary-content acceptance.",
       "No live provider operation, deployed production acceptance or full master acceptance was performed. POLICY-01 remains Partial."
     ]
+  },
+  "policy01cDispatchFreshnessNativeCi": {
+    "schemaVersion": 1,
+    "taskId": "POLICY-01C",
+    "increment": "dispatch-time-evidence-freshness-native-ci-closure",
+    "dateUtc": "2026-10-16",
+    "status": "source_public_native_ci_verified_closure_local",
+    "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
+    "parentCommit": "d223c5b27b2a3996150e5b430bda6ab82e600a8b",
+    "treeSha": "71563c7c27216d0ffc3ef32233998821881b157f",
+    "approvedSourcePaths": [
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "START_HERE.md",
+      "apps/api/src/claim-reviews.ts",
+      "apps/api/src/publication-attempts.ts",
+      "apps/api/src/publication-scheduler.ts",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/POLICY_ENGINE.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/qa/policy01c-dispatch-freshness-evidence.json",
+      "docs/qa/policy01c-dispatch-freshness-unit-receipts.json",
+      "docs/qa/verification-summary.json",
+      "scripts/package_handoff.py",
+      "tests/integration/claim-policy.test.ts"
+    ],
+    "fullPublicTreeMatchesLocal": true,
+    "run": {
+      "id": 38957638173,
+      "number": 77,
+      "workflow": "Core and recovery verification",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38957638173",
+      "headSha": "da352cb78355ca98a985288d82ca84995018b382",
+      "startedAtUtc": "2026-10-16T19:48:36Z",
+      "updatedAtUtc": "2026-10-16T20:03:52Z"
+    },
+    "job": {
+      "id": 117164412489,
+      "name": "Native application verification",
+      "status": "completed",
+      "conclusion": "success",
+      "runId": 38957638173,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install test object storage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install media dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Install pinned test CJK fonts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Verify bounded small-screen English readability",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Audit all dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Verify populated upgrade",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Verify native application flows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Upload browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35
+        }
+      ]
+    },
+    "verification": {
+      "unit": {
+        "tests": 210,
+        "pass": 210,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "http": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 9,
+        "pass": 9,
+        "fail": 0,
+        "duration": "42.8s"
+      },
+      "recovery": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "freshNativePostgresMigrations": 21,
+      "nativePostgres": true,
+      "nativeRedis": true,
+      "apiBuild": true,
+      "webBuild": true,
+      "boundedReadability": true,
+      "populatedUpgrade": true,
+      "upgradeEngine": "PGlite WASM PostgreSQL",
+      "upgradeArchiveBytes": 4940688,
+      "upgradeArchiveSha256": "464e11432ef9d3b54f190a0fc7b0d8d4f4cca163b54b451a1d58c396f8171ba1",
+      "nativePostgresRestoreVerified": false,
+      "productionDependencyAuditVulnerabilities": 0,
+      "allDependencyAuditVulnerabilities": 0
+    },
+    "unitReceipts": "docs/qa/policy01c-dispatch-freshness-native-unit-receipts.json",
+    "unitReceiptSha256": "4fdfef3fdcc65f6eea80392b839d806b86bf6d5a6080002a708a4ae0029d33e8",
+    "artifact": {
+      "id": 12071464008,
+      "name": "browser-evidence",
+      "sizeBytes": 6189816,
+      "digest": "sha256:89d93b9e52d95c3a2210c143c9d32266ae7c4c782a36b74416a597268809ad36",
+      "entries": 124,
+      "crcVerified": true,
+      "unitPassedReceipts": 210,
+      "unitUniqueReceipts": 210,
+      "summaries": 30,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 210,
+          "failed": 0,
+          "passed": 210,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 210,
+          "suites": 0
+        },
+        "durationMs": 438315.143477
+      },
+      "readabilitySamples": 36,
+      "busySamples": 8,
+      "ocrSampleHashesVerified": 44,
+      "blankNegativeControlPassed": true,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38957638173/artifacts/12071464008",
+      "expiresAtUtc": "2027-01-14T19:48:36Z"
+    },
+    "nonBlockingRunnerWarnings": [
+      "GitHub warned that Node.js 20 actions are deprecated and forced the referenced actions to Node.js 24; all affected steps passed."
+    ],
+    "sourceUnchangedByClosure": true,
+    "liveProviderOperation": false,
+    "deployedProductionAcceptance": false,
+    "fullMasterAcceptance": false,
+    "closurePublication": false,
+    "limits": [
+      "The guard validates operator-declared review age and policy/revision/fingerprint continuity; it does not fetch evidence URLs, resolve DNS, establish source reachability or quality, verify claim truth, or decide legal/platform compliance.",
+      "No live Google upload or deployed production acceptance was performed.",
+      "Upgrade/restore verification used PGlite; native PostgreSQL plus private-media backup/restore remains open.",
+      "OCR evidence is bounded synthetic English/readability regression, not physical-device or arbitrary-content acceptance.",
+      "No live provider operation or full master acceptance was performed. POLICY-01 remains Partial."
+    ],
+    "exact20Paths": true
   }
 }

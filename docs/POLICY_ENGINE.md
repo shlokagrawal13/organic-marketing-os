@@ -1,6 +1,6 @@
 # Policy and quality checks
 
-## POLICY-01C dispatch-time evidence freshness (local, unpublished)
+## POLICY-01C dispatch-time evidence freshness (published and native-CI verified)
 
 The application now evaluates the current `ContentClaimReview` again at every outbound eligibility boundary. It does not trust the sanitized review snapshot captured when the publication intent was prepared.
 
@@ -13,7 +13,7 @@ The application now evaluates the current `ContentClaimReview` again at every ou
 
 Claim-free content remains complete without a review. A complete owner-override-only review has no evidence timestamp to expire, but remains bound to the exact tenant, revision, policy version and claim-set fingerprint. The existing 30-day age and five-minute future-skew semantics are unchanged; no schema migration is needed.
 
-Verification on the final local source passed 210/210 unit/export cases, 16/16 isolated HTTP cases (including the new dispatch-boundary case), 9/9 production browser cases, 5/5 recovery cases and 21 fresh PGlite migrations. The regression proves zero provider requests for stale evidence and no sensitive evidence fields in the submission snapshot. Native PostgreSQL CI has not yet run on POLICY-01C.
+Verification on the final local source passed 210/210 unit/export cases, 16/16 isolated HTTP cases (including the new dispatch-boundary case), 9/9 production browser cases, 5/5 recovery cases and 21 fresh PGlite migrations. Its exact published tree then passed native Actions run 38957638173 with the same 210/16/9/5 counts, 21 native PostgreSQL migrations, native Redis, builds, readability, populated upgrade and two zero-vulnerability audits. The regression proves zero provider requests for stale evidence and no sensitive evidence fields in the submission snapshot.
 
 This remains a review-age and continuity gate. It does not fetch a URL, resolve DNS, prove reachability, assess source quality, verify claim truth, or establish legal/platform compliance. Live Google acceptance, deployed acceptance, native PostgreSQL plus private-media restore and full master acceptance remain open. POLICY-01 remains Partial. See `docs/qa/policy01c-dispatch-freshness-evidence.json`.
 
