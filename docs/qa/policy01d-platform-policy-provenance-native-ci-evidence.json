@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "taskId": "POLICY-01D",
+  "increment": "youtube-platform-policy-source-provenance-native-ci-closure",
+  "dateUtc": "2026-10-17",
+  "status": "source_public_native_ci_verified_closure_local",
+  "publicCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5",
+  "parentCommit": "972ca69b79809c47db1f12597931a3e965c57f31",
+  "treeSha": "3d85ca8f6d2c9fbeba5747a62060f3fa88e144e8",
+  "approvedSourcePathCount": 23,
+  "remoteCompare": {"aheadBy": 1, "behindBy": 0, "totalCommits": 1, "changedPaths": 23, "deletions": 0, "extraPaths": 0},
+  "fullPublicTreeMatchesLocal": true,
+  "run": {
+    "id": 39020625965,
+    "number": 79,
+    "workflow": "Core and recovery verification",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39020625965",
+    "headSha": "d1651879dee580eed48c108f84bd24a7f3d242e5",
+    "startedAtUtc": "2026-10-17T09:18:33Z",
+    "completedAtUtc": "2026-10-17T09:34:26Z",
+    "durationSeconds": 953
+  },
+  "job": {"id": 117361538915, "name": "Native application verification", "status": "completed", "conclusion": "success"},
+  "verification": {
+    "unit": {"tests": 211, "passed": 211, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "summaries": 30, "uniqueReceipts": 211},
+    "http": {"tests": 16, "passed": 16, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0},
+    "browser": {"tests": 9, "passed": 9},
+    "recovery": {"tests": 5, "passed": 5, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "observedRemainingLockMs": 119849},
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "boundedEnglishReadability": {"passed": true, "standardSamples": 36, "busySamples": 8, "blankNegativeControl": true},
+    "freshNativePostgresMigrations": 21,
+    "nativeRedis": true,
+    "populatedUpgrade": true,
+    "archiveRestore": true,
+    "nativePostgresRestoreVerified": false,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "artifact": {
+    "id": 12097176336,
+    "name": "browser-evidence",
+    "sizeBytes": 6192778,
+    "digest": "sha256:b329c1b12065453ab5fe42016a16c7ac51a4d0fb86e907a33d4a10111bfcd5e4",
+    "downloadedDigestMatches": true,
+    "zipEntries": 124,
+    "zipCrcPassed": true,
+    "expiresAtUtc": "2027-01-15T09:18:33Z"
+  },
+  "nonFailingWarnings": [
+    "GitHub forced Node.js 20-targeting checkout/setup/upload actions onto Node.js 24.",
+    "actions/setup-java@v4 is deprecated; migrate workflow maintenance to v5.",
+    "ubuntu-latest is scheduled to migrate to Ubuntu 26 beginning 2026-10-19.",
+    "Redis emitted the hosted-runner vm.overcommit_memory advisory during container shutdown.",
+    "A Node dependency emitted DEP0169 for url.parse during artifact upload."
+  ],
+  "limits": [
+    "No live Google OAuth grant, upload, moderation, quota or deployed-production acceptance occurred.",
+    "The runtime does not fetch or hash remote platform-policy page bodies.",
+    "The source fingerprint binds the maintained official-source manifest; it does not prove every platform rule is complete or legally sufficient.",
+    "Populated archive restore used the bounded test path; native PostgreSQL plus private-media cross-store restore remains open.",
+    "POLICY-01 and full master acceptance remain partial."
+  ]
+}
