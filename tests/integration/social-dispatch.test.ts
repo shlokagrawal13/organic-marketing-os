@@ -9,7 +9,7 @@ import { ObjectStore } from "../../packages/core/object-store";
 import { dispatchReviewedYoutubeVideo, reconcileUnknownYoutubeUpload } from "../../apps/api/src/youtube-dispatch";
 import { cancelPublicationSchedule, createPublicationSchedule,
   previewPublicationScheduleGuidance, runDuePublicationSchedules } from "../../apps/api/src/publication-scheduler";
-import { youtubePolicyVersion } from "../../packages/core/youtube-policy";
+import { youtubePolicySourceFingerprint, youtubePolicyVersion } from "../../packages/core/youtube-policy";
 import { evaluateManualGuidance } from "../../apps/api/src/posting-guidance";
 
 const orgs: string[] = [], users: string[] = [];
@@ -18,6 +18,7 @@ const priorDispatch = process.env.YOUTUBE_LIVE_DISPATCH_ENABLED;
 const priorScheduledDispatch = process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED;
 const priorReviewVersion = process.env.YOUTUBE_POLICY_REVIEWED_VERSION;
 const priorReviewAt = process.env.YOUTUBE_POLICY_REVIEWED_AT;
+const priorSourceFingerprint = process.env.YOUTUBE_POLICY_SOURCE_FINGERPRINT;
 const priorGuidanceCount = process.env.YOUTUBE_GUIDANCE_24H_COUNT;
 const priorMetadataSimilarity = process.env.YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT;
 const priorTopicOverlap = process.env.YOUTUBE_GUIDANCE_TOPIC_OVERLAP_PERCENT;
@@ -32,6 +33,7 @@ after(async () => {
     YOUTUBE_SCHEDULED_DISPATCH_ENABLED: priorScheduledDispatch,
     YOUTUBE_POLICY_REVIEWED_VERSION: priorReviewVersion,
     YOUTUBE_POLICY_REVIEWED_AT: priorReviewAt,
+    YOUTUBE_POLICY_SOURCE_FINGERPRINT: priorSourceFingerprint,
     YOUTUBE_GUIDANCE_24H_COUNT: priorGuidanceCount,
     YOUTUBE_GUIDANCE_METADATA_SIMILARITY_PERCENT: priorMetadataSimilarity,
     YOUTUBE_GUIDANCE_TOPIC_OVERLAP_PERCENT: priorTopicOverlap,
@@ -147,6 +149,7 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   assert.equal(blockedCalls, 0);
   assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 0);
   process.env.YOUTUBE_POLICY_REVIEWED_VERSION = youtubePolicyVersion;
+  process.env.YOUTUBE_POLICY_SOURCE_FINGERPRINT = youtubePolicySourceFingerprint;
   process.env.YOUTUBE_POLICY_REVIEWED_AT = new Date().toISOString();
   // The harness's API server stays default-off; only this test process uses
   // synthetic provider requests through the internal dispatcher.

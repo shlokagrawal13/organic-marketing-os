@@ -515,3 +515,6 @@ application harness; complete Compose/MinIO and native/cross-store restore remai
 
 Read `docs/UPGRADE_0.9.md` before updating a populated installation. A source ZIP
 and the workspace NDJSON export are not database/private-media restore backups.
+## Current local increment: POLICY-01D
+
+POLICY-01D binds YouTube maintenance to an exact official-source manifest fingerprint, policy version and seven-day review. Manual/scheduled dispatch and readiness fail closed before provider traffic. Focused verification passes; native CI awaits publication. POLICY-01 remains Partial.

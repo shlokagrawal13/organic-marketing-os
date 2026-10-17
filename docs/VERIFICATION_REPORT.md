@@ -997,3 +997,9 @@ dependency installation, build, 31 unit tests, production/development dependency
 audits, populated upgrade verification, native application flows, browser-evidence
 upload and cleanup. This closes the current source-publication/CI gate, not the
 separate live-provider, native Compose/MinIO or full-product acceptance gates.
+## POLICY-01D local verification — 2026-10-17 UTC
+
+- Clean locked install/Fontkit verified; focused policy/readiness/capture tests 7/7.
+- Isolated HTTP: social dispatch 1/1 and claim policy 2/2 with 21 fresh migrations per run.
+- API/web production builds and both zero-vulnerability audits passed.
+- Missing-font broad attempt was excluded; own full pinned-font native CI is pending publication.

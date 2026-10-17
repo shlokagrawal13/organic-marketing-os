@@ -868,3 +868,6 @@ Continued from the published MEDIA-01D checkpoint after confirming public `main`
 Fresh checks passed: 31 unit tests, API TypeScript build, Next.js 16.3.8 production build and full `npm run verify`. The full harness applied all 12 migrations and passed 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios. The browser scenario reordered two scenes, duplicated and removed a copy, saved the final order and completed real FFmpeg render/approval. No user data, paid provider or live service was used.
 
 Published EDITOR-01A to public `main` as application commit `97381d1f620eb5f30ec095522c7057c99ac8c1c6`, tree `dbf2bf8dca90b3b6612a72960d37b5d5b010702f`. The remote head and tree matched the locally verified source. Push-created Actions run `37126029720` completed successfully: build, 31 unit tests, both dependency audits, populated upgrade, native application flows, browser-evidence upload and cleanup all passed.
+## 2026-10-17 — POLICY-01D local source-provenance gate
+
+Recovered exact public POLICY-01C base, inspected five official Google sources, and bound operator maintenance/readiness to their ordered fingerprint. Focused tests, isolated HTTP, builds and audits passed. Missing-font runs are excluded, not passes. No public write or live provider call occurred before approval.

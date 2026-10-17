@@ -93,6 +93,7 @@ test("deployed receipt config and sanitizer reject unsafe origins, cookies, inco
     { ...valid, ok: "true" },
     { ...valid, checkedAt: "not a date" },
     { ...valid, policyVersion: "obsolete" },
+    { ...valid, policySourceFingerprint: "obsolete" },
     { ...valid, receipt: { ...valid.receipt, liveGoogleCallAttempted: true } },
     { ...valid, receipt: { ...valid.receipt, externalPostAttempted: true } },
     { ...valid, receipt: { ...valid.receipt, secretValuesIncluded: true } },

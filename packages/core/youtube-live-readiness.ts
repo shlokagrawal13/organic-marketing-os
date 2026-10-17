@@ -1,6 +1,7 @@
 import { decryptSocialToken, encryptSocialToken, type SocialTokenContext } from "./social-tokens";
 import { youtubeOAuthConfig } from "./youtube-oauth";
-import { youtubePolicyMaintenanceCurrent, youtubePolicyVersion } from "./youtube-policy";
+import { youtubePolicyMaintenanceCurrent, youtubePolicySourceFingerprint,
+  youtubePolicyVersion } from "./youtube-policy";
 
 export type YoutubeLiveReadinessCheck = {
   id: string;
@@ -13,6 +14,7 @@ export type YoutubeLiveReadiness = {
   ok: boolean;
   checkedAt: string;
   policyVersion: string;
+  policySourceFingerprint: string;
   checks: YoutubeLiveReadinessCheck[];
 };
 
@@ -69,7 +71,7 @@ export function evaluateYoutubeLiveReadiness(
     checks,
     "operator-policy-review-current",
     youtubePolicyMaintenanceCurrent(env, now),
-    "YOUTUBE_POLICY_REVIEWED_VERSION and YOUTUBE_POLICY_REVIEWED_AT must record a current operator review.",
+    "The policy version, official-source fingerprint and review time must match a current operator review.",
   );
 
   let oauthReady = true;
@@ -124,6 +126,7 @@ export function evaluateYoutubeLiveReadiness(
     ok: !criticalFailures,
     checkedAt: now.toISOString(),
     policyVersion: youtubePolicyVersion,
+    policySourceFingerprint: youtubePolicySourceFingerprint,
     checks,
   };
 }

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { randomBytes } from "node:crypto";
 import { evaluateYoutubeLiveReadiness } from "../packages/core/youtube-live-readiness";
-import { youtubePolicyVersion } from "../packages/core/youtube-policy";
+import { youtubePolicySourceFingerprint, youtubePolicyVersion } from "../packages/core/youtube-policy";
 
 const now = new Date("2026-10-13T16:40:00.000Z");
 
@@ -13,6 +13,7 @@ function readyEnv() {
     COOKIE_SECURE: "true",
     YOUTUBE_LIVE_DISPATCH_ENABLED: "true",
     YOUTUBE_POLICY_REVIEWED_VERSION: youtubePolicyVersion,
+    YOUTUBE_POLICY_SOURCE_FINGERPRINT: youtubePolicySourceFingerprint,
     YOUTUBE_POLICY_REVIEWED_AT: "2026-10-13T16:35:00Z",
     YOUTUBE_OAUTH_CLIENT_ID: "youtube-client-id",
     YOUTUBE_OAUTH_CLIENT_SECRET: "youtube-client-secret",
@@ -32,6 +33,7 @@ test("YouTube live readiness passes only with current policy, OAuth, storage and
   assert.equal(result.ok, true);
   assert.equal(result.checkedAt, now.toISOString());
   assert.equal(result.policyVersion, youtubePolicyVersion);
+  assert.equal(result.policySourceFingerprint, youtubePolicySourceFingerprint);
   assert.deepEqual(result.checks.map((item) => [item.id, item.ok]), [
     ["live-dispatch-enabled", true],
     ["operator-policy-review-current", true],
@@ -52,6 +54,7 @@ test("YouTube live readiness fails closed without exposing secret values", () =>
     COOKIE_SECURE: "false",
     YOUTUBE_LIVE_DISPATCH_ENABLED: "false",
     YOUTUBE_POLICY_REVIEWED_VERSION: youtubePolicyVersion,
+    YOUTUBE_POLICY_SOURCE_FINGERPRINT: "stale-source-manifest",
     YOUTUBE_POLICY_REVIEWED_AT: "2026-09-01T00:00:00Z",
     YOUTUBE_OAUTH_CLIENT_ID: "client",
     YOUTUBE_OAUTH_CLIENT_SECRET: "bad-secret-value",

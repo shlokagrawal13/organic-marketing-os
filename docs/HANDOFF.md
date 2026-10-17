@@ -643,3 +643,6 @@ The previous account-side Actions gate is cleared. Application commit
 `092b502cca399cfe732d9743202f310b0c80d994`. Public run `37207895511` completed every native verification step
 successfully.
 No Windows deployment update or ChatGPT buffering root cause is claimed.
+## POLICY-01D local handoff — 2026-10-17 UTC
+
+Built from exact public base `972ca69b79809c47db1f12597931a3e965c57f31`. YouTube dispatch now requires policy version `youtube-upload-policy-2026-10-17`, source fingerprint `3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf`, and a current review time. Focused 7/7, HTTP 3/3, builds and audits passed. Full pinned-font native CI awaits publication. No schema migration or live Google call occurred.

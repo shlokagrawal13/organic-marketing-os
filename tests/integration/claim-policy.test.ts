@@ -9,7 +9,7 @@ import { encryptSocialToken } from "../../packages/core/social-tokens";
 import {
   claimEvidenceMaximumAgeMs,
 } from "../../packages/core/evidence-source";
-import { youtubePolicyVersion } from "../../packages/core/youtube-policy";
+import { youtubePolicySourceFingerprint, youtubePolicyVersion } from "../../packages/core/youtube-policy";
 import {
   enterPublicationSubmission,
   reservePublicationAttempt,
@@ -30,6 +30,7 @@ const priorEnvironment = Object.fromEntries(
     "YOUTUBE_SCHEDULED_DISPATCH_ENABLED",
     "YOUTUBE_POLICY_REVIEWED_VERSION",
     "YOUTUBE_POLICY_REVIEWED_AT",
+    "YOUTUBE_POLICY_SOURCE_FINGERPRINT",
   ].map((key) => [key, process.env[key]]),
 );
 
@@ -48,6 +49,7 @@ test("claim evidence is rechecked at scheduling, reservation, due claim, and sub
   process.env.YOUTUBE_LIVE_DISPATCH_ENABLED = "true";
   process.env.YOUTUBE_SCHEDULED_DISPATCH_ENABLED = "true";
   process.env.YOUTUBE_POLICY_REVIEWED_VERSION = youtubePolicyVersion;
+  process.env.YOUTUBE_POLICY_SOURCE_FINGERPRINT = youtubePolicySourceFingerprint;
   process.env.YOUTUBE_POLICY_REVIEWED_AT = new Date().toISOString();
 
   const organization = await db.organization.create({

@@ -1,5 +1,11 @@
 # Policy and quality checks
 
+## POLICY-01D YouTube policy-source provenance (local, unpublished)
+
+The live YouTube stop switch now binds an operator review to an exact, ordered manifest of five official Google sources: `videos.insert`, the video resource, API Terms, Developer Policies and Required Minimum Functionality. Policy version `youtube-upload-policy-2026-10-17` and source fingerprint `3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf` must both match the deployed environment, and the UTC review timestamp must still be within seven days. A missing or changed source fingerprint blocks manual dispatch, scheduled dispatch and readiness before provider traffic.
+
+The readiness endpoint and sanitized deployed receipt expose the non-secret fingerprint so operations evidence can prove which exact source set was acknowledged. Advancing this policy version intentionally invalidates earlier saved upload reviews. Focused verification passed 7/7 unit/runner cases, 1/1 social-dispatch HTTP and 2/2 claim-policy HTTP cases, API/web builds and both zero-vulnerability audits. A broad attempt without unbundled Noto fixtures is excluded, not presented as a pass. Own native CI remains required after publication. This gate does not certify legal compliance or provider acceptance. See `docs/qa/policy01d-platform-policy-provenance-evidence.json`.
+
 ## POLICY-01C dispatch-time evidence freshness (published and native-CI verified)
 
 The application now evaluates the current `ContentClaimReview` again at every outbound eligibility boundary. It does not trust the sanitized review snapshot captured when the publication intent was prepared.

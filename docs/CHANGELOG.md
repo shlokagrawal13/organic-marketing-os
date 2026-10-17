@@ -709,3 +709,8 @@ Local verification uses PGlite, Redis, S3rver and real FFmpeg. Native Docker/Min
 - Verified the browser workflows against the built production web server; included desktop/mobile test screenshots.
 
 Real-provider validation, native CI/Docker and the remaining master-spec modules are pending. This release is not production-ready.
+# 2026-10-17 — POLICY-01D official-source provenance gate (local)
+
+- Bound YouTube maintenance to an ordered five-source official Google manifest fingerprint, policy version and review age.
+- Added the fingerprint to readiness and sanitized deployed receipts; stale/missing values fail closed.
+- Advanced the policy version, intentionally requiring fresh saved upload reviews.

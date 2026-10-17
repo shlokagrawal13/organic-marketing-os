@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "taskId": "POLICY-01D",
+  "increment": "youtube-platform-policy-source-provenance",
+  "verifiedAtUtc": "2026-10-17T00:50:37Z",
+  "status": "locally_verified_unpublished",
+  "publicBaseCommit": "972ca69b79809c47db1f12597931a3e965c57f31",
+  "policyVersion": "youtube-upload-policy-2026-10-17",
+  "policySourceFingerprint": "3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf",
+  "officialSources": [
+    {"id":"videos-insert","url":"https://developers.google.com/youtube/data/reference/rest/v3/videos/insert","observedLastUpdatedUtc":"2026-10-15"},
+    {"id":"video-resource","url":"https://developers.google.com/youtube/data/reference/rest/v3/videos","observedLastUpdatedUtc":"2026-10-15"},
+    {"id":"api-terms","url":"https://developers.google.com/youtube/terms/api-services-terms-of-service","observedLastUpdatedUtc":"2026-09-14"},
+    {"id":"developer-policies","url":"https://developers.google.com/youtube/terms/developer-policies","observedLastUpdatedUtc":"2026-10-15"},
+    {"id":"required-minimum-functionality","url":"https://developers.google.com/youtube/terms/required-minimum-functionality","observedLastUpdatedUtc":"2026-10-15"}
+  ],
+  "behavior": {"requiresExactVersion":true,"requiresExactSourceFingerprint":true,"requiresReviewWithinDays":7,"futureReviewRejected":true,"manualDispatchFailClosed":true,"scheduledDispatchFailClosed":true,"readinessReceiptBindsSourceFingerprint":true,"providerCallOnMissingOrMismatchedReceipt":false,"existingSavedUploadReviewsInvalidatedByVersionAdvance":true},
+  "verification": {"cleanLockedInstallPackages":273,"fontkitPostinstallVerified":true,"focusedUnitCases":7,"focusedUnitFailed":0,"socialDispatchHttpCases":1,"claimPolicyHttpCases":2,"freshMigrationsPerHttpRun":21,"apiBuild":true,"webProductionBuild":true,"productionAuditVulnerabilities":0,"fullAuditVulnerabilities":0,"diffCheck":true},
+  "excludedRuns": [
+    {"name":"initial focused unit attempt","reason":"tsx dependency was absent before the clean locked install; no tests ran"},
+    {"name":"broad unit attempt without restored Noto fixtures","result":{"passed":117,"failed":94,"total":211},"reason":"all reported failures were caused by missing configured Noto/OTF test fonts; this attempt is not counted as a passing regression run"},
+    {"name":"first isolated HTTP harness starts","reason":"the recovered workspace initially lacked Redis and S3Proxy paths; no HTTP case ran before verified preserved binaries were supplied"}
+  ],
+  "limits": ["The runtime does not fetch or hash remote page bodies.","The fingerprint proves agreement on the maintained source manifest, not the truth or completeness of every platform rule.","No live Google OAuth grant, upload, provider moderation, quota or deployed-production acceptance occurred.","The full font/export unit suite awaits own native CI on the exact published source; no font test was skipped or reclassified as passed.","POLICY-01 and master acceptance remain partial."]
+}

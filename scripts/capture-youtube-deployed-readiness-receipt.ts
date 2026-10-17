@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { evaluateYoutubeLiveReadiness } from "../packages/core/youtube-live-readiness";
-import { youtubePolicyVersion } from "../packages/core/youtube-policy";
+import { youtubePolicySourceFingerprint, youtubePolicyVersion } from "../packages/core/youtube-policy";
 
 type Env = Record<string, string | undefined>;
 const canonicalChecks = evaluateYoutubeLiveReadiness({}).checks;
@@ -81,6 +81,7 @@ export function sanitizeReadinessReceipt(value: unknown) {
     value.checkedAt.length > 40 ||
     new Date(value.checkedAt).toISOString() !== value.checkedAt ||
     value.policyVersion !== youtubePolicyVersion ||
+    value.policySourceFingerprint !== youtubePolicySourceFingerprint ||
     !record(value.receipt) ||
     value.receipt.type !== "youtube-live-readiness" ||
     value.receipt.generatedBy !== "operations" ||
@@ -121,6 +122,7 @@ export function sanitizeReadinessReceipt(value: unknown) {
     ok: value.ok,
     checkedAt: new Date(value.checkedAt).toISOString(),
     policyVersion: youtubePolicyVersion,
+    policySourceFingerprint: youtubePolicySourceFingerprint,
     checks,
     receipt: {
       type: "youtube-live-readiness",

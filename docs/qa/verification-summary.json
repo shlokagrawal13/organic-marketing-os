@@ -1,6 +1,6 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-16",
+  "verifiedDate": "2026-10-17",
   "builds": [
     "API TypeScript",
     "Next.js 16.3.8 production build"
@@ -13,7 +13,7 @@
     "schemaMigrations": 21,
     "unitFontSets": 1
   },
-  "environment": "POLICY-01C exact published source plus native PostgreSQL/Redis GitHub Actions verification; no live provider or deployed acceptance",
+  "environment": "POLICY-01D focused local verification on exact public POLICY-01C base; native CI pending",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -29,7 +29,7 @@
     "allTwelveMigrationsUnchangedByV": true
   },
   "gatesNotVerified": [
-    "Native PostgreSQL/Redis CI for the unpublished POLICY-01C source",
+    "Full pinned-font/native CI for POLICY-01D source",
     "Live Google grant/upload and actual deployed production readiness receipt",
     "Native PostgreSQL concurrency and restore",
     "Docker/MinIO execution",
@@ -74,7 +74,8 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "POLICY-01C approved 20-path source is public at da352cb with exact tree 71563c7; own native Actions run 38957638173 passed 210 unit, 16 HTTP, 9 browser, 5 recovery, 21 migrations, builds, readability, populated upgrade and both zero-vulnerability audits. The 16-path closure payload is local pending separate approval; no live Google/deployed/master acceptance occurred.",
+  "latestIncrement": "POLICY-01D binds YouTube maintenance to an exact five-source official manifest fingerprint. Focused 7/7, HTTP 3/3, builds and audits pass; native CI remains pending.",
+  "policy01dPlatformPolicyProvenance": {"status":"locally_verified_unpublished","policyVersion":"youtube-upload-policy-2026-10-17","sourceFingerprint":"3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf","officialSourceCount":5,"focusedUnitPassed":7,"focusedHttpPassed":3,"nativeCiPending":true,"liveProviderAttempted":false},
   "policy01cDispatchFreshness": {
     "schemaVersion": 1,
     "taskId": "POLICY-01C",
