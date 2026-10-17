@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-17.05-POLICY-01G",
-  "savedAtUtc": "2026-10-17T18:36:36.554781Z",
-  "currentMilestone": "POLICY-01G management UI locally verified; broader research/semantic/live/master work remains.",
-  "activeTaskId": "POLICY-01",
-  "workInProgress": true,
+  "checkpointRevision": "2026-10-18.01-POLICY-01G-native-CI",
+  "savedAtUtc": "2026-10-17T18:55:51.071968+00:00",
+  "currentMilestone": "POLICY-01E/F/G published and exact-source native CI verified; broader research/semantic/live/master work remains.",
+  "activeTaskId": null,
+  "workInProgress": false,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RESEARCH-01",
-  "nextAction": "Publish the verified accumulated source to main without force, inspect its complete native Actions result/artifacts, fix failures if any, and publish evidence/continuity closure before resuming RESEARCH-01.",
+  "nextAction": "Start RESEARCH-01 with a bounded source-backed research/evidence foundation: read MASTER_SPEC sections 18-23 and 47, define tenant-scoped research records with citations, collection/review timestamps, provenance and stale/missing-data states, then implement and verify the first ingestion/review workflow. Do not invent source metrics or claim live research from fixtures. POLICY-01 remains partial for wider semantic/multi-platform checks.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,60 +84,24 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    ".env.example",
-    "AGENTS.md",
-    "CHECKPOINT_MANIFEST.json",
-    "PROJECT_CHECKPOINT.json",
-    "PROJECT_STATUS.md",
-    "README.md",
-    "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/main.ts",
-    "apps/api/src/operations.ts",
-    "apps/api/src/posting-guidance.ts",
-    "apps/api/src/publication-attempts.ts",
-    "apps/api/src/publication-scheduler.ts",
-    "apps/api/src/publications.ts",
-    "apps/api/src/workspace-youtube-policy-controller.ts",
-    "apps/api/src/workspace-youtube-policy.ts",
-    "apps/web/app/globals.css",
-    "apps/web/app/workspace-youtube-policy-panel.tsx",
-    "apps/web/app/workspace.tsx",
-    "apps/web/app/youtube-policy-review.tsx",
-    "docs/CHANGELOG.md",
-    "docs/HANDOFF.md",
-    "docs/POLICY_01E_AUDIT.md",
-    "docs/POLICY_01F_WORKSPACE_RULES.md",
-    "docs/POLICY_01G_MANAGEMENT_UI.md",
-    "docs/POLICY_ENGINE.md",
+    "PROJECT_STATUS.md",
     "docs/PROJECT_STATUS.md",
-    "docs/REQUIREMENTS_MATRIX.md",
     "docs/RESUME_CONTEXT.md",
-    "docs/SESSION_LOG.md",
+    "README.md",
+    "docs/HANDOFF.md",
     "docs/TASK_BOARD.md",
+    "docs/SESSION_LOG.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/context-resume-evidence.json",
-    "docs/qa/policy01e-declarative-rules-evidence.json",
-    "docs/qa/policy01e-declarative-rules-unit-receipts.json",
-    "docs/qa/policy01f-upgrade-evidence.json",
-    "docs/qa/policy01f-workspace-rules-evidence.json",
-    "docs/qa/policy01g-management-ui-evidence.json",
-    "docs/qa/policy01g-workspace-policy-dark.png",
-    "docs/qa/policy01g-workspace-policy-desktop.png",
-    "docs/qa/policy01g-workspace-policy-mobile.png",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/CHANGELOG.md",
+    "docs/POLICY_01G_MANAGEMENT_UI.md",
+    "RESUME_PROMPT.txt",
+    "PROJECT_CHECKPOINT.json",
     "docs/qa/verification-summary.json",
-    "packages/core/youtube-policy.ts",
-    "packages/core/youtube-rules.json",
-    "packages/core/youtube-rules.ts",
-    "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql",
-    "prisma/schema.prisma",
-    "scripts/verify-upgrade.mjs",
-    "tests/integration/social-attempts.test.ts",
-    "tests/integration/social-dispatch.test.ts",
-    "tests/integration/workspace-policy.test.ts",
-    "tests/ui/social-policy-review.spec.ts",
-    "tests/ui/workspace-policy.spec.ts",
-    "tests/youtube-policy.test.ts"
+    "docs/qa/policy01g-native-ci-evidence.json",
+    "docs/qa/policy01g-native-unit-receipts.json",
+    "CHECKPOINT_MANIFEST.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6732,8 +6696,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
-    "status": "POLICY-01G_local_verified_unpublished",
+    "commit": "a8495b7179b25f4246716b1a8e00e5f560baa0ec",
+    "status": "POLICY-01E_G_public_native_ci_verified",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6746,11 +6710,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "759327c3f14ce4547a9d64a9333db76c1fb06554",
+    "sourceTree": "32cacfb1c795ffa0426d62b18af4d95965e33a65",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Recorded public base from prior context recovery; not freshly queried for G; accumulated changes are local.",
+    "commitMeaning": "Native-verified application source; current evidence-only closure may have a newer HEAD. Read Git/Actions for current closure identity and CI.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
+    "lastLocalCheckpointCommit": "a8495b7179b25f4246716b1a8e00e5f560baa0ec",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -7927,7 +7891,8 @@
       "ownCiRunId": 37823837950,
       "ownCiConclusion": "success"
     },
-    "latestApplicationSourceCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5"
+    "latestApplicationSourceCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5",
+    "localBranch": "work"
   },
   "credentialsIncluded": false,
   "runtimeDatabaseOrMediaIncluded": false,
@@ -8079,10 +8044,9 @@
     }
   ],
   "lastChanges": [
-    "Verified incoming399-file checkpoint and retained all prior local changes.",
-    "Added owner/admin bounded policy form with acknowledgment, revision conflicts and retry/repair handling.",
-    "Protected unsaved navigation/workspace changes and scoped editor state to workspace/role/navigation.",
-    "Passed web build and12 production browser cases plus3 focused visual recapture; reviewed desktop/dark/mobile."
+    "Published exact 54-path E/F/G/context payload without force.",
+    "Verified successful exact-source native CI logs and recorded blocked artifact byte inspection.",
+    "Saved standing implementation/verification/push/CI workflow and current continuity."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8109,8 +8073,8 @@
     "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished.",
-  "activeTask": "Publish accumulated POLICY-01E/F/G and context recovery, verify exact remote tree and native GitHub Actions, then record CI closure.",
+  "latestStatus": "Accumulated POLICY-01E/F/G source is public on main at `a8495b7179b25f4246716b1a8e00e5f560baa0ec` (tree `32cacfb1c795ffa0426d62b18af4d95965e33a65`); all 54 published paths and the complete tree matched local Git. Exact-source Actions run `39059080016` succeeded: 214 unit/export, 18 HTTP, 12 production browser and 5 recovery cases. API/web builds, bounded English readability, 22 fresh native PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed. The final native log summary records 214 unit passes; the bounded reporter prints 19 media-case names. Artifact metadata and successful upload were checked; independent ZIP/digest/image inspection is blocked by the environment download-host policy (CONNECT 403).",
+  "activeTask": null,
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8121,66 +8085,7 @@
     "priorLostResultsInvented": false,
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
-  "pendingPublication": {
-    "taskId": "POLICY-01E-G",
-    "description": "User-authorized accumulated source publication plus standing CI/push workflow; native Actions verification pending.",
-    "paths": [
-      ".env.example",
-      "AGENTS.md",
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "README.md",
-      "RESUME_PROMPT.txt",
-      "START_HERE.md",
-      "apps/api/src/main.ts",
-      "apps/api/src/operations.ts",
-      "apps/api/src/posting-guidance.ts",
-      "apps/api/src/publication-attempts.ts",
-      "apps/api/src/publication-scheduler.ts",
-      "apps/api/src/publications.ts",
-      "apps/api/src/workspace-youtube-policy-controller.ts",
-      "apps/api/src/workspace-youtube-policy.ts",
-      "apps/web/app/globals.css",
-      "apps/web/app/workspace-youtube-policy-panel.tsx",
-      "apps/web/app/workspace.tsx",
-      "apps/web/app/youtube-policy-review.tsx",
-      "docs/CHANGELOG.md",
-      "docs/HANDOFF.md",
-      "docs/POLICY_01E_AUDIT.md",
-      "docs/POLICY_01F_WORKSPACE_RULES.md",
-      "docs/POLICY_01G_MANAGEMENT_UI.md",
-      "docs/POLICY_ENGINE.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/RESUME_CONTEXT.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/VERIFICATION_REPORT.md",
-      "docs/qa/context-resume-evidence.json",
-      "docs/qa/policy01e-declarative-rules-evidence.json",
-      "docs/qa/policy01e-declarative-rules-unit-receipts.json",
-      "docs/qa/policy01f-upgrade-evidence.json",
-      "docs/qa/policy01f-workspace-rules-evidence.json",
-      "docs/qa/policy01g-management-ui-evidence.json",
-      "docs/qa/policy01g-workspace-policy-dark.png",
-      "docs/qa/policy01g-workspace-policy-desktop.png",
-      "docs/qa/policy01g-workspace-policy-mobile.png",
-      "docs/qa/verification-summary.json",
-      "packages/core/youtube-policy.ts",
-      "packages/core/youtube-rules.json",
-      "packages/core/youtube-rules.ts",
-      "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql",
-      "prisma/schema.prisma",
-      "scripts/verify-upgrade.mjs",
-      "tests/integration/social-attempts.test.ts",
-      "tests/integration/social-dispatch.test.ts",
-      "tests/integration/workspace-policy.test.ts",
-      "tests/ui/social-policy-review.spec.ts",
-      "tests/ui/workspace-policy.spec.ts",
-      "tests/youtube-policy.test.ts"
-    ]
-  },
+  "pendingPublication": null,
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
     "status": "approved_payload_published_ci_verified",
@@ -8651,17 +8556,239 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "POLICY-01D",
-    "scope": "official YouTube policy-source provenance",
-    "publicCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5",
-    "parentCommit": "972ca69b79809c47db1f12597931a3e965c57f31",
-    "treeSha": "3d85ca8f6d2c9fbeba5747a62060f3fa88e144e8",
-    "nativeCiRunId": 39020625965,
-    "nativeCiConclusion": "success",
-    "ciEvidence": "docs/qa/policy01d-platform-policy-provenance-native-ci-evidence.json",
-    "closurePublicCommit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
-    "closurePublicationVerifiedByReadOnlyGit": true,
-    "closureOwnNativeCiIndependentlyChecked": false
+    "schemaVersion": 1,
+    "taskId": "POLICY-01E-G",
+    "increment": "declarative-workspace-policy-and-management-ui-native-ci",
+    "dateUtc": "2026-10-17",
+    "status": "source_public_native_ci_verified",
+    "publicCommit": "a8495b7179b25f4246716b1a8e00e5f560baa0ec",
+    "parentCommit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
+    "treeSha": "32cacfb1c795ffa0426d62b18af4d95965e33a65",
+    "publishedSourcePathCount": 54,
+    "fullPublicTreeMatchesLocal": true,
+    "run": {
+      "id": 39059080016,
+      "number": 81,
+      "workflow": "Core and recovery verification",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39059080016",
+      "headSha": "a8495b7179b25f4246716b1a8e00e5f560baa0ec",
+      "startedAtUtc": "2026-10-17T18:39:47Z",
+      "updatedAtUtc": "2026-10-17T18:53:45Z"
+    },
+    "job": {
+      "id": 117473140629,
+      "name": "Native application verification",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39059080016,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install test object storage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install media dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Install pinned test CJK fonts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Verify bounded small-screen English readability",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Audit all dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Verify populated upgrade",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Verify native application flows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Upload browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35
+        }
+      ]
+    },
+    "verification": {
+      "unit": {
+        "tests": 214,
+        "passed": 214,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "uniqueVisibleLogReceiptNames": 19,
+        "completeArtifactReceiptsInspected": false
+      },
+      "http": {
+        "tests": 18,
+        "passed": 18,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 12,
+        "passed": 12,
+        "durationSeconds": 44.5
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119960
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "boundedEnglishReadability": {
+        "passed": true,
+        "sampleBytesIndependentlyChecked": false
+      },
+      "freshNativePostgresMigrations": 22,
+      "nativeRedis": true,
+      "populatedUpgrade": true,
+      "archiveRestore": true,
+      "workspaceYoutubePolicyRestored": true,
+      "nativePostgresRestoreVerified": false,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "unitReceipts": "docs/qa/policy01g-native-unit-receipts.json",
+    "logSha256": "0079f3bc93632aa4f77ee58cc98910daac0e1e842f5a8e7b5ea1f346677a4edd",
+    "artifact": {
+      "id": 12110902285,
+      "name": "browser-evidence",
+      "sizeBytes": 6879877,
+      "digest": "sha256:24e510c986ef972897b06c6df2a16849916a10e1aecfaa4973b4e1e5ac082a66",
+      "expiresAtUtc": "2027-01-15T18:39:47Z",
+      "connectorDownloadReturnedFileReference": true,
+      "bytesDownloadedToWorkspace": false,
+      "downloadedDigestMatches": null,
+      "zipCrcPassed": null,
+      "limitation": "Artifact connector returned a File Service reference; returned download host is blocked by the environment network proxy (CONNECT 403). Independent ZIP/digest and artifact JSON/image inspection could not be completed; native job logs and upload-step success were checked."
+    },
+    "limits": [
+      "CI verifies disposable services and synthetic providers, not deployed production or live Google operations.",
+      "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
+      "Artifact byte-integrity and image inspection remain unverified in this environment; no network restriction bypass attempted.",
+      "POLICY-01 remains partial; RESEARCH-01 is next."
+    ]
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8757,25 +8884,58 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "scope": "Frontend management UI and unsaved-navigation integration; real isolated API with synthetic accounts",
-    "webProductionBuild": "passed",
-    "productionBrowser": {
+    "unit": {
+      "tests": 214,
+      "passed": 214,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "uniqueVisibleLogReceiptNames": 19,
+      "completeArtifactReceiptsInspected": false
+    },
+    "http": {
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 12,
       "passed": 12,
-      "failed": 0
+      "durationSeconds": 44.5
     },
-    "finalFocusedVisualRerun": {
-      "passed": 3,
-      "failed": 0
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119960
     },
-    "freshHarnessPGliteMigrations": 22,
-    "backendCoreSchemaUnchangedFromPolicy01F": true,
-    "nativeSuiteRerun": false,
-    "fullUnitSuiteRerun": false,
-    "separateHttpSuiteRerun": false,
-    "liveProviderVerification": false,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "boundedEnglishReadability": {
+      "passed": true,
+      "sampleBytesIndependentlyChecked": false
+    },
+    "freshNativePostgresMigrations": 22,
+    "nativeRedis": true,
+    "populatedUpgrade": true,
+    "archiveRestore": true,
+    "workspaceYoutubePolicyRestored": true,
     "nativePostgresRestoreVerified": false,
-    "fullMasterAcceptanceVerified": false,
-    "evidence": "docs/qa/policy01g-management-ui-evidence.json"
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "scope": "Exact published E/F/G source native GitHub Actions",
+    "sourceCommit": "a8495b7179b25f4246716b1a8e00e5f560baa0ec",
+    "runId": 39059080016,
+    "evidence": "docs/qa/policy01g-native-ci-evidence.json",
+    "liveProviderVerification": false,
+    "fullMasterAcceptanceVerified": false
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -9091,29 +9251,60 @@
     "closurePublicationNativeCi": true
   },
   "lastPublishedFiles": [
+    ".env.example",
+    "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
+    "README.md",
+    "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/claim-reviews.ts",
-    "apps/web/app/content-workspace.tsx",
+    "apps/api/src/main.ts",
+    "apps/api/src/operations.ts",
+    "apps/api/src/posting-guidance.ts",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/publication-scheduler.ts",
+    "apps/api/src/publications.ts",
+    "apps/api/src/workspace-youtube-policy-controller.ts",
+    "apps/api/src/workspace-youtube-policy.ts",
+    "apps/web/app/globals.css",
+    "apps/web/app/workspace-youtube-policy-panel.tsx",
+    "apps/web/app/workspace.tsx",
+    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
+    "docs/POLICY_01E_AUDIT.md",
+    "docs/POLICY_01F_WORKSPACE_RULES.md",
+    "docs/POLICY_01G_MANAGEMENT_UI.md",
     "docs/POLICY_ENGINE.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/policy01b-evidence-source-evidence.json",
-    "docs/qa/policy01b-evidence-source-unit-receipts.json",
+    "docs/qa/context-resume-evidence.json",
+    "docs/qa/policy01e-declarative-rules-evidence.json",
+    "docs/qa/policy01e-declarative-rules-unit-receipts.json",
+    "docs/qa/policy01f-upgrade-evidence.json",
+    "docs/qa/policy01f-workspace-rules-evidence.json",
+    "docs/qa/policy01g-management-ui-evidence.json",
+    "docs/qa/policy01g-workspace-policy-dark.png",
+    "docs/qa/policy01g-workspace-policy-desktop.png",
+    "docs/qa/policy01g-workspace-policy-mobile.png",
     "docs/qa/verification-summary.json",
-    "packages/core/claim-policy.ts",
-    "packages/core/evidence-source.ts",
-    "tests/evidence-source.test.ts",
-    "tests/integration/claim-policy.test.ts",
-    "tests/render-controls.test.ts",
-    "tests/ui/claim-policy.spec.ts"
+    "packages/core/youtube-policy.ts",
+    "packages/core/youtube-rules.json",
+    "packages/core/youtube-rules.ts",
+    "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql",
+    "prisma/schema.prisma",
+    "scripts/verify-upgrade.mjs",
+    "tests/integration/social-attempts.test.ts",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/integration/workspace-policy.test.ts",
+    "tests/ui/social-policy-review.spec.ts",
+    "tests/ui/workspace-policy.spec.ts",
+    "tests/youtube-policy.test.ts"
   ],
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
@@ -10149,10 +10340,10 @@
   "contextResume": {
     "evidence": "docs/qa/context-resume-evidence.json",
     "resumeContext": "docs/RESUME_CONTEXT.md",
-    "lastVerifiedPublicMain": "0eeaff642108ff781cf2a7f481c916b116ff0889",
+    "lastVerifiedPublicMain": "a8495b7179b25f4246716b1a8e00e5f560baa0ec",
     "pastedContextSuperseded": true,
-    "documentationOnly": true,
-    "publicPushAttempted": false
+    "documentationOnly": false,
+    "publicPushAttempted": true
   },
   "workflowPreference": {
     "recordedAtUtc": "2026-10-17T18:36:36.554781Z",

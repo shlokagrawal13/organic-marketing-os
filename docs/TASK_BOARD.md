@@ -1,3 +1,19 @@
+## Current continuation — POLICY-01E–G published native CI, 2026-10-18 IST
+
+Accumulated POLICY-01E/F/G source is public on main at `a8495b7179b25f4246716b1a8e00e5f560baa0ec` (tree `32cacfb1c795ffa0426d62b18af4d95965e33a65`); all 54 published paths and the complete tree matched local Git. Exact-source Actions run `39059080016` succeeded: 214 unit/export, 18 HTTP, 12 production browser and 5 recovery cases. API/web builds, bounded English readability, 22 fresh native PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed. The final native log summary records 214 unit passes; the bounded reporter prints 19 media-case names. Artifact metadata and successful upload were checked; independent ZIP/digest/image inspection is blocked by the environment download-host policy (CONNECT 403).
+
+Standing user instruction: implement, verify, push routine project changes and inspect/fix exact-commit CI before claiming completion. No repeated push permission is required; preserve unrelated changes and never force-push. See AGENTS.md.
+
+POLICY-01 and full master acceptance remain partial. CI is verification-only: deployment, live-provider acceptance and native PostgreSQL plus private-media cross-store restore remain open. Historical local/unpublished notes below are superseded by this publication record; their dated test scopes remain historical.
+
+This evidence/continuity commit follows the verified application source. Its own commit identity and follow-up CI result are read from Git/Actions; the source receipt does not claim that follow-up result in advance.
+
+Next: Start RESEARCH-01 with a bounded source-backed research/evidence foundation: read MASTER_SPEC sections 18-23 and 47, define tenant-scoped research records with citations, collection/review timestamps, provenance and stale/missing-data states, then implement and verify the first ingestion/review workflow. Do not invent source metrics or claim live research from fixtures. POLICY-01 remains partial for wider semantic/multi-platform checks.
+
+Evidence: `docs/qa/policy01g-native-ci-evidence.json` and `docs/qa/policy01g-native-unit-receipts.json`.
+
+Earlier dated records below are historical.
+
 ## Current next action — POLICY-01G completed locally
 
 POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished.
