@@ -1,3 +1,19 @@
+## 2026-10-17 — POLICY-01G
+
+Added owner/admin YouTube upload-rule form under Connections, with deployment bounds, explicit review, expected revisions, conflict/retry/repair states and permission failure handling. Added unsaved navigation/workspace guards and scoped request/state cleanup. Verified 12 production browser cases and bounded desktop/dark/mobile visuals. No backend, schema, dependency or deployment change.
+
+## 2026-10-17 — POLICY-01F
+
+Added workspace-scoped YouTube policy GET/PUT, owner/admin authorization and membership recheck under lock, monotonic expected revisions and atomic audit receipts. Bind metadata review and all manual/scheduled boundaries to current tenant policy identity; preview/save rejects stale workspace revisions. Include the policy in workspace exports and populated archive restoration. Defaults preserve eligible unconfigured POLICY-01E reviews. See [POLICY_01F_WORKSPACE_RULES.md](POLICY_01F_WORKSPACE_RULES.md).
+
+## 2026-10-17 — POLICY-01E
+
+Moved bounded YouTube metadata, visibility and synthetic-media restrictions to strict validated JSON. Bind policy/maintenance/review identities to normalized rules, reject stale reviews at reservation and display allowed choices in the browser. Defaults retain earlier metadata behavior; existing reviews need fresh preparation because policy identity changes. See [POLICY_01E_AUDIT.md](POLICY_01E_AUDIT.md).
+
+## 2026-10-17 — resumed project context
+
+Reconciled the current public POLICY-01D source/closure with stale EDITOR-01I and POLICY-01B/C continuation fields. Added a single current resume summary, preserved historical evidence, and refreshed the portable source checkpoint. Documentation only; no application, dependency, migration or acceptance-state change. See [RESUME_CONTEXT.md](RESUME_CONTEXT.md).
+
 <!-- POLICY01C_NATIVE_CLOSURE_START -->
 ## POLICY-01C dispatch-time evidence freshness publication and native CI — 2026-10-16 UTC
 

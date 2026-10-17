@@ -1,8 +1,9 @@
+import { workspaceYoutubeReviewCurrent } from "./workspace-youtube-policy";
 import { ConflictException, ServiceUnavailableException } from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { evaluatePostingPolicy, PostingPolicyConfig } from "../../../packages/core/posting-policy";
 import { digest } from "../../../packages/core/security";
-import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
+import { youtubePolicyFingerprint } from "../../../packages/core/youtube-policy";
 
 type DbReader = PrismaClient | Prisma.TransactionClient;
 const dayMs = 24 * 60 * 60 * 1000;
@@ -106,12 +107,12 @@ export async function evaluateManualGuidance(db: DbReader, input: {
   if (!review || review.organizationId !== input.organizationId ||
       review.connectionId !== input.connectionId ||
       review.contentRevision !== input.contentRevision ||
-      review.policyVersion !== youtubePolicyVersion ||
+      !(await workspaceYoutubeReviewCurrent(db, input.organizationId, review)) ||
       review.expiresAt <= new Date() ||
       review.snapshotHash !== youtubePolicyFingerprint({
         intentId: input.intentId, connectionId: input.connectionId,
         contentRevision: input.contentRevision, renderId: input.renderId,
-        metadata: review.metadata,
+        metadata: review.metadata, policyVersion: review.policyVersion,
       }))
     throw new ConflictException("A current reviewed YouTube upload policy and metadata snapshot is required.");
   return { ...(await evaluateScheduleGuidance(db, {

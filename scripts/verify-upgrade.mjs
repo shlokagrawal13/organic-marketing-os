@@ -136,6 +136,11 @@ try {
       "video_restore_fixture",
     ],
   );
+  const workspaceRules = JSON.parse(await readFile("packages/core/youtube-rules.json", "utf8"));
+  await db.query(
+    'INSERT INTO "WorkspaceYoutubePolicy" ("organizationId",revision,rules,"updatedBy","updatedAt") VALUES ($1,3,$2,$3,now())',
+    [org, JSON.stringify(workspaceRules), user],
+  );
   const backup = await db.dumpDataDir();
   await db.query('DELETE FROM "Organization" WHERE id=$1', [org]);
   assert.equal(
@@ -195,6 +200,12 @@ try {
   assert.equal(savedMedia.state, "PENDING");
   assert.equal(savedMedia.providerJobId, "video_restore_fixture");
   assert.equal(savedMedia.actualCostUsd, null);
+  const savedPolicy = (await restored.query(
+    'SELECT revision,rules,"updatedBy" FROM "WorkspaceYoutubePolicy" WHERE "organizationId"=$1', [org],
+  )).rows[0];
+  assert.equal(savedPolicy.revision, 3);
+  assert.deepEqual(savedPolicy.rules, workspaceRules);
+  assert.equal(savedPolicy.updatedBy, user);
   await mkdir(".local", { recursive: true });
   const result = {
     passed: true,
@@ -211,6 +222,7 @@ try {
     nativePostgresRestoreVerified: false,
     creditLedgerRestoreAndImmutabilityVerified: true,
     generatedMediaRequestAndProviderReceiptRestored: true,
+    workspaceYoutubePolicyRestored: true,
   };
   await writeFile(
     ".local/upgrade-restore-evidence.json",

@@ -1,3 +1,19 @@
+## Latest local increment — POLICY-01G
+
+POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished. See [the management UI contract](docs/POLICY_01G_MANAGEMENT_UI.md).
+
+## Latest local increment — POLICY-01F
+
+POLICY-01F is locally verified: OWNER/ADMIN workspace YouTube policy API with monotonic revisions, deployment-bound validation and audited updates; upload preview/save and manual/scheduled dispatch bind the current workspace policy. Workspace data export and populated archive restore include the policy. Current checks: 12 focused units, 18 isolated HTTP, 1 focused production browser, 22 PGlite migrations, and 2 additional policy HTTP cases against dedicated PostgreSQL 17.11/Redis 7.4.11 fixtures with 22 native migrations. API/web production builds and populated PGlite upgrade/archive restore passed. POLICY-01 remains partial. No public push, native CI, live provider, full Compose/MinIO, native cross-store restore or full master acceptance is claimed. See [the workspace policy contract](docs/POLICY_01F_WORKSPACE_RULES.md) and [current resume context](docs/RESUME_CONTEXT.md). Current F/E/context changes remain local/unpublished.
+
+## Latest local increment — POLICY-01E
+
+POLICY-01E is locally verified: validated declarative YouTube metadata/visibility/disclosure rules now bind saved reviews and maintenance receipts to the rule fingerprint. Reservation rejects stale or missing reviews before inserting an attempt; the preview and browser use the same rules. Full unit/export 213/213, isolated HTTP 16/16 and focused production browser 1/1 passed; 21 fresh PGlite migrations and API/web production builds passed. No native CI, live provider, full Compose/MinIO or native cross-store recovery is claimed for this source. POLICY-01 remains partial; this increment and the retained context-recovery changes are local/unpublished. See [the policy audit](docs/POLICY_01E_AUDIT.md) and [current resume context](docs/RESUME_CONTEXT.md).
+
+## Continuing this project
+
+The current resume point is POLICY-01D, with public closure `0eeaff6`. Begin with [docs/RESUME_CONTEXT.md](docs/RESUME_CONTEXT.md) and `PROJECT_CHECKPOINT.json`; older dated release notes below are historical. The full product remains partial.
+
 # Organic Marketing OS — 0.9.2
 
 ## EDITOR-01W local verification complete — 2026-10-07 UTC

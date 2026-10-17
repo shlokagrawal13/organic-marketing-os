@@ -43,6 +43,7 @@ import MediaWorkspace from "./media-workspace";
 import OperationsWorkspace from "./operations-workspace";
 import CreditsWorkspace from "./credits-workspace";
 import SocialConnectionsPanel from "./social-connections-panel";
+import WorkspaceYoutubePolicyPanel from "./workspace-youtube-policy-panel";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -156,6 +157,7 @@ export default function Workspace({
 }) {
   const [navVersion, setNavVersion] = useState(0),
     [contentDirty, setContentDirty] = useState(false);
+  const [policyDirty, setPolicyDirty] = useState(false);
   const [orgId, setOrgId] = useState(session.memberships[0].organizationId),
     [view, setView] = useState("dashboard"),
     [navOpen, setNavOpen] = useState(false),
@@ -219,14 +221,14 @@ export default function Workspace({
   }, []);
   useEffect(() => {
     function protect(e: BeforeUnloadEvent) {
-      if (dirty) {
+      if (dirty || policyDirty) {
         e.preventDefault();
         e.returnValue = "";
       }
     }
     window.addEventListener("beforeunload", protect);
     return () => window.removeEventListener("beforeunload", protect);
-  }, [dirty]);
+  }, [dirty, policyDirty]);
   useEffect(() => {
     const timer = setInterval(
       () => api("/auth/renew", "POST").catch(() => {}),
@@ -234,9 +236,11 @@ export default function Workspace({
     );
     return () => clearInterval(timer);
   }, []);
-  function go(next: string) {
-    if (contentDirty && !confirm("Discard unsaved content changes?")) return;
+  function go(next: string, discardConfirmed = false) {
+    if (!discardConfirmed && contentDirty && !confirm("Discard unsaved content changes?")) return;
+    if (!discardConfirmed && policyDirty && !confirm("Discard unsaved YouTube policy changes?")) return;
     setContentDirty(false);
+    setPolicyDirty(false);
     setNavVersion((v) => v + 1);
     setView(next);
     setNavOpen(false);
@@ -355,12 +359,12 @@ export default function Workspace({
               value={orgId}
               onChange={(e) => {
                 if (
-                  (dirty || contentDirty) &&
+                  (dirty || contentDirty || policyDirty) &&
                   !confirm("Discard unsaved workspace changes?")
                 )
                   return;
                 setOrgId(e.target.value);
-                go("dashboard");
+                go("dashboard", true);
               }}
             >
               {session.memberships.map((m: Any) => (
@@ -1155,6 +1159,7 @@ export default function Workspace({
                     are still pending.
                   </div>
                   <SocialConnectionsPanel key={base} base={base} role={member.role} />
+                  <WorkspaceYoutubePolicyPanel key={`${base}:${member.role}:${navVersion}`} base={base} role={member.role} onDirtyChange={setPolicyDirty} />
                   <section className="panel connection-list">
                     <div>
                       <div className="connection-icon">

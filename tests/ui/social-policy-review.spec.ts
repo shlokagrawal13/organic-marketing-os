@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { randomBytes, randomUUID } from "node:crypto";
 import { db, scene } from "../support/http";
 import { encryptSocialToken } from "../../packages/core/social-tokens";
+import rules from "../../packages/core/youtube-rules.json";
 
 test("an owner reviews one approved YouTube render without scheduling or posting", async ({ page }) => {
   test.setTimeout(120000);
@@ -46,10 +47,27 @@ test("an owner reviews one approved YouTube render without scheduling or posting
   const panel = page.getByRole("region", { name: "YouTube publication review" });
   await expect(panel.getByText("YouTube upload review")).toBeVisible();
   await expect(panel.getByRole("combobox", { name: /Approved render/ })).toHaveValue(render.id);
+  // Persist actual tenant policy; no live provider or deployment flag is enabled.
+  const policyUrl = `/api/workspaces/${org.id}/youtube-policy`;
+  expect((await page.request.put(policyUrl, { headers, data: { expectedRevision: 0,
+    rules: { ...rules, allowedPrivacyStatuses: ["private"], requireSyntheticMediaDeclaration: true } } })).status()).toBe(200);
   await panel.getByRole("button", { name: "Create new upload preparation" }).click();
   await expect(panel.getByRole("textbox", { name: "Title", exact: true })).toHaveValue(title);
   await expect(panel.getByText("Nothing was posted.", { exact: false })).toBeVisible();
   const save = panel.getByRole("button", { name: "Save policy review" });
+  await expect(save).toBeDisabled();
+  await expect(panel.getByRole("combobox", { name: "Visibility" }).locator("option"))
+    .toHaveText(["Choose visibility", "Private"]);
+  await panel.getByRole("combobox", { name: "Channel" }).selectOption(connection.id);
+  await panel.getByRole("combobox", { name: "Visibility" }).selectOption("private");
+  await panel.getByRole("combobox", { name: "Is this video made for kids?" }).selectOption("no");
+  await panel.getByRole("combobox", { name: "Does it contain realistic synthetic or altered media?" }).selectOption("no");
+  for (const checkbox of await panel.getByRole("checkbox").all()) await checkbox.check();
+  await expect(save).toBeDisabled();
+  await panel.getByRole("combobox", { name: "Does it contain realistic synthetic or altered media?" }).selectOption("yes");
+  await expect(save).toBeEnabled();
+  expect((await page.request.put(policyUrl, { headers, data: { expectedRevision: 1, rules } })).status()).toBe(200);
+  await panel.getByRole("button", { name: /Open .*revision 1/ }).first().click();
   await expect(save).toBeDisabled();
   await panel.getByRole("combobox", { name: "Channel" }).selectOption(connection.id);
   await panel.getByRole("combobox", { name: "Visibility" }).selectOption("unlisted");

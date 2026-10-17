@@ -1,8 +1,9 @@
+import { workspaceYoutubeReviewCurrent } from "./workspace-youtube-policy";
 import { BadRequestException, ConflictException, NotFoundException, ServiceUnavailableException } from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { digest } from "../../../packages/core/security";
 import { ObjectStore } from "../../../packages/core/object-store";
-import { youtubePolicyFingerprint, youtubePolicyMaintenanceCurrent, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
+import { youtubePolicyFingerprint, youtubePolicyMaintenanceCurrent } from "../../../packages/core/youtube-policy";
 import { activeConnection, currentApproval } from "./publication-attempts";
 import {
   claimEvidenceChangedCode,
@@ -66,12 +67,12 @@ async function candidate(tx: Tx, input: { organizationId: string; actorId: strin
   if (!review || review.organizationId !== input.organizationId ||
       review.connectionId !== connection.id ||
       review.contentRevision !== intent.contentRevision ||
-      review.policyVersion !== youtubePolicyVersion ||
+      !(await workspaceYoutubeReviewCurrent(tx, input.organizationId, review)) ||
       review.expiresAt <= input.dueAt ||
       review.snapshotHash !== youtubePolicyFingerprint({
         intentId: intent.id, connectionId: connection.id,
         contentRevision: intent.contentRevision, renderId: intent.renderId,
-        metadata: review.metadata,
+        metadata: review.metadata, policyVersion: review.policyVersion,
       }))
     throw new ConflictException("A reviewed policy snapshot must remain current through the scheduled time.");
   return evaluateScheduleGuidance(tx, { organizationId: input.organizationId,
@@ -209,11 +210,11 @@ export async function runDuePublicationSchedules(db: PrismaClient, store: Object
         const review = await tx.publicationPolicyReview.findUnique({ where: { intentId: row.intentId } });
         if (!review || review.connectionId !== row.connectionId ||
             review.organizationId !== row.organizationId ||
-            review.policyVersion !== youtubePolicyVersion || review.expiresAt <= now ||
+            !(await workspaceYoutubeReviewCurrent(tx, row.organizationId, review)) || review.expiresAt <= now ||
             review.contentRevision !== intent.contentRevision ||
             review.snapshotHash !== youtubePolicyFingerprint({ intentId: intent.id,
               connectionId: row.connectionId, contentRevision: intent.contentRevision,
-              renderId: intent.renderId, metadata: review.metadata })) blocked = "POLICY_REVIEW_CHANGED";
+              renderId: intent.renderId, metadata: review.metadata, policyVersion: review.policyVersion })) blocked = "POLICY_REVIEW_CHANGED";
         if (!blocked && review) {
           const guidance = await evaluateScheduleGuidance(tx, {
             organizationId: row.organizationId, connectionId: row.connectionId,

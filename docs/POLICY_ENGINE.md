@@ -1,3 +1,34 @@
+## POLICY-01G — policy-management UI (local verified)
+
+The owner/admin form is available under Connections. It uses F optimistic revisions and deployment ceilings, requires explicit review, preserves conflicting drafts and protects unsaved navigation/workspace changes. Restricted roles do not load it; server role removal removes editable controls after a rejected save. Production build and all 12 browser cases passed; backend/schema are unchanged from F. See [POLICY_01G_MANAGEMENT_UI.md](POLICY_01G_MANAGEMENT_UI.md). Wider semantic/multi-platform and live/master gates remain partial.
+
+## POLICY-01F — workspace rules (local verified)
+
+POLICY-01F is locally verified: OWNER/ADMIN workspace YouTube policy API with monotonic revisions, deployment-bound validation and audited updates; upload preview/save and manual/scheduled dispatch bind the current workspace policy. Workspace data export and populated archive restore include the policy. Current checks: 12 focused units, 18 isolated HTTP, 1 focused production browser, 22 PGlite migrations, and 2 additional policy HTTP cases against dedicated PostgreSQL 17.11/Redis 7.4.11 fixtures with 22 native migrations. API/web production builds and populated PGlite upgrade/archive restore passed. POLICY-01 remains partial. No public push, native CI, live provider, full Compose/MinIO, native cross-store restore or full master acceptance is claimed.
+
+Supported settings and exact authorization, concurrency, preview revision and dispatch behavior are documented in [POLICY_01F_WORKSPACE_RULES.md](POLICY_01F_WORKSPACE_RULES.md). New workspace policies take effect without a process restart; deployment rule edits retain the earlier all-process rebuild/restart contract. The management form remains pending; existing upload-review UI reads and submits the workspace revision.
+
+## POLICY-01E — declarative metadata rules (local)
+
+YouTube/Video metadata limits, allowed visibility and the optional affirmative
+synthetic-media restriction now come from validated `packages/core/youtube-rules.json`.
+The rule fingerprint enters the effective policy version, maintenance source
+fingerprint and all existing saved-review/dispatch identities. Rule changes need
+a rebuild/restart of every API and worker, a new operator maintenance receipt and
+fresh preparation/review; they do not silently reuse old approvals. Reservation
+also rejects a missing, expired or stale-policy review before inserting an attempt.
+The browser reads the rules from the tenant-gated preview and restricts its choices.
+
+See [POLICY_01E_AUDIT.md](POLICY_01E_AUDIT.md) for the complete section 33/40 gap
+audit, supported settings and rollout contract. Multi-platform/database-managed
+rules, semantic quality and live/master acceptance remain open. Prior records
+below describe historical source/evidence; current execution results are recorded
+in `docs/qa/policy01e-declarative-rules-evidence.json` when the increment closes.
+
+## Current policy continuation state — 2026-10-17
+
+POLICY-01D source `d165187` and native-CI closure `0eeaff6` are already public. Its saved native CI evidence passed; older local/unpublished descriptions below retain the initial development history. Broader configurable platform/format/disclosure and semantic policy work remains partial. See [RESUME_CONTEXT.md](RESUME_CONTEXT.md).
+
 # Policy and quality checks
 
 ## POLICY-01D YouTube policy-source provenance (local, unpublished)

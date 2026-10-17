@@ -151,6 +151,17 @@ test("guarded HTTP gate and single-send internal dispatch remain tenant-bound", 
   process.env.YOUTUBE_POLICY_REVIEWED_VERSION = youtubePolicyVersion;
   process.env.YOUTUBE_POLICY_SOURCE_FINGERPRINT = youtubePolicySourceFingerprint;
   process.env.YOUTUBE_POLICY_REVIEWED_AT = new Date().toISOString();
+  // A review from before declarative rules were fingerprinted cannot be reused,
+  // even when its metadata remains valid under the current default limits.
+  await db.publicationPolicyReview.update({ where: { intentId: first.intentId },
+    data: { policyVersion: "youtube-upload-policy-2026-10-17" } });
+  await assert.rejects(() => dispatchReviewedYoutubeVideo(db, store, first,
+    (async () => { blockedCalls++; throw new Error("should not call provider"); }) as typeof fetch),
+    /current reviewed YouTube upload policy/u);
+  assert.equal(blockedCalls, 0);
+  assert.equal(await db.publicationAttempt.count({ where: { organizationId: org.id } }), 0);
+  await db.publicationPolicyReview.update({ where: { intentId: first.intentId },
+    data: { policyVersion: youtubePolicyVersion } });
   // The harness's API server stays default-off; only this test process uses
   // synthetic provider requests through the internal dispatcher.
   async function manualGuidance(input: typeof first, checkedAt = new Date()) {

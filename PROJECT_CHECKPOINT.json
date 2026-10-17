@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-17.01-POLICY01D-local-verified",
-  "savedAtUtc": "2026-10-17T00:50:37Z",
-  "currentMilestone": "POLICY-01D official-source provenance is locally verified; publication/native CI pending.",
+  "checkpointRevision": "2026-10-17.05-POLICY-01G",
+  "savedAtUtc": "2026-10-17T18:36:36.554781Z",
+  "currentMilestone": "POLICY-01G management UI locally verified; broader research/semantic/live/master work remains.",
   "activeTaskId": "POLICY-01",
-  "workInProgress": false,
+  "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -74,8 +74,8 @@
     "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
-  "nextTaskId": "POLICY-01",
-  "nextAction": "Obtain exact approval for the 16-path POLICY-01C native-CI closure, publish it, verify remote tree and then continue the next bounded POLICY-01 increment.",
+  "nextTaskId": "RESEARCH-01",
+  "nextAction": "Publish the verified accumulated source to main without force, inspect its complete native Actions result/artifacts, fix failures if any, and publish evidence/continuity closure before resuming RESEARCH-01.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,22 +84,60 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".env.example",
+    "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
+    "README.md",
+    "RESUME_PROMPT.txt",
     "START_HERE.md",
+    "apps/api/src/main.ts",
+    "apps/api/src/operations.ts",
+    "apps/api/src/posting-guidance.ts",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/publication-scheduler.ts",
+    "apps/api/src/publications.ts",
+    "apps/api/src/workspace-youtube-policy-controller.ts",
+    "apps/api/src/workspace-youtube-policy.ts",
+    "apps/web/app/globals.css",
+    "apps/web/app/workspace-youtube-policy-panel.tsx",
+    "apps/web/app/workspace.tsx",
+    "apps/web/app/youtube-policy-review.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
+    "docs/POLICY_01E_AUDIT.md",
+    "docs/POLICY_01F_WORKSPACE_RULES.md",
+    "docs/POLICY_01G_MANAGEMENT_UI.md",
     "docs/POLICY_ENGINE.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/policy01c-dispatch-freshness-evidence.json",
-    "docs/qa/policy01c-dispatch-freshness-native-ci-evidence.json",
-    "docs/qa/policy01c-dispatch-freshness-native-unit-receipts.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/context-resume-evidence.json",
+    "docs/qa/policy01e-declarative-rules-evidence.json",
+    "docs/qa/policy01e-declarative-rules-unit-receipts.json",
+    "docs/qa/policy01f-upgrade-evidence.json",
+    "docs/qa/policy01f-workspace-rules-evidence.json",
+    "docs/qa/policy01g-management-ui-evidence.json",
+    "docs/qa/policy01g-workspace-policy-dark.png",
+    "docs/qa/policy01g-workspace-policy-desktop.png",
+    "docs/qa/policy01g-workspace-policy-mobile.png",
+    "docs/qa/verification-summary.json",
+    "packages/core/youtube-policy.ts",
+    "packages/core/youtube-rules.json",
+    "packages/core/youtube-rules.ts",
+    "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql",
+    "prisma/schema.prisma",
+    "scripts/verify-upgrade.mjs",
+    "tests/integration/social-attempts.test.ts",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/integration/workspace-policy.test.ts",
+    "tests/ui/social-policy-review.spec.ts",
+    "tests/ui/workspace-policy.spec.ts",
+    "tests/youtube-policy.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -1857,7 +1895,7 @@
         "batch": "fontkit-outlines-v1-indic-registry-mark-filter-sinhala"
       },
       "plainOverlayFingerprintUnchanged": true,
-      "fractionalEdgeTolerancePixels": 1e-7,
+      "fractionalEdgeTolerancePixels": 1e-07,
       "realOverflowStillRejected": true,
       "sinhalaJoinerConjunctsVerified": false,
       "sinhalaJoinersPreservedWithImageFallback": true,
@@ -6694,8 +6732,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-    "status": "POLICY01B_source_public_native_ci_verified_closure_local",
+    "commit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
+    "status": "POLICY-01G_local_verified_unpublished",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6708,11 +6746,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
+    "sourceTree": "759327c3f14ce4547a9d64a9333db76c1fb06554",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "POLICY-01B exact recovered source is public and own native CI passed; the later 15-path closure record remains local pending separate approval.",
+    "commitMeaning": "Recorded public base from prior context recovery; not freshly queried for G; accumulated changes are local.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "See local recovery/policy01b branch; final docs commit follows this checkpoint.",
+    "lastLocalCheckpointCommit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -7888,7 +7926,8 @@
       "blobInventory": 279,
       "ownCiRunId": 37823837950,
       "ownCiConclusion": "success"
-    }
+    },
+    "latestApplicationSourceCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5"
   },
   "credentialsIncluded": false,
   "runtimeDatabaseOrMediaIncluded": false,
@@ -7900,9 +7939,10 @@
     },
     {
       "id": "NATIVE-01",
-      "state": "needs_execution_environment",
+      "state": "ready_for_local_work",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Native PostgreSQL/Redis and Docker/Compose acceptance still needs dedicated native service/Compose evidence beyond the PGlite/S3Proxy harness and GitHub workflow."
+      "currentBlocker": "Whole Compose/MinIO and broader native acceptance still need dedicated evidence; a native fixture execution environment is available.",
+      "completedIncrement": "F dedicated PostgreSQL17.11/Redis7.4.11 fixtures passed22 migrations and2 policy HTTP cases; containers removed."
     },
     {
       "id": "RECOVERY-01",
@@ -7988,7 +8028,7 @@
       "id": "POLICY-01",
       "state": "ready_for_local_work",
       "title": "Semantic quality and platform policy gates",
-      "completedIncrement": "POLICY-01A/B/C are public/native-CI verified. POLICY-01D exact YouTube official-source provenance is locally verified; publication/native CI and broader policy work remain."
+      "completedIncrement": "A-D public; E/F/G local verified. G policy management UI passed12 browser regressions and3 focused visual rerun; wider semantic/multi-platform/live/master work remains partial."
     },
     {
       "id": "CLOUD-01",
@@ -8039,9 +8079,10 @@
     }
   ],
   "lastChanges": [
-    "Recorded exact POLICY-01C public commit/tree and 20-path remote scope.",
-    "Recorded successful native run 38957638173 and inspected its 124-entry artifact.",
-    "Imported 210 unique native unit receipts and retained local/deployed/live acceptance limits."
+    "Verified incoming399-file checkpoint and retained all prior local changes.",
+    "Added owner/admin bounded policy form with acknowledgment, revision conflicts and retry/repair handling.",
+    "Protected unsaved navigation/workspace changes and scoped editor state to workspace/role/navigation.",
+    "Passed web build and12 production browser cases plus3 focused visual recapture; reviewed desktop/dark/mobile."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8064,11 +8105,12 @@
     "prisma/migrations/202609280001_billing_invoices/migration.sql": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4",
     "prisma/migrations/202609290001_model_routing/migration.sql": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090",
     "prisma/migrations/202609290002_agent_orchestration/migration.sql": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f",
-    "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+    "prisma/migrations/202610010001_generated_media/migration.sql": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a",
+    "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "POLICY-01D public source commit d165187 has exact verified tree 3d85ca8 and successful native run 39020625965: 211 unit, 16 HTTP, 9 browser, 5 recovery, 21 migrations and zero audit vulnerabilities. Closure docs/evidence are local pending separate publication approval. POLICY-01 remains Partial.",
-  "activeTask": "POLICY-01D native-CI closure evidence is locally verified and awaiting publication approval.",
+  "latestStatus": "POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished.",
+  "activeTask": "Publish accumulated POLICY-01E/F/G and context recovery, verify exact remote tree and native GitHub Actions, then record CI closure.",
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8080,25 +8122,63 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "POLICY-01C",
-    "description": "Native-CI closure/docs/evidence only; verified implementation unchanged.",
+    "taskId": "POLICY-01E-G",
+    "description": "User-authorized accumulated source publication plus standing CI/push workflow; native Actions verification pending.",
     "paths": [
+      ".env.example",
+      "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
+      "README.md",
+      "RESUME_PROMPT.txt",
       "START_HERE.md",
+      "apps/api/src/main.ts",
+      "apps/api/src/operations.ts",
+      "apps/api/src/posting-guidance.ts",
+      "apps/api/src/publication-attempts.ts",
+      "apps/api/src/publication-scheduler.ts",
+      "apps/api/src/publications.ts",
+      "apps/api/src/workspace-youtube-policy-controller.ts",
+      "apps/api/src/workspace-youtube-policy.ts",
+      "apps/web/app/globals.css",
+      "apps/web/app/workspace-youtube-policy-panel.tsx",
+      "apps/web/app/workspace.tsx",
+      "apps/web/app/youtube-policy-review.tsx",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
+      "docs/POLICY_01E_AUDIT.md",
+      "docs/POLICY_01F_WORKSPACE_RULES.md",
+      "docs/POLICY_01G_MANAGEMENT_UI.md",
       "docs/POLICY_ENGINE.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
+      "docs/RESUME_CONTEXT.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/policy01c-dispatch-freshness-evidence.json",
-      "docs/qa/policy01c-dispatch-freshness-native-ci-evidence.json",
-      "docs/qa/policy01c-dispatch-freshness-native-unit-receipts.json",
-      "docs/qa/verification-summary.json"
+      "docs/qa/context-resume-evidence.json",
+      "docs/qa/policy01e-declarative-rules-evidence.json",
+      "docs/qa/policy01e-declarative-rules-unit-receipts.json",
+      "docs/qa/policy01f-upgrade-evidence.json",
+      "docs/qa/policy01f-workspace-rules-evidence.json",
+      "docs/qa/policy01g-management-ui-evidence.json",
+      "docs/qa/policy01g-workspace-policy-dark.png",
+      "docs/qa/policy01g-workspace-policy-desktop.png",
+      "docs/qa/policy01g-workspace-policy-mobile.png",
+      "docs/qa/verification-summary.json",
+      "packages/core/youtube-policy.ts",
+      "packages/core/youtube-rules.json",
+      "packages/core/youtube-rules.ts",
+      "prisma/migrations/202610170001_workspace_youtube_policy/migration.sql",
+      "prisma/schema.prisma",
+      "scripts/verify-upgrade.mjs",
+      "tests/integration/social-attempts.test.ts",
+      "tests/integration/social-dispatch.test.ts",
+      "tests/integration/workspace-policy.test.ts",
+      "tests/ui/social-policy-review.spec.ts",
+      "tests/ui/workspace-policy.spec.ts",
+      "tests/youtube-policy.test.ts"
     ]
   },
   "priorPendingPublication": {
@@ -8571,39 +8651,17 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "POLICY-01B",
-    "scope": "evidence source syntax and review freshness",
-    "publicCommit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-    "parentCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
-    "treeSha": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
-    "paths": [
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "START_HERE.md",
-      "apps/api/src/claim-reviews.ts",
-      "apps/web/app/content-workspace.tsx",
-      "docs/CHANGELOG.md",
-      "docs/HANDOFF.md",
-      "docs/POLICY_ENGINE.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/VERIFICATION_REPORT.md",
-      "docs/qa/policy01b-evidence-source-evidence.json",
-      "docs/qa/policy01b-evidence-source-unit-receipts.json",
-      "docs/qa/verification-summary.json",
-      "packages/core/claim-policy.ts",
-      "packages/core/evidence-source.ts",
-      "tests/evidence-source.test.ts",
-      "tests/integration/claim-policy.test.ts",
-      "tests/render-controls.test.ts",
-      "tests/ui/claim-policy.spec.ts"
-    ],
-    "nativeCiRunId": 38911616401,
-    "nativeCiJobId": 117008589097,
-    "nativeCiConclusion": "success"
+    "taskId": "POLICY-01D",
+    "scope": "official YouTube policy-source provenance",
+    "publicCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5",
+    "parentCommit": "972ca69b79809c47db1f12597931a3e965c57f31",
+    "treeSha": "3d85ca8f6d2c9fbeba5747a62060f3fa88e144e8",
+    "nativeCiRunId": 39020625965,
+    "nativeCiConclusion": "success",
+    "ciEvidence": "docs/qa/policy01d-platform-policy-provenance-native-ci-evidence.json",
+    "closurePublicCommit": "0eeaff642108ff781cf2a7f481c916b116ff0889",
+    "closurePublicationVerifiedByReadOnlyGit": true,
+    "closureOwnNativeCiIndependentlyChecked": false
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8699,62 +8757,25 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "scope": "POLICY-01B exact-source recovery verification; native CI still pending publication",
-    "sourceRecovery": {
-      "publicBaseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
-      "originalManifestRevision": "2026-10-15-POLICY01B-local-verified",
-      "sourceAndTestFilesExact": 8,
-      "statusAndPolicyDocsExact": 10,
-      "originalScratchResultsInvented": false,
-      "generatedEvidenceRecreated": true
+    "scope": "Frontend management UI and unsaved-navigation integration; real isolated API with synthetic accounts",
+    "webProductionBuild": "passed",
+    "productionBrowser": {
+      "passed": 12,
+      "failed": 0
     },
-    "freshUnit": {
-      "tests": 210,
-      "failed": 0,
-      "passed": 210,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0,
-      "topLevel": 210,
-      "suites": 0
+    "finalFocusedVisualRerun": {
+      "passed": 3,
+      "failed": 0
     },
-    "unitDurationMs": 407991.837716,
-    "uniqueUnitReceipts": 210,
-    "unitFileCount": 29,
-    "unitSummaryCount": 30,
-    "cleanNpmCi": true,
-    "installedPackages": 273,
-    "fontkitPostinstallVerified": true,
-    "prismaGenerate": true,
-    "apiBuild": true,
-    "webProductionBuild": true,
-    "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0,
-    "controlExportCase": {
-      "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
-      "file": "tests/render-controls.test.ts",
-      "durationMs": 127983.588054
-    },
-    "controlExportTimeout": {
-      "defaultMs": 360000,
-      "localOverrideMs": 600000,
-      "maximumMs": 600000,
-      "exportCount": 90,
-      "perProcessTimeoutsUnchanged": true
-    },
-    "fontSet": "SHA-verified Ubuntu fonts-noto-core 20201225-2 and four SHA-pinned Noto CJK OTF fonts",
-    "nodeVersion": "v24.19.0",
-    "receipts": "docs/qa/policy01b-evidence-source-unit-receipts.json",
-    "receiptsSha256": "48f56e72e0da7601e451286fe789d876d823306e813e0fa66a3ac5b25b8c7b26",
-    "priorApplicationVerification": {
-      "httpPassed": 15,
-      "browserPassed": 9,
-      "recoveryPassed": 5,
-      "status": "Recovered from the exact original checkpoint and bound to byte-identical source/test hashes; not rerun during evidence recovery."
-    },
-    "nativePostgres": false,
+    "freshHarnessPGliteMigrations": 22,
+    "backendCoreSchemaUnchangedFromPolicy01F": true,
+    "nativeSuiteRerun": false,
+    "fullUnitSuiteRerun": false,
+    "separateHttpSuiteRerun": false,
+    "liveProviderVerification": false,
+    "nativePostgresRestoreVerified": false,
     "fullMasterAcceptanceVerified": false,
-    "liveProviderVerification": false
+    "evidence": "docs/qa/policy01g-management-ui-evidence.json"
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -9248,346 +9269,25 @@
     "requiresUserApprovalText": "I explicitly approve publishing POLICY-01A claim-evidence native-CI closure’s 15 verified docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "verification": {
-    "scope": "POLICY-01B exact-source recovery plus exact published-source native CI verification",
-    "sourceRecovery": {
-      "publicBaseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
-      "originalManifestRevision": "2026-10-15-POLICY01B-local-verified",
-      "sourceAndTestFilesExact": 8,
-      "statusAndPolicyDocsExact": 10,
-      "originalScratchResultsInvented": false,
-      "generatedEvidenceRecreated": true
+    "scope": "Frontend management UI and unsaved-navigation integration; real isolated API with synthetic accounts",
+    "webProductionBuild": "passed",
+    "productionBrowser": {
+      "passed": 12,
+      "failed": 0
     },
-    "freshUnit": {
-      "tests": 210,
-      "failed": 0,
-      "passed": 210,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0,
-      "topLevel": 210,
-      "suites": 0
+    "finalFocusedVisualRerun": {
+      "passed": 3,
+      "failed": 0
     },
-    "unitDurationMs": 407991.837716,
-    "uniqueUnitReceipts": 210,
-    "unitFileCount": 29,
-    "unitSummaryCount": 30,
-    "cleanNpmCi": true,
-    "installedPackages": 273,
-    "fontkitPostinstallVerified": true,
-    "prismaGenerate": true,
-    "apiBuild": true,
-    "webProductionBuild": true,
-    "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0,
-    "controlExportCase": {
-      "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
-      "file": "tests/render-controls.test.ts",
-      "durationMs": 127983.588054
-    },
-    "controlExportTimeout": {
-      "defaultMs": 360000,
-      "localOverrideMs": 600000,
-      "maximumMs": 600000,
-      "exportCount": 90,
-      "perProcessTimeoutsUnchanged": true
-    },
-    "fontSet": "SHA-verified Ubuntu fonts-noto-core 20201225-2 and four SHA-pinned Noto CJK OTF fonts",
-    "nodeVersion": "v24.19.0",
-    "receipts": "docs/qa/policy01b-evidence-source-unit-receipts.json",
-    "receiptsSha256": "48f56e72e0da7601e451286fe789d876d823306e813e0fa66a3ac5b25b8c7b26",
-    "priorApplicationVerification": {
-      "httpPassed": 15,
-      "browserPassed": 9,
-      "recoveryPassed": 5,
-      "status": "Recovered from the exact original checkpoint and bound to byte-identical source/test hashes; not rerun during evidence recovery."
-    },
-    "nativePostgres": true,
-    "fullMasterAcceptanceVerified": false,
+    "freshHarnessPGliteMigrations": 22,
+    "backendCoreSchemaUnchangedFromPolicy01F": true,
+    "nativeSuiteRerun": false,
+    "fullUnitSuiteRerun": false,
+    "separateHttpSuiteRerun": false,
     "liveProviderVerification": false,
-    "nativeCi": {
-      "schemaVersion": 1,
-      "taskId": "POLICY-01B",
-      "increment": "evidence-source-and-freshness-native-ci-closure",
-      "dateUtc": "2026-10-16",
-      "status": "source_public_native_ci_verified_closure_local",
-      "publicCommit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-      "parentCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
-      "treeSha": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
-      "approvedSourcePaths": [
-        "CHECKPOINT_MANIFEST.json",
-        "PROJECT_CHECKPOINT.json",
-        "PROJECT_STATUS.md",
-        "START_HERE.md",
-        "apps/api/src/claim-reviews.ts",
-        "apps/web/app/content-workspace.tsx",
-        "docs/CHANGELOG.md",
-        "docs/HANDOFF.md",
-        "docs/POLICY_ENGINE.md",
-        "docs/PROJECT_STATUS.md",
-        "docs/REQUIREMENTS_MATRIX.md",
-        "docs/SESSION_LOG.md",
-        "docs/TASK_BOARD.md",
-        "docs/VERIFICATION_REPORT.md",
-        "docs/qa/policy01b-evidence-source-evidence.json",
-        "docs/qa/policy01b-evidence-source-unit-receipts.json",
-        "docs/qa/verification-summary.json",
-        "packages/core/claim-policy.ts",
-        "packages/core/evidence-source.ts",
-        "tests/evidence-source.test.ts",
-        "tests/integration/claim-policy.test.ts",
-        "tests/render-controls.test.ts",
-        "tests/ui/claim-policy.spec.ts"
-      ],
-      "exact23Paths": true,
-      "fullPublicTreeMatchesLocal": true,
-      "run": {
-        "id": 38911616401,
-        "number": 75,
-        "workflow": "Core and recovery verification",
-        "event": "push",
-        "status": "completed",
-        "conclusion": "success",
-        "attempt": 1,
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401",
-        "headSha": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
-        "startedAtUtc": "2026-10-16T13:55:20Z",
-        "updatedAtUtc": "2026-10-16T14:10:15Z"
-      },
-      "job": {
-        "id": 117008589097,
-        "name": "Native application verification",
-        "status": "completed",
-        "conclusion": "success",
-        "runId": 38911616401,
-        "steps": [
-          {
-            "name": "Set up job",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 1
-          },
-          {
-            "name": "Initialize containers",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 2
-          },
-          {
-            "name": "Check out source",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 3
-          },
-          {
-            "name": "Set up Node.js",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 4
-          },
-          {
-            "name": "Install dependencies",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 5
-          },
-          {
-            "name": "Set up Java",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 6
-          },
-          {
-            "name": "Install test object storage",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 7
-          },
-          {
-            "name": "Install media dependencies",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 8
-          },
-          {
-            "name": "Install pinned test CJK fonts",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 9
-          },
-          {
-            "name": "Build",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 10
-          },
-          {
-            "name": "Run unit tests",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 11
-          },
-          {
-            "name": "Verify bounded small-screen English readability",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 12
-          },
-          {
-            "name": "Audit production dependencies",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 13
-          },
-          {
-            "name": "Audit all dependencies",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 14
-          },
-          {
-            "name": "Verify populated upgrade",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 15
-          },
-          {
-            "name": "Verify native application flows",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 16
-          },
-          {
-            "name": "Upload browser evidence",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 17
-          },
-          {
-            "name": "Post Set up Java",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 31
-          },
-          {
-            "name": "Post Set up Node.js",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 32
-          },
-          {
-            "name": "Post Check out source",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 33
-          },
-          {
-            "name": "Stop containers",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 34
-          },
-          {
-            "name": "Complete job",
-            "status": "completed",
-            "conclusion": "success",
-            "number": 35
-          }
-        ]
-      },
-      "verification": {
-        "unit": {
-          "tests": 210,
-          "pass": 210,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0
-        },
-        "http": {
-          "tests": 15,
-          "pass": 15,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0
-        },
-        "browser": {
-          "tests": 9,
-          "pass": 9,
-          "fail": 0,
-          "duration": "43.4s"
-        },
-        "recovery": {
-          "tests": 5,
-          "pass": 5,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0
-        },
-        "freshNativePostgresMigrations": 21,
-        "nativePostgres": true,
-        "nativeRedis": true,
-        "apiBuild": true,
-        "webBuild": true,
-        "boundedReadability": true,
-        "populatedUpgrade": true,
-        "upgradeEngine": "PGlite WASM PostgreSQL",
-        "upgradeArchiveBytes": 4940642,
-        "upgradeArchiveSha256": "0b11a0d42e9aabba818e18bb5415dbe430d8873f09eb09581f3c6caa2ac403ad",
-        "nativePostgresRestoreVerified": false,
-        "productionDependencyAuditVulnerabilities": 0,
-        "allDependencyAuditVulnerabilities": 0
-      },
-      "unitReceipts": "docs/qa/policy01b-evidence-source-native-unit-receipts.json",
-      "unitReceiptSha256": "4364e791f3a35b0e6470b881682ae7d198d12b6baa9a238cfee5f30c067dbb06",
-      "artifact": {
-        "id": 12051471346,
-        "name": "browser-evidence",
-        "sizeBytes": 6184174,
-        "digest": "sha256:9eff37bb21c3ffdd7a5a25d96989ceb64210f8d52e3fc6e3042f7049ae7f888f",
-        "entries": 124,
-        "crcVerified": true,
-        "unitPassedReceipts": 210,
-        "unitUniqueReceipts": 210,
-        "summaries": 30,
-        "finalSummary": {
-          "success": true,
-          "counts": {
-            "tests": 210,
-            "failed": 0,
-            "passed": 210,
-            "cancelled": 0,
-            "skipped": 0,
-            "todo": 0,
-            "topLevel": 210,
-            "suites": 0
-          },
-          "durationMs": 410475.622523
-        },
-        "readabilitySamples": 36,
-        "busySamples": 8,
-        "ocrSampleHashesVerified": 44,
-        "blankNegativeControlPassed": true,
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401/artifacts/12051471346",
-        "expiresAtUtc": "2027-01-14T13:55:20Z"
-      },
-      "nonBlockingRunnerWarnings": [
-        "GitHub warned that Node.js 20 actions are deprecated and forced the referenced actions to Node.js 24; all affected steps passed."
-      ],
-      "sourceUnchangedByClosure": true,
-      "liveProviderOperation": false,
-      "deployedProductionAcceptance": false,
-      "fullMasterAcceptance": false,
-      "closurePublication": false,
-      "limits": [
-        "The gate validates source-reference syntax and operator-declared review age; it does not fetch URLs, resolve DNS or establish claim truth, source quality, legal compliance or platform compliance.",
-        "Freshness is rechecked through publication preparation, not at later scheduled or live dispatch boundaries.",
-        "Upgrade/restore verification used PGlite; native PostgreSQL plus private-media backup/restore remains open.",
-        "OCR evidence is bounded synthetic English/readability regression, not physical-device or arbitrary-content acceptance.",
-        "No live provider operation, deployed production acceptance or full master acceptance was performed. POLICY-01 remains Partial."
-      ]
-    }
+    "nativePostgresRestoreVerified": false,
+    "fullMasterAcceptanceVerified": false,
+    "evidence": "docs/qa/policy01g-management-ui-evidence.json"
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
     "scope": "POLICY-01B local reconstruction; full app regression plus final hostname-hardening focused rerun; no native CI for this increment",
@@ -9968,5 +9668,497 @@
       "No live provider operation or full master acceptance was performed. POLICY-01 remains Partial."
     ],
     "exact20Paths": true
+  },
+  "priorStateBeforeContextResume": {
+    "checkpointRevision": "2026-10-17.01-POLICY01D-local-verified",
+    "savedAtUtc": "2026-10-17T00:50:37Z",
+    "currentMilestone": "POLICY-01D official-source provenance is locally verified; publication/native CI pending.",
+    "activeTask": "POLICY-01D native-CI closure evidence is locally verified and awaiting publication approval.",
+    "nextAction": "Obtain exact approval for the 16-path POLICY-01C native-CI closure, publish it, verify remote tree and then continue the next bounded POLICY-01 increment.",
+    "repository": {
+      "commit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
+      "status": "POLICY01B_source_public_native_ci_verified_closure_local",
+      "sourceTree": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
+      "commitMeaning": "POLICY-01B exact recovered source is public and own native CI passed; the later 15-path closure record remains local pending separate approval.",
+      "lastLocalCheckpointCommit": "See local recovery/policy01b branch; final docs commit follows this checkpoint.",
+      "historyNote": "Unchanged remote/visibility, excluded target, earlier publication/CI and approval history remain under the current repository object; only superseded resume fields are copied here."
+    },
+    "publishedIncrement": {
+      "taskId": "POLICY-01B",
+      "scope": "evidence source syntax and review freshness",
+      "publicCommit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
+      "parentCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
+      "treeSha": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
+      "paths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "START_HERE.md",
+        "apps/api/src/claim-reviews.ts",
+        "apps/web/app/content-workspace.tsx",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/POLICY_ENGINE.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/qa/policy01b-evidence-source-evidence.json",
+        "docs/qa/policy01b-evidence-source-unit-receipts.json",
+        "docs/qa/verification-summary.json",
+        "packages/core/claim-policy.ts",
+        "packages/core/evidence-source.ts",
+        "tests/evidence-source.test.ts",
+        "tests/integration/claim-policy.test.ts",
+        "tests/render-controls.test.ts",
+        "tests/ui/claim-policy.spec.ts"
+      ],
+      "nativeCiRunId": 38911616401,
+      "nativeCiJobId": 117008589097,
+      "nativeCiConclusion": "success"
+    },
+    "pendingPublication": {
+      "taskId": "POLICY-01C",
+      "description": "Native-CI closure/docs/evidence only; verified implementation unchanged.",
+      "paths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "START_HERE.md",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/POLICY_ENGINE.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/qa/policy01c-dispatch-freshness-evidence.json",
+        "docs/qa/policy01c-dispatch-freshness-native-ci-evidence.json",
+        "docs/qa/policy01c-dispatch-freshness-native-unit-receipts.json",
+        "docs/qa/verification-summary.json"
+      ]
+    },
+    "currentVerification": {
+      "scope": "POLICY-01B exact-source recovery verification; native CI still pending publication",
+      "sourceRecovery": {
+        "publicBaseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
+        "originalManifestRevision": "2026-10-15-POLICY01B-local-verified",
+        "sourceAndTestFilesExact": 8,
+        "statusAndPolicyDocsExact": 10,
+        "originalScratchResultsInvented": false,
+        "generatedEvidenceRecreated": true
+      },
+      "freshUnit": {
+        "tests": 210,
+        "failed": 0,
+        "passed": 210,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 210,
+        "suites": 0
+      },
+      "unitDurationMs": 407991.837716,
+      "uniqueUnitReceipts": 210,
+      "unitFileCount": 29,
+      "unitSummaryCount": 30,
+      "cleanNpmCi": true,
+      "installedPackages": 273,
+      "fontkitPostinstallVerified": true,
+      "prismaGenerate": true,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "controlExportCase": {
+        "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
+        "file": "tests/render-controls.test.ts",
+        "durationMs": 127983.588054
+      },
+      "controlExportTimeout": {
+        "defaultMs": 360000,
+        "localOverrideMs": 600000,
+        "maximumMs": 600000,
+        "exportCount": 90,
+        "perProcessTimeoutsUnchanged": true
+      },
+      "fontSet": "SHA-verified Ubuntu fonts-noto-core 20201225-2 and four SHA-pinned Noto CJK OTF fonts",
+      "nodeVersion": "v24.19.0",
+      "receipts": "docs/qa/policy01b-evidence-source-unit-receipts.json",
+      "receiptsSha256": "48f56e72e0da7601e451286fe789d876d823306e813e0fa66a3ac5b25b8c7b26",
+      "priorApplicationVerification": {
+        "httpPassed": 15,
+        "browserPassed": 9,
+        "recoveryPassed": 5,
+        "status": "Recovered from the exact original checkpoint and bound to byte-identical source/test hashes; not rerun during evidence recovery."
+      },
+      "nativePostgres": false,
+      "fullMasterAcceptanceVerified": false,
+      "liveProviderVerification": false
+    },
+    "verification": {
+      "scope": "POLICY-01B exact-source recovery plus exact published-source native CI verification",
+      "sourceRecovery": {
+        "publicBaseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
+        "originalManifestRevision": "2026-10-15-POLICY01B-local-verified",
+        "sourceAndTestFilesExact": 8,
+        "statusAndPolicyDocsExact": 10,
+        "originalScratchResultsInvented": false,
+        "generatedEvidenceRecreated": true
+      },
+      "freshUnit": {
+        "tests": 210,
+        "failed": 0,
+        "passed": 210,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 210,
+        "suites": 0
+      },
+      "unitDurationMs": 407991.837716,
+      "uniqueUnitReceipts": 210,
+      "unitFileCount": 29,
+      "unitSummaryCount": 30,
+      "cleanNpmCi": true,
+      "installedPackages": 273,
+      "fontkitPostinstallVerified": true,
+      "prismaGenerate": true,
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "controlExportCase": {
+        "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
+        "file": "tests/render-controls.test.ts",
+        "durationMs": 127983.588054
+      },
+      "controlExportTimeout": {
+        "defaultMs": 360000,
+        "localOverrideMs": 600000,
+        "maximumMs": 600000,
+        "exportCount": 90,
+        "perProcessTimeoutsUnchanged": true
+      },
+      "fontSet": "SHA-verified Ubuntu fonts-noto-core 20201225-2 and four SHA-pinned Noto CJK OTF fonts",
+      "nodeVersion": "v24.19.0",
+      "receipts": "docs/qa/policy01b-evidence-source-unit-receipts.json",
+      "receiptsSha256": "48f56e72e0da7601e451286fe789d876d823306e813e0fa66a3ac5b25b8c7b26",
+      "priorApplicationVerification": {
+        "httpPassed": 15,
+        "browserPassed": 9,
+        "recoveryPassed": 5,
+        "status": "Recovered from the exact original checkpoint and bound to byte-identical source/test hashes; not rerun during evidence recovery."
+      },
+      "nativePostgres": true,
+      "fullMasterAcceptanceVerified": false,
+      "liveProviderVerification": false,
+      "nativeCi": {
+        "schemaVersion": 1,
+        "taskId": "POLICY-01B",
+        "increment": "evidence-source-and-freshness-native-ci-closure",
+        "dateUtc": "2026-10-16",
+        "status": "source_public_native_ci_verified_closure_local",
+        "publicCommit": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
+        "parentCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
+        "treeSha": "15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca",
+        "approvedSourcePaths": [
+          "CHECKPOINT_MANIFEST.json",
+          "PROJECT_CHECKPOINT.json",
+          "PROJECT_STATUS.md",
+          "START_HERE.md",
+          "apps/api/src/claim-reviews.ts",
+          "apps/web/app/content-workspace.tsx",
+          "docs/CHANGELOG.md",
+          "docs/HANDOFF.md",
+          "docs/POLICY_ENGINE.md",
+          "docs/PROJECT_STATUS.md",
+          "docs/REQUIREMENTS_MATRIX.md",
+          "docs/SESSION_LOG.md",
+          "docs/TASK_BOARD.md",
+          "docs/VERIFICATION_REPORT.md",
+          "docs/qa/policy01b-evidence-source-evidence.json",
+          "docs/qa/policy01b-evidence-source-unit-receipts.json",
+          "docs/qa/verification-summary.json",
+          "packages/core/claim-policy.ts",
+          "packages/core/evidence-source.ts",
+          "tests/evidence-source.test.ts",
+          "tests/integration/claim-policy.test.ts",
+          "tests/render-controls.test.ts",
+          "tests/ui/claim-policy.spec.ts"
+        ],
+        "exact23Paths": true,
+        "fullPublicTreeMatchesLocal": true,
+        "run": {
+          "id": 38911616401,
+          "number": 75,
+          "workflow": "Core and recovery verification",
+          "event": "push",
+          "status": "completed",
+          "conclusion": "success",
+          "attempt": 1,
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401",
+          "headSha": "590a9b22e853638c0b4beae0d3bb98554a8ec5cf",
+          "startedAtUtc": "2026-10-16T13:55:20Z",
+          "updatedAtUtc": "2026-10-16T14:10:15Z"
+        },
+        "job": {
+          "id": 117008589097,
+          "name": "Native application verification",
+          "status": "completed",
+          "conclusion": "success",
+          "runId": 38911616401,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Initialize containers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Check out source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Set up Java",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install test object storage",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Install media dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Install pinned test CJK fonts",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run unit tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Verify bounded small-screen English readability",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Audit production dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Audit all dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Verify populated upgrade",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Verify native application flows",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Upload browser evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Set up Java",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31
+            },
+            {
+              "name": "Post Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32
+            },
+            {
+              "name": "Post Check out source",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33
+            },
+            {
+              "name": "Stop containers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 34
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 35
+            }
+          ]
+        },
+        "verification": {
+          "unit": {
+            "tests": 210,
+            "pass": 210,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "http": {
+            "tests": 15,
+            "pass": 15,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "browser": {
+            "tests": 9,
+            "pass": 9,
+            "fail": 0,
+            "duration": "43.4s"
+          },
+          "recovery": {
+            "tests": 5,
+            "pass": 5,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "freshNativePostgresMigrations": 21,
+          "nativePostgres": true,
+          "nativeRedis": true,
+          "apiBuild": true,
+          "webBuild": true,
+          "boundedReadability": true,
+          "populatedUpgrade": true,
+          "upgradeEngine": "PGlite WASM PostgreSQL",
+          "upgradeArchiveBytes": 4940642,
+          "upgradeArchiveSha256": "0b11a0d42e9aabba818e18bb5415dbe430d8873f09eb09581f3c6caa2ac403ad",
+          "nativePostgresRestoreVerified": false,
+          "productionDependencyAuditVulnerabilities": 0,
+          "allDependencyAuditVulnerabilities": 0
+        },
+        "unitReceipts": "docs/qa/policy01b-evidence-source-native-unit-receipts.json",
+        "unitReceiptSha256": "4364e791f3a35b0e6470b881682ae7d198d12b6baa9a238cfee5f30c067dbb06",
+        "artifact": {
+          "id": 12051471346,
+          "name": "browser-evidence",
+          "sizeBytes": 6184174,
+          "digest": "sha256:9eff37bb21c3ffdd7a5a25d96989ceb64210f8d52e3fc6e3042f7049ae7f888f",
+          "entries": 124,
+          "crcVerified": true,
+          "unitPassedReceipts": 210,
+          "unitUniqueReceipts": 210,
+          "summaries": 30,
+          "finalSummary": {
+            "success": true,
+            "counts": {
+              "tests": 210,
+              "failed": 0,
+              "passed": 210,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0,
+              "topLevel": 210,
+              "suites": 0
+            },
+            "durationMs": 410475.622523
+          },
+          "readabilitySamples": 36,
+          "busySamples": 8,
+          "ocrSampleHashesVerified": 44,
+          "blankNegativeControlPassed": true,
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/38911616401/artifacts/12051471346",
+          "expiresAtUtc": "2027-01-14T13:55:20Z"
+        },
+        "nonBlockingRunnerWarnings": [
+          "GitHub warned that Node.js 20 actions are deprecated and forced the referenced actions to Node.js 24; all affected steps passed."
+        ],
+        "sourceUnchangedByClosure": true,
+        "liveProviderOperation": false,
+        "deployedProductionAcceptance": false,
+        "fullMasterAcceptance": false,
+        "closurePublication": false,
+        "limits": [
+          "The gate validates source-reference syntax and operator-declared review age; it does not fetch URLs, resolve DNS or establish claim truth, source quality, legal compliance or platform compliance.",
+          "Freshness is rechecked through publication preparation, not at later scheduled or live dispatch boundaries.",
+          "Upgrade/restore verification used PGlite; native PostgreSQL plus private-media backup/restore remains open.",
+          "OCR evidence is bounded synthetic English/readability regression, not physical-device or arbitrary-content acceptance.",
+          "No live provider operation, deployed production acceptance or full master acceptance was performed. POLICY-01 remains Partial."
+        ]
+      }
+    },
+    "lastChanges": [
+      "Recorded exact POLICY-01C public commit/tree and 20-path remote scope.",
+      "Recorded successful native run 38957638173 and inspected its 124-entry artifact.",
+      "Imported 210 unique native unit receipts and retained local/deployed/live acceptance limits."
+    ]
+  },
+  "contextResume": {
+    "evidence": "docs/qa/context-resume-evidence.json",
+    "resumeContext": "docs/RESUME_CONTEXT.md",
+    "lastVerifiedPublicMain": "0eeaff642108ff781cf2a7f481c916b116ff0889",
+    "pastedContextSuperseded": true,
+    "documentationOnly": true,
+    "publicPushAttempted": false
+  },
+  "workflowPreference": {
+    "recordedAtUtc": "2026-10-17T18:36:36.554781Z",
+    "userInstruction": "Implement, verify, push to GitHub and inspect CI/CD pipeline as in the previous workflow.",
+    "routineProjectPushAuthorized": true,
+    "exactCommitCiVerificationRequired": true,
+    "productionDeploymentConfigured": false
   }
 }

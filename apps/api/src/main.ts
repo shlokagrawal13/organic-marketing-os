@@ -30,6 +30,7 @@ import { CreditsModule } from "./credits";
 import { GeneratedMediaModule } from "./generated-media";
 import { PublicationsModule } from "./publications";
 import { SocialConnectionsModule } from "./social-connections";
+import { WorkspaceYoutubePolicyModule } from "./workspace-youtube-policy-controller";
 import { creditPolicy } from "../../../packages/core/credits";
 import { stripeBillingConfiguration } from "../../../packages/core/billing";
 
@@ -67,6 +68,7 @@ class HealthController {
     GeneratedMediaModule,
     PublicationsModule,
     SocialConnectionsModule,
+    WorkspaceYoutubePolicyModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: AuthGuard }],

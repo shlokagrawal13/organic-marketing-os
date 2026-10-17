@@ -202,6 +202,10 @@ export class OperationsController {
             where: { organizationId: org },
           });
           if (brain) await write("brand", brain);
+          const youtubePolicy = await tx.workspaceYoutubePolicy.findUnique({
+            where: { organizationId: org },
+          });
+          if (youtubePolicy) await write("youtubePolicy", youtubePolicy);
           const creditAccount = await tx.creditAccount.findUnique({
             where: { organizationId: org },
           });

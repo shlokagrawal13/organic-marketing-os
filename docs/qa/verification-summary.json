@@ -74,7 +74,24 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": "POLICY-01D exact 23-path source is public at d165187 with matching tree 3d85ca8; native run 39020625965 passed 211 unit, 16 HTTP, 9 browser, 5 recovery, 21 migrations, builds/readability and zero-vulnerability audits. Closure evidence is local pending approval.",
-  "policy01dPlatformPolicyProvenance": {"status":"source_public_native_ci_verified_closure_local","policyVersion":"youtube-upload-policy-2026-10-17","sourceFingerprint":"3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf","officialSourceCount":5,"publicCommit":"d1651879dee580eed48c108f84bd24a7f3d242e5","publicTree":"3d85ca8f6d2c9fbeba5747a62060f3fa88e144e8","nativeCiRunId":39020625965,"nativeCiPassed":true,"unitPassed":211,"httpPassed":16,"browserPassed":9,"recoveryPassed":5,"freshNativePostgresMigrations":21,"auditVulnerabilities":0,"closurePublicationPending":true,"liveProviderAttempted":false},
+  "policy01dPlatformPolicyProvenance": {
+    "status": "source_public_native_ci_verified_closure_local",
+    "policyVersion": "youtube-upload-policy-2026-10-17",
+    "sourceFingerprint": "3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf",
+    "officialSourceCount": 5,
+    "publicCommit": "d1651879dee580eed48c108f84bd24a7f3d242e5",
+    "publicTree": "3d85ca8f6d2c9fbeba5747a62060f3fa88e144e8",
+    "nativeCiRunId": 39020625965,
+    "nativeCiPassed": true,
+    "unitPassed": 211,
+    "httpPassed": 16,
+    "browserPassed": 9,
+    "recoveryPassed": 5,
+    "freshNativePostgresMigrations": 21,
+    "auditVulnerabilities": 0,
+    "closurePublicationPending": true,
+    "liveProviderAttempted": false
+  },
   "policy01cDispatchFreshness": {
     "schemaVersion": 1,
     "taskId": "POLICY-01C",
@@ -1941,7 +1958,7 @@
       "batch": "fontkit-outlines-v1-indic-registry-mark-filter-sinhala"
     },
     "plainOverlayFingerprintUnchanged": true,
-    "fractionalEdgeTolerancePixels": 1e-7,
+    "fractionalEdgeTolerancePixels": 1e-07,
     "realOverflowStillRejected": true,
     "sinhalaJoinerConjunctsVerified": false,
     "sinhalaJoinersPreservedWithImageFallback": true,
@@ -9678,5 +9695,94 @@
       "No live provider operation or full master acceptance was performed. POLICY-01 remains Partial."
     ],
     "exact20Paths": true
+  },
+  "latestContextResume": {
+    "checkpointRevision": "2026-10-17.02-CONTEXT-RESUME",
+    "scope": "docs-only; no new application execution claim",
+    "evidence": "docs/qa/context-resume-evidence.json",
+    "resumeContext": "docs/RESUME_CONTEXT.md"
+  },
+  "latestPolicy01E": {
+    "scope": "Current-source local isolated execution; not native/live/production acceptance",
+    "builds": "API and web production builds passed",
+    "unit": {
+      "passed": 213,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "http": {
+      "passed": 16,
+      "failed": 0
+    },
+    "focusedProductionBrowser": {
+      "passed": 1,
+      "failed": 0
+    },
+    "freshPGliteMigrations": 21,
+    "recoveryRerun": false,
+    "nativeCiRun": false,
+    "liveProviderVerification": false,
+    "nativePostgresRestoreVerified": false,
+    "fullMasterAcceptanceVerified": false,
+    "evidence": "docs/qa/policy01e-declarative-rules-evidence.json"
+  },
+  "latestPolicy01F": {
+    "scope": "Current-source bounded local/isolated verification",
+    "focusedUnits": {
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "pgliteHttp": {
+      "passed": 18,
+      "failed": 0
+    },
+    "focusedProductionBrowser": {
+      "passed": 1,
+      "failed": 0
+    },
+    "nativePolicyHttp": {
+      "passed": 2,
+      "failed": 0,
+      "postgresVersion": "17.11",
+      "redisVersion": "7.4.11",
+      "fixtureContainersRemoved": true
+    },
+    "freshMigrations": {
+      "PGlite": 22,
+      "dedicatedNativePostgres": 22
+    },
+    "populatedPGliteUpgradeAndPolicyArchiveRestore": true,
+    "builds": "Prisma generate, API TypeScript and web production builds passed; final API rebuilt after export addition",
+    "fullUnitSuiteRerun": false,
+    "nativeCiRun": false,
+    "liveProviderVerification": false,
+    "nativePostgresRestoreVerified": false,
+    "fullMasterAcceptanceVerified": false,
+    "evidence": "docs/qa/policy01f-workspace-rules-evidence.json"
+  },
+  "latestPolicy01G": {
+    "scope": "Frontend management UI and unsaved-navigation integration; real isolated API with synthetic accounts",
+    "webProductionBuild": "passed",
+    "productionBrowser": {
+      "passed": 12,
+      "failed": 0
+    },
+    "finalFocusedVisualRerun": {
+      "passed": 3,
+      "failed": 0
+    },
+    "freshHarnessPGliteMigrations": 22,
+    "backendCoreSchemaUnchangedFromPolicy01F": true,
+    "nativeSuiteRerun": false,
+    "fullUnitSuiteRerun": false,
+    "separateHttpSuiteRerun": false,
+    "liveProviderVerification": false,
+    "nativePostgresRestoreVerified": false,
+    "fullMasterAcceptanceVerified": false,
+    "evidence": "docs/qa/policy01g-management-ui-evidence.json"
   }
 }

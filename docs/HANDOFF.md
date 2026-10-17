@@ -1,3 +1,23 @@
+## POLICY-01G handoff — 2026-10-17
+
+POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished.
+
+Resume with `PROJECT_CHECKPOINT.json`, [RESUME_CONTEXT.md](RESUME_CONTEXT.md) and the RESEARCH-01 task. Apply the existing 22 migrations before the API/workers; G adds no migration. Source handoff includes bounded QA screenshots and excludes credentials, runtime databases/media and raw logs. It is not a database/media backup.
+
+## POLICY-01F handoff — 2026-10-17
+
+POLICY-01F is locally verified: OWNER/ADMIN workspace YouTube policy API with monotonic revisions, deployment-bound validation and audited updates; upload preview/save and manual/scheduled dispatch bind the current workspace policy. Workspace data export and populated archive restore include the policy. Current checks: 12 focused units, 18 isolated HTTP, 1 focused production browser, 22 PGlite migrations, and 2 additional policy HTTP cases against dedicated PostgreSQL 17.11/Redis 7.4.11 fixtures with 22 native migrations. API/web production builds and populated PGlite upgrade/archive restore passed. POLICY-01 remains partial. No public push, native CI, live provider, full Compose/MinIO, native cross-store restore or full master acceptance is claimed.
+
+Resume from the checkpoint and [RESUME_CONTEXT.md](RESUME_CONTEXT.md). Apply all migrations, including `202610170001_workspace_youtube_policy`, before starting the updated API/workers. The source archive excludes secrets, runtime databases and private media. No GitHub push has been attempted for the accumulated F/E/context work.
+
+## POLICY-01E handoff — 2026-10-17
+
+POLICY-01E is locally verified: validated declarative YouTube metadata/visibility/disclosure rules now bind saved reviews and maintenance receipts to the rule fingerprint. Reservation rejects stale or missing reviews before inserting an attempt; the preview and browser use the same rules. Full unit/export 213/213, isolated HTTP 16/16 and focused production browser 1/1 passed; 21 fresh PGlite migrations and API/web production builds passed. No native CI, live provider, full Compose/MinIO or native cross-store recovery is claimed for this source. POLICY-01 remains partial; this increment and the retained context-recovery changes are local/unpublished. Resume from `PROJECT_CHECKPOINT.json` and [RESUME_CONTEXT.md](RESUME_CONTEXT.md). The source ZIP excludes credentials, user data and private media; it is not a database/media backup.
+
+## Current handoff — 2026-10-17
+
+Resume from the local checkpoint and [RESUME_CONTEXT.md](RESUME_CONTEXT.md). Its last verified public base is `0eeaff642108ff781cf2a7f481c916b116ff0889`; the older EDITOR-01I paste and POLICY-01C/D closure-pending text below are historical. Current changes are documentation only, are not publicly pushed, and retain the architecture, all migrations and runtime data. The fresh ZIP is a source/context handoff, not a database/media backup.
+
 <!-- POLICY01C_NATIVE_CLOSURE_START -->
 ## POLICY-01C dispatch-time evidence freshness publication and native CI — 2026-10-16 UTC
 

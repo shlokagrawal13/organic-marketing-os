@@ -80,6 +80,16 @@ model Organization {
   publicationPolicyReviews PublicationPolicyReview[]
   publicationSchedules     PublicationSchedule[]
   contentClaimReviews      ContentClaimReview[]
+  youtubePolicy            WorkspaceYoutubePolicy?
+}
+
+model WorkspaceYoutubePolicy {
+  organizationId String       @id
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  revision       Int          @default(1)
+  rules          Json
+  updatedBy      String
+  updatedAt      DateTime     @updatedAt
 }
 
 enum ContentStatus {

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "taskId": "POLICY-01E",
+  "recordedAtUtc": "2026-10-17T17:47:18.600128Z",
+  "scope": "Local declarative YouTube metadata rules and review invalidation",
+  "effectivePolicy": {
+    "effectivePolicyVersion": "youtube-upload-policy-2026-10-17.77553a3e8049ec327909790a236009f91e5acb0b1dacb14e9d146984976ecb8a",
+    "policySourceFingerprint": "df07f5b5ecbf02a3bf1c3bbea9ae042876701f7075ecb74915ff1ad45a820f1c"
+  },
+  "incomingCheckpointFiles": 387,
+  "incomingCheckpointNoDrift": true,
+  "retainedIncomingContextPaths": [
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "README.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/POLICY_ENGINE.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/context-resume-evidence.json",
+    "docs/qa/verification-summary.json"
+  ],
+  "verification": {
+    "scope": "Current-source local isolated execution; not native/live/production acceptance",
+    "builds": "API and web production builds passed",
+    "unit": {
+      "passed": 213,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "http": {
+      "passed": 16,
+      "failed": 0
+    },
+    "focusedProductionBrowser": {
+      "passed": 1,
+      "failed": 0
+    },
+    "freshPGliteMigrations": 21,
+    "recoveryRerun": false,
+    "nativeCiRun": false,
+    "liveProviderVerification": false,
+    "nativePostgresRestoreVerified": false,
+    "fullMasterAcceptanceVerified": false,
+    "evidence": "docs/qa/policy01e-declarative-rules-evidence.json"
+  },
+  "initialFailures": [
+    "Focused dispatch regression found stale review inserted an attempt before submission rejection; fixed with pre-reservation tenant/revision/policy/fingerprint check.",
+    "Broad HTTP passed 16/16, but browser found retained choices/acknowledgments on reopening. Reset those fields; final web rebuild and isolated focused browser rerun passed."
+  ],
+  "focusedDispatchAfterFix": {
+    "passed": 1,
+    "failed": 0,
+    "providerRequestsForStaleReview": 0,
+    "attemptsForStaleReview": 0
+  },
+  "focusedUnitPassed": 11,
+  "browserFixtureNote": "Tightened-rule preview is browser-only; default server enforcement and factory boundary tests are separate.",
+  "publicPushAttempted": false,
+  "runtimeUserDataChanged": false,
+  "fullProductComplete": false,
+  "changedPaths": [
+    ".env.example",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "README.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "apps/api/src/publication-attempts.ts",
+    "apps/api/src/publications.ts",
+    "apps/web/app/youtube-policy-review.tsx",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/POLICY_01E_AUDIT.md",
+    "docs/POLICY_ENGINE.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/context-resume-evidence.json",
+    "docs/qa/policy01e-declarative-rules-evidence.json",
+    "docs/qa/policy01e-declarative-rules-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "packages/core/youtube-policy.ts",
+    "packages/core/youtube-rules.json",
+    "packages/core/youtube-rules.ts",
+    "tests/integration/social-attempts.test.ts",
+    "tests/integration/social-dispatch.test.ts",
+    "tests/ui/social-policy-review.spec.ts",
+    "tests/youtube-policy.test.ts"
+  ],
+  "sourceSha256": {
+    "apps/api/src/publication-attempts.ts": "be3f5e148ee98e0320b26e95281fac9c086316612029f0f0c8e582fd7b3bcd19",
+    "apps/api/src/publications.ts": "b5f795c1aa4a957decea6e3d3d69866426c987f770a1f5a39e6ad64481000d1a",
+    "apps/web/app/youtube-policy-review.tsx": "a90f3c71f33a6576ab1ab6cc8d3c709e9d096e781bee189e6f7aaf65370d59b7",
+    "packages/core/youtube-policy.ts": "9bd5762c7ce3c507d5a91f2035197bdb86a502e621644f5c3d87d0a267466309",
+    "packages/core/youtube-rules.json": "ff0af3e92e59c95dc630dea592ffd3352ba64624292059565eb957499fbc0b76",
+    "packages/core/youtube-rules.ts": "a6d23fa53e3b253da281196c2e1dd3878021fc2bd7020fdaf0a823b65b8b94af",
+    "tests/integration/social-attempts.test.ts": "4b47181def9ec7359e8c56dddce7c31c950c612a689b0a5bf13e9cbf92dd306c",
+    "tests/integration/social-dispatch.test.ts": "bba97def33626265aafdb2de1b4713b8ba844a9c2c055d5f7e7722ba145278dc",
+    "tests/ui/social-policy-review.spec.ts": "f8d729de82f13df2297fb225bcd1ecc80f3b336ba3a2a13cc821f117a1a94a86",
+    "tests/youtube-policy.test.ts": "6f11d70a86b1699f55c9164ae12f800d7b2dc271499c65e3ca1e762658428b9d"
+  },
+  "rawLogSha256": {
+    ".local/policy01e-build.log": "c511c286ace91a9dd4cdc52a3215d106b22446c2b93496d588a7e7473d3a90bc",
+    ".local/policy01e-unit.log": "95a34439491dabd2321c9a01919a1e7e8db8fca90d6103f486f2543ab1b71256",
+    ".local/policy01e-http-ui.log": "30e61c58506e1acbc8c79276188c2ef2e54fa43038108bcd2949b7eab7d1d46d",
+    ".local/policy01e-web-final-build.log": "fa839330cb35efc4c0e64c0cfa6b5feb6e0cecf7941098e88d950bdb22213979",
+    ".local/policy01e-browser-final.log": "b8ec407d2070c717400d8d2b2cad8f780bce923a5e9439e8ef83d2b98bab81ca"
+  },
+  "sourceHandoff": {
+    "archive": "organic-marketing-os-policy01e-2026-10-17.zip",
+    "includedSourceFiles": 392,
+    "entriesIncludingManifest": 393,
+    "manifestNoDrift": true,
+    "scope": "source/context/evidence; excludes credentials and runtime databases/media"
+  }
+}

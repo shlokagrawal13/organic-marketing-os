@@ -26,11 +26,11 @@ import {
 import { digest } from "../../../packages/core/security";
 import { checkContent } from "../../../packages/core/content";
 import { draftSchema } from "../../../packages/core/ai";
+import { effectiveWorkspaceYoutubePolicy } from "./workspace-youtube-policy";
 import {
   youtubeBaseMetadata,
   youtubePolicyFingerprint,
   youtubePolicyReviewLifetimeMs,
-  youtubePolicyVersion,
   youtubePolicyMaintenanceCurrent,
   youtubeReviewInput,
   youtubeUploadMetadata,
@@ -180,18 +180,21 @@ export class PublicationIntentsController {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
       const intent = await currentApproval(tx, req.organizationId, intentId);
       try {
+        const workspacePolicy = await effectiveWorkspaceYoutubePolicy(tx, req.organizationId);
         return {
           intentId,
           contentRevision: intent.contentRevision,
           renderId: intent.renderId,
-          snippet: youtubeBaseMetadata(intent.snapshot),
+          snippet: youtubeBaseMetadata(intent.snapshot, workspacePolicy.policy),
           requiredChoices: [
             "connectionId",
             "privacyStatus",
             "selfDeclaredMadeForKids",
             "containsSyntheticMedia",
           ],
-          policyVersion: youtubePolicyVersion,
+          policyVersion: workspacePolicy.policyVersion,
+          workspacePolicyRevision: workspacePolicy.revision,
+          rules: workspacePolicy.policy.rules,
           externallySubmitted: false as const,
         };
       } catch (error) {
@@ -241,9 +244,12 @@ export class PublicationIntentsController {
       if (!connection)
         throw new NotFoundException("Social connection not found.");
       activeConnection(connection, req.organizationId);
+      const workspacePolicy = await effectiveWorkspaceYoutubePolicy(tx, req.organizationId);
+      if (reviewInput.workspacePolicyRevision !== workspacePolicy.revision)
+        throw new ConflictException("Workspace policy changed. Reload the upload preview before reviewing.");
       let metadata;
       try {
-        metadata = youtubeUploadMetadata(intent.snapshot, reviewInput);
+        metadata = youtubeUploadMetadata(intent.snapshot, reviewInput, workspacePolicy.policy);
       } catch (error) {
         throw new BadRequestException(
           error instanceof Error ? error.message : "Invalid YouTube metadata.",
@@ -255,6 +261,7 @@ export class PublicationIntentsController {
         contentRevision: intent.contentRevision,
         renderId: intent.renderId,
         metadata,
+        policyVersion: workspacePolicy.policyVersion,
       });
       const existing = await tx.publicationPolicyReview.findUnique({
         where: { intentId },
@@ -276,7 +283,7 @@ export class PublicationIntentsController {
           intentId,
           connectionId: connection.id,
           contentRevision: intent.contentRevision,
-          policyVersion: youtubePolicyVersion,
+          policyVersion: workspacePolicy.policyVersion,
           metadata,
           snapshotHash: fingerprint,
           reviewedBy: req.userId,
@@ -293,7 +300,7 @@ export class PublicationIntentsController {
           detail: {
             reviewId: review.id,
             connectionId: connection.id,
-            policyVersion: youtubePolicyVersion,
+            policyVersion: workspacePolicy.policyVersion,
             privacyStatus: reviewInput.privacyStatus,
             selfDeclaredMadeForKids: reviewInput.selfDeclaredMadeForKids,
             containsSyntheticMedia: reviewInput.containsSyntheticMedia,

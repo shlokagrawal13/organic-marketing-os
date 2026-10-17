@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { draftSchema } from "./ai";
 import { digest } from "./security";
+import { youtubeMetadataPolicy } from "./youtube-rules";
 
 // Reviewed against the exact official-source manifest below on 2026-10-17.
 // Advance the version when the maintained rules or source set changes.
-export const youtubePolicyVersion = "youtube-upload-policy-2026-10-17";
+export const youtubePolicyVersion = `youtube-upload-policy-2026-10-17.${youtubeMetadataPolicy.fingerprint}`;
 export const youtubePolicySources = [
   { id: "videos-insert", url: "https://developers.google.com/youtube/data/reference/rest/v3/videos/insert" },
   { id: "video-resource", url: "https://developers.google.com/youtube/data/reference/rest/v3/videos" },
@@ -36,6 +36,7 @@ export function youtubePolicyMaintenanceCurrent(
     reviewed <= current && current - reviewed < youtubePolicyMaintenanceLifetimeMs;
 }
 export const youtubeReviewInput = z.object({
+  workspacePolicyRevision: z.number().int().min(0).max(2147483647).default(0),
   connectionId: z.string().uuid(),
   privacyStatus: z.enum(["private", "unlisted", "public"]),
   selfDeclaredMadeForKids: z.boolean(),
@@ -46,26 +47,17 @@ export const youtubeReviewInput = z.object({
   rightsAndPlatformRulesReviewed: z.literal(true),
 }).strict();
 
-export function youtubeBaseMetadata(snapshot: unknown) {
-  const draft = draftSchema.strip().parse(snapshot);
-  if (draft.platform !== "YouTube" || draft.format !== "Video")
-    throw new Error("Only approved YouTube videos can receive an upload review.");
-  const title = draft.title.trim();
-  const description = [draft.hook, draft.body, draft.cta]
-    .map((part) => part.trim()).filter(Boolean).join("\n\n");
-  if (!title || title.length > 100 || /[<>]/u.test(title))
-    throw new Error("YouTube title must be 1–100 characters without angle brackets.");
-  if (!description || Buffer.byteLength(description, "utf8") > 5000 || /[<>]/u.test(description))
-    throw new Error("YouTube description must be nonempty, at most 5000 UTF-8 bytes and without angle brackets.");
-  return { title, description };
+export function youtubeBaseMetadata(snapshot: unknown, policy = youtubeMetadataPolicy) {
+  return policy.baseMetadata(snapshot);
 }
 
-export function youtubeUploadMetadata(snapshot: unknown, review: z.infer<typeof youtubeReviewInput>) {
+export function youtubeUploadMetadata(snapshot: unknown, review: z.infer<typeof youtubeReviewInput>, policy = youtubeMetadataPolicy) {
+  policy.checkDeclarations(review);
   // Privacy is never omitted: Google's documented default can be public.
   // Scheduling/publishAt, tags, category and other mutable metadata are not
   // accepted by this bounded contract. No provider call occurs here.
   return {
-    snippet: youtubeBaseMetadata(snapshot),
+    snippet: youtubeBaseMetadata(snapshot, policy),
     status: {
       privacyStatus: review.privacyStatus,
       selfDeclaredMadeForKids: review.selfDeclaredMadeForKids,
@@ -80,6 +72,7 @@ export function youtubePolicyFingerprint(input: {
   contentRevision: number;
   renderId: string | null;
   metadata: unknown;
+  policyVersion?: string;
 }) {
   // PostgreSQL JSONB normalizes object key order; hash canonical JSON so the
   // stored metadata has the same fingerprint after an actual DB round trip.
@@ -96,6 +89,6 @@ export function youtubePolicyFingerprint(input: {
     contentRevision: input.contentRevision,
     renderId: input.renderId,
     metadata: input.metadata,
-    policyVersion: youtubePolicyVersion,
+    policyVersion: input.policyVersion ?? youtubePolicyVersion,
   })));
 }

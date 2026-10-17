@@ -182,15 +182,8 @@ test("local connection revocation and durable unknown attempts never resubmit", 
   };
   await assert.rejects(() => reservePublicationAttempt(db, args), /authorized YouTube upload connection/);
   await db.socialConnection.update({ where: { id: connection.id }, data: { refreshPendingAt: null } });
-  const [attempt, replay] = await Promise.all([
-    reservePublicationAttempt(db, args),
-    reservePublicationAttempt(db, args),
-  ]);
-  assert.equal(attempt.id, replay.id);
-  assert.equal(attempt.status, "RESERVED");
-  await assert.rejects(() => enterPublicationSubmission(db, {
-    organizationId: org.id, attemptId: attempt.id, expectedVersion: 1, actorId: owner.id,
-  }), /current reviewed YouTube upload policy/);
+  await assert.rejects(() => reservePublicationAttempt(db, args), /current reviewed YouTube upload policy/);
+  assert.equal(await db.publicationAttempt.count({ where: { intentId: intent.id } }), 0);
   const reviewPath = root + `/publication-intents/${intent.id}/youtube-policy-review`;
   const previewPath = root + `/publication-intents/${intent.id}/youtube-policy-preview`;
   assert.equal((await owner.call(reviewPath)).status, 404);
@@ -202,10 +195,17 @@ test("local connection revocation and durable unknown attempts never resubmit", 
   assert.equal(preview.status, 200);
   assert.equal(preview.body.snippet.title, "YouTube ledger fixture one");
   assert.equal(preview.body.externallySubmitted, false);
+  assert.deepEqual(preview.body.rules.allowedPrivacyStatuses, ["private", "public", "unlisted"]);
+  assert.equal(preview.body.rules.requireSyntheticMediaDeclaration, false);
   assert.equal((await creator.call(reviewPath, "POST", reviewInput)).status, 403);
   assert.equal((await outsider.call(`/workspaces/${otherOrg.id}/publication-intents/${intent.id}/youtube-policy-review`, "POST", reviewInput)).status, 404);
   assert.equal((await owner.call(reviewPath, "POST", { ...reviewInput, metadataReviewed: false })).status, 400);
   const reviewed = await reviewVideo(intent.id);
+  const [attempt, replay] = await Promise.all([
+    reservePublicationAttempt(db, args), reservePublicationAttempt(db, args),
+  ]);
+  assert.equal(attempt.id, replay.id);
+  assert.equal(attempt.status, "RESERVED");
   const savedReview = await owner.call(reviewPath);
   assert.equal(savedReview.status, 200);
   assert.equal(savedReview.body.id, reviewed.id);
@@ -314,23 +314,23 @@ test("local connection revocation and durable unknown attempts never resubmit", 
   assert.equal(confirmed.providerPostId, "fixture-video");
 
   const pending = await preparedVideo("YouTube ledger fixture two");
+  const pendingReview = await reviewVideo(pending.id);
   const reserved = await reservePublicationAttempt(db, {
     ...args,
     intentId: pending.id,
     requestKey: randomUUID(),
   });
-  const pendingReview = await reviewVideo(pending.id);
   await db.publicationPolicyReview.update({ where: { id: pendingReview.id }, data: { metadata: { unsafe: "tampered" } } });
   await assert.rejects(() => enterPublicationSubmission(db, {
     organizationId: org.id, attemptId: reserved.id, expectedVersion: 1, actorId: owner.id,
   }), /current reviewed YouTube upload policy/);
   const inflight = await preparedVideo("YouTube ledger fixture three");
+  await reviewVideo(inflight.id);
   const reservedInflight = await reservePublicationAttempt(db, {
     ...args,
     intentId: inflight.id,
     requestKey: randomUUID(),
   });
-  await reviewVideo(inflight.id);
   const submitting = await enterPublicationSubmission(db, {
     organizationId: org.id,
     attemptId: reservedInflight.id,

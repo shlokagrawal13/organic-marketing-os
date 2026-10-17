@@ -1,3 +1,4 @@
+import { workspaceYoutubeReviewCurrent } from "./workspace-youtube-policy";
 import {
   BadRequestException,
   ConflictException,
@@ -6,7 +7,7 @@ import {
 import { PrismaClient, Prisma } from "@prisma/client";
 import { digest } from "../../../packages/core/security";
 import { decryptSocialToken, encryptSocialToken } from "../../../packages/core/social-tokens";
-import { youtubePolicyFingerprint, youtubePolicyVersion } from "../../../packages/core/youtube-policy";
+import { youtubePolicyFingerprint } from "../../../packages/core/youtube-policy";
 import { verifiedYoutubeSessionUri } from "../../../packages/core/youtube-resumable";
 import {
   publicationClaimReviewSnapshot,
@@ -215,6 +216,14 @@ export async function reservePublicationAttempt(
       if (current.fingerprint !== input.manualGuidance.fingerprint)
         throw new ConflictException("Posting guidance changed. Review and acknowledge the current warnings before sending.");
     }
+    const review = await tx.publicationPolicyReview.findUnique({ where: { intentId: intent.id } });
+    if (!review || review.organizationId !== org || review.connectionId !== connection.id ||
+        review.contentRevision !== intent.contentRevision || !(await workspaceYoutubeReviewCurrent(tx, org, review)) ||
+        review.expiresAt <= new Date() || review.snapshotHash !== youtubePolicyFingerprint({
+          intentId: intent.id, connectionId: connection.id, contentRevision: intent.contentRevision,
+          renderId: intent.renderId, metadata: review.metadata, policyVersion: review.policyVersion,
+        }))
+      throw new ConflictException("A current reviewed YouTube upload policy and metadata snapshot is required.");
     const attempt = await tx.publicationAttempt.create({
       data: {
         organizationId: org,
@@ -313,14 +322,14 @@ export async function enterPublicationSubmission(
     if (!review || review.organizationId !== org ||
         review.connectionId !== connection.id ||
         review.contentRevision !== intent.contentRevision ||
-        review.policyVersion !== youtubePolicyVersion ||
+        !(await workspaceYoutubeReviewCurrent(tx, org, review)) ||
         review.expiresAt <= submissionAt ||
         review.snapshotHash !== youtubePolicyFingerprint({
           intentId: intent.id,
           connectionId: connection.id,
           contentRevision: intent.contentRevision,
           renderId: intent.renderId,
-          metadata: review.metadata,
+          metadata: review.metadata, policyVersion: review.policyVersion,
         }))
       throw new ConflictException("A current reviewed YouTube upload policy and metadata snapshot is required.");
     const changed = await tx.publicationAttempt.updateMany({

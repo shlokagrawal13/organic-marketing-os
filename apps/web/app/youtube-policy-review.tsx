@@ -6,7 +6,9 @@ import { api } from "./api-client";
 type Render = { id: string; contentRevision: number; status: string; approvedAt: string | null; hasOutput: boolean; createdAt: string };
 type Intent = { id: string; contentRevision: number; renderId: string | null; status: string; createdAt: string; externallySubmitted: false };
 type Channel = { id: string; provider: string; accountLabel: string; externalAccountId: string; scopes: string[]; revokedAt: string | null; refreshPendingAt: string | null; tokenExpiresAt: string | null; refreshTokenExpiresAt: string | null };
-type Preview = { intentId: string; snippet: { title: string; description: string }; policyVersion: string; externallySubmitted: false };
+type Preview = { intentId: string; snippet: { title: string; description: string }; policyVersion: string; externallySubmitted: false;
+  workspacePolicyRevision: number;
+  rules: { allowedPrivacyStatuses: string[]; requireSyntheticMediaDeclaration: boolean } };
 type Review = { id: string; connectionId: string; metadata: { snippet: { title: string; description: string }; status: { privacyStatus: string; selfDeclaredMadeForKids: boolean; containsSyntheticMedia: boolean } }; expiresAt: string; reviewedAt: string; policyVersion: string };
 type Choice = "" | "yes" | "no";
 type Attempt = { id: string; status: string; outcomeCode: string | null; providerPostId: string | null; canCheckStatus: boolean; createdAt: string; completedAt: string | null };
@@ -82,6 +84,14 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
     setIntent(null);
     setPreview(null);
     setReview(null);
+    setConnectionId("");
+    setPrivacyStatus("");
+    setMadeForKids("");
+    setSyntheticMedia("");
+    setMetadataAck(false);
+    setAudienceAck(false);
+    setSyntheticAck(false);
+    setRightsAck(false);
     setAttempt(null);
     setSchedule(null);
     setPostingGuidance(null);
@@ -166,14 +176,17 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
     }
   }
 
+  const policyChoicesValid = !!preview?.rules.allowedPrivacyStatuses.includes(privacyStatus) &&
+    (!preview.rules.requireSyntheticMediaDeclaration || syntheticMedia === "yes");
   async function saveReview() {
-    if (!intent || !preview || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck || !rightsAck) return;
+    if (!policyChoicesValid || !intent || !preview || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck || !rightsAck) return;
     setBusy(true);
     setError("");
     setNotice("");
     try {
       const saved: Review = await api(path + `/${intent.id}/youtube-policy-review`, "POST", {
         connectionId, privacyStatus,
+        workspacePolicyRevision: preview.workspacePolicyRevision,
         selfDeclaredMadeForKids: madeForKids === "yes",
         containsSyntheticMedia: syntheticMedia === "yes",
         metadataReviewed: true, audienceReviewed: true, syntheticMediaReviewed: true,
@@ -372,7 +385,8 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
           {activeChannels.length === 0 && <p>No eligible channel is connected. <button className="text-button" onClick={() => onNavigate("integrations")}>Open Connections</button></p>}
           <label>Visibility
             <select value={privacyStatus} onChange={(event) => setPrivacyStatus(event.target.value)}>
-              <option value="">Choose visibility</option><option value="private">Private</option><option value="unlisted">Unlisted</option><option value="public">Public</option>
+              <option value="">Choose visibility</option>
+              {preview.rules.allowedPrivacyStatuses.map((status) => <option key={status} value={status}>{status[0].toUpperCase() + status.slice(1)}</option>)}
             </select>
           </label>
           <label>Is this video made for kids?
@@ -381,11 +395,12 @@ export default function YoutubePolicyReview({ base, contentId, revision, onNavig
           <label>Does it contain realistic synthetic or altered media?
             <select value={syntheticMedia} onChange={(event) => setSyntheticMedia(event.target.value as Choice)}><option value="">Choose yes or no</option><option value="yes">Yes</option><option value="no">No</option></select>
           </label>
+          {preview.rules.requireSyntheticMediaDeclaration && <p>This upload policy accepts videos declared as containing realistic synthetic or altered media. Only choose Yes if that declaration is accurate.</p>}
           <label className="review-ack"><input type="checkbox" checked={metadataAck} onChange={(e) => setMetadataAck(e.target.checked)} />I checked the exact title and description above.</label>
           <label className="review-ack"><input type="checkbox" checked={audienceAck} onChange={(e) => setAudienceAck(e.target.checked)} />I checked the child-audience declaration.</label>
           <label className="review-ack"><input type="checkbox" checked={syntheticAck} onChange={(e) => setSyntheticAck(e.target.checked)} />I checked the realistic synthetic-media declaration.</label>
           <label className="review-ack"><input type="checkbox" checked={rightsAck} onChange={(e) => setRightsAck(e.target.checked)} />I checked usage rights and current YouTube rules for this video.</label>
-          <button className="button primary" disabled={busy || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck || !rightsAck} onClick={() => void saveReview()}>Save policy review</button>
+          <button className="button primary" disabled={busy || !policyChoicesValid || !connectionId || !privacyStatus || !madeForKids || !syntheticMedia || !metadataAck || !audienceAck || !syntheticAck || !rightsAck} onClick={() => void saveReview()}>Save policy review</button>
         </> : null}
         {review && <div className="policy-saved">
           <h4>Upload status</h4>

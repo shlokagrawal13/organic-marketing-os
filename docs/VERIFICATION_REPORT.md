@@ -1,3 +1,35 @@
+## POLICY-01G current-source checks — 2026-10-17T18:30:51.974723Z
+
+POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished.
+
+Final browser evidence includes 3 new policy cases within the 12-case regression, plus a final 3-case visual recapture. The broader suite also covers foundation, claims, credits, generated/private media, rendering, operations/export and existing upload review. Initial failures resolved: Initial three focused cases used a Connections locator scoped inside main navigation; corrected the selector to the actual button location. First combined run passed11/12; the final case inherited earlier accounts shared-loopback auth rate budget. Added isolated-fixture counter reset before each independent new case; production limiter unchanged; final combined run12/12 passed. Initial full-page screenshots captured a sidebar transition/offscreen fixed elements. Waited for sidebar bounds and normalized scroll/animations for the final visual capture.
+
+Full unit, separate HTTP, native, worker recovery, upgrade, readability and dependency audit suites were not rerun for this frontend-only increment. Inherited F backend/core/schema hashes were checked unchanged. Images: `docs/qa/policy01g-workspace-policy-{desktop,dark,mobile}.png`. Evidence: `docs/qa/policy01g-management-ui-evidence.json`.
+
+## POLICY-01F current-source checks — 2026-10-17T18:01:40.620677Z
+
+POLICY-01F is locally verified: OWNER/ADMIN workspace YouTube policy API with monotonic revisions, deployment-bound validation and audited updates; upload preview/save and manual/scheduled dispatch bind the current workspace policy. Workspace data export and populated archive restore include the policy. Current checks: 12 focused units, 18 isolated HTTP, 1 focused production browser, 22 PGlite migrations, and 2 additional policy HTTP cases against dedicated PostgreSQL 17.11/Redis 7.4.11 fixtures with 22 native migrations. API/web production builds and populated PGlite upgrade/archive restore passed. POLICY-01 remains partial. No public push, native CI, live provider, full Compose/MinIO, native cross-store restore or full master acceptance is claimed.
+
+Focused unit cases have zero failures/skips/cancellations/todo; full unit/export suite was not rerun for F (E 213/213 is historical). Native policy fixtures prove real PostgreSQL concurrency and JSONB round trips, with zero provider calls for stale reviews; synthetic SUBMITTING success is not a Google upload. The browser persists real tenant rules, changes revision and saves an exact reviewed revision. Native fixtures had no shared volumes/user data and were removed afterward. Current failures resolved before closure: Initial API compile caught extra policyVersion fields on advisory guidance calls; removed them before verification. The first focused test loader imported parameter decorators through a shared service module; split the HTTP controller from the decorator-free shared policy resolver, then focused tests passed 2/2. The first broad run passed 17/18 HTTP; export assertion ran against an API built before the new export branch. Rebuilt the frozen final source, passed dedicated native 2/2 and reran the full isolated 18/18 plus focused browser 1/1.
+
+Recovery worker, readability, dependency audits and native database/private-media restore were not rerun. Source-scoped evidence: `docs/qa/policy01f-workspace-rules-evidence.json`.
+
+## POLICY-01E current-source checks — 2026-10-17T17:47:18.600128Z
+
+POLICY-01E is locally verified: validated declarative YouTube metadata/visibility/disclosure rules now bind saved reviews and maintenance receipts to the rule fingerprint. Reservation rejects stale or missing reviews before inserting an attempt; the preview and browser use the same rules. Full unit/export 213/213, isolated HTTP 16/16 and focused production browser 1/1 passed; 21 fresh PGlite migrations and API/web production builds passed. No native CI, live provider, full Compose/MinIO or native cross-store recovery is claimed for this source. POLICY-01 remains partial; this increment and the retained context-recovery changes are local/unpublished.
+
+Focused policy/readiness units passed 11/11. The initial focused dispatch regression failed because a stale review still allowed reservation (zero provider calls); the added pre-reservation guard fixed it and focused dispatch 1/1 then passed. The broad HTTP phase passed 16 cases. Its browser phase exposed retained choices/acknowledgments on reopening a preparation; reset those fields, rebuilt the web app and passed the final focused production browser 1/1, including the tightened-rules preview fixture. API source was unchanged after the passing HTTP phase. Full unit/export receipts have 213 unique pass identities and zero failed/skipped/cancelled/todo cases. Recovery/readability/upgrade/audits were not rerun; historical native POLICY-01D evidence does not verify this source. Evidence: `docs/qa/policy01e-declarative-rules-evidence.json`.
+
+## Context resumption checks — 2026-10-17T16:45:44Z
+
+- Initial `python3 scripts/package_handoff.py --check`: 385 included files, no drift; starting Git worktree was clean.
+- Fresh read-only remote main matched local `0eeaff642108ff781cf2a7f481c916b116ff0889`. Its POLICY-01D source parent matches the saved CI tree; the subsequent closure changes exactly 16 documentation/evidence paths.
+- Saved native receipts: 211 unique `(file, case)` pass identities, no failed receipts and a successful complete summary. Saved 211/16/9/5 CI results retain their original source/date; no new native CI run or artifact download is claimed.
+- Continuation consistency and exact 17-path docs-only scope passed. The refreshed handoff verified 387 source/context/evidence files plus its manifest (388 ZIP entries), including ZIP CRC and every included source hash; runtime data and credentials are excluded.
+- No application code changed; application suites were not rerun for this increment.
+
+See [RESUME_CONTEXT.md](RESUME_CONTEXT.md) and `docs/qa/context-resume-evidence.json`. Historical verification follows.
+
 <!-- POLICY01C_NATIVE_CLOSURE_START -->
 ## POLICY-01C dispatch-time evidence freshness publication and native CI — 2026-10-16 UTC
 

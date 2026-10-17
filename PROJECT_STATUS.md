@@ -1,3 +1,35 @@
+## Current state — POLICY-01G, 2026-10-17
+
+POLICY-01G workspace YouTube policy-management UI is locally verified under Connections. Owners/admins can edit deployment-bounded metadata/visibility/disclosure settings, acknowledge changes and save the loaded revision. Conflicts preserve edits and require explicit reload; transient errors and invalid stored rules are recoverable. Navigation/workspace changes protect unsaved edits; role removal fails closed and restricted roles never load the editor. Web production build, all 12 production browser cases and a final 3-case focused/visual rerun passed against disposable services with 22 PGlite migrations. Backend/schema/dependency code is unchanged from F; no new native CI, live-provider, recovery or full master acceptance is claimed. Accumulated G/F/E/context changes remain local/unpublished.
+
+Next: Start RESEARCH-01 with a bounded source-backed research/evidence foundation: read MASTER_SPEC sections 18-23 and 47, define tenant-scoped research records with citations, collection/review timestamps, provenance and stale/missing-data states, then implement and verify the first ingestion/review workflow. Do not invent source metrics or claim live research from fixtures. POLICY-01 remains partial for wider semantic/multi-platform checks.
+
+Evidence: `docs/qa/policy01g-management-ui-evidence.json`. Older source/CI/test results below retain their original dates and scope.
+
+## Current state — POLICY-01F, 2026-10-17
+
+POLICY-01F is locally verified: OWNER/ADMIN workspace YouTube policy API with monotonic revisions, deployment-bound validation and audited updates; upload preview/save and manual/scheduled dispatch bind the current workspace policy. Workspace data export and populated archive restore include the policy. Current checks: 12 focused units, 18 isolated HTTP, 1 focused production browser, 22 PGlite migrations, and 2 additional policy HTTP cases against dedicated PostgreSQL 17.11/Redis 7.4.11 fixtures with 22 native migrations. API/web production builds and populated PGlite upgrade/archive restore passed. POLICY-01 remains partial. No public push, native CI, live provider, full Compose/MinIO, native cross-store restore or full master acceptance is claimed.
+
+Next: Continue POLICY-01 with an owner/admin workspace-policy management form using the POLICY-01F API: show deployment bounds and current revision, require explicit review before save, handle 409 conflicts and test restricted roles/tenant access in the production browser. Broader semantic/multi-platform and live/master gaps remain tracked in the policy audit.
+
+Evidence: `docs/qa/policy01f-workspace-rules-evidence.json`. Current F/E/context changes remain local/unpublished; prior dated results below retain their original source and scope.
+
+## Current state — POLICY-01E, 2026-10-17
+
+POLICY-01E is locally verified: validated declarative YouTube metadata/visibility/disclosure rules now bind saved reviews and maintenance receipts to the rule fingerprint. Reservation rejects stale or missing reviews before inserting an attempt; the preview and browser use the same rules. Full unit/export 213/213, isolated HTTP 16/16 and focused production browser 1/1 passed; 21 fresh PGlite migrations and API/web production builds passed. No native CI, live provider, full Compose/MinIO or native cross-store recovery is claimed for this source. POLICY-01 remains partial; this increment and the retained context-recovery changes are local/unpublished.
+
+Next: Continue POLICY-01 from POLICY-01E: define and implement the next bounded tenant-scoped configurable-policy increment, with owner/admin authorization, optimistic revision checks and dispatch-time snapshot validation. Use the section 33/40 gap audit; do not replay earlier publication steps.
+
+See `docs/POLICY_01E_AUDIT.md` and `docs/qa/policy01e-declarative-rules-evidence.json`. Earlier dated entries are historical.
+
+## Current resumed state — 2026-10-17
+
+Public `main` and the starting local checkout match `0eeaff642108ff781cf2a7f481c916b116ff0889`, the POLICY-01D closure commit. Application source `d1651879dee580eed48c108f84bd24a7f3d242e5` has saved successful native CI (211 unit / 16 HTTP / 9 browser / 5 recovery); those suites were not rerun for this documentation-only resumption. The older pending publication/next-action fields were reconciled without changing application code, dependencies, tests, migrations or user runtime data.
+
+Next task: Continue POLICY-01 from the current implementation: audit MASTER_SPEC sections 33 and 40 against configurable platform/format/disclosure rules, select the next uncovered bounded rule, then implement and verify tenant/revision and pre-dispatch checks. Do not repeat EDITOR-01I or already-published POLICY-01C/D uploads.
+
+See `docs/RESUME_CONTEXT.md` for the authoritative current summary, exact fresh checks, remaining acceptance gaps and changed paths. Older dated sections below retain historical verification, including publication-pending states that have since been closed. This new continuity update remains local and unpublished.
+
 <!-- POLICY01C_NATIVE_CLOSURE_START -->
 ## POLICY-01C dispatch-time evidence freshness publication and native CI — 2026-10-16 UTC
 

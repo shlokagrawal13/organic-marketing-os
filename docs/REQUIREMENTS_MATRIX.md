@@ -1,3 +1,19 @@
+## POLICY-01G traceability — 2026-10-17
+
+MASTER_SPEC sections 33/40: tenant policy management now has an owner/admin form with explicit review, bounded inputs, optimistic conflict handling and isolated workspace state. Human-review/UX support includes dirty-navigation protection and labeled controls. This does not close semantic quality, full accessibility/device QA, other platform rules or production/master acceptance. Current-source build/browser evidence is linked in [POLICY_01G_MANAGEMENT_UI.md](POLICY_01G_MANAGEMENT_UI.md).
+
+## POLICY-01F traceability — 2026-10-17
+
+MASTER_SPEC sections 33/40 now have bounded tenant-scoped YouTube metadata/visibility/disclosure management through a versioned OWNER/ADMIN API, stale-review invalidation, preview revision checks and pre-dispatch snapshots. Tenant data portability includes the new record. Dedicated PostgreSQL/Redis fixture evidence strengthens NATIVE-01 for this bounded path; it does not complete Compose, native recovery or master acceptance. POLICY-01 remains partial; management UI and wider semantic/platform work remain open.
+
+## POLICY-01E traceability — 2026-10-17
+
+MASTER_SPEC sections 33 and 40: locally implemented a bounded declarative YouTube/Video metadata/disclosure policy, rule-identity invalidation and pre-reservation checks. [POLICY_01E_AUDIT.md](POLICY_01E_AUDIT.md) maps every category and remaining gap. POLICY-01 stays partial; no multi-platform/database-managed or semantic acceptance is claimed.
+
+## Continuation traceability update — 2026-10-17
+
+This docs-only increment supports master requirements 99, 111, 114 and 157 by reconciling continuation state and preserving verification provenance. Existing feature/acceptance states are unchanged; POLICY-01 stays partial. Current context: [RESUME_CONTEXT.md](RESUME_CONTEXT.md). Older publication-pending statements below are historical.
+
 <!-- POLICY01C_NATIVE_CLOSURE_START -->
 ## POLICY-01C dispatch-time evidence freshness publication and native CI — 2026-10-16 UTC
 
