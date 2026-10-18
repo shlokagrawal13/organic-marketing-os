@@ -1,3 +1,19 @@
+## Current continuation — RESEARCH-01C published native CI, 2026-10-18 IST
+
+RESEARCH-01C source is public on main at `689141d2ea14cb89bfdbf267d385867cda8bff71` (tree `115e80d858422042758eb5c6faaf6129e5e31e7a`); all 40 published paths and the full tree matched local verification. Exact-source native Actions run `39116498113` passed: 237 unit/export, 31 HTTP, 18 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed.
+
+RESEARCH-01C adds structured recommendation source references and explicit assumptions. Deterministic checks bind source IDs, captured revisions and exact excerpts; invalid/missing references block approval. Approval rechecks current reviewer membership and cited live source acceptance/fingerprint/expiry. The UI displays matched excerpts, blocked findings or evidence-gap assumptions and gates Use idea on approval. Tenant export/restore preserves recommendation output and agent run/step reviews.
+
+Fresh verification: API/web production builds, 237 unit/export cases (9 new reference cases), 31 native HTTP cases (4 new reference/approval cases), 18 production browser cases, 5 recovery cases, 23 unchanged migrations, bounded readability, populated PGlite restore including recommendation/run/step reference JSON, and both zero-vulnerability dependency audits.
+
+Reference matching does not establish truth, source quality, relevance or semantic entailment, nor automatically validate every strategy field. All claims and assumptions need human review. Historical approvals are not retroactively certified or revoked after later source changes. Live research/provider/deployed acceptance, wider research and POLICY-01, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+This continuity/evidence commit follows the native-verified application source. Read Git/Actions for its own newer HEAD and follow-up CI result; this receipt does not claim that follow-up result in advance. Local receipts/screenshots are verified separately. CI artifact bytes were not independently inspected; see the native receipt for the observed download limitation.
+
+Next: Continue RESEARCH-01D: add explicit bounded research selection/filter criteria to strategy requests, with reviewer-visible category, market and language choices and immutable capture of those choices. Preserve tenant/revision/expiry checks and missing-data behavior; verify actual provider input and reviewer UX, then push and inspect exact-commit CI. Live source adapters, source-quality/semantic acceptance and full master acceptance remain open.
+
+Evidence: `docs/STRATEGY_REFERENCE_REVIEW.md`, `docs/qa/research01c-evidence.json` and `docs/qa/research01c-native-ci-evidence.json`.
+
 ## Current continuation — RESEARCH-01C local verification, 2026-10-18 IST
 
 RESEARCH-01C adds structured recommendation source references and explicit assumptions. Deterministic checks bind source IDs, captured revisions and exact excerpts; invalid/missing references block approval. Approval rechecks current reviewer membership and cited live source acceptance/fingerprint/expiry. The UI displays matched excerpts, blocked findings or evidence-gap assumptions and gates Use idea on approval. Tenant export/restore preserves recommendation output and agent run/step reviews.
