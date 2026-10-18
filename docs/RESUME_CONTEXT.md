@@ -1,3 +1,19 @@
+## Current continuation — RESEARCH-01E published native CI, 2026-10-18 IST
+
+RESEARCH-01E source is public on main at `0378110432b954c93631f0851f9ee182413589a1` (tree `837efee7163de4c2a6eedf041420852c87a9b2ca`); all 35 published paths and the full tree matched local verification. Exact-source native Actions run `39134469984` passed: 242 unit/export, 33 HTTP, 19 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed.
+
+RESEARCH-01E adds bounded research coverage and missing-data explanations. The latest-100 matching window records eligibility/rejection and source/byte omission counts, with one lookahead flag. Immutable capture counts and current category gaps reach the actual provider and trace. The viewer explains bounded scope and exclusions without exposing omitted source bodies; older jobs retain unknown coverage. Export and populated restore preserve the metadata without changing migrations.
+
+Fresh verification: API/web production builds, 242 unit/export cases, 33 native HTTP cases, 19 production browser cases, 5 recovery cases, 23 unchanged migrations, 44 bounded readability samples, populated PGlite restore including coverage/selection/recommendation context, and both zero-vulnerability dependency audits.
+
+Coverage describes source counts inside a bounded capture window; it does not establish completeness, truth, rights, quality, relevance or semantic entailment. No source retrieval or live trend/competitor/search measurement occurred. Live source/provider/deployed acceptance, wider research and POLICY-01, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+This continuity/evidence commit follows the native-verified application source. Read Git/Actions for its own newer HEAD and follow-up CI result; this receipt does not claim that follow-up result in advance. Local receipts/screenshots are verified separately. CI artifact bytes were not independently inspected; see the native receipt for the observed download limitation.
+
+Next: Continue RESEARCH-01F: audit and implement the next bounded structured competitor/search insight slice from master sections 20–21. Preserve manual-source provenance, tenant/revision/review gates, frozen selection/coverage and explicit assumptions; run full verification, push and inspect exact-commit CI. Live adapters, semantic/factual-quality acceptance and full master acceptance remain open.
+
+Evidence: `docs/RESEARCH_COVERAGE.md`, `docs/qa/research01e-evidence.json` and `docs/qa/research01e-native-ci-evidence.json`.
+
 ## Current continuation — RESEARCH-01E local verification, 2026-10-18 IST
 
 RESEARCH-01E adds bounded research coverage and missing-data explanations. The latest-100 matching window records eligibility/rejection and source/byte omission counts, with one lookahead flag. Immutable capture counts and current category gaps reach the actual provider and trace. The viewer explains bounded scope and exclusions without exposing omitted source bodies; older jobs retain unknown coverage. Export and populated restore preserve the metadata without changing migrations.

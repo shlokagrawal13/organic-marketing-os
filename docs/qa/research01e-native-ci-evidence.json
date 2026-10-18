@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01E",
+  "status": "source_public_native_ci_verified",
+  "publicCommit": "0378110432b954c93631f0851f9ee182413589a1",
+  "parentCommit": "53edf40321894aae1bee124a1b5e49418338cffe",
+  "treeSha": "837efee7163de4c2a6eedf041420852c87a9b2ca",
+  "publishedSourcePathCount": 35,
+  "fullPublicTreeMatchesLocal": true,
+  "run": {
+    "id": 39134469984,
+    "number": 93,
+    "workflow": "Core and recovery verification",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "attempt": 1,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39134469984",
+    "headSha": "0378110432b954c93631f0851f9ee182413589a1",
+    "startedAtUtc": "2026-10-18T14:06:04Z",
+    "updatedAtUtc": "2026-10-18T14:22:17Z"
+  },
+  "job": {
+    "id": 117696061133,
+    "name": "Native application verification",
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 39134469984,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Initialize containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Check out source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Install dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Set up Java",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Install test object storage",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Install media dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Install pinned test CJK fonts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Run unit tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Verify bounded small-screen English readability",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Audit production dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13
+      },
+      {
+        "name": "Audit all dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14
+      },
+      {
+        "name": "Verify populated upgrade",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Verify native application flows",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16
+      },
+      {
+        "name": "Upload browser evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17
+      },
+      {
+        "name": "Post Set up Java",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 31
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 32
+      },
+      {
+        "name": "Post Check out source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 33
+      },
+      {
+        "name": "Stop containers",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 34
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 35
+      }
+    ]
+  },
+  "verification": {
+    "unit": {
+      "tests": 242,
+      "passed": 242,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "completeFinalCumulativeSummary": true,
+      "artifactReceiptsIndependentlyInspected": false
+    },
+    "http": {
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 19,
+      "passed": 19,
+      "duration": "1.2m"
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119862
+    },
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "boundedEnglishReadability": {
+      "passed": true,
+      "passedSampleLogLines": 44,
+      "artifactSampleBytesIndependentlyInspected": false
+    },
+    "freshNativePostgresMigrations": 23,
+    "nativeRedis": true,
+    "populatedUpgradeRestore": true,
+    "researchCitationProvenanceAndReviewRestored": true,
+    "queuedStrategyResearchSnapshotRestored": true,
+    "strategyRecommendationsAndCitationReviewRestored": true,
+    "strategyResearchSelectionRestored": true,
+    "strategyResearchCoverageRestored": true,
+    "nativePostgresRestoreVerified": false,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "artifact": {
+    "id": 12138774441,
+    "name": "browser-evidence",
+    "sizeBytes": 8994203,
+    "digest": "sha256:4b4d211d3617dc4a6003416d94c1c66c8bb772fa8c79eab00f21083cdfbc9aa2",
+    "expiresAtUtc": "2027-01-16T14:06:04Z",
+    "digestMatchesUploadLog": true,
+    "bytesDownloadedToWorkspace": false,
+    "downloadedDigestMatches": null,
+    "zipCrcPassed": null,
+    "limitation": {
+      "artifactId": 12138774441,
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "errorType": "URLError",
+      "reason": "Tunnel connection failed: 403 Forbidden",
+      "independentArtifactByteInspection": false
+    }
+  },
+  "decodedJobLogSha256": "e609962a3b5e1f9a0862594df4e7a07925948840b3b5e163df10f2ce46042b3f",
+  "localUnitReceipts": "docs/qa/research01e-unit-receipts.json",
+  "limits": [
+    "Manual citations and observation dates are operator-declared; no automatic source retrieval or factual/rights verification.",
+    "Bounded reference identity/revision/quote checks do not establish factual truth, relevance, semantic entailment or live model quality.",
+    "No live-source/provider or deployed production acceptance occurred.",
+    "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
+    "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
+  ]
+}
