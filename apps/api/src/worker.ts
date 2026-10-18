@@ -5,6 +5,8 @@ import Redis from "ioredis";
 import { randomUUID } from "node:crypto";
 import { ObjectStore } from "../../../packages/core/object-store";
 import { runDuePublicationSchedules } from "./publication-scheduler";
+import { strategyResearchContext, checkStrategyResearchBoundary } from "./research-context";
+import { ResearchContextChangedError } from "../../../packages/core/research-context";
 import {
   ModelRouter,
   providersFromEnv,
@@ -177,12 +179,16 @@ const worker = new Worker(
     let agentRunId: string | undefined;
     let generatorStepId: string | undefined;
     try {
-      const brand =
+      const savedBrand =
         row.brandContext ||
         (await db.brandBrain.findUnique({
           where: { organizationId: row.organizationId },
         }));
-      if (!brand) throw new Error("Brand Brain is unavailable.");
+      if (!savedBrand) throw new Error("Brand Brain is unavailable.");
+      const { researchSnapshot, ...brandFields } = savedBrand as Record<string, any>;
+      const research = row.task === "strategy"
+        ? await strategyResearchContext(db, row.organizationId, researchSnapshot) : null;
+      const brand = freezeAgentContext({ ...brandFields, ...(research ? { research } : {}) });
       const plan = buildAgentPlan(row.task as AITask);
       const frozenContext = freezeAgentContext({
         task: row.task,
@@ -272,6 +278,7 @@ const worker = new Worker(
         },
         abort.signal,
         async () => {
+          if (research) await checkStrategyResearchBoundary(db, row.organizationId, research);
           providerStarted = true;
         },
         routingOptionsFromEnv(routePlan),
@@ -333,7 +340,7 @@ const worker = new Worker(
           },
         });
       });
-    } catch {
+    } catch (error) {
       await db.$transaction(async (tx) => {
         await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${row.organizationId} FOR UPDATE`;
         const changed = await tx.aIJob.updateMany({
@@ -341,7 +348,7 @@ const worker = new Worker(
           data: {
             status: "FAILED",
             completedAt: new Date(),
-            error: abort.signal.aborted
+            error: error instanceof ResearchContextChangedError ? error.message : abort.signal.aborted
               ? "Generation was interrupted. Review provider usage before creating a new request."
               : "Generation or usage recording failed. Review provider usage before retrying.",
           },

@@ -147,6 +147,19 @@ try {
     [research, org, "Synthetic restored observation", "Fixture evidence, not a real market finding.", "https://public.org/restore", "Synthetic source", user, "Synthetic archival review"],
   );
   const researchBefore = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [research])).rows[0].row;
+  const strategyResearch = randomUUID(), strategyJob = randomUUID();
+  await db.query(
+    'INSERT INTO "ResearchRecord" (id,"organizationId",revision,title,category,"temporalScope",summary,"sourceUrl","sourceLabel","observedAt","authorizedSource","createdBy","updatedAt","reviewStatus","reviewedAt","reviewedBy","reviewNote") VALUES ($1,$2,2,\'Synthetic strategy restore source\',\'AUDIENCE\',\'CURRENT\',\'Fixture only; not real research.\',\'https://public.org/strategy-restore\',\'Synthetic source\',now()-interval \'1 minute\',true,$3,now(),\'ACCEPTED\',now(),$3,\'Synthetic source reviewed\')',
+    [strategyResearch, org, user],
+  );
+  const { captureResearchSnapshot, resolveResearchContext } = await import("../dist/packages/core/research-context.js");
+  const researchRow = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
+  const utcResearch = (row) => ({ ...row, ...Object.fromEntries(["observedAt", "collectedAt", "reviewedAt"].map((key) => [key, new Date(row[key] + "Z")])) });
+  const researchSnapshot = captureResearchSnapshot(org, [utcResearch(researchRow)]);
+  assert.equal(researchSnapshot.evidence.length, 1);
+  const strategyContext = { revision: 1, profile: {}, creativeDna: {}, approvedContent: [], researchSnapshot };
+  await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6)',
+    [strategyJob, org, user, randomUUID(), JSON.stringify({ prompt: "Restore a synthetic sourced strategy request" }), JSON.stringify(strategyContext)]);
   const backup = await db.dumpDataDir();
   await db.query('DELETE FROM "Organization" WHERE id=$1', [org]);
   assert.equal(
@@ -194,7 +207,7 @@ try {
   );
   assert.equal(
     (await restored.query('SELECT count(*)::int AS n FROM "AIJob"')).rows[0].n,
-    1,
+    2,
   );
   const savedMedia = (
     await restored.query(
@@ -218,6 +231,11 @@ try {
   assert.equal(savedResearch.reviewStatus, "ACCEPTED");
   assert.equal(savedResearch.revision, 2);
   assert.equal((await db.query('SELECT count(*)::int AS n FROM "ResearchRecord" WHERE "organizationId"=$1', [org])).rows[0].n, 0);
+  const restoredStrategy = (await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].brandContext;
+  assert.deepEqual(restoredStrategy, strategyContext);
+  const restoredSource = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
+  assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).evidence, researchSnapshot.evidence);
+  assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
   await mkdir(".local", { recursive: true });
   const result = {
     passed: true,
@@ -236,6 +254,7 @@ try {
     generatedMediaRequestAndProviderReceiptRestored: true,
     workspaceYoutubePolicyRestored: true,
     researchCitationProvenanceAndReviewRestored: true,
+    queuedStrategyResearchSnapshotRestored: true,
   };
   await writeFile(
     ".local/upgrade-restore-evidence.json",

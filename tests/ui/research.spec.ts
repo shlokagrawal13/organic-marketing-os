@@ -164,3 +164,36 @@ test("missing and stale evidence cannot be accepted and restricted roles cannot 
   expect((await user.call(path + "/" + missing.id)).body.reviewStatus).toBe("REJECTED");
   expect((await user.call(path + "/" + stale.id)).body.reviewStatus).toBe("UNREVIEWED");
 });
+
+test("a generated strategy exposes the reviewed source context actually sent to its provider", async ({ page }) => {
+  const { org, user, path, open } = await setup(page);
+  await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic research brand", audience: "Synthetic audience" }, creativeDna: {} } });
+  const created = (await user.call(path, "POST", evidence("Source for synthetic strategy"))).body;
+  expect((await user.call(path + `/${created.id}/review`, "POST", { expectedRevision: 1, decision: "ACCEPTED", note: "Reviewed synthetic source.", sourcesReviewed: true })).status).toBe(201);
+  await open();
+  await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
+  await page.getByLabel("Generation type").selectOption("strategy");
+  const prompt = "Create a synthetic strategy using the supplied research evidence.";
+  await page.getByLabel("What would you like to create?").fill(prompt);
+  await page.getByRole("button", { name: "Generate", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Test-only strategy", exact: true })).toBeVisible({ timeout: 30000 });
+  const context = page.getByRole("region", { name: "Strategy research context" });
+  await context.getByRole("button", { name: "View research sources" }).click();
+  await expect(context.getByRole("heading", { name: "1 reviewed source selected" })).toBeVisible();
+  await expect(context.getByText("Source for synthetic strategy", { exact: true })).toBeVisible();
+  await expect(context.getByRole("link", { name: "Synthetic source publication" })).toHaveAttribute("href", evidence().sourceUrl);
+  const jobs = (await user.call(`/workspaces/${org.id}/ai/jobs`)).body;
+  const job = jobs.find((item: any) => item.input.prompt === prompt);
+  const trace = (await user.call(`/workspaces/${org.id}/ai/jobs/${job.id}/trace`)).body;
+  expect(trace.frozenContext.brand.research.evidence[0].id).toBe(created.id);
+  expect(trace.frozenContext.brand.research.evidence[0].revision).toBe(2);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path: "test-results/strategy-research-desktop.png", fullPage: true, animations: "disabled" });
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();
+  await page.screenshot({ path: "test-results/strategy-research-dark.png", fullPage: true, animations: "disabled" });
+  await page.getByRole("button", { name: "Switch to light mode" }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.locator(".sidebar").evaluate((el) => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: "test-results/strategy-research-mobile.png", fullPage: true, animations: "disabled" });
+});

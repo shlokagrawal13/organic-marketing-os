@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01B, 2026-10-18 IST
+
+RESEARCH-01B connects current accepted tenant research to strategy generation. Jobs freeze bounded source versions/citations/provenance at queue time; workers omit changed, withdrawn or expired evidence and disclose legacy/missing data. Provider and fallback boundaries recheck eligibility. The research trace and actual model request contain identical resolved evidence; strategy history displays selected sources. Content/scene behavior is preserved.
+
+Fresh checks: API/web production builds, 228 unit/export cases (8 new research-context cases), 27 native HTTP cases (4 new strategy-context cases), 16 production browser cases, 5 recovery cases, 23 unchanged migrations on disposable PostgreSQL 17.11/Redis 7.4.11, bounded readability, populated PGlite restore including a strategy snapshot and a legacy job, and both zero-vulnerability dependency audits.
+
+This supplies manual, team-reviewed observations; no source pages are fetched or independently verified. Synthetic provider tests prove input delivery and policy behavior, not live model quality, correct interpretation or generated citation validity. Wider research, POLICY-01, live/deployed provider acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. The pipeline verifies and does not deploy the application.
+
+This source checkpoint records local verification; routine authorized publication and exact-source native CI must still complete. Current pipeline/CI closure is in progress. Earlier dated entries below retain historical scopes and are superseded for current behavior.
+
+Next: Continue RESEARCH-01C: add explicit generated recommendation/citation references bound to captured research source IDs. Validate unknown, missing and unsupported references, retain visible missing-data/assumption states, and test actual model-output fixtures plus reviewer UX. Do not treat context delivery as proof of factual correctness. Then push and inspect exact-commit CI; live source adapters and quality acceptance remain open.
+
+Evidence: `docs/RESEARCH_STRATEGY_CONTEXT.md` and `docs/qa/research01b-evidence.json`.
+
 ## Current continuation — RESEARCH-01A published native CI, 2026-10-18 IST
 
 RESEARCH-01A manual research intake/review source is public on main at `7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237` (tree `9a03e15a11e7596c11c494cbd07558a9a0889c20`). All 34 published paths and the full tree matched the locally verified source. Exact-source native Actions run `39106314144` succeeded: 220 unit/export, 23 HTTP, 15 production browser and 5 recovery cases. API/web builds, bounded readability, 23 fresh PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed.

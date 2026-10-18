@@ -200,7 +200,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
         <p>Collect source references, record what you observed, and review the evidence with your team.</p></div>
       {canEdit && <button className="button primary" onClick={create} disabled={busy}><Plus size={16} />Add research</button>}
     </div>
-    <div className="research-intro"><BookOpen size={20} aria-hidden="true" /><p>Manual evidence intake. Sources and observation times are entered by your team; links are not fetched or independently verified. Strategy integration is not available yet.</p></div>
+    <div className="research-intro"><BookOpen size={20} aria-hidden="true" /><p>Manual evidence intake. Sources and observation times are entered by your team; links are not fetched or independently verified. New strategies can use up to 10 current, accepted observations. Changed or expired evidence is excluded before generation.</p></div>
     {error && <div className="alert error" role="alert">{error}</div>}
     {notice && <div className="inline-notice" role="status">{notice}</div>}
     <div className="research-toolbar">
@@ -255,7 +255,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
           <div className="tag-row"><span className="pill">Review: {label(selected.reviewStatus)}</span><span className="pill">Evidence: {label(selected.freshness)}</span><span className="pill">{label(selected.temporalScope)}</span></div>
           <p className="research-summary">{selected.summary}</p>
           <div className="research-evidence-state" role="note"><strong>{selected.eligibleForStrategy ? "Evidence accepted and current" : selected.temporalScope === "HISTORICAL" ? "Historical context only" : "Evidence needs review or refresh"}</strong>
-            <p>{selected.freshnessReason}</p><p>Acceptance records a team review. It does not establish source accuracy. Strategy integration is not available yet.</p></div>
+            <p>{selected.freshnessReason}</p><p>Acceptance records a team review and does not establish source accuracy. Eligible observations can be selected for a new strategy; previously queued jobs keep their captured versions.</p></div>
           <dl className="research-facts">
             <div><dt>Provenance</dt><dd>Manual · operator-entered source</dd></div>
             <div><dt>Source reference</dt><dd>{sourceLink(selected.sourceUrl) ? <a href={sourceLink(selected.sourceUrl)!} target="_blank" rel="noopener noreferrer">{selected.sourceLabel || selected.sourceUrl}<ExternalLink size={13} aria-label="opens in a new tab" /></a> : selected.sourceUrl ? "Source URL requires correction" : "No source URL supplied"}{selected.sourceLabel && !sourceLink(selected.sourceUrl) && <span>{selected.sourceLabel}</span>}</dd></div>

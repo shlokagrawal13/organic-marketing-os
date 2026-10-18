@@ -11,6 +11,7 @@ import {
   ServiceUnavailableException,
   NotFoundException,
   ConflictException,
+  ForbiddenException,
 } from "@nestjs/common";
 import { z } from "zod";
 import {
@@ -27,6 +28,7 @@ import {
 import { providersFromEnv, sceneSchema } from "../../../packages/core/ai";
 import { stableJson } from "../../../packages/core/requests";
 import { randomUUID } from "node:crypto";
+import { captureResearchSnapshot } from "../../../packages/core/research-context";
 import {
   creditPolicy,
   reserveCredits,
@@ -164,6 +166,12 @@ export class AIController {
     today.setUTCHours(0, 0, 0, 0);
     return this.db.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${req.organizationId} FOR UPDATE`;
+      await tx.$queryRaw`SELECT "userId" FROM "Membership" WHERE "organizationId"=${req.organizationId} AND "userId"=${req.userId} FOR UPDATE`;
+      const member = await tx.membership.findUnique({ where: { userId_organizationId: {
+        userId: req.userId, organizationId: req.organizationId,
+      } } });
+      if (!member) throw new NotFoundException("Workspace not found.");
+      if (!writerRoles.includes(member.role)) throw new ForbiddenException("Your current role does not allow generation.");
       const duplicate = await tx.aIJob.findUnique({
         where: {
           organizationId_requestKey: {
@@ -229,6 +237,9 @@ export class AIController {
           "Five jobs are already pending. Wait for them to finish.",
         );
       const jobId = randomUUID();
+      const researchSnapshot = data.task === "strategy" ? captureResearchSnapshot(req.organizationId,
+        await tx.researchRecord.findMany({ where: { organizationId: req.organizationId },
+          orderBy: [{ updatedAt: "desc" }, { id: "desc" }], take: 100 }), new Date()) : undefined;
       const reservation =
         policy.mode === "credits"
           ? await reserveCredits(
@@ -253,6 +264,7 @@ export class AIController {
             profile: brand.profile,
             creativeDna: brand.creativeDna,
             approvedContent,
+            ...(researchSnapshot ? { researchSnapshot } : {}),
           },
         },
       });

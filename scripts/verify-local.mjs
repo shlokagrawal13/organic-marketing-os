@@ -163,7 +163,15 @@ const server = db
     })
   : null;
 const fixtureCalls = {};
+const fixtureResearchInputs = new Map();
 const fixtureServer = createServer(async (req, res) => {
+  if (req.url?.startsWith("/research-input?")) {
+    const prompt = new URL(req.url, "http://127.0.0.1:4999").searchParams.get("prompt");
+    const captured = fixtureResearchInputs.get(prompt);
+    res.writeHead(captured ? 200 : 404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(captured || {}));
+    return;
+  }
   if (req.url === "/stats") {
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(fixtureCalls));
@@ -213,7 +221,10 @@ const fixtureServer = createServer(async (req, res) => {
     cta: "Share your experience.",
     scenes: [],
   };
-  const input = JSON.parse(parsed.messages?.[1]?.content || "{}").input || {};
+  const supplied = JSON.parse(parsed.messages?.[1]?.content || "{}");
+  const input = supplied.input || {};
+  fixtureResearchInputs.set(input.prompt || "unknown", { research: supplied.brand?.research ?? null, system: parsed.messages?.[0]?.content });
+  if (fixtureResearchInputs.size > 100) fixtureResearchInputs.delete(fixtureResearchInputs.keys().next().value);
   fixtureCalls[input.prompt || "unknown"] =
     (fixtureCalls[input.prompt || "unknown"] || 0) + 1;
   if (input.prompt?.startsWith("HOLD:")) {

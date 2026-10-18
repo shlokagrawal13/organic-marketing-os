@@ -73,7 +73,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "RESEARCH-01A published native CI closure",
+  "latestIncrement": "RESEARCH-01B local verification; publication/native CI pending",
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
     "policyVersion": "youtube-upload-policy-2026-10-17",
@@ -1043,49 +1043,64 @@
   },
   "currentIncrementChecks": {
     "unit": {
-      "tests": 220,
-      "passed": 220,
+      "tests": 228,
+      "passed": 228,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "completeFinalCumulativeSummary": true,
-      "artifactReceiptsIndependentlyInspected": false
+      "uniqueReceipts": 228
     },
+    "focusedResearchUnit": 8,
     "http": {
-      "tests": 23,
-      "passed": 23,
+      "tests": 27,
+      "passed": 27,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0
     },
+    "focusedResearchHttp": 4,
     "browser": {
-      "tests": 15,
-      "passed": 15,
-      "duration": "52.8s"
+      "tests": 16,
+      "passed": 16
     },
+    "focusedResearchBrowser": 4,
     "recovery": {
       "tests": 5,
       "passed": 5,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119856
+      "observedRemainingLockMs": 119947
     },
     "apiBuild": true,
     "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "nativePostgresVersion": "17.11",
+    "nativeRedisVersion": "7.4.11",
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4967472,
+      "sha256": "f50d58738f6dc941185c7259856bc436f5cf10cc63fcaeaa0fc74017369a9902",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true
+    },
     "boundedEnglishReadability": {
       "passed": true,
-      "passedSampleLogLines": 44,
-      "artifactSampleBytesIndependentlyInspected": false
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
     },
-    "freshNativePostgresMigrations": 23,
-    "nativeRedis": true,
-    "populatedUpgradeRestore": true,
-    "researchCitationProvenanceAndReviewRestored": true,
-    "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0
   },
@@ -10321,5 +10336,112 @@
       "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
       "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
     ]
+  },
+  "latestResearch01B": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01B",
+    "recordedAtUtc": "2026-10-18T08:09:27.840791+00:00",
+    "status": "locally_verified_publication_ci_pending",
+    "scope": "Bounded, immutable accepted research snapshots reach actual strategy provider requests and agent traces; changed/stale/withdrawn records are excluded, provider/fallback boundaries recheck, legacy jobs disclose missing evidence, and source context is visible in generation history.",
+    "basePublicCommit": "61efba96e30fc71fb71c329d79804194281f2707",
+    "verification": {
+      "unit": {
+        "tests": 228,
+        "passed": 228,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "uniqueReceipts": 228
+      },
+      "focusedResearchUnit": 8,
+      "http": {
+        "tests": 27,
+        "passed": 27,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "focusedResearchHttp": 4,
+      "browser": {
+        "tests": 16,
+        "passed": 16
+      },
+      "focusedResearchBrowser": 4,
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119947
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "freshNativePostgresMigrations": 23,
+      "nativePostgresVersion": "17.11",
+      "nativeRedisVersion": "7.4.11",
+      "populatedUpgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 23,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4967472,
+        "sha256": "f50d58738f6dc941185c7259856bc436f5cf10cc63fcaeaa0fc74017369a9902",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true,
+        "workspaceYoutubePolicyRestored": true,
+        "researchCitationProvenanceAndReviewRestored": true,
+        "queuedStrategyResearchSnapshotRestored": true
+      },
+      "boundedEnglishReadability": {
+        "passed": true,
+        "standardSamples": 36,
+        "busySamples": 8,
+        "blankNegativeControl": true
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "behavior": [
+      "Strategy queue rechecks writer membership and captures latest-100 / up-to-10 accepted eligible sources with 1,000-codepoint excerpts and 24,000-byte cap.",
+      "Captured IDs/revisions/provenance/dates/citations/fingerprints remain immutable across request replay and source edits.",
+      "Worker omits changed, withdrawn and expired records; legacy and missing snapshots remain explicit gaps.",
+      "Trace and actual provider input contain identical resolved evidence; each provider attempt/fallback rechecks live source identities and expiry.",
+      "Strategy history shows selected source versions/dates and missing states; workspace export and populated restore retain captured JSON."
+    ],
+    "screenshots": {
+      "desktop": "docs/qa/research01b-desktop.png",
+      "dark": "docs/qa/research01b-dark.png",
+      "mobile": "docs/qa/research01b-mobile.png"
+    },
+    "unitReceipts": "docs/qa/research01b-unit-receipts.json",
+    "commands": [
+      "npm run build",
+      "npm test",
+      "npm run verify:upgrade",
+      "npm run verify:readability",
+      "npm audit --omit=dev --audit-level=moderate",
+      "npm audit --audit-level=moderate",
+      "bash .local/run-research01b-native.sh (dedicated disposable PostgreSQL/Redis; full verify-local --native --production-web)"
+    ],
+    "limits": [
+      "No remote source retrieval, source truth/rights verification or live research took place; the checks prove supplied input delivery and policy behavior.",
+      "Only new strategy jobs consume bounded manual evidence; this does not verify live model quality or that generated recommendations cite/interpret sources correctly.",
+      "No live research/source API, Google operation or deployed production acceptance occurred.",
+      "Populated archive restore uses PGlite; native PostgreSQL plus private-media cross-store restore remains open.",
+      "RESEARCH-01, POLICY-01 and full master acceptance remain partial."
+    ],
+    "logs": {
+      "unit": "a8a6e0369c440ff6eaee602b01757de196ebcb45b3c7e7feeb29dc984374e533",
+      "native": "43e9f5b5e0d9b0885fbcc0098c163c0db09facb2b77799791d37cd9b9ee515ee",
+      "build": "2d7b7ebc9135e6ccfc73baf34060dda7a8875eb94538711b517fd00d5b7adc7c",
+      "upgrade": "a7966ac76d34aa824af94aa630501b7483352ba05efe3370b67ca70677a8de47",
+      "readability": "8fd5f6dd2a4c5042db10e3975d2bfea3cae5df1412a8ba12824bd125ae8ac9ae"
+    }
   }
 }

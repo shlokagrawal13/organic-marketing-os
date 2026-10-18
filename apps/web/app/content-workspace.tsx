@@ -31,6 +31,7 @@ import { api, download } from "./api-client";
 import { RenderPanel } from "./media-workspace";
 import YoutubePolicyReview from "./youtube-policy-review";
 import { CaptionEditor } from "./caption-editor";
+import StrategyResearch from "./strategy-research";
 import {
   sceneTimeline as timeline,
   timelineTime,
@@ -1867,6 +1868,7 @@ export default function ContentWorkspace({
                         <Status value={j.status} />
                       </div>
                       <p>{j.input.prompt}</p>
+                      {j.task === "strategy" && <StrategyResearch key={`${base}:${j.id}`} base={base} jobId={j.id} available={!!j.agentRun} />}
                       {j.agentRun && (
                         <div className="field-help">
                           Agent graph {j.agentRun.graphVersion} ·{" "}
