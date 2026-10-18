@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-18.07-RESEARCH-01E-native-CI-fixture-followup",
-  "savedAtUtc": "2026-10-18T14:50:35.314337+00:00",
-  "currentMilestone": "RESEARCH-01E application source native CI verified; browser fixture follow-up locally verified, own full CI read from Git/Actions. RESEARCH-01F structured insights are next.",
+  "checkpointRevision": "2026-10-18.07-RESEARCH-01E-native-CI-api-fixture-followup",
+  "savedAtUtc": "2026-10-18T15:09:05.980061+00:00",
+  "currentMilestone": "RESEARCH-01E application source native CI verified; HTTP/browser fixture budget follow-up locally verified; read its own full CI from latest Git/Actions. RESEARCH-01F is next.",
   "activeTaskId": null,
   "workInProgress": false,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RESEARCH-01",
-  "nextAction": "Read latest fixture/evidence HEAD and its own full CI result from Git/Actions; inspect/fix any failure. Then continue RESEARCH-01F structured competitor/search insights with full verification, push and CI; live/factual/full master acceptance remain open.",
+  "nextAction": "Read latest HTTP/browser fixture follow-up HEAD and its full CI in Git/Actions; inspect/fix any failure. Then continue RESEARCH-01F structured competitor/search insights with full verification, push and CI. Live/factual/full acceptance remains open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -103,9 +103,11 @@
     "docs/STRATEGY_RESEARCH_SELECTION.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/research01e-ci-fixture-followup.json",
+    "docs/qa/research01e-api-fixture-followup.json",
     "docs/qa/verification-summary.json",
+    "tests/integration/media.test.ts",
     "tests/support/browser-rate-budget.ts",
+    "tests/support/fixture-rate-budget.ts",
     "tests/ui/fixture-isolation.spec.ts",
     "tests/ui/research.spec.ts",
     "tests/ui/social-policy-review.spec.ts",
@@ -6705,7 +6707,7 @@
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "0378110432b954c93631f0851f9ee182413589a1",
-    "status": "RESEARCH-01E_app_native_ci_verified_fixture_followup_own_ci_pending",
+    "status": "RESEARCH-01E_app_native_ci_verified_api_fixture_followup_own_ci_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -8054,7 +8056,8 @@
   ],
   "lastChanges": [
     "RESEARCH-01E adds bounded research coverage and missing-data explanations. The latest-100 matching window records eligibility/rejection and source/byte omission counts, with one lookahead flag. Immutable capture counts and current category gaps reach the actual provider and trace. The viewer explains bounded scope and exclusions without exposing omitted source bodies; older jobs retain unknown coverage. Export and populated restore preserve the metadata without changing migrations.",
-    "Isolated shared browser auth/API budgets with a guarded helper and actual 429/200 bootstrap regression; no production code/limits or timeouts changed."
+    "Isolated shared browser auth/API budgets with a guarded helper and actual 429/200 bootstrap regression; no production code/limits or timeouts changed.",
+    "Generalized guarded fixture rate-budget reset for the independent media HTTP case; verified normal auth/API throttles and bootstrap recovery without altering production limits/timeouts."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8091,7 +8094,7 @@
     "prisma/migrations/202610180001_research_evidence/migration.sql": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RESEARCH-01E source is public on main at `0378110432b954c93631f0851f9ee182413589a1` (tree `837efee7163de4c2a6eedf041420852c87a9b2ca`); all 35 published paths and the full tree matched local verification. Exact-source native Actions run `39134469984` passed: 242 unit/export, 33 HTTP, 19 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed. Later continuity CI found a browser bootstrap/navigation timeout. Shared fixture auth/API isolation plus a real limiter/restore regression passed 33 native HTTP, 20 browser and 5 recovery cases. Read the newer HEAD and its full CI from Git/Actions.",
+  "latestStatus": "RESEARCH-01E source is public on main at `0378110432b954c93631f0851f9ee182413589a1` (tree `837efee7163de4c2a6eedf041420852c87a9b2ca`); all 35 published paths and the full tree matched local verification. Exact-source native Actions run `39134469984` passed: 242 unit/export, 33 HTTP, 19 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed. Later continuity CI found a browser bootstrap/navigation timeout. Shared fixture auth/API isolation plus a real limiter/restore regression passed 33 native HTTP, 20 browser and 5 recovery cases. Read the newer HEAD and its full CI from Git/Actions. The first fixture follow-up CI hit an explicit inherited API 429 in the existing media case. Shared HTTP/browser fixture isolation and real auth/API throttle/restore assertions passed complete 33 HTTP, 20 browser and 5 recovery locally; read newer HEAD CI.",
   "activeTask": null,
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -12327,6 +12330,58 @@
     "limits": [
       "Source coverage and excerpt matching do not prove truth, quality or semantic relevance.",
       "Live source/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
+    ]
+  },
+  "research01eApiFixtureFollowup": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01E",
+    "recordedAtUtc": "2026-10-18T15:09:05.980061+00:00",
+    "status": "api_browser_fixture_followup_locally_verified_own_ci_pending",
+    "nativeVerifiedApplicationSource": "0378110432b954c93631f0851f9ee182413589a1",
+    "nativeVerifiedSourceRun": 39134469984,
+    "priorBrowserFailure": "docs/qa/research01e-ci-fixture-followup.json",
+    "failedFollowup": {
+      "commit": "7b79cc612f5ff54609572deb70f07866af1e2965",
+      "runId": 39137826516,
+      "jobId": 117705855790,
+      "unitPassed": 242,
+      "httpPassed": 32,
+      "httpFailed": 1,
+      "browser": "not run after HTTP failure",
+      "recovery": "not run after HTTP failure",
+      "failure": "The existing media integration case received HTTP 429 Too many requests instead of the Gujarati caption body at media.test.ts:720.",
+      "decodedLogSha256": "fe9db0a43b4f885fbbefb7a88650d7be47f1db651cc6b45256cc61be4e216fad"
+    },
+    "fix": {
+      "paths": [
+        "tests/support/fixture-rate-budget.ts",
+        "tests/integration/media.test.ts",
+        "tests/ui/fixture-isolation.spec.ts",
+        "tests/ui/research.spec.ts",
+        "tests/ui/social-policy-review.spec.ts",
+        "tests/ui/workspace-policy.spec.ts"
+      ],
+      "behavior": "The shared guarded helper now serves HTTP and browser fixtures. The independent media case resets inherited auth/API counters before it starts. Browser regression verifies both normal auth-40 and API-600 budget exhaustion produce real 429 and absent navigation, then verifies 200/restored navigation after fixture reset.",
+      "productionApplicationCodeChanged": false,
+      "productionRateLimitsChanged": false,
+      "timeoutsIncreased": false,
+      "checksSkippedOrWeakened": false,
+      "resetScope": "Only disposable isolated-test Redis counters; the helper imports the existing isolated-harness guard before opening Redis."
+    },
+    "localVerification": {
+      "httpPassed": 33,
+      "browserPassed": 20,
+      "recoveryPassed": 5,
+      "normalAuthAndApiThrottlesVerified": true,
+      "bootstrapRecoveryVerified": true,
+      "remainingRecoveryLockMs": 119955,
+      "nativeLogSha256": "7aea7cf3839a9e1b91e02854c7a6ce3faa5609a03d43414723090a7dba4bd511",
+      "unitScope": "242 unit/export cases passed on unchanged production/unit source locally and in all earlier CI attempts. This newer fixture/evidence commit requires its own complete CI."
+    },
+    "latestHeadCi": "Read Git/Actions for the newer fixture/evidence HEAD. Its own CI success is not claimed in advance.",
+    "limits": [
+      "The exact first browser failure response remains unobserved because failed artifact bytes were inaccessible; its reproduced mechanism and the later explicit HTTP 429 are recorded separately.",
+      "Manual source counts do not prove completeness, truth, rights or semantic relevance. Live/provider/deployed/full master acceptance and native PostgreSQL/private-media cross-store restore remain open. CI verifies and does not deploy."
     ]
   }
 }

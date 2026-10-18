@@ -1,8 +1,8 @@
 import "./isolated";
 import Redis from "ioredis";
 
-/** Independent browser accounts share the isolated harness's loopback IP. */
-export async function resetBrowserFixtureRateBudget() {
+/** Independent HTTP/browser accounts share the isolated harness's loopback IP. */
+export async function resetFixtureRateBudget() {
   const redis = new Redis(process.env.REDIS_URL!, { maxRetriesPerRequest: 1 });
   try {
     for (const pattern of ["rate:auth:*", "rate:api:*"]) {

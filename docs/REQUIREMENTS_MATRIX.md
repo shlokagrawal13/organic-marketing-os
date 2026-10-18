@@ -1,3 +1,11 @@
+## Current HTTP/browser fixture follow-up — 2026-10-18 IST
+
+RESEARCH-01E application source `0378110432b954c93631f0851f9ee182413589a1` remains native-verified by run `39134469984`. After the recorded browser bootstrap timeout, follow-up run `39137826516` passed 242 unit cases but stopped at 32/33 HTTP cases: the existing media test received a 429 response instead of Gujarati captions. Browser/recovery were not run in that attempt.
+
+A shared guarded fixture-budget helper now resets inherited counters before the independent media, research and policy browser fixtures. The regression verifies real auth/API 429 responses at the normal 40/600 budgets and restored authenticated navigation after fixture reset. Production code, rate limits, timeouts and assertions remain unchanged. Fresh complete native verification passed 33 HTTP, 20 browser and 5 recovery cases.
+
+This newer fixture/evidence commit requires its own full CI; read the latest HEAD in Git/Actions. No success is claimed in advance. The earlier browser response remains unobserved because its artifact bytes were inaccessible; the deterministic reproduction and this explicit media HTTP 429 are distinguished in `docs/qa/research01e-api-fixture-followup.json` and the earlier receipt. Next remains RESEARCH-01F structured competitor/search insights. Full live/factual/master acceptance remains open.
+
 ## Current CI fixture follow-up — 2026-10-18 IST
 
 RESEARCH-01E application source `0378110432b954c93631f0851f9ee182413589a1` remains verified by native Actions run `39134469984` (242 unit, 33 HTTP, 19 browser, 5 recovery; builds, readability, audits and populated coverage restore passed). Later continuity run `39135793894` passed units/HTTP but stopped at 18/19 browser cases when the existing YouTube review test lost navigation after reload; recovery did not run in that attempt.

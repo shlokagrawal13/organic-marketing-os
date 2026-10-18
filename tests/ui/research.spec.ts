@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
-import { resetBrowserFixtureRateBudget } from "../support/browser-rate-budget";
+import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { actor, db } from "../support/http";
 
 const orgs: string[] = [], users: string[] = [];
@@ -20,7 +20,7 @@ test.afterAll(async () => {
 });
 async function setup(page: Page, role: Parameters<typeof actor>[1] = "OWNER") {
   test.setTimeout(90000);
-  await resetBrowserFixtureRateBudget();
+  await resetFixtureRateBudget();
   const org = await db.organization.create({ data: { name: `Research browser ${role}` } });
   orgs.push(org.id);
   const user = await actor(org.id, role); users.push(user.id);

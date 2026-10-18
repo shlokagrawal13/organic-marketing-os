@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01E",
+  "recordedAtUtc": "2026-10-18T15:09:05.980061+00:00",
+  "status": "api_browser_fixture_followup_locally_verified_own_ci_pending",
+  "nativeVerifiedApplicationSource": "0378110432b954c93631f0851f9ee182413589a1",
+  "nativeVerifiedSourceRun": 39134469984,
+  "priorBrowserFailure": "docs/qa/research01e-ci-fixture-followup.json",
+  "failedFollowup": {
+    "commit": "7b79cc612f5ff54609572deb70f07866af1e2965",
+    "runId": 39137826516,
+    "jobId": 117705855790,
+    "unitPassed": 242,
+    "httpPassed": 32,
+    "httpFailed": 1,
+    "browser": "not run after HTTP failure",
+    "recovery": "not run after HTTP failure",
+    "failure": "The existing media integration case received HTTP 429 Too many requests instead of the Gujarati caption body at media.test.ts:720.",
+    "decodedLogSha256": "fe9db0a43b4f885fbbefb7a88650d7be47f1db651cc6b45256cc61be4e216fad"
+  },
+  "fix": {
+    "paths": [
+      "tests/support/fixture-rate-budget.ts",
+      "tests/integration/media.test.ts",
+      "tests/ui/fixture-isolation.spec.ts",
+      "tests/ui/research.spec.ts",
+      "tests/ui/social-policy-review.spec.ts",
+      "tests/ui/workspace-policy.spec.ts"
+    ],
+    "behavior": "The shared guarded helper now serves HTTP and browser fixtures. The independent media case resets inherited auth/API counters before it starts. Browser regression verifies both normal auth-40 and API-600 budget exhaustion produce real 429 and absent navigation, then verifies 200/restored navigation after fixture reset.",
+    "productionApplicationCodeChanged": false,
+    "productionRateLimitsChanged": false,
+    "timeoutsIncreased": false,
+    "checksSkippedOrWeakened": false,
+    "resetScope": "Only disposable isolated-test Redis counters; the helper imports the existing isolated-harness guard before opening Redis."
+  },
+  "localVerification": {
+    "httpPassed": 33,
+    "browserPassed": 20,
+    "recoveryPassed": 5,
+    "normalAuthAndApiThrottlesVerified": true,
+    "bootstrapRecoveryVerified": true,
+    "remainingRecoveryLockMs": 119955,
+    "nativeLogSha256": "7aea7cf3839a9e1b91e02854c7a6ce3faa5609a03d43414723090a7dba4bd511",
+    "unitScope": "242 unit/export cases passed on unchanged production/unit source locally and in all earlier CI attempts. This newer fixture/evidence commit requires its own complete CI."
+  },
+  "latestHeadCi": "Read Git/Actions for the newer fixture/evidence HEAD. Its own CI success is not claimed in advance.",
+  "limits": [
+    "The exact first browser failure response remains unobserved because failed artifact bytes were inaccessible; its reproduced mechanism and the later explicit HTTP 429 are recorded separately.",
+    "Manual source counts do not prove completeness, truth, rights or semantic relevance. Live/provider/deployed/full master acceptance and native PostgreSQL/private-media cross-store restore remain open. CI verifies and does not deploy."
+  ]
+}

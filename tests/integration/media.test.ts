@@ -2,6 +2,7 @@ import { CJK_BATCH_FIXTURES } from "../fixtures/cjk-batch";
 import { SOUTHEAST_BATCH_FIXTURES } from "../fixtures/southeast-batch";
 import { INDIC_BATCH_FIXTURES } from "../fixtures/indic-batch";
 import "../support/isolated";
+import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { test, after } from "node:test";
 import assert from "node:assert/strict";
 import { PrismaClient } from "@prisma/client";
@@ -77,6 +78,7 @@ test(
     ),
   },
   async () => {
+    await resetFixtureRateBudget();
     const a = client(),
       b = client(),
       suffix = randomUUID();

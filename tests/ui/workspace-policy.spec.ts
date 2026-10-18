@@ -2,7 +2,7 @@ import { test, expect, Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { db } from "../support/http";
 import rules from "../../packages/core/youtube-rules.json";
-import { resetBrowserFixtureRateBudget } from "../support/browser-rate-budget";
+import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 
 test.afterAll(async () => { await db.$disconnect(); });
 
@@ -10,7 +10,7 @@ const headers = { "X-Requested-With": "MarketingOS" };
 const acknowledgment = "I reviewed these rules and understand existing upload reviews and scheduled posts may need review again.";
 async function setup(page: Page, role: "OWNER" | "ADMIN" = "OWNER") {
   test.setTimeout(90000);
-  await resetBrowserFixtureRateBudget();
+  await resetFixtureRateBudget();
   expect((await page.request.post("/api/auth/register", { headers, data: {
     name: "Policy manager QA", email: `policy-manager-${randomUUID()}@example.test`,
     password: "Isolated browser password 123",
