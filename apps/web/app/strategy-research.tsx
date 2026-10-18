@@ -19,6 +19,8 @@ export default function StrategyResearch({ base, jobId, available }: { base: str
     <button className="button" disabled={!available || busy} onClick={() => void load()}>{busy ? "Loading research context…" : "View research sources"}</button>
     {error && <p role="alert" className="alert error">{error}</p>}
     {context && <div>
+      {context.selection ? <p aria-label="Captured research selection" className="field-help">Captured filters · Categories: {context.selection.categories.join(", ") || "All"} · Market: {context.selection.market || "All"} · Language: {context.selection.language || "All"}</p>
+        : <p className="field-help">This older job did not record explicit research filters.</p>}
       <h4>{context.evidence.length ? `${context.evidence.length} reviewed source${context.evidence.length === 1 ? "" : "s"} selected` : "No usable research evidence"}</h4>
       <p className="field-help">{context.checkedAt ? `Checked ${new Date(context.checkedAt).toLocaleString()}. ` : "This older job has no captured research. "}Manual observations are checked before provider requests; sources are not fetched or independently verified. Check the job result before using its recommendations.</p>
       {context.evidence.length === 0 && <p className="field-help">Recommendations must treat current research as missing and label assumptions. Add and review evidence before requesting a new strategy.</p>}

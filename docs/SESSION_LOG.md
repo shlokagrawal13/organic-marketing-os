@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01D local verification, 2026-10-18 IST
+
+RESEARCH-01D adds explicit bounded category/market/language filters to strategy requests. The tenant query filters before the latest-100 limit; canonical choices freeze in job snapshots and actual provider/trace context. Reviewers see captured filters independently of later form changes. Empty matches remain missing research/assumptions; old snapshots remain readable. Export and populated restore retain the criteria without migration changes.
+
+Fresh verification: API/web production builds, 239 unit/export cases, 32 native HTTP cases, 18 production browser cases, 5 recovery cases, 23 unchanged migrations, 44 bounded readability samples, populated PGlite restore including research selection and recommendation/run/step reference JSON, and both zero-vulnerability dependency audits.
+
+Selection restricts a bounded input window and does not rank relevance or consider every library entry. Manual source declarations and excerpt matching do not establish truth, rights, source quality or semantic entailment. Live research/provider/deployed acceptance, wider research and POLICY-01, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+This checkpoint is locally verified; standing-authorized source publication and exact-commit native CI are pending. Earlier entries below retain historical scopes.
+
+Next: Continue RESEARCH-01E: audit master research requirements against the retained manual intake, selection and recommendation review. Implement the next bounded source-coverage/missing-data explanation increment, preserving tenant/revision/expiry checks; verify, push and inspect exact-commit CI. Live adapters, relevance/factual-quality acceptance and full master acceptance remain open.
+
+Evidence: `docs/STRATEGY_RESEARCH_SELECTION.md`, `docs/qa/research01d-evidence.json`.
+
 ## Current CI fixture follow-up — 2026-10-18 IST
 
 RESEARCH-01C application source `689141d2ea14cb89bfdbf267d385867cda8bff71` remains native-verified by Actions run `39116498113` (237 unit, 31 HTTP, 18 browser, 5 recovery; restore, builds, readability and both audits passed). Its later evidence-only closure run `39126112183` passed 237 unit and 31 HTTP but stopped at 17/18 browser cases: Playwright rejected a datetime-local value ending in `:00` after Chromium normalized it to minutes. Recovery was not run in that failed attempt.

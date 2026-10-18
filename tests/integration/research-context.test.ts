@@ -136,3 +136,48 @@ test("strategy enqueue rechecks current writer membership before capturing priva
     (error: any) => error.getStatus?.() === 403);
   assert.equal(await db.aIJob.count({ where: { organizationId: w.org.id } }), 0);
 });
+
+test("strategy filters constrain the pre-limit query, freeze canonical choices, replay safely and disclose unmatched research", async () => {
+  const w = await workspace("Selection fixture"), other = await workspace("Foreign selection fixture");
+  const kept = await accepted(w, "Selected observation");
+  await accepted(other, "Foreign matching observation");
+  // A hundred newer mismatches must not crowd the matching source out of the query.
+  await db.researchRecord.createMany({ data: Array.from({ length: 101 }, (_, i) => ({ ...input(`Different market ${i}`),
+    organizationId: w.org.id, createdBy: w.owner.id, market: "US", observedAt: new Date() })) });
+  const data = { requestKey: randomUUID(), task: "strategy", prompt: "Synthetic explicit selection " + randomUUID(),
+    researchSelection: { categories: ["AUDIENCE"], market: " India ", language: " ENGLISH " } };
+  await queue.pause();
+  const posted = await w.owner.call(w.root + "/ai/jobs", "POST", data);assert.equal(posted.status, 201);
+  const saved = await db.aIJob.findUniqueOrThrow({ where: { id: posted.body.id } });
+  const selection = { categories: ["AUDIENCE"], market: "india", language: "english" };
+  assert.deepEqual((saved.brandContext as any).researchSnapshot.selection, selection);
+  assert.deepEqual((saved.brandContext as any).researchSnapshot.evidence.map((x: any) => x.id), [kept.id]);
+  assert.deepEqual((saved.input as any).researchSelection, selection);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", { ...data, researchSelection: selection })).body.id, saved.id);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", { ...data, researchSelection: { ...selection, market: "US" } })).status, 409);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", { ...data, task: "content", requestKey: randomUUID() })).status, 400);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", { ...data, requestKey: randomUUID(), researchSelection: { ...selection, sourceIds: [kept.id] } })).status, 400);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", { ...data, requestKey: randomUUID(), researchSelection: { ...selection, market: "İ".repeat(100) } })).status, 400);
+  const analyst = await actor(w.org.id, "ANALYST");users.push(analyst.id);
+  assert.equal((await analyst.call(w.root + "/ai/jobs", "POST", { ...data, requestKey: randomUUID() })).status, 403);
+  await queue.resume();
+  const completed = await result(w, saved.id, data.prompt);
+  assert.deepEqual(completed.sent.research.selection, selection);
+  assert.deepEqual(completed.sent.research.evidence.map((x: any) => x.id), [kept.id]);
+  const emptyData = { ...data, requestKey: randomUUID(), prompt: "Synthetic missing filtered evidence " + randomUUID(),
+    researchSelection: { ...selection, language: "Hindi" } };
+  const empty = await w.owner.call(w.root + "/ai/jobs", "POST", emptyData);assert.equal(empty.status, 201);
+  const absent = await result(w, empty.body.id, emptyData.prompt);
+  assert.equal(absent.sent.research.status, "MISSING");assert.equal(absent.sent.research.selection.language, "hindi");
+  // Literal wildcard labels: neither a wildcard match nor another tenant may supply evidence.
+  await db.researchRecord.update({ where: { id: kept.id }, data: { market: "A_%\\B" } });
+  const literalData = { ...data, requestKey: randomUUID(), prompt: "Synthetic literal filters " + randomUUID(),
+    researchSelection: { ...selection, market: "a_%\\b" } };
+  const literal = await w.owner.call(w.root + "/ai/jobs", "POST", literalData);assert.equal(literal.status, 201);
+  assert.deepEqual((await db.aIJob.findUniqueOrThrow({ where: { id: literal.body.id } })).brandContext &&
+    ((await db.aIJob.findUniqueOrThrow({ where: { id: literal.body.id } })).brandContext as any).researchSnapshot.evidence.map((x: any) => x.id), [kept.id]);
+  await result(w, literal.body.id, literalData.prompt);
+  const exported = await fetch(base + w.root + "/operations/export", { headers: w.owner.headers });
+  const rows = (await exported.text()).trim().split("\n").map(x => JSON.parse(x));
+  assert.deepEqual(rows.find(x => x.type === "aiJob" && x.data.id === saved.id).data.brandContext.researchSnapshot.selection, selection);
+});

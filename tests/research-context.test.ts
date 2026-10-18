@@ -121,3 +121,31 @@ test("provider fallback rechecks frozen evidence and stops before a second reque
     async () => assertResearchContextCurrent(research, org, [row], now)), ResearchContextChangedError);
   assert.equal(calls, 1);
 });
+
+test("explicit research criteria filter before candidate limits and persist through resolution without changing legacy jobs", () => {
+  const criteria = { categories: ["AUDIENCE" as const], market: "india", language: "english" };
+  const selected = source();
+  const snapshot = captureResearchSnapshot(org, [...Array.from({ length: 101 }, () => source({ market: "US" })), selected], now, criteria);
+  assert.deepEqual(snapshot.selection, criteria);
+  assert.deepEqual(snapshot.evidence.map(x => x.id), [selected.id]);
+  assert.deepEqual(resolveResearchContext(snapshot, org, [selected], now).selection, criteria);
+  assert.equal(readResearchSnapshot({ ...snapshot, selection: { ...criteria, market: "us" } }, org), null);
+  const { selection, ...legacy } = snapshot;
+  assert.ok(readResearchSnapshot(legacy, org));
+  assert.equal(resolveResearchContext(legacy, org, [selected], now).selection, null);
+  for (const change of [{ category: "SEARCH" }, { market: "US" }, { language: "Hindi" }]) {
+    assert.deepEqual(captureResearchSnapshot(org, [source(change)], now, criteria).evidence, []);
+  }
+});
+
+test("research selection validates bounds, canonicalizes replay choices and treats labels literally", async () => {
+  const { researchSelectionSchema, researchSelectionWhere } = await import("../packages/core/research-selection");
+  const canonical = researchSelectionSchema.parse({ categories: ["SEARCH", "AUDIENCE", "SEARCH"], market: "  INDIA  ", language: " English " });
+  assert.deepEqual(canonical, { categories: ["AUDIENCE", "SEARCH"], market: "india", language: "english" });
+  for (const bad of [{ categories: ["FAKE"] }, { categories: Array(7).fill("SEARCH") }, { market: "x".repeat(101) }, { language: "x".repeat(81) }, { market: "İ".repeat(100) }, { language: "İ".repeat(80) }, { sourceIds: [randomUUID()] }]) {
+    assert.equal(researchSelectionSchema.safeParse(bad).success, false);
+  }
+  assert.equal(researchSelectionWhere({ categories: [], market: "a_%\\b", language: "" }).market?.equals, "a\\_\\%\\\\b");
+  const snapshot = captureResearchSnapshot(org, [source({ market: "INDIA", language: "ENGLISH" })], now, canonical);
+  assert.equal(snapshot.evidence.length, 1);
+});

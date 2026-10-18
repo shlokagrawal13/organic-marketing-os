@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { z } from "zod";
 import { canonicalEvidenceSourceUrl } from "./evidence-source";
 import { researchCategories, researchTemporalScopes, researchEvidenceState } from "./research";
+import { researchSelectionSchema, ResearchSelection, matchesResearchSelection } from "./research-selection";
 import { stableJson } from "./requests";
 
 export const researchContextVersion = "manual-strategy-evidence-2026-10-18";
@@ -20,7 +21,7 @@ const sourceSchema = z.object({
 const evidenceSchema = sourceSchema.extend({ fingerprint: z.string().regex(/^[a-f0-9]{64}$/) }).strict();
 const snapshotSchema = z.object({
   version: z.literal(researchContextVersion), organizationId: z.string().uuid(),
-  capturedAt: iso, evidence: z.array(evidenceSchema).max(researchContextLimit),
+  capturedAt: iso, selection: researchSelectionSchema.optional(), evidence: z.array(evidenceSchema).max(researchContextLimit),
 }).strict();
 export type ResearchSnapshot = z.infer<typeof snapshotSchema>;
 export type ResearchEvidence = z.infer<typeof evidenceSchema>;
@@ -33,6 +34,7 @@ export type ResearchCandidate = {
 export type ResearchContext = {
   version: typeof researchContextVersion; capturedAt: string | null; checkedAt: string;
   status: "AVAILABLE" | "MISSING"; reason: "CAPTURED" | "NO_ELIGIBLE_EVIDENCE" | "LEGACY_NOT_CAPTURED" | "INVALID_SNAPSHOT";
+  selection: ResearchSelection | null;
   evidence: ResearchEvidence[]; excluded: { id: string; reason: "STALE" | "CHANGED_OR_UNAVAILABLE" }[];
   policy: string;
 };
@@ -61,10 +63,11 @@ function candidateEvidence(row: ResearchCandidate, organizationId: string, now: 
 }
 
 /** Call with a deterministic, tenant-scoped latest-100 candidate query under the workspace lock. */
-export function captureResearchSnapshot(organizationId: string, rows: ResearchCandidate[], now = new Date()): ResearchSnapshot {
+export function captureResearchSnapshot(organizationId: string, rows: ResearchCandidate[], now = new Date(), criteria: ResearchSelection = researchSelectionSchema.parse({})): ResearchSnapshot {
+  const selection = researchSelectionSchema.parse(criteria);
   const snapshot: ResearchSnapshot = { version: researchContextVersion, organizationId,
-    capturedAt: now.toISOString(), evidence: [] };
-  for (const row of rows.slice(0, 100)) {
+    capturedAt: now.toISOString(), selection, evidence: [] };
+  for (const row of rows.filter(row => matchesResearchSelection(row, selection)).slice(0, 100)) {
     const evidence = candidateEvidence(row, organizationId, now);
     if (!evidence || snapshot.evidence.some((item) => item.id === evidence.id)) continue;
     const proposed = { ...snapshot, evidence: [...snapshot.evidence, evidence] };
@@ -83,7 +86,7 @@ export function readResearchSnapshot(value: unknown, organizationId: string): Re
   if (new Set(snapshot.evidence.map((item) => item.id)).size !== snapshot.evidence.length) return null;
   for (const { fingerprint: saved, ...item } of snapshot.evidence) {
     try {
-      if (saved !== fingerprint(item) || canonicalEvidenceSourceUrl(item.sourceUrl) !== item.sourceUrl ||
+      if (saved !== fingerprint(item) || (snapshot.selection && !matchesResearchSelection(item, snapshot.selection)) || canonicalEvidenceSourceUrl(item.sourceUrl) !== item.sourceUrl ||
         !researchEvidenceState({ ...item, reviewStatus: "ACCEPTED" }, new Date(snapshot.capturedAt)).eligibleForStrategy ||
         researchEvidenceState({ ...item, reviewStatus: "ACCEPTED" }, new Date(snapshot.capturedAt)).expiresAt !== item.expiresAt ||
         new Date(item.reviewedAt) > new Date(snapshot.capturedAt)) return null;
@@ -97,7 +100,7 @@ export function resolveResearchContext(value: unknown, organizationId: string, c
   const snapshot = readResearchSnapshot(value, organizationId);
   const context: ResearchContext = { version: researchContextVersion, capturedAt: snapshot?.capturedAt ?? null,
     checkedAt: now.toISOString(), status: "MISSING", reason: value == null ? "LEGACY_NOT_CAPTURED" : snapshot ? "NO_ELIGIBLE_EVIDENCE" : "INVALID_SNAPSHOT",
-    evidence: [], excluded: [], policy };
+    selection: snapshot?.selection ?? null, evidence: [], excluded: [], policy };
   if (!snapshot) return context;
   if (new Date(snapshot.capturedAt) > now) { context.reason = "INVALID_SNAPSHOT"; return context; }
   for (const item of snapshot.evidence) {
@@ -121,7 +124,7 @@ export class ResearchContextChangedError extends Error {
 
 export function assertResearchContextCurrent(context: ResearchContext, organizationId: string, rows: ResearchCandidate[], now = new Date()) {
   if (!context.evidence.length) return;
-  const snapshot = { version: researchContextVersion, organizationId, capturedAt: context.capturedAt, evidence: context.evidence };
+  const snapshot = { version: researchContextVersion, organizationId, capturedAt: context.capturedAt, ...(context.selection ? { selection: context.selection } : {}), evidence: context.evidence };
   const checked = resolveResearchContext(snapshot, organizationId, rows, now);
   if (checked.evidence.length !== context.evidence.length) throw new ResearchContextChangedError();
 }

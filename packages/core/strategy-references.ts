@@ -22,6 +22,7 @@ export function reviewStrategyReferences(value: { recommendations?: StrategyReco
   const context = research as ResearchContext | null | undefined;
   const saved = context && context.status === "AVAILABLE" ? readResearchSnapshot({
     version: context.version, organizationId, capturedAt: context.capturedAt, evidence: context.evidence,
+    ...(context.selection ? { selection: context.selection } : {}),
   }, organizationId) : null;
   const evidence = saved && new Date(saved.capturedAt) <= now ? saved.evidence : [];
   const parsed = strategyRecommendationsSchema.safeParse(value.recommendations);

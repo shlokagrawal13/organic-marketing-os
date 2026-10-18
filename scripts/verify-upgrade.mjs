@@ -153,9 +153,10 @@ try {
     [strategyResearch, org, user],
   );
   const { captureResearchSnapshot, resolveResearchContext } = await import("../dist/packages/core/research-context.js");
+  await db.query('UPDATE "ResearchRecord" SET market=$1, language=$2 WHERE id=$3', ["India", "English", strategyResearch]);
   const researchRow = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
   const utcResearch = (row) => ({ ...row, ...Object.fromEntries(["observedAt", "collectedAt", "reviewedAt"].map((key) => [key, new Date(row[key] + "Z")])) });
-  const researchSnapshot = captureResearchSnapshot(org, [utcResearch(researchRow)]);
+  const researchSnapshot = captureResearchSnapshot(org, [utcResearch(researchRow)], new Date(), { categories: ["AUDIENCE"], market: "india", language: "english" });
   assert.equal(researchSnapshot.evidence.length, 1);
   const strategyContext = { revision: 1, profile: {}, creativeDna: {}, approvedContent: [], researchSnapshot };
   await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6)',
@@ -249,6 +250,7 @@ try {
   const restoredStrategy = (await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].brandContext;
   assert.deepEqual(restoredStrategy, strategyContext);
   const restoredSource = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
+  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["AUDIENCE"], market: "india", language: "english" });
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).evidence, researchSnapshot.evidence);
   assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
   const restoredRun = (await restored.query('SELECT "frozenContext","finalReview" FROM "AIAgentRun" WHERE id=$1', [runId])).rows[0];
@@ -276,6 +278,7 @@ try {
     workspaceYoutubePolicyRestored: true,
     researchCitationProvenanceAndReviewRestored: true,
     queuedStrategyResearchSnapshotRestored: true,
+    strategyResearchSelectionRestored: true,
     strategyRecommendationsAndCitationReviewRestored: true,
   };
   await writeFile(

@@ -181,6 +181,9 @@ test("a generated strategy exposes the reviewed source context actually sent to 
   await open();
   await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
   await page.getByLabel("Generation type").selectOption("strategy");
+  await page.getByLabel("Research categories", { exact: true }).selectOption(["AUDIENCE"]);
+  await page.getByLabel("Research market", { exact: true }).fill(" India ");
+  await page.getByLabel("Research language", { exact: true }).fill("English");
   const prompt = "Create a synthetic strategy using the supplied research evidence.";
   await page.getByLabel("What would you like to create?").fill(prompt);
   await page.getByRole("button", { name: "Generate", exact: true }).click();
@@ -195,6 +198,10 @@ test("a generated strategy exposes the reviewed source context actually sent to 
   const trace = (await user.call(`/workspaces/${org.id}/ai/jobs/${job.id}/trace`)).body;
   expect(trace.frozenContext.brand.research.evidence[0].id).toBe(created.id);
   expect(trace.frozenContext.brand.research.evidence[0].revision).toBe(2);
+  expect(trace.frozenContext.brand.research.selection).toEqual({ categories: ["AUDIENCE"], market: "india", language: "english" });
+  await expect(context.getByLabel("Captured research selection")).toContainText("Categories: AUDIENCE · Market: india · Language: english");
+  await page.getByLabel("Research market", { exact: true }).fill("US");
+  await expect(context.getByLabel("Captured research selection")).toContainText("Market: india");
   const recommendations = page.getByRole("region", { name: "Recommendation source review" });
   await expect(recommendations.getByText("Source excerpt matched — review its relevance", { exact: true })).toBeVisible();
   await expect(recommendations.getByText(evidence().summary, { exact: true })).toBeVisible();
@@ -234,15 +241,25 @@ test("unsupported strategy references block approval and copying while reviewer 
 });
 
 test("strategy without research labels its recommendation as an assumption and missing data", async ({ page }) => {
-  const { org, open } = await setup(page);
+  const { org, user, path, open } = await setup(page);
+  const mismatched = (await user.call(path, "POST", evidence("Different language source"))).body;
+  expect((await user.call(path + `/${mismatched.id}/review`, "POST", { expectedRevision: 1, decision: "ACCEPTED", sourcesReviewed: true, note: "Reviewed synthetic English source." })).status).toBe(201);
   await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic brand", audience: "Test audience" }, creativeDna: {} } });
   await open();await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
   await page.getByLabel("Generation type").selectOption("strategy");
+  await page.getByLabel("Research language", { exact: true }).fill("Hindi");
   await page.getByLabel("What would you like to create?").fill("Synthetic strategy with no supplied research observations");
   await page.getByRole("button", { name: "Generate", exact: true }).click();
   const review = page.getByRole("region", { name: "Recommendation source review" });
   await expect(review.getByText("Assumption — evidence gap or proposed test", { exact: true })).toBeVisible({ timeout: 30000 });
   await expect(review.getByText(/No usable research supplied/)).toBeVisible();
   await expect(review.getByRole("link")).toHaveCount(0);
+  const context = page.getByRole("region", { name: "Strategy research context" });
+  await context.getByRole("button", { name: "View research sources" }).click();
+  await expect(context.getByRole("heading", { name: "No usable research evidence" })).toBeVisible();
+  await expect(context.getByLabel("Captured research selection")).toContainText("Language: hindi");
+  await page.getByRole("button", { name: "Clear research filters", exact: true }).click();
+  await expect(page.getByLabel("Research language", { exact: true })).toHaveValue("");
+  await expect(context.getByLabel("Captured research selection")).toContainText("Language: hindi");
   await page.screenshot({ path: "test-results/strategy-references-assumption.png", fullPage: true, animations: "disabled" });
 });

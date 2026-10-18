@@ -28,6 +28,7 @@ import {
 import { providersFromEnv, sceneSchema } from "../../../packages/core/ai";
 import { stableJson } from "../../../packages/core/requests";
 import { randomUUID } from "node:crypto";
+import { researchSelectionSchema, researchSelectionWhere } from "../../../packages/core/research-selection";
 import { captureResearchSnapshot } from "../../../packages/core/research-context";
 import { ResearchContextChangedError } from "../../../packages/core/research-context";
 import { reviewStrategyReferences } from "../../../packages/core/strategy-references";
@@ -43,6 +44,7 @@ const jobInput = z
     task: z.enum(["strategy", "content", "scene"]),
     prompt: z.string().trim().min(10).max(4000),
     scene: sceneSchema.optional(),
+    researchSelection: researchSelectionSchema.optional(),
     maxCredits: z.number().int().min(0).max(10000).optional(),
   })
   .strict();
@@ -141,8 +143,12 @@ export class AIController {
       throw new BadRequestException(
         "A scene rewrite requires a valid scene; other tasks do not accept a scene.",
       );
+    if (data.task !== "strategy" && data.researchSelection !== undefined)
+      throw new BadRequestException("Research selection is only available for strategy requests.");
+    const selection = data.researchSelection ?? researchSelectionSchema.parse({});
     const input = {
       prompt: data.prompt,
+      ...(data.researchSelection !== undefined ? { researchSelection: selection } : {}),
       ...(data.scene ? { scene: data.scene } : {}),
     };
     const replay = (job: any) => {
@@ -241,8 +247,8 @@ export class AIController {
         );
       const jobId = randomUUID();
       const researchSnapshot = data.task === "strategy" ? captureResearchSnapshot(req.organizationId,
-        await tx.researchRecord.findMany({ where: { organizationId: req.organizationId },
-          orderBy: [{ updatedAt: "desc" }, { id: "desc" }], take: 100 }), new Date()) : undefined;
+        await tx.researchRecord.findMany({ where: { organizationId: req.organizationId, ...researchSelectionWhere(selection) },
+          orderBy: [{ updatedAt: "desc" }, { id: "desc" }], take: 100 }), new Date(), selection) : undefined;
       const reservation =
         policy.mode === "credits"
           ? await reserveCredits(

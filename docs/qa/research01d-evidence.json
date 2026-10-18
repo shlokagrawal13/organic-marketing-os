@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01D",
+  "recordedAtUtc": "2026-10-18T13:10:24.075713+00:00",
+  "status": "locally_verified_publication_ci_pending",
+  "basePublicCommit": "6ef958dfe04c063ecb1d8ff438e78bc546ae455f",
+  "scope": "Explicit bounded strategy research category/market/language criteria, immutable capture, actual provider context and reviewer UI.",
+  "verification": {
+    "unit": {
+      "tests": 239,
+      "passed": 239,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "uniqueReceipts": 239
+    },
+    "http": {
+      "tests": 32,
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 18,
+      "passed": 18
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119842
+    },
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4971275,
+      "sha256": "9b06650bfdf306c07bc12074a0d157ff01fb611e2580f0543de74f2bb50c58c1",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
+    "boundedEnglishReadability": {
+      "passed": true,
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "behavior": [
+    "Canonical category/market/language choices filter the tenant query before latest-100 capture; existing 10-source/24k budgets and eligibility checks remain.",
+    "Filters are immutable in strategy snapshots and provider/trace context, including empty results. Equivalent normalized input replays; changed choices conflict. Content/scene reject strategy-only selection.",
+    "Reviewer form and source history expose current versus captured choices; empty matches remain missing evidence and assumptions. Legacy snapshots remain readable without invented filter history.",
+    "Tenant export and populated restore retain research selection without changing migrations."
+  ],
+  "screenshots": {
+    "desktop": "docs/qa/research01d-desktop.png",
+    "dark": "docs/qa/research01d-dark.png",
+    "mobile": "docs/qa/research01d-mobile.png",
+    "assumption": "docs/qa/research01d-assumption.png"
+  },
+  "unitReceipts": "docs/qa/research01d-unit-receipts.json",
+  "resolvedLocalVerificationIssue": "The initial focused browser attempt used the preceding web build and was stopped. An intermediate full native run was stopped for a Unicode normalized-length hardening change. A fresh full production build preceded the final complete native run; The first full unit attempt used system HarfBuzz 10.2 rather than the existing pinned 8.3 reference and was stopped after version-check failures. The final full unit run uses the retained .local/cloud/bin Python wrapper and pinned 8.3 library; no test requirement was weakened. Only complete final-source passing runs support this receipt.",
+  "commands": [
+    "npm run build",
+    "PATH=.local/cloud/bin:$PATH npm test (retained HarfBuzz 8.3 test runtime)",
+    "npm run verify:upgrade",
+    "npm run verify:readability",
+    "npm audit --omit=dev --json",
+    "npm audit --json",
+    "bash .local/run-research01d-native.sh (fresh disposable native PostgreSQL/Redis; full verify-local --native --production-web)"
+  ],
+  "limits": [
+    "Filters restrict the bounded input window; they do not rank relevance or ensure all eligible library records are considered.",
+    "Manual sources are not fetched or independently verified; selection and excerpt matching do not prove truth, rights, quality or semantic entailment.",
+    "Live source/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open.",
+    "CI verifies and does not deploy."
+  ],
+  "logs": {
+    "unit": "a5b05c8e895b67c67a2e6905901149c762cbb3d6a73f198af8e7a7b70af71b8c",
+    "native": "c6214c1c6f7fe15f942393f71d4e3113bf30e4b71f94f0ed0ce5ac6423860d51",
+    "build": "195eabe8614f0daa988ffa22dcd1361f36d8c7504cfc9de4ad898e2449c884c6",
+    "upgrade": "318912104511509e63b77995c64210e748b4ebd8c1bf09e8013ce63ee21fd15c",
+    "readability": "40c3e7305de9879f875135000f90142d1e3851027ca4a0f3caa470746c949f1f"
+  }
+}

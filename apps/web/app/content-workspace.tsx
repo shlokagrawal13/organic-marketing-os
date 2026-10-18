@@ -1,4 +1,5 @@
 "use client";
+import { strategyResearchCategories, ResearchSelection } from "../../../packages/core/research-selection";
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Plus,
@@ -156,6 +157,7 @@ export default function ContentWorkspace({
     [month, setMonth] = useState(
       new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     );
+  const [researchSelection, setResearchSelection] = useState<ResearchSelection>({ categories: [], market: "", language: "" });
   const campaignDialog = useRef<HTMLDialogElement>(null);
   const editable = ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role),
     approver = ["OWNER", "ADMIN", "EDITOR"].includes(role);
@@ -180,6 +182,9 @@ export default function ContentWorkspace({
     } finally {
       setLoading(false);
     }
+  }, [base]);
+  useEffect(() => {
+    setResearchSelection({ categories: [], market: "", language: "" });
   }, [base]);
   useEffect(() => {
     load();
@@ -367,6 +372,7 @@ export default function ContentWorkspace({
         requestKey: crypto.randomUUID(),
         task: kind,
         prompt: text,
+        ...(kind === "strategy" ? { researchSelection } : {}),
         ...(scene ? { scene } : {}),
         ...(aiStatus.credits?.mode === "credits"
           ? { maxCredits: aiStatus.credits.prices[kind] }
@@ -1801,6 +1807,17 @@ export default function ContentWorkspace({
                     required
                     placeholder="Create a 30-second Instagram Reel introducing our new product…"
                   />
+                  {task === "strategy" && <fieldset disabled={busy || !editable} className="research-selection">
+                    <legend>Research selection</legend>
+                    <p className="field-help">Blank filters include all values. Market and language match whole labels, ignoring case. Up to 10 eligible reviewed sources are captured from the latest 100 matching records; no matches means missing research.</p>
+                    <label>Research categories<select multiple aria-label="Research categories" value={researchSelection.categories}
+                      onChange={e => setResearchSelection({ ...researchSelection, categories: Array.from(e.target.selectedOptions, o => o.value) as ResearchSelection["categories"] })}>
+                      {strategyResearchCategories.map(category => <option key={category} value={category}>{category}</option>)}
+                    </select></label>
+                    <label>Research market<input maxLength={100} value={researchSelection.market} onChange={e => setResearchSelection({ ...researchSelection, market: e.target.value })} placeholder="All markets" /></label>
+                    <label>Research language<input maxLength={80} value={researchSelection.language} onChange={e => setResearchSelection({ ...researchSelection, language: e.target.value })} placeholder="All languages" /></label>
+                    <button type="button" className="button" onClick={() => setResearchSelection({ categories: [], market: "", language: "" })}>Clear research filters</button>
+                  </fieldset>}
                   <div className="ai-controls">
                     <label>
                       <span className="sr-only">Generation type</span>
