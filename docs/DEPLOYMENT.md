@@ -1,6 +1,6 @@
 # Deployment
 
-**Production deployment is pending.** The provided Compose stack is for local development. This release's Docker/MinIO images and startup were not exercised here; local verification used separate processes, PGlite, native Redis and S3rver.
+**Production deployment is pending.** The provided Compose stack is for local development. Application Docker stages and isolated configuration are locally verified. Full Compose/MinIO and quiesced native cross-store acceptance require the exact-source dedicated CI report; see COMPOSE_NATIVE_VERIFICATION.md for the local network block and acceptance conditions.
 
 ## Staging gates
 
@@ -16,7 +16,7 @@
 
 ## Rollback and data
 
-Keep the previous images, environment configuration and database/object backups. The 0.2 media and 0.3 recovery migrations are additive, but schema compatibility is not an executed rollback guarantee. Prefer forward fixes; validate any restore in a separate environment before switching traffic. An isolated populated upgrade and fresh-database restore were executed on PGlite. Native PostgreSQL/PITR, private-object restore and application rollback were not executed.
+Keep the previous images, environment configuration and database/object backups. The 0.2 media and 0.3 recovery migrations are additive, but schema compatibility is not an executed rollback guarantee. Prefer forward fixes; validate any restore in a separate environment before switching traffic. An isolated populated upgrade and fresh-database restore were executed on PGlite. The NATIVE-01A disposable Compose job verifies quiesced native PostgreSQL/private-object restore when its full report passes on the exact source. PITR, interrupted restore/upgrade and application rollback remain unverified.
 
 Do not expose PostgreSQL/Redis/object-store administration publicly. Mailpit is only a local mail capture. Define backup/PITR, private bucket protection, log retention, output/cache cleanup, budgets and incident ownership. See UPGRADE_0.3.md for the local Windows upgrade.
 

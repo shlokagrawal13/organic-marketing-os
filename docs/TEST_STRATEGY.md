@@ -1,3 +1,7 @@
+## NATIVE-01A Compose/native restore — 2026-10-19 IST
+
+Added an isolated full-stack verifier, pinned-source MinIO build, optional trusted build-CA secret and a separate verification-only CI job. Local application images, four ownership/env/port/redaction tests and actual Compose configuration passed. Full local MinIO is network-blocked; exact published CI must prove all services, real media/SMTP and separate native PostgreSQL/private-object restore after deleting source fixture volumes. Require full-mode sanitized report and every core/Compose CI step. Quiesced fixtures do not close interrupted upgrades/restores, PITR, live/deployed acceptance or the full master. See `docs/COMPOSE_NATIVE_VERIFICATION.md` and `docs/qa/native01a-evidence.json`.
+
 # Verification and remaining gates — 0.9.2
 
 ## EDITOR-01AE busy-background title/caption contrast — 2026-10-09 UTC

@@ -11,7 +11,7 @@ docker compose up -d --build
 
 Setup creates unique development secrets in `.env` and refuses to overwrite an existing file. For an existing 0.1 or 0.2 installation, use `UPGRADE_0.3.md` instead. Open http://localhost:3000; local development emails are at http://localhost:8025. Only host ports 3000, 4000, 1025 and 8025 are published, all on loopback. PostgreSQL, Redis and MinIO use private Compose networking. The web build proxies to `http://api:4000`.
 
-The stack includes web, API, text worker, render worker, PostgreSQL, Redis, local MinIO storage, Mailpit and a one-time migration service. `migrate` exiting 0 is expected. This is a local development configuration, not a public production deployment. This release's Docker/MinIO stack has not been executed in the build environment.
+The stack includes web, API, text worker, render worker, PostgreSQL, Redis, local MinIO storage, Mailpit and a one-time migration service. `migrate` exiting 0 is expected. This is a local development configuration, not a public production deployment. See `COMPOSE_NATIVE_VERIFICATION.md` for actual image/configuration evidence, full-stack CI acceptance and local network limitations. MinIO is built from the same checksum-pinned official release source instead of pulling the unavailable upstream image; the first build also downloads Go dependencies.
 
 ## Source development on the host
 

@@ -1,0 +1,23 @@
+# Build the official release source because upstream container registries may
+# require authorization. Keep the original Compose release and persistent data.
+FROM golang:1.24-bookworm AS build
+ARG MINIO_SOURCE_SHA256=c9598dcce3440977e79f787f2ba0e7e4d92c8d556bd51e7cef3785bafd6635f3
+WORKDIR /src
+RUN --mount=type=secret,id=proxy_ca \
+    if [ -f /run/secrets/proxy_ca ]; then export SSL_CERT_FILE=/run/secrets/proxy_ca; fi; \
+    wget --ca-certificate="${SSL_CERT_FILE:-/etc/ssl/certs/ca-certificates.crt}" -O minio.tar.gz https://codeload.github.com/minio/minio/tar.gz/refs/tags/RELEASE.2025-09-07T16-13-09Z && \
+    echo "$MINIO_SOURCE_SHA256  minio.tar.gz" | sha256sum -c - && \
+    tar -xzf minio.tar.gz --strip-components=1 && rm minio.tar.gz
+RUN --mount=type=secret,id=proxy_ca --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
+    if [ -f /run/secrets/proxy_ca ]; then export SSL_CERT_FILE=/run/secrets/proxy_ca; fi; \
+    CGO_ENABLED=0 GOTOOLCHAIN=local GOMAXPROCS=2 go build -p 2 -trimpath -ldflags="-s -w -X github.com/minio/minio/cmd.Version=2025-09-07T16:13:09Z -X github.com/minio/minio/cmd.ReleaseTag=RELEASE.2025-09-07T16-13-09Z -X github.com/minio/minio/cmd.CommitID=07c3a429bfed433e49018cb0f78a52145d4bedeb" -o /out/minio .
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+COPY --from=build /out/minio /usr/bin/minio
+COPY --from=build /src/LICENSE /licenses/LICENSE
+LABEL org.opencontainers.image.source="https://github.com/minio/minio" \
+      org.opencontainers.image.revision="07c3a429bfed433e49018cb0f78a52145d4bedeb" \
+      org.opencontainers.image.licenses="AGPL-3.0-only"
+EXPOSE 9000 9001
+ENTRYPOINT ["/usr/bin/minio"]

@@ -9,6 +9,30 @@ permissions:
   contents: read
 
 jobs:
+  compose:
+    name: Disposable Compose and native restore
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      MOS_ALLOW_NATIVE_TESTS: "isolated-test-services"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Verify complete Compose and native cross-store restore
+        run: npm run verify:compose
+      - name: Upload sanitized Compose evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-evidence
+          path: .local/compose-evidence.json
+          if-no-files-found: error
+
   core:
     name: Native application verification
     runs-on: ubuntu-latest

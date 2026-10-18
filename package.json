@@ -26,6 +26,7 @@
     "verify:youtube-live-readiness": "node --import tsx scripts/verify-youtube-live-readiness.ts",
     "capture:youtube-deployed-readiness": "node --import tsx scripts/capture-youtube-deployed-readiness-receipt.ts",
     "verify:upgrade": "node scripts/verify-upgrade.mjs",
+    "verify:compose": "node scripts/verify-compose.mjs",
     "verify:readability": "node --import tsx scripts/verify-render-readability.ts",
     "prepare:device-review": "node --import tsx scripts/prepare-device-review.ts",
     "start:media": "node dist/apps/api/src/media-generation-worker.js"

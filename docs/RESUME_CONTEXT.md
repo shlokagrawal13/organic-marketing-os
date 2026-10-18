@@ -1,3 +1,15 @@
+## Current continuation — NATIVE-01A, 2026-10-19 IST
+
+Disposable full-Compose/native-restore verification is implemented. The verifier builds actual migration/runtime/MinIO images; starts all nine persistent services; checks auth, tenant isolation, private upload/range, real FFmpeg render, idempotency, no-key failure and Mailpit delivery; removes the source fixture volumes; then restores a native PostgreSQL dump and checksummed private objects into a different stack and verifies records/media/access through the app.
+
+Local evidence: both application image stages built; four new fixture-safety tests and actual isolated Compose configuration passed; all 25 protected master/migration hashes are unchanged. Full local MinIO build is explicitly blocked by the network allowlist (`storage.googleapis.com` 403). A separate ordinary GitHub Actions job now runs the full disposable Compose/restore acceptance alongside unchanged core checks. Read the exact current Git/Actions result and its complete-mode sanitized report before claiming full acceptance; no CI result is claimed in advance by this source checkpoint.
+
+Prior RESEARCH-01I source `d42a3bb` passed exact-source native run `39174119655` (266 unit,38 HTTP,28 browser,5 recovery; builds,24 migrations,44 readability samples,populated archive restore,zero audits). Its closure is retained in `docs/qa/research01i-native-ci-evidence.json`. Current expected core unit count is 270 with the four added isolation tests; current core CI evidence must be read separately.
+
+Next: finish standing-authorized publication and inspect BOTH exact-source CI jobs, fixing failures. After complete fixture startup/restore acceptance, continue RECOVERY-01 interrupted restore/upgrade and broader native recovery audit. Live-provider/deployed acceptance, broader research, PITR/in-flight recovery and full master acceptance remain open. CI verifies and does not deploy.
+
+Evidence and procedure: `docs/COMPOSE_NATIVE_VERIFICATION.md`, `docs/qa/native01a-evidence.json`. Earlier entries retain their dated historical scopes.
+
 ## Current continuation — RESEARCH-01I, 2026-10-19 IST
 
 Optional industry/trend interpretations are locally verified: source-scoped topic, observed pattern, business relevance, proposed opportunity, explicit missing/recorded counter-signals and assumptions. All six research categories now support structured manual interpretation. Historical library status and observation freshness are labeled separately. Existing current/historical/evergreen/emerging/expired classification, review and observation expiry remain enforced; recency does not establish measured momentum or a forecast. Missing counter-signals are not proof that contrary evidence is absent.

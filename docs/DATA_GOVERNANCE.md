@@ -1,3 +1,7 @@
+## NATIVE-01A Compose/native restore — 2026-10-19 IST
+
+Added an isolated full-stack verifier, pinned-source MinIO build, optional trusted build-CA secret and a separate verification-only CI job. Local application images, four ownership/env/port/redaction tests and actual Compose configuration passed. Full local MinIO is network-blocked; exact published CI must prove all services, real media/SMTP and separate native PostgreSQL/private-object restore after deleting source fixture volumes. Require full-mode sanitized report and every core/Compose CI step. Quiesced fixtures do not close interrupted upgrades/restores, PITR, live/deployed acceptance or the full master. See `docs/COMPOSE_NATIVE_VERIFICATION.md` and `docs/qa/native01a-evidence.json`.
+
 # Data governance
 
 Stored records include account identity and hashed authentication data, memberships, brand/creative revisions, content/scripts/campaigns/comments, prompts/results/usage, audit events, private media metadata and render snapshots. Tenant access requires current membership; roles constrain mutations and administration.

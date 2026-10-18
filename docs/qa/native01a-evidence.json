@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NATIVE-01A",
+  "recordedAtUtc": "2026-10-18T23:28:50.338730+00:00",
+  "status": "local_configuration_and_application_images_verified_full_compose_CI_required",
+  "basePublicCommit": "d42a3bb155c1cd185fe28adc156108401362d3cf",
+  "localVerification": {
+    "fixtureSafetyTests": 4,
+    "composeConfiguration": {
+      "schemaVersion": 1,
+      "taskId": "NATIVE-01A",
+      "passed": true,
+      "startedAt": "2026-10-18T23:27:28.351Z",
+      "sourceProject": "omos-compose-verify-aacbc3ae44b1c8d6",
+      "restoreProject": "omos-compose-verify-aacbc3ae44b1c8d6-restore",
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "checks": {
+        "generatedProjectPrivateEnvAndVolumeIsolation": true,
+        "realEnvironmentUnchanged": true
+      },
+      "steps": [
+        {
+          "name": "isolated configuration",
+          "passed": true,
+          "durationMs": 174
+        }
+      ],
+      "verificationMode": "configuration-only",
+      "completedAt": "2026-10-18T23:27:28.526Z"
+    },
+    "applicationBuildImage": "sha256:ca899b677558919ffc8663c2b5139b0baca7437ada966db41a38bf104c043e5b",
+    "applicationRuntimeImage": "sha256:476201cf3b2e4ca0e47753ea59760aab27ad1853a57c87ee523894fc5acd9954",
+    "fullComposeExecuted": false,
+    "protectedMasterAndMigrationHashesUnchanged": 25
+  },
+  "observedFailuresAndFixes": [
+    {
+      "failure": "Published MinIO release image pulls from DockerHub and Quay rejected authorization.",
+      "fix": "Build the same official release from checksum-pinned signed-tag source; preserve media_data and release version."
+    },
+    {
+      "failure": "Application npm Docker build rejected the managed proxy CA (SELF_SIGNED_CERT_IN_CHAIN).",
+      "fix": "Optional BuildKit proxy_ca secret adds NODE_EXTRA_CA_CERTS for install only. TLS verification remains enabled and no CA/private env is baked into the image."
+    },
+    {
+      "failure": "Local MinIO Go-module download redirects to storage.googleapis.com rejected by enforced network allowlist (403).",
+      "fix": "Local full Compose is blocked. The ordinary independent GitHub Actions Compose job executes generated disposable acceptance fixtures and publishes sanitized verification evidence; no resource download back to this workspace."
+    }
+  ],
+  "minioSource": {
+    "release": "RELEASE.2025-09-07T16-13-09Z",
+    "commit": "07c3a429bfed433e49018cb0f78a52145d4bedeb",
+    "signedTagVerified": true,
+    "sourceSha256": "c9598dcce3440977e79f787f2ba0e7e4d92c8d556bd51e7cef3785bafd6635f3",
+    "sourceUrl": "https://codeload.github.com/minio/minio/tar.gz/refs/tags/RELEASE.2025-09-07T16-13-09Z"
+  },
+  "ciAcceptance": "Read exact HEAD Actions results for BOTH native core and disposable Compose jobs. Require complete-compose-native-restore mode, every phase/check passing, original volumes removed before restore, real env unchanged and fixture cleanup. Configuration-only is not full acceptance.",
+  "limits": [
+    "Synthetic isolated development stack only; no deployment, live AI/social/billing acceptance or populated user services touched.",
+    "Quiesced complete-database and private-object restore is distinct from PITR, interrupted upgrade/restore and in-flight queue recovery. Those wider RECOVERY-01 cases remain open.",
+    "Full master acceptance remains open."
+  ]
+}
