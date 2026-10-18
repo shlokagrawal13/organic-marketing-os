@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01A published native CI, 2026-10-18 IST
+
+RESEARCH-01A manual research intake/review source is public on main at `7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237` (tree `9a03e15a11e7596c11c494cbd07558a9a0889c20`). All 34 published paths and the full tree matched the locally verified source. Exact-source native Actions run `39106314144` succeeded: 220 unit/export, 23 HTTP, 15 production browser and 5 recovery cases. API/web builds, bounded readability, 23 fresh PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed.
+
+Native job logs and artifact metadata/upload digest were checked. Independent artifact ZIP/digest/image-byte inspection is not claimed; see the native evidence record for the actual download limitation. Local unit receipts and desktop/dark/mobile screenshots are saved and verified separately.
+
+Manual source entry, URL syntax checks and team acceptance do not establish source reachability, factual accuracy or rights. Strategy/model jobs do not consume this library yet. RESEARCH-01 remains partial; wider trend/competitor/SEO/localization/calendar/community work is open. POLICY-01, live-source/provider/deployed production acceptance, native PostgreSQL plus private-media cross-store restore and full master acceptance remain open. CI is verification-only.
+
+This continuity/evidence commit follows the native-verified application source. Read Git/Actions for its own newer HEAD and follow-up CI result; this source receipt does not claim that follow-up result in advance. Standing implementation/verification/push/CI authorization is saved in AGENTS.md. Earlier dated local/unpublished notes below are historical.
+
+Next: Continue RESEARCH-01B: integrate a bounded snapshot of current accepted workspace research into strategy generation. Freeze citations/provenance/revisions at queue time, re-evaluate expiry at worker execution, pass identical evidence into agent trace and actual model input, and retain explicit missing-evidence behavior. Verify delayed/stale, rejected/unreviewed, tenant isolation and real model-input fixture cases; then push and inspect exact-commit CI.
+
+Evidence: `docs/RESEARCH_EVIDENCE.md`, `docs/qa/research01a-evidence.json`, `docs/qa/research01a-native-ci-evidence.json`.
+
 ## Current continuation — RESEARCH-01A, 2026-10-18 IST
 
 RESEARCH-01A manual research evidence library is implemented and locally verified: tenant-scoped intake/detail/list, one declared citation per record, server collection time, observation-age freshness, temporal classification, optimistic edits and human accept/reject review. Edits clear acceptance; every mutation advances revision. Browser controls preserve conflicts and unsaved workspace changes, handle temporary errors and fail closed after role removal.
