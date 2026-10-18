@@ -1,3 +1,9 @@
+## Current CI fixture follow-up — 2026-10-18 IST
+
+RESEARCH-01C application source `689141d2ea14cb89bfdbf267d385867cda8bff71` remains native-verified by Actions run `39116498113` (237 unit, 31 HTTP, 18 browser, 5 recovery; restore, builds, readability and both audits passed). Its later evidence-only closure run `39126112183` passed 237 unit and 31 HTTP but stopped at 17/18 browser cases: Playwright rejected a datetime-local value ending in `:00` after Chromium normalized it to minutes. Recovery was not run in that failed attempt.
+
+The browser fixture now always exercises zero seconds using canonical browser-local minute precision and checks the saved UTC value. The old failure was reproduced in UTC and Asia/Kolkata; the canonical input/UTC round-trip and all 6 native research browser cases passed. Only the test fixture and continuity/evidence changed; verification steps remain intact. This follow-up requires its own full CI: read the newer HEAD and its result from Git/Actions; no follow-up success is claimed here in advance. See `docs/qa/research01c-ci-fixture-followup.json`. The next implementation increment remains RESEARCH-01D source selection/filter criteria. Full product/live/semantic acceptance remains open.
+
 ## Current continuation — RESEARCH-01C published native CI, 2026-10-18 IST
 
 RESEARCH-01C source is public on main at `689141d2ea14cb89bfdbf267d385867cda8bff71` (tree `115e80d858422042758eb5c6faaf6129e5e31e7a`); all 40 published paths and the full tree matched local verification. Exact-source native Actions run `39116498113` passed: 237 unit/export, 31 HTTP, 18 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed.

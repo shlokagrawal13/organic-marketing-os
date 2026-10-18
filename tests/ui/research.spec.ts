@@ -56,7 +56,14 @@ test("manual research intake, acceptance and edit invalidation persist with resp
   await panel.getByLabel("Observation summary").fill(evidence().summary);
   await panel.getByLabel("Source URL").fill(evidence().sourceUrl);
   await panel.getByLabel("Source label").fill(evidence().sourceLabel);
-  await panel.getByLabel("Observed at (your local time)").fill(new Date(Date.now() - 60000).toISOString().slice(0, 19));
+  // datetime-local normalizes :00 seconds away; use its canonical minute form.
+  // Always exercise that boundary, in the browser's timezone, instead of depending on the wall-clock second.
+  const observed = await page.evaluate(() => {
+    const date = new Date(Date.now() - 60000);date.setSeconds(0, 0);
+    return { local: new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16), utc: date.toISOString() };
+  });
+  await panel.getByLabel("Observed at (your local time)").fill(observed.local);
+  await expect(panel.getByLabel("Observed at (your local time)")).toHaveValue(observed.local);
   await panel.getByLabel("Market", { exact: true }).fill("India");
   await panel.getByLabel("Language", { exact: true }).fill("English");
   const save = panel.getByRole("button", { name: "Save research", exact: true });
@@ -67,6 +74,7 @@ test("manual research intake, acceptance and edit invalidation persist with resp
   const list = await user.call(path);
   const saved = list.body.items[0];
   expect(saved.provenance).toBe("MANUAL"); expect(saved.reviewStatus).toBe("UNREVIEWED");
+  expect(saved.observedAt).toBe(observed.utc);
   await panel.getByLabel("Review note", { exact: true }).fill("Reviewed synthetic source and observation date.");
   await panel.getByRole("checkbox", { name: reviewAck }).check();
   await panel.getByRole("button", { name: "Accept evidence", exact: true }).click();

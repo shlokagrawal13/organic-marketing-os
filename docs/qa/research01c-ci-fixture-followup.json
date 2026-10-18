@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01C",
+  "recordedAtUtc": "2026-10-18T12:25:07.260075+00:00",
+  "status": "fixture_fix_locally_verified_own_ci_pending",
+  "nativeVerifiedApplicationSource": "689141d2ea14cb89bfdbf267d385867cda8bff71",
+  "nativeVerifiedSourceRun": 39116498113,
+  "failedClosure": {
+    "commit": "e0f384c1c54cdcb3329257f450b1c8946d66a628",
+    "runId": 39126112183,
+    "jobId": 117671479096,
+    "unitPassed": 237,
+    "httpPassed": 31,
+    "browserPassed": 17,
+    "browserFailed": 1,
+    "recovery": "not run after browser failure",
+    "failure": "Playwright datetime-local fill rejected 2026-10-18T12:20:00 after Chromium normalized it to minute precision.",
+    "decodedLogSha256": "db9c85613eaab07060b9d136264b8c8bfdc3420c867adcf1b2a0c7be554a2dd3"
+  },
+  "fix": {
+    "path": "tests/ui/research.spec.ts",
+    "behavior": "Always set seconds/milliseconds to zero, format the browser-local canonical minute input, assert its input value and assert the API saved the exact UTC observation.",
+    "productionApplicationCodeChanged": false,
+    "checksSkippedOrWeakened": false
+  },
+  "localVerification": {
+    "nativeResearchBrowserPassed": 6,
+    "browserUtcAndKolkataReproduction": {
+      "passed": true,
+      "cases": [
+        {
+          "timezoneId": "UTC",
+          "priorZeroSecondsFailureReproduced": true,
+          "canonicalMinuteFillPassed": true,
+          "utcRoundtripMatched": true,
+          "nonzeroSecondsFillPassed": true
+        },
+        {
+          "timezoneId": "Asia/Kolkata",
+          "priorZeroSecondsFailureReproduced": true,
+          "canonicalMinuteFillPassed": true,
+          "utcRoundtripMatched": true,
+          "nonzeroSecondsFillPassed": true
+        }
+      ]
+    },
+    "browserLogSha256": "131012b293536ab74a4ea93ce321b3ecf5a8daa009c11ea6d3f6dddbce3b300e"
+  },
+  "latestHeadCi": "Read Git/Actions for this newer fixture/evidence commit; its own full CI result is not claimed in advance."
+}
