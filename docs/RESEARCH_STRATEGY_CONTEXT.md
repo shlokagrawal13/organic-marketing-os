@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01B published native CI, 2026-10-18 IST
+
+RESEARCH-01B bounded strategy research context source is public on main at `7ecc56363639141582032904ba2070484e3ca83a` (tree `33419fca5a7ba40c1a7282064ed90ac5b01d853a`). All 38 published paths and the full tree matched the locally verified source. Exact-source native Actions run `39110770249` succeeded: 228 unit/export, 27 HTTP, 16 production browser and 5 recovery cases. API/web builds, bounded readability, 23 fresh PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed.
+
+Native job logs and artifact metadata/upload digest were checked. Independent artifact ZIP/digest/image-byte inspection is not claimed; see the native evidence record for the actual download limitation. Local unit receipts and desktop/dark/mobile screenshots are saved and verified separately.
+
+Manual source entry, URL syntax checks and team acceptance do not establish source reachability, factual accuracy or rights. New strategy jobs consume bounded manual research snapshots; generated citation validity and live model quality remain unverified. RESEARCH-01 remains partial; wider trend/competitor/SEO/localization/calendar/community work is open. POLICY-01, live-source/provider/deployed production acceptance, native PostgreSQL plus private-media cross-store restore and full master acceptance remain open. CI is verification-only.
+
+This continuity/evidence commit follows the native-verified application source. Read Git/Actions for its own newer HEAD and follow-up CI result; this source receipt does not claim that follow-up result in advance. Standing implementation/verification/push/CI authorization is saved in AGENTS.md. Earlier dated local/unpublished notes below are historical.
+
+Next: Continue RESEARCH-01C: add explicit generated recommendation/citation references bound to captured research source IDs. Validate unknown, missing and unsupported references, retain visible missing-data/assumption states, and test actual model-output fixtures plus reviewer UX. Do not treat context delivery as proof of factual correctness. Then push and inspect exact-commit CI; live source adapters and quality acceptance remain open.
+
+Evidence: `docs/RESEARCH_STRATEGY_CONTEXT.md`, `docs/qa/research01b-evidence.json`, `docs/qa/research01b-native-ci-evidence.json`.
+
 # Reviewed research in strategy requests
 
 RESEARCH-01B connects the manual research library to newly queued strategy jobs. It supplies the same bounded evidence context to the research/community agent trace and the actual model request. Content and scene jobs retain their previous context behavior.

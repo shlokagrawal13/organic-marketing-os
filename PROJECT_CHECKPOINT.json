@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-18.04-RESEARCH-01B",
-  "savedAtUtc": "2026-10-18T08:14:54.045470+00:00",
-  "currentMilestone": "RESEARCH-01B locally verified; source publication/native CI closure in progress.",
-  "activeTaskId": "RESEARCH-01",
-  "workInProgress": true,
+  "checkpointRevision": "2026-10-18.04-RESEARCH-01B-native-CI",
+  "savedAtUtc": "2026-10-18T08:30:30.514145+00:00",
+  "currentMilestone": "RESEARCH-01B published and exact-source native CI verified; RESEARCH-01C generated citation validation is next.",
+  "activeTaskId": null,
+  "workInProgress": false,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RESEARCH-01",
-  "nextAction": "Publish the verified RESEARCH-01B source without force, inspect/fix complete native CI, then publish evidence/continuity closure. Continue RESEARCH-01C: add explicit generated recommendation/citation references bound to captured research source IDs. Validate unknown, missing and unsupported references, retain visible missing-data/assumption states, and test actual model-output fixtures plus reviewer UX. Do not treat context delivery as proof of factual correctness. Then push and inspect exact-commit CI; live source adapters and quality acceptance remain open.",
+  "nextAction": "Continue RESEARCH-01C: add explicit generated recommendation/citation references bound to captured research source IDs. Validate unknown, missing and unsupported references, retain visible missing-data/assumption states, and test actual model-output fixtures plus reviewer UX. Do not treat context delivery as proof of factual correctness. Then push and inspect exact-commit CI; live source adapters and quality acceptance remain open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,10 +84,24 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
-    "docs/qa/research01b-ci-registry-retry.json"
+    "PROJECT_STATUS.md",
+    "README.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESEARCH_EVIDENCE.md",
+    "docs/RESEARCH_STRATEGY_CONTEXT.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/research01b-native-ci-evidence.json",
+    "docs/qa/verification-summary.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6682,8 +6696,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237",
-    "status": "RESEARCH-01B_local_verified_publication_pending",
+    "commit": "7ecc56363639141582032904ba2070484e3ca83a",
+    "status": "RESEARCH-01B_public_native_ci_verified",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6696,11 +6710,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "9a03e15a11e7596c11c494cbd07558a9a0889c20",
+    "sourceTree": "33419fca5a7ba40c1a7282064ed90ac5b01d853a",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Native-verified application source; a newer evidence-only closure HEAD and its own CI are read from Git/Actions.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237",
+    "lastLocalCheckpointCommit": "7ecc56363639141582032904ba2070484e3ca83a",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -7931,7 +7945,7 @@
       "id": "RESEARCH-01",
       "state": "ready_for_local_work",
       "title": "Sourced research, trends, competitors, SEO/AEO and community",
-      "completedIncrement": "RESEARCH-01A/B manual evidence and strategy context locally verified; B publication/native CI pending. Next C validates generated source references."
+      "completedIncrement": "RESEARCH-01A/B source and exact-source native CI verified; manual evidence plus bounded strategy consumption completed. RESEARCH-01C generated source-reference validation is next; wider research remains partial."
     },
     {
       "id": "SOCIAL-01",
@@ -8031,11 +8045,9 @@
     }
   ],
   "lastChanges": [
-    "Strategy queue rechecks writer membership and captures latest-100 / up-to-10 accepted eligible sources with 1,000-codepoint excerpts and 24,000-byte cap.",
-    "Captured IDs/revisions/provenance/dates/citations/fingerprints remain immutable across request replay and source edits.",
-    "Worker omits changed, withdrawn and expired records; legacy and missing snapshots remain explicit gaps.",
-    "Trace and actual provider input contain identical resolved evidence; each provider attempt/fallback rechecks live source identities and expiry.",
-    "Strategy history shows selected source versions/dates and missing states; workspace export and populated restore retain captured JSON."
+    "Implemented and published bounded immutable manual research snapshots for strategy model input and traces.",
+    "Verified exact remote tree and full native Actions on the published source.",
+    "Saved evidence, known artifact-inspection limitation and next RESEARCH-01C context."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8072,8 +8084,8 @@
     "prisma/migrations/202610180001_research_evidence/migration.sql": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RESEARCH-01B connects current accepted tenant research to strategy generation. Jobs freeze bounded source versions/citations/provenance at queue time; workers omit changed, withdrawn or expired evidence and disclose legacy/missing data. Provider and fallback boundaries recheck eligibility. The research trace and actual model request contain identical resolved evidence; strategy history displays selected sources. Content/scene behavior is preserved. Fresh checks: API/web production builds, 228 unit/export cases (8 new research-context cases), 27 native HTTP cases (4 new strategy-context cases), 16 production browser cases, 5 recovery cases, 23 unchanged migrations on disposable PostgreSQL 17.11/Redis 7.4.11, bounded readability, populated PGlite restore including a strategy snapshot and a legacy job, and both zero-vulnerability dependency audits. Public source 1c345156419cb7cf5ef9c1abf131c88fbd109511 had two CI attempts fail before checkout on the public ECR data quota. A two-line registry-address follow-up retains all verification steps; new-source CI remains pending.",
-  "activeTask": "Verify RESEARCH-01B with Docker Official Image registry addresses after two public ECR initialization failures.",
+  "latestStatus": "RESEARCH-01B bounded strategy research context source is public on main at `7ecc56363639141582032904ba2070484e3ca83a` (tree `33419fca5a7ba40c1a7282064ed90ac5b01d853a`). All 38 published paths and the full tree matched the locally verified source. Exact-source native Actions run `39110770249` succeeded: 228 unit/export, 27 HTTP, 16 production browser and 5 recovery cases. API/web builds, bounded readability, 23 fresh PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed.",
+  "activeTask": null,
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8084,16 +8096,7 @@
     "priorLostResultsInvented": false,
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
-  "pendingPublication": {
-    "taskId": "RESEARCH-01B",
-    "description": "Standing user-authorized source push and exact-commit CI.",
-    "paths": [
-      ".github/workflows/ci.yml",
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "docs/qa/research01b-ci-registry-retry.json"
-    ]
-  },
+  "pendingPublication": null,
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
     "status": "approved_payload_published_ci_verified",
@@ -8565,32 +8568,32 @@
   },
   "publishedIncrement": {
     "schemaVersion": 1,
-    "taskId": "RESEARCH-01A",
+    "taskId": "RESEARCH-01B",
     "status": "source_public_native_ci_verified",
-    "publicCommit": "7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237",
-    "parentCommit": "be959006c0ce9df66d7576d6d909c6c755660e8a",
-    "treeSha": "9a03e15a11e7596c11c494cbd07558a9a0889c20",
-    "publishedSourcePathCount": 34,
+    "publicCommit": "7ecc56363639141582032904ba2070484e3ca83a",
+    "parentCommit": "1c345156419cb7cf5ef9c1abf131c88fbd109511",
+    "treeSha": "33419fca5a7ba40c1a7282064ed90ac5b01d853a",
+    "publishedSourcePathCount": 38,
     "fullPublicTreeMatchesLocal": true,
     "run": {
-      "id": 39106314144,
-      "number": 83,
+      "id": 39110770249,
+      "number": 86,
       "workflow": "Core and recovery verification",
       "event": "push",
       "status": "completed",
       "conclusion": "success",
       "attempt": 1,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39106314144",
-      "headSha": "7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237",
-      "startedAtUtc": "2026-10-18T07:04:27Z",
-      "updatedAtUtc": "2026-10-18T07:19:26Z"
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39110770249",
+      "headSha": "7ecc56363639141582032904ba2070484e3ca83a",
+      "startedAtUtc": "2026-10-18T08:15:47Z",
+      "updatedAtUtc": "2026-10-18T08:29:31Z"
     },
     "job": {
-      "id": 117612799883,
+      "id": 117626236131,
       "name": "Native application verification",
       "status": "completed",
       "conclusion": "success",
-      "run_id": 39106314144,
+      "run_id": 39110770249,
       "logs_url": null,
       "steps": [
         {
@@ -8729,8 +8732,8 @@
     },
     "verification": {
       "unit": {
-        "tests": 220,
-        "passed": 220,
+        "tests": 228,
+        "passed": 228,
         "failed": 0,
         "cancelled": 0,
         "skipped": 0,
@@ -8739,17 +8742,17 @@
         "artifactReceiptsIndependentlyInspected": false
       },
       "http": {
-        "tests": 23,
-        "passed": 23,
+        "tests": 27,
+        "passed": 27,
         "failed": 0,
         "cancelled": 0,
         "skipped": 0,
         "todo": 0
       },
       "browser": {
-        "tests": 15,
-        "passed": 15,
-        "duration": "52.8s"
+        "tests": 16,
+        "passed": 16,
+        "duration": "54.2s"
       },
       "recovery": {
         "tests": 5,
@@ -8758,7 +8761,7 @@
         "cancelled": 0,
         "skipped": 0,
         "todo": 0,
-        "observedRemainingLockMs": 119856
+        "observedRemainingLockMs": 119943
       },
       "apiBuild": true,
       "webProductionBuild": true,
@@ -8771,16 +8774,17 @@
       "nativeRedis": true,
       "populatedUpgradeRestore": true,
       "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
       "nativePostgresRestoreVerified": false,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0
     },
     "artifact": {
-      "id": 12129101321,
+      "id": 12130598185,
       "name": "browser-evidence",
-      "sizeBytes": 7383163,
-      "digest": "sha256:643bc61ba9365831a51a66b986f24ae9b4770407a777786fc715746dd782846d",
-      "expiresAtUtc": "2027-01-16T07:04:28Z",
+      "sizeBytes": 7919898,
+      "digest": "sha256:6a82b115c7eca8f5a2de41ac67c879e55486c92d135f322065b3a151815bcd13",
+      "expiresAtUtc": "2027-01-16T08:15:47Z",
       "digestMatchesUploadLog": true,
       "bytesDownloadedToWorkspace": false,
       "downloadedDigestMatches": null,
@@ -8788,16 +8792,39 @@
       "limitation": {
         "connectorReturnedFileServiceReference": true,
         "workspaceDownloadSucceeded": false,
-        "observedFailure": "Returned download URL failed with HTTP 403 and CONNECT tunnel 403 from the environment network proxy.",
         "independentZipDigestCrcReceiptImageInspection": false,
-        "networkRestrictionBypassed": false
+        "networkRestrictionBypassed": false,
+        "observedFailure": "Returned download URL failed through the environment proxy: Tunnel connection failed: 403 Forbidden"
       }
     },
-    "decodedJobLogSha256": "9b18ca806373b5ec63853850688a00a7e9d9c891650a6ec8cf7e48777d412d2b",
-    "localUnitReceipts": "docs/qa/research01a-unit-receipts.json",
+    "decodedJobLogSha256": "4587554cf619f308b8881e9e0c6f0465e06c9e018d729d50b4910ae5bbfdf1e5",
+    "localUnitReceipts": "docs/qa/research01b-unit-receipts.json",
+    "initialRegistryFailure": {
+      "runId": 39110481990,
+      "attempt": 1,
+      "jobId": 117625372011,
+      "stage": "Initialize containers",
+      "cause": "public.ecr.aws PostgreSQL pull failed three times: toomanyrequests: Data limit exceeded",
+      "applicationChecksStarted": false,
+      "decodedLogSha256": "ca7ea923e3a8a5c3b3fcbc74c2f11729900129d9b0862a657bda9d5542b8bf27",
+      "action": "Use the same Docker Official Images PostgreSQL 17-alpine and Redis 7-alpine from Docker Hub after repeat public ECR data-quota failures; retain all health checks and verification steps.",
+      "attempts": [
+        {
+          "attempt": 1,
+          "jobId": 117625372011
+        },
+        {
+          "attempt": 2,
+          "jobId": 117625712537
+        }
+      ],
+      "status": "both_attempts_failed_before_checkout"
+    },
+    "initialApplicationSource": "1c345156419cb7cf5ef9c1abf131c88fbd109511",
+    "incrementBaseCommit": "61efba96e30fc71fb71c329d79804194281f2707",
     "limits": [
       "Manual citations and observation dates are operator-declared; no automatic source retrieval or factual/rights verification.",
-      "Strategy/model consumption is the next increment and is not implemented here.",
+      "Bounded manual research reaches strategy requests; generated citation correctness and live model quality are not verified.",
       "No live-source/provider or deployed production acceptance occurred.",
       "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
       "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
@@ -8901,63 +8928,55 @@
       "tests": 228,
       "passed": 228,
       "failed": 0,
-      "skipped": 0,
       "cancelled": 0,
+      "skipped": 0,
       "todo": 0,
-      "uniqueReceipts": 228
+      "completeFinalCumulativeSummary": true,
+      "artifactReceiptsIndependentlyInspected": false
     },
-    "focusedResearchUnit": 8,
     "http": {
       "tests": 27,
       "passed": 27,
       "failed": 0,
-      "skipped": 0,
       "cancelled": 0,
+      "skipped": 0,
       "todo": 0
     },
-    "focusedResearchHttp": 4,
     "browser": {
       "tests": 16,
-      "passed": 16
+      "passed": 16,
+      "duration": "54.2s"
     },
-    "focusedResearchBrowser": 4,
     "recovery": {
       "tests": 5,
       "passed": 5,
       "failed": 0,
-      "skipped": 0,
       "cancelled": 0,
+      "skipped": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119947
+      "observedRemainingLockMs": 119943
     },
     "apiBuild": true,
     "webProductionBuild": true,
-    "freshNativePostgresMigrations": 23,
-    "nativePostgresVersion": "17.11",
-    "nativeRedisVersion": "7.4.11",
-    "populatedUpgradeRestore": {
-      "passed": true,
-      "engine": "PGlite WASM PostgreSQL",
-      "migrations": 23,
-      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
-      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4967472,
-      "sha256": "f50d58738f6dc941185c7259856bc436f5cf10cc63fcaeaa0fc74017369a9902",
-      "nativePostgresRestoreVerified": false,
-      "creditLedgerRestoreAndImmutabilityVerified": true,
-      "generatedMediaRequestAndProviderReceiptRestored": true,
-      "workspaceYoutubePolicyRestored": true,
-      "researchCitationProvenanceAndReviewRestored": true,
-      "queuedStrategyResearchSnapshotRestored": true
-    },
     "boundedEnglishReadability": {
       "passed": true,
-      "standardSamples": 36,
-      "busySamples": 8,
-      "blankNegativeControl": true
+      "passedSampleLogLines": 44,
+      "artifactSampleBytesIndependentlyInspected": false
     },
+    "freshNativePostgresMigrations": 23,
+    "nativeRedis": true,
+    "populatedUpgradeRestore": true,
+    "researchCitationProvenanceAndReviewRestored": true,
+    "queuedStrategyResearchSnapshotRestored": true,
+    "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0
+    "fullAuditVulnerabilities": 0,
+    "scope": "Exact-source native GitHub Actions",
+    "sourceCommit": "7ecc56363639141582032904ba2070484e3ca83a",
+    "runId": 39110770249,
+    "evidence": "docs/qa/research01b-native-ci-evidence.json",
+    "liveProviderVerification": false,
+    "fullMasterAcceptanceVerified": false
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -9273,39 +9292,43 @@
     "closurePublicationNativeCi": true
   },
   "lastPublishedFiles": [
+    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/main.ts",
-    "apps/api/src/operations.ts",
-    "apps/api/src/research.ts",
-    "apps/web/app/globals.css",
+    "apps/api/src/ai.ts",
+    "apps/api/src/research-context.ts",
+    "apps/api/src/worker.ts",
+    "apps/web/app/content-workspace.tsx",
     "apps/web/app/research-workspace.tsx",
-    "apps/web/app/workspace.tsx",
+    "apps/web/app/strategy-research.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/RESEARCH_EVIDENCE.md",
+    "docs/RESEARCH_STRATEGY_CONTEXT.md",
     "docs/RESUME_CONTEXT.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/research01a-dark.png",
-    "docs/qa/research01a-desktop.png",
-    "docs/qa/research01a-evidence.json",
-    "docs/qa/research01a-mobile.png",
-    "docs/qa/research01a-unit-receipts.json",
+    "docs/qa/research01b-ci-registry-retry.json",
+    "docs/qa/research01b-dark.png",
+    "docs/qa/research01b-desktop.png",
+    "docs/qa/research01b-evidence.json",
+    "docs/qa/research01b-mobile.png",
+    "docs/qa/research01b-unit-receipts.json",
     "docs/qa/verification-summary.json",
-    "packages/core/research.ts",
-    "prisma/migrations/202610180001_research_evidence/migration.sql",
-    "prisma/schema.prisma",
+    "packages/core/agents.ts",
+    "packages/core/ai.ts",
+    "packages/core/research-context.ts",
+    "scripts/verify-local.mjs",
     "scripts/verify-upgrade.mjs",
-    "tests/integration/research.test.ts",
-    "tests/research.test.ts",
+    "tests/integration/research-context.test.ts",
+    "tests/research-context.test.ts",
     "tests/ui/research.spec.ts"
   ],
   "priorPendingPublicationBeforeCaptureRunner": {
@@ -9463,8 +9486,8 @@
   },
   "verification": {
     "unit": {
-      "tests": 220,
-      "passed": 220,
+      "tests": 228,
+      "passed": 228,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
@@ -9473,17 +9496,17 @@
       "artifactReceiptsIndependentlyInspected": false
     },
     "http": {
-      "tests": 23,
-      "passed": 23,
+      "tests": 27,
+      "passed": 27,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0
     },
     "browser": {
-      "tests": 15,
-      "passed": 15,
-      "duration": "52.8s"
+      "tests": 16,
+      "passed": 16,
+      "duration": "54.2s"
     },
     "recovery": {
       "tests": 5,
@@ -9492,7 +9515,7 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119856
+      "observedRemainingLockMs": 119943
     },
     "apiBuild": true,
     "webProductionBuild": true,
@@ -9505,13 +9528,14 @@
     "nativeRedis": true,
     "populatedUpgradeRestore": true,
     "researchCitationProvenanceAndReviewRestored": true,
+    "queuedStrategyResearchSnapshotRestored": true,
     "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0,
     "scope": "Exact-source native GitHub Actions",
-    "sourceCommit": "7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237",
-    "runId": 39106314144,
-    "evidence": "docs/qa/research01a-native-ci-evidence.json",
+    "sourceCommit": "7ecc56363639141582032904ba2070484e3ca83a",
+    "runId": 39110770249,
+    "evidence": "docs/qa/research01b-native-ci-evidence.json",
     "liveProviderVerification": false,
     "fullMasterAcceptanceVerified": false
   },
@@ -10375,7 +10399,7 @@
   "contextResume": {
     "evidence": "docs/qa/context-resume-evidence.json",
     "resumeContext": "docs/RESUME_CONTEXT.md",
-    "lastVerifiedPublicMain": "7ca6e9f7250f14c6a032dcb7e2c83431f1d2c237",
+    "lastVerifiedPublicMain": "7ecc56363639141582032904ba2070484e3ca83a",
     "pastedContextSuperseded": true,
     "documentationOnly": false,
     "publicPushAttempted": true
@@ -10867,5 +10891,269 @@
       }
     ],
     "status": "both_attempts_failed_before_checkout"
+  },
+  "research01bNativeCi": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01B",
+    "status": "source_public_native_ci_verified",
+    "publicCommit": "7ecc56363639141582032904ba2070484e3ca83a",
+    "parentCommit": "1c345156419cb7cf5ef9c1abf131c88fbd109511",
+    "treeSha": "33419fca5a7ba40c1a7282064ed90ac5b01d853a",
+    "publishedSourcePathCount": 38,
+    "fullPublicTreeMatchesLocal": true,
+    "run": {
+      "id": 39110770249,
+      "number": 86,
+      "workflow": "Core and recovery verification",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39110770249",
+      "headSha": "7ecc56363639141582032904ba2070484e3ca83a",
+      "startedAtUtc": "2026-10-18T08:15:47Z",
+      "updatedAtUtc": "2026-10-18T08:29:31Z"
+    },
+    "job": {
+      "id": 117626236131,
+      "name": "Native application verification",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39110770249,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install test object storage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install media dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Install pinned test CJK fonts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Verify bounded small-screen English readability",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Audit all dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Verify populated upgrade",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Verify native application flows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Upload browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35
+        }
+      ]
+    },
+    "verification": {
+      "unit": {
+        "tests": 228,
+        "passed": 228,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "completeFinalCumulativeSummary": true,
+        "artifactReceiptsIndependentlyInspected": false
+      },
+      "http": {
+        "tests": 27,
+        "passed": 27,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 16,
+        "passed": 16,
+        "duration": "54.2s"
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119943
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "boundedEnglishReadability": {
+        "passed": true,
+        "passedSampleLogLines": 44,
+        "artifactSampleBytesIndependentlyInspected": false
+      },
+      "freshNativePostgresMigrations": 23,
+      "nativeRedis": true,
+      "populatedUpgradeRestore": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "nativePostgresRestoreVerified": false,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "artifact": {
+      "id": 12130598185,
+      "name": "browser-evidence",
+      "sizeBytes": 7919898,
+      "digest": "sha256:6a82b115c7eca8f5a2de41ac67c879e55486c92d135f322065b3a151815bcd13",
+      "expiresAtUtc": "2027-01-16T08:15:47Z",
+      "digestMatchesUploadLog": true,
+      "bytesDownloadedToWorkspace": false,
+      "downloadedDigestMatches": null,
+      "zipCrcPassed": null,
+      "limitation": {
+        "connectorReturnedFileServiceReference": true,
+        "workspaceDownloadSucceeded": false,
+        "independentZipDigestCrcReceiptImageInspection": false,
+        "networkRestrictionBypassed": false,
+        "observedFailure": "Returned download URL failed through the environment proxy: Tunnel connection failed: 403 Forbidden"
+      }
+    },
+    "decodedJobLogSha256": "4587554cf619f308b8881e9e0c6f0465e06c9e018d729d50b4910ae5bbfdf1e5",
+    "localUnitReceipts": "docs/qa/research01b-unit-receipts.json",
+    "initialRegistryFailure": {
+      "runId": 39110481990,
+      "attempt": 1,
+      "jobId": 117625372011,
+      "stage": "Initialize containers",
+      "cause": "public.ecr.aws PostgreSQL pull failed three times: toomanyrequests: Data limit exceeded",
+      "applicationChecksStarted": false,
+      "decodedLogSha256": "ca7ea923e3a8a5c3b3fcbc74c2f11729900129d9b0862a657bda9d5542b8bf27",
+      "action": "Use the same Docker Official Images PostgreSQL 17-alpine and Redis 7-alpine from Docker Hub after repeat public ECR data-quota failures; retain all health checks and verification steps.",
+      "attempts": [
+        {
+          "attempt": 1,
+          "jobId": 117625372011
+        },
+        {
+          "attempt": 2,
+          "jobId": 117625712537
+        }
+      ],
+      "status": "both_attempts_failed_before_checkout"
+    },
+    "initialApplicationSource": "1c345156419cb7cf5ef9c1abf131c88fbd109511",
+    "incrementBaseCommit": "61efba96e30fc71fb71c329d79804194281f2707",
+    "limits": [
+      "Manual citations and observation dates are operator-declared; no automatic source retrieval or factual/rights verification.",
+      "Bounded manual research reaches strategy requests; generated citation correctness and live model quality are not verified.",
+      "No live-source/provider or deployed production acceptance occurred.",
+      "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
+      "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
+    ]
   }
 }
