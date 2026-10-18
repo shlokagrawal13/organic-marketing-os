@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01G",
+  "recordedAtUtc": "2026-10-18T18:58:01.993591+00:00",
+  "status": "locally_verified_read_Git_Actions_for_exact_source_publication_and_CI",
+  "basePublicCommit": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
+  "baseNativeRunId": 39150525720,
+  "scope": "Optional source-scoped audience/community interpretations, explicit missing lists and assumptions; same frozen context in actual provider and research/audience/community traces, with tenant/revision/expiry/capacity/legacy gates.",
+  "verification": {
+    "unit": {
+      "tests": 254,
+      "passed": 254,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "uniqueReceipts": 254
+    },
+    "http": {
+      "tests": 36,
+      "passed": 36,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 24,
+      "passed": 24
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119889
+    },
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "freshNativePostgresMigrations": 24,
+    "nativeRedis": true,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 24,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4973889,
+      "sha256": "bc6f219d5d4aaa21a96ed365eb7d0bcab224ac6b319864dcdde6cf85c1b83cb4",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyResearchCoverageRestored": true,
+      "structuredResearchInsightAndLegacyNullRestored": true,
+      "audienceCommunityInsightsAndMissingListsRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
+    "boundedEnglishReadability": {
+      "passed": true,
+      "passedSamples": 44,
+      "blankNegativeControl": true
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "unitReceipts": "docs/qa/research01g-unit-receipts.json",
+  "screenshots": {
+    "audience-insight-desktop": {
+      "path": "docs/qa/research01g-audience-insight-desktop.png",
+      "sha256": "5bc8319f291f508e46a27dcb1a0cfb55fb1bbba549544059f91c07e16782b61a"
+    },
+    "audience-insight-frozen-history": {
+      "path": "docs/qa/research01g-audience-insight-frozen-history.png",
+      "sha256": "fd1bef88a5d485adcbe474f3c9ff91aa493f096caca6dd82cebdd15684c0da64"
+    },
+    "audience-insight-history-mobile": {
+      "path": "docs/qa/research01g-audience-insight-history-mobile.png",
+      "sha256": "b61627711830bcb7a4aa4ee8acf960aaac1641059ddf0ca24ecce2f476ff1f63"
+    },
+    "community-insight-dark": {
+      "path": "docs/qa/research01g-community-insight-dark.png",
+      "sha256": "0783086d17d04faa1630bb9b15af5631fde582eb5cf0d1d11b6d77197b67cff7"
+    },
+    "community-insight-mobile": {
+      "path": "docs/qa/research01g-community-insight-mobile.png",
+      "sha256": "89ef49de1500cd1229323fe3d4f13c86307fe1473f00022c32d27f84bc7e77b4"
+    }
+  },
+  "protectedExistingMasterAndMigrationHashesUnchanged": 25,
+  "newMigrationAdded": false,
+  "resolvedLocalVerificationIssue": "Initial populated restore fixture violated the existing ResearchRecord_review_check (23514) because its accepted synthetic clone omitted reviewedBy/reviewNote. The fixture now copies the existing review metadata. Fresh complete restore passed; no constraint or runtime rule changed.",
+  "limits": [
+    "Manual source declarations and structured interpretations do not establish source truth, rights, relevance, semantic entailment or no-copy quality.",
+    "No interaction collection, measured population/frequency/sentiment, personal profiling or outbound response occurred. Manual source review and hypotheses do not establish factual or semantic quality.",
+    "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
+  ],
+  "commands": [
+    "npm run db:generate",
+    "npm run build:api",
+    "npm run build:web",
+    "PATH=.local/cloud/bin:$PATH npm test",
+    "npm run verify:upgrade",
+    "npm run verify:readability",
+    "npm audit --omit=dev --audit-level=moderate",
+    "npm audit --audit-level=moderate",
+    "bash .local/run-research01g-native.sh (fresh disposable native PostgreSQL/Redis; full production-web HTTP/browser/recovery)"
+  ],
+  "decodedLocalLogSha256": {
+    "unit": "593a5b81447ae9832e5b3b6c48456e8fb1be6b2ecfa2c5e9ff6128179aee695d",
+    "native": "f78d798449376e3a9546bfe84d95c4cc60177c9295e3e09ba887ce4187e1a4d1",
+    "web-build": "ab23df1709ad2ae0d71756b99686604168697163f64d609cb5acbd5653e3525a",
+    "upgrade": "113e625f5e22e226dca32c4e2f69adcc1e5a9188221d818f1e2e6221d14160e2",
+    "readability": "8e7dc5d5713952d9a528e255566b17e5c15e48e380304ce21581d4ba1a1bddbd",
+    "audit-production": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+    "audit-all": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+  }
+}

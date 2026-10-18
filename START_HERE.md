@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01G, 2026-10-19 IST
+
+Optional audience/community interpretations are locally verified. Audience scope and observed need retain optional interests/questions/pain-points as explicit empty lists when missing; community context, declared signal, observed theme and proposed content test retain assumptions. The actual provider and research/audience/community agent traces use the same frozen source context. Review, revision, tenant, expiry, latest-100, 10-source and 24,000-byte gates remain enforced.
+
+Fresh local verification: API/web builds; 254 unit/export, 36 native HTTP, 24 production browser and 5 recovery cases; 24 fresh migrations; 44 bounded readability samples; populated predecessor/SEARCH/AUDIENCE/COMMUNITY/empty-list archive restore; both dependency audits with zero vulnerabilities. All 25 existing master/migration hashes are unchanged; no migration, dependency or pipeline changes.
+
+This checkpoint records local verification. Its standing-authorized source publication and own exact-commit CI must be read from latest Git/Actions before completion is claimed. The predecessor main `e9c0b09` passed run `39150525720` (249/35/22/5); its native receipt is retained in `docs/qa/research01f-native-ci-evidence.json`.
+
+RESEARCH-01 remains Partial. Source-scoped interpretations do not establish population-wide interests, measured frequency/sentiment, personal profiles or factual/semantic quality. No interactions are collected or responses sent. Live/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+Next: finish/read this increment's exact-source publication and CI, fixing any failure; then RESEARCH-01H bounded seasonal/calendar-context audit from master sections 22–23, preserving manual event/date/timezone uncertainty, source review, market/language selection, coverage and assumptions.
+
+Evidence: `docs/AUDIENCE_COMMUNITY_INSIGHTS.md`, `docs/qa/research01g-evidence.json` and `docs/qa/research01g-unit-receipts.json`. Earlier entries retain their historical scopes.
+
 ## Current continuation — RESEARCH-01F, 2026-10-18 UTC
 
 Optional structured competitor/search insights are locally verified. A reviewed manual source can retain competitor theme/format/positioning/opportunity/differentiation or proposed search query/intent/keywords/questions/answer angle, always with explicit assumptions. Insight-only edits clear acceptance; captured analysis stays immutable and shares the existing tenant, revision, expiry, latest-100, 10-source and 24,000-byte gates. Old/null records preserve their earlier evidence fingerprints.

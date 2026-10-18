@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 import { createRequire } from "node:module";
 import { db, actor, base } from "../support/http";
 import { researchMaximumAgeMs } from "../../packages/core/research";
-import { competitorInsight, searchInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight } from "../support/research-insight";
 
 const orgs: string[] = [],
   users: string[] = [];
@@ -47,9 +47,9 @@ after(async () => {
   await db.$disconnect();
 });
 
-test("structured research HTTP persists both insight kinds, rejects invalid input and invalidates review on insight-only edits", async () => {
+test("structured research HTTP persists all supported insight kinds, rejects invalid input and invalidates review on insight-only edits", async () => {
   const w = await workspace("Structured insight fixture");
-  for (const insight of [competitorInsight(), searchInsight()]) {
+  for (const insight of [competitorInsight(), searchInsight(), audienceInsight(), communityInsight()]) {
     const payload = { ...input(), category: insight.kind, insight };
     const created = await w.owner.call(w.path, "POST", payload);
     assert.equal(created.status, 201); assert.deepEqual(created.body.insight, insight);

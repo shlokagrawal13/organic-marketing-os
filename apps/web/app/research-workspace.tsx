@@ -169,7 +169,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
   }
   if (draft?.insight) {
     try { parseResearchInsight(draft.insight, draft.category); }
-    catch { validation = "Complete all insight fields within their limits; structured insights must fit within 6,000 UTF-8 bytes."; }
+    catch { validation = "Complete required insight fields within their limits; structured insights must fit within 6,000 UTF-8 bytes."; }
   }
   const unchanged = !!draft && !creating && !!selected && JSON.stringify({ ...draft, authorizedSource: false }) === JSON.stringify(draftFrom(selected));
   async function save(event: FormEvent) {

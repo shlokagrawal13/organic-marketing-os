@@ -6,7 +6,9 @@ import { parseResearchInput } from "../packages/core/research";
 import { captureResearchSnapshot, readResearchSnapshot, resolveResearchContext, assertResearchContextCurrent, ResearchContextChangedError, ResearchCandidate } from "../packages/core/research-context";
 import { reviewStrategyReferences } from "../packages/core/strategy-references";
 import { stableJson } from "../packages/core/requests";
-import { competitorInsight, searchInsight } from "./support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight } from "./support/research-insight";
+import { contextArtifact, buildAgentPlan } from "../packages/core/agents";
+import { ModelRouter } from "../packages/core/ai";
 
 const now = new Date(), org = randomUUID();
 const candidate = (insight: unknown = searchInsight()): ResearchCandidate => ({ id: randomUUID(), organizationId: org,
@@ -14,6 +16,77 @@ const candidate = (insight: unknown = searchInsight()): ResearchCandidate => ({ 
   summary: "Synthetic source summary, separate from analyst interpretation.", sourceUrl: "https://public.org/insight",
   sourceLabel: "Synthetic source", observedAt: new Date(now.getTime()-60000), collectedAt: new Date(now.getTime()-50000),
   reviewedAt: new Date(now.getTime()-40000), market: "India", language: "English", provenance: "MANUAL", reviewStatus: "ACCEPTED", authorizedSource: true, insight });
+
+test("audience/community intake preserves declared scope, optional missing lists and strict manual interpretation fields", () => {
+  for (const insight of [audienceInsight(), communityInsight()]) {
+    assert.deepEqual(parseResearchInsight(insight, insight.kind), insight);
+    assert.throws(() => parseResearchInsight(insight, "INDUSTRY"), /match/);
+    for (const extra of [{ sentimentScore: 0.9 }, { count: 10 }, { personId: "fixture" }, { sourceUrl: "https://public.org/forged" }])
+      assert.throws(() => parseResearchInsight({ ...insight, ...extra }, insight.kind));
+  }
+  const missing = { ...audienceInsight(), interests: [], questions: [], painPoints: [] };
+  assert.deepEqual(parseResearchInsight(missing, "AUDIENCE"), missing);
+  assert.throws(() => parseResearchInsight({ ...missing, observedNeed: " " }, "AUDIENCE"));
+  assert.throws(() => parseResearchInsight({ ...communityInsight(), signal: "VERIFIED_SENTIMENT" }, "COMMUNITY"));
+  assert.throws(() => parseResearchInsight({ ...communityInsight(), assumptions: "" }, "COMMUNITY"));
+});
+
+test("audience lists and community classifications enforce field, item, enum and UTF8 capacity bounds", () => {
+  for (const key of ["interests", "questions", "painPoints"]) {
+    assert.throws(() => parseResearchInsight({ ...audienceInsight(), [key]: Array(6).fill("fixture") }, "AUDIENCE"));
+    assert.throws(() => parseResearchInsight({ ...audienceInsight(), [key]: ["x".repeat(key === "interests" ? 161 : 201)] }, "AUDIENCE"));
+  }
+  for (const signal of ["QUESTION", "OBJECTION", "PAIN_POINT", "REQUEST", "FEEDBACK"])
+    assert.equal(parseResearchInsight({ ...communityInsight(), signal }, "COMMUNITY")?.kind, "COMMUNITY");
+  for (const [key, length] of [["channelContext", 161], ["topic", 201], ["observation", 501], ["proposedResponse", 501]] as const)
+    assert.throws(() => parseResearchInsight({ ...communityInsight(), [key]: "x".repeat(length) }, "COMMUNITY"));
+  const oversized = { ...audienceInsight(), interests: Array(5).fill("क".repeat(160)), questions: Array(5).fill("क".repeat(200)), painPoints: Array(5).fill("क".repeat(200)) };
+  assert.throws(() => parseResearchInsight(oversized, "AUDIENCE"), /6,000/);
+});
+
+test("audience/community snapshots retain assumptions, reject tampering and withdraw later edits, review loss and expiry", () => {
+  for (const insight of [audienceInsight(), communityInsight()]) {
+    const row = { ...candidate(insight), category: insight.kind }, snapshot = captureResearchSnapshot(org, [row], now);
+    assert.deepEqual(snapshot.evidence[0].insight, insight); assert.ok(readResearchSnapshot(snapshot, org));
+    for (const change of [{ insight: { ...insight, assumptions: "Edited hypothesis after capture" } }, { reviewStatus: "REJECTED" }, { organizationId: randomUUID() }])
+      assert.equal(resolveResearchContext(snapshot, org, [{ ...row, ...change }], now).evidence.length, 0);
+    assert.equal(resolveResearchContext(snapshot, org, [row], new Date(snapshot.evidence[0].expiresAt)).evidence.length, 0);
+    assert.equal(readResearchSnapshot({ ...snapshot, evidence: [{ ...snapshot.evidence[0], insight: { ...insight, assumptions: "Forged history" } }] }, org), null);
+    const invalid = captureResearchSnapshot(org, [{ ...row, insight: { ...insight, count: 123 } }], now);
+    assert.equal(invalid.coverage!.rejected.invalidSource, 1);assert.equal(invalid.evidence.length, 0);
+  }
+});
+
+test("audience/community analysis shares source capacity, excludes foreign bodies and cannot become a source quotation", () => {
+  const insight = { ...audienceInsight(), observedNeed: "क".repeat(500), proposedResponse: "क".repeat(500), assumptions: "क".repeat(500), interests: [], questions: [], painPoints: [] };
+  const rows = Array.from({ length: 10 }, () => ({ ...candidate(insight), category: "AUDIENCE" }));
+  const snapshot = captureResearchSnapshot(org, [{ ...candidate(communityInsight()), category: "COMMUNITY", organizationId: randomUUID(), summary: "Private foreign interaction" }, ...rows], now);
+  assert.ok(Buffer.byteLength(JSON.stringify(snapshot)) <= 24000);assert.ok(snapshot.coverage!.omitted.byteBudget > 0);
+  assert.ok(!JSON.stringify(snapshot).includes("Private foreign interaction"));assert.deepEqual(snapshot.evidence[0].insight, insight);
+  const context = resolveResearchContext(snapshot, org, rows, now), source = context.evidence[0];
+  const checked = reviewStrategyReferences({ recommendations: [{ id: "audience", recommendation: "Test the proposal", basis: "RESEARCH", assumption: "Synthetic hypothesis",
+    sourceRefs: [{ sourceId: source.id, revision: source.revision, quote: insight.proposedResponse }] }] }, context, org, now);
+  assert.equal(checked.passed, false);assert.ok(checked.recommendations[0].issues.includes("QUOTE_NOT_FOUND"));
+});
+
+test("actual provider and research, audience and community agent traces receive identical scoped interpretations", async () => {
+  const rows = [audienceInsight(), communityInsight()].map(insight => ({ ...candidate(insight), category: insight.kind }));
+  const research = resolveResearchContext(captureResearchSnapshot(org, rows, now), org, rows, now);
+  const brand = { profile: { audience: "Synthetic declared audience" }, research };
+  for (const role of ["research", "audience", "community-intelligence"]) {
+    const step = buildAgentPlan("strategy").steps.find(step => step.role === role)!;assert.ok(step);
+    assert.deepEqual(contextArtifact(step, { brand, input: {} }).inputs.externalEvidence, research);
+  }
+  let calls = 0;
+  const fake = (async (_url: unknown, init: RequestInit) => {
+    calls++;const body=JSON.parse(String(init.body));assert.deepEqual(JSON.parse(body.messages[1].content).brand.research, research);
+    assert.match(body.messages[0].content, /not population-wide facts/);assert.match(body.messages[0].content, /No interaction was collected or response sent/);
+    return Response.json({ choices: [{ message: { content: JSON.stringify({ title: "Synthetic strategy", goal: "Test", audience: "Test", positioning: "Test",
+      pillars: [{ name: "Test", purpose: "Explain" }], ideas: [{ title: "Test", hook: "Test", platform: "LinkedIn", format: "Text", purpose: "Explain", cta: "Read" }], cadence: "Weekly", experiments: [], assumptions: ["Synthetic fixture"] }) } }] });
+  }) as typeof fetch;
+  await new ModelRouter([{ name: "fixture", url: "https://fixture.test", key: "test-only", model: "fixture", qualityTier: "premium", capabilities: ["text", "json", "strategy"] }], fake).run("strategy", {}, brand, async () => {});
+  assert.equal(calls, 1);
+});
 
 test("structured insight intake canonicalizes both kinds, retains assumptions and keeps legacy input optional", () => {
   const row = candidate();

@@ -165,13 +165,24 @@ try {
   await db.query('UPDATE "ResearchRecord" SET category=\'SEARCH\', insight=$1 WHERE id=$2', [JSON.stringify(restoredInsight), strategyResearch]);
   const researchRow = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
   const utcResearch = (row) => ({ ...row, ...Object.fromEntries(["observedAt", "collectedAt", "reviewedAt"].map((key) => [key, new Date(row[key] + "Z")])) });
-  const researchSnapshot = captureResearchSnapshot(org, [utcResearch(researchRow)], new Date(), { categories: ["SEARCH"], market: "india", language: "english" });
-  assert.equal(researchSnapshot.evidence.length, 1);
+  const scopedInsights = [
+    { kind: "AUDIENCE", segment: "Synthetic beginners", observedNeed: "Synthetic source described an unclear first step", interests: [], questions: [], painPoints: [], proposedResponse: "Test an original starter checklist", assumptions: "Synthetic fixture; missing lists stay unknown, not population-wide evidence." },
+    { kind: "COMMUNITY", channelContext: "Synthetic public discussion", signal: "QUESTION", topic: "Synthetic setup steps", observation: "Synthetic interaction asked about setup", proposedResponse: "Test an original setup explanation", assumptions: "Synthetic fixture; no measured frequency or individual profile." },
+  ];
+  const scopedRows = [];
+  for (const insight of scopedInsights) {
+    const id = randomUUID();
+    await db.query('INSERT INTO "ResearchRecord" (id,"organizationId",revision,title,category,"temporalScope",summary,"sourceUrl","sourceLabel","observedAt",market,language,"authorizedSource","createdBy","updatedAt","reviewStatus","reviewedAt","reviewedBy","reviewNote",insight) SELECT $1,"organizationId",2,\'Synthetic scoped restore source\',$2::"ResearchCategory",\'CURRENT\',summary,"sourceUrl","sourceLabel","observedAt",market,language,true,"createdBy",now(),\'ACCEPTED\',now(),\"reviewedBy\",\"reviewNote\",$3::jsonb FROM "ResearchRecord" WHERE id=$4', [id, insight.kind, JSON.stringify(insight), strategyResearch]);
+    scopedRows.push((await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [id])).rows[0].row);
+  }
+  const selectedRows = [researchRow, ...scopedRows];
+  const researchSnapshot = captureResearchSnapshot(org, selectedRows.map(utcResearch), new Date(), { categories: ["AUDIENCE", "COMMUNITY", "SEARCH"], market: "india", language: "english" });
+  assert.equal(researchSnapshot.evidence.length, 3);
   const strategyContext = { revision: 1, profile: {}, creativeDna: {}, approvedContent: [], researchSnapshot };
   await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6)',
     [strategyJob, org, user, randomUUID(), JSON.stringify({ prompt: "Restore a synthetic sourced strategy request" }), JSON.stringify(strategyContext)]);
   const { reviewStrategyReferences } = await import("../dist/packages/core/strategy-references.js");
-  const selectedResearch = resolveResearchContext(researchSnapshot, org, [utcResearch(researchRow)]);
+  const selectedResearch = resolveResearchContext(researchSnapshot, org, selectedRows.map(utcResearch));
   const recommendations = [{ id: "restore-recommendation", recommendation: "Test a synthetic educational post", basis: "RESEARCH",
     sourceRefs: [{ sourceId: strategyResearch, revision: 2, quote: selectedResearch.evidence[0].summary }], assumption: "Synthetic test only" }];
   const citationReview = reviewStrategyReferences({ recommendations }, selectedResearch, org);assert.equal(citationReview.passed, true);
@@ -260,15 +271,23 @@ try {
   const restoredStrategy = (await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].brandContext;
   assert.deepEqual(restoredStrategy, strategyContext);
   const restoredSource = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
+  const restoredScoped = [];
+  for (const source of scopedRows) {
+    const saved = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [source.id])).rows[0].row;
+    assert.deepEqual(saved, source);restoredScoped.push(saved);
+  }
+  const restoredRows = [restoredSource, ...restoredScoped].map(utcResearch);
+  assert.deepEqual(restoredStrategy.researchSnapshot.evidence.slice(1).map(source => source.insight), scopedInsights);
   assert.deepEqual(restoredSource.insight, restoredInsight);
   assert.deepEqual(restoredStrategy.researchSnapshot.evidence[0].insight, restoredInsight);
   assert.deepEqual(restoredStrategy.researchSnapshot.coverage, researchSnapshot.coverage);
-  assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).coverage, selectedResearch.coverage);
-  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["SEARCH"], market: "india", language: "english" });
-  assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).evidence, researchSnapshot.evidence);
+  assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, restoredRows).coverage, selectedResearch.coverage);
+  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["AUDIENCE", "COMMUNITY", "SEARCH"], market: "india", language: "english" });
+  assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, restoredRows).evidence, researchSnapshot.evidence);
   assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
   const restoredRun = (await restored.query('SELECT "frozenContext","finalReview" FROM "AIAgentRun" WHERE id=$1', [runId])).rows[0];
   assert.deepEqual(restoredRun.frozenContext.brand.research.evidence[0].insight, restoredInsight);
+  assert.deepEqual(restoredRun.frozenContext.brand.research.evidence.slice(1).map(source => source.insight), scopedInsights);
   assert.deepEqual(restoredRun.finalReview, finalReview);
   assert.deepEqual((await restored.query('SELECT output,status FROM "AIJob" WHERE id=$1', [completedStrategyJob])).rows[0], { output: strategyOutput, status: "SUCCEEDED" });
   assert.equal((await restored.query('SELECT status FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].status, "QUEUED");
@@ -296,6 +315,7 @@ try {
     strategyResearchSelectionRestored: true,
     strategyResearchCoverageRestored: true,
     structuredResearchInsightAndLegacyNullRestored: true,
+    audienceCommunityInsightsAndMissingListsRestored: true,
     strategyRecommendationsAndCitationReviewRestored: true,
   };
   await writeFile(

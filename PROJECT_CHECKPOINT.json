@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-18.08-RESEARCH-01F-local-verified",
-  "savedAtUtc": "2026-10-18T17:38:02.549734+00:00",
-  "currentMilestone": "RESEARCH-01F structured competitor/search insights locally verified; exact-source publication and own CI must be read from latest Git/Actions.",
+  "checkpointRevision": "2026-10-19.09-RESEARCH-01G-local-verified",
+  "savedAtUtc": "2026-10-18T18:58:01.993591+00:00",
+  "currentMilestone": "RESEARCH-01G audience/community insights locally verified; exact-source publication and own CI must be read from latest Git/Actions.",
   "activeTaskId": null,
   "workInProgress": false,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RESEARCH-01",
-  "nextAction": "Publish and inspect exact-source RESEARCH-01F CI, fixing any failure. Then RESEARCH-01G bounded structured audience/community insights from master sections 18 and 47; live/factual/full acceptance remains open.",
+  "nextAction": "Publish and inspect exact-source RESEARCH-01G CI, fixing any failure. Then RESEARCH-01H bounded seasonal/calendar-context audit from master sections 22–23; live/factual/full acceptance remains open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -90,11 +90,9 @@
     "README.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/research.ts",
-    "apps/web/app/globals.css",
     "apps/web/app/research-insight.tsx",
     "apps/web/app/research-workspace.tsx",
-    "apps/web/app/strategy-research.tsx",
+    "docs/AUDIENCE_COMMUNITY_INSIGHTS.md",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -109,21 +107,19 @@
     "docs/STRUCTURED_RESEARCH_INSIGHTS.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/research01e-final-ci-evidence.json",
-    "docs/qa/research01f-competitor-insight-desktop.png",
-    "docs/qa/research01f-competitor-insight-frozen-history.png",
-    "docs/qa/research01f-evidence.json",
-    "docs/qa/research01f-label-followup.json",
-    "docs/qa/research01f-search-insight-dark.png",
-    "docs/qa/research01f-search-insight-mobile.png",
-    "docs/qa/research01f-unit-receipts.json",
+    "docs/qa/research01f-native-ci-evidence.json",
+    "docs/qa/research01g-audience-insight-desktop.png",
+    "docs/qa/research01g-audience-insight-frozen-history.png",
+    "docs/qa/research01g-audience-insight-history-mobile.png",
+    "docs/qa/research01g-community-insight-dark.png",
+    "docs/qa/research01g-community-insight-mobile.png",
+    "docs/qa/research01g-evidence.json",
+    "docs/qa/research01g-unit-receipts.json",
     "docs/qa/verification-summary.json",
+    "packages/core/agents.ts",
     "packages/core/ai.ts",
     "packages/core/research-context.ts",
     "packages/core/research-insight.ts",
-    "packages/core/research.ts",
-    "prisma/migrations/202610180002_research_insight/migration.sql",
-    "prisma/schema.prisma",
     "scripts/verify-upgrade.mjs",
     "tests/integration/research-context.test.ts",
     "tests/integration/research.test.ts",
@@ -6724,8 +6720,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "35557b29b67df29499252c8e89e6ad9d66db51d4",
-    "status": "RESEARCH-01F_local_verified_read_latest_Git_Actions_for_own_publication_CI",
+    "commit": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
+    "status": "RESEARCH-01G_local_verified_read_latest_Git_Actions_for_own_publication_CI",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6738,11 +6734,11 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "c0fb90eb9d890dfb54b500e703a2a7e257b6f498",
+    "sourceTree": "9977fd24c1d00f3ec9c7ee726223684fb0aa89a6",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last native-verified predecessor main. This RESEARCH-01F source checkpoint is newer; read its exact HEAD and own CI from Git/Actions.",
+    "commitMeaning": "Last native-verified predecessor main. This RESEARCH-01G source checkpoint is newer; read its exact HEAD and own CI from Git/Actions.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "35557b29b67df29499252c8e89e6ad9d66db51d4",
+    "lastLocalCheckpointCommit": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
     "uploadGate": {
       "initialRejectedAction": "Create Git tree containing the verified EDITOR-01E source/docs payload on public main",
       "initialReason": "Automatic approval review required explicit authorization to export this source payload to the public repository destination.",
@@ -7973,7 +7969,7 @@
       "id": "RESEARCH-01",
       "state": "ready_for_local_work",
       "title": "Sourced research, trends, competitors, SEO/AEO and community",
-      "completedIncrement": "A–E and final E fixture main published/native CI verified. F structured competitor/search interpretations locally verified; own publication/CI read from latest Git/Actions. Next G audience/community insights; broader research remains Partial."
+      "completedIncrement": "A–F published/native CI verified. G audience/community interpretations locally verified; own publication/CI read from latest Git/Actions. Next H seasonal/calendar context; broader research remains Partial."
     },
     {
       "id": "SOCIAL-01",
@@ -8126,7 +8122,7 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RESEARCH-01F",
+    "taskId": "RESEARCH-01G",
     "description": "Standing-authorized source push and exact-source native CI; read latest Git/Actions for result.",
     "paths": [
       "CHECKPOINT_MANIFEST.json",
@@ -8135,11 +8131,9 @@
       "README.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "apps/api/src/research.ts",
-      "apps/web/app/globals.css",
       "apps/web/app/research-insight.tsx",
       "apps/web/app/research-workspace.tsx",
-      "apps/web/app/strategy-research.tsx",
+      "docs/AUDIENCE_COMMUNITY_INSIGHTS.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -8154,21 +8148,19 @@
       "docs/STRUCTURED_RESEARCH_INSIGHTS.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/research01e-final-ci-evidence.json",
-      "docs/qa/research01f-competitor-insight-desktop.png",
-      "docs/qa/research01f-competitor-insight-frozen-history.png",
-      "docs/qa/research01f-evidence.json",
-      "docs/qa/research01f-label-followup.json",
-      "docs/qa/research01f-search-insight-dark.png",
-      "docs/qa/research01f-search-insight-mobile.png",
-      "docs/qa/research01f-unit-receipts.json",
+      "docs/qa/research01f-native-ci-evidence.json",
+      "docs/qa/research01g-audience-insight-desktop.png",
+      "docs/qa/research01g-audience-insight-frozen-history.png",
+      "docs/qa/research01g-audience-insight-history-mobile.png",
+      "docs/qa/research01g-community-insight-dark.png",
+      "docs/qa/research01g-community-insight-mobile.png",
+      "docs/qa/research01g-evidence.json",
+      "docs/qa/research01g-unit-receipts.json",
       "docs/qa/verification-summary.json",
+      "packages/core/agents.ts",
       "packages/core/ai.ts",
       "packages/core/research-context.ts",
       "packages/core/research-insight.ts",
-      "packages/core/research.ts",
-      "prisma/migrations/202610180002_research_insight/migration.sql",
-      "prisma/schema.prisma",
       "scripts/verify-upgrade.mjs",
       "tests/integration/research-context.test.ts",
       "tests/integration/research.test.ts",
@@ -8987,25 +8979,25 @@
   },
   "currentVerification": {
     "unit": {
-      "tests": 249,
-      "passed": 249,
+      "tests": 254,
+      "passed": 254,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "uniqueReceipts": 249
+      "uniqueReceipts": 254
     },
     "http": {
-      "tests": 35,
-      "passed": 35,
+      "tests": 36,
+      "passed": 36,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0
     },
     "browser": {
-      "tests": 22,
-      "passed": 22
+      "tests": 24,
+      "passed": 24
     },
     "recovery": {
       "tests": 5,
@@ -9014,7 +9006,7 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119949
+      "observedRemainingLockMs": 119889
     },
     "apiBuild": true,
     "webProductionBuild": true,
@@ -9026,8 +9018,8 @@
       "migrations": 24,
       "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
       "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4973495,
-      "sha256": "25c29d1fc83622c06092b9c2904a41cea536f581ab167958e9f10436a021dc45",
+      "archiveBytes": 4973889,
+      "sha256": "bc6f219d5d4aaa21a96ed365eb7d0bcab224ac6b319864dcdde6cf85c1b83cb4",
       "nativePostgresRestoreVerified": false,
       "creditLedgerRestoreAndImmutabilityVerified": true,
       "generatedMediaRequestAndProviderReceiptRestored": true,
@@ -9037,6 +9029,7 @@
       "strategyResearchSelectionRestored": true,
       "strategyResearchCoverageRestored": true,
       "structuredResearchInsightAndLegacyNullRestored": true,
+      "audienceCommunityInsightsAndMissingListsRestored": true,
       "strategyRecommendationsAndCitationReviewRestored": true
     },
     "boundedEnglishReadability": {
@@ -9046,8 +9039,8 @@
     },
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0,
-    "scope": "Fresh local full native verification of RESEARCH-01F; own source publication/CI read separately",
-    "evidence": "docs/qa/research01f-evidence.json",
+    "scope": "Fresh local full native verification of RESEARCH-01G; own source publication/CI read separately",
+    "evidence": "docs/qa/research01g-evidence.json",
     "liveProviderVerification": false,
     "fullMasterAcceptanceVerified": false
   },
@@ -9556,25 +9549,25 @@
   },
   "verification": {
     "unit": {
-      "tests": 249,
-      "passed": 249,
+      "tests": 254,
+      "passed": 254,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "uniqueReceipts": 249
+      "uniqueReceipts": 254
     },
     "http": {
-      "tests": 35,
-      "passed": 35,
+      "tests": 36,
+      "passed": 36,
       "failed": 0,
       "cancelled": 0,
       "skipped": 0,
       "todo": 0
     },
     "browser": {
-      "tests": 22,
-      "passed": 22
+      "tests": 24,
+      "passed": 24
     },
     "recovery": {
       "tests": 5,
@@ -9583,7 +9576,7 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119949
+      "observedRemainingLockMs": 119889
     },
     "apiBuild": true,
     "webProductionBuild": true,
@@ -9595,8 +9588,8 @@
       "migrations": 24,
       "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
       "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4973495,
-      "sha256": "25c29d1fc83622c06092b9c2904a41cea536f581ab167958e9f10436a021dc45",
+      "archiveBytes": 4973889,
+      "sha256": "bc6f219d5d4aaa21a96ed365eb7d0bcab224ac6b319864dcdde6cf85c1b83cb4",
       "nativePostgresRestoreVerified": false,
       "creditLedgerRestoreAndImmutabilityVerified": true,
       "generatedMediaRequestAndProviderReceiptRestored": true,
@@ -9606,6 +9599,7 @@
       "strategyResearchSelectionRestored": true,
       "strategyResearchCoverageRestored": true,
       "structuredResearchInsightAndLegacyNullRestored": true,
+      "audienceCommunityInsightsAndMissingListsRestored": true,
       "strategyRecommendationsAndCitationReviewRestored": true
     },
     "boundedEnglishReadability": {
@@ -9615,8 +9609,8 @@
     },
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0,
-    "scope": "Fresh local full native verification of RESEARCH-01F; own source publication/CI read separately",
-    "evidence": "docs/qa/research01f-evidence.json",
+    "scope": "Fresh local full native verification of RESEARCH-01G; own source publication/CI read separately",
+    "evidence": "docs/qa/research01g-evidence.json",
     "liveProviderVerification": false,
     "fullMasterAcceptanceVerified": false
   },
@@ -10480,7 +10474,7 @@
   "contextResume": {
     "evidence": "docs/qa/context-resume-evidence.json",
     "resumeContext": "docs/RESUME_CONTEXT.md",
-    "lastVerifiedPublicMain": "35557b29b67df29499252c8e89e6ad9d66db51d4",
+    "lastVerifiedPublicMain": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
     "pastedContextSuperseded": true,
     "documentationOnly": false,
     "publicPushAttempted": true
@@ -12704,6 +12698,271 @@
       "web-build": "2983f7f569bcf882ac6dc4493980a42188c7259694696be3f46621860521a8f8",
       "upgrade": "3e24ed196f11a971f3b024c0cd08194ae47ce2c84389f5e5b397cea3af9c9c97",
       "readability": "56e26485fa52aa1a91af17ab2791a731c046541d21620e784681ec8bc12ec1fd",
+      "audit-production": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+      "audit-all": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+    }
+  },
+  "research01fNativeCi": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01F",
+    "status": "latest_public_source_native_ci_verified",
+    "recordedAtUtc": "2026-10-18T17:54:42.982629+00:00",
+    "publicCommit": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
+    "treeSha": "9977fd24c1d00f3ec9c7ee726223684fb0aa89a6",
+    "run": {
+      "id": 39150525720,
+      "html_url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39150525720",
+      "head_sha": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
+      "status": "completed",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "run_started_at": "2026-10-18T17:38:33Z",
+      "updated_at": "2026-10-18T17:53:42Z"
+    },
+    "jobId": 117743059967,
+    "allJobStepsPassed": true,
+    "verification": {
+      "unit": {
+        "tests": 249,
+        "passed": 249,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "http": {
+        "tests": 35,
+        "passed": 35,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 22,
+        "passed": 22,
+        "duration": "1.2m"
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119965
+      },
+      "apiAndWebBuildsPassed": true,
+      "readabilityPassedSamples": 44,
+      "freshNativePostgresMigrations": 24,
+      "populatedPredecessorStructuredInsightSnapshotCoverageSelectionAndReferenceRestorePassed": true,
+      "nativePostgresPrivateMediaCrossStoreRestoreVerified": false,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "publication": {
+      "publicCommit": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
+      "parent": "35557b29b67df29499252c8e89e6ad9d66db51d4",
+      "treeSha": "9977fd24c1d00f3ec9c7ee726223684fb0aa89a6",
+      "changedPaths": [
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "README.md",
+        "RESUME_PROMPT.txt",
+        "START_HERE.md",
+        "apps/api/src/research.ts",
+        "apps/web/app/globals.css",
+        "apps/web/app/research-insight.tsx",
+        "apps/web/app/research-workspace.tsx",
+        "apps/web/app/strategy-research.tsx",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/RESEARCH_COVERAGE.md",
+        "docs/RESEARCH_EVIDENCE.md",
+        "docs/RESEARCH_STRATEGY_CONTEXT.md",
+        "docs/RESUME_CONTEXT.md",
+        "docs/SESSION_LOG.md",
+        "docs/STRATEGY_REFERENCE_REVIEW.md",
+        "docs/STRATEGY_RESEARCH_SELECTION.md",
+        "docs/STRUCTURED_RESEARCH_INSIGHTS.md",
+        "docs/TASK_BOARD.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/qa/research01e-final-ci-evidence.json",
+        "docs/qa/research01f-competitor-insight-desktop.png",
+        "docs/qa/research01f-competitor-insight-frozen-history.png",
+        "docs/qa/research01f-evidence.json",
+        "docs/qa/research01f-label-followup.json",
+        "docs/qa/research01f-search-insight-dark.png",
+        "docs/qa/research01f-search-insight-mobile.png",
+        "docs/qa/research01f-unit-receipts.json",
+        "docs/qa/verification-summary.json",
+        "packages/core/ai.ts",
+        "packages/core/research-context.ts",
+        "packages/core/research-insight.ts",
+        "packages/core/research.ts",
+        "prisma/migrations/202610180002_research_insight/migration.sql",
+        "prisma/schema.prisma",
+        "scripts/verify-upgrade.mjs",
+        "tests/integration/research-context.test.ts",
+        "tests/integration/research.test.ts",
+        "tests/research-insight.test.ts",
+        "tests/support/research-insight.ts",
+        "tests/ui/research.spec.ts"
+      ],
+      "fullPublicTreeMatchesLocal": true,
+      "allPublicTreeFilesCompared": 486,
+      "gitFetchAndConnectorRefAgree": true,
+      "workingTreeClean": true,
+      "allExistingMasterAndMigrationHashesUnchanged": 24,
+      "newAdditiveMigrationProtected": true,
+      "manifestCheckPassed": true
+    },
+    "artifact": {
+      "id": 12145502056,
+      "digest": "sha256:7f7cbbd7c307c760f2fa8711b1d71f1de1b123d553ab21dffed2413850da0905",
+      "digestMatchesUploadLog": true,
+      "inspection": {
+        "artifactId": 12145502056,
+        "attempted": true,
+        "host": "sdmntprcentralindia.oaiusercontent.com",
+        "bytesDownloadedToWorkspace": false,
+        "independentArtifactByteInspection": false,
+        "errorType": "URLError",
+        "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      }
+    },
+    "decodedJobLogSha256": "fd06bca66ec18d66f4265cef98eb7bce2e59d766adb6e61266d3feb288a1ef6e",
+    "localEvidence": "docs/qa/research01f-evidence.json",
+    "nextTask": "RESEARCH-01G bounded structured audience/community insight audit and implementation, retaining source/review/selection/coverage and assumptions",
+    "limits": [
+      "CI artifact bytes were not independently inspected: provided download URL returned proxy CONNECT 403. Exact job logs, all step outcomes, test counts, restore flags and upload digest metadata were verified.",
+      "Manual source declarations and structured interpretations do not establish source truth, rights, relevance, semantic entailment or no-copy quality.",
+      "No live source collection, measured competitor engagement, search demand, traffic or ranking verification occurred.",
+      "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
+    ]
+  },
+  "research01g": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01G",
+    "recordedAtUtc": "2026-10-18T18:58:01.993591+00:00",
+    "status": "locally_verified_read_Git_Actions_for_exact_source_publication_and_CI",
+    "basePublicCommit": "e9c0b09b15a292d70a30df5279b861c306cd73bc",
+    "baseNativeRunId": 39150525720,
+    "scope": "Optional source-scoped audience/community interpretations, explicit missing lists and assumptions; same frozen context in actual provider and research/audience/community traces, with tenant/revision/expiry/capacity/legacy gates.",
+    "verification": {
+      "unit": {
+        "tests": 254,
+        "passed": 254,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "uniqueReceipts": 254
+      },
+      "http": {
+        "tests": 36,
+        "passed": 36,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 24,
+        "passed": 24
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119889
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "freshNativePostgresMigrations": 24,
+      "nativeRedis": true,
+      "populatedUpgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 24,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4973889,
+        "sha256": "bc6f219d5d4aaa21a96ed365eb7d0bcab224ac6b319864dcdde6cf85c1b83cb4",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true,
+        "workspaceYoutubePolicyRestored": true,
+        "researchCitationProvenanceAndReviewRestored": true,
+        "queuedStrategyResearchSnapshotRestored": true,
+        "strategyResearchSelectionRestored": true,
+        "strategyResearchCoverageRestored": true,
+        "structuredResearchInsightAndLegacyNullRestored": true,
+        "audienceCommunityInsightsAndMissingListsRestored": true,
+        "strategyRecommendationsAndCitationReviewRestored": true
+      },
+      "boundedEnglishReadability": {
+        "passed": true,
+        "passedSamples": 44,
+        "blankNegativeControl": true
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "unitReceipts": "docs/qa/research01g-unit-receipts.json",
+    "screenshots": {
+      "audience-insight-desktop": {
+        "path": "docs/qa/research01g-audience-insight-desktop.png",
+        "sha256": "5bc8319f291f508e46a27dcb1a0cfb55fb1bbba549544059f91c07e16782b61a"
+      },
+      "audience-insight-frozen-history": {
+        "path": "docs/qa/research01g-audience-insight-frozen-history.png",
+        "sha256": "fd1bef88a5d485adcbe474f3c9ff91aa493f096caca6dd82cebdd15684c0da64"
+      },
+      "audience-insight-history-mobile": {
+        "path": "docs/qa/research01g-audience-insight-history-mobile.png",
+        "sha256": "b61627711830bcb7a4aa4ee8acf960aaac1641059ddf0ca24ecce2f476ff1f63"
+      },
+      "community-insight-dark": {
+        "path": "docs/qa/research01g-community-insight-dark.png",
+        "sha256": "0783086d17d04faa1630bb9b15af5631fde582eb5cf0d1d11b6d77197b67cff7"
+      },
+      "community-insight-mobile": {
+        "path": "docs/qa/research01g-community-insight-mobile.png",
+        "sha256": "89ef49de1500cd1229323fe3d4f13c86307fe1473f00022c32d27f84bc7e77b4"
+      }
+    },
+    "protectedExistingMasterAndMigrationHashesUnchanged": 25,
+    "newMigrationAdded": false,
+    "resolvedLocalVerificationIssue": "Initial populated restore fixture violated the existing ResearchRecord_review_check (23514) because its accepted synthetic clone omitted reviewedBy/reviewNote. The fixture now copies the existing review metadata. Fresh complete restore passed; no constraint or runtime rule changed.",
+    "limits": [
+      "Manual source declarations and structured interpretations do not establish source truth, rights, relevance, semantic entailment or no-copy quality.",
+      "No interaction collection, measured population/frequency/sentiment, personal profiling or outbound response occurred. Manual source review and hypotheses do not establish factual or semantic quality.",
+      "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
+    ],
+    "commands": [
+      "npm run db:generate",
+      "npm run build:api",
+      "npm run build:web",
+      "PATH=.local/cloud/bin:$PATH npm test",
+      "npm run verify:upgrade",
+      "npm run verify:readability",
+      "npm audit --omit=dev --audit-level=moderate",
+      "npm audit --audit-level=moderate",
+      "bash .local/run-research01g-native.sh (fresh disposable native PostgreSQL/Redis; full production-web HTTP/browser/recovery)"
+    ],
+    "decodedLocalLogSha256": {
+      "unit": "593a5b81447ae9832e5b3b6c48456e8fb1be6b2ecfa2c5e9ff6128179aee695d",
+      "native": "f78d798449376e3a9546bfe84d95c4cc60177c9295e3e09ba887ce4187e1a4d1",
+      "web-build": "ab23df1709ad2ae0d71756b99686604168697163f64d609cb5acbd5653e3525a",
+      "upgrade": "113e625f5e22e226dca32c4e2f69adcc1e5a9188221d818f1e2e6221d14160e2",
+      "readability": "8e7dc5d5713952d9a528e255566b17e5c15e48e380304ce21581d4ba1a1bddbd",
       "audit-production": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
       "audit-all": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
     }

@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@playwright/test";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { actor, db } from "../support/http";
-import { competitorInsight, searchInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight } from "../support/research-insight";
 
 const orgs: string[] = [], users: string[] = [];
 const headers = { "X-Requested-With": "MarketingOS" };
@@ -37,7 +37,7 @@ async function setup(page: Page, role: Parameters<typeof actor>[1] = "OWNER") {
   return { org, user, path, open, panel: page.getByRole("region", { name: "Research detail" }) };
 }
 
-async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByRole"]>, kind: "COMPETITOR" | "SEARCH") {
+async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByRole"]>, kind: "COMPETITOR" | "SEARCH" | "AUDIENCE" | "COMMUNITY") {
   await page.getByRole("button", { name: "Add research", exact: true }).click();
   await panel.getByLabel("Research title").fill(`Synthetic ${kind.toLowerCase()} analysis`);
   await panel.getByLabel("Research category").selectOption(kind);
@@ -50,6 +50,79 @@ async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByR
   });
   await panel.getByLabel("Observed at (your local time)").fill(observed);
 }
+
+test("audience insight keeps missing lists explicit and freezes reviewed scope in generated strategy history", async ({ page }) => {
+  const { org, user, path, open, panel } = await setup(page);
+  await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic brand", audience: "Synthetic beginners" }, creativeDna: {} } });
+  await open();await fillInsightObservation(page, panel, "AUDIENCE");
+  await panel.getByRole("checkbox", { name: "Add structured audience insight" }).check();
+  const insight = { ...audienceInsight(), interests: [], questions: [], painPoints: [] };
+  for (const [name, value] of [["Audience segment", insight.segment], ["Observed audience need", insight.observedNeed], ["Proposed response / content test", insight.proposedResponse]])
+    await panel.getByLabel(name, { exact: true }).fill(value);
+  await panel.getByRole("checkbox", { name: sourceAck }).check();
+  await expect(panel.getByRole("button", { name: "Save research", exact: true })).toBeDisabled();
+  await panel.getByLabel("Assumptions and limits", { exact: true }).fill(insight.assumptions);
+  await expect(panel.getByRole("checkbox", { name: sourceAck })).not.toBeChecked();
+  await panel.getByLabel("Observed interests", { exact: true }).fill(Array(6).fill("Synthetic interest").join("\n"));
+  await panel.getByRole("checkbox", { name: sourceAck }).check();
+  await expect(panel.getByRole("button", { name: "Save research", exact: true })).toBeDisabled();
+  await panel.getByLabel("Observed interests", { exact: true }).fill("");
+  await panel.getByRole("checkbox", { name: sourceAck }).check();
+  await panel.getByRole("button", { name: "Save research", exact: true }).click();
+  const view = panel.getByRole("region", { name: "Structured research insight" });
+  await expect(view.getByRole("heading", { name: "Audience insight", exact: true })).toBeVisible();
+  await expect(view.getByText("Not recorded", { exact: true })).toHaveCount(3);
+  const record = (await user.call(path)).body.items[0];expect(record.insight).toEqual(insight);
+  await panel.getByLabel("Review note", { exact: true }).fill("Reviewed synthetic audience source, scope and missing lists.");
+  await panel.getByRole("checkbox", { name: reviewAck }).check();await panel.getByRole("button", { name: "Accept evidence", exact: true }).click();
+  await expect(panel.getByText("Evidence accepted and current", { exact: true })).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0,0));await page.screenshot({ path: "test-results/audience-insight-desktop.png", fullPage: true, animations: "disabled" });
+  await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
+  await page.getByLabel("Generation type").selectOption("strategy");await page.getByLabel("What would you like to create?").fill("Synthetic scoped audience strategy");
+  await page.getByRole("button", { name: "Generate", exact: true }).click();
+  const context = page.getByRole("region", { name: "Strategy research context", exact: true });
+  await expect(context.getByRole("button", { name: "View research sources" })).toBeEnabled({ timeout: 30000 });
+  await context.getByRole("button", { name: "View research sources" }).click();
+  await expect(context.getByText("Not recorded", { exact: true })).toHaveCount(3);await expect(context).toContainText(insight.assumptions);
+  const edit = await user.call(`${path}/${record.id}`, "PUT", { ...evidence(record.title), insight: { ...insight, observedNeed: "Later synthetic need" }, expectedRevision: 2 });
+  expect(edit.status).toBe(200);expect(edit.body.reviewStatus).toBe("UNREVIEWED");
+  await context.getByRole("button", { name: "View research sources" }).click();
+  await expect(context).toContainText(insight.observedNeed);await expect(context).not.toContainText("Later synthetic need");
+  await page.evaluate(() => window.scrollTo(0,0));await page.screenshot({ path: "test-results/audience-insight-frozen-history.png", fullPage: true, animations: "disabled" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.locator(".sidebar").evaluate(el => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(await context.getByRole("region", { name: "Structured research insight" }).locator("p").first().evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
+  await page.screenshot({ path: "test-results/audience-insight-history-mobile.png", fullPage: true, animations: "disabled" });
+});
+
+test("community insight saves a declared signal with assumptions, invalidates review on edit and remains readable on mobile", async ({ page }) => {
+  const { user, path, open, panel } = await setup(page);await open();await fillInsightObservation(page, panel, "COMMUNITY");
+  await panel.getByRole("checkbox", { name: "Add structured community insight" }).check();const insight = communityInsight();
+  await panel.getByLabel("Community signal", { exact: true }).selectOption(insight.signal);
+  for (const [name, value] of [["Community context", insight.channelContext], ["Observed topic", insight.topic], ["Observed interaction theme", insight.observation],
+    ["Proposed response / content test", insight.proposedResponse], ["Assumptions and limits", insight.assumptions]])
+    await panel.getByLabel(name, { exact: true }).fill(value);
+  await expect(panel.getByText(/Omit personal identifiers and private message text/)).toBeVisible();
+  await panel.getByRole("checkbox", { name: sourceAck }).check();await panel.getByRole("button", { name: "Save research", exact: true }).click();
+  const view=panel.getByRole("region", { name: "Structured research insight" });await expect(view.getByRole("heading", { name: "Community insight", exact: true })).toBeVisible();
+  const record = (await user.call(path)).body.items[0];expect(record.insight).toEqual(insight);
+  await panel.getByLabel("Review note", { exact: true }).fill("Reviewed synthetic de-identified source, signal and assumptions.");
+  await panel.getByRole("checkbox", { name: reviewAck }).check();await panel.getByRole("button", { name: "Accept evidence", exact: true }).click();
+  await expect(panel.getByText("Evidence accepted and current", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Reload research", exact: true }).click();await expect(view).toContainText(insight.assumptions);
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();await page.evaluate(() => window.scrollTo(0,0));
+  await page.screenshot({ path: "test-results/community-insight-dark.png", fullPage: true, animations: "disabled" });
+  await page.getByRole("button", { name: "Switch to light mode" }).click();await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.locator(".sidebar").evaluate(el => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: "test-results/community-insight-mobile.png", fullPage: true, animations: "disabled" });
+  await panel.getByRole("button", { name: "Edit research", exact: true }).click();
+  await panel.getByLabel("Community signal", { exact: true }).selectOption("REQUEST");
+  await panel.getByRole("checkbox", { name: sourceAck }).check();await panel.getByRole("button", { name: "Save research", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Research saved at revision 3");
+  const edited=(await user.call(`${path}/${record.id}`)).body;expect(edited.insight.signal).toBe("REQUEST");expect(edited.reviewStatus).toBe("UNREVIEWED");expect(edited.reviewedAt).toBeNull();
+});
 
 test("competitor interpretation is reviewed, sent to strategy and retained in source history after later edits", async ({ page }) => {
   const { org, user, path, open, panel } = await setup(page);

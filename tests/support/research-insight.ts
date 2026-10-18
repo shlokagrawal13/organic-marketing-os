@@ -7,3 +7,10 @@ export const searchInsight = () => ({ kind: "SEARCH" as const, query: "Synthetic
   keywords: ["synthetic workflow", "synthetic example"], questions: ["How would a synthetic workflow work?"],
   answerAngle: "Test an original concise explanation followed by a worked example",
   assumptions: "Synthetic fixture; no measured search volume, traffic or ranking evidence." });
+export const audienceInsight = () => ({ kind: "AUDIENCE" as const, segment: "Synthetic first-time operators",
+  observedNeed: "Synthetic source described difficulty choosing a first step", interests: ["Synthetic worked examples"],
+  questions: ["Where could a synthetic operator start?"], painPoints: ["Unclear first step in a synthetic workflow"],
+  proposedResponse: "Test an original beginner checklist", assumptions: "Synthetic fixture; not representative of all operators." });
+export const communityInsight = () => ({ kind: "COMMUNITY" as const, channelContext: "Synthetic public discussion",
+  signal: "OBJECTION" as const, topic: "Synthetic setup effort", observation: "Synthetic source raised an objection about setup effort",
+  proposedResponse: "Test an original explanation of setup steps and limits", assumptions: "Synthetic fixture; no verified frequency, sentiment or individual profile." });
