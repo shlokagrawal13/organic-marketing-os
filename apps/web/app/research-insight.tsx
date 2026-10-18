@@ -2,6 +2,7 @@
 import { parseResearchInsight, ResearchInsight, searchIntents, communitySignals, insightCategories, calendarEventTypes, calendarDateStatuses } from "../../../packages/core/research-insight";
 
 const labels: Record<string, string> = {
+  observedPattern: "Observed industry pattern", counterSignals: "Counter-signals / alternative explanations",
   eventName: "Event / occasion", eventType: "Event type", dateStatus: "Date certainty", startDate: "Declared start date", endDate: "Declared end date", timeZone: "Event time zone (IANA; blank if unknown)", culturalContext: "Cultural / market context", businessRelevance: "Business relevance", proposedOpportunity: "Proposed calendar opportunity",
   subject: "Competitor / subject", contentTheme: "Observed content theme", format: "Observed format",
   positioning: "Observed positioning", opportunity: "Proposed opportunity", differentiation: "How we will differentiate",
@@ -11,14 +12,16 @@ const labels: Record<string, string> = {
   painPoints: "Observed pain points", proposedResponse: "Proposed response / content test",
   channelContext: "Community context", signal: "Community signal", topic: "Observed topic", observation: "Observed interaction theme",
 };
-const maximums: Record<string, number> = { eventName: 160, timeZone: 100, startDate: 10, endDate: 10, culturalContext: 500, businessRelevance: 500, proposedOpportunity: 500, subject: 160, contentTheme: 300, format: 120, positioning: 500,
+const maximums: Record<string, number> = { observedPattern: 500, eventName: 160, timeZone: 100, startDate: 10, endDate: 10, culturalContext: 500, businessRelevance: 500, proposedOpportunity: 500, subject: 160, contentTheme: 300, format: 120, positioning: 500,
   opportunity: 500, differentiation: 500, query: 200, answerAngle: 500, assumptions: 500,
   segment: 160, observedNeed: 500, proposedResponse: 500, channelContext: 160, topic: 200, observation: 500 };
 const lists: Record<string, { count: number; length: number }> = {
+  counterSignals: { count: 5, length: 200 },
   keywords: { count: 8, length: 80 }, questions: { count: 5, length: 200 },
   interests: { count: 5, length: 160 }, painPoints: { count: 5, length: 200 },
 };
 const guidance: Record<ResearchInsight["kind"], string> = {
+  INDUSTRY: "Describe this source’s pattern and business relevance as a hypothesis. Preserve its temporal scope. Missing counter-signals mean not recorded; recency does not establish momentum, market size or a forecast.",
   SEASONAL: "Dates and time zone are manual declarations. Leave unknown timing blank; verify dates, local customs and relevance before scheduling. No recurrence, holiday verification or measured seasonal demand is implied.",
   COMPETITOR: "Identify differentiation without copying competitor content.",
   SEARCH: "Candidate questions and intent are hypotheses; they do not establish search demand or rankings.",
@@ -26,8 +29,9 @@ const guidance: Record<ResearchInsight["kind"], string> = {
   COMMUNITY: "Use authorized, de-identified interaction themes. Omit personal identifiers and private message text. A signal does not establish frequency or sentiment.",
 };
 const displayKind = (kind: string) => kind[0] + kind.slice(1).toLowerCase();
-const fieldLabel = (kind: string, key: string) => kind === "AUDIENCE" && key === "questions" ? "Observed audience questions" : labels[key];
+const fieldLabel = (kind: string, key: string) => kind === "INDUSTRY" && key === "topic" ? "Industry topic / hypothesis" : kind === "INDUSTRY" && key === "proposedOpportunity" ? "Proposed industry opportunity" : kind === "AUDIENCE" && key === "questions" ? "Observed audience questions" : labels[key];
 export function emptyResearchInsight(category: ResearchInsight["kind"]): ResearchInsight {
+  if (category === "INDUSTRY") return { kind: category, topic: "", observedPattern: "", businessRelevance: "", proposedOpportunity: "", counterSignals: [], assumptions: "" };
   if (category === "SEASONAL") return { kind: category, eventName: "", eventType: "BUSINESS_EVENT", dateStatus: "UNKNOWN", startDate: "", endDate: "", timeZone: "", culturalContext: "", businessRelevance: "", proposedOpportunity: "", assumptions: "" };
   if (category === "AUDIENCE") return { kind: category, segment: "", observedNeed: "", interests: [], questions: [], painPoints: [], proposedResponse: "", assumptions: "" };
   if (category === "COMMUNITY") return { kind: category, channelContext: "", signal: "QUESTION", topic: "", observation: "", proposedResponse: "", assumptions: "" };
@@ -47,7 +51,7 @@ export function ResearchInsightEditor({ category, value, onChange }: {
     {value && Object.entries(value).filter(([key]) => key !== "kind").map(([key, field]) => {
       const update = (next: string | string[]) => onChange({ ...value, [key]: next,
         ...(key === "dateStatus" && next === "UNKNOWN" ? { startDate: "", endDate: "" } : {}) } as ResearchInsight);
-      const name = fieldLabel(value.kind, key), list = lists[key], optional = (value.kind === "AUDIENCE" && !!list) || (value.kind === "SEASONAL" && (key === "timeZone" || ((key === "startDate" || key === "endDate") && value.dateStatus === "UNKNOWN")));
+      const name = fieldLabel(value.kind, key), list = lists[key], optional = ((value.kind === "AUDIENCE" || value.kind === "INDUSTRY") && !!list) || (value.kind === "SEASONAL" && (key === "timeZone" || ((key === "startDate" || key === "endDate") && value.dateStatus === "UNKNOWN")));
       const options = key === "intent" ? searchIntents : key === "signal" ? communitySignals : key === "eventType" ? calendarEventTypes : key === "dateStatus" ? calendarDateStatuses : null;
       return <label key={key}>{name}{options
         ? <select aria-label={name} value={String(field)} onChange={event => update(event.target.value)}>{options.map(option => <option key={option} value={option}>{displayKind(option).replaceAll("_", " ")}</option>)}</select>

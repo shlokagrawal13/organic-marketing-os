@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01I, 2026-10-19 IST
+
+Optional industry/trend interpretations are locally verified: source-scoped topic, observed pattern, business relevance, proposed opportunity, explicit missing/recorded counter-signals and assumptions. All six research categories now support structured manual interpretation. Historical library status and observation freshness are labeled separately. Existing current/historical/evergreen/emerging/expired classification, review and observation expiry remain enforced; recency does not establish measured momentum or a forecast. Missing counter-signals are not proof that contrary evidence is absent.
+
+Fresh local verification: API/web builds; 266 unit/export, 38 native HTTP, 28 production browser and 5 recovery cases; 24 fresh migrations; 44 readability samples; populated mixed-insight/industry-counter-signals/calendar/empty-list/legacy/selection/coverage/reference archive restore; both audits with zero vulnerabilities. All 25 protected master/migration hashes unchanged; no migration, dependency or pipeline changes.
+
+This checkpoint records local verification. Read latest Git/Actions for its standing-authorized source publication and own exact-commit CI. Predecessor main `e1cbab4` passed run `39159687691` (260/37/26/5); its native receipt is retained in `docs/qa/research01h-native-ci-evidence.json`.
+
+RESEARCH-01 remains Partial. Manual patterns and opportunities do not establish verified trends, momentum, market size, forecasts, factual/semantic quality or effectiveness. No live source tracking occurred. Live provider/deployed acceptance, native PostgreSQL/private-media cross-store recovery and full master acceptance remain open. CI verifies and does not deploy.
+
+Next: finish/read exact-source publication and CI, fixing any failure; then NATIVE-01 complete disposable Compose/MinIO startup and native populated PostgreSQL/private-media restore readiness audit. Recheck available infrastructure and preserve populated services.
+
+Evidence: `docs/INDUSTRY_TREND_INSIGHTS.md`, `docs/qa/research01i-evidence.json` and `docs/qa/research01i-unit-receipts.json`. Earlier entries retain their historical scopes.
+
 ## Current continuation — RESEARCH-01H, 2026-10-19 IST
 
 Optional seasonal/calendar interpretations are locally verified: manual event classification, cultural context, business relevance, proposed opportunity and assumptions; explicit unknown dates/zone or declared inclusive local date window. Impossible/reversed dates and invalid named zones are rejected. Ended declared windows withdraw evidence at capture, execution and provider boundary without rewriting history. Unknown timing remains a research hypothesis requiring confirmation before scheduling.

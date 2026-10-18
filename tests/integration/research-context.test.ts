@@ -7,7 +7,7 @@ import { Queue } from "bullmq";
 import Redis from "ioredis";
 import { actor, base, db, until } from "../support/http";
 import { captureResearchSnapshot } from "../../packages/core/research-context";
-import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight, industryInsight } from "../support/research-insight";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 
 const orgs: string[] = [], users: string[] = [];
@@ -53,11 +53,11 @@ async function result(w: Awaited<ReturnType<typeof workspace>>, id: string, prom
   return { trace: trace.body, sent, job };
 }
 
-test("audience/community/seasonal insights retain scoped assumptions in provider, three agent traces, replay and exported history", async () => {
+test("audience/community/seasonal/industry insights retain scoped assumptions in provider, three agent traces, replay and exported history", async () => {
   await resetFixtureRateBudget();
   const w = await workspace("Audience/community strategy fixture"), other = await workspace("Private community fixture");
   const sources: any[] = [];
-  for (const insight of [audienceInsight(), communityInsight(), seasonalInsight()]) {
+  for (const insight of [audienceInsight(), communityInsight(), seasonalInsight(), industryInsight()]) {
     const created = await w.owner.call(w.root + "/research", "POST", { ...input(insight.kind), category: insight.kind, insight });assert.equal(created.status, 201);
     const reviewed = await w.owner.call(w.root + `/research/${created.body.id}/review`, "POST", { expectedRevision: 1, decision: "ACCEPTED", sourcesReviewed: true, note: "Reviewed synthetic source, scope and assumptions." });
     assert.equal(reviewed.status, 201);sources.push(reviewed.body);
@@ -67,26 +67,31 @@ test("audience/community/seasonal insights retain scoped assumptions in provider
   assert.equal((await other.owner.call(other.root + `/research/${privateSource.body.id}/review`, "POST", { expectedRevision: 1, decision: "ACCEPTED", sourcesReviewed: true, note: "Reviewed synthetic private source." })).status, 201);
   await queue.pause();const requested = await enqueue(w, "audience-community");
   const saved = await db.aIJob.findUniqueOrThrow({ where: { id: requested.job.id } });
-  assert.equal((saved.brandContext as any).researchSnapshot.evidence.length, 3);
+  assert.equal((saved.brandContext as any).researchSnapshot.evidence.length, 4);
   assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", requested.data)).body.id, requested.job.id);
   await queue.resume();const done = await result(w, requested.job.id, requested.data.prompt);
   for (const source of sources) assert.deepEqual(done.sent.research.evidence.find((e: any) => e.id === source.id).insight, source.insight);
   for (const role of ["research", "audience", "community-intelligence"])
     assert.deepEqual(done.trace.steps.find((s: any) => s.role === role).output.inputs.externalEvidence, done.sent.research);
-  assert.match(done.sent.system, /Unknown dates or zones require verification/);assert.match(done.sent.system, /not population-wide facts/);assert.ok(!JSON.stringify(done.sent).includes("Private tenant interaction theme"));
+  assert.match(done.sent.system, /Missing counter-signals mean not recorded/);assert.match(done.sent.system, /Unknown dates or zones require verification/);assert.match(done.sent.system, /not population-wide facts/);assert.ok(!JSON.stringify(done.sent).includes("Private tenant interaction theme"));
   assert.equal((await other.owner.call(w.root + `/ai/jobs/${requested.job.id}/trace`)).status, 404);
   await queue.pause();const delayed = await enqueue(w, "community-edited-before-generation");
   const changed = await w.owner.call(w.root + `/research/${sources[1].id}`, "PUT", { ...input(sources[1].title), category: "COMMUNITY",
     insight: { ...communityInsight(), assumptions: "Edited scope after capture" }, expectedRevision: 2 });
   assert.equal(changed.status, 200);assert.equal(changed.body.reviewStatus, "UNREVIEWED");
+  const industryEdit = await w.owner.call(w.root + `/research/${sources[3].id}`, "PUT", { ...input(sources[3].title), category: "INDUSTRY",
+    insight: { ...industryInsight(), counterSignals: ["Later synthetic alternative explanation"] }, expectedRevision: 2 });
+  assert.equal(industryEdit.status, 200);assert.equal(industryEdit.body.reviewStatus, "UNREVIEWED");
   await queue.resume();const checked = await result(w, delayed.job.id, delayed.data.prompt);
   assert.deepEqual(checked.sent.research.evidence.map((e: any) => e.id).sort(), [sources[0].id, sources[2].id].sort());
   assert.ok(checked.sent.research.excluded.some((e: any) => e.id === sources[1].id));
+  assert.ok(checked.sent.research.excluded.some((e: any) => e.id === sources[3].id));
   const trace = await w.owner.call(w.root + `/ai/jobs/${requested.job.id}/trace`);
   assert.deepEqual(trace.body.frozenContext.brand.research, done.sent.research);
   const exported = await fetch(base + w.root + "/operations/export", { headers: w.owner.headers });assert.equal(exported.status, 200);
   const rows = (await exported.text()).trim().split("\n").map(s => JSON.parse(s));
   assert.deepEqual(rows.find(r => r.type === "research" && r.data.id === sources[1].id).data.insight, changed.body.insight);
+  assert.deepEqual(rows.find(r => r.type === "research" && r.data.id === sources[3].id).data.insight, industryEdit.body.insight);
   assert.deepEqual(rows.find(r => r.type === "aiJob" && r.data.id === requested.job.id).data.brandContext, saved.brandContext);
   assert.deepEqual(rows.find(r => r.type === "aiAgentRun" && r.data.jobId === requested.job.id).data.frozenContext.brand.research, done.sent.research);
 });

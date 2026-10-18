@@ -6,7 +6,7 @@ import { parseResearchInput } from "../packages/core/research";
 import { captureResearchSnapshot, readResearchSnapshot, resolveResearchContext, assertResearchContextCurrent, ResearchContextChangedError, ResearchCandidate } from "../packages/core/research-context";
 import { reviewStrategyReferences } from "../packages/core/strategy-references";
 import { stableJson } from "../packages/core/requests";
-import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight } from "./support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight, industryInsight } from "./support/research-insight";
 import { contextArtifact, buildAgentPlan } from "../packages/core/agents";
 import { ModelRouter } from "../packages/core/ai";
 
@@ -70,7 +70,7 @@ test("audience/community analysis shares source capacity, excludes foreign bodie
 });
 
 test("actual provider and research, audience and community agent traces receive identical scoped interpretations", async () => {
-  const rows = [audienceInsight(), communityInsight(), seasonalInsight()].map(insight => ({ ...candidate(insight), category: insight.kind }));
+  const rows = [audienceInsight(), communityInsight(), seasonalInsight(), industryInsight()].map(insight => ({ ...candidate(insight), category: insight.kind }));
   const research = resolveResearchContext(captureResearchSnapshot(org, rows, now), org, rows, now);
   const brand = { profile: { audience: "Synthetic declared audience" }, research };
   for (const role of ["research", "audience", "community-intelligence"]) {

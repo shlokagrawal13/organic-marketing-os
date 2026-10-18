@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01I",
+  "recordedAtUtc": "2026-10-18T22:52:10.447009+00:00",
+  "status": "locally_verified_read_Git_Actions_for_exact_source_publication_and_CI",
+  "basePublicCommit": "e1cbab4c73e5a51227195588edc666f22006bc57",
+  "baseNativeRunId": 39159687691,
+  "scope": "Optional source-scoped industry/trend patterns, business relevance, opportunities and missing/recorded counter-signals; unchanged five temporal scopes, source review/freshness, frozen provider/three-agent history, tenant/selection/coverage/UTF8/legacy gates.",
+  "verification": {
+    "unit": {
+      "tests": 266,
+      "passed": 266,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "uniqueReceipts": 266
+    },
+    "http": {
+      "tests": 38,
+      "passed": 38,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 28,
+      "passed": 28
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119941
+    },
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "freshNativePostgresMigrations": 24,
+    "nativeRedis": true,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 24,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4974580,
+      "sha256": "e26bbd25870e81f666b8ab03165d8f4a821024a21395ba0495f4d24b97ca21e1",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyResearchCoverageRestored": true,
+      "structuredResearchInsightAndLegacyNullRestored": true,
+      "audienceCommunityInsightsAndMissingListsRestored": true,
+      "seasonalUnknownAndDeclaredCalendarContextRestored": true,
+      "industryInsightsAndUnknownCounterSignalsRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
+    "boundedEnglishReadability": {
+      "passed": true,
+      "passedSamples": 44,
+      "blankNegativeControl": true
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "unitReceipts": "docs/qa/research01i-unit-receipts.json",
+  "screenshots": {
+    "industry-insight-desktop": {
+      "path": "docs/qa/research01i-industry-insight-desktop.png",
+      "sha256": "7c032ef4296d421703c4404c3b6c26139a3cc6c3d3b00100b1a2cef04f7d016b"
+    },
+    "industry-insight-history-mobile": {
+      "path": "docs/qa/research01i-industry-insight-history-mobile.png",
+      "sha256": "e62ce9fb2deaa8c263e34e3b00c9907fc944647ebf99754ba8f1beec3b888a39"
+    },
+    "industry-insight-historical-dark": {
+      "path": "docs/qa/research01i-industry-insight-historical-dark.png",
+      "sha256": "2e3391dbf1bd8e1088c177b12fbbaa790316be5c8de5b7f5544adb1ea1ff9002"
+    },
+    "industry-insight-historical-mobile": {
+      "path": "docs/qa/research01i-industry-insight-historical-mobile.png",
+      "sha256": "2a2a9f6ab664692bc9cafd952ca569dee5038f29cdf9f09c286e48a8eb18dbc1"
+    }
+  },
+  "protectedExistingMasterAndMigrationHashesUnchanged": 25,
+  "newMigrationAdded": false,
+  "resolvedLocalVerificationIssue": "Visual review found an existing misleading Current evidence label on historical records. Historical library status now says Historical context only and its detail pill separates Observation: Fresh. A regression assertion covers both. The initial full-native attempt was intentionally stopped for this correction and is not counted as a completed verification; final receipt requires a fresh complete rerun.",
+  "limits": [
+    "Manual industry patterns and opportunities do not establish verified trends, momentum, market size, forecasts, source truth, rights, factual/semantic quality or effectiveness.",
+    "Missing counter-signals mean not recorded, not verified absence of contrary evidence. No live source collection or trend measurement occurred.",
+    "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
+  ],
+  "commands": [
+    "npm run build:api",
+    "npm run build:web",
+    "PATH=.local/cloud/bin:$PATH npm test",
+    "npm run verify:upgrade",
+    "npm run verify:readability",
+    "npm audit --omit=dev --audit-level=moderate",
+    "npm audit --audit-level=moderate",
+    "bash .local/run-research01i-native.sh (fresh disposable native PostgreSQL/Redis; full production-web HTTP/browser/recovery)"
+  ],
+  "decodedLocalLogSha256": {
+    "unit": "2350dbf312dcb74f7b0330ce398582721a908343c99d4a485437b85a7f854843",
+    "native": "740f316e28698f1020a06a24010b28dcc506293878d15510d64757bbb23f70e9",
+    "api-build": "2f63cda02acd6d01f71b6d2942933998b8dac7aeebf97ea512574b611fa5ab42",
+    "web-build": "4c392abf19c18654b1c944cb4ad2d85595da6eabbc98b48caaee507779c4bf2c",
+    "upgrade": "c9388e5ae7666ec30d121d2351b131f9d5f8446017efb2a478862ec2bf98c3ac",
+    "readability": "0f2182c0d05b0282536b08044a86d81f7c8ae2dc1032888e4c8719e670cc25af",
+    "audit-production": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+    "audit-all": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+  }
+}

@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 import { createRequire } from "node:module";
 import { db, actor, base } from "../support/http";
 import { researchMaximumAgeMs } from "../../packages/core/research";
-import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight, industryInsight } from "../support/research-insight";
 
 const orgs: string[] = [],
   users: string[] = [];
@@ -49,7 +49,7 @@ after(async () => {
 
 test("structured research HTTP persists all supported insight kinds, rejects invalid input and invalidates review on insight-only edits", async () => {
   const w = await workspace("Structured insight fixture");
-  for (const insight of [competitorInsight(), searchInsight(), audienceInsight(), communityInsight(), seasonalInsight()]) {
+  for (const insight of [competitorInsight(), searchInsight(), audienceInsight(), communityInsight(), seasonalInsight(), industryInsight()]) {
     const payload = { ...input(), category: insight.kind, insight };
     const created = await w.owner.call(w.path, "POST", payload);
     assert.equal(created.status, 201); assert.deepEqual(created.body.insight, insight);
@@ -485,4 +485,23 @@ test("seasonal HTTP validates actual dates and zones, preserves unknown timing a
   assert.match(edited.body.freshnessReason, /declared event window has ended/);
   assert.equal((await w.owner.call(path + "/review", "POST", review(3))).status, 400);
   assert.equal((await w.owner.call(path)).body.eligibleForStrategy, false);
+});
+
+test("industry HTTP retains temporal classifications and unknown counter-signals while old or expired evidence cannot become current", async () => {
+  const w=await workspace("Industry temporal fixture");
+  for (const temporalScope of ["CURRENT","HISTORICAL","EVERGREEN","EMERGING","EXPIRED"]) {
+    const payload={ ...input(),category:"INDUSTRY",temporalScope,insight:industryInsight() };
+    const created=await w.owner.call(w.path,"POST",payload);assert.equal(created.status,201);assert.deepEqual(created.body.insight.counterSignals,[]);
+    const path=`${w.path}/${created.body.id}`,accepted=await w.owner.call(path+"/review","POST",review(1));
+    assert.equal(accepted.status,temporalScope==="EXPIRED"?400:201);
+    if (temporalScope==="EXPIRED") continue;
+    assert.equal(accepted.body.temporalScope,temporalScope);assert.equal(accepted.body.eligibleForStrategy,temporalScope!=="HISTORICAL");
+    if (temporalScope==="CURRENT") {
+      const edited=await w.owner.call(path,"PUT",{...payload,insight:{...industryInsight(),counterSignals:["One synthetic source may be unrepresentative"]},expectedRevision:2});
+      assert.equal(edited.status,200);assert.equal(edited.body.reviewStatus,"UNREVIEWED");assert.equal(edited.body.reviewedAt,null);
+    } else {
+      await db.researchRecord.update({where:{id:created.body.id},data:{observedAt:new Date(Date.now()-researchMaximumAgeMs)}});
+      assert.equal((await w.owner.call(path)).body.eligibleForStrategy,false);assert.equal((await w.owner.call(path+"/review","POST",review(2))).status,400);
+    }
+  }
 });

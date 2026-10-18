@@ -5,9 +5,14 @@ export const searchIntents = ["INFORMATIONAL", "COMMERCIAL", "NAVIGATIONAL", "TR
 export const communitySignals = ["QUESTION", "OBJECTION", "PAIN_POINT", "REQUEST", "FEEDBACK"] as const;
 export const calendarEventTypes = ["FESTIVAL", "HOLIDAY", "INDUSTRY_EVENT", "SEASONAL_DEMAND", "PRODUCT_LAUNCH", "PROMOTION", "IMPORTANT_DATE", "BUSINESS_EVENT"] as const;
 export const calendarDateStatuses = ["UNKNOWN", "DECLARED"] as const;
-export const insightCategories = ["COMPETITOR", "SEARCH", "AUDIENCE", "COMMUNITY", "SEASONAL"] as const;
+export const insightCategories = ["COMPETITOR", "SEARCH", "AUDIENCE", "COMMUNITY", "SEASONAL", "INDUSTRY"] as const;
 const calendarDate = z.string().regex(/^(?:|[0-9]{4}-[0-9]{2}-[0-9]{2})$/);
 export const researchInsightSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("INDUSTRY"), topic: text(200), observedPattern: text(500),
+    businessRelevance: text(500), proposedOpportunity: text(500),
+    counterSignals: z.array(text(200)).max(5), assumptions: text(500),
+  }).strict(),
   z.object({
     kind: z.literal("COMPETITOR"), subject: text(160), contentTheme: text(300),
     format: text(120), positioning: text(500), opportunity: text(500),

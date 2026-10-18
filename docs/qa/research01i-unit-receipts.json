@@ -1,0 +1,1890 @@
+{
+  "passed": [
+    {
+      "name": "all 18 specified agents have explicit responsibilities and are mapped into a task graph",
+      "file": "/workspace/organic-marketing-os/tests/agents.test.ts",
+      "durationMs": 1.228835
+    },
+    {
+      "name": "agent context is frozen and research/community agents disclose absent external evidence",
+      "file": "/workspace/organic-marketing-os/tests/agents.test.ts",
+      "durationMs": 0.355305
+    },
+    {
+      "name": "agent critique blocks obvious guarantees and always requires a human gate",
+      "file": "/workspace/organic-marketing-os/tests/agents.test.ts",
+      "durationMs": 1.195585
+    },
+    {
+      "name": "model router validates output and records primary failure, fallback, tokens and estimates",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 21.226909
+    },
+    {
+      "name": "invalid model output never becomes successful generated content",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 1.30752
+    },
+    {
+      "name": "invalid task output does not disable the provider for the next job, but an outage does",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 2.249241
+    },
+    {
+      "name": "empty content and unsupported guarantees block approval; structural passes still require human review",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.509553
+    },
+    {
+      "name": "usage-record failure cannot trigger another paid provider request",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.802625
+    },
+    {
+      "name": "aborted jobs cannot start a fallback and oversized provider output is rejected",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 1.980294
+    },
+    {
+      "name": "critical routing never downgrades quality and ambiguous transport failures never duplicate a paid call",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.416204
+    },
+    {
+      "name": "routing enforces plan, capability and maximum estimated cost before calling a provider",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.254736
+    },
+    {
+      "name": "shared health removes an unavailable provider from selection and records the configured fallback",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.535561
+    },
+    {
+      "name": "Redis health adapter shares failure cooldown and clears it after success",
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts",
+      "durationMs": 0.448813
+    },
+    {
+      "name": "bounded claim policy detects deterministic field-bound signals",
+      "file": "/workspace/organic-marketing-os/tests/claim-policy.test.ts",
+      "durationMs": 3.10938
+    },
+    {
+      "name": "ordinary unquantified copy remains claim-review free",
+      "file": "/workspace/organic-marketing-os/tests/claim-policy.test.ts",
+      "durationMs": 0.160187
+    },
+    {
+      "name": "deployed receipt config and sanitizer reject unsafe origins, cookies, incomplete checks and false success",
+      "file": "/workspace/organic-marketing-os/tests/deployed-readiness-receipt.test.ts",
+      "durationMs": 2.095564
+    },
+    {
+      "name": "deployed capture CLI performs authenticated GET, saves private sanitized proof and fails closed on readiness/transport errors",
+      "file": "/workspace/organic-marketing-os/tests/deployed-readiness-receipt.test.ts",
+      "durationMs": 2620.761029
+    },
+    {
+      "name": "evidence URLs canonicalize without changing path or query",
+      "file": "/workspace/organic-marketing-os/tests/evidence-source.test.ts",
+      "durationMs": 4.770062
+    },
+    {
+      "name": "evidence references reject credentials, IPs and special-use hosts",
+      "file": "/workspace/organic-marketing-os/tests/evidence-source.test.ts",
+      "durationMs": 2.148442
+    },
+    {
+      "name": "evidence review age and future skew are bounded at exact milliseconds",
+      "file": "/workspace/organic-marketing-os/tests/evidence-source.test.ts",
+      "durationMs": 0.596561
+    },
+    {
+      "name": "Fontkit postinstall is idempotent and rejects partial/unknown/version inputs without modifying another export",
+      "file": "/workspace/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 1560.659437
+    },
+    {
+      "name": "OpenType mark filtering supports both coverage formats, supersedes attachment class and respects IgnoreMarks in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 228.773215
+    },
+    {
+      "name": "Mark-to-base accepts unmultiplied bases and covered multiple outputs while preserving contiguous uncovered-output boundaries in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 93.848777
+    },
+    {
+      "name": "OpenType chained backtrack arrays are nearest-first in glyph/class/coverage formats, including skipped marks, without mutating font tables",
+      "file": "/workspace/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 105.995982
+    },
+    {
+      "name": "nested contextual lookups keep outer matched indices around controls and inserted multiple outputs",
+      "file": "/workspace/organic-marketing-os/tests/fontkit-patch.test.ts",
+      "durationMs": 90.872913
+    },
+    {
+      "name": "concurrent generation workers submit once and polling does not invent zero cost or bypass private ingestion",
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 44.871008
+    },
+    {
+      "name": "ambiguous provider acceptance and failed persistence cannot replay an expensive generation",
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 6.840279
+    },
+    {
+      "name": "generation capability, unknown quote and cost ceiling stop before the paid boundary",
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 12.91681
+    },
+    {
+      "name": "cancellation requires provider confirmation and a completed race retains the billable result",
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 3.797106
+    },
+    {
+      "name": "poll transport errors retry only polling and malformed output cannot become ready",
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 1.272108
+    },
+    {
+      "name": "generation payloads retain targeted revision, reject rights/component mismatch and isolate replay",
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts",
+      "durationMs": 2.188191
+    },
+    {
+      "name": "named render presets normalize geometry, reject conflicts and preserve legacy hashes",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 51.159922
+    },
+    {
+      "name": "scene motion defaults to static and accepts only bounded presets",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 0.689157
+    },
+    {
+      "name": "scene framing defaults legacy inputs to fit and accepts only bounded modes",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 0.383556
+    },
+    {
+      "name": "caption cues preserve legacy scenes and export exact ordered scene-relative timing",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 5.057747
+    },
+    {
+      "name": "caption validation rejects invalid, overlapping, unordered and excessive cues",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 9.202857
+    },
+    {
+      "name": "uploads reject executable/text formats and rendering options reject filter injection",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 0.429624
+    },
+    {
+      "name": "render bounds and scene captions have deterministic, accurate timing",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 10.427424
+    },
+    {
+      "name": "render text preflight accepts configured RTL scripts and reports unsupported shaping cases",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 14.113828
+    },
+    {
+      "name": "media subprocess cancellation closes a running child promptly",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 168.211446
+    },
+    {
+      "name": "media process output preserves Unicode split across UTF-8 pipe chunks",
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts",
+      "durationMs": 391.095011
+    },
+    {
+      "name": "media configuration requires explicit prices; presets reject unsupported references and budget/model mismatch",
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 2.47926
+    },
+    {
+      "name": "bounded provider reads enforce declared and streamed size without trusting headers",
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 67.012657
+    },
+    {
+      "name": "image editing uses a separately quoted preset and sends owned bytes as multipart",
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 4.405854
+    },
+    {
+      "name": "source preflight checks tenant ownership and private byte integrity before submission",
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 1.651308
+    },
+    {
+      "name": "provider adapter fixes request shape, disables redirects and refuses remote URLs or malformed image encodings",
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 75.490774
+    },
+    {
+      "name": "voice options are bounded and sent in the saved provider request",
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts",
+      "durationMs": 13.991638
+    },
+    {
+      "name": "semantic posting policy flags metadata, topic and CTA repetition",
+      "file": "/workspace/organic-marketing-os/tests/posting-policy.test.ts",
+      "durationMs": 7.764783
+    },
+    {
+      "name": "posting policy normalizes URLs, punctuation and filler words",
+      "file": "/workspace/organic-marketing-os/tests/posting-policy.test.ts",
+      "durationMs": 0.516993
+    },
+    {
+      "name": "render output rejects malformed duration, audio timing and incompatible cached audio",
+      "file": "/workspace/organic-marketing-os/tests/render-audio.test.ts",
+      "durationMs": 6.23871
+    },
+    {
+      "name": "decoded narration is padded/trimmed at scene boundaries, silent scenes stay silent and audio caches are validated",
+      "file": "/workspace/organic-marketing-os/tests/render-audio.test.ts",
+      "durationMs": 14384.243866
+    },
+    {
+      "name": "Bengali has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+      "file": "/workspace/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 18.475256
+    },
+    {
+      "name": "Bengali conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+      "file": "/workspace/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 701.51278
+    },
+    {
+      "name": "Bengali mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 3486.262436
+    },
+    {
+      "name": "Bengali outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+      "file": "/workspace/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 638.153356
+    },
+    {
+      "name": "decoded pure/mixed Bengali titles/cues remain bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-bengali.test.ts",
+      "durationMs": 39334.669708
+    },
+    {
+      "name": "Simplified Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 22.414445
+    },
+    {
+      "name": "Simplified Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 2358.338051
+    },
+    {
+      "name": "Simplified Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 2402.355561
+    },
+    {
+      "name": "Simplified Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 614.297081
+    },
+    {
+      "name": "Simplified Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 39263.587934
+    },
+    {
+      "name": "Traditional Chinese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 25.112706
+    },
+    {
+      "name": "Traditional Chinese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 3775.755568
+    },
+    {
+      "name": "Traditional Chinese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 4224.332286
+    },
+    {
+      "name": "Traditional Chinese: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 610.622834
+    },
+    {
+      "name": "Traditional Chinese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 72514.287317
+    },
+    {
+      "name": "Japanese: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 3.32626
+    },
+    {
+      "name": "Japanese: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 1316.492168
+    },
+    {
+      "name": "Japanese: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 2041.757461
+    },
+    {
+      "name": "Japanese: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 421.956214
+    },
+    {
+      "name": "Japanese: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 46861.037353
+    },
+    {
+      "name": "Korean: explicit saved locale, independent CJK opt-ins, effective cues and preserved Unicode SRT",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 4.448328
+    },
+    {
+      "name": "Korean: independent HarfBuzz glyph/advance/offset and runtime outlines",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 20658.66273
+    },
+    {
+      "name": "Korean: complete-grapheme wrapping, overfull text and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 936.079844
+    },
+    {
+      "name": "Korean: runtime fingerprint records locale and ignores unburned or overridden cues",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 305.971561
+    },
+    {
+      "name": "Korean: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 41599.166947
+    },
+    {
+      "name": "CJK wrapping yields only independent ICU strict boundaries and preserves all complete graphemes",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 95.513198
+    },
+    {
+      "name": "CJK localized Han glyphs independently match across all four configured font variants",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 5944.37192
+    },
+    {
+      "name": "CJK saved locale and trusted font bytes separate scene caches while unchanged renders reuse them",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 8211.339089
+    },
+    {
+      "name": "CJK mixed Latin Greek Cyrillic and three Indic font runs match independent HarfBuzz placement",
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts",
+      "durationMs": 3402.547406
+    },
+    {
+      "name": "Devanagari: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 501.902035
+    },
+    {
+      "name": "Bengali: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 262.786109
+    },
+    {
+      "name": "Gujarati: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 286.137246
+    },
+    {
+      "name": "Gurmukhi: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 164.874116
+    },
+    {
+      "name": "Odia: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 187.511287
+    },
+    {
+      "name": "Tamil: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 171.52759
+    },
+    {
+      "name": "Telugu: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 271.731924
+    },
+    {
+      "name": "Kannada: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 323.73424
+    },
+    {
+      "name": "Malayalam: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 228.060344
+    },
+    {
+      "name": "Sinhala: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 491.4685
+    },
+    {
+      "name": "Khmer: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 228.972105
+    },
+    {
+      "name": "Myanmar: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 277.19956
+    },
+    {
+      "name": "Tibetan: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 749.991177
+    },
+    {
+      "name": "Thai: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 124.088446
+    },
+    {
+      "name": "Lao: controls match independent HarfBuzz in CJS/ESM and runtime outlines without cmap/cache poisoning",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 101.874888
+    },
+    {
+      "name": "bounded control rejection happens before storage/cache while original unburned SRT is preserved",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 6.62363
+    },
+    {
+      "name": "wrapping preserves joiner font units, explicit ZWSP breaks and WJ words across mixed scripts",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 3671.214258
+    },
+    {
+      "name": "controls: 90 timed video exports across fifteen scripts, three aspects and two resolutions",
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts",
+      "durationMs": 230324.174524
+    },
+    {
+      "name": "Devanagari is opt-in, unsupported scripts/controls stay blocked and ignored captions need no shaping runtime",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 43.839213
+    },
+    {
+      "name": "Devanagari runtime guard rejects legacy/missing shaping before fonts, storage or cache work",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 52.432191
+    },
+    {
+      "name": "Devanagari font fallback keeps conjunct graphemes intact and missing coverage fails safely while Latin/Devanagari font runs compose",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 955.052676
+    },
+    {
+      "name": "decoded Hindi and mixed Latin title/caption frames are bounded and timed across all six output geometries",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 34636.073199
+    },
+    {
+      "name": "Hindi outlines apply conjunct substitution and never embed user text as SVG markup",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 21.509627
+    },
+    {
+      "name": "mixed-script wrapping preserves complete Latin combining and Hindi conjunct clusters",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 974.630713
+    },
+    {
+      "name": "mixed overlay reuses valid scene cache and changing configured fonts rebuilds it",
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts",
+      "durationMs": 3779.876158
+    },
+    {
+      "name": "configured font maps real Latin, Greek, Cyrillic, accents and normalized whitespace",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 67.798598
+    },
+    {
+      "name": "font coverage rejects missing glyphs in effective titles/cues, preserving unburned SRT and fallback overrides",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 7.894526
+    },
+    {
+      "name": "configured fallback fonts cover allowed multilingual text missing from the primary font",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 11.441382
+    },
+    {
+      "name": "readRenderFonts loads unique primary and fallback font paths from configuration",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 1.827248
+    },
+    {
+      "name": "font inspection rejects malformed, collection, web, oversized and unreadable files without exposing paths",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 18.295662
+    },
+    {
+      "name": "renderer checks the configured font before storage, cache or media work",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 52.364271
+    },
+    {
+      "name": "renderer uses explicit text shaping and fallback fonts for readable Arabic and Hebrew text",
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts",
+      "durationMs": 1245.783971
+    },
+    {
+      "name": "Gujarati has a separate opt-in, shared mixed-script boundaries and unchanged unburned Unicode cues",
+      "file": "/workspace/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 12.730906
+    },
+    {
+      "name": "Gujarati conjunct/matra/reph glyph order and offsets match independent HarfBuzz in both Node exports",
+      "file": "/workspace/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 958.903852
+    },
+    {
+      "name": "Gujarati mixed-font wrapping preserves conjunct graphemes and missing coverage fails before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 4439.772922
+    },
+    {
+      "name": "Gujarati outline runtime has a distinct fingerprint and invalidates prior Indic shaping while unburned captions need no runtime",
+      "file": "/workspace/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 1429.161699
+    },
+    {
+      "name": "decoded pure/mixed Gujarati titles/cues remain bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-gujarati.test.ts",
+      "durationMs": 44423.105078
+    },
+    {
+      "name": "Gurmukhi: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 21.316836
+    },
+    {
+      "name": "Gurmukhi: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 271.690741
+    },
+    {
+      "name": "Gurmukhi: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1980.452149
+    },
+    {
+      "name": "Gurmukhi: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 361.990296
+    },
+    {
+      "name": "Gurmukhi: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 41239.0925
+    },
+    {
+      "name": "Odia: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 7.502447
+    },
+    {
+      "name": "Odia: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 181.645218
+    },
+    {
+      "name": "Odia: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1624.929382
+    },
+    {
+      "name": "Odia: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 537.069607
+    },
+    {
+      "name": "Odia: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 40666.52387
+    },
+    {
+      "name": "Tamil: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 4.750475
+    },
+    {
+      "name": "Tamil: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 84.06513
+    },
+    {
+      "name": "Tamil: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1002.186901
+    },
+    {
+      "name": "Tamil: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 288.740134
+    },
+    {
+      "name": "Tamil: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 39057.181389
+    },
+    {
+      "name": "Telugu: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.828927
+    },
+    {
+      "name": "Telugu: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 130.80949
+    },
+    {
+      "name": "Telugu: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 877.715375
+    },
+    {
+      "name": "Telugu: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 337.1036
+    },
+    {
+      "name": "Telugu: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 41215.879387
+    },
+    {
+      "name": "Kannada: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.0994
+    },
+    {
+      "name": "Kannada: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 121.328683
+    },
+    {
+      "name": "Kannada: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1993.564369
+    },
+    {
+      "name": "Kannada: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 266.80664
+    },
+    {
+      "name": "Kannada: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 40038.272405
+    },
+    {
+      "name": "Malayalam: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.979239
+    },
+    {
+      "name": "Malayalam: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 175.332893
+    },
+    {
+      "name": "Malayalam: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 942.189302
+    },
+    {
+      "name": "Malayalam: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 455.793794
+    },
+    {
+      "name": "Malayalam: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 38444.258033
+    },
+    {
+      "name": "Sinhala: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1.770284
+    },
+    {
+      "name": "Sinhala: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 689.197609
+    },
+    {
+      "name": "Sinhala: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 1189.183725
+    },
+    {
+      "name": "Sinhala: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 445.929525
+    },
+    {
+      "name": "Sinhala: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 36419.83402
+    },
+    {
+      "name": "registry: all ten Indic scripts compose independently referenced font/script runs in one overlay",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 579.978098
+    },
+    {
+      "name": "registry: every legacy Indic cache revision changes with the shared engine patch while plain overlays keep their path",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 2.393033
+    },
+    {
+      "name": "fractional inset caption bounds accept Telugu/Sinhala edge rounding while rejecting real overflow",
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts",
+      "durationMs": 129.089281
+    },
+    {
+      "name": "font-aware wrapping bounds wide text and preserves combining graphemes across output geometries",
+      "file": "/workspace/organic-marketing-os/tests/render-layout.test.ts",
+      "durationMs": 731.912458
+    },
+    {
+      "name": "overfull captions fail before storage/cache/media work but unburned SRT and cue overrides stay usable",
+      "file": "/workspace/organic-marketing-os/tests/render-layout.test.ts",
+      "durationMs": 1765.330267
+    },
+    {
+      "name": "decoded titles and captions stay in separate bounded bands at 720/1080 in all three aspects",
+      "file": "/workspace/organic-marketing-os/tests/render-layout.test.ts",
+      "durationMs": 16937.691522
+    },
+    {
+      "name": "mixed LTR preflight permits configured Hindi/Greek/Cyrillic but rejects mixed RTL in effective titles and cues",
+      "file": "/workspace/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 15.407468
+    },
+    {
+      "name": "mixed LTR runs preserve combining/conjunct clusters and use each script's covering font",
+      "file": "/workspace/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 3274.001017
+    },
+    {
+      "name": "LTR outline pipeline invalidates preceding Devanagari segments without changing plain-script runtime identity",
+      "file": "/workspace/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 416.10952
+    },
+    {
+      "name": "decoded mixed LTR titles/cues remain bounded and timed at six geometries with standard and extra margins",
+      "file": "/workspace/organic-marketing-os/tests/render-ltr-mixed.test.ts",
+      "durationMs": 29078.326277
+    },
+    {
+      "name": "placement is strict/optional, legacy serialization stays stable and inset overflow fails before media work",
+      "file": "/workspace/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 380.090012
+    },
+    {
+      "name": "decoded inset-v1 Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
+      "file": "/workspace/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 16157.209542
+    },
+    {
+      "name": "decoded device-safe-v1 Latin and mixed Hindi overlays stay inside aspect-specific title/caption boxes",
+      "file": "/workspace/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 19646.132083
+    },
+    {
+      "name": "placement changes rebuild text scenes while empty scenes and unchanged placement reuse cache",
+      "file": "/workspace/organic-marketing-os/tests/render-placement.test.ts",
+      "durationMs": 5203.747392
+    },
+    {
+      "name": "Thai: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 17.730648
+    },
+    {
+      "name": "Thai: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 874.961344
+    },
+    {
+      "name": "Thai: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 609.055176
+    },
+    {
+      "name": "Thai: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 440.94226
+    },
+    {
+      "name": "Thai: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 40809.705322
+    },
+    {
+      "name": "Lao: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 2.206668
+    },
+    {
+      "name": "Lao: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 355.760744
+    },
+    {
+      "name": "Lao: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 428.690669
+    },
+    {
+      "name": "Lao: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 288.269168
+    },
+    {
+      "name": "Lao: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 40626.62921
+    },
+    {
+      "name": "Khmer: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 7.883639
+    },
+    {
+      "name": "Khmer: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 5159.451124
+    },
+    {
+      "name": "Khmer: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 621.228329
+    },
+    {
+      "name": "Khmer: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 311.062546
+    },
+    {
+      "name": "Khmer: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 38739.106563
+    },
+    {
+      "name": "Myanmar: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 2.366134
+    },
+    {
+      "name": "Myanmar: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 5529.747962
+    },
+    {
+      "name": "Myanmar: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 390.419625
+    },
+    {
+      "name": "Myanmar: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 274.044453
+    },
+    {
+      "name": "Myanmar: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 36079.921231
+    },
+    {
+      "name": "Tibetan: separate opt-in, effective cues, unchanged SRT and shared RTL/control boundaries",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 1.232519
+    },
+    {
+      "name": "Tibetan: independent HarfBuzz glyph/advance/offset and emitted-outline reference in CJS/ESM",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 5036.521056
+    },
+    {
+      "name": "Tibetan: mixed-font wrapping keeps graphemes complete and missing/truncated fonts fail before storage",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 1041.331337
+    },
+    {
+      "name": "Tibetan: guarded runtime fingerprint invalidates old Indic outlines and ignores unburned cues",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 305.013646
+    },
+    {
+      "name": "Tibetan: decoded pure/mixed titles/cues stay bounded and timed across 18 exports and 54 frames",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 30081.753771
+    },
+    {
+      "name": "Southeast Asian word wrapping protects dictionary words, leading vowels and Tibetan tsheg while oversized words fail readably",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 319.103154
+    },
+    {
+      "name": "Derived Sara Am glyph coverage selects a complete fallback and rejects missing glyphs before cache/storage",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 165.418428
+    },
+    {
+      "name": "All fifteen registered scripts compose independently referenced runs without changing Unicode SRT",
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts",
+      "durationMs": 984.334613
+    },
+    {
+      "name": "strategy snapshots select only tenant-scoped accepted current evidence and retain citation/provenance",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 14.156961
+    },
+    {
+      "name": "research capture has deterministic candidate, record, Unicode excerpt and UTF8 byte limits",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 11.685202
+    },
+    {
+      "name": "corrupt stored summaries and impossible review/collection chronology cannot enter a strategy snapshot",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 0.638103
+    },
+    {
+      "name": "captured versions cannot substitute later edits, new reviews, rejected sources or another tenant",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 2.169393
+    },
+    {
+      "name": "queue delay expires evidence at the exact boundary and review time cannot renew it",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 1.920576
+    },
+    {
+      "name": "legacy, malformed, tampered, oversized, future and cross-workspace snapshots fail closed",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 3.601608
+    },
+    {
+      "name": "the research agent trace and actual strategy model request receive identical evidence with source policy",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 52.395127
+    },
+    {
+      "name": "provider fallback rechecks frozen evidence and stops before a second request after source change",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 2.184134
+    },
+    {
+      "name": "explicit research criteria filter before candidate limits and persist through resolution without changing legacy jobs",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 2.24237
+    },
+    {
+      "name": "research selection validates bounds, canonicalizes replay choices and treats labels literally",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 3.141017
+    },
+    {
+      "name": "research coverage accounts for primary eligibility omissions without exposing excluded or foreign source text",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 1.413016
+    },
+    {
+      "name": "coverage reports a bounded candidate lookahead, source cap and byte omissions with exact accounting",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 10.169855
+    },
+    {
+      "name": "legacy coverage remains unknown while inconsistent or forged coverage fails closed",
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts",
+      "durationMs": 0.924746
+    },
+    {
+      "name": "industry intake keeps source-scoped hypotheses and unknown counter-signals explicit and rejects fabricated authority",
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts",
+      "durationMs": 13.062666
+    },
+    {
+      "name": "industry scalar/list/UTF8 bounds reject oversized interpretation without truncation or silently inventing counter-signals",
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts",
+      "durationMs": 0.734094
+    },
+    {
+      "name": "industry hypotheses preserve five temporal scopes and source review cannot renew expired observations",
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts",
+      "durationMs": 7.147242
+    },
+    {
+      "name": "industry counter-signal and scope edits withdraw queued evidence, fail provider boundary and leave captured history immutable",
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts",
+      "durationMs": 10.355349
+    },
+    {
+      "name": "industry selection and shared byte capacity exclude foreign bodies and preserve null/absent predecessor fingerprints",
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts",
+      "durationMs": 2.415126
+    },
+    {
+      "name": "industry opportunities and counter-signals cannot impersonate source-summary quotations",
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts",
+      "durationMs": 2.205817
+    },
+    {
+      "name": "audience/community intake preserves declared scope, optional missing lists and strict manual interpretation fields",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 4.252238
+    },
+    {
+      "name": "audience lists and community classifications enforce field, item, enum and UTF8 capacity bounds",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 0.832319
+    },
+    {
+      "name": "audience/community snapshots retain assumptions, reject tampering and withdraw later edits, review loss and expiry",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 10.64029
+    },
+    {
+      "name": "audience/community analysis shares source capacity, excludes foreign bodies and cannot become a source quotation",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 4.657667
+    },
+    {
+      "name": "actual provider and research, audience and community agent traces receive identical scoped interpretations",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 19.243371
+    },
+    {
+      "name": "structured insight intake canonicalizes both kinds, retains assumptions and keeps legacy input optional",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 1.563508
+    },
+    {
+      "name": "structured insights reject mismatched categories, incomplete fields, unknown measurements and injected authority",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 0.566636
+    },
+    {
+      "name": "structured insights enforce list, field and serialized UTF8 limits without truncating analyst text",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 0.375844
+    },
+    {
+      "name": "legacy evidence fingerprints remain byte-compatible when optional stored insight is absent or null",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 0.844567
+    },
+    {
+      "name": "insights freeze with source fingerprints and cannot substitute edits, mismatched categories or forged snapshot data",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 1.434648
+    },
+    {
+      "name": "full structured insights share the snapshot byte budget and omitted or foreign analysis never leaks",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 1.74699
+    },
+    {
+      "name": "analyst interpretation is never accepted as a source quote and uncertainty policy remains explicit",
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts",
+      "durationMs": 0.698801
+    },
+    {
+      "name": "seasonal intake retains all declared event types, missing timing and assumptions without inventing dates",
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts",
+      "durationMs": 20.638051
+    },
+    {
+      "name": "calendar dates reject normalization, invalid leap days, reversed ranges and inconsistent unknown timing",
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts",
+      "durationMs": 0.903204
+    },
+    {
+      "name": "calendar zones are explicit valid names and inclusive end dates follow local midnight including DST",
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts",
+      "durationMs": 2.561222
+    },
+    {
+      "name": "an ended event cannot be renewed by recent observation, acceptance or emerging scope and captured history stays readable",
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts",
+      "durationMs": 11.372941
+    },
+    {
+      "name": "seasonal source edits, cross-tenant rows, invalid stored dates and fingerprint tampering fail closed",
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts",
+      "durationMs": 5.333525
+    },
+    {
+      "name": "seasonal hypotheses share bounded capacity, selection and unknown timing is preserved through snapshots",
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts",
+      "durationMs": 2.941512
+    },
+    {
+      "name": "research intake canonicalizes declared citation without fetching and preserves missing drafts",
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts",
+      "durationMs": 1.996798
+    },
+    {
+      "name": "research intake rejects unsafe reference syntax, unacknowledged sources and forged provenance",
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts",
+      "durationMs": 1.348881
+    },
+    {
+      "name": "research intake validates observation calendar, strict future boundary and bounded fields",
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts",
+      "durationMs": 1.034968
+    },
+    {
+      "name": "research expires at the exact 30-day boundary and cannot be renewed by review",
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts",
+      "durationMs": 0.208699
+    },
+    {
+      "name": "research freshness and strategy eligibility distinguish review status and temporal classification",
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts",
+      "durationMs": 0.279483
+    },
+    {
+      "name": "research derives missing status for absent, corrupt or future stored evidence despite acceptance",
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts",
+      "durationMs": 0.207025
+    },
+    {
+      "name": "password hashes are salted; correct password succeeds and incorrect fails",
+      "file": "/workspace/organic-marketing-os/tests/security.test.ts",
+      "durationMs": 172.826901
+    },
+    {
+      "name": "session tokens have independent entropy and hashes hide the raw token",
+      "file": "/workspace/organic-marketing-os/tests/security.test.ts",
+      "durationMs": 0.701826
+    },
+    {
+      "name": "creators cannot approve and analysts cannot mutate content",
+      "file": "/workspace/organic-marketing-os/tests/security.test.ts",
+      "durationMs": 0.143933
+    },
+    {
+      "name": "social tokens are authenticated to a workspace and exact external account",
+      "file": "/workspace/organic-marketing-os/tests/social-tokens.test.ts",
+      "durationMs": 2.661439
+    },
+    {
+      "name": "references resolve only captured identities, revisions, exact excerpts and server citation links",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 14.123582
+    },
+    {
+      "name": "unknown, other-context and mismatched source revisions block review",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 2.840344
+    },
+    {
+      "name": "fabricated, altered, trivial and uncaptured truncated excerpts cannot pass",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 2.23528
+    },
+    {
+      "name": "missing recommendation declarations and research without references block approval while legacy shape stays readable",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 2.073612
+    },
+    {
+      "name": "assumptions require a visible gap/test explanation and cannot claim research references",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 1.020737
+    },
+    {
+      "name": "duplicate recommendation IDs and duplicate source references cannot hide review findings",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 1.505032
+    },
+    {
+      "name": "expiry uses the exact clock boundary and corrupt/future contexts fail closed",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 1.50372
+    },
+    {
+      "name": "actual ModelRouter response retains structured references for the agent approval gate",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 41.97342
+    },
+    {
+      "name": "recommendations and references are bounded and model-supplied citation URLs are rejected",
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts",
+      "durationMs": 1.172251
+    },
+    {
+      "name": "YouTube live readiness passes only with current policy, OAuth, storage and secure production config",
+      "file": "/workspace/organic-marketing-os/tests/youtube-live-readiness.test.ts",
+      "durationMs": 3.951975
+    },
+    {
+      "name": "YouTube live readiness fails closed without exposing secret values",
+      "file": "/workspace/organic-marketing-os/tests/youtube-live-readiness.test.ts",
+      "durationMs": 0.5351
+    },
+    {
+      "name": "YouTube OAuth uses a fixed registered callback, offline consent, state and PKCE",
+      "file": "/workspace/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 2.527982
+    },
+    {
+      "name": "code exchange validates granted scopes/offline token and sends proof only to Google",
+      "file": "/workspace/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 24.189033
+    },
+    {
+      "name": "refresh handles rotation and rejects scope downgrade",
+      "file": "/workspace/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 1.471973
+    },
+    {
+      "name": "channel lookup rejects ambiguity and revocation requires a confirmed response",
+      "file": "/workspace/organic-marketing-os/tests/youtube-oauth.test.ts",
+      "durationMs": 20.234635
+    },
+    {
+      "name": "live YouTube dispatch needs a current, exact policy maintenance receipt",
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy-maintenance.test.ts",
+      "durationMs": 1.649766
+    },
+    {
+      "name": "policy maintenance fingerprint binds the ordered official-source manifest",
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy-maintenance.test.ts",
+      "durationMs": 0.843635
+    },
+    {
+      "name": "declarative YouTube rules tighten metadata and disclosure without changing application code",
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy.test.ts",
+      "durationMs": 2.118027
+    },
+    {
+      "name": "invalid rules fail closed and every meaningful rule change changes policy identity",
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy.test.ts",
+      "durationMs": 1.639521
+    },
+    {
+      "name": "workspace rules may tighten but never loosen deployment metadata or disclosures",
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy.test.ts",
+      "durationMs": 0.540699
+    },
+    {
+      "name": "YouTube upload metadata is derived only from approved snapshot and explicit disclosures",
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy.test.ts",
+      "durationMs": 1.143508
+    },
+    {
+      "name": "only the fixed videos.insert endpoint starts a validated session",
+      "file": "/workspace/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 65.612171
+    },
+    {
+      "name": "status query sends no media and reads only a bounded 308 offset",
+      "file": "/workspace/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 1.016431
+    },
+    {
+      "name": "a completed receipt must carry an exact connected-channel video ID",
+      "file": "/workspace/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 2.441404
+    },
+    {
+      "name": "one media send never replays an ambiguous response or redirect",
+      "file": "/workspace/organic-marketing-os/tests/youtube-resumable.test.ts",
+      "durationMs": 1.740029
+    }
+  ],
+  "failed": [],
+  "summaries": [
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 11.20953,
+      "file": "/workspace/organic-marketing-os/tests/agents.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 10,
+        "failed": 0,
+        "passed": 10,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 10,
+        "suites": 0
+      },
+      "duration_ms": 41.16234,
+      "file": "/workspace/organic-marketing-os/tests/ai.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 28.251699,
+      "file": "/workspace/organic-marketing-os/tests/claim-policy.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 2628.155246,
+      "file": "/workspace/organic-marketing-os/tests/deployed-readiness-receipt.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 20.779769,
+      "file": "/workspace/organic-marketing-os/tests/evidence-source.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 2085.753608,
+      "file": "/workspace/organic-marketing-os/tests/fontkit-patch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 95.722905,
+      "file": "/workspace/organic-marketing-os/tests/generated-media.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 10,
+        "failed": 0,
+        "passed": 10,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 10,
+        "suites": 0
+      },
+      "duration_ms": 662.14649,
+      "file": "/workspace/organic-marketing-os/tests/media.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 182.100383,
+      "file": "/workspace/organic-marketing-os/tests/openai-media.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 63.88847,
+      "file": "/workspace/organic-marketing-os/tests/posting-policy.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 14400.936881,
+      "file": "/workspace/organic-marketing-os/tests/render-audio.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 44224.141444,
+      "file": "/workspace/organic-marketing-os/tests/render-bengali.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 24,
+        "failed": 0,
+        "passed": 24,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 24,
+        "suites": 0
+      },
+      "duration_ms": 257629.156035,
+      "file": "/workspace/organic-marketing-os/tests/render-cjk-batch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 18,
+        "failed": 0,
+        "passed": 18,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 18,
+        "suites": 0
+      },
+      "duration_ms": 238384.960569,
+      "file": "/workspace/organic-marketing-os/tests/render-controls.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 7,
+        "failed": 0,
+        "passed": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 7,
+        "suites": 0
+      },
+      "duration_ms": 40468.505043,
+      "file": "/workspace/organic-marketing-os/tests/render-devanagari.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 7,
+        "failed": 0,
+        "passed": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 7,
+        "suites": 0
+      },
+      "duration_ms": 1410.575622,
+      "file": "/workspace/organic-marketing-os/tests/render-font.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 51269.05393,
+      "file": "/workspace/organic-marketing-os/tests/render-gujarati.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 38,
+        "failed": 0,
+        "passed": 38,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 38,
+        "suites": 0
+      },
+      "duration_ms": 291835.899178,
+      "file": "/workspace/organic-marketing-os/tests/render-indic-batch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 19443.837042,
+      "file": "/workspace/organic-marketing-os/tests/render-layout.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 32788.239402,
+      "file": "/workspace/organic-marketing-os/tests/render-ltr-mixed.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 41391.940839,
+      "file": "/workspace/organic-marketing-os/tests/render-placement.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 28,
+        "failed": 0,
+        "passed": 28,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 28,
+        "suites": 0
+      },
+      "duration_ms": 209515.396464,
+      "file": "/workspace/organic-marketing-os/tests/render-southeast-batch.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 13,
+        "failed": 0,
+        "passed": 13,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 13,
+        "suites": 0
+      },
+      "duration_ms": 128.590534,
+      "file": "/workspace/organic-marketing-os/tests/research-context.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 44.637915,
+      "file": "/workspace/organic-marketing-os/tests/research-industry.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 12,
+        "failed": 0,
+        "passed": 12,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 12,
+        "suites": 0
+      },
+      "duration_ms": 84.031466,
+      "file": "/workspace/organic-marketing-os/tests/research-insight.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 65.972282,
+      "file": "/workspace/organic-marketing-os/tests/research-seasonal.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 15.511381,
+      "file": "/workspace/organic-marketing-os/tests/research.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 179.10527,
+      "file": "/workspace/organic-marketing-os/tests/security.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 1,
+        "failed": 0,
+        "passed": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 1,
+        "suites": 0
+      },
+      "duration_ms": 10.263052,
+      "file": "/workspace/organic-marketing-os/tests/social-tokens.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 9,
+        "failed": 0,
+        "passed": 9,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 9,
+        "suites": 0
+      },
+      "duration_ms": 90.539655,
+      "file": "/workspace/organic-marketing-os/tests/strategy-references.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 14.402545,
+      "file": "/workspace/organic-marketing-os/tests/youtube-live-readiness.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 59.21709,
+      "file": "/workspace/organic-marketing-os/tests/youtube-oauth.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 10.130156,
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy-maintenance.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 14.889753,
+      "file": "/workspace/organic-marketing-os/tests/youtube-policy.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 85.260641,
+      "file": "/workspace/organic-marketing-os/tests/youtube-resumable.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 266,
+        "failed": 0,
+        "passed": 266,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 266,
+        "suites": 0
+      },
+      "duration_ms": 646776.417592
+    }
+  ],
+  "finalSummary": {
+    "success": true,
+    "counts": {
+      "tests": 266,
+      "failed": 0,
+      "passed": 266,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "topLevel": 266,
+      "suites": 0
+    },
+    "duration_ms": 646776.417592
+  }
+}

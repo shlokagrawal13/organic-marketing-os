@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@playwright/test";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { actor, db } from "../support/http";
-import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight, industryInsight } from "../support/research-insight";
 
 const orgs: string[] = [], users: string[] = [];
 const headers = { "X-Requested-With": "MarketingOS" };
@@ -37,7 +37,7 @@ async function setup(page: Page, role: Parameters<typeof actor>[1] = "OWNER") {
   return { org, user, path, open, panel: page.getByRole("region", { name: "Research detail" }) };
 }
 
-async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByRole"]>, kind: "COMPETITOR" | "SEARCH" | "AUDIENCE" | "COMMUNITY" | "SEASONAL") {
+async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByRole"]>, kind: "COMPETITOR" | "SEARCH" | "AUDIENCE" | "COMMUNITY" | "SEASONAL" | "INDUSTRY") {
   await page.getByRole("button", { name: "Add research", exact: true }).click();
   await panel.getByLabel("Research title").fill(`Synthetic ${kind.toLowerCase()} analysis`);
   await panel.getByLabel("Research category").selectOption(kind);
@@ -500,4 +500,52 @@ test("an ended declared seasonal window stays unavailable for acceptance in dark
   await page.setViewportSize({ width: 390, height: 844 });await expect.poll(() => page.locator(".sidebar").evaluate(el => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: "test-results/seasonal-insight-ended-mobile.png", fullPage: true, animations: "disabled" });
+});
+
+test("industry insight preserves unknown counter-signals and frozen temporal scope after source edits", async ({ page }) => {
+  const {org,user,path,open,panel}=await setup(page);
+  await db.brandBrain.create({data:{organizationId:org.id,profile:{name:"Synthetic industry brand",audience:"Synthetic operators"},creativeDna:{}}});
+  await open();await fillInsightObservation(page,panel,"INDUSTRY");
+  await panel.getByRole("checkbox",{name:"Add structured industry insight"}).check();const insight=industryInsight();
+  for (const [name,value] of [["Industry topic / hypothesis",insight.topic],["Observed industry pattern",insight.observedPattern],["Business relevance",insight.businessRelevance],["Proposed industry opportunity",insight.proposedOpportunity]])
+    await panel.getByLabel(name,{exact:true}).fill(value);
+  await panel.getByRole("checkbox",{name:sourceAck}).check();await expect(panel.getByRole("button",{name:"Save research",exact:true})).toBeDisabled();
+  await panel.getByLabel("Assumptions and limits",{exact:true}).fill(insight.assumptions);await expect(panel.getByRole("checkbox",{name:sourceAck})).not.toBeChecked();
+  await panel.getByLabel("Counter-signals / alternative explanations",{exact:true}).fill(Array(6).fill("Synthetic alternative").join("\n"));
+  await panel.getByRole("checkbox",{name:sourceAck}).check();await expect(panel.getByRole("button",{name:"Save research",exact:true})).toBeDisabled();
+  await panel.getByLabel("Counter-signals / alternative explanations",{exact:true}).fill("");await panel.getByRole("checkbox",{name:sourceAck}).check();
+  await panel.getByRole("button",{name:"Save research",exact:true}).click();const view=panel.getByRole("region",{name:"Structured research insight"});
+  await expect(view.getByRole("heading",{name:"Industry insight",exact:true})).toBeVisible();await expect(view.getByText("Not recorded",{exact:true})).toHaveCount(1);
+  const record=(await user.call(path)).body.items[0];expect(record.insight).toEqual(insight);expect(record.temporalScope).toBe("CURRENT");
+  await panel.getByLabel("Review note",{exact:true}).fill("Reviewed synthetic source; counter-signals not recorded.");await panel.getByRole("checkbox",{name:reviewAck}).check();
+  await panel.getByRole("button",{name:"Accept evidence",exact:true}).click();await expect(panel.getByText("Evidence accepted and current",{exact:true})).toBeVisible();
+  await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:"test-results/industry-insight-desktop.png",fullPage:true,animations:"disabled"});
+  await page.getByRole("navigation").getByRole("button",{name:"Create with AI",exact:true}).click();await page.getByLabel("Generation type").selectOption("strategy");
+  await page.getByLabel("What would you like to create?").fill("Synthetic industry strategy with explicit unknown counter-signals");await page.getByRole("button",{name:"Generate",exact:true}).click();
+  const context=page.getByRole("region",{name:"Strategy research context",exact:true});await expect(context.getByRole("button",{name:"View research sources"})).toBeEnabled({timeout:30000});
+  await context.getByRole("button",{name:"View research sources"}).click();await expect(context).toContainText(insight.assumptions);await expect(context.getByText("Not recorded",{exact:true})).toHaveCount(1);
+  const edit=await user.call(`${path}/${record.id}`,"PUT",{...evidence(record.title),category:"INDUSTRY",temporalScope:"HISTORICAL",insight:{...insight,counterSignals:["Later synthetic counter-signal"]},expectedRevision:2});
+  expect(edit.status).toBe(200);expect(edit.body.reviewStatus).toBe("UNREVIEWED");expect(edit.body.eligibleForStrategy).toBe(false);
+  await context.getByRole("button",{name:"View research sources"}).click();await expect(context).not.toContainText("Later synthetic counter-signal");await expect(context.getByText("Not recorded",{exact:true})).toHaveCount(1);
+  await page.setViewportSize({width:390,height:844});await expect.poll(()=>page.locator(".sidebar").evaluate(el=>el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:"test-results/industry-insight-history-mobile.png",fullPage:true,animations:"disabled"});
+});
+
+test("historical industry context keeps recorded counter-signals, stays out of current strategy and remains readable in dark/mobile views", async ({ page }) => {
+  const {user,path,open,panel}=await setup(page);const insight={...industryInsight(),counterSignals:["Synthetic source may reflect a temporary local change"]};
+  const created=await user.call(path,"POST",{...evidence("Synthetic historical industry context"),category:"INDUSTRY",temporalScope:"HISTORICAL",insight});expect(created.status).toBe(201);
+  await open();await page.getByRole("button",{name:/Synthetic historical industry context/}).click();
+  await expect(panel.getByText("Historical context only",{exact:true})).toBeVisible();await expect(panel).toContainText(insight.counterSignals[0]);
+  await expect(page.getByRole("region",{name:"Research records"})).toContainText("Historical context only");
+  await expect(page.getByRole("region",{name:"Research records"})).not.toContainText("Current evidence");
+  await expect(panel.getByText("Observation: Fresh",{exact:true})).toBeVisible();
+  await panel.getByLabel("Review note",{exact:true}).fill("Reviewed synthetic historical context and alternative explanation.");await panel.getByRole("checkbox",{name:reviewAck}).check();
+  await panel.getByRole("button",{name:"Accept evidence",exact:true}).click();await expect(page.getByRole("status")).toContainText("Review saved");
+  const record=(await user.call(`${path}/${created.body.id}`)).body;expect(record.reviewStatus).toBe("ACCEPTED");expect(record.eligibleForStrategy).toBe(false);
+  await page.getByRole("button",{name:"Switch to dark mode"}).click();await page.evaluate(()=>window.scrollTo(0,0));
+  await page.screenshot({path:"test-results/industry-insight-historical-dark.png",fullPage:true,animations:"disabled"});
+  await page.setViewportSize({width:390,height:844});await expect.poll(()=>page.locator(".sidebar").evaluate(el=>el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:"test-results/industry-insight-historical-mobile.png",fullPage:true,animations:"disabled"});
 });

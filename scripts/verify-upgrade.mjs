@@ -171,6 +171,8 @@ try {
   ];
   const seasonal = { kind: "SEASONAL", eventName: "Synthetic business event", eventType: "BUSINESS_EVENT", dateStatus: "UNKNOWN", startDate: "", endDate: "", timeZone: "", culturalContext: "Synthetic local context", businessRelevance: "Synthetic business relevance", proposedOpportunity: "Test original content after timing confirmation", assumptions: "Synthetic fixture; dates and cultural relevance unverified." };
   scopedInsights.push(seasonal, { ...seasonal, dateStatus: "DECLARED", startDate: "2099-01-01", endDate: "2099-01-02", timeZone: "Asia/Kolkata" });
+  const industry = { kind: "INDUSTRY", topic: "Synthetic industry topic", observedPattern: "Synthetic source described a workflow change", businessRelevance: "Synthetic business relevance", proposedOpportunity: "Test an original workflow explanation", counterSignals: [], assumptions: "Synthetic fixture; no measured momentum or verified absence of contrary evidence." };
+  scopedInsights.push(industry, { ...industry, counterSignals: ["Synthetic alternative explanation; one source may be unrepresentative"] });
   const scopedRows = [];
   for (const insight of scopedInsights) {
     const id = randomUUID();
@@ -178,8 +180,8 @@ try {
     scopedRows.push((await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [id])).rows[0].row);
   }
   const selectedRows = [researchRow, ...scopedRows];
-  const researchSnapshot = captureResearchSnapshot(org, selectedRows.map(utcResearch), new Date(), { categories: ["AUDIENCE", "COMMUNITY", "SEARCH", "SEASONAL"], market: "india", language: "english" });
-  assert.equal(researchSnapshot.evidence.length, 5);
+  const researchSnapshot = captureResearchSnapshot(org, selectedRows.map(utcResearch), new Date(), { categories: ["AUDIENCE", "COMMUNITY", "INDUSTRY", "SEARCH", "SEASONAL"], market: "india", language: "english" });
+  assert.equal(researchSnapshot.evidence.length, 7);
   const strategyContext = { revision: 1, profile: {}, creativeDna: {}, approvedContent: [], researchSnapshot };
   await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6)',
     [strategyJob, org, user, randomUUID(), JSON.stringify({ prompt: "Restore a synthetic sourced strategy request" }), JSON.stringify(strategyContext)]);
@@ -284,7 +286,7 @@ try {
   assert.deepEqual(restoredStrategy.researchSnapshot.evidence[0].insight, restoredInsight);
   assert.deepEqual(restoredStrategy.researchSnapshot.coverage, researchSnapshot.coverage);
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, restoredRows).coverage, selectedResearch.coverage);
-  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["AUDIENCE", "COMMUNITY", "SEARCH", "SEASONAL"], market: "india", language: "english" });
+  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["AUDIENCE", "COMMUNITY", "INDUSTRY", "SEARCH", "SEASONAL"], market: "india", language: "english" });
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, restoredRows).evidence, researchSnapshot.evidence);
   assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
   const restoredRun = (await restored.query('SELECT "frozenContext","finalReview" FROM "AIAgentRun" WHERE id=$1', [runId])).rows[0];
@@ -319,6 +321,7 @@ try {
     structuredResearchInsightAndLegacyNullRestored: true,
     audienceCommunityInsightsAndMissingListsRestored: true,
     seasonalUnknownAndDeclaredCalendarContextRestored: true,
+    industryInsightsAndUnknownCounterSignalsRestored: true,
     strategyRecommendationsAndCitationReviewRestored: true,
   };
   await writeFile(

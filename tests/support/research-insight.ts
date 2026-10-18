@@ -19,3 +19,8 @@ export const seasonalInsight = () => ({ kind: "SEASONAL" as const, eventName: "S
   dateStatus: "UNKNOWN" as const, startDate: "", endDate: "", timeZone: "",
   culturalContext: "Synthetic local context; customs are not verified.", businessRelevance: "Test relevance to the synthetic business.",
   proposedOpportunity: "Test an original event-related explanation after confirming timing.", assumptions: "Synthetic fixture; dates, zone, demand and cultural relevance are unverified." });
+
+export const industryInsight = () => ({ kind: "INDUSTRY" as const, topic: "Synthetic industry workflow topic",
+  observedPattern: "Synthetic source described a change in workflow preferences", businessRelevance: "Test relevance to our synthetic business and audience",
+  proposedOpportunity: "Test an original explanation of the observed workflow", counterSignals: [] as string[],
+  assumptions: "Synthetic fixture; no measured momentum, forecast or claim that contrary evidence is absent." });

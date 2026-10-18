@@ -235,7 +235,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
             className="research-record" onClick={() => void select(item.id)}>
             <span className="research-record-category">{label(item.category)} · {label(item.temporalScope)}</span>
             <strong>{item.title}</strong>
-            <span className="research-record-status">{label(item.reviewStatus)} · {label(item.freshness)} evidence</span>
+            <span className="research-record-status">{label(item.reviewStatus)} · {item.temporalScope === "HISTORICAL" ? "Historical context only" : `${label(item.freshness)} evidence`}</span>
           </button>
         </li>)}</ul>}
       </section>
@@ -269,7 +269,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
               if (!discardAllowed()) return;
               clearForms(); setDraft(draftFrom(selected)); setError(""); setNotice("");
             }}>Edit research</button>}</div>
-          <div className="tag-row"><span className="pill">Review: {label(selected.reviewStatus)}</span><span className="pill">Evidence: {label(selected.freshness)}</span><span className="pill">{label(selected.temporalScope)}</span></div>
+          <div className="tag-row"><span className="pill">Review: {label(selected.reviewStatus)}</span><span className="pill">{selected.temporalScope === "HISTORICAL" ? `Observation: ${selected.freshness === "CURRENT" ? "Fresh" : label(selected.freshness)}` : `Evidence: ${label(selected.freshness)}`}</span><span className="pill">{label(selected.temporalScope)}</span></div>
           <p className="research-summary">{selected.summary}</p>
           <ResearchInsightView value={selected.insight} category={selected.category} />
           {selected.insightIssue && <p role="alert" className="alert error">{selected.insightIssue}</p>}
