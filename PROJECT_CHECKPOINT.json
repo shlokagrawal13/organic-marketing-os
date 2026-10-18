@@ -3,7 +3,7 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
   "checkpointRevision": "2026-10-18.04-RESEARCH-01B",
-  "savedAtUtc": "2026-10-18T08:09:27.872721+00:00",
+  "savedAtUtc": "2026-10-18T08:14:54.045470+00:00",
   "currentMilestone": "RESEARCH-01B locally verified; source publication/native CI closure in progress.",
   "activeTaskId": "RESEARCH-01",
   "workInProgress": true,
@@ -84,42 +84,10 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
-    "PROJECT_STATUS.md",
-    "README.md",
-    "RESUME_PROMPT.txt",
-    "START_HERE.md",
-    "apps/api/src/ai.ts",
-    "apps/api/src/research-context.ts",
-    "apps/api/src/worker.ts",
-    "apps/web/app/content-workspace.tsx",
-    "apps/web/app/research-workspace.tsx",
-    "apps/web/app/strategy-research.tsx",
-    "docs/CHANGELOG.md",
-    "docs/HANDOFF.md",
-    "docs/PROJECT_STATUS.md",
-    "docs/REQUIREMENTS_MATRIX.md",
-    "docs/RESEARCH_EVIDENCE.md",
-    "docs/RESEARCH_STRATEGY_CONTEXT.md",
-    "docs/RESUME_CONTEXT.md",
-    "docs/SESSION_LOG.md",
-    "docs/TASK_BOARD.md",
-    "docs/VERIFICATION_REPORT.md",
-    "docs/qa/research01b-dark.png",
-    "docs/qa/research01b-desktop.png",
-    "docs/qa/research01b-evidence.json",
-    "docs/qa/research01b-mobile.png",
-    "docs/qa/research01b-unit-receipts.json",
-    "docs/qa/verification-summary.json",
-    "packages/core/agents.ts",
-    "packages/core/ai.ts",
-    "packages/core/research-context.ts",
-    "scripts/verify-local.mjs",
-    "scripts/verify-upgrade.mjs",
-    "tests/integration/research-context.test.ts",
-    "tests/research-context.test.ts",
-    "tests/ui/research.spec.ts"
+    "docs/qa/research01b-ci-registry-retry.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -8104,8 +8072,8 @@
     "prisma/migrations/202610180001_research_evidence/migration.sql": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RESEARCH-01B connects current accepted tenant research to strategy generation. Jobs freeze bounded source versions/citations/provenance at queue time; workers omit changed, withdrawn or expired evidence and disclose legacy/missing data. Provider and fallback boundaries recheck eligibility. The research trace and actual model request contain identical resolved evidence; strategy history displays selected sources. Content/scene behavior is preserved. Fresh checks: API/web production builds, 228 unit/export cases (8 new research-context cases), 27 native HTTP cases (4 new strategy-context cases), 16 production browser cases, 5 recovery cases, 23 unchanged migrations on disposable PostgreSQL 17.11/Redis 7.4.11, bounded readability, populated PGlite restore including a strategy snapshot and a legacy job, and both zero-vulnerability dependency audits.",
-  "activeTask": "Publish RESEARCH-01B and inspect exact-source native Actions, then publish CI evidence closure.",
+  "latestStatus": "RESEARCH-01B connects current accepted tenant research to strategy generation. Jobs freeze bounded source versions/citations/provenance at queue time; workers omit changed, withdrawn or expired evidence and disclose legacy/missing data. Provider and fallback boundaries recheck eligibility. The research trace and actual model request contain identical resolved evidence; strategy history displays selected sources. Content/scene behavior is preserved. Fresh checks: API/web production builds, 228 unit/export cases (8 new research-context cases), 27 native HTTP cases (4 new strategy-context cases), 16 production browser cases, 5 recovery cases, 23 unchanged migrations on disposable PostgreSQL 17.11/Redis 7.4.11, bounded readability, populated PGlite restore including a strategy snapshot and a legacy job, and both zero-vulnerability dependency audits. Public source 1c345156419cb7cf5ef9c1abf131c88fbd109511 had two CI attempts fail before checkout on the public ECR data quota. A two-line registry-address follow-up retains all verification steps; new-source CI remains pending.",
+  "activeTask": "Verify RESEARCH-01B with Docker Official Image registry addresses after two public ECR initialization failures.",
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8120,42 +8088,10 @@
     "taskId": "RESEARCH-01B",
     "description": "Standing user-authorized source push and exact-commit CI.",
     "paths": [
+      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "README.md",
-      "RESUME_PROMPT.txt",
-      "START_HERE.md",
-      "apps/api/src/ai.ts",
-      "apps/api/src/research-context.ts",
-      "apps/api/src/worker.ts",
-      "apps/web/app/content-workspace.tsx",
-      "apps/web/app/research-workspace.tsx",
-      "apps/web/app/strategy-research.tsx",
-      "docs/CHANGELOG.md",
-      "docs/HANDOFF.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/RESEARCH_EVIDENCE.md",
-      "docs/RESEARCH_STRATEGY_CONTEXT.md",
-      "docs/RESUME_CONTEXT.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/VERIFICATION_REPORT.md",
-      "docs/qa/research01b-dark.png",
-      "docs/qa/research01b-desktop.png",
-      "docs/qa/research01b-evidence.json",
-      "docs/qa/research01b-mobile.png",
-      "docs/qa/research01b-unit-receipts.json",
-      "docs/qa/verification-summary.json",
-      "packages/core/agents.ts",
-      "packages/core/ai.ts",
-      "packages/core/research-context.ts",
-      "scripts/verify-local.mjs",
-      "scripts/verify-upgrade.mjs",
-      "tests/integration/research-context.test.ts",
-      "tests/research-context.test.ts",
-      "tests/ui/research.spec.ts"
+      "docs/qa/research01b-ci-registry-retry.json"
     ]
   },
   "priorPendingPublication": {
@@ -10910,5 +10846,26 @@
       "upgrade": "a7966ac76d34aa824af94aa630501b7483352ba05efe3370b67ca70677a8de47",
       "readability": "8fd5f6dd2a4c5042db10e3975d2bfea3cae5df1412a8ba12824bd125ae8ac9ae"
     }
+  },
+  "ciRegistryFollowup": {
+    "runId": 39110481990,
+    "attempt": 1,
+    "jobId": 117625372011,
+    "stage": "Initialize containers",
+    "cause": "public.ecr.aws PostgreSQL pull failed three times: toomanyrequests: Data limit exceeded",
+    "applicationChecksStarted": false,
+    "decodedLogSha256": "ca7ea923e3a8a5c3b3fcbc74c2f11729900129d9b0862a657bda9d5542b8bf27",
+    "action": "Use the same Docker Official Images PostgreSQL 17-alpine and Redis 7-alpine from Docker Hub after repeat public ECR data-quota failures; retain all health checks and verification steps.",
+    "attempts": [
+      {
+        "attempt": 1,
+        "jobId": 117625372011
+      },
+      {
+        "attempt": 2,
+        "jobId": 117625712537
+      }
+    ],
+    "status": "both_attempts_failed_before_checkout"
   }
 }

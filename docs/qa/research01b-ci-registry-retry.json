@@ -1,0 +1,21 @@
+{
+  "runId": 39110481990,
+  "attempt": 1,
+  "jobId": 117625372011,
+  "stage": "Initialize containers",
+  "cause": "public.ecr.aws PostgreSQL pull failed three times: toomanyrequests: Data limit exceeded",
+  "applicationChecksStarted": false,
+  "decodedLogSha256": "ca7ea923e3a8a5c3b3fcbc74c2f11729900129d9b0862a657bda9d5542b8bf27",
+  "action": "Use the same Docker Official Images PostgreSQL 17-alpine and Redis 7-alpine from Docker Hub after repeat public ECR data-quota failures; retain all health checks and verification steps.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "jobId": 117625372011
+    },
+    {
+      "attempt": 2,
+      "jobId": 117625712537
+    }
+  ],
+  "status": "both_attempts_failed_before_checkout"
+}
