@@ -122,6 +122,7 @@ test("delayed, empty and legacy strategy jobs disclose missing evidence without 
   await until(() => db.aIJob.findUniqueOrThrow({ where: { id: content.job.id } }), j => j.status === "SUCCEEDED", 30000);
   const contentInput = await (await fetch("http://127.0.0.1:4999/research-input?prompt=" + encodeURIComponent(content.data.prompt))).json();
   assert.equal(contentInput.research, null);
+  assert.ok(!contentInput.system.includes("Return 1–12 recommendations"));
 });
 
 test("strategy enqueue rechecks current writer membership before capturing private research", async () => {

@@ -29,6 +29,9 @@ import { providersFromEnv, sceneSchema } from "../../../packages/core/ai";
 import { stableJson } from "../../../packages/core/requests";
 import { randomUUID } from "node:crypto";
 import { captureResearchSnapshot } from "../../../packages/core/research-context";
+import { ResearchContextChangedError } from "../../../packages/core/research-context";
+import { reviewStrategyReferences } from "../../../packages/core/strategy-references";
+import { checkStrategyResearchBoundary } from "./research-context";
 import {
   creditPolicy,
   reserveCredits,
@@ -319,6 +322,12 @@ export class AIController {
     const data = parse(agentReviewInput, body);
     return this.db.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${req.organizationId} FOR UPDATE`;
+      await tx.$queryRaw`SELECT "userId" FROM "Membership" WHERE "organizationId"=${req.organizationId} AND "userId"=${req.userId} FOR UPDATE`;
+      const member = await tx.membership.findUnique({ where: { userId_organizationId: {
+        userId: req.userId, organizationId: req.organizationId,
+      } } });
+      if (!member) throw new NotFoundException("Workspace not found.");
+      if (!approverRoles.includes(member.role)) throw new ForbiddenException("Your current role does not allow agent review.");
       const job = await tx.aIJob.findFirst({
         where: { id, organizationId: req.organizationId },
         include: { agentRun: true },
@@ -332,6 +341,21 @@ export class AIController {
           "Blocked compliance findings must be corrected by a new generation before approval.",
         );
       const approved = data.decision === "approve";
+      let approvedCitationReview;
+      if (approved && job.task === "strategy") {
+        const research = (job.agentRun.frozenContext as any)?.brand?.research;
+        approvedCitationReview = reviewStrategyReferences((job.output || {}) as any, research, req.organizationId);
+        if (!approvedCitationReview.passed) throw new ConflictException("Strategy source references are missing, expired or invalid. Generate a corrected strategy before approval.");
+        const citedIds = new Set(approvedCitationReview.recommendations.flatMap(item => item.references.map(ref => ref.sourceId)));
+        if (citedIds.size) {
+          try { await checkStrategyResearchBoundary(tx, req.organizationId, { ...research,
+            evidence: research.evidence.filter((item: any) => citedIds.has(item.id)) }); }
+          catch (error) {
+            if (error instanceof ResearchContextChangedError) throw new ConflictException("Cited research changed or lost acceptance. Review the research and generate a new strategy before approval.");
+            throw error;
+          }
+        }
+      }
       const run = await tx.aIAgentRun.update({
         where: { id: job.agentRun.id },
         data: {
@@ -339,6 +363,8 @@ export class AIController {
           reviewedBy: req.userId,
           reviewNote: data.note || null,
           reviewedAt: new Date(),
+          ...(approvedCitationReview ? { finalReview: { ...finalReview, citationReview: approvedCitationReview,
+            sourceApprovalRevalidatedAt: new Date().toISOString() } } : {}),
         },
       });
       await tx.aIAgentStep.update({
@@ -351,6 +377,7 @@ export class AIController {
             decision: data.decision,
             note: data.note || null,
             reviewerId: req.userId,
+            ...(approvedCitationReview ? { citationReview: approvedCitationReview } : {}),
           },
           startedAt: new Date(),
           completedAt: new Date(),

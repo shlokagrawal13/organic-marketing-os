@@ -187,6 +187,11 @@ test("a generated strategy exposes the reviewed source context actually sent to 
   const trace = (await user.call(`/workspaces/${org.id}/ai/jobs/${job.id}/trace`)).body;
   expect(trace.frozenContext.brand.research.evidence[0].id).toBe(created.id);
   expect(trace.frozenContext.brand.research.evidence[0].revision).toBe(2);
+  const recommendations = page.getByRole("region", { name: "Recommendation source review" });
+  await expect(recommendations.getByText("Source excerpt matched — review its relevance", { exact: true })).toBeVisible();
+  await expect(recommendations.getByText(evidence().summary, { exact: true })).toBeVisible();
+  await expect(recommendations.getByRole("link", { name: "Synthetic source publication" })).toHaveAttribute("href", evidence().sourceUrl);
+  await expect(page.getByRole("button", { name: "Use idea", exact: true })).toBeDisabled();
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: "test-results/strategy-research-desktop.png", fullPage: true, animations: "disabled" });
   await page.getByRole("button", { name: "Switch to dark mode" }).click();
@@ -196,4 +201,40 @@ test("a generated strategy exposes the reviewed source context actually sent to 
   await expect.poll(() => page.locator(".sidebar").evaluate((el) => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: "test-results/strategy-research-mobile.png", fullPage: true, animations: "disabled" });
+  await page.getByRole("button", { name: "Approve agent result", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Use idea", exact: true })).toBeEnabled();
+});
+
+test("unsupported strategy references block approval and copying while reviewer can reject", async ({ page }) => {
+  const { org, path, open } = await setup(page);
+  await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic brand", audience: "Test audience" }, creativeDna: {} } });
+  await open();await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
+  await page.getByLabel("Generation type").selectOption("strategy");
+  await page.getByLabel("What would you like to create?").fill("REF_UNKNOWN: synthetic unsupported strategy reference");
+  await page.getByRole("button", { name: "Generate", exact: true }).click();
+  const review = page.getByRole("region", { name: "Recommendation source review" });
+  await expect(review.getByRole("alert")).toHaveText("Source reference checks blocked approval. Generate a corrected strategy.", { timeout: 30000 });
+  await expect(review.getByText("Source was not in the captured research context", { exact: true })).toBeVisible();
+  await expect(review.getByRole("link")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Approve agent result", exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Use idea", exact: true })).toBeDisabled();
+  await page.screenshot({ path: "test-results/strategy-references-blocked.png", fullPage: true, animations: "disabled" });
+  page.once("dialog", dialog => dialog.accept("Synthetic reference needs correction"));
+  await page.getByRole("button", { name: "Reject", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Agent result rejected.");
+  await expect(page.getByRole("button", { name: "Approve agent result", exact: true })).toHaveCount(0);
+});
+
+test("strategy without research labels its recommendation as an assumption and missing data", async ({ page }) => {
+  const { org, open } = await setup(page);
+  await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic brand", audience: "Test audience" }, creativeDna: {} } });
+  await open();await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
+  await page.getByLabel("Generation type").selectOption("strategy");
+  await page.getByLabel("What would you like to create?").fill("Synthetic strategy with no supplied research observations");
+  await page.getByRole("button", { name: "Generate", exact: true }).click();
+  const review = page.getByRole("region", { name: "Recommendation source review" });
+  await expect(review.getByText("Assumption — evidence gap or proposed test", { exact: true })).toBeVisible({ timeout: 30000 });
+  await expect(review.getByText(/No usable research supplied/)).toBeVisible();
+  await expect(review.getByRole("link")).toHaveCount(0);
+  await page.screenshot({ path: "test-results/strategy-references-assumption.png", fullPage: true, animations: "disabled" });
 });

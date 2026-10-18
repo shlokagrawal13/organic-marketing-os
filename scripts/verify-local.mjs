@@ -223,6 +223,13 @@ const fixtureServer = createServer(async (req, res) => {
   };
   const supplied = JSON.parse(parsed.messages?.[1]?.content || "{}");
   const input = supplied.input || {};
+  const source = supplied.brand?.research?.evidence?.[0];
+  strategy.recommendations = source ? [{ id: "synthetic-recommendation", recommendation: "Test an educational post based on the supplied observation",
+    basis: "RESEARCH", sourceRefs: [{ sourceId: source.id, revision: source.revision, quote: source.summary }], assumption: "Synthetic fixture; relevance requires human review" }]
+    : [{ id: "synthetic-assumption", recommendation: "Test an educational post with the proposed audience", basis: "ASSUMPTION", sourceRefs: [], assumption: "No usable research supplied; validate this synthetic hypothesis" }];
+  if (input.prompt?.startsWith("REF_UNKNOWN:")) strategy.recommendations[0] = { ...strategy.recommendations[0], basis: "RESEARCH", sourceRefs: [{ sourceId: "00000000-0000-4000-8000-000000000001", revision: 1, quote: "Unknown synthetic source excerpt" }] };
+  if (input.prompt?.startsWith("REF_QUOTE:")) strategy.recommendations[0].sourceRefs[0].quote = "This synthetic quotation was never supplied";
+  if (input.prompt?.startsWith("REF_MISSING:")) delete strategy.recommendations;
   fixtureResearchInputs.set(input.prompt || "unknown", { research: supplied.brand?.research ?? null, system: parsed.messages?.[0]?.content });
   if (fixtureResearchInputs.size > 100) fixtureResearchInputs.delete(fixtureResearchInputs.keys().next().value);
   fixtureCalls[input.prompt || "unknown"] =

@@ -283,7 +283,7 @@ const worker = new Worker(
         },
         routingOptionsFromEnv(routePlan),
       );
-      const finalReview = reviewAgentOutput(row.task as AITask, output);
+      const finalReview = reviewAgentOutput(row.task as AITask, output, research, row.organizationId);
       await db.$transaction(async (tx) => {
         await tx.$queryRaw`SELECT id FROM "Organization" WHERE id = ${row.organizationId} FOR UPDATE`;
         const changed = await tx.aIJob.updateMany({

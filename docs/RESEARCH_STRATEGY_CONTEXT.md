@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01C local verification, 2026-10-18 IST
+
+RESEARCH-01C adds structured recommendation source references and explicit assumptions. Deterministic checks bind source IDs, captured revisions and exact excerpts; invalid/missing references block approval. Approval rechecks current reviewer membership and cited live source acceptance/fingerprint/expiry. The UI displays matched excerpts, blocked findings or evidence-gap assumptions and gates Use idea on approval. Tenant export/restore preserves recommendation output and agent run/step reviews.
+
+Fresh verification: API/web production builds, 237 unit/export cases (9 new reference cases), 31 native HTTP cases (4 new reference/approval cases), 18 production browser cases, 5 recovery cases, 23 unchanged migrations, bounded readability, populated PGlite restore including recommendation/run/step reference JSON, and both zero-vulnerability dependency audits.
+
+Reference matching does not establish truth, source quality, relevance or semantic entailment, nor automatically validate every strategy field. All claims and assumptions need human review. Historical approvals are not retroactively certified or revoked after later source changes. Live research/provider/deployed acceptance, wider research and POLICY-01, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+This checkpoint is locally verified; standing-authorized source publication and exact-commit native CI are pending. Earlier entries below retain historical scopes.
+
+Next: Continue RESEARCH-01D: add explicit bounded research selection/filter criteria to strategy requests, with reviewer-visible category, market and language choices and immutable capture of those choices. Preserve tenant/revision/expiry checks and missing-data behavior; verify actual provider input and reviewer UX, then push and inspect exact-commit CI. Live source adapters, source-quality/semantic acceptance and full master acceptance remain open.
+
+Evidence: `docs/STRATEGY_REFERENCE_REVIEW.md`, `docs/qa/research01c-evidence.json`.
+
 ## Current continuation — RESEARCH-01B published native CI, 2026-10-18 IST
 
 RESEARCH-01B bounded strategy research context source is public on main at `7ecc56363639141582032904ba2070484e3ca83a` (tree `33419fca5a7ba40c1a7282064ed90ac5b01d853a`). All 38 published paths and the full tree matched the locally verified source. Exact-source native Actions run `39110770249` succeeded: 228 unit/export, 27 HTTP, 16 production browser and 5 recovery cases. API/web builds, bounded readability, 23 fresh PostgreSQL migrations, Redis, populated upgrade/archive restore and both zero-vulnerability dependency audits passed.

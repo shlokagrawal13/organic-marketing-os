@@ -268,6 +268,8 @@ export class OperationsController {
               }) => ({ ...row, provider: "openai" }),
             ],
             ["aiJob", tx.aIJob, own, ({ runToken, ...row }) => row],
+            ["aiAgentRun", tx.aIAgentRun, own],
+            ["aiAgentStep", tx.aIAgentStep, { run: own }],
             ["aiUsage", tx.aIUsage, own],
             [
               "creditEntry",

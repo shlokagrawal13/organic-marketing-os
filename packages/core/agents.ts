@@ -1,5 +1,6 @@
 import { AITask, draftSchema, sceneSchema, strategySchema } from "./ai";
 import { checkContent } from "./content";
+import { reviewStrategyReferences } from "./strategy-references";
 
 export const agentRoles = [
   "chief-marketing-orchestrator",
@@ -204,7 +205,7 @@ export function contextArtifact(
   };
 }
 
-export function reviewAgentOutput(task: AITask, value: unknown) {
+export function reviewAgentOutput(task: AITask, value: unknown, research?: unknown, organizationId = "") {
   if (task === "content") {
     const parsed = draftSchema.parse(value);
     const result = checkContent(parsed);
@@ -238,9 +239,14 @@ export function reviewAgentOutput(task: AITask, value: unknown) {
     };
   }
   const parsed = strategySchema.parse(value);
+  const citationReview = reviewStrategyReferences(parsed, research, organizationId);
   return {
-    passed: true,
+    passed: citationReview.passed,
+    citationReview,
     findings: [
+      { label: citationReview.passed ? "Recommendation source references and assumption labels checked; human relevance review required"
+        : "Recommendation references are missing or invalid. Generate a corrected strategy before approval.",
+        severity: citationReview.passed ? "warning" : "block" },
       {
         label: parsed.assumptions.length
           ? "Assumptions are explicitly recorded"

@@ -160,6 +160,21 @@ try {
   const strategyContext = { revision: 1, profile: {}, creativeDna: {}, approvedContent: [], researchSnapshot };
   await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6)',
     [strategyJob, org, user, randomUUID(), JSON.stringify({ prompt: "Restore a synthetic sourced strategy request" }), JSON.stringify(strategyContext)]);
+  const { reviewStrategyReferences } = await import("../dist/packages/core/strategy-references.js");
+  const selectedResearch = resolveResearchContext(researchSnapshot, org, [utcResearch(researchRow)]);
+  const recommendations = [{ id: "restore-recommendation", recommendation: "Test a synthetic educational post", basis: "RESEARCH",
+    sourceRefs: [{ sourceId: strategyResearch, revision: 2, quote: selectedResearch.evidence[0].summary }], assumption: "Synthetic test only" }];
+  const citationReview = reviewStrategyReferences({ recommendations }, selectedResearch, org);assert.equal(citationReview.passed, true);
+  const runId = randomUUID(), stepId = randomUUID(), completedStrategyJob = randomUUID(), finalReview = { passed: true, citationReview, requiresHumanReview: true };
+  const strategyOutput = { title: "Synthetic restored strategy", goal: "Test", audience: "Synthetic audience", positioning: "Test observation",
+    pillars: [{ name: "Education", purpose: "Explain" }], ideas: [{ title: "Synthetic example", hook: "A test question", platform: "LinkedIn", format: "Text", purpose: "Explain", cta: "Read" }],
+    cadence: "Weekly", experiments: [], assumptions: ["Synthetic fixture"], recommendations };
+  await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext",status,output,"completedAt") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6,\'SUCCEEDED\',$7,now())',
+    [completedStrategyJob, org, user, randomUUID(), JSON.stringify({ prompt: "Synthetic completed strategy for restore" }), JSON.stringify(strategyContext), JSON.stringify(strategyOutput)]);
+  await db.query('INSERT INTO "AIAgentRun" (id,"organizationId","jobId","graphVersion",task,"frozenContext",state,"finalReview") VALUES ($1,$2,$3,\'2026-09-29.1\',\'strategy\',$4,\'AWAITING_REVIEW\',$5)',
+    [runId, org, completedStrategyJob, JSON.stringify({ brand: { research: selectedResearch } }), JSON.stringify(finalReview)]);
+  await db.query('INSERT INTO "AIAgentStep" (id,"runId",key,sequence,role,kind,responsibility,dependencies,"inputContext",output,state) VALUES ($1,$2,\'critique\',1,\'chief-marketing-orchestrator\',\'review\',\'Synthetic review\',\'[]\',\'{}\',$3,\'SUCCEEDED\')',
+    [stepId, runId, JSON.stringify(finalReview)]);
   const backup = await db.dumpDataDir();
   await db.query('DELETE FROM "Organization" WHERE id=$1', [org]);
   assert.equal(
@@ -207,7 +222,7 @@ try {
   );
   assert.equal(
     (await restored.query('SELECT count(*)::int AS n FROM "AIJob"')).rows[0].n,
-    2,
+    3,
   );
   const savedMedia = (
     await restored.query(
@@ -236,6 +251,12 @@ try {
   const restoredSource = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).evidence, researchSnapshot.evidence);
   assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
+  const restoredRun = (await restored.query('SELECT "frozenContext","finalReview" FROM "AIAgentRun" WHERE id=$1', [runId])).rows[0];
+  assert.deepEqual(restoredRun.finalReview, finalReview);
+  assert.deepEqual((await restored.query('SELECT output,status FROM "AIJob" WHERE id=$1', [completedStrategyJob])).rows[0], { output: strategyOutput, status: "SUCCEEDED" });
+  assert.equal((await restored.query('SELECT status FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].status, "QUEUED");
+  assert.deepEqual((await restored.query('SELECT output FROM "AIAgentStep" WHERE id=$1', [stepId])).rows[0].output, finalReview);
+  assert.equal(reviewStrategyReferences({ recommendations }, restoredRun.frozenContext.brand.research, org).passed, true);
   await mkdir(".local", { recursive: true });
   const result = {
     passed: true,
@@ -255,6 +276,7 @@ try {
     workspaceYoutubePolicyRestored: true,
     researchCitationProvenanceAndReviewRestored: true,
     queuedStrategyResearchSnapshotRestored: true,
+    strategyRecommendationsAndCitationReviewRestored: true,
   };
   await writeFile(
     ".local/upgrade-restore-evidence.json",

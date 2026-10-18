@@ -73,7 +73,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "RESEARCH-01B published native CI closure",
+  "latestIncrement": "RESEARCH-01C local verification; publication/native CI pending",
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
     "policyVersion": "youtube-upload-policy-2026-10-17",
@@ -1043,50 +1043,75 @@
   },
   "currentIncrementChecks": {
     "unit": {
-      "tests": 228,
-      "passed": 228,
+      "tests": 237,
+      "passed": 237,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "completeFinalCumulativeSummary": true,
-      "artifactReceiptsIndependentlyInspected": false
+      "uniqueReceipts": 237
+    },
+    "focusedReferenceUnit": 9,
+    "postRegressionRouterScope": {
+      "tests": 30,
+      "passed": 30,
+      "scope": "Final strategy-only prompt instruction plus existing router/agent/context/reference cases"
     },
     "http": {
-      "tests": 27,
-      "passed": 27,
+      "tests": 31,
+      "passed": 31,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0
     },
-    "browser": {
-      "tests": 16,
-      "passed": 16,
-      "duration": "54.2s"
+    "focusedReferenceHttp": 4,
+    "postRegressionContentHttp": {
+      "tests": 4,
+      "passed": 4,
+      "scope": "Final production build; actual content worker provider request excludes strategy-only recommendation instructions"
     },
+    "browser": {
+      "tests": 18,
+      "passed": 18
+    },
+    "focusedResearchBrowser": 6,
     "recovery": {
       "tests": 5,
       "passed": 5,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119943
+      "observedRemainingLockMs": 119946
     },
     "apiBuild": true,
     "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "nativePostgresVersion": "17.11",
+    "nativeRedisVersion": "7.4.11",
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4970752,
+      "sha256": "8494e78a9b5945f95d55fcd0d2ea3a5d787c8be9ee73407c241795fac3a63b04",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
     "boundedEnglishReadability": {
       "passed": true,
-      "passedSampleLogLines": 44,
-      "artifactSampleBytesIndependentlyInspected": false
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
     },
-    "freshNativePostgresMigrations": 23,
-    "nativeRedis": true,
-    "populatedUpgradeRestore": true,
-    "researchCitationProvenanceAndReviewRestored": true,
-    "queuedStrategyResearchSnapshotRestored": true,
-    "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0
   },
@@ -10717,5 +10742,132 @@
       "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
       "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
     ]
+  },
+  "latestResearch01C": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01C",
+    "recordedAtUtc": "2026-10-18T09:41:37.720113+00:00",
+    "status": "locally_verified_publication_ci_pending",
+    "basePublicCommit": "cce9d2227a94c3f6d8764cdbdea1342efafbfdff",
+    "scope": "Bounded recommendation source IDs/revisions/excerpts and assumption declarations, worker review, live cited-source approval checks, reviewer UX and complete tenant trace export/restore.",
+    "verification": {
+      "unit": {
+        "tests": 237,
+        "passed": 237,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "uniqueReceipts": 237
+      },
+      "focusedReferenceUnit": 9,
+      "postRegressionRouterScope": {
+        "tests": 30,
+        "passed": 30,
+        "scope": "Final strategy-only prompt instruction plus existing router/agent/context/reference cases"
+      },
+      "http": {
+        "tests": 31,
+        "passed": 31,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "focusedReferenceHttp": 4,
+      "postRegressionContentHttp": {
+        "tests": 4,
+        "passed": 4,
+        "scope": "Final production build; actual content worker provider request excludes strategy-only recommendation instructions"
+      },
+      "browser": {
+        "tests": 18,
+        "passed": 18
+      },
+      "focusedResearchBrowser": 6,
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119946
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "freshNativePostgresMigrations": 23,
+      "nativePostgresVersion": "17.11",
+      "nativeRedisVersion": "7.4.11",
+      "populatedUpgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 23,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4970752,
+        "sha256": "8494e78a9b5945f95d55fcd0d2ea3a5d787c8be9ee73407c241795fac3a63b04",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true,
+        "workspaceYoutubePolicyRestored": true,
+        "researchCitationProvenanceAndReviewRestored": true,
+        "queuedStrategyResearchSnapshotRestored": true,
+        "strategyRecommendationsAndCitationReviewRestored": true
+      },
+      "boundedEnglishReadability": {
+        "passed": true,
+        "standardSamples": 36,
+        "busySamples": 8,
+        "blankNegativeControl": true
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "behavior": [
+      "Strategies declare 1–12 recommendations with research references or explicit assumptions; model-supplied citation URL fields are rejected.",
+      "Unknown IDs, wrong revisions, nonmatching/trivial/uncaptured quotes, expiry, duplicate IDs and missing assumptions block source review.",
+      "Approval rechecks current approver membership, persisted recommendation declarations and cited live source identity/fingerprint/acceptance/expiry; uncited changes do not block it.",
+      "Reviewer UI shows canonical matched excerpts, blocked findings or assumptions and requires approval before Use idea.",
+      "Tenant workspace export and populated archive restore preserve recommendation output, agent runs/steps and citation reviews."
+    ],
+    "screenshots": {
+      "desktop": "docs/qa/research01c-desktop.png",
+      "dark": "docs/qa/research01c-dark.png",
+      "mobile": "docs/qa/research01c-mobile.png",
+      "blocked": "docs/qa/research01c-blocked.png",
+      "assumption": "docs/qa/research01c-assumption.png"
+    },
+    "unitReceipts": "docs/qa/research01c-unit-receipts.json",
+    "resolvedLocalFailures": [
+      "Final prompt review scoped recommendation instructions to strategy only; 30 focused router/agent/context/reference cases and 4 final-build native content-context cases passed including actual content worker request exclusion. Full final-source CI remains required.",
+      "Initial synthetic uncited-record fixture lacked required review note; corrected and native test passed.",
+      "Initial rejection browser assertion expected title-case status; rejection succeeded, assertion corrected to visible confirmation and controls."
+    ],
+    "commands": [
+      "npm run build",
+      "npm test",
+      "npm run verify:upgrade",
+      "npm run verify:readability",
+      "npm audit --omit=dev --audit-level=moderate",
+      "npm audit --audit-level=moderate",
+      "bash .local/run-research01c-native.sh (dedicated disposable native PostgreSQL/Redis; full verify-local --native --production-web)"
+    ],
+    "limits": [
+      "Identity/revision/excerpt matching does not prove factual truth, source quality, relevance or semantic entailment.",
+      "Checks cover declared recommendations, not automatic factual validation of every strategy field.",
+      "No source page retrieval, live provider quality or deployed acceptance occurred.",
+      "Historical approvals are not retroactively certified or revoked after later source changes.",
+      "Populated restore uses PGlite; native PostgreSQL/private-media cross-store restore and full master acceptance remain open."
+    ],
+    "logs": {
+      "unit": "e234b03d5f4bb765f71c3a1f6792938c1a1e6ca4e53a58e17a8a65b1aa4d046c",
+      "native": "fbc15bec4c7779c7ac7c163ea0990784f8c9ede5630cfe2fe0dac7d0622e7f67",
+      "build": "5029e033e8d371d961054ef030bcd675f1c2df0f3d2dd49faa2ae002ea9da27e",
+      "upgrade": "529e92d1f2981bf3fb2ca2798ba143911b4b3b2e37c773161eae6ebc7dea5218",
+      "readability": "1e3fee96625290d3b3b9eed4b8ec0cb1c2e0f8dfb9c44e5685ca5ed271f7aaed",
+      "final-router-focused": "8a3e72f0e1c1cde71f05bffa256020d025ed86caeae27522cf331542746753d9",
+      "final-content-http": "04edf0b2ee4455226e5650fd93c873af3a1530e398b856d77282c02309278b81"
+    }
   }
 }

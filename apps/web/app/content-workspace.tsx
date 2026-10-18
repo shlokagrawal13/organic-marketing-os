@@ -32,6 +32,7 @@ import { RenderPanel } from "./media-workspace";
 import YoutubePolicyReview from "./youtube-policy-review";
 import { CaptionEditor } from "./caption-editor";
 import StrategyResearch from "./strategy-research";
+import StrategyRecommendations from "./strategy-recommendations";
 import {
   sceneTimeline as timeline,
   timelineTime,
@@ -1914,6 +1915,7 @@ export default function ContentWorkspace({
                           )}
                           {j.task === "strategy" ? (
                             <div className="strategy-result">
+                              <StrategyRecommendations output={j.output} review={j.agentRun?.finalReview} />
                               <p>{j.output.positioning}</p>
                               <div className="pillar-grid">
                                 {j.output.pillars.map((p: Any) => (
@@ -1935,7 +1937,7 @@ export default function ContentWorkspace({
                                   </div>
                                   <button
                                     className="button"
-                                    disabled={!editable}
+                                    disabled={!editable || j.agentRun?.state !== "APPROVED" || j.agentRun?.finalReview?.passed === false}
                                     onClick={() =>
                                       create({
                                         ...emptyDraft,
