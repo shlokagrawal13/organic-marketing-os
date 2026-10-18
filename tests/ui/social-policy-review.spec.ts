@@ -2,10 +2,12 @@ import { test, expect } from "@playwright/test";
 import { randomBytes, randomUUID } from "node:crypto";
 import { db, scene } from "../support/http";
 import { encryptSocialToken } from "../../packages/core/social-tokens";
+import { resetBrowserFixtureRateBudget } from "../support/browser-rate-budget";
 import rules from "../../packages/core/youtube-rules.json";
 
 test("an owner reviews one approved YouTube render without scheduling or posting", async ({ page }) => {
   test.setTimeout(120000);
+  await resetBrowserFixtureRateBudget();
   const headers = { "X-Requested-With": "MarketingOS" };
   expect((await page.request.post("/api/auth/register", { headers, data: {
     name: "Policy UI QA", email: `policy-ui-${randomUUID()}@example.test`, password: "Isolated browser password 123",

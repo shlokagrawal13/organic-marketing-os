@@ -73,7 +73,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "RESEARCH-01E published native CI closure",
+  "latestIncrement": "RESEARCH-01E native-verified application; browser auth/API fixture isolation locally verified; newer own full CI read from Git/Actions",
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
     "policyVersion": "youtube-upload-policy-2026-10-17",
@@ -11821,6 +11821,67 @@
       "No live-source/provider or deployed production acceptance occurred.",
       "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
       "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
+    ]
+  },
+  "latestResearch01EFixtureFollowup": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01E",
+    "recordedAtUtc": "2026-10-18T14:50:35.314337+00:00",
+    "status": "fixture_followup_locally_verified_own_ci_pending",
+    "nativeVerifiedApplicationSource": "0378110432b954c93631f0851f9ee182413589a1",
+    "nativeVerifiedSourceRun": 39134469984,
+    "failedClosure": {
+      "commit": "e624628aee76d7423a92b02667d8fa5c3bf6fa37",
+      "runId": 39135793894,
+      "jobId": 117699917635,
+      "unitPassed": 242,
+      "httpPassed": 33,
+      "browserPassed": 18,
+      "browserFailed": 1,
+      "recovery": "not run after browser failure",
+      "failure": "Existing YouTube review browser test timed out waiting for Content library navigation after its last page reload.",
+      "decodedLogSha256": "a018815360930c50201283fc78ed4c7c75ff3ceb03eb2d2d8c42dc198ae4e162"
+    },
+    "diagnosis": {
+      "observed": "Auth budget exhaustion deterministically reproduces the missing-navigation state: /api/auth/me returns 429, Workspace unavailable is shown and navigation is absent. After isolated budget reset the same session returns 200 and navigation is visible.",
+      "ciSpecificEvidenceLimit": "The failed CI screenshot/error-context artifact bytes were inaccessible through the provided file URL (proxy CONNECT 403); the exact failed CI bootstrap HTTP response was not independently observed.",
+      "fixtureCoupling": "Browser accounts share a loopback IP. Research fixtures previously reset only the API bucket; the YouTube review fixture inherited both buckets. Workspace-policy fixtures already reset both."
+    },
+    "fix": {
+      "paths": [
+        "tests/support/browser-rate-budget.ts",
+        "tests/ui/fixture-isolation.spec.ts",
+        "tests/ui/research.spec.ts",
+        "tests/ui/social-policy-review.spec.ts",
+        "tests/ui/workspace-policy.spec.ts"
+      ],
+      "behavior": "Guarded shared helper resets only isolated auth/API fixture counters before independent research, YouTube-review and workspace-policy fixtures. A regression case verifies the runtime limiter still blocks at its normal auth budget, then verifies restored bootstrap after fixture reset.",
+      "productionApplicationCodeChanged": false,
+      "productionLimitsChanged": false,
+      "timeoutsIncreased": false,
+      "checksSkippedOrWeakened": false
+    },
+    "localVerification": {
+      "httpPassed": 33,
+      "browserPassed": 20,
+      "recoveryPassed": 5,
+      "recoveryRemainingLockMs": 119930,
+      "deterministicAuthReproduction": {
+        "tests": 1,
+        "passed": 1,
+        "blockedStatus": 429,
+        "restoredStatus": 200,
+        "missingNavigationObserved": true,
+        "restoredNavigationObserved": true
+      },
+      "nativeLogSha256": "1bea1aaea226a75ee04e8357db39ad9ea6248b9a29d7989f939b48a0f1b6a0d7",
+      "reproductionLogSha256": "ad94b120c90cd65d3d2618eba431c498d0fc5ecdcb2ab9d919289cbadc4ab956",
+      "unitScope": "242 unit/export cases passed on unchanged production/unit source locally and in both earlier CI attempts; this test-fixture follow-up requires its own complete CI."
+    },
+    "latestHeadCi": "Read Git/Actions for this newer fixture/evidence commit. Its own full CI is not claimed in advance.",
+    "limits": [
+      "Source coverage and excerpt matching do not prove truth, quality or semantic relevance.",
+      "Live source/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
     ]
   }
 }

@@ -1,3 +1,11 @@
+## Current CI fixture follow-up — 2026-10-18 IST
+
+RESEARCH-01E application source `0378110432b954c93631f0851f9ee182413589a1` remains verified by native Actions run `39134469984` (242 unit, 33 HTTP, 19 browser, 5 recovery; builds, readability, audits and populated coverage restore passed). Later continuity run `39135793894` passed units/HTTP but stopped at 18/19 browser cases when the existing YouTube review test lost navigation after reload; recovery did not run in that attempt.
+
+Auth-budget exhaustion deterministically reproduced the missing-navigation state (429); resetting only the isolated fixture buckets restored the same session and navigation (200). A guarded shared auth/API reset now isolates the affected browser fixtures, and a new regression case retains the normal runtime limiter assertion. The exact failed CI response remains unobserved because its artifact bytes were blocked by proxy 403; the detailed receipt distinguishes that gap from the reproduced mechanism.
+
+Fresh complete native follow-up: 33 HTTP, 20 production browser and 5 recovery cases passed. Production code, runtime rate limits, timeouts and verification steps are unchanged. This fixture/evidence follow-up requires its own full CI; read the newer HEAD in Git/Actions. No follow-up CI success is claimed in advance. See `docs/qa/research01e-ci-fixture-followup.json`. Next remains RESEARCH-01F structured competitor/search insights; full live/factual/master acceptance remains open.
+
 ## Current continuation — RESEARCH-01E published native CI, 2026-10-18 IST
 
 RESEARCH-01E source is public on main at `0378110432b954c93631f0851f9ee182413589a1` (tree `837efee7163de4c2a6eedf041420852c87a9b2ca`); all 35 published paths and the full tree matched local verification. Exact-source native Actions run `39134469984` passed: 242 unit/export, 33 HTTP, 19 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed.

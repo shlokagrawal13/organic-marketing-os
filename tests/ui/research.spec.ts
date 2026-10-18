@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
-import Redis from "ioredis";
+import { resetBrowserFixtureRateBudget } from "../support/browser-rate-budget";
 import { actor, db } from "../support/http";
 
 const orgs: string[] = [], users: string[] = [];
@@ -20,17 +20,7 @@ test.afterAll(async () => {
 });
 async function setup(page: Page, role: Parameters<typeof actor>[1] = "OWNER") {
   test.setTimeout(90000);
-  // The isolated harness guard is imported by support/http. Reset only the
-  // disposable loopback API budget between independent browser fixtures.
-  const redis = new Redis(process.env.REDIS_URL!, { maxRetriesPerRequest: 1 });
-  try {
-    let cursor = "0";
-    do {
-      const [next, keys] = await redis.scan(cursor, "MATCH", "rate:api:*", "COUNT", 100);
-      cursor = next;
-      if (keys.length) await redis.del(...keys);
-    } while (cursor !== "0");
-  } finally { redis.disconnect(); }
+  await resetBrowserFixtureRateBudget();
   const org = await db.organization.create({ data: { name: `Research browser ${role}` } });
   orgs.push(org.id);
   const user = await actor(org.id, role); users.push(user.id);

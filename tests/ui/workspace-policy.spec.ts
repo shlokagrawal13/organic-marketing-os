@@ -2,7 +2,7 @@ import { test, expect, Page } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 import { db } from "../support/http";
 import rules from "../../packages/core/youtube-rules.json";
-import Redis from "ioredis";
+import { resetBrowserFixtureRateBudget } from "../support/browser-rate-budget";
 
 test.afterAll(async () => { await db.$disconnect(); });
 
@@ -10,20 +10,7 @@ const headers = { "X-Requested-With": "MarketingOS" };
 const acknowledgment = "I reviewed these rules and understand existing upload reviews and scheduled posts may need review again.";
 async function setup(page: Page, role: "OWNER" | "ADMIN" = "OWNER") {
   test.setTimeout(90000);
-  // Independent browser accounts share one fixture loopback IP. Clear only
-  // their inherited auth/API counters, keeping the runtime limiter enabled.
-  // ../support/http imports the isolated-harness guard before this can run.
-  const redis = new Redis(process.env.REDIS_URL!, { maxRetriesPerRequest: 1 });
-  try {
-    for (const pattern of ["rate:auth:*", "rate:api:*"]) {
-      let cursor = "0";
-      do {
-        const [next, keys] = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
-        cursor = next;
-        if (keys.length) await redis.del(...keys);
-      } while (cursor !== "0");
-    }
-  } finally { redis.disconnect(); }
+  await resetBrowserFixtureRateBudget();
   expect((await page.request.post("/api/auth/register", { headers, data: {
     name: "Policy manager QA", email: `policy-manager-${randomUUID()}@example.test`,
     password: "Isolated browser password 123",
