@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.12-NATIVE-01A-local-build-config-verified",
-  "savedAtUtc": "2026-10-18T23:28:50.338730+00:00",
-  "currentMilestone": "NATIVE-01A actual image/configuration verified locally; complete disposable Compose/native restore requires exact-source CI.",
-  "activeTaskId": "NATIVE-01",
-  "workInProgress": true,
+  "checkpointRevision": "2026-10-19.12-NATIVE-01A-initial-compose-CI-and-local-isolation-verified",
+  "savedAtUtc": "2026-10-18T23:34:22.796615+00:00",
+  "currentMilestone": "NATIVE-01A initial source complete Compose/native-restore job verified; isolation/metadata follow-up locally verified. Read BOTH current exact-source CI jobs before final acceptance.",
+  "activeTaskId": null,
+  "workInProgress": false,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -108,7 +108,9 @@
     "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/native01a-evidence.json",
+    "docs/qa/native01a-initial-compose-ci-evidence.json",
     "docs/qa/research01i-native-ci-evidence.json",
+    "docs/qa/verification-summary.json",
     "package.json",
     "scripts/compose-verification.mjs",
     "scripts/verify-compose-fixture.mjs",
@@ -7919,12 +7921,13 @@
       "state": "ready_for_local_work",
       "title": "Native Postgres/Redis and actual Compose",
       "currentBlocker": "Whole Compose/MinIO and native populated PostgreSQL/private-media restore require dedicated execution/evidence; current managed Docker environment is available and must be rechecked on resume.",
-      "completedIncrement": "A actual application images, fixture guards and isolated Compose config locally passed. Full MinIO local build network blocked; complete startup/native cross-store restore requires both exact-source CI jobs and sanitized full-mode report."
+      "completedIncrement": "A initial source 7c624d5 complete Compose/native restore job117820808071 passed with five objects and source volume deletion; local inherited-shell guard follow-up passed. Read BOTH newer exact-source CI jobs for final acceptance."
     },
     {
       "id": "RECOVERY-01",
       "state": "needs_execution_environment",
-      "title": "Native populated upgrade and cross-store recovery"
+      "title": "Native populated upgrade and cross-store recovery",
+      "completedIncrement": "NATIVE-01A initial source actual Compose job passed a quiesced synthetic pg_dump/pg_restore plus five-object private restore after source volume deletion. Wider interrupted upgrade/restore, PITR, production sizing and in-flight queue recovery remain open."
     },
     {
       "id": "AI-LIVE-01",
@@ -8098,11 +8101,7 @@
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
   "latestStatus": "RESEARCH-01E source is public on main at `0378110432b954c93631f0851f9ee182413589a1` (tree `837efee7163de4c2a6eedf041420852c87a9b2ca`); all 35 published paths and the full tree matched local verification. Exact-source native Actions run `39134469984` passed: 242 unit/export, 33 HTTP, 19 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed. Later continuity CI found a browser bootstrap/navigation timeout. Shared fixture auth/API isolation plus a real limiter/restore regression passed 33 native HTTP, 20 browser and 5 recovery cases. Read the newer HEAD and its full CI from Git/Actions. The first fixture follow-up CI hit an explicit inherited API 429 in the existing media case. Shared HTTP/browser fixture isolation and real auth/API throttle/restore assertions passed complete 33 HTTP, 20 browser and 5 recovery locally; read newer HEAD CI.",
-  "activeTask": {
-    "id": "NATIVE-01A",
-    "title": "Actual disposable Compose and native PostgreSQL/private-media restore verification",
-    "status": "publication_and_exact_CI_in_progress"
-  },
+  "activeTask": null,
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8115,7 +8114,7 @@
   },
   "pendingPublication": {
     "taskId": "NATIVE-01A",
-    "description": "Standing-authorized push; both exact-source native core and full Compose/restore CI required.",
+    "description": "Standing-authorized isolation/release-metadata follow-up push; BOTH own exact-source native core and complete Compose/restore CI required. Initial Compose source/job receipt is retained separately.",
     "paths": [
       ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
@@ -8141,7 +8140,9 @@
       "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/native01a-evidence.json",
+      "docs/qa/native01a-initial-compose-ci-evidence.json",
       "docs/qa/research01i-native-ci-evidence.json",
+      "docs/qa/verification-summary.json",
       "package.json",
       "scripts/compose-verification.mjs",
       "scripts/verify-compose-fixture.mjs",
@@ -13486,9 +13487,9 @@
         "schemaVersion": 1,
         "taskId": "NATIVE-01A",
         "passed": true,
-        "startedAt": "2026-10-18T23:27:28.351Z",
-        "sourceProject": "omos-compose-verify-aacbc3ae44b1c8d6",
-        "restoreProject": "omos-compose-verify-aacbc3ae44b1c8d6-restore",
+        "startedAt": "2026-10-18T23:31:10.711Z",
+        "sourceProject": "omos-compose-verify-e0c71ebfe7a47018",
+        "restoreProject": "omos-compose-verify-e0c71ebfe7a47018-restore",
         "liveProvidersCalled": false,
         "publicDeployment": false,
         "checks": {
@@ -13499,11 +13500,11 @@
           {
             "name": "isolated configuration",
             "passed": true,
-            "durationMs": 174
+            "durationMs": 431
           }
         ],
         "verificationMode": "configuration-only",
-        "completedAt": "2026-10-18T23:27:28.526Z"
+        "completedAt": "2026-10-18T23:31:11.145Z"
       },
       "applicationBuildImage": "sha256:ca899b677558919ffc8663c2b5139b0baca7437ada966db41a38bf104c043e5b",
       "applicationRuntimeImage": "sha256:476201cf3b2e4ca0e47753ea59760aab27ad1853a57c87ee523894fc5acd9954",
@@ -13536,7 +13537,19 @@
       "Synthetic isolated development stack only; no deployment, live AI/social/billing acceptance or populated user services touched.",
       "Quiesced complete-database and private-object restore is distinct from PITR, interrupted upgrade/restore and in-flight queue recovery. Those wider RECOVERY-01 cases remain open.",
       "Full master acceptance remains open."
-    ]
+    ],
+    "priorSourceCompleteComposeCi": "docs/qa/native01a-initial-compose-ci-evidence.json",
+    "fixtureIsolationFollowup": {
+      "changedBehavior": "Drop inherited POSTGRES_PASSWORD/S3 and Compose selection variables before CLI interpolation; preserve configured proxy/path and original parent environment.",
+      "tests": "Four focused fixture tests passed again, including inherited-variable non-mutation/isolation; actual Compose configuration passed with deliberately conflicting dummy parent secrets.",
+      "changedPaths": [
+        "scripts/compose-verification.mjs",
+        "scripts/verify-compose.mjs",
+        "tests/compose-verification.test.ts",
+        "Dockerfile.minio"
+      ],
+      "minioBuildMetadata": "Set official release copyright 2025 and short commit in addition to full release/version/commit."
+    }
   },
   "research01iNativeCi": {
     "schemaVersion": 1,
@@ -13678,5 +13691,123 @@
       "Missing counter-signals mean not recorded, not verified absence of contrary evidence. No live source collection or trend measurement occurred.",
       "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
     ]
+  },
+  "native01aInitialComposeCi": {
+    "schemaVersion": 1,
+    "taskId": "NATIVE-01A",
+    "status": "completed_initial_source_Compose_job_only_current_followup_requires_own_full_CI",
+    "publicCommit": "7c624d50379341283f468db8f3413d74f70bf4fa",
+    "treeSha": "84413dd18e4c2982c8585cce2b445683685b2453",
+    "runId": 39176723245,
+    "jobId": 117820808071,
+    "jobConclusion": "success",
+    "runUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39176723245",
+    "coreJobStatusAtCapture": "in_progress",
+    "completeComposeReport": {
+      "schemaVersion": 1,
+      "taskId": "NATIVE-01A",
+      "passed": true,
+      "startedAt": "2026-10-18T23:29:27.118Z",
+      "sourceProject": "omos-compose-verify-3f5cf3f8602987a3",
+      "restoreProject": "omos-compose-verify-3f5cf3f8602987a3-restore",
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "checks": {
+        "generatedProjectPrivateEnvAndVolumeIsolation": true,
+        "allNineLongRunningServices": true,
+        "health": true,
+        "auth": true,
+        "tenantIsolation": true,
+        "range": true,
+        "realRender": true,
+        "idempotency": true,
+        "noKeyFailure": true,
+        "emailSubmission": true,
+        "realSmtpDelivery": true,
+        "originalSourceVolumesRemoved": true,
+        "objectsRestored": 5,
+        "allObjectBytesAndMetadataMatch": true,
+        "nativeDatabaseRestore": true,
+        "privateMediaRestore": true,
+        "recordCountsMatch": true,
+        "originalAndRenderedBytesMatch": true,
+        "tenantAndAnonymousIsolationAfterRestore": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "steps": [
+        {
+          "name": "isolated configuration",
+          "passed": true,
+          "durationMs": 553
+        },
+        {
+          "name": "build application images",
+          "passed": true,
+          "durationMs": 78584
+        },
+        {
+          "name": "build official pinned MinIO release",
+          "passed": true,
+          "durationMs": 96932
+        },
+        {
+          "name": "complete Compose startup",
+          "passed": true,
+          "durationMs": 17970
+        },
+        {
+          "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+          "passed": true,
+          "durationMs": 2143
+        },
+        {
+          "name": "real SMTP delivery",
+          "passed": true,
+          "durationMs": 48
+        },
+        {
+          "name": "quiesced native database and private-object backup",
+          "passed": true,
+          "durationMs": 1913
+        },
+        {
+          "name": "remove original disposable source targets",
+          "passed": true,
+          "durationMs": 779
+        },
+        {
+          "name": "restore into separate PostgreSQL and MinIO targets",
+          "passed": true,
+          "durationMs": 8042
+        },
+        {
+          "name": "restored records/media/tenant access through actual application",
+          "passed": true,
+          "durationMs": 307
+        }
+      ],
+      "verificationMode": "complete-compose-native-restore",
+      "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-0000 MinIO, Inc.",
+      "databaseDump": {
+        "bytes": 120978,
+        "sha256": "b7d2908604635a5e5de57d88b364b75dfac20d55ee1ccf5186ca28f7608a544f"
+      },
+      "objectBackup": {
+        "objects": 5,
+        "bytes": 25947,
+        "sha256": "c0b889f3da434027516de69d59a1b86fd61a806a2116e6586bafc51bf72b1750"
+      },
+      "completedAt": "2026-10-18T23:32:56.332Z"
+    },
+    "decodedJobLogSha256": "e4c98ee57092d40050470d10a87ed0116c6238f568b426e2ae1f18930ab8f519",
+    "artifact": {
+      "id": 12154633176,
+      "name": "compose-evidence",
+      "sizeInBytes": 1297,
+      "digest": "sha256:61ab32c1567f11ef18be016f33ae8736e9029202ae7cec061b010561f4f34337",
+      "independentArtifactByteInspection": false
+    },
+    "followup": "Inherited shell interpolation isolation is locally hardened and re-tested. Correct release copyright/short-commit metadata are added. The newer source must pass both exact-source core and Compose CI jobs; this receipt does not claim future results."
   }
 }

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NATIVE-01A",
+  "status": "completed_initial_source_Compose_job_only_current_followup_requires_own_full_CI",
+  "publicCommit": "7c624d50379341283f468db8f3413d74f70bf4fa",
+  "treeSha": "84413dd18e4c2982c8585cce2b445683685b2453",
+  "runId": 39176723245,
+  "jobId": 117820808071,
+  "jobConclusion": "success",
+  "runUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39176723245",
+  "coreJobStatusAtCapture": "in_progress",
+  "completeComposeReport": {
+    "schemaVersion": 1,
+    "taskId": "NATIVE-01A",
+    "passed": true,
+    "startedAt": "2026-10-18T23:29:27.118Z",
+    "sourceProject": "omos-compose-verify-3f5cf3f8602987a3",
+    "restoreProject": "omos-compose-verify-3f5cf3f8602987a3-restore",
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "checks": {
+      "generatedProjectPrivateEnvAndVolumeIsolation": true,
+      "allNineLongRunningServices": true,
+      "health": true,
+      "auth": true,
+      "tenantIsolation": true,
+      "range": true,
+      "realRender": true,
+      "idempotency": true,
+      "noKeyFailure": true,
+      "emailSubmission": true,
+      "realSmtpDelivery": true,
+      "originalSourceVolumesRemoved": true,
+      "objectsRestored": 5,
+      "allObjectBytesAndMetadataMatch": true,
+      "nativeDatabaseRestore": true,
+      "privateMediaRestore": true,
+      "recordCountsMatch": true,
+      "originalAndRenderedBytesMatch": true,
+      "tenantAndAnonymousIsolationAfterRestore": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "steps": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 553
+      },
+      {
+        "name": "build application images",
+        "passed": true,
+        "durationMs": 78584
+      },
+      {
+        "name": "build official pinned MinIO release",
+        "passed": true,
+        "durationMs": 96932
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 17970
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 2143
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 48
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 1913
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 779
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 8042
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 307
+      }
+    ],
+    "verificationMode": "complete-compose-native-restore",
+    "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-0000 MinIO, Inc.",
+    "databaseDump": {
+      "bytes": 120978,
+      "sha256": "b7d2908604635a5e5de57d88b364b75dfac20d55ee1ccf5186ca28f7608a544f"
+    },
+    "objectBackup": {
+      "objects": 5,
+      "bytes": 25947,
+      "sha256": "c0b889f3da434027516de69d59a1b86fd61a806a2116e6586bafc51bf72b1750"
+    },
+    "completedAt": "2026-10-18T23:32:56.332Z"
+  },
+  "decodedJobLogSha256": "e4c98ee57092d40050470d10a87ed0116c6238f568b426e2ae1f18930ab8f519",
+  "artifact": {
+    "id": 12154633176,
+    "name": "compose-evidence",
+    "sizeInBytes": 1297,
+    "digest": "sha256:61ab32c1567f11ef18be016f33ae8736e9029202ae7cec061b010561f4f34337",
+    "independentArtifactByteInspection": false
+  },
+  "followup": "Inherited shell interpolation isolation is locally hardened and re-tested. Correct release copyright/short-commit metadata are added. The newer source must pass both exact-source core and Compose CI jobs; this receipt does not claim future results."
+}

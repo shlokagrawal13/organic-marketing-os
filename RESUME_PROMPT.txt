@@ -1,3 +1,11 @@
+## NATIVE-01A initial Compose CI and isolation follow-up — 2026-10-19 IST
+
+Initial published source `7c624d5` passed the complete disposable Compose/native-restore job `117820808071` in run `39176723245`: all nine persistent services, real render, real fixture SMTP, source volumes deleted before restore, native PostgreSQL and five private objects restored into a different project, matching record counts/rows and media hashes, tenant/anonymous isolation and cleanup. The local full-Compose network block remains distinct from this independent CI execution.
+
+The follow-up removes inherited shell database/S3/Compose variables before fixture interpolation; four safety regressions and actual configuration with conflicting dummy parent secrets pass. MinIO release copyright/short-commit build metadata is corrected. These newer changes require BOTH core and Compose jobs on their own exact published commit; read latest Git/Actions. Initial core CI was still running at this receipt's capture, so no whole-run/final-source green claim is made here. Details: `docs/qa/native01a-initial-compose-ci-evidence.json` and `docs/COMPOSE_NATIVE_VERIFICATION.md`.
+
+After exact-source CI, next is RECOVERY-01 interruption/upgrade/PITR and wider recovery audit. Quiesced synthetic restore does not close live/deployed or full master acceptance. The pipeline verifies and does not deploy.
+
 ## Current continuation — NATIVE-01A, 2026-10-19 IST
 
 Disposable full-Compose/native-restore verification is implemented. The verifier builds actual migration/runtime/MinIO images; starts all nine persistent services; checks auth, tenant isolation, private upload/range, real FFmpeg render, idempotency, no-key failure and Mailpit delivery; removes the source fixture volumes; then restores a native PostgreSQL dump and checksummed private objects into a different stack and verifies records/media/access through the app.

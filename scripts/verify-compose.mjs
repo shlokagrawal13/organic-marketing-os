@@ -11,6 +11,7 @@ import {
   assertFixtureConfig,
   checksum,
   redact,
+  fixtureDockerEnv,
 } from "./compose-verification.mjs";
 if (process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
@@ -24,15 +25,7 @@ const dir = resolve(root, ".local", "compose-verification", suffix);
 mkdirSync(dir, { recursive: true, mode: 0o700 });
 const realEnv = resolve(root, ".env"),
   beforeEnv = existsSync(realEnv) ? checksum(readFileSync(realEnv)) : null;
-const dockerEnv = { ...process.env };
-for (const key of [
-  "DOCKER_HOST",
-  "DOCKER_CONTEXT",
-  "DOCKER_TLS",
-  "DOCKER_TLS_VERIFY",
-  "DOCKER_CERT_PATH",
-])
-  delete dockerEnv[key];
+const dockerEnv = fixtureDockerEnv(process.env);
 const dockerBase = ["--host=unix:///var/run/docker.sock"];
 const secrets = [
   randomBytes(32).toString("hex"),

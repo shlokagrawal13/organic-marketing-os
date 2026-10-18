@@ -5,6 +5,7 @@ import {
   assertFixtureProject,
   assertFixtureConfig,
   redact,
+  fixtureDockerEnv,
 } from "../scripts/compose-verification.mjs";
 const project = fixtureProject("0123456789abcdef"),
   envPath = "/fixture/private.env";
@@ -51,6 +52,23 @@ test("Compose fixture rejects populated volumes, bind mounts and external networ
   }
 });
 test("Compose fixture rejects real env files and publicly bound ports", () => {
+  const parent = {
+    POSTGRES_PASSWORD: "parent-db",
+    S3_ACCESS_KEY: "parent-s3",
+    S3_SECRET_KEY: "parent-secret",
+    DOCKER_HOST: "tcp://existing",
+    COMPOSE_ENV_FILES: "/real/.env",
+    COMPOSE_FILE: "/real/compose.yaml",
+    COMPOSE_PROFILES: "real",
+    COMPOSE_PROJECT_NAME: "real",
+    HTTP_PROXY: "configured-proxy",
+    PATH: "configured-path",
+  };
+  assert.deepEqual(fixtureDockerEnv(parent), {
+    HTTP_PROXY: "configured-proxy",
+    PATH: "configured-path",
+  });
+  assert.equal(parent.POSTGRES_PASSWORD, "parent-db");
   for (const mutation of [
     (c) => (c.services.api.env_file = ["/project/.env"]),
     (c) => (c.services.api.ports[0].host_ip = "0.0.0.0"),

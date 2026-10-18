@@ -1,3 +1,7 @@
+## NATIVE-01A initial complete fixture acceptance — 2026-10-19 IST
+
+Initial source `7c624d5` passed complete Compose/native cross-store job `117820808071` (run `39176723245`): source volumes removed; native DB/five private objects restored and app records/media/access/cleanup verified. Follow-up removes inherited shell fixture overrides and corrects MinIO release metadata; four guard tests and actual conflicting-parent configuration passed. Read newer exact-source BOTH jobs before final acceptance. Core job was still running at capture. Wider interrupted restore/upgrade, PITR and full live/master acceptance remain open. See `docs/qa/native01a-initial-compose-ci-evidence.json`.
+
 ## NATIVE-01A Compose/native restore — 2026-10-19 IST
 
 Added an isolated full-stack verifier, pinned-source MinIO build, optional trusted build-CA secret and a separate verification-only CI job. Local application images, four ownership/env/port/redaction tests and actual Compose configuration passed. Full local MinIO is network-blocked; exact published CI must prove all services, real media/SMTP and separate native PostgreSQL/private-object restore after deleting source fixture volumes. Require full-mode sanitized report and every core/Compose CI step. Quiesced fixtures do not close interrupted upgrades/restores, PITR, live/deployed acceptance or the full master. See `docs/COMPOSE_NATIVE_VERIFICATION.md` and `docs/qa/native01a-evidence.json`.

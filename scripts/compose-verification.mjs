@@ -1,5 +1,27 @@
 import { randomBytes, createHash } from "node:crypto";
 
+export function fixtureDockerEnv(parent) {
+  const env = { ...parent };
+  // Shell variables override --env-file interpolation. Never let inherited
+  // development/production credentials replace the generated fixture secrets.
+  for (const key of [
+    "DOCKER_HOST",
+    "DOCKER_CONTEXT",
+    "DOCKER_TLS",
+    "DOCKER_TLS_VERIFY",
+    "DOCKER_CERT_PATH",
+    "POSTGRES_PASSWORD",
+    "S3_ACCESS_KEY",
+    "S3_SECRET_KEY",
+    "COMPOSE_FILE",
+    "COMPOSE_ENV_FILES",
+    "COMPOSE_PROFILES",
+    "COMPOSE_PROJECT_NAME",
+  ])
+    delete env[key];
+  return env;
+}
+
 export function fixtureProject(
   suffix = randomBytes(8).toString("hex"),
   restored = false,

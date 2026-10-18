@@ -10,9 +10,9 @@
       "schemaVersion": 1,
       "taskId": "NATIVE-01A",
       "passed": true,
-      "startedAt": "2026-10-18T23:27:28.351Z",
-      "sourceProject": "omos-compose-verify-aacbc3ae44b1c8d6",
-      "restoreProject": "omos-compose-verify-aacbc3ae44b1c8d6-restore",
+      "startedAt": "2026-10-18T23:31:10.711Z",
+      "sourceProject": "omos-compose-verify-e0c71ebfe7a47018",
+      "restoreProject": "omos-compose-verify-e0c71ebfe7a47018-restore",
       "liveProvidersCalled": false,
       "publicDeployment": false,
       "checks": {
@@ -23,11 +23,11 @@
         {
           "name": "isolated configuration",
           "passed": true,
-          "durationMs": 174
+          "durationMs": 431
         }
       ],
       "verificationMode": "configuration-only",
-      "completedAt": "2026-10-18T23:27:28.526Z"
+      "completedAt": "2026-10-18T23:31:11.145Z"
     },
     "applicationBuildImage": "sha256:ca899b677558919ffc8663c2b5139b0baca7437ada966db41a38bf104c043e5b",
     "applicationRuntimeImage": "sha256:476201cf3b2e4ca0e47753ea59760aab27ad1853a57c87ee523894fc5acd9954",
@@ -60,5 +60,17 @@
     "Synthetic isolated development stack only; no deployment, live AI/social/billing acceptance or populated user services touched.",
     "Quiesced complete-database and private-object restore is distinct from PITR, interrupted upgrade/restore and in-flight queue recovery. Those wider RECOVERY-01 cases remain open.",
     "Full master acceptance remains open."
-  ]
+  ],
+  "priorSourceCompleteComposeCi": "docs/qa/native01a-initial-compose-ci-evidence.json",
+  "fixtureIsolationFollowup": {
+    "changedBehavior": "Drop inherited POSTGRES_PASSWORD/S3 and Compose selection variables before CLI interpolation; preserve configured proxy/path and original parent environment.",
+    "tests": "Four focused fixture tests passed again, including inherited-variable non-mutation/isolation; actual Compose configuration passed with deliberately conflicting dummy parent secrets.",
+    "changedPaths": [
+      "scripts/compose-verification.mjs",
+      "scripts/verify-compose.mjs",
+      "tests/compose-verification.test.ts",
+      "Dockerfile.minio"
+    ],
+    "minioBuildMetadata": "Set official release copyright 2025 and short commit in addition to full release/version/commit."
+  }
 }

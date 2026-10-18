@@ -73,7 +73,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "NATIVE-01A local app images/config verified; read exact-source BOTH CI jobs for complete acceptance",
+  "latestIncrement": "NATIVE-01A initial complete Compose/native restore CI passed; inherited-shell isolation follow-up locally verified; read own exact-source BOTH CI jobs.",
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
     "policyVersion": "youtube-upload-policy-2026-10-17",
@@ -12987,9 +12987,9 @@
         "schemaVersion": 1,
         "taskId": "NATIVE-01A",
         "passed": true,
-        "startedAt": "2026-10-18T23:27:28.351Z",
-        "sourceProject": "omos-compose-verify-aacbc3ae44b1c8d6",
-        "restoreProject": "omos-compose-verify-aacbc3ae44b1c8d6-restore",
+        "startedAt": "2026-10-18T23:31:10.711Z",
+        "sourceProject": "omos-compose-verify-e0c71ebfe7a47018",
+        "restoreProject": "omos-compose-verify-e0c71ebfe7a47018-restore",
         "liveProvidersCalled": false,
         "publicDeployment": false,
         "checks": {
@@ -13000,11 +13000,11 @@
           {
             "name": "isolated configuration",
             "passed": true,
-            "durationMs": 174
+            "durationMs": 431
           }
         ],
         "verificationMode": "configuration-only",
-        "completedAt": "2026-10-18T23:27:28.526Z"
+        "completedAt": "2026-10-18T23:31:11.145Z"
       },
       "applicationBuildImage": "sha256:ca899b677558919ffc8663c2b5139b0baca7437ada966db41a38bf104c043e5b",
       "applicationRuntimeImage": "sha256:476201cf3b2e4ca0e47753ea59760aab27ad1853a57c87ee523894fc5acd9954",
@@ -13037,7 +13037,19 @@
       "Synthetic isolated development stack only; no deployment, live AI/social/billing acceptance or populated user services touched.",
       "Quiesced complete-database and private-object restore is distinct from PITR, interrupted upgrade/restore and in-flight queue recovery. Those wider RECOVERY-01 cases remain open.",
       "Full master acceptance remains open."
-    ]
+    ],
+    "priorSourceCompleteComposeCi": "docs/qa/native01a-initial-compose-ci-evidence.json",
+    "fixtureIsolationFollowup": {
+      "changedBehavior": "Drop inherited POSTGRES_PASSWORD/S3 and Compose selection variables before CLI interpolation; preserve configured proxy/path and original parent environment.",
+      "tests": "Four focused fixture tests passed again, including inherited-variable non-mutation/isolation; actual Compose configuration passed with deliberately conflicting dummy parent secrets.",
+      "changedPaths": [
+        "scripts/compose-verification.mjs",
+        "scripts/verify-compose.mjs",
+        "tests/compose-verification.test.ts",
+        "Dockerfile.minio"
+      ],
+      "minioBuildMetadata": "Set official release copyright 2025 and short commit in addition to full release/version/commit."
+    }
   },
   "latestResearch01INativeCi": {
     "schemaVersion": 1,
@@ -13179,5 +13191,123 @@
       "Missing counter-signals mean not recorded, not verified absence of contrary evidence. No live source collection or trend measurement occurred.",
       "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
     ]
+  },
+  "latestNative01AInitialComposeCi": {
+    "schemaVersion": 1,
+    "taskId": "NATIVE-01A",
+    "status": "completed_initial_source_Compose_job_only_current_followup_requires_own_full_CI",
+    "publicCommit": "7c624d50379341283f468db8f3413d74f70bf4fa",
+    "treeSha": "84413dd18e4c2982c8585cce2b445683685b2453",
+    "runId": 39176723245,
+    "jobId": 117820808071,
+    "jobConclusion": "success",
+    "runUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39176723245",
+    "coreJobStatusAtCapture": "in_progress",
+    "completeComposeReport": {
+      "schemaVersion": 1,
+      "taskId": "NATIVE-01A",
+      "passed": true,
+      "startedAt": "2026-10-18T23:29:27.118Z",
+      "sourceProject": "omos-compose-verify-3f5cf3f8602987a3",
+      "restoreProject": "omos-compose-verify-3f5cf3f8602987a3-restore",
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "checks": {
+        "generatedProjectPrivateEnvAndVolumeIsolation": true,
+        "allNineLongRunningServices": true,
+        "health": true,
+        "auth": true,
+        "tenantIsolation": true,
+        "range": true,
+        "realRender": true,
+        "idempotency": true,
+        "noKeyFailure": true,
+        "emailSubmission": true,
+        "realSmtpDelivery": true,
+        "originalSourceVolumesRemoved": true,
+        "objectsRestored": 5,
+        "allObjectBytesAndMetadataMatch": true,
+        "nativeDatabaseRestore": true,
+        "privateMediaRestore": true,
+        "recordCountsMatch": true,
+        "originalAndRenderedBytesMatch": true,
+        "tenantAndAnonymousIsolationAfterRestore": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "steps": [
+        {
+          "name": "isolated configuration",
+          "passed": true,
+          "durationMs": 553
+        },
+        {
+          "name": "build application images",
+          "passed": true,
+          "durationMs": 78584
+        },
+        {
+          "name": "build official pinned MinIO release",
+          "passed": true,
+          "durationMs": 96932
+        },
+        {
+          "name": "complete Compose startup",
+          "passed": true,
+          "durationMs": 17970
+        },
+        {
+          "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+          "passed": true,
+          "durationMs": 2143
+        },
+        {
+          "name": "real SMTP delivery",
+          "passed": true,
+          "durationMs": 48
+        },
+        {
+          "name": "quiesced native database and private-object backup",
+          "passed": true,
+          "durationMs": 1913
+        },
+        {
+          "name": "remove original disposable source targets",
+          "passed": true,
+          "durationMs": 779
+        },
+        {
+          "name": "restore into separate PostgreSQL and MinIO targets",
+          "passed": true,
+          "durationMs": 8042
+        },
+        {
+          "name": "restored records/media/tenant access through actual application",
+          "passed": true,
+          "durationMs": 307
+        }
+      ],
+      "verificationMode": "complete-compose-native-restore",
+      "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-0000 MinIO, Inc.",
+      "databaseDump": {
+        "bytes": 120978,
+        "sha256": "b7d2908604635a5e5de57d88b364b75dfac20d55ee1ccf5186ca28f7608a544f"
+      },
+      "objectBackup": {
+        "objects": 5,
+        "bytes": 25947,
+        "sha256": "c0b889f3da434027516de69d59a1b86fd61a806a2116e6586bafc51bf72b1750"
+      },
+      "completedAt": "2026-10-18T23:32:56.332Z"
+    },
+    "decodedJobLogSha256": "e4c98ee57092d40050470d10a87ed0116c6238f568b426e2ae1f18930ab8f519",
+    "artifact": {
+      "id": 12154633176,
+      "name": "compose-evidence",
+      "sizeInBytes": 1297,
+      "digest": "sha256:61ab32c1567f11ef18be016f33ae8736e9029202ae7cec061b010561f4f34337",
+      "independentArtifactByteInspection": false
+    },
+    "followup": "Inherited shell interpolation isolation is locally hardened and re-tested. Correct release copyright/short-commit metadata are added. The newer source must pass both exact-source core and Compose CI jobs; this receipt does not claim future results."
   }
 }
