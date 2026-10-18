@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@playwright/test";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { actor, db } from "../support/http";
-import { competitorInsight, searchInsight, audienceInsight, communityInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight } from "../support/research-insight";
 
 const orgs: string[] = [], users: string[] = [];
 const headers = { "X-Requested-With": "MarketingOS" };
@@ -37,7 +37,7 @@ async function setup(page: Page, role: Parameters<typeof actor>[1] = "OWNER") {
   return { org, user, path, open, panel: page.getByRole("region", { name: "Research detail" }) };
 }
 
-async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByRole"]>, kind: "COMPETITOR" | "SEARCH" | "AUDIENCE" | "COMMUNITY") {
+async function fillInsightObservation(page: Page, panel: ReturnType<Page["getByRole"]>, kind: "COMPETITOR" | "SEARCH" | "AUDIENCE" | "COMMUNITY" | "SEASONAL") {
   await page.getByRole("button", { name: "Add research", exact: true }).click();
   await panel.getByLabel("Research title").fill(`Synthetic ${kind.toLowerCase()} analysis`);
   await panel.getByLabel("Research category").selectOption(kind);
@@ -448,4 +448,56 @@ test("a bounded unreviewed window explains missing evidence without exposing omi
   await expect(context.getByRole("link")).toHaveCount(0);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: "test-results/research-coverage-window.png", fullPage: true, animations: "disabled" });
+});
+
+
+test("seasonal insight keeps unknown timing explicit, validates declared dates and freezes calendar context in strategy history", async ({ page }) => {
+  const { org, user, path, open, panel } = await setup(page);
+  await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic calendar brand", audience: "Synthetic audience" }, creativeDna: {} } });
+  await open();await fillInsightObservation(page, panel, "SEASONAL");
+  await panel.getByRole("checkbox", { name: "Add structured seasonal insight" }).check();const insight = seasonalInsight();
+  await expect(panel.getByLabel("Declared start date", { exact: true })).toBeDisabled();
+  for (const [name, value] of [["Event / occasion", insight.eventName], ["Cultural / market context", insight.culturalContext], ["Business relevance", insight.businessRelevance],
+    ["Proposed calendar opportunity", insight.proposedOpportunity], ["Assumptions and limits", insight.assumptions]]) await panel.getByLabel(name, { exact: true }).fill(value);
+  await panel.getByLabel("Date certainty", { exact: true }).selectOption("DECLARED");
+  await panel.getByLabel("Declared start date", { exact: true }).fill("2099-01-02");await panel.getByLabel("Declared end date", { exact: true }).fill("2099-01-01");
+  await panel.getByRole("checkbox", { name: sourceAck }).check();await expect(panel.getByRole("button", { name: "Save research", exact: true })).toBeDisabled();
+  await panel.getByLabel("Declared end date", { exact: true }).fill("2099-01-03");await panel.getByLabel("Event time zone (IANA; blank if unknown)", { exact: true }).fill("Invalid/Zone");
+  await panel.getByRole("checkbox", { name: sourceAck }).check();await expect(panel.getByRole("button", { name: "Save research", exact: true })).toBeDisabled();
+  await panel.getByLabel("Event time zone (IANA; blank if unknown)", { exact: true }).fill("");await panel.getByLabel("Date certainty", { exact: true }).selectOption("UNKNOWN");
+  await expect(panel.getByLabel("Declared start date", { exact: true })).toHaveValue("");await expect(panel.getByRole("checkbox", { name: sourceAck })).not.toBeChecked();
+  await panel.getByRole("checkbox", { name: sourceAck }).check();await panel.getByRole("button", { name: "Save research", exact: true }).click();
+  const view=panel.getByRole("region", { name: "Structured research insight" });await expect(view.getByRole("heading", { name: "Seasonal insight", exact: true })).toBeVisible();
+  await expect(view.getByText("Unknown", { exact: true })).toHaveCount(3);
+  const record=(await user.call(path)).body.items[0];expect(record.insight).toEqual(insight);
+  await panel.getByLabel("Review note", { exact: true }).fill("Reviewed synthetic calendar source; timing still unknown.");
+  await panel.getByRole("checkbox", { name: reviewAck }).check();await panel.getByRole("button", { name: "Accept evidence", exact: true }).click();
+  await expect(panel.getByText("Evidence accepted and current", { exact: true })).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0,0));await page.screenshot({ path: "test-results/seasonal-insight-desktop.png", fullPage: true, animations: "disabled" });
+  await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
+  await page.getByLabel("Generation type").selectOption("strategy");await page.getByLabel("What would you like to create?").fill("Synthetic calendar strategy with unknown event timing");
+  await page.getByRole("button", { name: "Generate", exact: true }).click();const context=page.getByRole("region", { name: "Strategy research context", exact: true });
+  await expect(context.getByRole("button", { name: "View research sources" })).toBeEnabled({ timeout: 30000 });await context.getByRole("button", { name: "View research sources" }).click();
+  await expect(context).toContainText(insight.assumptions);await expect(context.getByText("Unknown", { exact: true })).toHaveCount(3);
+  expect((await user.call(`${path}/${record.id}`, "PUT", { ...evidence(record.title), category: "SEASONAL", expectedRevision: 2,
+    insight: { ...insight, eventName: "Later synthetic occasion", dateStatus: "DECLARED", startDate: "2099-01-01", endDate: "2099-01-02", timeZone: "Asia/Kolkata" } })).status).toBe(200);
+  await context.getByRole("button", { name: "View research sources" }).click();await expect(context).toContainText(insight.eventName);await expect(context).not.toContainText("Later synthetic occasion");
+  await page.setViewportSize({ width: 390, height: 844 });await expect.poll(() => page.locator(".sidebar").evaluate(el => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: "test-results/seasonal-insight-history-mobile.png", fullPage: true, animations: "disabled" });
+});
+
+test("an ended declared seasonal window stays unavailable for acceptance in dark and mobile research views", async ({ page }) => {
+  const { user, path, open, panel } = await setup(page);
+  const insight={ ...seasonalInsight(), dateStatus: "DECLARED", startDate: "2000-01-01", endDate: "2000-01-02", timeZone: "Asia/Kolkata" };
+  expect((await user.call(path, "POST", { ...evidence("Synthetic ended event"), category: "SEASONAL", insight })).status).toBe(201);
+  await open();await page.getByRole("button", { name: /Synthetic ended event/ }).click();
+  await expect(panel).toContainText("The declared event window has ended in its named time zone");
+  await panel.getByLabel("Review note", { exact: true }).fill("Synthetic source checked; event has ended.");await panel.getByRole("checkbox", { name: reviewAck }).check();
+  await expect(panel.getByRole("button", { name: "Accept evidence", exact: true })).toBeDisabled();
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();await page.evaluate(() => window.scrollTo(0,0));
+  await page.screenshot({ path: "test-results/seasonal-insight-ended-dark.png", fullPage: true, animations: "disabled" });
+  await page.setViewportSize({ width: 390, height: 844 });await expect.poll(() => page.locator(".sidebar").evaluate(el => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: "test-results/seasonal-insight-ended-mobile.png", fullPage: true, animations: "disabled" });
 });

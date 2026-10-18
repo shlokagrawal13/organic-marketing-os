@@ -225,7 +225,7 @@ export class ResearchController {
         researchEvidenceState(current, now).freshness !== "CURRENT"
       )
         throw new BadRequestException(
-          "Acceptance requires a complete citation and an observation less than 30 days old, without expired classification.",
+          "Acceptance requires a complete citation and an observation less than 30 days old, without expired classification or an ended declared event window.",
         );
       if (input.decision === "ACCEPTED") {
         try { parseResearchInsight(current.insight, current.category); }

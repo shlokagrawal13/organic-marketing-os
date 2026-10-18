@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01H, 2026-10-19 IST
+
+Optional seasonal/calendar interpretations are locally verified: manual event classification, cultural context, business relevance, proposed opportunity and assumptions; explicit unknown dates/zone or declared inclusive local date window. Impossible/reversed dates and invalid named zones are rejected. Ended declared windows withdraw evidence at capture, execution and provider boundary without rewriting history. Unknown timing remains a research hypothesis requiring confirmation before scheduling.
+
+Fresh local verification: API/web builds; 260 unit/export, 37 native HTTP, 26 production browser and 5 recovery cases; 24 fresh migrations; 44 readability samples; populated mixed-insight/unknown-and-declared-calendar/empty-list/legacy/selection/coverage/reference archive restore; both audits with zero vulnerabilities. All 25 protected master/migration hashes are unchanged; no migration, dependency or pipeline changes.
+
+This checkpoint records local verification. Read latest Git/Actions for its standing-authorized source publication and own exact-commit CI. Predecessor main `324f1fe` passed run `39156593160` (254/36/24/5); its native receipt is retained in `docs/qa/research01g-native-ci-evidence.json`.
+
+RESEARCH-01 remains Partial. Event classification is not verified holiday/recurrence/custom or measured demand. No automatic calendar ingestion or scheduling occurred. Live provider/deployed acceptance, factual/semantic quality, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+Next: finish/read exact-source publication and CI, fixing any failure; then RESEARCH-01I bounded industry/trend opportunity audit from master sections 18–19, preserving temporal distinctions, manual provenance, selection, coverage and assumptions.
+
+Evidence: `docs/SEASONAL_CALENDAR_INSIGHTS.md`, `docs/qa/research01h-evidence.json` and `docs/qa/research01h-unit-receipts.json`. Earlier entries retain their historical scopes.
+
 ## Current continuation — RESEARCH-01G, 2026-10-19 IST
 
 Optional audience/community interpretations are locally verified. Audience scope and observed need retain optional interests/questions/pain-points as explicit empty lists when missing; community context, declared signal, observed theme and proposed content test retain assumptions. The actual provider and research/audience/community agent traces use the same frozen source context. Review, revision, tenant, expiry, latest-100, 10-source and 24,000-byte gates remain enforced.

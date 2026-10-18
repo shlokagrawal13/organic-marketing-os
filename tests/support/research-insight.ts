@@ -14,3 +14,8 @@ export const audienceInsight = () => ({ kind: "AUDIENCE" as const, segment: "Syn
 export const communityInsight = () => ({ kind: "COMMUNITY" as const, channelContext: "Synthetic public discussion",
   signal: "OBJECTION" as const, topic: "Synthetic setup effort", observation: "Synthetic source raised an objection about setup effort",
   proposedResponse: "Test an original explanation of setup steps and limits", assumptions: "Synthetic fixture; no verified frequency, sentiment or individual profile." });
+
+export const seasonalInsight = () => ({ kind: "SEASONAL" as const, eventName: "Synthetic business event", eventType: "BUSINESS_EVENT" as const,
+  dateStatus: "UNKNOWN" as const, startDate: "", endDate: "", timeZone: "",
+  culturalContext: "Synthetic local context; customs are not verified.", businessRelevance: "Test relevance to the synthetic business.",
+  proposedOpportunity: "Test an original event-related explanation after confirming timing.", assumptions: "Synthetic fixture; dates, zone, demand and cultural relevance are unverified." });

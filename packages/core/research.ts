@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { canonicalEvidenceSourceUrl } from "./evidence-source";
-import { parseResearchInsight, researchInsightSchema } from "./research-insight";
+import { parseResearchInsight, researchInsightSchema, seasonalWindowElapsed } from "./research-insight";
 
 export const researchMaximumAgeDays = 30;
 export const researchMaximumAgeMs = researchMaximumAgeDays * 86400000;
@@ -62,6 +62,8 @@ export function parseResearchInput(
 }
 
 type EvidenceState = {
+  category?: string;
+  insight?: unknown;
   sourceUrl: string | null;
   sourceLabel: string | null;
   observedAt: string | Date | null;
@@ -108,12 +110,22 @@ export function researchEvidenceState(record: EvidenceState, now = new Date()) {
     freshnessReason =
       "The declared observation is less than 30 days old; source reachability and accuracy are not verified.";
   }
+  let calendarUnavailable = false;
+  if (record.category === "SEASONAL" && record.insight != null) {
+    try {
+      if (seasonalWindowElapsed(record.insight, now)) {
+        calendarUnavailable = true;
+        if (freshness === "CURRENT") freshness = "STALE";
+        freshnessReason = "The declared event window has ended in its named time zone; review cannot renew it.";
+      }
+    } catch { calendarUnavailable = true; }
+  }
   return {
     freshness,
     freshnessReason,
     expiresAt,
     eligibleForStrategy:
-      freshness === "CURRENT" &&
+      !calendarUnavailable && freshness === "CURRENT" &&
       record.reviewStatus === "ACCEPTED" &&
       record.temporalScope !== "HISTORICAL" &&
       record.temporalScope !== "EXPIRED",

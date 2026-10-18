@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { BookOpen, ExternalLink, Plus } from "lucide-react";
 import { api } from "./api-client";
-import { parseResearchInsight, ResearchInsight } from "../../../packages/core/research-insight";
+import { parseResearchInsight, ResearchInsight, seasonalWindowElapsed } from "../../../packages/core/research-insight";
 import { ResearchInsightEditor, ResearchInsightView } from "./research-insight";
 
 type Category = "INDUSTRY" | "AUDIENCE" | "COMPETITOR" | "SEARCH" | "SEASONAL" | "COMMUNITY";
@@ -36,6 +36,12 @@ function currentEvidence(item: ResearchRecord, now: number): ResearchRecord {
   if (item.freshness === "CURRENT" && item.expiresAt && new Date(item.expiresAt).getTime() <= now) {
     return { ...item, freshness: "STALE", eligibleForStrategy: false,
       freshnessReason: "The 30-day observation window has ended. Reload or update the evidence before accepting it." };
+  }
+  if (item.category === "SEASONAL" && item.insight) {
+    try {
+      if (seasonalWindowElapsed(item.insight, new Date(now))) return { ...item, freshness: "STALE", eligibleForStrategy: false,
+        freshnessReason: "The declared event window has ended in its named time zone; review cannot renew it." };
+    } catch { return { ...item, eligibleForStrategy: false, insightIssue: "Correct the structured calendar insight before using this evidence." }; }
   }
   return item;
 }
@@ -169,7 +175,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
   }
   if (draft?.insight) {
     try { parseResearchInsight(draft.insight, draft.category); }
-    catch { validation = "Complete required insight fields within their limits; structured insights must fit within 6,000 UTF-8 bytes."; }
+    catch { validation = "Complete required insight fields and valid ordered calendar dates/IANA time zone within their limits; structured insights must fit within 6,000 UTF-8 bytes."; }
   }
   const unchanged = !!draft && !creating && !!selected && JSON.stringify({ ...draft, authorizedSource: false }) === JSON.stringify(draftFrom(selected));
   async function save(event: FormEvent) {

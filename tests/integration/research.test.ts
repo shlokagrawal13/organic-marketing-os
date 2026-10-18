@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 import { createRequire } from "node:module";
 import { db, actor, base } from "../support/http";
 import { researchMaximumAgeMs } from "../../packages/core/research";
-import { competitorInsight, searchInsight, audienceInsight, communityInsight } from "../support/research-insight";
+import { competitorInsight, searchInsight, audienceInsight, communityInsight, seasonalInsight } from "../support/research-insight";
 
 const orgs: string[] = [],
   users: string[] = [];
@@ -49,7 +49,7 @@ after(async () => {
 
 test("structured research HTTP persists all supported insight kinds, rejects invalid input and invalidates review on insight-only edits", async () => {
   const w = await workspace("Structured insight fixture");
-  for (const insight of [competitorInsight(), searchInsight(), audienceInsight(), communityInsight()]) {
+  for (const insight of [competitorInsight(), searchInsight(), audienceInsight(), communityInsight(), seasonalInsight()]) {
     const payload = { ...input(), category: insight.kind, insight };
     const created = await w.owner.call(w.path, "POST", payload);
     assert.equal(created.status, 201); assert.deepEqual(created.body.insight, insight);
@@ -467,4 +467,22 @@ test("research list is bounded deterministically and workspace export includes t
   );
   assert.equal(records.at(-1).data.counts.research, 101);
   assert.ok(!research.some(({ data }) => data.id === created.body.id));
+});
+
+
+test("seasonal HTTP validates actual dates and zones, preserves unknown timing and refuses to accept an ended event", async () => {
+  const w = await workspace("Seasonal timing fixture");
+  const payload = { ...input(), category: "SEASONAL", insight: seasonalInsight() };
+  for (const change of [{ dateStatus: "DECLARED", startDate: "2026-02-30", endDate: "2026-02-30" },
+    { timeZone: "Invalid/Zone" }, { startDate: "2099-01-01" }, { dateStatus: "DECLARED", startDate: "2099-01-02", endDate: "2099-01-01" }])
+    assert.equal((await w.owner.call(w.path, "POST", { ...payload, insight: { ...payload.insight, ...change } })).status, 400);
+  const created = await w.owner.call(w.path, "POST", payload);assert.equal(created.status, 201);
+  const path = `${w.path}/${created.body.id}`;
+  assert.equal((await w.owner.call(path + "/review", "POST", review(1))).body.eligibleForStrategy, true);
+  const ended = { ...payload.insight, dateStatus: "DECLARED", startDate: "2000-01-01", endDate: "2000-01-02", timeZone: "Asia/Kolkata" };
+  const edited = await w.owner.call(path, "PUT", { ...payload, insight: ended, expectedRevision: 2 });
+  assert.equal(edited.status, 200);assert.equal(edited.body.reviewStatus, "UNREVIEWED");assert.equal(edited.body.freshness, "STALE");
+  assert.match(edited.body.freshnessReason, /declared event window has ended/);
+  assert.equal((await w.owner.call(path + "/review", "POST", review(3))).status, 400);
+  assert.equal((await w.owner.call(path)).body.eligibleForStrategy, false);
 });

@@ -1,7 +1,8 @@
 "use client";
-import { parseResearchInsight, ResearchInsight, searchIntents, communitySignals, insightCategories } from "../../../packages/core/research-insight";
+import { parseResearchInsight, ResearchInsight, searchIntents, communitySignals, insightCategories, calendarEventTypes, calendarDateStatuses } from "../../../packages/core/research-insight";
 
 const labels: Record<string, string> = {
+  eventName: "Event / occasion", eventType: "Event type", dateStatus: "Date certainty", startDate: "Declared start date", endDate: "Declared end date", timeZone: "Event time zone (IANA; blank if unknown)", culturalContext: "Cultural / market context", businessRelevance: "Business relevance", proposedOpportunity: "Proposed calendar opportunity",
   subject: "Competitor / subject", contentTheme: "Observed content theme", format: "Observed format",
   positioning: "Observed positioning", opportunity: "Proposed opportunity", differentiation: "How we will differentiate",
   query: "Search query / topic", intent: "Proposed search intent", keywords: "Candidate keywords",
@@ -10,7 +11,7 @@ const labels: Record<string, string> = {
   painPoints: "Observed pain points", proposedResponse: "Proposed response / content test",
   channelContext: "Community context", signal: "Community signal", topic: "Observed topic", observation: "Observed interaction theme",
 };
-const maximums: Record<string, number> = { subject: 160, contentTheme: 300, format: 120, positioning: 500,
+const maximums: Record<string, number> = { eventName: 160, timeZone: 100, startDate: 10, endDate: 10, culturalContext: 500, businessRelevance: 500, proposedOpportunity: 500, subject: 160, contentTheme: 300, format: 120, positioning: 500,
   opportunity: 500, differentiation: 500, query: 200, answerAngle: 500, assumptions: 500,
   segment: 160, observedNeed: 500, proposedResponse: 500, channelContext: 160, topic: 200, observation: 500 };
 const lists: Record<string, { count: number; length: number }> = {
@@ -18,6 +19,7 @@ const lists: Record<string, { count: number; length: number }> = {
   interests: { count: 5, length: 160 }, painPoints: { count: 5, length: 200 },
 };
 const guidance: Record<ResearchInsight["kind"], string> = {
+  SEASONAL: "Dates and time zone are manual declarations. Leave unknown timing blank; verify dates, local customs and relevance before scheduling. No recurrence, holiday verification or measured seasonal demand is implied.",
   COMPETITOR: "Identify differentiation without copying competitor content.",
   SEARCH: "Candidate questions and intent are hypotheses; they do not establish search demand or rankings.",
   AUDIENCE: "Describe only this source's observed need. Optional lists can stay empty; do not infer population-wide interests or frequency.",
@@ -26,6 +28,7 @@ const guidance: Record<ResearchInsight["kind"], string> = {
 const displayKind = (kind: string) => kind[0] + kind.slice(1).toLowerCase();
 const fieldLabel = (kind: string, key: string) => kind === "AUDIENCE" && key === "questions" ? "Observed audience questions" : labels[key];
 export function emptyResearchInsight(category: ResearchInsight["kind"]): ResearchInsight {
+  if (category === "SEASONAL") return { kind: category, eventName: "", eventType: "BUSINESS_EVENT", dateStatus: "UNKNOWN", startDate: "", endDate: "", timeZone: "", culturalContext: "", businessRelevance: "", proposedOpportunity: "", assumptions: "" };
   if (category === "AUDIENCE") return { kind: category, segment: "", observedNeed: "", interests: [], questions: [], painPoints: [], proposedResponse: "", assumptions: "" };
   if (category === "COMMUNITY") return { kind: category, channelContext: "", signal: "QUESTION", topic: "", observation: "", proposedResponse: "", assumptions: "" };
   return category === "COMPETITOR" ? { kind: category, subject: "", contentTheme: "", format: "", positioning: "",
@@ -42,11 +45,14 @@ export function ResearchInsightEditor({ category, value, onChange }: {
     <label className="review-ack"><input type="checkbox" checked={!!value} onChange={event => onChange(event.target.checked ? emptyResearchInsight(kind) : null)} />Add structured {kind.toLowerCase()} insight</label>
     <p className="small-copy">Record your interpretation of this source. Keep uncertainty explicit. {guidance[kind]} Changing category clears this optional insight.</p>
     {value && Object.entries(value).filter(([key]) => key !== "kind").map(([key, field]) => {
-      const update = (next: string | string[]) => onChange({ ...value, [key]: next } as ResearchInsight);
-      const name = fieldLabel(value.kind, key), list = lists[key], optional = value.kind === "AUDIENCE" && !!list;
-      const options = key === "intent" ? searchIntents : key === "signal" ? communitySignals : null;
+      const update = (next: string | string[]) => onChange({ ...value, [key]: next,
+        ...(key === "dateStatus" && next === "UNKNOWN" ? { startDate: "", endDate: "" } : {}) } as ResearchInsight);
+      const name = fieldLabel(value.kind, key), list = lists[key], optional = (value.kind === "AUDIENCE" && !!list) || (value.kind === "SEASONAL" && (key === "timeZone" || ((key === "startDate" || key === "endDate") && value.dateStatus === "UNKNOWN")));
+      const options = key === "intent" ? searchIntents : key === "signal" ? communitySignals : key === "eventType" ? calendarEventTypes : key === "dateStatus" ? calendarDateStatuses : null;
       return <label key={key}>{name}{options
         ? <select aria-label={name} value={String(field)} onChange={event => update(event.target.value)}>{options.map(option => <option key={option} value={option}>{displayKind(option).replaceAll("_", " ")}</option>)}</select>
+        : key === "startDate" || key === "endDate"
+        ? <input aria-label={name} type="date" min="0001-01-01" max="9999-12-31" required={!optional} disabled={value.kind === "SEASONAL" && value.dateStatus === "UNKNOWN"} value={String(field)} onChange={event => update(event.target.value)} />
         : <textarea aria-label={name} required={!optional} rows={list ? 3 : 2} maxLength={maximums[key] || (list ? list.count * (list.length + 1) - 1 : 500)}
           value={Array.isArray(field) ? field.join("\n") : field} onChange={event => update(Array.isArray(field) ? (event.target.value === "" ? [] : event.target.value.split("\n")) : event.target.value)} />}
         {list && <small>{optional ? "Optional; leave blank when not observed. " : ""}One per line; {optional ? "0" : "1"}–{list.count} items, at most {list.length} characters each.</small>}
@@ -64,7 +70,7 @@ export function ResearchInsightView({ value, category }: { value: unknown; categ
     <h3>{displayKind(insight.kind)} insight</h3>
     <p className="field-help">Manual analyst interpretation · retain assumptions. {guidance[insight.kind]}</p>
     <dl className="research-facts">{Object.entries(insight).filter(([key]) => key !== "kind").map(([key, field]) => <div key={key}>
-      <dt>{fieldLabel(insight.kind, key)}</dt><dd>{Array.isArray(field) ? field.length ? <ul>{field.map((item, index) => <li key={index}>{item}</li>)}</ul> : "Not recorded" : field}</dd>
+      <dt>{fieldLabel(insight.kind, key)}</dt><dd>{Array.isArray(field) ? field.length ? <ul>{field.map((item, index) => <li key={index}>{item}</li>)}</ul> : "Not recorded" : field || "Unknown"}</dd>
     </div>)}</dl>
   </section>;
 }
