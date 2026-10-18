@@ -44,6 +44,7 @@ import OperationsWorkspace from "./operations-workspace";
 import CreditsWorkspace from "./credits-workspace";
 import SocialConnectionsPanel from "./social-connections-panel";
 import WorkspaceYoutubePolicyPanel from "./workspace-youtube-policy-panel";
+import ResearchWorkspace from "./research-workspace";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -158,6 +159,7 @@ export default function Workspace({
   const [navVersion, setNavVersion] = useState(0),
     [contentDirty, setContentDirty] = useState(false);
   const [policyDirty, setPolicyDirty] = useState(false);
+  const [researchDirty, setResearchDirty] = useState(false);
   const [orgId, setOrgId] = useState(session.memberships[0].organizationId),
     [view, setView] = useState("dashboard"),
     [navOpen, setNavOpen] = useState(false),
@@ -221,14 +223,14 @@ export default function Workspace({
   }, []);
   useEffect(() => {
     function protect(e: BeforeUnloadEvent) {
-      if (dirty || policyDirty) {
+      if (dirty || policyDirty || researchDirty) {
         e.preventDefault();
         e.returnValue = "";
       }
     }
     window.addEventListener("beforeunload", protect);
     return () => window.removeEventListener("beforeunload", protect);
-  }, [dirty, policyDirty]);
+  }, [dirty, policyDirty, researchDirty]);
   useEffect(() => {
     const timer = setInterval(
       () => api("/auth/renew", "POST").catch(() => {}),
@@ -239,8 +241,10 @@ export default function Workspace({
   function go(next: string, discardConfirmed = false) {
     if (!discardConfirmed && contentDirty && !confirm("Discard unsaved content changes?")) return;
     if (!discardConfirmed && policyDirty && !confirm("Discard unsaved YouTube policy changes?")) return;
+    if (!discardConfirmed && researchDirty && !confirm("Discard unsaved research changes?")) return;
     setContentDirty(false);
     setPolicyDirty(false);
+    setResearchDirty(false);
     setNavVersion((v) => v + 1);
     setView(next);
     setNavOpen(false);
@@ -293,6 +297,7 @@ export default function Workspace({
     { id: "dashboard", label: "Command center", icon: LayoutDashboard },
     { id: "brand", label: "Brand Brain", icon: Brain },
     { id: "dna", label: "Creative DNA", icon: Palette },
+    { id: "research", label: "Research", icon: Search },
     { id: "create", label: "Create with AI", icon: Sparkles },
     { id: "content", label: "Content library", icon: FolderOpen },
     { id: "assets", label: "Asset library", icon: ImageIcon },
@@ -324,6 +329,7 @@ export default function Workspace({
     video: "Video studio",
     operations: "Workspace health",
     credits: "Credits & usage",
+    research: "Research",
   };
   return (
     <div className="app-shell">
@@ -359,7 +365,7 @@ export default function Workspace({
               value={orgId}
               onChange={(e) => {
                 if (
-                  (dirty || contentDirty || policyDirty) &&
+                  (dirty || contentDirty || policyDirty || researchDirty) &&
                   !confirm("Discard unsaved workspace changes?")
                 )
                   return;
@@ -520,6 +526,10 @@ export default function Workspace({
                   onNavigate={go}
                 />
               )}
+              {view === "research" && <ResearchWorkspace
+                key={`${base}:${member.role}:${navVersion}`} base={base} role={member.role}
+                onDirtyChange={setResearchDirty}
+              />}
               {view === "operations" && admin && (
                 <OperationsWorkspace base={base} />
               )}

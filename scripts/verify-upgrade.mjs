@@ -141,6 +141,12 @@ try {
     'INSERT INTO "WorkspaceYoutubePolicy" ("organizationId",revision,rules,"updatedBy","updatedAt") VALUES ($1,3,$2,$3,now())',
     [org, JSON.stringify(workspaceRules), user],
   );
+  const research = randomUUID();
+  await db.query(
+    'INSERT INTO "ResearchRecord" (id,"organizationId",revision,title,category,"temporalScope",summary,"sourceUrl","sourceLabel","observedAt",market,language,"authorizedSource","createdBy","updatedAt","reviewStatus","reviewedAt","reviewedBy","reviewNote") VALUES ($1,$2,2,$3,\'INDUSTRY\',\'HISTORICAL\',$4,$5,$6,\'2026-01-01T00:00:00Z\',\'India\',\'English\',true,$7,now(),\'ACCEPTED\',now(),$7,$8)',
+    [research, org, "Synthetic restored observation", "Fixture evidence, not a real market finding.", "https://public.org/restore", "Synthetic source", user, "Synthetic archival review"],
+  );
+  const researchBefore = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [research])).rows[0].row;
   const backup = await db.dumpDataDir();
   await db.query('DELETE FROM "Organization" WHERE id=$1', [org]);
   assert.equal(
@@ -206,6 +212,12 @@ try {
   assert.equal(savedPolicy.revision, 3);
   assert.deepEqual(savedPolicy.rules, workspaceRules);
   assert.equal(savedPolicy.updatedBy, user);
+  const savedResearch = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [research])).rows[0].row;
+  assert.deepEqual(savedResearch, researchBefore);
+  assert.equal(savedResearch.provenance, "MANUAL");
+  assert.equal(savedResearch.reviewStatus, "ACCEPTED");
+  assert.equal(savedResearch.revision, 2);
+  assert.equal((await db.query('SELECT count(*)::int AS n FROM "ResearchRecord" WHERE "organizationId"=$1', [org])).rows[0].n, 0);
   await mkdir(".local", { recursive: true });
   const result = {
     passed: true,
@@ -223,6 +235,7 @@ try {
     creditLedgerRestoreAndImmutabilityVerified: true,
     generatedMediaRequestAndProviderReceiptRestored: true,
     workspaceYoutubePolicyRestored: true,
+    researchCitationProvenanceAndReviewRestored: true,
   };
   await writeFile(
     ".local/upgrade-restore-evidence.json",

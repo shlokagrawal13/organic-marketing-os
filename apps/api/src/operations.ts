@@ -222,6 +222,7 @@ export class OperationsController {
           const own = { organizationId: org };
           const tables: [string, any, any, ((v: any) => any)?][] = [
             ["brandVersion", tx.brandVersion, own],
+            ["research", tx.researchRecord, own],
             ["campaign", tx.campaign, own],
             ["content", tx.contentItem, own],
             ["contentVersion", tx.contentVersion, { content: own }],

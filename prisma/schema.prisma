@@ -81,6 +81,62 @@ model Organization {
   publicationSchedules     PublicationSchedule[]
   contentClaimReviews      ContentClaimReview[]
   youtubePolicy            WorkspaceYoutubePolicy?
+  research                 ResearchRecord[]
+}
+
+enum ResearchCategory {
+  INDUSTRY
+  AUDIENCE
+  COMPETITOR
+  SEARCH
+  SEASONAL
+  COMMUNITY
+}
+
+enum ResearchTemporalScope {
+  CURRENT
+  HISTORICAL
+  EVERGREEN
+  EMERGING
+  EXPIRED
+}
+
+enum ResearchReviewStatus {
+  UNREVIEWED
+  ACCEPTED
+  REJECTED
+}
+
+enum ResearchProvenance {
+  MANUAL
+}
+
+model ResearchRecord {
+  id               String                @id @default(uuid())
+  organizationId   String
+  organization     Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  revision         Int                   @default(1)
+  title            String
+  category         ResearchCategory
+  temporalScope    ResearchTemporalScope
+  summary          String
+  sourceUrl        String?
+  sourceLabel      String?
+  observedAt       DateTime?
+  market           String                @default("")
+  language         String                @default("")
+  authorizedSource Boolean
+  provenance       ResearchProvenance    @default(MANUAL)
+  collectedAt      DateTime              @default(now())
+  createdAt        DateTime              @default(now())
+  createdBy        String
+  updatedAt        DateTime              @updatedAt
+  reviewStatus     ResearchReviewStatus  @default(UNREVIEWED)
+  reviewedAt       DateTime?
+  reviewedBy       String?
+  reviewNote       String?
+
+  @@index([organizationId, updatedAt(sort: Desc), id(sort: Desc)])
 }
 
 model WorkspaceYoutubePolicy {

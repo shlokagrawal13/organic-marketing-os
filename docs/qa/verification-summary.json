@@ -73,7 +73,7 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "POLICY-01E-G public native CI closure",
+  "latestIncrement": "RESEARCH-01A local verification; public native CI pending",
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
     "policyVersion": "youtube-upload-policy-2026-10-17",
@@ -1043,49 +1043,63 @@
   },
   "currentIncrementChecks": {
     "unit": {
-      "tests": 214,
-      "passed": 214,
+      "tests": 220,
+      "passed": 220,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "uniqueVisibleLogReceiptNames": 19,
-      "completeArtifactReceiptsInspected": false
+      "uniqueReceipts": 220
     },
+    "focusedResearchUnit": 6,
     "http": {
-      "tests": 18,
-      "passed": 18,
+      "tests": 23,
+      "passed": 23,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0
     },
+    "focusedResearchHttp": 5,
     "browser": {
-      "tests": 12,
-      "passed": 12,
-      "durationSeconds": 44.5
+      "tests": 15,
+      "passed": 15
     },
+    "focusedResearchBrowser": 3,
     "recovery": {
       "tests": 5,
       "passed": 5,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119960
+      "observedRemainingLockMs": 119923
     },
     "apiBuild": true,
     "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "nativePostgresVersion": "17.11",
+    "nativeRedisVersion": "7.4.11",
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4966384,
+      "sha256": "d51547bc0c01aead45cc74ae4815c52ab30584710bb4d714d54e7d2a019c3a9a",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true
+    },
     "boundedEnglishReadability": {
       "passed": true,
-      "sampleBytesIndependentlyChecked": false
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
     },
-    "freshNativePostgresMigrations": 22,
-    "nativeRedis": true,
-    "populatedUpgrade": true,
-    "archiveRestore": true,
-    "workspaceYoutubePolicyRestored": true,
-    "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0
   },
@@ -9963,5 +9977,118 @@
       "Artifact byte-integrity and image inspection remain unverified in this environment; no network restriction bypass attempted.",
       "POLICY-01 remains partial; RESEARCH-01 is next."
     ]
+  },
+  "latestResearch01A": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01A",
+    "recordedAtUtc": "2026-10-18T07:02:19.204335+00:00",
+    "status": "locally_verified_publication_ci_pending",
+    "scope": "Manual tenant research intake, citation provenance, observation-age freshness, revision-bound review and protected browser editing. Single source per record; strategy ingestion and live collection are not implemented.",
+    "basePublicCommit": "be959006c0ce9df66d7576d6d909c6c755660e8a",
+    "verification": {
+      "unit": {
+        "tests": 220,
+        "passed": 220,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "uniqueReceipts": 220
+      },
+      "focusedResearchUnit": 6,
+      "http": {
+        "tests": 23,
+        "passed": 23,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "focusedResearchHttp": 5,
+      "browser": {
+        "tests": 15,
+        "passed": 15
+      },
+      "focusedResearchBrowser": 3,
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119923
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "freshNativePostgresMigrations": 23,
+      "nativePostgresVersion": "17.11",
+      "nativeRedisVersion": "7.4.11",
+      "populatedUpgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 23,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4966384,
+        "sha256": "d51547bc0c01aead45cc74ae4815c52ab30584710bb4d714d54e7d2a019c3a9a",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true,
+        "workspaceYoutubePolicyRestored": true,
+        "researchCitationProvenanceAndReviewRestored": true
+      },
+      "boundedEnglishReadability": {
+        "passed": true,
+        "standardSamples": 36,
+        "busySamples": 8,
+        "blankNegativeControl": true
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "initialVerificationFailure": {
+      "browserPassed": 13,
+      "browserFailed": 2,
+      "cause": "Test assertions: global alert selector also matched the hidden Next route announcer; reload intentionally preserved selected record while test assumed newest selection. Scoped alerts and explicit record selection corrected; production code unchanged by these fixes.",
+      "fixedBeforeFinalVerification": true
+    },
+    "behavior": [
+      "Immutable manual provenance, author and server collection time; user-declared source/date/market/language.",
+      "Server recomputes missing/current/stale and exact 30-day expiry; historical/expired scope cannot become strategy-eligible.",
+      "All workspace reads and writes tenant scoped; current membership rechecked under ordered transaction locks.",
+      "Writer and reviewer role controls; edits invalidate review; every edit/review advances revision.",
+      "Conflicts preserve browser edits until explicit reload; transient errors, restricted roles and workspace navigation covered.",
+      "Workspace export and populated PGlite archive restore retain research citation/provenance/review fields."
+    ],
+    "screenshots": {
+      "desktop": "docs/qa/research01a-desktop.png",
+      "dark": "docs/qa/research01a-dark.png",
+      "mobile": "docs/qa/research01a-mobile.png"
+    },
+    "unitReceipts": "docs/qa/research01a-unit-receipts.json",
+    "commands": [
+      "npm run build",
+      "npm test",
+      "npm run verify:upgrade",
+      "npm run verify:readability",
+      "npm audit --omit=dev --audit-level=moderate",
+      "npm audit --audit-level=moderate",
+      "bash .local/run-research01a-native.sh (dedicated disposable PostgreSQL/Redis; full verify-local --native --production-web)"
+    ],
+    "limits": [
+      "Manual input and syntactic URL validation do not fetch or establish source reachability, quality, accuracy or rights.",
+      "Strategy/model jobs do not consume this research library yet.",
+      "No live research/source API, Google operation or deployed production acceptance occurred.",
+      "Populated archive restore uses PGlite; native PostgreSQL plus private-media cross-store restore remains open.",
+      "RESEARCH-01, POLICY-01 and full master acceptance remain partial."
+    ],
+    "logs": {
+      "unit": "7a4353109be974d902cb7772dfc1e49fd79b7f43acdbf63c8d986fddcc84702e",
+      "native": "9b442daadbfb7b9d09ab49534123079487779b2e24d1abb54355af9122c1c185",
+      "build": "320ab1fac51eb5d18c99bba385c4c9d78f1daac4702e720b9983a904ebaca57a",
+      "upgrade": "ee195343f4183a4c41d691dbdd201ab986ce427c4a4b0269331e0b9f40d827b8",
+      "readability": "aaddf9a3b5a600314ddc9b069b626ffbb1b5435953b524b28ca43c34a7b1650a"
+    }
   }
 }
