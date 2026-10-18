@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01F",
+  "scope": "Local pre-publication search-form exact-label lookup failure",
+  "firstFullNativeAttempt": {
+    "http": { "passed": 35, "failed": 0 },
+    "browser": { "passed": 21, "failed": 1 },
+    "recoveryExecuted": false,
+    "failure": "The new search form case timed out at getByLabel('Proposed search intent', { exact: true }).selectOption(...), originally line 102. The visible dropdown was retained in the failure screenshot."
+  },
+  "reproduction": {
+    "mechanism": "Exact getByLabel lookup of the implicit wrapping label did not match while the select contained option text. The combobox accessible name itself was already correct; this was not evidence of an incorrect screen-reader name.",
+    "beforeExactLabelMatches": 0,
+    "afterExplicitAriaLabelMatches": 1,
+    "accessibleComboboxNameBeforeAndAfter": "Proposed search intent"
+  },
+  "fix": "Supply explicit control labels to the structured insight select and textareas. Keep exact label assertions, ordinary timeouts, enabled rate limiting and all verification phases. Scroll screenshots to the top and wait for the mobile sidebar transition before capture.",
+  "focusedProductionBrowserVerification": {
+    "cases": 9,
+    "passed": 9,
+    "failed": 0,
+    "duration": "25.2s",
+    "scope": "Fresh disposable native fixture, all research browser cases. HTTP/recovery were intentionally outside this focused diagnostic; the subsequent full run is recorded separately."
+  },
+  "finalFullNativeVerification": "Read docs/qa/research01f-evidence.json and exact-source GitHub Actions; the failed first attempt is not used as final success evidence."
+}

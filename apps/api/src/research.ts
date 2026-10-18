@@ -15,6 +15,7 @@ import {
 } from "@nestjs/common";
 import { Prisma, ResearchRecord, Role } from "@prisma/client";
 import { z, ZodError } from "zod";
+import { parseResearchInsight } from "../../../packages/core/research-insight";
 import {
   approverRoles,
   AuthedRequest,
@@ -49,7 +50,11 @@ export class ResearchController {
   constructor(private db: Db) {}
 
   private view(record: ResearchRecord, now = new Date()) {
-    return { ...record, ...researchEvidenceState(record, now) };
+    const state = researchEvidenceState(record, now);
+    let insightIssue: string | null = null;
+    try { parseResearchInsight(record.insight, record.category); }
+    catch { insightIssue = "Correct the structured insight before accepting or using this evidence."; }
+    return { ...record, ...state, insightIssue, eligibleForStrategy: state.eligibleForStrategy && !insightIssue };
   }
 
   private input(body: unknown, now = new Date()) {
@@ -57,6 +62,7 @@ export class ResearchController {
       const data = parseResearchInput(body, now);
       return {
         ...data,
+        insight: data.insight ?? Prisma.DbNull,
         observedAt: data.observedAt ? new Date(data.observedAt) : null,
       };
     } catch (error) {
@@ -221,6 +227,10 @@ export class ResearchController {
         throw new BadRequestException(
           "Acceptance requires a complete citation and an observation less than 30 days old, without expired classification.",
         );
+      if (input.decision === "ACCEPTED") {
+        try { parseResearchInsight(current.insight, current.category); }
+        catch { throw new BadRequestException("Correct the structured insight before accepting this evidence."); }
+      }
       const record = await tx.researchRecord.update({
         where: {
           id,

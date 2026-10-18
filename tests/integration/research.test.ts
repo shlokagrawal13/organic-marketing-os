@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { createRequire } from "node:module";
 import { db, actor, base } from "../support/http";
 import { researchMaximumAgeMs } from "../../packages/core/research";
+import { competitorInsight, searchInsight } from "../support/research-insight";
 
 const orgs: string[] = [],
   users: string[] = [];
@@ -44,6 +45,34 @@ after(async () => {
   await db.organization.deleteMany({ where: { id: { in: orgs } } });
   await db.user.deleteMany({ where: { id: { in: users } } });
   await db.$disconnect();
+});
+
+test("structured research HTTP persists both insight kinds, rejects invalid input and invalidates review on insight-only edits", async () => {
+  const w = await workspace("Structured insight fixture");
+  for (const insight of [competitorInsight(), searchInsight()]) {
+    const payload = { ...input(), category: insight.kind, insight };
+    const created = await w.owner.call(w.path, "POST", payload);
+    assert.equal(created.status, 201); assert.deepEqual(created.body.insight, insight);
+    const path = `${w.path}/${created.body.id}`;
+    const accepted = await w.owner.call(path + "/review", "POST", review(1));
+    assert.equal(accepted.status, 201); assert.equal(accepted.body.eligibleForStrategy, true);
+    const changed = { ...insight, assumptions: "Changed synthetic analysis; still unverified." };
+    const edit = await w.owner.call(path, "PUT", { ...payload, insight: changed, expectedRevision: 2 });
+    assert.equal(edit.status, 200); assert.equal(edit.body.revision, 3);
+    assert.equal(edit.body.reviewStatus, "UNREVIEWED"); assert.equal(edit.body.reviewedAt, null);
+    assert.deepEqual((await w.owner.call(path)).body.insight, changed);
+    assert.equal((await w.owner.call(path, "PUT", { ...payload, expectedRevision: 2 })).status, 409);
+    const removed = await w.owner.call(path, "PUT", { ...payload, insight: null, expectedRevision: 3 });
+    assert.equal(removed.status, 200); assert.equal(removed.body.insight, null);
+    // Corrupt stored insights must not receive acceptance even when citation freshness passes.
+    await db.researchRecord.update({ where: { id: created.body.id }, data: { insight: { ...insight, measuredVolume: 1000 } } });
+    const invalid = await w.owner.call(path);
+    assert.equal(invalid.body.eligibleForStrategy, false); assert.ok(invalid.body.insightIssue);
+    assert.equal((await w.owner.call(path + "/review", "POST", review(4))).status, 400);
+  }
+  for (const change of [{ category: "AUDIENCE", insight: searchInsight() }, { category: "SEARCH", insight: competitorInsight() },
+    { category: "SEARCH", insight: { ...searchInsight(), demand: 1000 } }, { category: "COMPETITOR", insight: { ...competitorInsight(), differentiation: "" } }])
+    assert.equal((await w.owner.call(w.path, "POST", { ...input(), ...change })).status, 400);
 });
 
 test("research HTTP routes enforce tenant membership, all writer/reviewer roles and strict input", async () => {

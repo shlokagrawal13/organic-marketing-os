@@ -7,6 +7,7 @@ import { Queue } from "bullmq";
 import Redis from "ioredis";
 import { actor, base, db, until } from "../support/http";
 import { captureResearchSnapshot } from "../../packages/core/research-context";
+import { competitorInsight, searchInsight } from "../support/research-insight";
 
 const orgs: string[] = [], users: string[] = [];
 const redis = new Redis(process.env.REDIS_URL!, { maxRetriesPerRequest: null });
@@ -50,6 +51,48 @@ async function result(w: Awaited<ReturnType<typeof workspace>>, id: string, prom
   assert.match(sent.system, /untrusted data/); assert.match(sent.system, /research gaps/);
   return { trace: trace.body, sent, job };
 }
+
+test("structured insights reach the actual strategy provider and frozen trace, retain export and exclude later edits", async () => {
+  const w = await workspace("Structured strategy fixture"), other = await workspace("Private insight fixture");
+  const records: any[] = [];
+  for (const insight of [competitorInsight(), searchInsight()]) {
+    const created = await w.owner.call(w.root + "/research", "POST", { ...input(insight.kind), category: insight.kind, insight });
+    assert.equal(created.status, 201);
+    const reviewed = await w.owner.call(w.root + `/research/${created.body.id}/review`, "POST", {
+      expectedRevision: 1, decision: "ACCEPTED", sourcesReviewed: true, note: "Reviewed synthetic source and analyst interpretation.",
+    }); assert.equal(reviewed.status, 201); records.push(reviewed.body);
+  }
+  const privateSource = await other.owner.call(other.root + "/research", "POST", { ...input("Private competitor"), category: "COMPETITOR", insight: { ...competitorInsight(), subject: "Private tenant subject" } });
+  assert.equal(privateSource.status, 201);
+  assert.equal((await other.owner.call(other.root + `/research/${privateSource.body.id}/review`, "POST", {
+    expectedRevision: 1, decision: "ACCEPTED", sourcesReviewed: true, note: "Reviewed private synthetic analysis.",
+  })).status, 201);
+  await queue.pause(); const first = await enqueue(w, "structured-insights");
+  const saved = await db.aIJob.findUniqueOrThrow({ where: { id: first.job.id } });
+  assert.equal((saved.brandContext as any).researchSnapshot.evidence.length, 2);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", first.data)).body.id, first.job.id);
+  await queue.resume(); const completed = await result(w, first.job.id, first.data.prompt);
+  for (const record of records) assert.deepEqual(completed.sent.research.evidence.find((s: any) => s.id === record.id).insight, record.insight);
+  assert.match(completed.sent.system, /without copying/); assert.match(completed.sent.system, /not measured search demand/);
+  assert.ok(!JSON.stringify(completed.sent).includes("Private tenant subject"));
+  assert.equal((await other.owner.call(w.root + `/ai/jobs/${first.job.id}/trace`)).status, 404);
+  await queue.pause(); const queued = await enqueue(w, "insight-withdrawal");
+  const record = records[0];
+  const edit = await w.owner.call(w.root + `/research/${record.id}`, "PUT", { ...input(record.title), category: record.category,
+    insight: { ...record.insight, differentiation: "New original synthetic direction" }, expectedRevision: 2 });
+  assert.equal(edit.status, 200); assert.equal(edit.body.reviewStatus, "UNREVIEWED");
+  await queue.resume(); const afterEdit = await result(w, queued.job.id, queued.data.prompt);
+  assert.deepEqual(afterEdit.sent.research.evidence.map((s: any) => s.id), [records[1].id]);
+  assert.ok(afterEdit.sent.research.excluded.some((s: any) => s.id === record.id));
+  const originalTrace = await w.owner.call(w.root + `/ai/jobs/${first.job.id}/trace`);
+  assert.deepEqual(originalTrace.body.frozenContext.brand.research, completed.sent.research);
+  const exported = await fetch(base + w.root + "/operations/export", { headers: w.owner.headers });
+  assert.equal(exported.status, 200);
+  const rows = (await exported.text()).trim().split("\n").map(s => JSON.parse(s));
+  assert.deepEqual(rows.find(r => r.type === "research" && r.data.id === record.id).data.insight, edit.body.insight);
+  assert.deepEqual(rows.find(r => r.type === "aiJob" && r.data.id === first.job.id).data.brandContext, saved.brandContext);
+  assert.deepEqual(rows.find(r => r.type === "aiAgentRun" && r.data.jobId === first.job.id).data.frozenContext.brand.research, completed.sent.research);
+});
 
 test("strategy queue captures only this workspace's accepted evidence and sends identical citations to provider and trace", async () => {
   const w = await workspace("Strategy research fixture"), other = await workspace("Other strategy research fixture");

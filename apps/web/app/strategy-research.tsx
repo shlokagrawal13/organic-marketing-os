@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { api } from "./api-client";
+import { ResearchInsightView } from "./research-insight";
 
 const omissionLabels: Record<string, string> = { reviewRequired: "not accepted", unauthorized: "not authorized",
   unsupportedProvenance: "unsupported provenance", timeScope: "historical time scope", expired: "expired", invalidSource: "incomplete or invalid" };
@@ -49,6 +50,7 @@ export default function StrategyResearch({ base, jobId, available }: { base: str
         <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceLabel}</a>
         <p className="field-help">Manual · observed {new Date(item.observedAt).toLocaleString()} · freshness window ends {new Date(item.expiresAt).toLocaleString()}</p>
         {item.summaryTruncated && <p className="field-help">A bounded excerpt of this observation was supplied.</p>}
+        <ResearchInsightView value={item.insight} category={item.category} />
       </li>)}</ul>
       {!context.coverage && context.excluded?.length > 0 && <p className="field-help">{context.excluded.length} captured observation(s) excluded after becoming stale, changing or losing acceptance.</p>}
     </div>}

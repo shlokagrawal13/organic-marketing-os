@@ -1,3 +1,17 @@
+## Current continuation — RESEARCH-01F, 2026-10-18 UTC
+
+Optional structured competitor/search insights are locally verified. A reviewed manual source can retain competitor theme/format/positioning/opportunity/differentiation or proposed search query/intent/keywords/questions/answer angle, always with explicit assumptions. Insight-only edits clear acceptance; captured analysis stays immutable and shares the existing tenant, revision, expiry, latest-100, 10-source and 24,000-byte gates. Old/null records preserve their earlier evidence fingerprints.
+
+Fresh local verification: API/web builds; 249 unit/export, 35 native HTTP, 22 production browser and 5 recovery cases; 24 fresh migrations; 44 bounded readability samples; populated predecessor/structured-insight archive restore; both audits with zero vulnerabilities. All 24 pre-existing master/migration hashes are unchanged. Source ZIP integrity is verified separately.
+
+This checkpoint records local verification, not future CI success. Standing-authorized source publication and its own exact-commit CI must be read from the latest Git/Actions before completion is claimed. The previous final main `35557b2` passed run `39139191945` (242/33/20/5); its closure receipt is now retained in `docs/qa/research01e-final-ci-evidence.json`.
+
+RESEARCH-01 remains Partial. Insights are analyst interpretations; no source retrieval, measured demand, factual/relevance or semantic no-copy acceptance occurred. Live/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy.
+
+Next: finish/read this increment's exact-source publication and CI, fixing any failure; then RESEARCH-01G bounded structured audience/community insights from master sections 18 and 47, preserving source/review/selection/coverage and assumptions.
+
+Evidence: `docs/STRUCTURED_RESEARCH_INSIGHTS.md`, `docs/qa/research01f-evidence.json` and `docs/qa/research01f-unit-receipts.json`. Earlier entries below retain their original scopes.
+
 ## Current HTTP/browser fixture follow-up — 2026-10-18 IST
 
 RESEARCH-01E application source `0378110432b954c93631f0851f9ee182413589a1` remains native-verified by run `39134469984`. After the recorded browser bootstrap timeout, follow-up run `39137826516` passed 242 unit cases but stopped at 32/33 HTTP cases: the existing media test received a 429 response instead of Gujarati captions. Browser/recovery were not run in that attempt.

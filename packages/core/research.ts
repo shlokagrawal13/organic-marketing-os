@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { canonicalEvidenceSourceUrl } from "./evidence-source";
+import { parseResearchInsight, researchInsightSchema } from "./research-insight";
 
 export const researchMaximumAgeDays = 30;
 export const researchMaximumAgeMs = researchMaximumAgeDays * 86400000;
@@ -32,6 +33,7 @@ export const researchInputSchema = z
     market: z.string().trim().max(100).default(""),
     language: z.string().trim().max(80).default(""),
     authorizedSource: z.literal(true),
+    insight: researchInsightSchema.nullable().default(null),
   })
   .strict();
 
@@ -49,6 +51,7 @@ export function parseResearchInput(
     throw new Error("The observation date cannot be in the future.");
   return {
     ...data,
+    insight: parseResearchInsight(data.insight, data.category),
     sourceUrl: data.sourceUrl
       ? canonicalEvidenceSourceUrl(data.sourceUrl)
       : null,

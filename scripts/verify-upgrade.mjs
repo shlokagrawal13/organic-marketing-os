@@ -58,10 +58,17 @@ try {
       [content],
     )
   ).rows[0].row;
-  for (const dir of dirs.slice(4))
-    await db.exec(
-      await readFile(`prisma/migrations/${dir}/migration.sql`, "utf8"),
-    );
+  const legacyResearchId = randomUUID();
+  let legacyResearch;
+  for (const dir of dirs.slice(4)) {
+    if (dir === "202610180002_research_insight") {
+      await db.query('INSERT INTO "ResearchRecord" (id,"organizationId",title,category,"temporalScope",summary,"authorizedSource","createdBy","updatedAt") VALUES ($1,$2,\'Legacy observation\',\'INDUSTRY\',\'HISTORICAL\',\'Synthetic pre-insight record\',true,$3,now())', [legacyResearchId, org, user]);
+      legacyResearch = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [legacyResearchId])).rows[0].row;
+    }
+    await db.exec(await readFile(`prisma/migrations/${dir}/migration.sql`, "utf8"));
+  }
+  const upgradedResearch = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [legacyResearchId])).rows[0].row;
+  assert.deepEqual(upgradedResearch, { ...legacyResearch, insight: null });
   assert.deepEqual(
     (
       await db.query(
@@ -154,9 +161,11 @@ try {
   );
   const { captureResearchSnapshot, resolveResearchContext } = await import("../dist/packages/core/research-context.js");
   await db.query('UPDATE "ResearchRecord" SET market=$1, language=$2 WHERE id=$3', ["India", "English", strategyResearch]);
+  const restoredInsight = { kind: "SEARCH", query: "Synthetic workflow question", intent: "INFORMATIONAL", keywords: ["synthetic workflow"], questions: ["How would a synthetic workflow work?"], answerAngle: "Test an original explanation", assumptions: "Synthetic fixture; no measured demand." };
+  await db.query('UPDATE "ResearchRecord" SET category=\'SEARCH\', insight=$1 WHERE id=$2', [JSON.stringify(restoredInsight), strategyResearch]);
   const researchRow = (await db.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
   const utcResearch = (row) => ({ ...row, ...Object.fromEntries(["observedAt", "collectedAt", "reviewedAt"].map((key) => [key, new Date(row[key] + "Z")])) });
-  const researchSnapshot = captureResearchSnapshot(org, [utcResearch(researchRow)], new Date(), { categories: ["AUDIENCE"], market: "india", language: "english" });
+  const researchSnapshot = captureResearchSnapshot(org, [utcResearch(researchRow)], new Date(), { categories: ["SEARCH"], market: "india", language: "english" });
   assert.equal(researchSnapshot.evidence.length, 1);
   const strategyContext = { revision: 1, profile: {}, creativeDna: {}, approvedContent: [], researchSnapshot };
   await db.query('INSERT INTO "AIJob" (id,"organizationId","actorId","requestKey",task,input,"brandContext") VALUES ($1,$2,$3,$4,\'strategy\',$5,$6)',
@@ -183,6 +192,7 @@ try {
     0,
   );
   restored = await PGlite.create({ loadDataDir: backup });
+  assert.deepEqual((await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [legacyResearchId])).rows[0].row, upgradedResearch);
   assert.deepEqual(
     (
       await restored.query(
@@ -250,12 +260,15 @@ try {
   const restoredStrategy = (await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].brandContext;
   assert.deepEqual(restoredStrategy, strategyContext);
   const restoredSource = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
+  assert.deepEqual(restoredSource.insight, restoredInsight);
+  assert.deepEqual(restoredStrategy.researchSnapshot.evidence[0].insight, restoredInsight);
   assert.deepEqual(restoredStrategy.researchSnapshot.coverage, researchSnapshot.coverage);
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).coverage, selectedResearch.coverage);
-  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["AUDIENCE"], market: "india", language: "english" });
+  assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["SEARCH"], market: "india", language: "english" });
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).evidence, researchSnapshot.evidence);
   assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
   const restoredRun = (await restored.query('SELECT "frozenContext","finalReview" FROM "AIAgentRun" WHERE id=$1', [runId])).rows[0];
+  assert.deepEqual(restoredRun.frozenContext.brand.research.evidence[0].insight, restoredInsight);
   assert.deepEqual(restoredRun.finalReview, finalReview);
   assert.deepEqual((await restored.query('SELECT output,status FROM "AIJob" WHERE id=$1', [completedStrategyJob])).rows[0], { output: strategyOutput, status: "SUCCEEDED" });
   assert.equal((await restored.query('SELECT status FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].status, "QUEUED");
@@ -282,6 +295,7 @@ try {
     queuedStrategyResearchSnapshotRestored: true,
     strategyResearchSelectionRestored: true,
     strategyResearchCoverageRestored: true,
+    structuredResearchInsightAndLegacyNullRestored: true,
     strategyRecommendationsAndCitationReviewRestored: true,
   };
   await writeFile(

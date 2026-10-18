@@ -1,3 +1,7 @@
+## RESEARCH-01F structured competitor/search insights — 2026-10-18 UTC
+
+Optional reviewed analyst interpretations now freeze with source fingerprints in actual provider/trace and saved source history. Tenant export and populated upgrade/archive restore retain them; old/null observations remain compatible. Fresh local checks passed: 249 unit, 35 native HTTP, 22 production browser, 5 recovery, 24 migrations, 44 readability samples, builds and zero-vulnerability audits. Source publication/own CI is read from latest Git/Actions; no future success is claimed. RESEARCH-01 remains Partial: live collection, measured demand/engagement, factual/relevance/semantic no-copy and full master acceptance remain open. See `docs/STRUCTURED_RESEARCH_INSIGHTS.md` and `docs/qa/research01f-evidence.json`. Next after exact-source CI: RESEARCH-01G structured audience/community insights.
+
 ## Current HTTP/browser fixture follow-up — 2026-10-18 IST
 
 RESEARCH-01E application source `0378110432b954c93631f0851f9ee182413589a1` remains native-verified by run `39134469984`. After the recorded browser bootstrap timeout, follow-up run `39137826516` passed 242 unit cases but stopped at 32/33 HTTP cases: the existing media test received a 429 response instead of Gujarati captions. Browser/recovery were not run in that attempt.

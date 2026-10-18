@@ -3,6 +3,8 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { BookOpen, ExternalLink, Plus } from "lucide-react";
 import { api } from "./api-client";
+import { parseResearchInsight, ResearchInsight } from "../../../packages/core/research-insight";
+import { ResearchInsightEditor, ResearchInsightView } from "./research-insight";
 
 type Category = "INDUSTRY" | "AUDIENCE" | "COMPETITOR" | "SEARCH" | "SEASONAL" | "COMMUNITY";
 type TemporalScope = "CURRENT" | "HISTORICAL" | "EVERGREEN" | "EMERGING" | "EXPIRED";
@@ -15,16 +17,19 @@ type ResearchRecord = {
   reviewedAt: string | null; reviewedBy: string | null; reviewNote: string | null;
   freshness: "MISSING" | "STALE" | "CURRENT"; freshnessReason: string;
   expiresAt: string | null; eligibleForStrategy: boolean;
+  insight: ResearchInsight | null;
+  insightIssue: string | null;
 };
 type Draft = {
   title: string; category: Category; temporalScope: TemporalScope; summary: string;
   sourceUrl: string; sourceLabel: string; observedAt: string; market: string; language: string;
   authorizedSource: boolean;
+  insight: ResearchInsight | null;
 };
 const categories: Category[] = ["INDUSTRY", "AUDIENCE", "COMPETITOR", "SEARCH", "SEASONAL", "COMMUNITY"];
 const scopes: TemporalScope[] = ["CURRENT", "HISTORICAL", "EVERGREEN", "EMERGING", "EXPIRED"];
 const emptyDraft: Draft = { title: "", category: "INDUSTRY", temporalScope: "CURRENT", summary: "",
-  sourceUrl: "", sourceLabel: "", observedAt: "", market: "", language: "", authorizedSource: false };
+  sourceUrl: "", sourceLabel: "", observedAt: "", market: "", language: "", authorizedSource: false, insight: null };
 function label(value: string) { return value[0] + value.slice(1).toLowerCase(); }
 function dateLabel(value: string | null) { return value ? new Date(value).toLocaleString() : "Not supplied"; }
 function currentEvidence(item: ResearchRecord, now: number): ResearchRecord {
@@ -48,7 +53,7 @@ function localDate(value: string | null) {
 function draftFrom(item: ResearchRecord): Draft {
   return { title: item.title, category: item.category, temporalScope: item.temporalScope,
     summary: item.summary, sourceUrl: item.sourceUrl || "", sourceLabel: item.sourceLabel || "",
-    observedAt: localDate(item.observedAt), market: item.market, language: item.language, authorizedSource: false };
+    observedAt: localDate(item.observedAt), market: item.market, language: item.language, authorizedSource: false, insight: item.insight ?? null };
 }
 
 export default function ResearchWorkspace({ base, role, onDirtyChange }: {
@@ -148,6 +153,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
   }
   function edit(change: Partial<Draft>) {
     setDraft((current) => current ? { ...current, ...change,
+      ...(change.category && change.category !== current.category ? { insight: null } : {}),
       ...(Object.keys(change).some((key) => key !== "authorizedSource") ? { authorizedSource: false } : {}) } : null);
     setNotice("");
   }
@@ -160,6 +166,10 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
   if (draft?.observedAt) {
     const observed = new Date(draft.observedAt).getTime();
     if (!Number.isFinite(observed) || observed > Date.now()) validation = "Observed time must be a valid time in the past.";
+  }
+  if (draft?.insight) {
+    try { parseResearchInsight(draft.insight, draft.category); }
+    catch { validation = "Complete all insight fields within their limits; structured insights must fit within 6,000 UTF-8 bytes."; }
   }
   const unchanged = !!draft && !creating && !!selected && JSON.stringify({ ...draft, authorizedSource: false }) === JSON.stringify(draftFrom(selected));
   async function save(event: FormEvent) {
@@ -242,6 +252,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
             <div className="form-grid"><label>Market<input maxLength={100} value={draft.market} onChange={(event) => edit({ market: event.target.value })} /></label>
               <label>Language<input maxLength={80} value={draft.language} onChange={(event) => edit({ language: event.target.value })} /></label></div>
             <p className="small-copy">A source URL, source label and observed time are required for acceptance. Evidence needs a fresh observation after 30 days; historical records remain historical context.</p>
+            <ResearchInsightEditor category={draft.category} value={draft.insight} onChange={insight => edit({ insight })} />
             {validation && <p className="alert error" role="alert">{validation}</p>}
             <label className="review-ack"><input type="checkbox" checked={draft.authorizedSource} onChange={(event) => edit({ authorizedSource: event.target.checked })} />I am authorized to record this information and source.</label>
             <button className="button primary" type="submit" disabled={!draft.authorizedSource || !!validation || unchanged}>Save research</button>
@@ -254,6 +265,8 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
             }}>Edit research</button>}</div>
           <div className="tag-row"><span className="pill">Review: {label(selected.reviewStatus)}</span><span className="pill">Evidence: {label(selected.freshness)}</span><span className="pill">{label(selected.temporalScope)}</span></div>
           <p className="research-summary">{selected.summary}</p>
+          <ResearchInsightView value={selected.insight} category={selected.category} />
+          {selected.insightIssue && <p role="alert" className="alert error">{selected.insightIssue}</p>}
           <div className="research-evidence-state" role="note"><strong>{selected.eligibleForStrategy ? "Evidence accepted and current" : selected.temporalScope === "HISTORICAL" ? "Historical context only" : "Evidence needs review or refresh"}</strong>
             <p>{selected.freshnessReason}</p><p>Acceptance records a team review and does not establish source accuracy. Eligible observations can be selected for a new strategy; previously queued jobs keep their captured versions.</p></div>
           <dl className="research-facts">
@@ -267,10 +280,10 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
           {selected.reviewedAt && <div className="research-review-receipt"><h3>Last review</h3><p>{label(selected.reviewStatus)} · {dateLabel(selected.reviewedAt)}</p><p className="research-summary">{selected.reviewNote}</p></div>}
           {canReview && <fieldset className="research-review research-fields" disabled={busy || conflict}>
             <legend>Review this evidence</legend>
-            <p>Check the source and observation time before recording your decision. Acceptance requires complete evidence observed within the last 30 days and a topic that is not expired.</p>
+            <p>Check the source, summary, observation time and any structured insight, including its assumptions and proposed differentiation. Acceptance requires complete evidence observed within the last 30 days and a topic that is not expired.</p>
             <label>Review note<textarea maxLength={2000} rows={3} value={reviewNote} onChange={(event) => { setReviewNote(event.target.value); setReviewAcknowledged(false); }} /></label>
             <label className="review-ack"><input type="checkbox" checked={reviewAcknowledged} onChange={(event) => setReviewAcknowledged(event.target.checked)} />I reviewed the source, observation time and summary for this record.</label>
-            <div className="research-actions"><button className="button primary" disabled={!reviewAcknowledged || !reviewNote.trim() || selected.freshness !== "CURRENT" || selected.temporalScope === "EXPIRED"} onClick={() => void review("ACCEPTED")}>Accept evidence</button>
+            <div className="research-actions"><button className="button primary" disabled={!reviewAcknowledged || !reviewNote.trim() || selected.freshness !== "CURRENT" || selected.temporalScope === "EXPIRED" || !!selected.insightIssue} onClick={() => void review("ACCEPTED")}>Accept evidence</button>
               <button className="button" disabled={!reviewAcknowledged || !reviewNote.trim()} onClick={() => void review("REJECTED")}>Reject evidence</button></div>
           </fieldset>}
           {!canReview && <p className="small-copy">Owners, admins and editors can review evidence.</p>}

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01F",
+  "recordedAtUtc": "2026-10-18T17:38:02.549734+00:00",
+  "status": "locally_verified_read_Git_Actions_for_exact_source_publication_and_CI",
+  "basePublicCommit": "35557b29b67df29499252c8e89e6ad9d66db51d4",
+  "baseNativeRunId": 39139191945,
+  "scope": "Optional structured competitor/search interpretations attached to reviewed citations, frozen in actual provider and trace, with revision/expiry/tenant/capacity/legacy gates and visible assumptions.",
+  "verification": {
+    "unit": {
+      "tests": 249,
+      "passed": 249,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "uniqueReceipts": 249
+    },
+    "http": {
+      "tests": 35,
+      "passed": 35,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 22,
+      "passed": 22
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119949
+    },
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "freshNativePostgresMigrations": 24,
+    "nativeRedis": true,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 24,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4973495,
+      "sha256": "25c29d1fc83622c06092b9c2904a41cea536f581ab167958e9f10436a021dc45",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyResearchCoverageRestored": true,
+      "structuredResearchInsightAndLegacyNullRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
+    "boundedEnglishReadability": {
+      "passed": true,
+      "passedSamples": 44,
+      "blankNegativeControl": true
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "unitReceipts": "docs/qa/research01f-unit-receipts.json",
+  "screenshots": {
+    "competitor-insight-desktop": {
+      "path": "docs/qa/research01f-competitor-insight-desktop.png",
+      "sha256": "d46b9a9b24d58f643c798af23b4901cfab53f6e0fbf97576f9d0e28b3b3e3cac"
+    },
+    "competitor-insight-frozen-history": {
+      "path": "docs/qa/research01f-competitor-insight-frozen-history.png",
+      "sha256": "95d25fd69b2f09c70ea451d1a7a96067364f2902da654d88ad3f91e65453dae4"
+    },
+    "search-insight-dark": {
+      "path": "docs/qa/research01f-search-insight-dark.png",
+      "sha256": "ee5add86564dc7882b68be267246a397e654d0a5b6803d6273b682c1f216073b"
+    },
+    "search-insight-mobile": {
+      "path": "docs/qa/research01f-search-insight-mobile.png",
+      "sha256": "eaee0ce2c195358a9849df4c6d4ee852d543105af539003a1ffad4b1af988ac9"
+    }
+  },
+  "protectedExistingMasterAndMigrationHashesUnchanged": 24,
+  "addedMigration": "prisma/migrations/202610180002_research_insight/migration.sql",
+  "resolvedLocalVerificationIssue": "First full native attempt passed 35 HTTP but 21/22 browser cases; the new search case exact-label lookup timed out. Explicit control labels resolved the reproduced lookup issue. Combobox accessible name was already correct. All 9 focused research browser cases passed; only the fresh subsequent full run supplies final native counts. See docs/qa/research01f-label-followup.json.",
+  "limits": [
+    "Manual source declarations and structured interpretations do not establish source truth, rights, relevance, semantic entailment or no-copy quality.",
+    "No live source collection, measured competitor engagement, search demand, traffic or ranking verification occurred.",
+    "Live provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open. CI verifies and does not deploy."
+  ],
+  "commands": [
+    "npm run db:generate",
+    "npm run build:api",
+    "npm run build:web",
+    "PATH=.local/cloud/bin:$PATH npm test",
+    "npm run verify:upgrade",
+    "npm run verify:readability",
+    "npm audit --omit=dev --audit-level=moderate",
+    "npm audit --audit-level=moderate",
+    "bash .local/run-research01f-native.sh (fresh disposable native PostgreSQL/Redis; full production-web HTTP/browser/recovery)"
+  ],
+  "decodedLocalLogSha256": {
+    "unit": "c6dca45717defdf573a314744e1fdcfa791bf43b0a8fbb84c8e678279c5a6714",
+    "native": "c59cc99b029b10948d58ad2232587f6ec0c1c3b443e6de8c7cb877fbfda1c931",
+    "web-build": "2983f7f569bcf882ac6dc4493980a42188c7259694696be3f46621860521a8f8",
+    "upgrade": "3e24ed196f11a971f3b024c0cd08194ae47ce2c84389f5e5b397cea3af9c9c97",
+    "readability": "56e26485fa52aa1a91af17ab2791a731c046541d21620e784681ec8bc12ec1fd",
+    "audit-production": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+    "audit-all": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01E",
+  "status": "application_source_and_latest_main_native_ci_verified",
+  "recordedAtUtc": "2026-10-18T17:09:53.597460+00:00",
+  "sourceCommit": "0378110432b954c93631f0851f9ee182413589a1",
+  "latestPublicMain": "35557b29b67df29499252c8e89e6ad9d66db51d4",
+  "treeSha": "c0fb90eb9d890dfb54b500e703a2a7e257b6f498",
+  "latestRun": {
+    "id": 39139191945,
+    "html_url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39139191945",
+    "head_sha": "35557b29b67df29499252c8e89e6ad9d66db51d4",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "run_started_at": "2026-10-18T15:09:23Z",
+    "updated_at": "2026-10-18T15:22:50Z"
+  },
+  "latestJobId": 117709906628,
+  "allLatestJobStepsPassed": true,
+  "verification": {
+    "unit": {
+      "tests": 242,
+      "passed": 242,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "http": {
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 20,
+      "passed": 20,
+      "duration": "1.0m"
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119923
+    },
+    "buildsPassed": true,
+    "readabilityPassedSamples": 44,
+    "freshNativePostgresMigrations": 23,
+    "researchCoverageSelectionAndReferenceArchiveRestorePassed": true,
+    "nativePostgresPrivateMediaCrossStoreRestoreVerified": false,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "publication": {
+    "allPublicPathsModesAndBlobHashesCompared": 472,
+    "latestPublicTreeMatchesLocal": true,
+    "gitFetchAndConnectorRefAgree": true,
+    "workingTreeClean": true,
+    "applicationCodeUnchangedSinceVerifiedSource": true,
+    "closureChangedPaths": [
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "README.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/RESEARCH_COVERAGE.md",
+      "docs/RESEARCH_EVIDENCE.md",
+      "docs/RESEARCH_STRATEGY_CONTEXT.md",
+      "docs/RESUME_CONTEXT.md",
+      "docs/SESSION_LOG.md",
+      "docs/STRATEGY_REFERENCE_REVIEW.md",
+      "docs/STRATEGY_RESEARCH_SELECTION.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/qa/research01e-api-fixture-followup.json",
+      "docs/qa/research01e-ci-fixture-followup.json",
+      "docs/qa/research01e-native-ci-evidence.json",
+      "docs/qa/verification-summary.json",
+      "tests/integration/media.test.ts",
+      "tests/support/fixture-rate-budget.ts",
+      "tests/ui/fixture-isolation.spec.ts",
+      "tests/ui/research.spec.ts",
+      "tests/ui/social-policy-review.spec.ts",
+      "tests/ui/workspace-policy.spec.ts"
+    ],
+    "protectedSpecificationAndMigrationHashesUnchanged": 24,
+    "manifestCheckPassed": true
+  },
+  "artifact": {
+    "id": 12140984024,
+    "digest": "sha256:25f91fef5c4521d67dd71a2b1d56b941ab7be9f8e275c0e83b5258237cd6e428",
+    "digestMatchesUploadLog": true,
+    "inspection": {
+      "artifactId": 12140984024,
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "independentArtifactByteInspection": false,
+      "errorType": "URLError",
+      "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  },
+  "decodedLatestJobLogSha256": "29aa9c550c681d318278355831e5160b549d4013cee07d027aca6da979fa45ec",
+  "limits": [
+    "CI artifact bytes were not independently inspected: the provided download URL received proxy CONNECT 403. Job logs, all steps, counts, restore flags and upload digest metadata were verified.",
+    "Coverage describes a bounded manual-evidence window; they do not prove source truth, rights, quality, relevance or semantic entailment.",
+    "CI verifies and does not deploy. Live source/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open."
+  ]
+}
