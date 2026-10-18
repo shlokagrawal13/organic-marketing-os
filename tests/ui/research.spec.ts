@@ -191,6 +191,8 @@ test("a generated strategy exposes the reviewed source context actually sent to 
   const context = page.getByRole("region", { name: "Strategy research context" });
   await context.getByRole("button", { name: "View research sources" }).click();
   await expect(context.getByRole("heading", { name: "1 reviewed source selected" })).toBeVisible();
+  await expect(context.getByRole("region", { name: "Research coverage", exact: true })).toContainText("1 matching record examined · 1 eligible · 1 captured");
+  await expect(context.getByRole("region", { name: "Research coverage", exact: true })).toContainText("AUDIENCE: 1 usable source");
   await expect(context.getByText("Source for synthetic strategy", { exact: true })).toBeVisible();
   await expect(context.getByRole("link", { name: "Synthetic source publication" })).toHaveAttribute("href", evidence().sourceUrl);
   const jobs = (await user.call(`/workspaces/${org.id}/ai/jobs`)).body;
@@ -258,8 +260,35 @@ test("strategy without research labels its recommendation as an assumption and m
   await context.getByRole("button", { name: "View research sources" }).click();
   await expect(context.getByRole("heading", { name: "No usable research evidence" })).toBeVisible();
   await expect(context.getByLabel("Captured research selection")).toContainText("Language: hindi");
+  await expect(context.getByRole("region", { name: "Research coverage", exact: true })).toContainText("0 matching records examined · 0 eligible · 0 captured");
+  await expect(context.getByRole("region", { name: "Research coverage", exact: true })).toContainText("AUDIENCE: 0 usable sources at generation check — evidence gap; label assumptions");
   await page.getByRole("button", { name: "Clear research filters", exact: true }).click();
   await expect(page.getByLabel("Research language", { exact: true })).toHaveValue("");
   await expect(context.getByLabel("Captured research selection")).toContainText("Language: hindi");
   await page.screenshot({ path: "test-results/strategy-references-assumption.png", fullPage: true, animations: "disabled" });
+});
+
+
+test("a bounded unreviewed window explains missing evidence without exposing omitted record details", async ({ page }) => {
+  const { org, user, open } = await setup(page);
+  await db.brandBrain.create({ data: { organizationId: org.id, profile: { name: "Synthetic coverage brand", audience: "Synthetic audience" }, creativeDna: {} } });
+  await db.researchRecord.createMany({ data: Array.from({ length: 101 }, (_, i) => ({ ...evidence(`Private pending observation ${i}`),
+    organizationId: org.id, createdBy: user.id, observedAt: new Date() })) });
+  await open();await page.getByRole("navigation").getByRole("button", { name: "Create with AI", exact: true }).click();
+  await page.getByLabel("Generation type").selectOption("strategy");
+  await page.getByLabel("Research categories", { exact: true }).selectOption(["AUDIENCE", "SEARCH"]);
+  await page.getByLabel("What would you like to create?").fill("Synthetic bounded research coverage explanation");
+  await page.getByRole("button", { name: "Generate", exact: true }).click();
+  const context = page.getByRole("region", { name: "Strategy research context", exact: true });
+  await expect(context.getByRole("button", { name: "View research sources" })).toBeEnabled({ timeout: 30000 });
+  await context.getByRole("button", { name: "View research sources" }).click();
+  const coverage = context.getByRole("region", { name: "Research coverage", exact: true });
+  await expect(coverage).toContainText("100 matching records examined · 0 eligible · 0 captured");
+  await expect(coverage).toContainText("More matching records existed beyond the latest 100");
+  await expect(coverage).toContainText("100 not accepted");
+  await expect(coverage).toContainText("SEARCH: 0 usable sources at generation check — evidence gap; label assumptions");
+  await expect(context.getByText(/Private pending observation/)).toHaveCount(0);
+  await expect(context.getByRole("link")).toHaveCount(0);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path: "test-results/research-coverage-window.png", fullPage: true, animations: "disabled" });
 });

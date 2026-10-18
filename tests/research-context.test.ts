@@ -130,7 +130,7 @@ test("explicit research criteria filter before candidate limits and persist thro
   assert.deepEqual(snapshot.evidence.map(x => x.id), [selected.id]);
   assert.deepEqual(resolveResearchContext(snapshot, org, [selected], now).selection, criteria);
   assert.equal(readResearchSnapshot({ ...snapshot, selection: { ...criteria, market: "us" } }, org), null);
-  const { selection, ...legacy } = snapshot;
+  const { selection, coverage, ...legacy } = snapshot;
   assert.ok(readResearchSnapshot(legacy, org));
   assert.equal(resolveResearchContext(legacy, org, [selected], now).selection, null);
   for (const change of [{ category: "SEARCH" }, { market: "US" }, { language: "Hindi" }]) {
@@ -148,4 +148,49 @@ test("research selection validates bounds, canonicalizes replay choices and trea
   assert.equal(researchSelectionWhere({ categories: [], market: "a_%\\b", language: "" }).market?.equals, "a\\_\\%\\\\b");
   const snapshot = captureResearchSnapshot(org, [source({ market: "INDIA", language: "ENGLISH" })], now, canonical);
   assert.equal(snapshot.evidence.length, 1);
+});
+
+test("research coverage accounts for primary eligibility omissions without exposing excluded or foreign source text", () => {
+  const kept = source(), emerging = source({ category: "SEARCH", temporalScope: "EMERGING" });
+  const invalid = source({ summary: "PRIVATE INVALID TEXT", sourceUrl: null });
+  const rows = [kept, emerging, source({ reviewStatus: "UNREVIEWED" }), source({ authorizedSource: false }),
+    source({ provenance: "IMPORTED" }), source({ temporalScope: "HISTORICAL" }),
+    source({ observedAt: "2026-09-01T00:00:00Z" }), invalid, source({ organizationId: randomUUID(), summary: "PRIVATE FOREIGN TEXT" })];
+  const snapshot = captureResearchSnapshot(org, rows, now), c = snapshot.coverage!;
+  assert.ok(readResearchSnapshot(snapshot, org));
+  assert.equal(c.examined, 8);assert.equal(c.eligible, 2);assert.equal(c.captured, 2);
+  assert.deepEqual(c.rejected, { reviewRequired: 1, unauthorized: 1, unsupportedProvenance: 1, timeScope: 1, expired: 1, invalidSource: 1 });
+  assert.equal(c.byCategory.find(x => x.category === "SEARCH")?.captured, 1);
+  const primary = captureResearchSnapshot(org, [source({ reviewStatus: "REJECTED", authorizedSource: false, observedAt: "2026-09-01T00:00:00Z" }),
+    source({ authorizedSource: false, provenance: "IMPORTED" }), source({ temporalScope: "HISTORICAL", observedAt: "2026-09-01T00:00:00Z" })], now).coverage!;
+  assert.equal(primary.rejected.reviewRequired, 1);assert.equal(primary.rejected.unauthorized, 1);assert.equal(primary.rejected.expired, 1);
+  assert.ok(!JSON.stringify(snapshot).includes("PRIVATE"));assert.ok(!JSON.stringify(c).includes(invalid.id));
+  const context = resolveResearchContext(snapshot, org, rows.map(row => row.id === kept.id ? { ...row, revision: 3 } : row), now);
+  assert.deepEqual(context.coverage?.capture, c);
+  assert.equal(context.coverage?.availableByCategory.find(x => x.category === "AUDIENCE")?.sources, 0);
+  assert.equal(context.coverage?.availableByCategory.find(x => x.category === "SEARCH")?.sources, 1);
+});
+
+test("coverage reports a bounded candidate lookahead, source cap and byte omissions with exact accounting", () => {
+  const rows = Array.from({ length: 101 }, () => source());
+  const snapshot = captureResearchSnapshot(org, rows, now), c = snapshot.coverage!;
+  assert.equal(c.examined, 100);assert.equal(c.eligible, 100);assert.equal(c.captured, 10);
+  assert.equal(c.candidateWindowTruncated, true);assert.equal(c.omitted.sourceLimit, 90);
+  assert.equal(c.omitted.byteBudget, 0);assert.ok(readResearchSnapshot(snapshot, org));
+  const huge = captureResearchSnapshot(org, Array.from({ length: 15 }, () => source({ summary: "🌍".repeat(1200), sourceUrl: "https://public.org/" + "a".repeat(2000) })), now);
+  assert.ok(huge.coverage!.omitted.byteBudget > 0);
+  assert.equal(huge.coverage!.eligible, huge.coverage!.captured + huge.coverage!.omitted.sourceLimit + huge.coverage!.omitted.byteBudget);
+  assert.ok(Buffer.byteLength(JSON.stringify(huge)) <= researchContextMaximumBytes);assert.ok(readResearchSnapshot(huge, org));
+});
+
+test("legacy coverage remains unknown while inconsistent or forged coverage fails closed", () => {
+  const row = source(), snapshot = captureResearchSnapshot(org, [row], now);
+  const { coverage, ...legacy } = snapshot;
+  assert.ok(readResearchSnapshot(legacy, org));assert.equal(resolveResearchContext(legacy, org, [row], now).coverage, null);
+  const c = snapshot.coverage!;
+  for (const bad of [{ ...c, captured: 0 }, { ...c, examined: 2 }, { ...c, candidateWindowTruncated: true },
+    { ...c, omitted: { sourceLimit: 1, byteBudget: 0 } }, { ...c, byCategory: c.byCategory.slice(1) },
+    { ...c, byCategory: c.byCategory.map(x => ({ ...x, captured: 0 })) }, { ...c, sourceIds: [randomUUID()] }]) {
+    assert.equal(resolveResearchContext({ ...snapshot, coverage: bad }, org, [row], now).reason, "INVALID_SNAPSHOT");
+  }
 });

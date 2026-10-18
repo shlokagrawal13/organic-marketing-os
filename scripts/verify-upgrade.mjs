@@ -250,6 +250,8 @@ try {
   const restoredStrategy = (await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [strategyJob])).rows[0].brandContext;
   assert.deepEqual(restoredStrategy, strategyContext);
   const restoredSource = (await restored.query('SELECT row_to_json(r) AS row FROM "ResearchRecord" r WHERE id=$1', [strategyResearch])).rows[0].row;
+  assert.deepEqual(restoredStrategy.researchSnapshot.coverage, researchSnapshot.coverage);
+  assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).coverage, selectedResearch.coverage);
   assert.deepEqual(restoredStrategy.researchSnapshot.selection, { categories: ["AUDIENCE"], market: "india", language: "english" });
   assert.deepEqual(resolveResearchContext(restoredStrategy.researchSnapshot, org, [utcResearch(restoredSource)]).evidence, researchSnapshot.evidence);
   assert.equal((await restored.query('SELECT "brandContext" FROM "AIJob" WHERE id=$1', [job])).rows[0].brandContext, null);
@@ -279,6 +281,7 @@ try {
     researchCitationProvenanceAndReviewRestored: true,
     queuedStrategyResearchSnapshotRestored: true,
     strategyResearchSelectionRestored: true,
+    strategyResearchCoverageRestored: true,
     strategyRecommendationsAndCitationReviewRestored: true,
   };
   await writeFile(

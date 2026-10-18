@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-18.06-RESEARCH-01D-native-CI",
-  "savedAtUtc": "2026-10-18T13:28:03.973326+00:00",
-  "currentMilestone": "RESEARCH-01D published and exact-source native CI verified; RESEARCH-01E coverage explanations are next.",
-  "activeTaskId": null,
-  "workInProgress": false,
+  "checkpointRevision": "2026-10-18.07-RESEARCH-01E",
+  "savedAtUtc": "2026-10-18T14:05:45.583563+00:00",
+  "currentMilestone": "RESEARCH-01E locally verified; publication/native CI closure in progress.",
+  "activeTaskId": "RESEARCH-01",
+  "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RESEARCH-01",
-  "nextAction": "Continue RESEARCH-01E: audit master research requirements against the retained manual intake, selection and recommendation review. Implement the next bounded source-coverage/missing-data explanation increment, preserving tenant/revision/expiry checks; verify, push and inspect exact-commit CI. Live adapters, relevance/factual-quality acceptance and full master acceptance remain open.",
+  "nextAction": "Publish verified RESEARCH-01E source, inspect/fix native CI and publish evidence closure. Continue RESEARCH-01F: audit and implement the next bounded structured competitor/search insight slice from master sections 20–21. Preserve manual-source provenance, tenant/revision/review gates, frozen selection/coverage and explicit assumptions; run full verification, push and inspect exact-commit CI. Live adapters, semantic/factual-quality acceptance and full master acceptance remain open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -90,10 +90,14 @@
     "README.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
+    "apps/api/src/ai.ts",
+    "apps/web/app/globals.css",
+    "apps/web/app/strategy-research.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESEARCH_COVERAGE.md",
     "docs/RESEARCH_EVIDENCE.md",
     "docs/RESEARCH_STRATEGY_CONTEXT.md",
     "docs/RESUME_CONTEXT.md",
@@ -102,8 +106,19 @@
     "docs/STRATEGY_RESEARCH_SELECTION.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/research01d-native-ci-evidence.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/research01e-assumption.png",
+    "docs/qa/research01e-dark.png",
+    "docs/qa/research01e-desktop.png",
+    "docs/qa/research01e-evidence.json",
+    "docs/qa/research01e-mobile.png",
+    "docs/qa/research01e-unit-receipts.json",
+    "docs/qa/research01e-window.png",
+    "docs/qa/verification-summary.json",
+    "packages/core/research-context.ts",
+    "scripts/verify-upgrade.mjs",
+    "tests/integration/research-context.test.ts",
+    "tests/research-context.test.ts",
+    "tests/ui/research.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6699,7 +6714,7 @@
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
     "commit": "0dbefdfd30526d33d3d14f85b43e741e266a547d",
-    "status": "RESEARCH-01D_public_native_ci_verified",
+    "status": "RESEARCH-01E_local_verified_publication_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -7947,7 +7962,7 @@
       "id": "RESEARCH-01",
       "state": "ready_for_local_work",
       "title": "Sourced research, trends, competitors, SEO/AEO and community",
-      "completedIncrement": "RESEARCH-01A/B/C/D manual evidence, strategy context and reference/assumption review and explicit selection published/native CI verified. Next RESEARCH-01E coverage/missing-data explanation; wider research remains partial."
+      "completedIncrement": "RESEARCH-01A/B/C/D/E manual evidence, strategy context, reference review, selection and bounded coverage locally verified; E publication/CI pending. Next RESEARCH-01F structured insights; wider research remains partial."
     },
     {
       "id": "SOCIAL-01",
@@ -8047,7 +8062,10 @@
     }
   ],
   "lastChanges": [
-    "RESEARCH-01D adds explicit bounded category/market/language filters to strategy requests. The tenant query filters before the latest-100 limit; canonical choices freeze in job snapshots and actual provider/trace context. Reviewers see captured filters independently of later form changes. Empty matches remain missing research/assumptions; old snapshots remain readable. Export and populated restore retain the criteria without migration changes."
+    "Capture assesses the latest 100 tenant-scoped matches with one lookahead record; eligibility/rejection and source/byte omission counts reconcile with captured identities.",
+    "Immutable capture counts and current per-category usable-source counts reach the actual provider and trace; withdrawal never rewrites history or reveals omitted source bodies.",
+    "The reviewer sees bounded-window warnings, capture exclusions and category gaps; older jobs keep unknown coverage.",
+    "Coverage survives tenant export and populated archive restore without changing migrations."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8084,8 +8102,8 @@
     "prisma/migrations/202610180001_research_evidence/migration.sql": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RESEARCH-01D source is public on main at `0dbefdfd30526d33d3d14f85b43e741e266a547d` (tree `fefa4c2bc939db77edb564afdcaa36991ec082ea`); all 36 published paths and the full tree matched local verification. Exact-source native Actions run `39130392281` passed: 239 unit/export, 32 HTTP, 18 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed.",
-  "activeTask": null,
+  "latestStatus": "RESEARCH-01E adds bounded research coverage and missing-data explanations. The latest-100 matching window records eligibility/rejection and source/byte omission counts, with one lookahead flag. Immutable capture counts and current category gaps reach the actual provider and trace. The viewer explains bounded scope and exclusions without exposing omitted source bodies; older jobs retain unknown coverage. Export and populated restore preserve the metadata without changing migrations.",
+  "activeTask": "Publish RESEARCH-01E and inspect exact-source native CI, then publish continuity closure.",
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8096,7 +8114,47 @@
     "priorLostResultsInvented": false,
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
-  "pendingPublication": null,
+  "pendingPublication": {
+    "taskId": "RESEARCH-01E",
+    "description": "Standing-authorized source push/native CI",
+    "paths": [
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "README.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
+      "apps/api/src/ai.ts",
+      "apps/web/app/globals.css",
+      "apps/web/app/strategy-research.tsx",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/RESEARCH_COVERAGE.md",
+      "docs/RESEARCH_EVIDENCE.md",
+      "docs/RESEARCH_STRATEGY_CONTEXT.md",
+      "docs/RESUME_CONTEXT.md",
+      "docs/SESSION_LOG.md",
+      "docs/STRATEGY_REFERENCE_REVIEW.md",
+      "docs/STRATEGY_RESEARCH_SELECTION.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/qa/research01e-assumption.png",
+      "docs/qa/research01e-dark.png",
+      "docs/qa/research01e-desktop.png",
+      "docs/qa/research01e-evidence.json",
+      "docs/qa/research01e-mobile.png",
+      "docs/qa/research01e-unit-receipts.json",
+      "docs/qa/research01e-window.png",
+      "docs/qa/verification-summary.json",
+      "packages/core/research-context.ts",
+      "scripts/verify-upgrade.mjs",
+      "tests/integration/research-context.test.ts",
+      "tests/research-context.test.ts",
+      "tests/ui/research.spec.ts"
+    ]
+  },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
     "status": "approved_payload_published_ci_verified",
@@ -8906,60 +8964,64 @@
   },
   "currentVerification": {
     "unit": {
-      "tests": 239,
-      "passed": 239,
+      "tests": 242,
+      "passed": 242,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "completeFinalCumulativeSummary": true,
-      "artifactReceiptsIndependentlyInspected": false
+      "uniqueReceipts": 242
     },
     "http": {
-      "tests": 32,
-      "passed": 32,
+      "tests": 33,
+      "passed": 33,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0
     },
     "browser": {
-      "tests": 18,
-      "passed": 18,
-      "duration": "1.1m"
+      "tests": 19,
+      "passed": 19
     },
     "recovery": {
       "tests": 5,
       "passed": 5,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119849
+      "observedRemainingLockMs": 119848
     },
     "apiBuild": true,
     "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4973448,
+      "sha256": "b62dc9abd2c4e42f0b0ce01a56b63f4712efb29cc766072a492b6e7f9e38ce23",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyResearchCoverageRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
     "boundedEnglishReadability": {
       "passed": true,
-      "passedSampleLogLines": 44,
-      "artifactSampleBytesIndependentlyInspected": false
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
     },
-    "freshNativePostgresMigrations": 23,
-    "nativeRedis": true,
-    "populatedUpgradeRestore": true,
-    "researchCitationProvenanceAndReviewRestored": true,
-    "queuedStrategyResearchSnapshotRestored": true,
-    "strategyRecommendationsAndCitationReviewRestored": true,
-    "strategyResearchSelectionRestored": true,
-    "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0,
-    "scope": "Exact-source native GitHub Actions",
-    "sourceCommit": "0dbefdfd30526d33d3d14f85b43e741e266a547d",
-    "runId": 39130392281,
-    "evidence": "docs/qa/research01d-native-ci-evidence.json",
-    "liveProviderVerification": false,
-    "fullMasterAcceptanceVerified": false
+    "fullAuditVulnerabilities": 0
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -9467,60 +9529,64 @@
   },
   "verification": {
     "unit": {
-      "tests": 239,
-      "passed": 239,
+      "tests": 242,
+      "passed": 242,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "completeFinalCumulativeSummary": true,
-      "artifactReceiptsIndependentlyInspected": false
+      "uniqueReceipts": 242
     },
     "http": {
-      "tests": 32,
-      "passed": 32,
+      "tests": 33,
+      "passed": 33,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0
     },
     "browser": {
-      "tests": 18,
-      "passed": 18,
-      "duration": "1.1m"
+      "tests": 19,
+      "passed": 19
     },
     "recovery": {
       "tests": 5,
       "passed": 5,
       "failed": 0,
-      "cancelled": 0,
       "skipped": 0,
+      "cancelled": 0,
       "todo": 0,
-      "observedRemainingLockMs": 119849
+      "observedRemainingLockMs": 119848
     },
     "apiBuild": true,
     "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4973448,
+      "sha256": "b62dc9abd2c4e42f0b0ce01a56b63f4712efb29cc766072a492b6e7f9e38ce23",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyResearchCoverageRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
     "boundedEnglishReadability": {
       "passed": true,
-      "passedSampleLogLines": 44,
-      "artifactSampleBytesIndependentlyInspected": false
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
     },
-    "freshNativePostgresMigrations": 23,
-    "nativeRedis": true,
-    "populatedUpgradeRestore": true,
-    "researchCitationProvenanceAndReviewRestored": true,
-    "queuedStrategyResearchSnapshotRestored": true,
-    "strategyRecommendationsAndCitationReviewRestored": true,
-    "strategyResearchSelectionRestored": true,
-    "nativePostgresRestoreVerified": false,
     "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0,
-    "scope": "Exact-source native GitHub Actions",
-    "sourceCommit": "0dbefdfd30526d33d3d14f85b43e741e266a547d",
-    "runId": 39130392281,
-    "evidence": "docs/qa/research01d-native-ci-evidence.json",
-    "liveProviderVerification": false,
-    "fullMasterAcceptanceVerified": false
+    "fullAuditVulnerabilities": 0
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
     "scope": "POLICY-01B local reconstruction; full app regression plus final hostname-hardening focused rerun; no native CI for this increment",
@@ -11906,5 +11972,111 @@
       "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
       "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
     ]
+  },
+  "research01e": {
+    "schemaVersion": 1,
+    "taskId": "RESEARCH-01E",
+    "recordedAtUtc": "2026-10-18T14:05:45.546206+00:00",
+    "status": "locally_verified_publication_ci_pending",
+    "basePublicCommit": "53edf40321894aae1bee124a1b5e49418338cffe",
+    "scope": "Bounded research capture accounting, category gaps after revalidation, provider/trace equality, reviewer explanations and durable export/restore.",
+    "verification": {
+      "unit": {
+        "tests": 242,
+        "passed": 242,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "uniqueReceipts": 242
+      },
+      "http": {
+        "tests": 33,
+        "passed": 33,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "browser": {
+        "tests": 19,
+        "passed": 19
+      },
+      "recovery": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "observedRemainingLockMs": 119848
+      },
+      "apiBuild": true,
+      "webProductionBuild": true,
+      "freshNativePostgresMigrations": 23,
+      "populatedUpgradeRestore": {
+        "passed": true,
+        "engine": "PGlite WASM PostgreSQL",
+        "migrations": 23,
+        "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+        "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+        "archiveBytes": 4973448,
+        "sha256": "b62dc9abd2c4e42f0b0ce01a56b63f4712efb29cc766072a492b6e7f9e38ce23",
+        "nativePostgresRestoreVerified": false,
+        "creditLedgerRestoreAndImmutabilityVerified": true,
+        "generatedMediaRequestAndProviderReceiptRestored": true,
+        "workspaceYoutubePolicyRestored": true,
+        "researchCitationProvenanceAndReviewRestored": true,
+        "queuedStrategyResearchSnapshotRestored": true,
+        "strategyResearchSelectionRestored": true,
+        "strategyResearchCoverageRestored": true,
+        "strategyRecommendationsAndCitationReviewRestored": true
+      },
+      "boundedEnglishReadability": {
+        "passed": true,
+        "standardSamples": 36,
+        "busySamples": 8,
+        "blankNegativeControl": true
+      },
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0
+    },
+    "behavior": [
+      "Capture assesses the latest 100 tenant-scoped matches with one lookahead record; eligibility/rejection and source/byte omission counts reconcile with captured identities.",
+      "Immutable capture counts and current per-category usable-source counts reach the actual provider and trace; withdrawal never rewrites history or reveals omitted source bodies.",
+      "The reviewer sees bounded-window warnings, capture exclusions and category gaps; older jobs keep unknown coverage.",
+      "Coverage survives tenant export and populated archive restore without changing migrations."
+    ],
+    "screenshots": {
+      "desktop": "docs/qa/research01e-desktop.png",
+      "dark": "docs/qa/research01e-dark.png",
+      "mobile": "docs/qa/research01e-mobile.png",
+      "assumption": "docs/qa/research01e-assumption.png",
+      "window": "docs/qa/research01e-window.png"
+    },
+    "unitReceipts": "docs/qa/research01e-unit-receipts.json",
+    "resolvedLocalVerificationIssue": "The first full native attempt stopped at the disposable PostgreSQL readiness probe before application tests began. The retained test wrapper now probes TCP rather than the initialization Unix socket, and the fresh final native run must pass completely. Product and pipeline checks were not weakened.",
+    "commands": [
+      "npm run build",
+      "PATH=.local/cloud/bin:$PATH npm test (retained HarfBuzz 8.3 test runtime)",
+      "npm run verify:upgrade",
+      "npm run verify:readability",
+      "npm audit --omit=dev --json",
+      "npm audit --json",
+      "bash .local/run-research01e-native.sh (fresh disposable native PostgreSQL/Redis; full verify-local --native --production-web)"
+    ],
+    "limits": [
+      "Filters restrict the bounded input window; they do not rank relevance or ensure all eligible library records are considered.",
+      "Manual sources are not fetched or independently verified; selection and excerpt matching do not prove truth, rights, quality or semantic entailment.",
+      "Live source/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open.",
+      "CI verifies and does not deploy."
+    ],
+    "logs": {
+      "unit": "4a856292249b53639b94d1b9e0fe559a411a753c3f430f6b604036d82e699182",
+      "native": "17c75be56445b372b2882168b29f76e9af05d9a12cd47035f56517a3cf1b01c5",
+      "build": "3db2377ec915a27b25dd854faaafd7e059db5269aefde7be371a984a22eb9f10",
+      "upgrade": "d5405f35974edf7a31007708f11082161c019a8c0d30c5b7f3dc649f4211ee0f",
+      "readability": "8a21fa4886ed34e6a66aa4c58d3f8f7af00d34cf0173548c3f2c79977e75a08f"
+    }
   }
 }

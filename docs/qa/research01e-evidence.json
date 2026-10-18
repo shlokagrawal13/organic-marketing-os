@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RESEARCH-01E",
+  "recordedAtUtc": "2026-10-18T14:05:45.546206+00:00",
+  "status": "locally_verified_publication_ci_pending",
+  "basePublicCommit": "53edf40321894aae1bee124a1b5e49418338cffe",
+  "scope": "Bounded research capture accounting, category gaps after revalidation, provider/trace equality, reviewer explanations and durable export/restore.",
+  "verification": {
+    "unit": {
+      "tests": 242,
+      "passed": 242,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "uniqueReceipts": 242
+    },
+    "http": {
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "browser": {
+      "tests": 19,
+      "passed": 19
+    },
+    "recovery": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "observedRemainingLockMs": 119848
+    },
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "freshNativePostgresMigrations": 23,
+    "populatedUpgradeRestore": {
+      "passed": true,
+      "engine": "PGlite WASM PostgreSQL",
+      "migrations": 23,
+      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
+      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
+      "archiveBytes": 4973448,
+      "sha256": "b62dc9abd2c4e42f0b0ce01a56b63f4712efb29cc766072a492b6e7f9e38ce23",
+      "nativePostgresRestoreVerified": false,
+      "creditLedgerRestoreAndImmutabilityVerified": true,
+      "generatedMediaRequestAndProviderReceiptRestored": true,
+      "workspaceYoutubePolicyRestored": true,
+      "researchCitationProvenanceAndReviewRestored": true,
+      "queuedStrategyResearchSnapshotRestored": true,
+      "strategyResearchSelectionRestored": true,
+      "strategyResearchCoverageRestored": true,
+      "strategyRecommendationsAndCitationReviewRestored": true
+    },
+    "boundedEnglishReadability": {
+      "passed": true,
+      "standardSamples": 36,
+      "busySamples": 8,
+      "blankNegativeControl": true
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "behavior": [
+    "Capture assesses the latest 100 tenant-scoped matches with one lookahead record; eligibility/rejection and source/byte omission counts reconcile with captured identities.",
+    "Immutable capture counts and current per-category usable-source counts reach the actual provider and trace; withdrawal never rewrites history or reveals omitted source bodies.",
+    "The reviewer sees bounded-window warnings, capture exclusions and category gaps; older jobs keep unknown coverage.",
+    "Coverage survives tenant export and populated archive restore without changing migrations."
+  ],
+  "screenshots": {
+    "desktop": "docs/qa/research01e-desktop.png",
+    "dark": "docs/qa/research01e-dark.png",
+    "mobile": "docs/qa/research01e-mobile.png",
+    "assumption": "docs/qa/research01e-assumption.png",
+    "window": "docs/qa/research01e-window.png"
+  },
+  "unitReceipts": "docs/qa/research01e-unit-receipts.json",
+  "resolvedLocalVerificationIssue": "The first full native attempt stopped at the disposable PostgreSQL readiness probe before application tests began. The retained test wrapper now probes TCP rather than the initialization Unix socket, and the fresh final native run must pass completely. Product and pipeline checks were not weakened.",
+  "commands": [
+    "npm run build",
+    "PATH=.local/cloud/bin:$PATH npm test (retained HarfBuzz 8.3 test runtime)",
+    "npm run verify:upgrade",
+    "npm run verify:readability",
+    "npm audit --omit=dev --json",
+    "npm audit --json",
+    "bash .local/run-research01e-native.sh (fresh disposable native PostgreSQL/Redis; full verify-local --native --production-web)"
+  ],
+  "limits": [
+    "Filters restrict the bounded input window; they do not rank relevance or ensure all eligible library records are considered.",
+    "Manual sources are not fetched or independently verified; selection and excerpt matching do not prove truth, rights, quality or semantic entailment.",
+    "Live source/provider/deployed acceptance, native PostgreSQL/private-media cross-store restore and full master acceptance remain open.",
+    "CI verifies and does not deploy."
+  ],
+  "logs": {
+    "unit": "4a856292249b53639b94d1b9e0fe559a411a753c3f430f6b604036d82e699182",
+    "native": "17c75be56445b372b2882168b29f76e9af05d9a12cd47035f56517a3cf1b01c5",
+    "build": "3db2377ec915a27b25dd854faaafd7e059db5269aefde7be371a984a22eb9f10",
+    "upgrade": "d5405f35974edf7a31007708f11082161c019a8c0d30c5b7f3dc649f4211ee0f",
+    "readability": "8a21fa4886ed34e6a66aa4c58d3f8f7af00d34cf0173548c3f2c79977e75a08f"
+  }
+}

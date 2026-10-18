@@ -248,7 +248,7 @@ export class AIController {
       const jobId = randomUUID();
       const researchSnapshot = data.task === "strategy" ? captureResearchSnapshot(req.organizationId,
         await tx.researchRecord.findMany({ where: { organizationId: req.organizationId, ...researchSelectionWhere(selection) },
-          orderBy: [{ updatedAt: "desc" }, { id: "desc" }], take: 100 }), new Date(), selection) : undefined;
+          orderBy: [{ updatedAt: "desc" }, { id: "desc" }], take: 101 }), new Date(), selection) : undefined;
       const reservation =
         policy.mode === "credits"
           ? await reserveCredits(

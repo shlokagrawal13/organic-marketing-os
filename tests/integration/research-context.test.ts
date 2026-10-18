@@ -181,3 +181,42 @@ test("strategy filters constrain the pre-limit query, freeze canonical choices, 
   const rows = (await exported.text()).trim().split("\n").map(x => JSON.parse(x));
   assert.deepEqual(rows.find(x => x.type === "aiJob" && x.data.id === saved.id).data.brandContext.researchSnapshot.selection, selection);
 });
+
+test("bounded coverage reaches the actual provider, preserves capture history and reports later category gaps without tenant leakage", async () => {
+  const w = await workspace("Coverage fixture"), foreign = await workspace("Private coverage fixture");
+  const kept = await accepted(w, "Coverage source retained"), withdrawn = await accepted(w, "Coverage source changed after capture");
+  await db.researchRecord.update({ where: { id: withdrawn.id }, data: { category: "SEARCH" } });
+  await w.owner.call(w.root + "/research", "POST", input("Unreviewed coverage observation"));
+  await accepted(foreign, "Foreign coverage must not be counted");
+  const data = { requestKey: randomUUID(), task: "strategy", prompt: "Synthetic coverage context " + randomUUID(),
+    researchSelection: { categories: ["AUDIENCE", "SEARCH"], market: "India", language: "English" } };
+  await queue.pause();
+  const posted = await w.owner.call(w.root + "/ai/jobs", "POST", data);assert.equal(posted.status, 201);
+  const saved = await db.aIJob.findUniqueOrThrow({ where: { id: posted.body.id } }), snapshot = (saved.brandContext as any).researchSnapshot;
+  assert.equal(snapshot.coverage.examined, 3);assert.equal(snapshot.coverage.eligible, 2);
+  assert.equal(snapshot.coverage.rejected.reviewRequired, 1);assert.equal(snapshot.coverage.candidateWindowTruncated, false);
+  assert.equal((await w.owner.call(w.root + `/research/${withdrawn.id}/review`, "POST", { expectedRevision: 2, decision: "REJECTED", sourcesReviewed: true, note: "Withdraw synthetic coverage source." })).status, 201);
+  assert.equal((await w.owner.call(w.root + "/ai/jobs", "POST", data)).body.id, saved.id);
+  await queue.resume();
+  const { sent, trace } = await result(w, saved.id, data.prompt);
+  assert.deepEqual(sent.research.coverage.capture, snapshot.coverage);
+  assert.deepEqual(sent.research.coverage.availableByCategory, [{ category: "AUDIENCE", sources: 1 }, { category: "SEARCH", sources: 0 }]);
+  assert.deepEqual(sent.research.evidence.map((x: any) => x.id), [kept.id]);
+  assert.equal((await foreign.owner.call(w.root + `/ai/jobs/${saved.id}/trace`)).status, 404);
+  const exported = await fetch(base + w.root + "/operations/export", { headers: w.owner.headers });
+  const rows = (await exported.text()).trim().split("\n").map(x => JSON.parse(x));
+  assert.deepEqual(rows.find(x => x.type === "aiJob" && x.data.id === saved.id).data.brandContext.researchSnapshot.coverage, snapshot.coverage);
+  assert.deepEqual(rows.find(x => x.type === "aiAgentRun" && x.data.jobId === saved.id).data.frozenContext.brand.research.coverage, trace.frozenContext.brand.research.coverage);
+
+  // 101 matching records require a lookahead flag; only the newest 100 are assessed.
+  await db.researchRecord.createMany({ data: Array.from({ length: 101 }, (_, index) => ({ ...input(`Bounded pending ${index}`),
+    organizationId: w.org.id, createdBy: w.owner.id, observedAt: new Date() })) });
+  const limitedData = { ...data, requestKey: randomUUID(), prompt: "Synthetic bounded coverage window " + randomUUID() };
+  const limited = await w.owner.call(w.root + "/ai/jobs", "POST", limitedData);assert.equal(limited.status, 201);
+  const limitResult = await result(w, limited.body.id, limitedData.prompt);
+  assert.equal(limitResult.sent.research.coverage.capture.candidateWindowTruncated, true);
+  assert.equal(limitResult.sent.research.coverage.capture.examined, 100);
+  assert.equal(limitResult.sent.research.coverage.capture.rejected.reviewRequired, 100);
+  assert.equal(limitResult.sent.research.coverage.capture.eligible, 0);
+  assert.equal(limitResult.sent.research.status, "MISSING");
+});
