@@ -1,3 +1,11 @@
+## RECOVERY-01F populated application physical recovery — 2026-10-19
+
+Extended the existing no-network/tmpfs physical recovery fixture with all 24 unchanged SQL migrations and 19 synthetic rows in 11 of 37 application tables. Exact target row/column snapshots, later-change exclusion, source preservation, restored immutable-credit/FK/idempotency checks and tenant/role/revision predicates are implemented. Existing corrupt-base, missing-WAL, unreachable-target, promotion and retry assertions remain. Harness-only historical object/queue/external-effect prerequisites fail closed; this does not establish coordinated S3/Redis PITR or HTTP authorization.
+
+Local four focused guards and PGlite SQL contract pass; syntax/editor checks pass. Windows Docker daemon is unavailable, so native acceptance requires all THREE jobs on the exact new published commit. The supplied predecessor receipt closes 22e0824/run39250074116, independently rechecked through GitHub API. Resume integrity passed after 464 CRLF-only files were restored exclusively when LF hashes matched the saved manifest; no other drift. No application, migration, dependency or CI workflow changes.
+
+See docs/APPLICATION_PHYSICAL_RECOVERY.md and docs/qa/recovery01f-evidence.json for scope, changed paths and evidence. Next: publish and inspect/fix exact-source core, full 14-phase Compose and native-upgrade/physical jobs. Then RECOVERY-01G: historical private-object version retention/readback and external-effect reconciliation prerequisites in an isolated fixture. Production backup operations, live/deployed/full-master acceptance remain open. CI verifies fixtures and does not deploy.
+
 ## Current continuation — RECOVERY-01E, 2026-10-19 IST
 
 Actual PostgreSQL17.11 physical backup and named-target WAL recovery passed locally in an owned no-network/tmpfs-only container. Native pg_basebackup/pg_verifybackup validated 972 files; archived later transactions recovered the exact two-row target and excluded a later insert/delete. PostgreSQL promoted to timeline2, accepted an independent restored write and preserved source rows/timeline. Corrupt base verification blocked startup; missing WAL and nonexistent-target recovery both exited with the native target-not-reached fatal error and rejected SQL connections. The unchanged base reverified, fixture cleaned up and real .env stayed unchanged.

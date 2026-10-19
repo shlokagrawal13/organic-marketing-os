@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.17-RECOVERY-01E-physical-base-WAL-local-verified-native-CI-required",
-  "savedAtUtc": "2026-10-19T12:10:52.454803+00:00",
-  "currentMilestone": "Actual physical base backup/WAL named-target recovery locally verified with corrupt/missing-target controls; publish and require all three exact-source CI jobs.",
+  "checkpointRevision": "2026-10-19.18-RECOVERY-01F-application-physical-CI-pending",
+  "savedAtUtc": "2026-10-19T16:50:16.507Z",
+  "currentMilestone": "RECOVERY-01F implemented; four guards and SQL contract passed; exact-source native CI required",
   "activeTaskId": "RECOVERY-01",
-  "workInProgress": false,
+  "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish RECOVERY-01E and inspect/fix ALL THREE exact-source CI jobs: core, full fourteen-phase Compose recovery and native populated Prisma upgrade plus new physical base-backup/WAL named-target recovery. Require all previous checks and new native corrupt-base/missing-WAL/unreachable-target controls, clean retry/promotion/source preservation and four artifact receipts. Then RECOVERY-01F: populated application-schema physical restore and cross-store point-in-time prerequisites; production backup operations, live/deployed/full-master acceptance remain open.",
+  "nextAction": "Publish RECOVERY-01F; inspect/fix all three exact-source CI jobs. Then historical private-object version/reconciliation prerequisites (RECOVERY-01G).",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -1872,7 +1872,7 @@
         "batch": "fontkit-outlines-v1-indic-registry-mark-filter-sinhala"
       },
       "plainOverlayFingerprintUnchanged": true,
-      "fractionalEdgeTolerancePixels": 1e-07,
+      "fractionalEdgeTolerancePixels": 1e-7,
       "realOverflowStillRejected": true,
       "sinhalaJoinerConjunctsVerified": false,
       "sinhalaJoinersPreservedWithImageFallback": true,
@@ -14163,5 +14163,76 @@
       "CI artifact byte inspection is separate from logs/step results/upload digests."
     ],
     "nextTask": "RECOVERY-01F populated application-schema physical restore and cross-store point-in-time prerequisites"
+  },
+  "recovery01f": {
+    "status": "implemented_local_contracts_passed_exact_source_native_CI_pending",
+    "previousVerifiedCommit": "22e0824d7a2c15cc34dcc0a0e78f7d1f2a1eb6e8",
+    "previousVerifiedRun": 39250074116,
+    "integrity": {
+      "initialCheckFailed": "Windows core.autocrlf converted protected/source files",
+      "restoredOnlyExactManifestLFMatches": 464,
+      "otherDrift": 0,
+      "resumeCheckPassed": true
+    },
+    "nativeEnvironment": "Windows Docker Desktop daemon initially unavailable; dependencies installing",
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01F",
+    "recordedAtUtc": "2026-10-19T16:50:16.405Z",
+    "changedPaths": [
+      "scripts/application-pitr-fixture.mjs",
+      "scripts/historical-recovery-gate.mjs",
+      "scripts/verify-postgres-pitr.mjs",
+      "tests/postgres-pitr-verification.test.ts",
+      "docs/APPLICATION_PHYSICAL_RECOVERY.md",
+      "docs/POSTGRES_PHYSICAL_PITR.md",
+      "docs/qa/recovery01e-native-ci-evidence.json",
+      "docs/qa/recovery01f-evidence.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "docs/PROJECT_STATUS.md",
+      "START_HERE.md",
+      "AGENTS.md",
+      "docs/TASK_BOARD.md",
+      "docs/SESSION_LOG.md",
+      "REQUIREMENTS_MATRIX.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/CHANGELOG.md",
+      "docs/VERIFICATION_REPORT.md",
+      "CHECKPOINT_MANIFEST.json"
+    ],
+    "previousRun": 39250074116,
+    "previousRunRecheckedViaGithubApi": true,
+    "localChecks": {
+      "focusedUnitPassed": 4,
+      "focusedUnitFailed": 0,
+      "newUnitCases": 2,
+      "syntaxPassed": true,
+      "editorDiagnostics": 0,
+      "sqlContract": {
+        "engine": "PGlite",
+        "passed": true,
+        "tables": 37,
+        "populatedTables": 11,
+        "rows": 19,
+        "nativePhysicalRecovery": false
+      }
+    },
+    "environment": {
+      "os": "Windows",
+      "node": "22.22.2",
+      "python": "3.14.4",
+      "githubCliAvailable": false,
+      "dockerClient": "29.7.2",
+      "dockerDaemonAvailable": false,
+      "realEnvPresent": false,
+      "dependencies": "locked npm install in progress"
+    },
+    "limits": [
+      "Native physical recovery and all three exact-source CI jobs remain pending at package creation.",
+      "SQL contract checks do not prove WAL recovery; CI must execute the native fixture.",
+      "Historical S3/Redis coordinated recovery, production backup operations, live/deployed and full-master acceptance remain open.",
+      "Historical recovery gate is harness-only; no runtime traffic-switch controller is added.",
+      "All 24 migration files, runtime application code and three CI jobs are unchanged."
+    ]
   }
 }

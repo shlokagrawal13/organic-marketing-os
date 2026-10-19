@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01F",
+  "status": "implemented_local_contracts_passed_exact_source_native_CI_pending",
+  "recordedAtUtc": "2026-10-19T16:50:16.405Z",
+  "changedPaths": [
+    "scripts/application-pitr-fixture.mjs",
+    "scripts/historical-recovery-gate.mjs",
+    "scripts/verify-postgres-pitr.mjs",
+    "tests/postgres-pitr-verification.test.ts",
+    "docs/APPLICATION_PHYSICAL_RECOVERY.md",
+    "docs/POSTGRES_PHYSICAL_PITR.md",
+    "docs/qa/recovery01e-native-ci-evidence.json",
+    "docs/qa/recovery01f-evidence.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "docs/PROJECT_STATUS.md",
+    "START_HERE.md",
+    "AGENTS.md",
+    "docs/TASK_BOARD.md",
+    "docs/SESSION_LOG.md",
+    "REQUIREMENTS_MATRIX.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/CHANGELOG.md",
+    "docs/VERIFICATION_REPORT.md",
+    "CHECKPOINT_MANIFEST.json"
+  ],
+  "previousVerifiedCommit": "22e0824d7a2c15cc34dcc0a0e78f7d1f2a1eb6e8",
+  "previousRun": 39250074116,
+  "previousRunRecheckedViaGithubApi": true,
+  "integrity": {
+    "initialCheckFailed": "Windows core.autocrlf converted protected/source files",
+    "restoredOnlyExactManifestLFMatches": 464,
+    "otherDrift": 0,
+    "resumeCheckPassed": true
+  },
+  "localChecks": {
+    "focusedUnitPassed": 4,
+    "focusedUnitFailed": 0,
+    "newUnitCases": 2,
+    "syntaxPassed": true,
+    "editorDiagnostics": 0,
+    "sqlContract": {
+      "engine": "PGlite",
+      "passed": true,
+      "tables": 37,
+      "populatedTables": 11,
+      "rows": 19,
+      "nativePhysicalRecovery": false
+    }
+  },
+  "environment": {
+    "os": "Windows",
+    "node": "22.22.2",
+    "python": "3.14.4",
+    "githubCliAvailable": false,
+    "dockerClient": "29.7.2",
+    "dockerDaemonAvailable": false,
+    "realEnvPresent": false,
+    "dependencies": "locked npm install in progress"
+  },
+  "limits": [
+    "Native physical recovery and all three exact-source CI jobs remain pending at package creation.",
+    "SQL contract checks do not prove WAL recovery; CI must execute the native fixture.",
+    "Historical S3/Redis coordinated recovery, production backup operations, live/deployed and full-master acceptance remain open.",
+    "Historical recovery gate is harness-only; no runtime traffic-switch controller is added.",
+    "All 24 migration files, runtime application code and three CI jobs are unchanged."
+  ]
+}

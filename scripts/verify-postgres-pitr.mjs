@@ -4,6 +4,15 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import {
+  applicationMigrations,
+  applicationSeed,
+  applicationAtTarget,
+  applicationAfterTarget,
+  applicationSnapshot,
+  verifyRestoredApplication,
+} from "./application-pitr-fixture.mjs";
+import { withHistoricalRecoveryPrerequisites } from "./historical-recovery-gate.mjs";
 import { resolve } from "node:path";
 import { fixtureDockerEnv, checksum, redact } from "./compose-verification.mjs";
 import {
@@ -27,7 +36,7 @@ let id,
   cleaningUp = false;
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01E",
+  taskId: "RECOVERY-01F",
   verificationMode: "native-physical-base-backup-wal-pitr",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -212,6 +221,17 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     "source",
     "CREATE TABLE synthetic_pitr_record(id integer PRIMARY KEY, value text NOT NULL); INSERT INTO synthetic_pitr_record VALUES (1,'synthetic baseline');",
   );
+  const migrations = applicationMigrations(root);
+  for (const migration of migrations) await psql("source", migration.sql);
+  await psql("source", applicationSeed);
+  const applicationBase = await applicationSnapshot((sql) =>
+    psql("source", sql),
+  );
+  report.application = {
+    appliedMigrationSqlFiles: migrations.length,
+    migrationHashes: migrations.map(({ name, sha256 }) => ({ name, sha256 })),
+    prismaDeployClaimed: false,
+  };
   await docker([
     "exec",
     "-u",
@@ -248,6 +268,7 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     "INSERT INTO synthetic_pitr_record VALUES (2,'synthetic before target');",
   );
   const target = "omos_fixture_target";
+  await psql("source", applicationAtTarget);
   const targetLsn = (
     await psql("source", `SELECT pg_create_restore_point('${target}');`)
   ).trim();
@@ -258,11 +279,20 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
   const snapshotSql =
     "SELECT json_agg(t ORDER BY id) FROM synthetic_pitr_record t;";
   const expected = (await psql("source", snapshotSql)).trim();
+  const applicationTarget = await applicationSnapshot((sql) =>
+    psql("source", sql),
+  );
+  assert.notDeepEqual(applicationTarget, applicationBase);
   await psql(
     "source",
     "DELETE FROM synthetic_pitr_record WHERE id=1; INSERT INTO synthetic_pitr_record VALUES (3,'synthetic after target');",
   );
   const sourceAfter = (await psql("source", snapshotSql)).trim();
+  await psql("source", applicationAfterTarget);
+  const applicationLater = await applicationSnapshot((sql) =>
+    psql("source", sql),
+  );
+  assert.notDeepEqual(applicationLater, applicationTarget);
   assert.notEqual(expected, sourceAfter);
   await psql("source", "SELECT pg_switch_wal();");
   let archived = false;
@@ -317,6 +347,10 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     );
     await assert.rejects(psql(kind, "SELECT 1;"));
     assert.equal((await psql("source", snapshotSql)).trim(), sourceAfter);
+    assert.deepEqual(
+      await applicationSnapshot((sql) => psql("source", sql)),
+      applicationLater,
+    );
     report.failureCases.push({
       kind,
       nativeTargetNotReachedFatal: true,
@@ -329,6 +363,52 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
   const retry = await prepare("retry", target, "archive");
   await withVerifiedPhysicalBackup(() => verify("/fixture/base"), retry);
   assert.equal((await psql("retry", snapshotSql)).trim(), expected);
+  assert.deepEqual(
+    await applicationSnapshot((sql) => psql("retry", sql)),
+    applicationTarget,
+  );
+  // A restored PostgreSQL point is insufficient to start application workers.
+  // No S3 bytes are supplied by this database-only experiment, so startup must fail.
+  let applicationStarts = 0;
+  await assert.rejects(
+    withHistoricalRecoveryPrerequisites(
+      {
+        writersIsolated: true,
+        databasePoint: targetLsn,
+        objectsPoint: targetLsn,
+        redisKeys: 0,
+        queueReconstructionReviewed: true,
+        externalEffectsReconciled: true,
+        referenceInventoryComplete: true,
+        references: applicationTarget.rows.Asset.map((a) => ({
+          key: a.objectKey,
+          bytes: a.bytes,
+          sha256: a.sha256,
+          contentType: a.mimeType,
+        })),
+        objects: [],
+      },
+      async () => {
+        applicationStarts++;
+      },
+    ),
+    /Missing historical private object/,
+  );
+  assert.equal(applicationStarts, 0);
+  await verifyRestoredApplication((sql) => psql("retry", sql));
+  report.application.tablesCompared = Object.keys(
+    applicationTarget.rows,
+  ).length;
+  report.application.populatedTables = Object.values(
+    applicationTarget.rows,
+  ).filter((rows) => rows.length).length;
+  report.application.rowsCompared = Object.values(
+    applicationTarget.rows,
+  ).reduce((n, rows) => n + rows.length, 0);
+  report.application.crossStoreAcceptance = false;
+  report.application.missingHistoricalObjectsBlockedStartup = true;
+  report.application.restoredConstraintsAndRevisionPredicates = true;
+  report.application.httpAuthorizationClaimed = false;
   assert.equal(
     (await psql("retry", "SELECT pg_is_in_recovery();")).trim(),
     "f",
@@ -359,6 +439,11 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     "INSERT INTO synthetic_pitr_record VALUES (4,'synthetic restored independent write');",
   );
   assert.equal((await psql("source", snapshotSql)).trim(), sourceAfter);
+  assert.deepEqual(
+    await applicationSnapshot((sql) => psql("source", sql)),
+    applicationLater,
+  );
+  assert.deepEqual(applicationMigrations(root), migrations);
   assert.equal(
     (await shell("sha256sum /fixture/base/backup_manifest\n")).split(" ")[0],
     report.baseBackup.manifestSha256,
@@ -377,6 +462,11 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     restoredClusterAcceptsIndependentWrites: true,
     sourceRecordsAndTimelineUnchanged: true,
     savedBaseBackupUnchanged: true,
+    populatedApplicationSchemaPhysicalRecovery: true,
+    applicationRowsAndColumnDefinitionsMatchTarget: true,
+    applicationLaterChangesExcluded: true,
+    applicationSourcePreserved: true,
+    historicalObjectPrerequisiteBlocksApplicationStart: true,
   });
   report.passed = true;
 } catch (error) {
