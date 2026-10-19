@@ -23,7 +23,8 @@
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/CHANGELOG.md",
     "docs/VERIFICATION_REPORT.md",
-    "CHECKPOINT_MANIFEST.json"
+    "CHECKPOINT_MANIFEST.json",
+    "tests/native-upgrade-verification.test.ts"
   ],
   "previousVerifiedCommit": "22e0824d7a2c15cc34dcc0a0e78f7d1f2a1eb6e8",
   "previousRun": 39250074116,
@@ -47,6 +48,11 @@
       "populatedTables": 11,
       "rows": 19,
       "nativePhysicalRecovery": false
+    },
+    "focusedRecoveryRegression": {
+      "passed": 14,
+      "failed": 0,
+      "initialFailure": "Existing POSIX literal caseRoot failed Windows path equality; test now uses platform resolve for valid paths, retaining every rejection assertion"
     }
   },
   "environment": {
@@ -57,7 +63,7 @@
     "dockerClient": "29.7.2",
     "dockerDaemonAvailable": false,
     "realEnvPresent": false,
-    "dependencies": "locked npm install in progress"
+    "dependencies": "npm ci completed: 269 packages, Fontkit patch verified"
   },
   "limits": [
     "Native physical recovery and all three exact-source CI jobs remain pending at package creation.",
@@ -65,5 +71,10 @@
     "Historical S3/Redis coordinated recovery, production backup operations, live/deployed and full-master acceptance remain open.",
     "Historical recovery gate is harness-only; no runtime traffic-switch controller is added.",
     "All 24 migration files, runtime application code and three CI jobs are unchanged."
-  ]
+  ],
+  "publication": {
+    "initialCommit": "6bfca24a71245758d2832cb2c82b8265c2bce9af",
+    "initialRun": 39289498693,
+    "followup": "Windows test path portability; all three jobs required on final source"
+  }
 }

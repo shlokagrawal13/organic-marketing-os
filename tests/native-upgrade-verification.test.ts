@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { resolve } from "node:path";
 import {
   assertUpgradeFixture,
   assertPreservedRows,
@@ -8,9 +9,10 @@ import {
 test("Native Prisma upgrade accepts only its registered loopback database and private package", () => {
   const valid = {
     project: "omos-upgrade-verify-0123456789abcdef",
-    root: "/workspace/project",
-    caseRoot:
+    root: resolve("/workspace/project"),
+    caseRoot: resolve(
       "/workspace/project/.local/native-upgrade/0123456789abcdef/upgrade",
+    ),
     port: 54321,
     kind: "upgrade",
     url: `postgresql://fixture:${"a".repeat(64)}@127.0.0.1:54321/fixture_upgrade?schema=public`,
@@ -19,7 +21,7 @@ test("Native Prisma upgrade accepts only its registered loopback database and pr
   for (const change of [
     { project: "organic-marketing-os" },
     { project: valid.project + "\n" },
-    { caseRoot: "/workspace/project" },
+    { caseRoot: valid.root },
     { caseRoot: valid.caseRoot + "/../upgrade" },
     { port: 5432 },
     { kind: "production" },
