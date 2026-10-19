@@ -7,6 +7,7 @@ import {
   validateFixtureBackup,
   withValidatedFixtureBackup,
   invalidFixtureBackupCases,
+  fixtureApplicationStartGate,
 } from "../scripts/cross-store-backup-verification.mjs";
 function fixture() {
   const source = fixtureProject("0123456789abcdef"),
@@ -79,4 +80,49 @@ test("Backup sealing rejects duplicate keys and malformed private object encodin
   input.objects.pop();
   input.objects[0].body += "!";
   assert.throws(() => sealFixtureBackup(input));
+});
+test("Application startup stays gated after restore or database verification failure and changed backup", async () => {
+  const input = fixture(),
+    gate = fixtureApplicationStartGate(() => input);
+  let starts = 0;
+  const start = () => {
+    starts++;
+  };
+  await assert.rejects(gate.start(start));
+  await assert.rejects(
+    gate.restore(
+      async () => {
+        throw Error("after PUT");
+      },
+      async () => {},
+    ),
+  );
+  await assert.rejects(gate.start(start));
+  await assert.rejects(
+    gate.restore(
+      async () => ({
+        objectsRestored: 0,
+        allObjectBytesAndMetadataMatch: true,
+      }),
+      async () => {},
+    ),
+  );
+  await assert.rejects(gate.start(start));
+  const complete = async () => ({
+    objectsRestored: 1,
+    allObjectBytesAndMetadataMatch: true,
+  });
+  await assert.rejects(
+    gate.restore(complete, async () => {
+      throw Error("database changed");
+    }),
+  );
+  await assert.rejects(gate.start(start));
+  assert.equal(starts, 0);
+  await gate.restore(complete, async () => {});
+  await gate.start(start);
+  assert.equal(starts, 1);
+  input.objects[0].metadata.rights = "changed";
+  await assert.rejects(gate.start(start));
+  assert.equal(starts, 1);
 });

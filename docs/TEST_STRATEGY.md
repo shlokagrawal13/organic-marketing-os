@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01D, 2026-10-19 IST
+
+Complete Compose now requires fourteen phases, adding acknowledged-object-write failure, residual inspection, denied app startup, owned-bucket cleanup and identical-backup retry with a verified start gate. Every prior assertion and all three CI jobs remain. Local281 unit/13 focused guards/actual configuration passed; native acceptance requires own exact-source CI. Prior18f0b8f/run39237077202 passed all three. Older counts below are historical. See [PRIVATE_OBJECT_RESTORE_RECOVERY.md](PRIVATE_OBJECT_RESTORE_RECOVERY.md). CI verifies and does not deploy.
+
 ## Cross-store backup and fresh-Redis fixtures — RECOVERY-01C
 
 Four new unit regressions verify incomplete/corrupt backup rejection before callbacks, source/target/quiescence/reference binding, valid action gating and duplicate/encoding rejection (current total 277). Actual Compose configuration and a generated-loopback synthetic-provider HTTP/compiled-schema contract are local checks. Full Compose adds seven rejection controls, native source preservation, media-reference coverage, empty Redis before app startup, three reconstructed worker queues, uncertain AI no replay, exact credit settlement/immutability and actual worker restart. Require all thirteen phases and all three current-source CI jobs. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).

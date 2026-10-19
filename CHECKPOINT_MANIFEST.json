@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.15-RECOVERY-01C-preflight-local-verified-native-fixture-CI-required",
-  "createdAtUtc": "2026-10-19T10:22:16.387733+00:00",
+  "checkpointRevision": "2026-10-19.16-RECOVERY-01D-object-failure-retry-local-verified-native-CI-required",
+  "createdAtUtc": "2026-10-19T11:09:34.197562+00:00",
   "scope": "Portable source and saved project context; not runtime/database/media backup.",
   "hashAlgorithm": "sha256",
   "manifestIsSelfExcluded": true,
@@ -44,16 +44,16 @@
       "sha256": "2c221af10b982fce1292eaa2896a4650635b5c70720da428f69ad043e32e8183"
     },
     "PROJECT_CHECKPOINT.json": {
-      "bytes": 585354,
-      "sha256": "b6f16328f77796060ff7eeb635555a887e1963b7b8070cb4131e706a68588545"
+      "bytes": 582710,
+      "sha256": "06bc0040a9626a7cf2be3ce4f35051a4ef90ecc2b1b4502ae9df5d3abb78fd56"
     },
     "PROJECT_STATUS.md": {
-      "bytes": 200092,
-      "sha256": "99c8c970d273d8001af0c0fcea5ed282645db553334daec98cc7b7fdec025cf6"
+      "bytes": 202728,
+      "sha256": "b62eff70c80f0ec125bc5ecbd92d433ad062d4a4d2c775d378483e164d7dbd6d"
     },
     "README.md": {
-      "bytes": 82430,
-      "sha256": "36871edee53b2169a388b1001f323a464b2270830a557def9ed8cbae4431003c"
+      "bytes": 82894,
+      "sha256": "ee42c4f6dee7855fb97ff81642a3770d6228fc36a3d41e65744628e861096701"
     },
     "REQUIREMENTS_MATRIX.md": {
       "bytes": 106,
@@ -64,8 +64,8 @@
       "sha256": "4e761289ac29bcb5f2bac9d22e79f91e8f7faacd3eeb0463db03bed5730aa178"
     },
     "START_HERE.md": {
-      "bytes": 178814,
-      "sha256": "dd30d25018c37d1435c441c6515199f78924894b19386516e65b0ec0702031e3"
+      "bytes": 181450,
+      "sha256": "b0c68d7f1ee367fa39c105c5def99a3d26b6feb2b5f389e4ac3073ab1044a979"
     },
     "apps/api/src/ai.ts": {
       "bytes": 15032,
@@ -328,20 +328,20 @@
       "sha256": "56d99699cb53ef8e428d57093ec77eb897a16c0f3767a94cad6cb2eafb0b938a"
     },
     "docs/CHANGELOG.md": {
-      "bytes": 185488,
-      "sha256": "0293cb43e68f12937c6642657ae49ce300a95396f8b4351131cea5550b8baff2"
+      "bytes": 186266,
+      "sha256": "3a9b6a9dda4d538d70e27b137a108a08922fe9757bf8c464023c6bc3ebdd16dc"
     },
     "docs/CJK_RENDERING.md": {
       "bytes": 5367,
       "sha256": "b82f083b6795001fbcf140a55955027b3fd133e6425e6809464fbca6583ac593"
     },
     "docs/COMPOSE_NATIVE_VERIFICATION.md": {
-      "bytes": 6088,
-      "sha256": "b29d5c8f4416aca5dfd70b0ec6ab27606b4b4004d2c3cc5d4665294b5e682095"
+      "bytes": 6707,
+      "sha256": "ea355b4d103c4af1f0ead7905514c99105cd1ebf424da33399d7805eeadead6c"
     },
     "docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md": {
-      "bytes": 6751,
-      "sha256": "7cc569845aa8f5702f966ae039f7799a11a1e035c60f8f8637f9a2cb6e75f2cb"
+      "bytes": 7370,
+      "sha256": "f85d0713b334f640dd598b2f362bde71666fcf2cf0b9f363992d22f473632fed"
     },
     "docs/DATA_GOVERNANCE.md": {
       "bytes": 6945,
@@ -356,8 +356,8 @@
       "sha256": "874456cce4171ff44920ddcd13547992a3ddf1f4eb05866e4dac9a5080a899fe"
     },
     "docs/DEPLOYMENT.md": {
-      "bytes": 7917,
-      "sha256": "e09b5312728afe36688c15dd3ee859538a0fba65fc959fde5473e78d9b70cae6"
+      "bytes": 8536,
+      "sha256": "27df4088dd804abbdc995ea35a0418a8d3a20416eadefc3349d8fc36ef5b0e1d"
     },
     "docs/DESIGN_SYSTEM.md": {
       "bytes": 1454,
@@ -384,8 +384,8 @@
       "sha256": "b8c752cddf374e4fcefa95febb15923d76dba5d0f69ddfa8cd9bbf461c17feee"
     },
     "docs/HANDOFF.md": {
-      "bytes": 196359,
-      "sha256": "9f12a71ccb43161df74c90d268d43928063fcc26859a056b62af3bc032ac5ae0"
+      "bytes": 198995,
+      "sha256": "d4943078677cfd59be785854ec5782c436ce812b2de6e3d4038b5111ddad74a6"
     },
     "docs/IMPLEMENTATION_PLAN.md": {
       "bytes": 4581,
@@ -428,16 +428,20 @@
       "sha256": "5c12926762bd918b945b5882544e4117bd6c501381222dffa1037c2b2857498a"
     },
     "docs/POSTGRES_RESTORE_INTERRUPTION.md": {
-      "bytes": 5632,
-      "sha256": "d7e7c136885e3d15db22cd49b010e912564dc4e4dd2287fb02ea58a757989a26"
+      "bytes": 6251,
+      "sha256": "9c232b952993ab1e9bb516d61d00c020248930c42dc1c4755f7edb9bbf22a2f7"
+    },
+    "docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md": {
+      "bytes": 4234,
+      "sha256": "c957fe8b70109e9259ed0140280062b87ae5c69e14730c85feee235c691a8100"
     },
     "docs/PRODUCT_OPERATIONS_GUIDE.md": {
       "bytes": 2896,
       "sha256": "a23631f1f0891df57e4d594a845ac7d60d6ab7f0e98955c6d3fd251612f91c4d"
     },
     "docs/PROJECT_STATUS.md": {
-      "bytes": 200092,
-      "sha256": "99c8c970d273d8001af0c0fcea5ed282645db553334daec98cc7b7fdec025cf6"
+      "bytes": 202728,
+      "sha256": "b62eff70c80f0ec125bc5ecbd92d433ad062d4a4d2c775d378483e164d7dbd6d"
     },
     "docs/PROVIDER_CATALOG.md": {
       "bytes": 2320,
@@ -448,8 +452,8 @@
       "sha256": "6a168f1a08ef260c618d968b94f4a042c42ed65f8945cfb09dbd28a5558f1424"
     },
     "docs/REQUIREMENTS_MATRIX.md": {
-      "bytes": 209985,
-      "sha256": "3156a667e71bed5748bb93e81219eca63e45bf344766e4bfbc05caa593a32bda"
+      "bytes": 210763,
+      "sha256": "eaf7465d0bc09794c2a48ee9d88216f3abe48f9e9d5947e69bec46d341192548"
     },
     "docs/RESEARCH_COVERAGE.md": {
       "bytes": 16719,
@@ -464,8 +468,8 @@
       "sha256": "5d84fa5b357f8642b5e7e93f14b7370ba04f5ef5328901456229ec7085fe160c"
     },
     "docs/RESUME_CONTEXT.md": {
-      "bytes": 57441,
-      "sha256": "76825486fc3dcd41e1b79fee81561b5d8712edc4c2969474e5c5cfcd5427f52e"
+      "bytes": 60077,
+      "sha256": "8485601714b3dfc803772bae644f848c480a735efe712b199a4f99077725bdc2"
     },
     "docs/SEASONAL_CALENDAR_INSIGHTS.md": {
       "bytes": 5591,
@@ -476,8 +480,8 @@
       "sha256": "f955408f7522bc86cdce6ff85873b636cb73f3ce7dc1e469fc41b9994d74a015"
     },
     "docs/SESSION_LOG.md": {
-      "bytes": 242069,
-      "sha256": "0ee72c44d37362a6cd9610c85af5fcadbbb99dc7e523927f1c344cf4ef857735"
+      "bytes": 242847,
+      "sha256": "5e0e1c36af04738d64eb144c3f2acbcb0dc5fff55fa4c893e4a6c35752af9d89"
     },
     "docs/SETUP.md": {
       "bytes": 3847,
@@ -496,12 +500,12 @@
       "sha256": "dab843d62f64acefb82b817395d2d78b66d07854a35d46fa808e3d38cb5f8771"
     },
     "docs/TASK_BOARD.md": {
-      "bytes": 181299,
-      "sha256": "05f968a7e138138bf0ea79a0aefeb24f5100b19c65e56429fb40963dac0e1e41"
+      "bytes": 182077,
+      "sha256": "f741971e21dd6adf4a8fd9a5f0b73bcc393ab7f219c6ae90bd2c880b8b97d487"
     },
     "docs/TEST_STRATEGY.md": {
-      "bytes": 62794,
-      "sha256": "b29ee7e5e7490ba7c5e48df997a20fdbc91bb0289b484dfd6c56ffc577b7e996"
+      "bytes": 63413,
+      "sha256": "622997295b23110d4e2d621b3e116032f4f649f76cfc2346b5ee73882ada9b52"
     },
     "docs/TROUBLESHOOTING.md": {
       "bytes": 4797,
@@ -540,8 +544,8 @@
       "sha256": "4049fa10acac00b0353b9d3cc58a04729d7ef1fc66cde1c4859d1306a369f4d9"
     },
     "docs/VERIFICATION_REPORT.md": {
-      "bytes": 219387,
-      "sha256": "a52e12a1fce441c3393a18a8910227b11c10bd4d209647782c95b3f046fdcc3b"
+      "bytes": 220165,
+      "sha256": "85ee0d43b2be01ac2c624401a8998912d5c263282d5dcd0cc6423d1465fdd705"
     },
     "docs/VIDEO_PIPELINE.md": {
       "bytes": 79356,
@@ -951,6 +955,10 @@
       "bytes": 6303,
       "sha256": "0c59d4745d80c29b849dd4b9d919a39def269adda3222cddd0d06c2afaa49036"
     },
+    "docs/qa/recovery01c-native-ci-evidence.json": {
+      "bytes": 26807,
+      "sha256": "640fa3b4bc026ae5181707e004637e538c748bfa0af7459d08245cbddfa56cd8"
+    },
     "docs/qa/recovery01c-provider-smoke-evidence.json": {
       "bytes": 316,
       "sha256": "6976431b5b6ab6be592221eb72c7be94bea709df8dcc32986120e41a1afacbbe"
@@ -958,6 +966,14 @@
     "docs/qa/recovery01c-unit-receipts.json": {
       "bytes": 78306,
       "sha256": "e75ee15e7411c5c79808c2c3d609d36576e4f2c01bf22ddf7c98658138d3397d"
+    },
+    "docs/qa/recovery01d-evidence.json": {
+      "bytes": 3181,
+      "sha256": "2c5f3c28673b0d27917495d5145120b5bfac08cd209d8edfa86e01a3fc206101"
+    },
+    "docs/qa/recovery01d-unit-receipts.json": {
+      "bytes": 79634,
+      "sha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
     },
     "docs/qa/render-1920x1080.jpg": {
       "bytes": 24565,
@@ -1436,8 +1452,8 @@
       "sha256": "362d2704d40c49d7a1c3d83f7c22ce34e4a4e64d63d3b3ec41cfff7820cdcc8b"
     },
     "docs/qa/verification-summary.json": {
-      "bytes": 537080,
-      "sha256": "69eafd0bb57c6afa8231be427b11a94d975f825778ce098f6fc3f6bcedf93d68"
+      "bytes": 538946,
+      "sha256": "e5b58ca824536d1a3b771fdf111e9213a95d395e836d41fcb30d36145f49cf4b"
     },
     "docs/qa/video-studio-dark.png": {
       "bytes": 199675,
@@ -1756,8 +1772,8 @@
       "sha256": "77d56a11ea1985f103afd5373a88e87a7cefb776fa2da977730bae46bf43892b"
     },
     "scripts/compose-recovery-fixture.mjs": {
-      "bytes": 15780,
-      "sha256": "656e787417a4e27787c941dd5c0ac3f3e89e402d6377f27cb9cb06214c2fddc7"
+      "bytes": 15934,
+      "sha256": "2bace33715b4ce214e6b75d48824ce788ffed0eaf3f642289753e1eb03434037"
     },
     "scripts/compose-recovery-provider.mjs": {
       "bytes": 1581,
@@ -1768,8 +1784,8 @@
       "sha256": "cbab50c0b91a77fa9f5f7234617a1b0fbec0d05a067b0907fe4a7691b917f815"
     },
     "scripts/cross-store-backup-verification.mjs": {
-      "bytes": 6006,
-      "sha256": "c92ef734f0b2d39d37859f9789f31343f5131fa46781c39d8bb91b3496a601b8"
+      "bytes": 6844,
+      "sha256": "bb6435d0b6b2ddd9c2c5f32b589ffe6eb85a3d2c30e3cbb8af06d009629a708f"
     },
     "scripts/fontkit-controls.mjs": {
       "bytes": 16996,
@@ -1823,6 +1839,10 @@
       "bytes": 1951,
       "sha256": "6aaa98dafb3ead6270696f9fb07ce2d908054086cb1b08253137622b7a5ee849"
     },
+    "scripts/private-object-restore.mjs": {
+      "bytes": 2269,
+      "sha256": "7faf65e9af4b023bb8374fdbe1b63a8516c1b4d07cf40b294910cc010a21f9b8"
+    },
     "scripts/setup.mjs": {
       "bytes": 1551,
       "sha256": "7d57bdd8a6f807965ab535c3f46cf8c38521cc4ff21a4bb552a78ee1889d8bed"
@@ -1840,12 +1860,12 @@
       "sha256": "743a4107fd8a1bf0778f7470e64ed031dcc47e1a8fb06563b481ee2dc7a92367"
     },
     "scripts/verify-compose-fixture.mjs": {
-      "bytes": 13246,
-      "sha256": "651a40c80d3267a349eca5c266e7e4d2d2c627f28da84000f6eb34f22ba17e9b"
+      "bytes": 13667,
+      "sha256": "630eebc92e8e566b97f0327a8ef13b72085d16ab11df4172068124097b30eaab"
     },
     "scripts/verify-compose.mjs": {
-      "bytes": 25883,
-      "sha256": "9c0be35ad01e7bacd443f9976767c9abff1e0a220e2a48e13dd70f8d2b13257a"
+      "bytes": 28920,
+      "sha256": "474e3d1d9a8bfe9197301262142425b3fa982f22ce7cb58b5fe7bb1719a4867e"
     },
     "scripts/verify-local.mjs": {
       "bytes": 20919,
@@ -1888,8 +1908,8 @@
       "sha256": "397746eab49421da64f6a5d54f2e13760775371e3175bcd5112cd5230d0c849a"
     },
     "tests/cross-store-backup-verification.test.ts": {
-      "bytes": 2664,
-      "sha256": "33de587dbb2cad4d14479d15f15b5aaa8362d778e830cf4de2932050a428c190"
+      "bytes": 3922,
+      "sha256": "8298cc3f2b0516ded5b04462a956c5555939dff51c2f15d3fc0059d6c5889941"
     },
     "tests/deployed-readiness-receipt.test.ts": {
       "bytes": 8614,
@@ -2014,6 +2034,10 @@
     "tests/posting-policy.test.ts": {
       "bytes": 2535,
       "sha256": "ec05b798b3bb8bd759d4938a05bf03e1423c70c6fe06d0266fd65ad73f5c8f07"
+    },
+    "tests/private-object-restore.test.ts": {
+      "bytes": 2960,
+      "sha256": "c0c6ea548ffd273004c7c884a44db06b8093ff56042d3a215a4b75925fd7d729"
     },
     "tests/recovery/configuration.test.ts": {
       "bytes": 4237,

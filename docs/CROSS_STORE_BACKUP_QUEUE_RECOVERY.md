@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01D, 2026-10-19 IST
+
+Complete Compose now requires fourteen phases, adding acknowledged-object-write failure, residual inspection, denied app startup, owned-bucket cleanup and identical-backup retry with a verified start gate. Every prior assertion and all three CI jobs remain. Local281 unit/13 focused guards/actual configuration passed; native acceptance requires own exact-source CI. Prior18f0b8f/run39237077202 passed all three. Older counts below are historical. See [PRIVATE_OBJECT_RESTORE_RECOVERY.md](PRIVATE_OBJECT_RESTORE_RECOVERY.md). CI verifies and does not deploy.
+
 # Cross-store backup preflight and fresh-Redis recovery
 
 RECOVERY-01C extends the existing disposable Compose verifier. Application code, all 24 migration SQL files, dependencies and the three CI jobs are preserved. The complete Compose job now requires thirteen phases, including backup rejection controls and recovery of queued/uncertain/private-output work. Run `MOS_ALLOW_NATIVE_TESTS=isolated-test-services npm run verify:compose`; `--config-only` checks isolation and is not full acceptance.

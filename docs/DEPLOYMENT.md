@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01D, 2026-10-19 IST
+
+Complete Compose now requires fourteen phases, adding acknowledged-object-write failure, residual inspection, denied app startup, owned-bucket cleanup and identical-backup retry with a verified start gate. Every prior assertion and all three CI jobs remain. Local281 unit/13 focused guards/actual configuration passed; native acceptance requires own exact-source CI. Prior18f0b8f/run39237077202 passed all three. Older counts below are historical. See [PRIVATE_OBJECT_RESTORE_RECOVERY.md](PRIVATE_OBJECT_RESTORE_RECOVERY.md). CI verifies and does not deploy.
+
 ## Recovery verification scope — RECOVERY-01C
 
 All three CI jobs remain verification-only. The expanded Compose harness validates saved private backups before source deletion/target mutation and runs restored queued work only after exact database/media baseline checks. Its synthetic provider, seeded data and hash manifest are fixture tooling; no production backup scheduler, signed backup format, automatic repair or deployment was added. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).

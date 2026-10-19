@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.15-RECOVERY-01C-preflight-local-verified-native-fixture-CI-required",
-  "savedAtUtc": "2026-10-19T10:21:26.702126+00:00",
-  "currentMilestone": "Backup preflight and fresh-Redis recovery fixtures implemented; local guard/config/contract checks passed. Publish and require expanded complete native CI.",
+  "checkpointRevision": "2026-10-19.16-RECOVERY-01D-object-failure-retry-local-verified-native-CI-required",
+  "savedAtUtc": "2026-10-19T11:09:33.741975+00:00",
+  "currentMilestone": "Acknowledged private-object write failure, scoped cleanup/retry and application-start gate implemented; local checks passed, complete exact-source CI required.",
   "activeTaskId": "RECOVERY-01",
   "workInProgress": false,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish current RECOVERY-01C and inspect/fix ALL THREE exact-source core, native Prisma upgrade and expanded complete Compose/native DB/private-media/fresh-Redis recovery jobs. Require the thirteen-phase full-mode report with seven backup rejection controls, source preservation, queued/uncertain/private-output recovery and three-worker restart checks. Then RECOVERY-01D: controlled private-object restore failure, residual-target cleanup/retry and application-start gating; PITR/live/full-master acceptance remain open.",
+  "nextAction": "Publish RECOVERY-01D and inspect/fix ALL THREE exact-source CI jobs. Require complete fourteen-phase Compose report: actual acknowledged private-object PUT followed by controlled failure, exact residual state, absent app services/denied start callback, owned-bucket cleanup, identical validated retry and gated startup; retain all previous native/core/recovery checks. Then RECOVERY-01E: assess PITR/WAL prerequisites and remaining recovery/master acceptance gaps; live/full-master acceptance remains open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -88,15 +88,14 @@
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
-    "RESUME_PROMPT.txt",
     "START_HERE.md",
     "docs/CHANGELOG.md",
     "docs/COMPOSE_NATIVE_VERIFICATION.md",
     "docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md",
-    "docs/DATA_GOVERNANCE.md",
     "docs/DEPLOYMENT.md",
     "docs/HANDOFF.md",
     "docs/POSTGRES_RESTORE_INTERRUPTION.md",
+    "docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/RESUME_CONTEXT.md",
@@ -104,17 +103,17 @@
     "docs/TASK_BOARD.md",
     "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/recovery01b-native-ci-evidence.json",
-    "docs/qa/recovery01c-evidence.json",
-    "docs/qa/recovery01c-provider-smoke-evidence.json",
-    "docs/qa/recovery01c-unit-receipts.json",
+    "docs/qa/recovery01c-native-ci-evidence.json",
+    "docs/qa/recovery01d-evidence.json",
+    "docs/qa/recovery01d-unit-receipts.json",
     "docs/qa/verification-summary.json",
     "scripts/compose-recovery-fixture.mjs",
-    "scripts/compose-recovery-provider.mjs",
     "scripts/cross-store-backup-verification.mjs",
+    "scripts/private-object-restore.mjs",
     "scripts/verify-compose-fixture.mjs",
     "scripts/verify-compose.mjs",
-    "tests/cross-store-backup-verification.test.ts"
+    "tests/cross-store-backup-verification.test.ts",
+    "tests/private-object-restore.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6709,8 +6708,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "f99dba444dfaa25e8000d780735b065e6b002ffa",
-    "status": "RECOVERY-01C_local_guards_verified_expanded_full_native_three_job_CI_required",
+    "commit": "18f0b8f1e21d70811ab055d1a0278815f5bc0762",
+    "status": "RECOVERY-01D_local_verified_full_native_three_job_CI_required",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6723,9 +6722,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "a9d2c9bec8ee45a0fb35929922665494b3aa6dc4",
+    "sourceTree": "cecd01c9d291f433f9e57cac7cbd3263043554ff",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last verified public base; current source capsule requires its own expanded complete native CI and final external receipt.",
+    "commitMeaning": "Last verified public base; current capsule requires own exact-source CI and external final receipt.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "e1cbab4c73e5a51227195588edc666f22006bc57",
     "uploadGate": {
@@ -8060,11 +8059,10 @@
     }
   ],
   "lastChanges": [
-    "Added whole saved-set/project/quiescence/reference preflight before destructive fixture operations, plus seven negative controls/source-preservation checks.",
-    "Added fresh-Redis queued AI/render and retained private-output recovery, synthetic uncertain-call no replay, immutable/exact credit assertions and actual three-worker restart.",
-    "Retained every existing core/native Prisma/Compose check; local 277 unit, actual config and provider HTTP/schema contract passed.",
-    "Recovered optional local cached-runtime disk pressure by removing only identified unused own fixture image/cache records; user services/volumes/source/credentials preserved.",
-    "Retained predecessor exact-source native receipt and refreshed continuity/QA/source handoff."
+    "Controlled acknowledged-object-write failure and exact native residual inspection; actual absent application services and denied start callback.",
+    "Guarded owned-restore-bucket cleanup and same validated backup retry, unchanged native recovery rows, complete object readback before actual gated startup.",
+    "Retained all core/native-upgrade/backup/atomic/queue/private-output/credit/restart assertions; local281 unit/13 focused/config passed.",
+    "Preserved previous exact-source all-three-job CI receipt and refreshed continuity/QA/source handoff."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8102,11 +8100,11 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RECOVERY-01C: 277 local unit cases plus actual config/provider contract passed. Seven backup rejection and cross-store queue/uncertain/private-output/restart assertions require own exact-source three-job CI; wider recovery/live/master acceptance partial.",
+  "latestStatus": "RECOVERY-01D:281 local unit cases/13 focused/config passed; new fourteen-phase native assertions require all three exact-source CI jobs. Wider recovery/live/full-master acceptance remains partial.",
   "activeTask": {
-    "id": "RECOVERY-01C",
-    "title": "Backup integrity preflight and fresh-Redis queued/uncertain/private-output recovery",
-    "status": "local_guards_verified_expanded_full_native_publication_CI_required"
+    "id": "RECOVERY-01D",
+    "title": "Private-object restore failure, guarded cleanup/retry and application-start gate",
+    "status": "local_guards_verified_complete_native_publication_CI_required"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8119,22 +8117,21 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RECOVERY-01C",
-    "description": "Standing-authorized push followed by all exact-source core/native-upgrade/expanded complete Compose recovery CI jobs. No own future CI pass claimed.",
+    "taskId": "RECOVERY-01D",
+    "description": "Standing-authorized push, all three exact-source CI jobs; no future success claimed.",
     "paths": [
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "README.md",
-      "RESUME_PROMPT.txt",
       "START_HERE.md",
       "docs/CHANGELOG.md",
       "docs/COMPOSE_NATIVE_VERIFICATION.md",
       "docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md",
-      "docs/DATA_GOVERNANCE.md",
       "docs/DEPLOYMENT.md",
       "docs/HANDOFF.md",
       "docs/POSTGRES_RESTORE_INTERRUPTION.md",
+      "docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/RESUME_CONTEXT.md",
@@ -8142,17 +8139,17 @@
       "docs/TASK_BOARD.md",
       "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/recovery01b-native-ci-evidence.json",
-      "docs/qa/recovery01c-evidence.json",
-      "docs/qa/recovery01c-provider-smoke-evidence.json",
-      "docs/qa/recovery01c-unit-receipts.json",
+      "docs/qa/recovery01c-native-ci-evidence.json",
+      "docs/qa/recovery01d-evidence.json",
+      "docs/qa/recovery01d-unit-receipts.json",
       "docs/qa/verification-summary.json",
       "scripts/compose-recovery-fixture.mjs",
-      "scripts/compose-recovery-provider.mjs",
       "scripts/cross-store-backup-verification.mjs",
+      "scripts/private-object-restore.mjs",
       "scripts/verify-compose-fixture.mjs",
       "scripts/verify-compose.mjs",
-      "tests/cross-store-backup-verification.test.ts"
+      "tests/cross-store-backup-verification.test.ts",
+      "tests/private-object-restore.test.ts"
     ]
   },
   "priorPendingPublication": {
@@ -8625,12 +8622,12 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "RECOVERY-01B",
-    "publicCommit": "f99dba444dfaa25e8000d780735b065e6b002ffa",
-    "runId": 39230879722,
+    "taskId": "RECOVERY-01C",
+    "publicCommit": "18f0b8f1e21d70811ab055d1a0278815f5bc0762",
+    "runId": 39237077202,
     "conclusion": "success",
     "allThreeJobsPassed": true,
-    "receipt": "docs/qa/recovery01b-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01c-native-ci-evidence.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8726,94 +8723,45 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "unit": 277,
-    "uniqueUnitReceipts": 277,
+    "unit": 281,
+    "uniqueUnitReceipts": 281,
     "failedSkippedCancelledTodo": 0,
-    "focusedNewBackupUnitCases": 4,
+    "focusedNewUnitCases": 4,
+    "focusedPassedCases": 13,
     "actualComposeConfigurationPassed": true,
-    "providerHttpAndCompiledDraftSchemaContractPassed": true,
-    "providerContractReceipt": "docs/qa/recovery01c-provider-smoke-evidence.json",
     "all25ProtectedHashesUnchanged": true,
     "fullLocalComposePassed": false,
-    "fullLocalComposeBlock": "Enforced network allowlist rejects storage.googleapis.com Go dependency redirects through the normal configured proxy; full current-source MinIO/Compose acceptance runs independently in ordinary GitHub CI.",
+    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+    "environment": {
+      "spec_revision": "68",
+      "observations_current": true,
+      "phase": "running",
+      "network_policy": {
+        "mode": "restricted",
+        "state": "enforced"
+      },
+      "secrets": 0,
+      "runtime_variables": 0,
+      "outbound_identities": 0
+    },
     "localUnitProof": {
-      "uniquePassedReceipts": 277,
+      "uniquePassedReceipts": 281,
       "failedReceipts": 0,
       "finalSummary": {
         "success": true,
         "counts": {
-          "tests": 277,
+          "tests": 281,
           "failed": 0,
-          "passed": 277,
+          "passed": 281,
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "topLevel": 277,
+          "topLevel": 281,
           "suites": 0
         },
-        "duration_ms": 517905.274517
+        "duration_ms": 523227.647288
       },
-      "receiptSha256": "e75ee15e7411c5c79808c2c3d609d36576e4f2c01bf22ddf7c98658138d3397d"
-    },
-    "optionalCachedRuntimeContractAttempt": "Normal cached-runtime user could not read package configuration; root diagnostic/runtime copies then exhausted vfs disk. No full container acceptance claimed from those attempts. Explicit local loopback HTTP contract passed afterward.",
-    "localDiskPressureRecovered": {
-      "cause": "Concurrent vfs copies of the large cached fixture runtime exhausted local disk during an optional provider contract check.",
-      "removedFixtureRuntimeImage": "omos-native01a-runtime:latest",
-      "globalPrune": false,
-      "removedRuntimeLeafCache": "jieixz6a88fg4gwuky46ygk1j",
-      "targetedUnusedFixtureCaches": [
-        {
-          "id": "p6nhd5ao9zqs3je4ugxfasnci",
-          "description": "[runtime  9/10] COPY --from=build --chown=node:node /app/apps/web ./apps/web",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "v7nxbth7m6i5kqn5fjz1hfg92",
-          "description": "[runtime  8/10] COPY --from=build --chown=node:node /app/dist ./dist",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "gwzbjpulvx8mqjuw647wbez1p",
-          "description": "[runtime  7/10] COPY --from=build --chown=node:node /app/node_modules/.prisma ./node_modules/.prisma",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "l2jsik4xv7wb4iwn4t2j8s376",
-          "description": "mount / from exec /bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm ci --omit=dev --no-audit --no-fund",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "2em5sw37fkru201gp808of3t0",
-          "description": "[runtime  5/10] COPY scripts/patch-fontkit.mjs scripts/fontkit-controls.mjs scripts/fontkit-southeast.mjs scripts/fontkit-myanmar-data.json ./scripts/",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "b3wsnpi3b045vewap17s2l4er",
-          "description": "[runtime  4/10] COPY package.json package-lock.json ./",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "hkbx0793ajg573shzd62k9gwz",
-          "description": "mount / from exec /bin/sh -c apt-get update && apt-get install -y --no-install-recommends openssl ffmpeg fonts-dejavu-core fonts-noto-core ca-certificates && rm -rf /var/lib/apt/lists/*",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        }
-      ],
-      "userContainersOrVolumesRemoved": false,
-      "sourceOrCredentialsModified": false
+      "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
     }
   },
   "social01PolicyReview": {
@@ -9320,94 +9268,45 @@
     "requiresUserApprovalText": "I explicitly approve publishing POLICY-01A claim-evidence native-CI closure’s 15 verified docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "verification": {
-    "unit": 277,
-    "uniqueUnitReceipts": 277,
+    "unit": 281,
+    "uniqueUnitReceipts": 281,
     "failedSkippedCancelledTodo": 0,
-    "focusedNewBackupUnitCases": 4,
+    "focusedNewUnitCases": 4,
+    "focusedPassedCases": 13,
     "actualComposeConfigurationPassed": true,
-    "providerHttpAndCompiledDraftSchemaContractPassed": true,
-    "providerContractReceipt": "docs/qa/recovery01c-provider-smoke-evidence.json",
     "all25ProtectedHashesUnchanged": true,
     "fullLocalComposePassed": false,
-    "fullLocalComposeBlock": "Enforced network allowlist rejects storage.googleapis.com Go dependency redirects through the normal configured proxy; full current-source MinIO/Compose acceptance runs independently in ordinary GitHub CI.",
+    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+    "environment": {
+      "spec_revision": "68",
+      "observations_current": true,
+      "phase": "running",
+      "network_policy": {
+        "mode": "restricted",
+        "state": "enforced"
+      },
+      "secrets": 0,
+      "runtime_variables": 0,
+      "outbound_identities": 0
+    },
     "localUnitProof": {
-      "uniquePassedReceipts": 277,
+      "uniquePassedReceipts": 281,
       "failedReceipts": 0,
       "finalSummary": {
         "success": true,
         "counts": {
-          "tests": 277,
+          "tests": 281,
           "failed": 0,
-          "passed": 277,
+          "passed": 281,
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "topLevel": 277,
+          "topLevel": 281,
           "suites": 0
         },
-        "duration_ms": 517905.274517
+        "duration_ms": 523227.647288
       },
-      "receiptSha256": "e75ee15e7411c5c79808c2c3d609d36576e4f2c01bf22ddf7c98658138d3397d"
-    },
-    "optionalCachedRuntimeContractAttempt": "Normal cached-runtime user could not read package configuration; root diagnostic/runtime copies then exhausted vfs disk. No full container acceptance claimed from those attempts. Explicit local loopback HTTP contract passed afterward.",
-    "localDiskPressureRecovered": {
-      "cause": "Concurrent vfs copies of the large cached fixture runtime exhausted local disk during an optional provider contract check.",
-      "removedFixtureRuntimeImage": "omos-native01a-runtime:latest",
-      "globalPrune": false,
-      "removedRuntimeLeafCache": "jieixz6a88fg4gwuky46ygk1j",
-      "targetedUnusedFixtureCaches": [
-        {
-          "id": "p6nhd5ao9zqs3je4ugxfasnci",
-          "description": "[runtime  9/10] COPY --from=build --chown=node:node /app/apps/web ./apps/web",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "v7nxbth7m6i5kqn5fjz1hfg92",
-          "description": "[runtime  8/10] COPY --from=build --chown=node:node /app/dist ./dist",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "gwzbjpulvx8mqjuw647wbez1p",
-          "description": "[runtime  7/10] COPY --from=build --chown=node:node /app/node_modules/.prisma ./node_modules/.prisma",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "l2jsik4xv7wb4iwn4t2j8s376",
-          "description": "mount / from exec /bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm ci --omit=dev --no-audit --no-fund",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "2em5sw37fkru201gp808of3t0",
-          "description": "[runtime  5/10] COPY scripts/patch-fontkit.mjs scripts/fontkit-controls.mjs scripts/fontkit-southeast.mjs scripts/fontkit-myanmar-data.json ./scripts/",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "b3wsnpi3b045vewap17s2l4er",
-          "description": "[runtime  4/10] COPY package.json package-lock.json ./",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        },
-        {
-          "id": "hkbx0793ajg573shzd62k9gwz",
-          "description": "mount / from exec /bin/sh -c apt-get update && apt-get install -y --no-install-recommends openssl ffmpeg fonts-dejavu-core fonts-noto-core ca-certificates && rm -rf /var/lib/apt/lists/*",
-          "shared": false,
-          "reclaimable": true,
-          "targetedRemovalSucceeded": true
-        }
-      ],
-      "userContainersOrVolumesRemoved": false,
-      "sourceOrCredentialsModified": false
+      "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
     }
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
@@ -13962,7 +13861,7 @@
     ],
     "nextTask": "RECOVERY-01C backup failure/quiescence and in-flight queue/cross-store consistency audit"
   },
-  "nextRecoveryIncrement": "RECOVERY-01D",
+  "nextRecoveryIncrement": "RECOVERY-01E",
   "recovery01c": {
     "schemaVersion": 1,
     "taskId": "RECOVERY-01C",
@@ -14097,5 +13996,84 @@
       "CI artifact byte access is checked separately from logs and upload digests."
     ],
     "nextTask": "RECOVERY-01D controlled private-object restore failure and clean retry/application-start gating"
+  },
+  "recovery01d": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01D",
+    "recordedAtUtc": "2026-10-19T11:09:33.741975+00:00",
+    "status": "local_guards_and_config_verified_full_native_three_job_CI_required",
+    "basePublicCommit": "18f0b8f1e21d70811ab055d1a0278815f5bc0762",
+    "baseVerifiedRunId": 39237077202,
+    "scope": "Controlled failure after actual acknowledged private-object PUT; exact residual state, absent application services, gated startup, owned restore-bucket cleanup and identical validated backup retry. All previous checks retained.",
+    "localVerification": {
+      "unit": 281,
+      "uniqueUnitReceipts": 281,
+      "failedSkippedCancelledTodo": 0,
+      "focusedNewUnitCases": 4,
+      "focusedPassedCases": 13,
+      "actualComposeConfigurationPassed": true,
+      "all25ProtectedHashesUnchanged": true,
+      "fullLocalComposePassed": false,
+      "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+      "environment": {
+        "spec_revision": "68",
+        "observations_current": true,
+        "phase": "running",
+        "network_policy": {
+          "mode": "restricted",
+          "state": "enforced"
+        },
+        "secrets": 0,
+        "runtime_variables": 0,
+        "outbound_identities": 0
+      },
+      "localUnitProof": {
+        "uniquePassedReceipts": 281,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 281,
+            "failed": 0,
+            "passed": 281,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 281,
+            "suites": 0
+          },
+          "duration_ms": 523227.647288
+        },
+        "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
+      }
+    },
+    "implementedFullComposeAssertions": {
+      "phases": 14,
+      "fullMode": "complete-compose-native-restore",
+      "controlledFailureAfterActualAcknowledgedPut": true,
+      "exactResidualObjects": 1,
+      "applicationServicesAbsent": 5,
+      "startCallbackDeniedUntilVerified": true,
+      "ownershipAndWholeResidualValidationBeforeDeletion": true,
+      "sameSavedBackupRetry": true,
+      "priorBackupAtomicDatabaseQueueCreditRestartAssertionsRetained": true
+    },
+    "pipeline": {
+      "requiredJobs": [
+        "Native application verification",
+        "Disposable Compose and native restore",
+        "Native populated upgrade and migration recovery"
+      ],
+      "allPriorAssertionsRetained": true,
+      "deployed": false,
+      "ownExactSourceVerified": false
+    },
+    "applicationDependenciesMigrationsAndPipelineChanged": false,
+    "limits": [
+      "Controlled exception after acknowledged PUT, not network/server failure or actual process/container kill.",
+      "Quiesced synthetic fixture; no cross-store atomicity, arbitrary concurrent writers, production backup capacity/retention/encryption, live provider reconciliation/charges, PITR/WAL or full master acceptance.",
+      "CI artifact byte inspection is separate from logs/step results/upload digests."
+    ],
+    "nextTask": "RECOVERY-01E PITR/WAL prerequisites and remaining recovery/master acceptance audit"
   }
 }

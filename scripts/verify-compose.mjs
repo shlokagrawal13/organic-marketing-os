@@ -25,6 +25,7 @@ import {
   validateFixtureBackup,
   withValidatedFixtureBackup,
   invalidFixtureBackupCases,
+  fixtureApplicationStartGate,
 } from "./cross-store-backup-verification.mjs";
 if (process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
@@ -143,10 +144,15 @@ const recoveryModule =
   Buffer.from(
     readFileSync(resolve(root, "scripts/compose-recovery-fixture.mjs"), "utf8"),
   ).toString("base64");
+const objectModule =
+  "data:text/javascript;base64," +
+  Buffer.from(
+    readFileSync(resolve(root, "scripts/private-object-restore.mjs"), "utf8"),
+  ).toString("base64");
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01C",
-  baselineTaskId: "RECOVERY-01B",
+  taskId: "RECOVERY-01D",
+  baselineTaskId: "RECOVERY-01C",
   passed: false,
   startedAt: new Date().toISOString(),
   sourceProject: source,
@@ -353,7 +359,7 @@ async function node(project, mode, state = {}, running = true) {
       ];
   return JSON.parse(
     await compose(project, args, {
-      input: `globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
+      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
       quiet: true,
     }),
   );
@@ -720,28 +726,103 @@ try {
           restoreDatabase(dump, true),
         );
         report.checks.cleanAtomicNativeDatabaseRetry = true;
-        const objects = { objects: loadBackup().objects };
-        validateFixtureBackup(loadBackup());
-        const restoredObjects = await node(
-          restored,
-          "restore-objects",
-          objects,
-          false,
+      },
+    );
+    await phase(
+      "partial private-object failure, gated startup and clean retry",
+      async () => {
+        const gate = fixtureApplicationStartGate(loadBackup);
+        const objects = () => ({ objects: loadBackup().objects });
+        const baseline = () =>
+          node(restored, "recovery-database-baseline", state, false);
+        const assertWritersAbsent = async () => {
+          const lines = (
+            await compose(restored, ["ps", "--all", "--format", "json"], {
+              quiet: true,
+            })
+          ).trim();
+          const containers = lines
+            ? lines.split("\n").flatMap((line) => JSON.parse(line))
+            : [];
+          assert.ok(
+            !containers.some((c) => fixtureWriters.includes(c.Service)),
+          );
+        };
+        await assertWritersAbsent();
+        await baseline();
+        await assert.rejects(
+          gate.restore(
+            () =>
+              node(restored, "restore-objects-interrupted", objects(), false),
+            baseline,
+          ),
+          /Controlled fixture failure after first acknowledged private-object PUT/,
+        );
+        let starts = 0;
+        await assert.rejects(
+          gate.start(() => {
+            starts++;
+          }),
+          /Application start denied/,
+        );
+        assert.equal(starts, 0);
+        await assertWritersAbsent();
+        Object.assign(
+          report.checks,
+          await node(restored, "inspect-partial-objects", objects(), false),
+        );
+        await baseline();
+        await withValidatedFixtureBackup(loadBackup(), async () => {
+          assertFixtureRestoreProject(restored);
+          const cfg = await config(restored);
+          const labels = JSON.parse(
+            await command(
+              [
+                "volume",
+                "inspect",
+                cfg.volumes.media_data.name,
+                "--format",
+                "{{json .Labels}}",
+              ],
+              { quiet: true },
+            ),
+          );
+          assert.equal(labels["com.docker.compose.project"], restored);
+          await assertWritersAbsent();
+          Object.assign(
+            report.checks,
+            await node(restored, "clear-partial-objects", objects(), false),
+          );
+        });
+        await baseline();
+        const restoredObjects = await gate.restore(
+          () => node(restored, "restore-objects", objects(), false),
+          baseline,
         );
         assert.equal(
           restoredObjects.objectsRestored,
           report.objectBackup.objects,
         );
-        Object.assign(report.checks, restoredObjects);
+        Object.assign(report.checks, restoredObjects, {
+          controlledFailureAfterAcknowledgedPrivatePut: true,
+          applicationStartDeniedWhileObjectsIncomplete: true,
+          allFiveApplicationServicesAbsentDuringPartialRestore: true,
+          ownedRestoreBucketOnlyCleanup: true,
+          recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry: true,
+          sameValidatedBackupRetriedBeforeApplicationStart: true,
+        });
         // Verify restored rows before starting any worker that can consume them.
-        await compose(restored, [
-          "up",
-          "-d",
-          "--no-build",
-          "migrate",
-          "api",
-          "web",
-        ]);
+        await gate.start(() =>
+          compose(restored, [
+            "up",
+            "-d",
+            "--no-build",
+            "migrate",
+            "api",
+            "web",
+          ]),
+        );
+        report.checks.applicationStartAllowedOnlyAfterVerifiedRestore = true;
         await ready(restored);
       },
     );

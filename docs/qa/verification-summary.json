@@ -13677,5 +13677,54 @@
     "expandedFullNativeThreeJobCiPending": true,
     "priorFinalNativeCi": "docs/qa/recovery01b-native-ci-evidence.json",
     "evidence": "docs/qa/recovery01c-evidence.json"
+  },
+  "latestRecovery01D": {
+    "taskId": "RECOVERY-01D",
+    "scope": "Controlled failure after actual acknowledged private-object PUT; exact residual state, absent application services, gated startup, owned restore-bucket cleanup and identical validated backup retry. All previous checks retained.",
+    "localVerification": {
+      "unit": 281,
+      "uniqueUnitReceipts": 281,
+      "failedSkippedCancelledTodo": 0,
+      "focusedNewUnitCases": 4,
+      "focusedPassedCases": 13,
+      "actualComposeConfigurationPassed": true,
+      "all25ProtectedHashesUnchanged": true,
+      "fullLocalComposePassed": false,
+      "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+      "environment": {
+        "spec_revision": "68",
+        "observations_current": true,
+        "phase": "running",
+        "network_policy": {
+          "mode": "restricted",
+          "state": "enforced"
+        },
+        "secrets": 0,
+        "runtime_variables": 0,
+        "outbound_identities": 0
+      },
+      "localUnitProof": {
+        "uniquePassedReceipts": 281,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 281,
+            "failed": 0,
+            "passed": 281,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 281,
+            "suites": 0
+          },
+          "duration_ms": 523227.647288
+        },
+        "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
+      }
+    },
+    "expandedFullNativeThreeJobCiPending": true,
+    "priorFinalNativeCi": "docs/qa/recovery01c-native-ci-evidence.json",
+    "evidence": "docs/qa/recovery01d-evidence.json"
   }
 }

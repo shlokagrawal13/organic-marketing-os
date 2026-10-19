@@ -1,3 +1,15 @@
+## Current continuation — RECOVERY-01D, 2026-10-19 IST
+
+The disposable verifier now fails after the first actual acknowledged private-object PUT, inspects its exact residual bytes/metadata, denies app startup and requires all five application services to remain absent. Cleanup first validates the full saved backup, generated restore identity/configuration, actual media-volume ownership and the entire expected residual set. It deletes only those keys, proves the bucket empty and retries the same validated backup. Complete object readback and unchanged native recovery rows open the application-start gate. Existing preflight, atomic PostgreSQL, fresh-Redis, queue/private-output/credit/restart and app/media/tenant/SMTP checks remain.
+
+Fresh local checks: 281/281 unique full-unit receipts, 13 focused guards including four new cases, actual Compose configuration and all 25 protected master/migration hashes passed. Local Docker28.4/vfs is healthy; user containers/volumes and real .env remain untouched. Full local MinIO is still blocked by normal proxy403 at storage.googleapis.com (rechecked current environment revision68). No application, dependency, migration SQL or pipeline change.
+
+Prior 18f0b8f/run39237077202 passed all three jobs (277 unit,38 HTTP,28 browser,5 recovery; builds,24 migrations,44 readability,zero audits,thirteen-phase Compose/native restore with six private objects and native populated Prisma upgrades/retry). Its final receipt is retained in docs/qa/recovery01c-native-ci-evidence.json. This capsule records local checks and implemented native assertions; its own complete fourteen-phase acceptance requires ALL THREE exact-source CI jobs. CI verifies fixtures and does not deploy.
+
+Next: Publish RECOVERY-01D and inspect/fix ALL THREE exact-source CI jobs. Require complete fourteen-phase Compose report: actual acknowledged private-object PUT followed by controlled failure, exact residual state, absent app services/denied start callback, owned-bucket cleanup, identical validated retry and gated startup; retain all previous native/core/recovery checks. Then RECOVERY-01E: assess PITR/WAL prerequisites and remaining recovery/master acceptance gaps; live/full-master acceptance remains open.
+
+Evidence: docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md and docs/qa/recovery01d-evidence.json. Controlled exception after acknowledged PUT does not establish real network/server/container crash behavior or cross-store atomicity. Wider recovery, PITR/WAL, live-provider/deployed and full-master acceptance remain partial. Source ZIPs are not database/media backups. Earlier entries retain historical scope.
+
 ## Current continuation — RECOVERY-01C, 2026-10-19 IST
 
 The disposable Compose verifier now validates a private hash manifest before source removal or restore mutations: matching project identities, actual stopped writers, native dump, every listed object and database media reference, bytes/hashes and metadata. Seven corrupt/incomplete/mis-scoped backup controls must reject before destructive callbacks and leave native source rows/objects intact. All previous atomic restore, application/media/tenant/SMTP assertions remain.

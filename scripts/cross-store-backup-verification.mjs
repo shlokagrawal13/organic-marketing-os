@@ -179,6 +179,30 @@ export async function withValidatedFixtureBackup(input, action) {
   validateFixtureBackup(input); // Must precede source removal or target mutation.
   return await action();
 }
+export function fixtureApplicationStartGate(loadBackup) {
+  let verifiedManifest = null;
+  return {
+    async restore(restoreObjects, verifyDatabase) {
+      verifiedManifest = null;
+      const before = validateFixtureBackup(loadBackup());
+      const result = await restoreObjects();
+      assert.equal(result.objectsRestored, before.objects.length);
+      assert.equal(result.allObjectBytesAndMetadataMatch, true);
+      await verifyDatabase();
+      assert.deepEqual(validateFixtureBackup(loadBackup()), before);
+      verifiedManifest = before;
+      return result;
+    },
+    async start(action) {
+      assert.ok(
+        verifiedManifest,
+        "Application start denied: restore is incomplete.",
+      );
+      assert.deepEqual(validateFixtureBackup(loadBackup()), verifiedManifest);
+      return await action();
+    },
+  };
+}
 export function invalidFixtureBackupCases(input) {
   const clone = () => ({
     ...input,

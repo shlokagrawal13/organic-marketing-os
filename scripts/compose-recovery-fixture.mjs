@@ -235,6 +235,10 @@ export async function runComposeRecovery(ctx) {
       });
     return references;
   }
+  if (mode === "recovery-database-baseline") {
+    assert.deepEqual(await rows(r), r.before);
+    return { restoredRecoveryDatabaseUnchanged: true };
+  }
   if (mode === "recovery-baseline") {
     assert.deepEqual(await rows(r), r.before);
     assert.equal(sha(await store.read(r.outputKey, 2000000)), r.outputSha);

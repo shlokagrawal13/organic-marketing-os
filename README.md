@@ -1,3 +1,7 @@
+## Current recovery continuation — RECOVERY-01D
+
+Private-object restore now has an acknowledged-write failure probe, guarded residual cleanup/retry and verified application-start gate in the disposable harness. Require all three exact-source CI jobs and fourteen complete Compose phases. See [status](PROJECT_STATUS.md) and [procedure/evidence](docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md). Full product acceptance remains partial; CI verifies and does not deploy.
+
 ## Current recovery continuation — RECOVERY-01C
 
 The disposable verifier now rejects corrupt/incomplete cross-store backups before destructive actions and checks fresh-Redis queued/uncertain/private-output recovery plus worker restart. Full acceptance requires all three jobs on the published source. See [current status](PROJECT_STATUS.md) and [scope/evidence](docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md). Source ZIPs are not database/media backups; full product acceptance remains partial.

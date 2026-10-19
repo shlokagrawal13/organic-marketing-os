@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01D, 2026-10-19 IST
+
+Complete Compose now requires fourteen phases, adding acknowledged-object-write failure, residual inspection, denied app startup, owned-bucket cleanup and identical-backup retry with a verified start gate. Every prior assertion and all three CI jobs remain. Local281 unit/13 focused guards/actual configuration passed; native acceptance requires own exact-source CI. Prior18f0b8f/run39237077202 passed all three. Older counts below are historical. See [PRIVATE_OBJECT_RESTORE_RECOVERY.md](PRIVATE_OBJECT_RESTORE_RECOVERY.md). CI verifies and does not deploy.
+
 ## Current fixture scope — RECOVERY-01C, 2026-10-19 IST
 
 The full Compose verifier now has thirteen phases, a private synthetic provider, seven backup-preflight rejection controls and fresh-Redis queued/uncertain/private-output recovery followed by three-worker restart. Existing native interruption/atomic retry/media/tenant/SMTP checks remain. Current source requires all THREE exact-commit jobs; predecessor f99dba4/run39230879722 passed all three. Older ten-phase/two-job counts below are historical. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).

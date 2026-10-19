@@ -314,52 +314,52 @@ try {
         }),
       ),
     );
-  } else if (mode === "restore-objects") {
-    // Validate the complete set before the first bucket or object write.
-    const keys = new Set();
-    for (const object of state.objects) {
-      assert.ok(!keys.has(object.key));
-      keys.add(object.key);
-      const bytes = Buffer.from(object.body, "base64");
-      assert.equal(bytes.toString("base64"), object.body);
-      assert.equal(sha(bytes), object.sha256);
-    }
-    await store.ready();
-    for (const object of state.objects) {
-      assert.equal(sha(Buffer.from(object.body, "base64")), object.sha256);
-      await store.client.send(
-        new s3.PutObjectCommand({
-          Bucket: store.bucket,
-          Key: object.key,
-          Body: Buffer.from(object.body, "base64"),
-          ContentType: object.contentType,
-          CacheControl: object.cacheControl,
-          Metadata: object.metadata,
-        }),
-      );
-    }
-    const restored = await files();
-    assert.deepEqual(
-      restored.map((x) => [
-        x.key,
-        x.sha256,
-        x.contentType,
-        x.cacheControl,
-        x.metadata,
-      ]),
-      state.objects.map((x) => [
-        x.key,
-        x.sha256,
-        x.contentType,
-        x.cacheControl,
-        x.metadata,
-      ]),
-    );
+  } else if (mode === "inspect-partial-objects") {
+    const actual = await files();
+    assert.deepEqual(actual, state.objects.slice(0, 1));
     console.log(
       JSON.stringify({
-        objectsRestored: restored.length,
-        allObjectBytesAndMetadataMatch: true,
+        partialObjectsObserved: actual.length,
+        partialObjectBytesAndMetadataMatch: true,
       }),
+    );
+  } else if (mode === "clear-partial-objects") {
+    console.log(
+      JSON.stringify(
+        await globalThis.__composeObjects.clearPartialPrivateObjects({
+          expected: state.objects.slice(0, 1),
+          list: files,
+          remove: (Key) =>
+            store.client.send(
+              new s3.DeleteObjectCommand({ Bucket: store.bucket, Key }),
+            ),
+        }),
+      ),
+    );
+  } else if (
+    mode === "restore-objects" ||
+    mode === "restore-objects-interrupted"
+  ) {
+    console.log(
+      JSON.stringify(
+        await globalThis.__composeObjects.restorePrivateObjects({
+          objects: state.objects,
+          failAfterFirstPut: mode === "restore-objects-interrupted",
+          ready: () => store.ready(),
+          list: files,
+          put: (object) =>
+            store.client.send(
+              new s3.PutObjectCommand({
+                Bucket: store.bucket,
+                Key: object.key,
+                Body: Buffer.from(object.body, "base64"),
+                ContentType: object.contentType,
+                CacheControl: object.cacheControl,
+                Metadata: object.metadata,
+              }),
+            ),
+        }),
+      ),
     );
   } else if (mode === "verify-restored") {
     const root = `/workspaces/${state.owner.org}`;
@@ -425,6 +425,15 @@ try {
       }),
     );
   } else throw new Error("Unsupported verification phase");
+} catch (error) {
+  if (
+    mode === "restore-objects-interrupted" &&
+    error.message === globalThis.__composeObjects.controlledObjectFailure
+  ) {
+    // Keep this expected fault recognizable without a data-URL stack trace.
+    console.error(error.message);
+    process.exitCode = 1;
+  } else throw error;
 } finally {
   await db.$disconnect();
   store.client.destroy();
