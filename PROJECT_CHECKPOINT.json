@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.12-NATIVE-01A-initial-compose-CI-and-local-isolation-verified",
-  "savedAtUtc": "2026-10-18T23:34:22.796615+00:00",
-  "currentMilestone": "NATIVE-01A initial source complete Compose/native-restore job verified; isolation/metadata follow-up locally verified. Read BOTH current exact-source CI jobs before final acceptance.",
+  "checkpointRevision": "2026-10-19.13-RECOVERY-01A-native-interruption-local-verified",
+  "savedAtUtc": "2026-10-19T00:08:17.715392+00:00",
+  "currentMilestone": "RECOVERY-01A native interrupted restore/atomic rollback/clean retry locally verified; require both own exact-source CI jobs for populated full Compose acceptance.",
   "activeTaskId": null,
   "workInProgress": false,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish current source and inspect BOTH exact-source core and Compose/native-restore CI jobs; fix failures, verify report/logs/artifacts, then continue RECOVERY-01 interrupted restore/upgrade audit. Preserve populated services and real .env.",
+  "nextAction": "Publish current RECOVERY-01A and inspect BOTH exact-source core and Compose/native-interruption/private-media restore CI jobs; fix failures. Then RECOVERY-01B populated native predecessor upgrade and interrupted migration/retry audit; preserve populated services and real .env.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,37 +84,34 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
-    "Dockerfile",
-    "Dockerfile.minio",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "README.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "compose.yaml",
     "docs/CHANGELOG.md",
     "docs/COMPOSE_NATIVE_VERIFICATION.md",
     "docs/DATA_GOVERNANCE.md",
     "docs/DEPLOYMENT.md",
     "docs/HANDOFF.md",
+    "docs/POSTGRES_RESTORE_INTERRUPTION.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/RESUME_CONTEXT.md",
     "docs/SESSION_LOG.md",
-    "docs/SETUP.md",
     "docs/TASK_BOARD.md",
     "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/native01a-evidence.json",
-    "docs/qa/native01a-initial-compose-ci-evidence.json",
-    "docs/qa/research01i-native-ci-evidence.json",
+    "docs/qa/native01a-native-ci-evidence.json",
+    "docs/qa/recovery01a-evidence.json",
+    "docs/qa/recovery01a-postgres-interruption-evidence.json",
     "docs/qa/verification-summary.json",
     "package.json",
     "scripts/compose-verification.mjs",
-    "scripts/verify-compose-fixture.mjs",
+    "scripts/postgres-restore-verification.mjs",
     "scripts/verify-compose.mjs",
+    "scripts/verify-postgres-recovery.mjs",
     "tests/compose-verification.test.ts"
   ],
   "sourceOfTruth": {
@@ -6710,8 +6707,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "d42a3bb155c1cd185fe28adc156108401362d3cf",
-    "status": "NATIVE-01A_local_build_config_verified_read_latest_Git_Actions_for_own_publication_and_both_CI_jobs",
+    "commit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+    "status": "RECOVERY-01A_local_native_interruption_verified_own_publication_and_BOTH_CI_required",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6724,9 +6721,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "0fed941de26aa9d729bf16eb032944e6a8f7cd07",
+    "sourceTree": "8174d0d69471807f7ff24b6edd2e850404b2d50d",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last fully verified predecessor. This source is newer; read exact HEAD and both CI jobs for current acceptance.",
+    "commitMeaning": "Last fully verified predecessor. Read current exact HEAD and BOTH own jobs for this newer increment.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "e1cbab4c73e5a51227195588edc666f22006bc57",
     "uploadGate": {
@@ -7921,13 +7918,14 @@
       "state": "ready_for_local_work",
       "title": "Native Postgres/Redis and actual Compose",
       "currentBlocker": "Whole Compose/MinIO and native populated PostgreSQL/private-media restore require dedicated execution/evidence; current managed Docker environment is available and must be rechecked on resume.",
-      "completedIncrement": "A initial source 7c624d5 complete Compose/native restore job117820808071 passed with five objects and source volume deletion; local inherited-shell guard follow-up passed. Read BOTH newer exact-source CI jobs for final acceptance."
+      "completedIncrement": "A final060a7d1/run39177109393 both jobs passed:270/38/28/5,actual nine-service Compose plus native PostgreSQL and five private objects restored after source volumes removed."
     },
     {
       "id": "RECOVERY-01",
-      "state": "needs_execution_environment",
+      "state": "ready_for_local_work",
       "title": "Native populated upgrade and cross-store recovery",
-      "completedIncrement": "NATIVE-01A initial source actual Compose job passed a quiesced synthetic pg_dump/pg_restore plus five-object private restore after source volume deletion. Wider interrupted upgrade/restore, PITR, production sizing and in-flight queue recovery remain open."
+      "completedIncrement": "A native PostgreSQL17.11 interruption negative-control, atomic rollback and clean retry passed locally; full Compose uses same probes before atomic restore. Own both CI jobs required. Next B populated native predecessor upgrade/interrupted migration retry; wider recovery remains open.",
+      "currentBlocker": "Local MinIO dependency host CONNECT403; normal independent CI executes full current-source Compose/private-media fixtures. Native PostgreSQL fixture and current Docker environment are available."
     },
     {
       "id": "AI-LIVE-01",
@@ -8113,40 +8111,37 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "NATIVE-01A",
-    "description": "Standing-authorized isolation/release-metadata follow-up push; BOTH own exact-source native core and complete Compose/restore CI required. Initial Compose source/job receipt is retained separately.",
+    "taskId": "RECOVERY-01A",
+    "description": "Standing-authorized push; exact-source core and populated Compose/atomic interruption/private-media restore CI required.",
     "paths": [
-      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
-      "Dockerfile",
-      "Dockerfile.minio",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "README.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "compose.yaml",
       "docs/CHANGELOG.md",
       "docs/COMPOSE_NATIVE_VERIFICATION.md",
       "docs/DATA_GOVERNANCE.md",
       "docs/DEPLOYMENT.md",
       "docs/HANDOFF.md",
+      "docs/POSTGRES_RESTORE_INTERRUPTION.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/RESUME_CONTEXT.md",
       "docs/SESSION_LOG.md",
-      "docs/SETUP.md",
       "docs/TASK_BOARD.md",
       "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/native01a-evidence.json",
-      "docs/qa/native01a-initial-compose-ci-evidence.json",
-      "docs/qa/research01i-native-ci-evidence.json",
+      "docs/qa/native01a-native-ci-evidence.json",
+      "docs/qa/recovery01a-evidence.json",
+      "docs/qa/recovery01a-postgres-interruption-evidence.json",
       "docs/qa/verification-summary.json",
       "package.json",
       "scripts/compose-verification.mjs",
-      "scripts/verify-compose-fixture.mjs",
+      "scripts/postgres-restore-verification.mjs",
       "scripts/verify-compose.mjs",
+      "scripts/verify-postgres-recovery.mjs",
       "tests/compose-verification.test.ts"
     ]
   },
@@ -8959,73 +8954,18 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "unit": {
-      "tests": 266,
-      "passed": 266,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0,
-      "uniqueReceipts": 266
-    },
-    "http": {
-      "tests": 38,
-      "passed": 38,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0
-    },
-    "browser": {
-      "tests": 28,
-      "passed": 28
-    },
-    "recovery": {
-      "tests": 5,
-      "passed": 5,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0,
-      "observedRemainingLockMs": 119941
-    },
-    "apiBuild": true,
-    "webProductionBuild": true,
-    "freshNativePostgresMigrations": 24,
-    "nativeRedis": true,
-    "populatedUpgradeRestore": {
-      "passed": true,
-      "engine": "PGlite WASM PostgreSQL",
-      "migrations": 24,
-      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
-      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4974580,
-      "sha256": "e26bbd25870e81f666b8ab03165d8f4a821024a21395ba0495f4d24b97ca21e1",
-      "nativePostgresRestoreVerified": false,
-      "creditLedgerRestoreAndImmutabilityVerified": true,
-      "generatedMediaRequestAndProviderReceiptRestored": true,
-      "workspaceYoutubePolicyRestored": true,
-      "researchCitationProvenanceAndReviewRestored": true,
-      "queuedStrategyResearchSnapshotRestored": true,
-      "strategyResearchSelectionRestored": true,
-      "strategyResearchCoverageRestored": true,
-      "structuredResearchInsightAndLegacyNullRestored": true,
-      "audienceCommunityInsightsAndMissingListsRestored": true,
-      "seasonalUnknownAndDeclaredCalendarContextRestored": true,
-      "industryInsightsAndUnknownCounterSignalsRestored": true,
-      "strategyRecommendationsAndCitationReviewRestored": true
-    },
-    "boundedEnglishReadability": {
-      "passed": true,
-      "passedSamples": 44,
-      "blankNegativeControl": true
-    },
-    "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0,
-    "scope": "Fresh local full native verification of RESEARCH-01I; own source publication/CI read separately",
-    "evidence": "docs/qa/research01i-evidence.json",
-    "liveProviderVerification": false,
-    "fullMasterAcceptanceVerified": false
+    "nativePostgres": "17.11",
+    "nativeInterruptionCases": 2,
+    "cleanAtomicRetryPassed": true,
+    "sourceSyntheticRecordsUnchanged": true,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "focusedFixtureSafetyUnitTestsPassed": 5,
+    "actualComposeConfigurationPassed": true,
+    "localFullComposePassed": false,
+    "localFullComposeBlock": "Current normal proxy probe of storage.googleapis.com returns CONNECT 403; MinIO Go dependencies use this redirect host. Full current-source Compose acceptance is required in ordinary independent GitHub Actions.",
+    "protectedMasterAndMigrationHashesUnchanged": 25,
+    "nativeReceipt": "docs/qa/recovery01a-postgres-interruption-evidence.json"
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -9531,73 +9471,18 @@
     "requiresUserApprovalText": "I explicitly approve publishing POLICY-01A claim-evidence native-CI closure’s 15 verified docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "verification": {
-    "unit": {
-      "tests": 266,
-      "passed": 266,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0,
-      "uniqueReceipts": 266
-    },
-    "http": {
-      "tests": 38,
-      "passed": 38,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0
-    },
-    "browser": {
-      "tests": 28,
-      "passed": 28
-    },
-    "recovery": {
-      "tests": 5,
-      "passed": 5,
-      "failed": 0,
-      "cancelled": 0,
-      "skipped": 0,
-      "todo": 0,
-      "observedRemainingLockMs": 119941
-    },
-    "apiBuild": true,
-    "webProductionBuild": true,
-    "freshNativePostgresMigrations": 24,
-    "nativeRedis": true,
-    "populatedUpgradeRestore": {
-      "passed": true,
-      "engine": "PGlite WASM PostgreSQL",
-      "migrations": 24,
-      "populatedUpgrade": "v0.1 preserved user, membership, draft and queued AI job",
-      "restore": "Fresh database loaded from captured data-directory archive after deleting original test workspace",
-      "archiveBytes": 4974580,
-      "sha256": "e26bbd25870e81f666b8ab03165d8f4a821024a21395ba0495f4d24b97ca21e1",
-      "nativePostgresRestoreVerified": false,
-      "creditLedgerRestoreAndImmutabilityVerified": true,
-      "generatedMediaRequestAndProviderReceiptRestored": true,
-      "workspaceYoutubePolicyRestored": true,
-      "researchCitationProvenanceAndReviewRestored": true,
-      "queuedStrategyResearchSnapshotRestored": true,
-      "strategyResearchSelectionRestored": true,
-      "strategyResearchCoverageRestored": true,
-      "structuredResearchInsightAndLegacyNullRestored": true,
-      "audienceCommunityInsightsAndMissingListsRestored": true,
-      "seasonalUnknownAndDeclaredCalendarContextRestored": true,
-      "industryInsightsAndUnknownCounterSignalsRestored": true,
-      "strategyRecommendationsAndCitationReviewRestored": true
-    },
-    "boundedEnglishReadability": {
-      "passed": true,
-      "passedSamples": 44,
-      "blankNegativeControl": true
-    },
-    "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0,
-    "scope": "Fresh local full native verification of RESEARCH-01I; own source publication/CI read separately",
-    "evidence": "docs/qa/research01i-evidence.json",
-    "liveProviderVerification": false,
-    "fullMasterAcceptanceVerified": false
+    "nativePostgres": "17.11",
+    "nativeInterruptionCases": 2,
+    "cleanAtomicRetryPassed": true,
+    "sourceSyntheticRecordsUnchanged": true,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "focusedFixtureSafetyUnitTestsPassed": 5,
+    "actualComposeConfigurationPassed": true,
+    "localFullComposePassed": false,
+    "localFullComposeBlock": "Current normal proxy probe of storage.googleapis.com returns CONNECT 403; MinIO Go dependencies use this redirect host. Full current-source Compose acceptance is required in ordinary independent GitHub Actions.",
+    "protectedMasterAndMigrationHashesUnchanged": 25,
+    "nativeReceipt": "docs/qa/recovery01a-postgres-interruption-evidence.json"
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
     "scope": "POLICY-01B local reconstruction; full app regression plus final hostname-hardening focused rerun; no native CI for this increment",
@@ -10459,7 +10344,7 @@
   "contextResume": {
     "evidence": "docs/qa/context-resume-evidence.json",
     "resumeContext": "docs/RESUME_CONTEXT.md",
-    "lastVerifiedPublicMain": "d42a3bb155c1cd185fe28adc156108401362d3cf",
+    "lastVerifiedPublicMain": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
     "pastedContextSuperseded": true,
     "documentationOnly": false,
     "publicPushAttempted": true
@@ -13809,5 +13694,276 @@
       "independentArtifactByteInspection": false
     },
     "followup": "Inherited shell interpolation isolation is locally hardened and re-tested. Correct release copyright/short-commit metadata are added. The newer source must pass both exact-source core and Compose CI jobs; this receipt does not claim future results."
+  },
+  "recovery01a": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01A",
+    "recordedAtUtc": "2026-10-19T00:08:17.715392+00:00",
+    "status": "local_native_interruption_rollback_retry_verified_current_full_Compose_CI_required",
+    "basePublicCommit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+    "baseVerifiedRunId": 39177109393,
+    "scope": "Actual native COPY-barrier backend interruption: non-atomic partial-state control, single-transaction schema/data rollback and clean retry; full app/private-media restore uses the same probes before atomic pg_restore.",
+    "localVerification": {
+      "nativePostgres": "17.11",
+      "nativeInterruptionCases": 2,
+      "cleanAtomicRetryPassed": true,
+      "sourceSyntheticRecordsUnchanged": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "focusedFixtureSafetyUnitTestsPassed": 5,
+      "actualComposeConfigurationPassed": true,
+      "localFullComposePassed": false,
+      "localFullComposeBlock": "Current normal proxy probe of storage.googleapis.com returns CONNECT 403; MinIO Go dependencies use this redirect host. Full current-source Compose acceptance is required in ordinary independent GitHub Actions.",
+      "protectedMasterAndMigrationHashesUnchanged": 25,
+      "nativeReceipt": "docs/qa/recovery01a-postgres-interruption-evidence.json"
+    },
+    "observedFailure": "An interrupted --exit-on-error restore left two visible fixture tables. Stop-on-error does not make a whole restore atomic.",
+    "fix": "Final native restore now uses pg_restore --exit-on-error --single-transaction into an isolated empty target. Two interruption controls demonstrate the before/after behavior; target identity and volume ownership are checked before reset.",
+    "safety": "Generated restore projects only. The new guard rejects source/real/malformed targets before any SQL callback. Local fixture uses tmpfs, --network none, no host ports/real env; full Compose resets only its separately labelled restore DB.",
+    "ciAcceptance": "Require both core and Compose jobs on the exact new source. Complete report must retain all prior auth/media/tenant/SMTP checks, two real interruption cases, atomic rollback, successful atomic retry and matching private-media restore after original source volumes were removed.",
+    "limits": [
+      "Backend termination during a deterministic synthetic COPY pause is verified; client/network loss, server/container crash and other interruption points are distinct cases.",
+      "Single-transaction fixture restore does not establish backup completeness, PITR/WAL replay, encrypted-provider credential recovery, interrupted migration/upgrade behavior, in-flight queue restoration or production sizing/retention.",
+      "Live-provider/deployed and full master acceptance remain open; CI verifies and does not deploy."
+    ]
+  },
+  "native01aNativeCi": {
+    "schemaVersion": 1,
+    "taskId": "NATIVE-01A",
+    "status": "exact_public_source_both_core_and_full_compose_native_restore_CI_verified",
+    "recordedAtUtc": "2026-10-18T23:52:45.124521+00:00",
+    "publicCommit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+    "treeSha": "8174d0d69471807f7ff24b6edd2e850404b2d50d",
+    "run": {
+      "id": 39177109393,
+      "html_url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39177109393",
+      "head_sha": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+      "status": "completed",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "run_started_at": "2026-10-18T23:34:47Z",
+      "updated_at": "2026-10-18T23:51:28Z"
+    },
+    "jobs": [
+      {
+        "id": 117821935969,
+        "name": "Disposable Compose and native restore",
+        "allStepsPassed": true
+      },
+      {
+        "id": 117821936166,
+        "name": "Native application verification",
+        "allStepsPassed": true
+      }
+    ],
+    "verification": {
+      "unit": 270,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "failedSkippedCancelledTodo": 0,
+      "freshNativeMigrations": 24,
+      "readabilitySamples": 44,
+      "bothDependencyAuditVulnerabilities": 0,
+      "apiAndWebBuilds": true,
+      "populatedPgliteUpgradeArchiveRestore": true
+    },
+    "completeComposeAndNativeCrossStoreRestore": {
+      "schemaVersion": 1,
+      "taskId": "NATIVE-01A",
+      "passed": true,
+      "startedAt": "2026-10-18T23:34:54.719Z",
+      "sourceProject": "omos-compose-verify-251a1183fb6c2935",
+      "restoreProject": "omos-compose-verify-251a1183fb6c2935-restore",
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "checks": {
+        "generatedProjectPrivateEnvAndVolumeIsolation": true,
+        "allNineLongRunningServices": true,
+        "health": true,
+        "auth": true,
+        "tenantIsolation": true,
+        "range": true,
+        "realRender": true,
+        "idempotency": true,
+        "noKeyFailure": true,
+        "emailSubmission": true,
+        "realSmtpDelivery": true,
+        "originalSourceVolumesRemoved": true,
+        "objectsRestored": 5,
+        "allObjectBytesAndMetadataMatch": true,
+        "nativeDatabaseRestore": true,
+        "privateMediaRestore": true,
+        "recordCountsMatch": true,
+        "originalAndRenderedBytesMatch": true,
+        "tenantAndAnonymousIsolationAfterRestore": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "steps": [
+        {
+          "name": "isolated configuration",
+          "passed": true,
+          "durationMs": 438
+        },
+        {
+          "name": "build application images",
+          "passed": true,
+          "durationMs": 88283
+        },
+        {
+          "name": "build official pinned MinIO release",
+          "passed": true,
+          "durationMs": 136590
+        },
+        {
+          "name": "complete Compose startup",
+          "passed": true,
+          "durationMs": 17731
+        },
+        {
+          "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+          "passed": true,
+          "durationMs": 2253
+        },
+        {
+          "name": "real SMTP delivery",
+          "passed": true,
+          "durationMs": 59
+        },
+        {
+          "name": "quiesced native database and private-object backup",
+          "passed": true,
+          "durationMs": 2060
+        },
+        {
+          "name": "remove original disposable source targets",
+          "passed": true,
+          "durationMs": 811
+        },
+        {
+          "name": "restore into separate PostgreSQL and MinIO targets",
+          "passed": true,
+          "durationMs": 8580
+        },
+        {
+          "name": "restored records/media/tenant access through actual application",
+          "passed": true,
+          "durationMs": 378
+        }
+      ],
+      "verificationMode": "complete-compose-native-restore",
+      "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+      "databaseDump": {
+        "bytes": 120961,
+        "sha256": "d00efc1043eaacbd924e4aa8b2f635647d334d1c2cdcc2feb86e2d970ceb3903"
+      },
+      "objectBackup": {
+        "objects": 5,
+        "bytes": 25947,
+        "sha256": "c57022f995b997fd03dbcf17a92d503f1b07417c9c4d499d5eb5620086b67c2d"
+      },
+      "completedAt": "2026-10-18T23:39:13.894Z"
+    },
+    "localUnitVerification": {
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 270,
+          "failed": 0,
+          "passed": 270,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 270,
+          "suites": 0
+        },
+        "duration_ms": 478611.611035
+      },
+      "uniquePassedReceipts": 270,
+      "sha256": "4f1fdd7f3ba1d23021b9c877e646e4c7213d2c8828c929ab1915a6a7dcebb33f"
+    },
+    "localFullComposeBlocked": true,
+    "localFullComposeBlock": "Enforced network allowlist rejects storage.googleapis.com dependency downloads; complete fixture acceptance executed independently in ordinary GitHub Actions.",
+    "publication": {
+      "publicCommit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+      "treeSha": "8174d0d69471807f7ff24b6edd2e850404b2d50d",
+      "fullPublicTreeMatchesLocal": true,
+      "allPublicTreeFilesCompared": 522,
+      "all25ProtectedHashesUnchanged": true,
+      "workingTreeClean": true
+    },
+    "artifacts": [
+      {
+        "id": 12155745163,
+        "name": "browser-evidence",
+        "size_in_bytes": 13480922,
+        "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12155745163",
+        "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12155745163/zip",
+        "expired": false,
+        "created_at": "2026-10-18T23:51:23Z",
+        "expires_at": "2027-01-16T23:34:47Z",
+        "updated_at": "2026-10-18T23:51:23Z",
+        "digest": "sha256:3eabdccdd8daad4a0eb0cc30964287f05e73bbdcbc38ba29763d9e301579a00a",
+        "workflow_run": {
+          "id": 39177109393,
+          "repository_id": 1389748509,
+          "head_repository_id": 1389748509,
+          "head_branch": "main",
+          "head_sha": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7"
+        }
+      },
+      {
+        "id": 12154658841,
+        "name": "compose-evidence",
+        "size_in_bytes": 1295,
+        "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12154658841",
+        "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12154658841/zip",
+        "expired": false,
+        "created_at": "2026-10-18T23:39:14Z",
+        "expires_at": "2027-01-16T23:34:47Z",
+        "updated_at": "2026-10-18T23:39:14Z",
+        "digest": "sha256:cef685e64639d3b9945f03d2ec4b7439aecc465d7d7cfb30c0846073411fc9ba",
+        "workflow_run": {
+          "id": 39177109393,
+          "repository_id": 1389748509,
+          "head_repository_id": 1389748509,
+          "head_branch": "main",
+          "head_sha": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7"
+        }
+      }
+    ],
+    "artifactInspection": [
+      {
+        "artifactId": 12154658841,
+        "name": "compose-evidence",
+        "attempted": true,
+        "host": "sdmntprcentralindia.oaiusercontent.com",
+        "bytesDownloadedToWorkspace": false,
+        "independentArtifactByteInspection": false,
+        "errorType": "URLError",
+        "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      },
+      {
+        "artifactId": 12155745163,
+        "name": "browser-evidence",
+        "attempted": true,
+        "host": "sdmntprcentralindia.oaiusercontent.com",
+        "bytesDownloadedToWorkspace": false,
+        "independentArtifactByteInspection": false,
+        "errorType": "URLError",
+        "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+      }
+    ],
+    "decodedJobLogSha256": {
+      "core-ci.log": "6a773d191d4670ec3b3d763fc6927de02e0f276d32b29e87d8b258f7e6f29daf",
+      "compose-ci.log": "674cea2e7ad02aa593faaf920ad22659975b7dab02f4e1685f726fecf1a33f7d"
+    },
+    "nextTask": "RECOVERY-01 interrupted restore/upgrade and broader native recovery audit",
+    "limits": [
+      "CI verifies isolated synthetic development fixtures and does not deploy.",
+      "Quiesced native database/private-object restore does not close PITR, interrupted restore/migration, in-flight queue recovery, live providers or full master acceptance.",
+      "Independent artifact byte inspection status is recorded separately; logs, all steps, checks, counts and upload digests were verified."
+    ]
   }
 }

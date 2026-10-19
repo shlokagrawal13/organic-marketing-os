@@ -35,6 +35,14 @@ export function assertFixtureProject(project) {
     throw new Error("Only generated disposable Compose projects are allowed.");
   return project;
 }
+export function assertFixtureRestoreProject(project) {
+  assertFixtureProject(project);
+  if (!project.endsWith("-restore"))
+    throw new Error(
+      "Database reset/interruption requires a disposable restore target.",
+    );
+  return project;
+}
 export function assertFixtureConfig(config, project, envPath) {
   assertFixtureProject(project);
   if (config.name !== project) throw new Error("Unexpected Compose project.");

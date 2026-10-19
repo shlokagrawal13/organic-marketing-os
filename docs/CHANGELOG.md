@@ -1,3 +1,7 @@
+## RECOVERY-01A interrupted native restore — 2026-10-19 IST
+
+Native PostgreSQL17.11 negative control retained two tables after interrupted non-atomic restore; the atomic case rolled back to zero and clean retry restored all synthetic rows. Full Compose now uses the same COPY-barrier interruption probes and final `pg_restore --single-transaction`, retaining all prior cross-store/application checks. Five fixture guards/config passed; 25 protected hashes unchanged. Require own exact-source BOTH CI jobs for current populated acceptance. Prior NATIVE-01A final060a7d1/run39177109393 passed270/38/28/5 and full Compose/five-object restore. Wider native upgrade/migration interruption, PITR/live/full-master acceptance remain open. See `docs/POSTGRES_RESTORE_INTERRUPTION.md`.
+
 ## NATIVE-01A initial complete fixture acceptance — 2026-10-19 IST
 
 Initial source `7c624d5` passed complete Compose/native cross-store job `117820808071` (run `39176723245`): source volumes removed; native DB/five private objects restored and app records/media/access/cleanup verified. Follow-up removes inherited shell fixture overrides and corrects MinIO release metadata; four guard tests and actual conflicting-parent configuration passed. Read newer exact-source BOTH jobs before final acceptance. Core job was still running at capture. Wider interrupted restore/upgrade, PITR and full live/master acceptance remain open. See `docs/qa/native01a-initial-compose-ci-evidence.json`.

@@ -12,7 +12,13 @@ import {
   checksum,
   redact,
   fixtureDockerEnv,
+  assertFixtureRestoreProject,
 } from "./compose-verification.mjs";
+import {
+  restoreBarrierSql,
+  restoreApplicationName,
+  verifyInterruptedRestore,
+} from "./postgres-restore-verification.mjs";
 if (process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
     "Set MOS_ALLOW_NATIVE_TESTS=isolated-test-services for disposable Compose verification.",
@@ -94,7 +100,8 @@ const fixtureScript = readFileSync(
 );
 const report = {
   schemaVersion: 1,
-  taskId: "NATIVE-01A",
+  taskId: "RECOVERY-01A",
+  baselineTaskId: "NATIVE-01A",
   passed: false,
   startedAt: new Date().toISOString(),
   sourceProject: source,
@@ -198,6 +205,84 @@ async function config(project) {
   );
   assertFixtureConfig(value, project, fixtureEnv);
   return value;
+}
+function postgresSql(project, database, sql) {
+  return compose(
+    project,
+    [
+      "exec",
+      "-T",
+      "postgres",
+      "psql",
+      "-X",
+      "-q",
+      "-At",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-U",
+      "marketing",
+      "-d",
+      database,
+    ],
+    { input: sql, quiet: true },
+  );
+}
+async function resetRestoreDatabase() {
+  assertFixtureRestoreProject(restored);
+  const cfg = await config(restored);
+  const labels = JSON.parse(
+    await command(
+      [
+        "volume",
+        "inspect",
+        cfg.volumes.postgres_data.name,
+        "--format",
+        "{{json .Labels}}",
+      ],
+      { quiet: true },
+    ),
+  );
+  assert.equal(labels["com.docker.compose.project"], restored);
+  await compose(
+    restored,
+    [
+      "exec",
+      "-T",
+      "postgres",
+      "dropdb",
+      "-U",
+      "marketing",
+      "--force",
+      "marketing",
+    ],
+    { quiet: true },
+  );
+  await compose(
+    restored,
+    ["exec", "-T", "postgres", "createdb", "-U", "marketing", "marketing"],
+    { quiet: true },
+  );
+}
+function restoreDatabase(dump, atomic) {
+  assertFixtureRestoreProject(restored);
+  return compose(
+    restored,
+    [
+      "exec",
+      "-T",
+      "-e",
+      `PGAPPNAME=${restoreApplicationName}`,
+      "postgres",
+      "pg_restore",
+      "-U",
+      "marketing",
+      "-d",
+      "marketing",
+      "--exit-on-error",
+      ...(atomic ? ["--single-transaction"] : []),
+    ],
+    { input: dump, quiet: true },
+  );
 }
 async function node(project, mode, state = {}, running = true) {
   const args = running
@@ -371,6 +456,9 @@ try {
           "render-worker",
           "media-worker",
         ]);
+        // An isolated fixture-only CHECK function supplies a deterministic COPY
+        // barrier for native backend interruption, without fixed kill timing.
+        await postgresSql(source, "marketing", restoreBarrierSql);
         const dump = await compose(
           source,
           [
@@ -448,21 +536,28 @@ try {
             await new Promise((r) => setTimeout(r, 500));
           }
         }
-        await compose(
-          restored,
-          [
-            "exec",
-            "-T",
-            "postgres",
-            "pg_restore",
-            "-U",
-            "marketing",
-            "-d",
-            "marketing",
-            "--exit-on-error",
-          ],
-          { input: readFileSync(resolve(dir, "database.dump")), quiet: true },
+        const dump = readFileSync(resolve(dir, "database.dump"));
+        assert.equal(
+          checksum(dump),
+          report.databaseDump.sha256,
+          "Saved native database dump changed before restore.",
         );
+        report.restoreInterruption = await verifyInterruptedRestore({
+          project: restored,
+          query: (sql) => postgresSql(restored, "marketing", sql),
+          reset: resetRestoreDatabase,
+          setPause: (on) =>
+            postgresSql(
+              restored,
+              "postgres",
+              `ALTER DATABASE marketing SET omos.fixture_restore_pause = '${on ? "on" : "off"}';`,
+            ),
+          restore: (atomic) => restoreDatabase(dump, atomic),
+          progress: (name) => console.log("POSTGRES RECOVERY CHECK: " + name),
+        });
+        Object.assign(report.checks, report.restoreInterruption.checks);
+        await restoreDatabase(dump, true);
+        report.checks.cleanAtomicNativeDatabaseRetry = true;
         const objects = JSON.parse(
           readFileSync(resolve(dir, "private-objects.json"), "utf8"),
         );

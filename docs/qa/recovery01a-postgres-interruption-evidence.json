@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01A",
+  "verificationMode": "standalone-native-postgres-interruption",
+  "passed": true,
+  "startedAt": "2026-10-19T00:06:10.874Z",
+  "project": "omos-compose-verify-73ee1f672e907d94-restore",
+  "checks": {
+    "nonAtomicInterruptionLeavesPartialState": true,
+    "atomicInterruptionRollsBackSchemaAndData": true,
+    "cleanEmptyTargetPreparedForRetry": true,
+    "cleanAtomicRetryRestoresAllSyntheticRows": true,
+    "sourceRecordsUnchanged": true,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true
+  },
+  "liveProvidersCalled": false,
+  "publicDeployment": false,
+  "postgresVersion": "postgres (PostgreSQL) 17.11",
+  "databaseDump": {
+    "bytes": 3411,
+    "sha256": "e403d31606156e9599f8c34a50cc839b4a10d26bf3bf84eb43fab57dc4caceec"
+  },
+  "interruption": {
+    "cases": [
+      {
+        "atomic": false,
+        "reachedNativeCopyBarrier": true,
+        "backendTerminated": true,
+        "restoreExitedNonZero": true,
+        "visibleTablesDuringRestore": 2,
+        "visibleTablesAfterInterruption": 2,
+        "rollbackToEmptyTarget": false
+      },
+      {
+        "atomic": true,
+        "reachedNativeCopyBarrier": true,
+        "backendTerminated": true,
+        "restoreExitedNonZero": true,
+        "visibleTablesDuringRestore": 0,
+        "visibleTablesAfterInterruption": 0,
+        "rollbackToEmptyTarget": true
+      }
+    ],
+    "checks": {
+      "nonAtomicInterruptionLeavesPartialState": true,
+      "atomicInterruptionRollsBackSchemaAndData": true,
+      "cleanEmptyTargetPreparedForRetry": true
+    }
+  },
+  "completedAt": "2026-10-19T00:06:19.026Z"
+}

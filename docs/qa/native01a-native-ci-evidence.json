@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NATIVE-01A",
+  "status": "exact_public_source_both_core_and_full_compose_native_restore_CI_verified",
+  "recordedAtUtc": "2026-10-18T23:52:45.124521+00:00",
+  "publicCommit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+  "treeSha": "8174d0d69471807f7ff24b6edd2e850404b2d50d",
+  "run": {
+    "id": 39177109393,
+    "html_url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39177109393",
+    "head_sha": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "run_started_at": "2026-10-18T23:34:47Z",
+    "updated_at": "2026-10-18T23:51:28Z"
+  },
+  "jobs": [
+    {
+      "id": 117821935969,
+      "name": "Disposable Compose and native restore",
+      "allStepsPassed": true
+    },
+    {
+      "id": 117821936166,
+      "name": "Native application verification",
+      "allStepsPassed": true
+    }
+  ],
+  "verification": {
+    "unit": 270,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "failedSkippedCancelledTodo": 0,
+    "freshNativeMigrations": 24,
+    "readabilitySamples": 44,
+    "bothDependencyAuditVulnerabilities": 0,
+    "apiAndWebBuilds": true,
+    "populatedPgliteUpgradeArchiveRestore": true
+  },
+  "completeComposeAndNativeCrossStoreRestore": {
+    "schemaVersion": 1,
+    "taskId": "NATIVE-01A",
+    "passed": true,
+    "startedAt": "2026-10-18T23:34:54.719Z",
+    "sourceProject": "omos-compose-verify-251a1183fb6c2935",
+    "restoreProject": "omos-compose-verify-251a1183fb6c2935-restore",
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "checks": {
+      "generatedProjectPrivateEnvAndVolumeIsolation": true,
+      "allNineLongRunningServices": true,
+      "health": true,
+      "auth": true,
+      "tenantIsolation": true,
+      "range": true,
+      "realRender": true,
+      "idempotency": true,
+      "noKeyFailure": true,
+      "emailSubmission": true,
+      "realSmtpDelivery": true,
+      "originalSourceVolumesRemoved": true,
+      "objectsRestored": 5,
+      "allObjectBytesAndMetadataMatch": true,
+      "nativeDatabaseRestore": true,
+      "privateMediaRestore": true,
+      "recordCountsMatch": true,
+      "originalAndRenderedBytesMatch": true,
+      "tenantAndAnonymousIsolationAfterRestore": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "steps": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 438
+      },
+      {
+        "name": "build application images",
+        "passed": true,
+        "durationMs": 88283
+      },
+      {
+        "name": "build official pinned MinIO release",
+        "passed": true,
+        "durationMs": 136590
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 17731
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 2253
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 59
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 2060
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 811
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 8580
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 378
+      }
+    ],
+    "verificationMode": "complete-compose-native-restore",
+    "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+    "databaseDump": {
+      "bytes": 120961,
+      "sha256": "d00efc1043eaacbd924e4aa8b2f635647d334d1c2cdcc2feb86e2d970ceb3903"
+    },
+    "objectBackup": {
+      "objects": 5,
+      "bytes": 25947,
+      "sha256": "c57022f995b997fd03dbcf17a92d503f1b07417c9c4d499d5eb5620086b67c2d"
+    },
+    "completedAt": "2026-10-18T23:39:13.894Z"
+  },
+  "localUnitVerification": {
+    "finalSummary": {
+      "success": true,
+      "counts": {
+        "tests": 270,
+        "failed": 0,
+        "passed": 270,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 270,
+        "suites": 0
+      },
+      "duration_ms": 478611.611035
+    },
+    "uniquePassedReceipts": 270,
+    "sha256": "4f1fdd7f3ba1d23021b9c877e646e4c7213d2c8828c929ab1915a6a7dcebb33f"
+  },
+  "localFullComposeBlocked": true,
+  "localFullComposeBlock": "Enforced network allowlist rejects storage.googleapis.com dependency downloads; complete fixture acceptance executed independently in ordinary GitHub Actions.",
+  "publication": {
+    "publicCommit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+    "treeSha": "8174d0d69471807f7ff24b6edd2e850404b2d50d",
+    "fullPublicTreeMatchesLocal": true,
+    "allPublicTreeFilesCompared": 522,
+    "all25ProtectedHashesUnchanged": true,
+    "workingTreeClean": true
+  },
+  "artifacts": [
+    {
+      "id": 12155745163,
+      "name": "browser-evidence",
+      "size_in_bytes": 13480922,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12155745163",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12155745163/zip",
+      "expired": false,
+      "created_at": "2026-10-18T23:51:23Z",
+      "expires_at": "2027-01-16T23:34:47Z",
+      "updated_at": "2026-10-18T23:51:23Z",
+      "digest": "sha256:3eabdccdd8daad4a0eb0cc30964287f05e73bbdcbc38ba29763d9e301579a00a",
+      "workflow_run": {
+        "id": 39177109393,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7"
+      }
+    },
+    {
+      "id": 12154658841,
+      "name": "compose-evidence",
+      "size_in_bytes": 1295,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12154658841",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12154658841/zip",
+      "expired": false,
+      "created_at": "2026-10-18T23:39:14Z",
+      "expires_at": "2027-01-16T23:34:47Z",
+      "updated_at": "2026-10-18T23:39:14Z",
+      "digest": "sha256:cef685e64639d3b9945f03d2ec4b7439aecc465d7d7cfb30c0846073411fc9ba",
+      "workflow_run": {
+        "id": 39177109393,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7"
+      }
+    }
+  ],
+  "artifactInspection": [
+    {
+      "artifactId": 12154658841,
+      "name": "compose-evidence",
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "independentArtifactByteInspection": false,
+      "errorType": "URLError",
+      "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "artifactId": 12155745163,
+      "name": "browser-evidence",
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "independentArtifactByteInspection": false,
+      "errorType": "URLError",
+      "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  ],
+  "decodedJobLogSha256": {
+    "core-ci.log": "6a773d191d4670ec3b3d763fc6927de02e0f276d32b29e87d8b258f7e6f29daf",
+    "compose-ci.log": "674cea2e7ad02aa593faaf920ad22659975b7dab02f4e1685f726fecf1a33f7d"
+  },
+  "nextTask": "RECOVERY-01 interrupted restore/upgrade and broader native recovery audit",
+  "limits": [
+    "CI verifies isolated synthetic development fixtures and does not deploy.",
+    "Quiesced native database/private-object restore does not close PITR, interrupted restore/migration, in-flight queue recovery, live providers or full master acceptance.",
+    "Independent artifact byte inspection status is recorded separately; logs, all steps, checks, counts and upload digests were verified."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01A",
+  "recordedAtUtc": "2026-10-19T00:08:17.715392+00:00",
+  "status": "local_native_interruption_rollback_retry_verified_current_full_Compose_CI_required",
+  "basePublicCommit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+  "baseVerifiedRunId": 39177109393,
+  "scope": "Actual native COPY-barrier backend interruption: non-atomic partial-state control, single-transaction schema/data rollback and clean retry; full app/private-media restore uses the same probes before atomic pg_restore.",
+  "localVerification": {
+    "nativePostgres": "17.11",
+    "nativeInterruptionCases": 2,
+    "cleanAtomicRetryPassed": true,
+    "sourceSyntheticRecordsUnchanged": true,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "focusedFixtureSafetyUnitTestsPassed": 5,
+    "actualComposeConfigurationPassed": true,
+    "localFullComposePassed": false,
+    "localFullComposeBlock": "Current normal proxy probe of storage.googleapis.com returns CONNECT 403; MinIO Go dependencies use this redirect host. Full current-source Compose acceptance is required in ordinary independent GitHub Actions.",
+    "protectedMasterAndMigrationHashesUnchanged": 25,
+    "nativeReceipt": "docs/qa/recovery01a-postgres-interruption-evidence.json"
+  },
+  "observedFailure": "An interrupted --exit-on-error restore left two visible fixture tables. Stop-on-error does not make a whole restore atomic.",
+  "fix": "Final native restore now uses pg_restore --exit-on-error --single-transaction into an isolated empty target. Two interruption controls demonstrate the before/after behavior; target identity and volume ownership are checked before reset.",
+  "safety": "Generated restore projects only. The new guard rejects source/real/malformed targets before any SQL callback. Local fixture uses tmpfs, --network none, no host ports/real env; full Compose resets only its separately labelled restore DB.",
+  "ciAcceptance": "Require both core and Compose jobs on the exact new source. Complete report must retain all prior auth/media/tenant/SMTP checks, two real interruption cases, atomic rollback, successful atomic retry and matching private-media restore after original source volumes were removed.",
+  "limits": [
+    "Backend termination during a deterministic synthetic COPY pause is verified; client/network loss, server/container crash and other interruption points are distinct cases.",
+    "Single-transaction fixture restore does not establish backup completeness, PITR/WAL replay, encrypted-provider credential recovery, interrupted migration/upgrade behavior, in-flight queue restoration or production sizing/retention.",
+    "Live-provider/deployed and full master acceptance remain open; CI verifies and does not deploy."
+  ]
+}

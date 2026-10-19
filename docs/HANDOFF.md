@@ -1,3 +1,15 @@
+## Current continuation — RECOVERY-01A, 2026-10-19 IST
+
+Native PostgreSQL17.11 interruption tests reproduced partial restore under `--exit-on-error` alone (two visible fixture tables after backend termination). `--single-transaction` rolled restored relations back to zero; clean retry restored all synthetic rows, preserved source rows and cleaned up the isolated tmpfs/no-network container. Five focused fixture guards and actual Compose configuration passed; all 25 protected master/migration hashes are unchanged.
+
+The full Compose verifier now checks the native dump hash, runs both interruption controls on its separately owned restore database and uses an atomic final restore before the retained private-media/tenant/SMTP/application checks. Current full local MinIO is network-blocked (normal proxy CONNECT403); full populated app/MinIO acceptance must pass in BOTH exact-source core/Compose CI jobs. No future CI result is claimed by this source checkpoint.
+
+Preceding main `060a7d1` passed both jobs in run `39177109393`:270 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability samples,zero audits,all ten Compose phases and five restored private objects. Its final receipt is retained in `docs/qa/native01a-native-ci-evidence.json`. This increment adds one safety regression (expected core total271); current core results are read separately.
+
+Next: publish current source and inspect/fix both exact-source CI jobs, then RECOVERY-01B populated native predecessor upgrade and interrupted migration/retry audit. PITR, other interruption boundaries, in-flight backup/queue recovery, live/deployed providers and full master acceptance remain open. CI verifies and does not deploy.
+
+Evidence: `docs/POSTGRES_RESTORE_INTERRUPTION.md`, `docs/qa/recovery01a-evidence.json`, `docs/qa/recovery01a-postgres-interruption-evidence.json`. Earlier entries retain historical scopes.
+
 ## NATIVE-01A initial Compose CI and isolation follow-up — 2026-10-19 IST
 
 Initial published source `7c624d5` passed the complete disposable Compose/native-restore job `117820808071` in run `39176723245`: all nine persistent services, real render, real fixture SMTP, source volumes deleted before restore, native PostgreSQL and five private objects restored into a different project, matching record counts/rows and media hashes, tenant/anonymous isolation and cleanup. The local full-Compose network block remains distinct from this independent CI execution.

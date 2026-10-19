@@ -6,7 +6,9 @@ import {
   assertFixtureConfig,
   redact,
   fixtureDockerEnv,
+  assertFixtureRestoreProject,
 } from "../scripts/compose-verification.mjs";
+import { verifyInterruptedRestore } from "../scripts/postgres-restore-verification.mjs";
 const project = fixtureProject("0123456789abcdef"),
   envPath = "/fixture/private.env";
 const config = () => ({
@@ -17,6 +19,40 @@ const config = () => ({
   },
   volumes: { postgres_data: { name: project + "_postgres_data" } },
   networks: { default: { name: project + "_default" } },
+});
+test("PostgreSQL interruption and database reset reject source and non-fixture projects", async () => {
+  assert.equal(
+    assertFixtureRestoreProject(project + "-restore"),
+    project + "-restore",
+  );
+  for (const invalid of [
+    project,
+    "organic-marketing-os",
+    "omos-compose-verify-0123456789abcdef-restore-other",
+    project + "-restore\n",
+    "",
+  ]) {
+    assert.throws(() => assertFixtureRestoreProject(invalid));
+    let databaseCalls = 0;
+    const forbidden = () => {
+      databaseCalls++;
+      throw new Error("Database must not be reached.");
+    };
+    await assert.rejects(
+      verifyInterruptedRestore({
+        project: invalid,
+        query: forbidden,
+        reset: forbidden,
+        setPause: forbidden,
+        restore: forbidden,
+      }),
+    );
+    assert.equal(
+      databaseCalls,
+      0,
+      "Invalid target must be rejected before any SQL or reset.",
+    );
+  }
 });
 test("Compose destructive operations accept only generated source/restore identities", () => {
   assert.equal(assertFixtureProject(project), project);

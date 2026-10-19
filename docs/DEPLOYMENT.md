@@ -16,17 +16,17 @@
 
 ## Rollback and data
 
-Keep the previous images, environment configuration and database/object backups. The 0.2 media and 0.3 recovery migrations are additive, but schema compatibility is not an executed rollback guarantee. Prefer forward fixes; validate any restore in a separate environment before switching traffic. An isolated populated upgrade and fresh-database restore were executed on PGlite. The NATIVE-01A disposable Compose job verifies quiesced native PostgreSQL/private-object restore when its full report passes on the exact source. PITR, interrupted restore/upgrade and application rollback remain unverified.
+Keep the previous images, environment configuration and database/object backups. The 0.2 media and 0.3 recovery migrations are additive, but schema compatibility is not an executed rollback guarantee. Prefer forward fixes; validate any restore in a separate environment before switching traffic. An isolated populated upgrade and fresh-database restore were executed on PGlite. The NATIVE-01A disposable Compose job verifies quiesced native PostgreSQL/private-object restore when its full report passes on the exact source. RECOVERY-01A locally verifies controlled native backend-interruption rollback and clean retry; its newer full application/private-media flow requires both exact-source CI jobs. PITR, other interruption boundaries, native populated predecessor upgrades and application rollback remain open.
 
 Do not expose PostgreSQL/Redis/object-store administration publicly. Mailpit is only a local mail capture. Define backup/PITR, private bucket protection, log retention, output/cache cleanup, budgets and incident ownership. See UPGRADE_0.3.md for the local Windows upgrade.
 
 ## Verification and export capacity
 
-Native test services must be disposable and set `MOS_ALLOW_NATIVE_TESTS=isolated-test-services`; the checked-in CI supplies this flag. Never point the harness at a real workspace database or Redis. The supplied workflow is configured but was not run remotely in this review.
+Native test services must be disposable and set `MOS_ALLOW_NATIVE_TESTS=isolated-test-services`; the checked-in CI supplies this flag. Never point the harness at a real workspace database or Redis. Both jobs ran successfully on prior main060a7d1 (run39177109393). New increments require their own exact-source core and Compose reports.
 
 Workspace health does not certify live providers. Export uses a database RepeatableRead transaction up to 120 seconds and temporary disk up to 64 MiB plus metadata, per active request. Allow appropriate request timeouts and monitor database/disk use; large exports fail explicitly. Data exports exclude media bytes and cannot replace database/object backups.
 
-Runtime dependencies passed the release audit. The S3rver development test chain retains 4 advisories; do not ship the test harness/development dependency installation as a public service. Actual runtime container builds/starts still require the Docker gate above.
+The prior exact-source run passed both full and production dependency audits with zero vulnerabilities and exercised actual runtime container builds/startup. New source must pass both verification jobs; these development fixtures do not establish deployment or production readiness.
 
 ## Capture a deployed YouTube readiness receipt
 
