@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01E, 2026-10-19 IST
+
+The native-upgrade job now also verifies actual physical PostgreSQL backup and named-target WAL replay, with a separate sanitized artifact. Every previous core/native/14-phase Compose assertion remains. Local283 unit/two new guards/actual native PITR/config passed; require all three exact-source jobs. Prior a41de48/run39242635642 passed all three. See [POSTGRES_PHYSICAL_PITR.md](POSTGRES_PHYSICAL_PITR.md). Synthetic-table PITR does not close application-schema/coordinated private-object recovery or production backup operations. CI verifies and does not deploy.
+
 ## Current fixture scope — RECOVERY-01D, 2026-10-19 IST
 
 Complete Compose now requires fourteen phases, adding acknowledged-object-write failure, residual inspection, denied app startup, owned-bucket cleanup and identical-backup retry with a verified start gate. Every prior assertion and all three CI jobs remain. Local281 unit/13 focused guards/actual configuration passed; native acceptance requires own exact-source CI. Prior18f0b8f/run39237077202 passed all three. Older counts below are historical. See [PRIVATE_OBJECT_RESTORE_RECOVERY.md](PRIVATE_OBJECT_RESTORE_RECOVERY.md). CI verifies and does not deploy.

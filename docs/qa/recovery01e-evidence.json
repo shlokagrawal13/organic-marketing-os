@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01E",
+  "recordedAtUtc": "2026-10-19T12:10:52.454803+00:00",
+  "status": "local_native_physical_PITR_and_units_verified_exact_source_three_job_CI_required",
+  "basePublicCommit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+  "baseVerifiedRunId": 39242635642,
+  "scope": "Actual physical PostgreSQL base backup and manifest verification, archived WAL named-target recovery, corrupt-base/missing-WAL/unreachable-target controls, unchanged-base retry/promotion/source preservation in an owned no-network/tmpfs fixture.",
+  "localVerification": {
+    "unit": 283,
+    "uniqueUnitReceipts": 283,
+    "failedSkippedCancelledTodo": 0,
+    "focusedNewUnitCases": 2,
+    "actualComposeConfigurationPassed": true,
+    "actualNativePhysicalPitrPassed": true,
+    "nativePitrReceipt": "docs/qa/recovery01e-postgres-pitr-evidence.json",
+    "all25ProtectedHashesUnchanged": true,
+    "fullLocalComposePassed": false,
+    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision72 rechecked, no bypass. Independent GitHub CI runs complete stack.",
+    "environment": {
+      "revision": "72",
+      "current": true,
+      "phase": "running",
+      "network": {
+        "mode": "restricted",
+        "state": "enforced"
+      },
+      "secretBindings": 0,
+      "outboundIdentities": 0
+    },
+    "localUnitProof": {
+      "uniquePassedReceipts": 283,
+      "failedReceipts": 0,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 283,
+          "failed": 0,
+          "passed": 283,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 283,
+          "suites": 0
+        },
+        "duration_ms": 545384.575371
+      },
+      "receiptSha256": "ef8689e874580cf16753f459e48ae78e248af96292ca3c1f994a8a1c3b13d874"
+    }
+  },
+  "implementedNativeAssertions": {
+    "noNetworkPortsOrPersistentVolumes": true,
+    "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+    "targetTransactionsArchivedAfterBaseBackup": true,
+    "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+    "missingWalAndUnreachableTargetRejectReadiness": true,
+    "sameVerifiedBaseBackupCleanRetry": true,
+    "namedTargetRowsRestored": true,
+    "laterInsertAndDeleteNotReplayed": true,
+    "actualWalReplayAndPromotion": true,
+    "restoredClusterAcceptsIndependentWrites": true,
+    "sourceRecordsAndTimelineUnchanged": true,
+    "savedBaseBackupUnchanged": true,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true
+  },
+  "pipeline": {
+    "requiredJobs": [
+      "Native application verification",
+      "Disposable Compose and native restore",
+      "Native populated upgrade and migration recovery"
+    ],
+    "addedPhysicalPitrStepAndArtifact": true,
+    "expectedArtifacts": 4,
+    "allPriorAssertionsRetained": true,
+    "deployed": false,
+    "ownExactSourceVerified": false
+  },
+  "applicationDependenciesAndMigrationsChanged": false,
+  "limits": [
+    "Small synthetic table and named restore point, not populated application-schema or coordinated private-object/Redis PITR.",
+    "No durable remote archive/backup scheduling/retention/encryption/monitoring, arbitrary target/timeline or production RPO/RTO acceptance. Live/deployed/full-master acceptance remains open.",
+    "CI artifact byte inspection is separate from logs/step results/upload digests."
+  ],
+  "nextTask": "RECOVERY-01F populated application-schema physical restore and cross-store point-in-time prerequisites"
+}

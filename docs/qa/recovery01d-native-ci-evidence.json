@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01D",
+  "status": "exact_public_source_all_three_jobs_private_object_failure_scoped_cleanup_retry_and_application_start_gate_verified",
+  "recordedAtUtc": "2026-10-19T11:27:27.934561+00:00",
+  "publicCommit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+  "treeSha": "a22f31d111bf715239c03ec2c0ffe0cf10810f01",
+  "run": {
+    "id": 39242635642,
+    "html_url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39242635642",
+    "head_sha": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "run_started_at": "2026-10-19T11:09:52Z",
+    "updated_at": "2026-10-19T11:26:52Z"
+  },
+  "jobs": [
+    {
+      "id": 118026887362,
+      "name": "Disposable Compose and native restore",
+      "allStepsPassed": true
+    },
+    {
+      "id": 118026887478,
+      "name": "Native application verification",
+      "allStepsPassed": true
+    },
+    {
+      "id": 118026887608,
+      "name": "Native populated upgrade and migration recovery",
+      "allStepsPassed": true
+    }
+  ],
+  "verification": {
+    "unit": 281,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "failedSkippedCancelledTodo": 0,
+    "freshNativeMigrations": 24,
+    "readabilitySamples": 44,
+    "bothDependencyAuditVulnerabilities": 0,
+    "apiAndWebBuilds": true,
+    "populatedPgliteUpgradeArchiveRestore": true
+  },
+  "completeComposeAndNativeCrossStoreRestore": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01D",
+    "baselineTaskId": "RECOVERY-01C",
+    "passed": true,
+    "startedAt": "2026-10-19T11:10:00.085Z",
+    "sourceProject": "omos-compose-verify-c36d84a40f2d683c",
+    "restoreProject": "omos-compose-verify-c36d84a40f2d683c-restore",
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "checks": {
+      "generatedProjectPrivateEnvAndVolumeIsolation": true,
+      "allNineLongRunningServices": true,
+      "syntheticProviderService": true,
+      "health": true,
+      "auth": true,
+      "tenantIsolation": true,
+      "range": true,
+      "realRender": true,
+      "idempotency": true,
+      "noKeyFailure": true,
+      "emailSubmission": true,
+      "realSmtpDelivery": true,
+      "allFiveWritersStoppedBeforeBackup": true,
+      "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
+      "syntheticUncertainProviderCallsBeforeBackup": 1,
+      "completeSealedBackupPreflight": true,
+      "everyDatabaseMediaReferenceCovered": true,
+      "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
+      "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
+      "originalSourceVolumesRemoved": true,
+      "freshRedisEmptyBeforeApplicationStart": true,
+      "nonAtomicInterruptionLeavesPartialState": true,
+      "atomicInterruptionRollsBackSchemaAndData": true,
+      "cleanEmptyTargetPreparedForRetry": true,
+      "cleanAtomicNativeDatabaseRetry": true,
+      "partialObjectsObserved": 1,
+      "partialObjectBytesAndMetadataMatch": true,
+      "partialObjectsRemoved": 1,
+      "restoreBucketEmptyAfterCleanup": true,
+      "objectsRestored": 6,
+      "allObjectBytesAndMetadataMatch": true,
+      "controlledFailureAfterAcknowledgedPrivatePut": true,
+      "applicationStartDeniedWhileObjectsIncomplete": true,
+      "allFiveApplicationServicesAbsentDuringPartialRestore": true,
+      "ownedRestoreBucketOnlyCleanup": true,
+      "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
+      "sameValidatedBackupRetriedBeforeApplicationStart": true,
+      "applicationStartAllowedOnlyAfterVerifiedRestore": true,
+      "nativeDatabaseRestore": true,
+      "privateMediaRestore": true,
+      "recordCountsMatch": true,
+      "originalAndRenderedBytesMatch": true,
+      "tenantAndAnonymousIsolationAfterRestore": true,
+      "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
+      "queuedAiReconstructedFromFreshRedis": true,
+      "queuedRenderReconstructedAndProbed": true,
+      "retainedPrivateOutputIngestedWithoutProvider": true,
+      "uncertainAiNotReplayed": true,
+      "syntheticQueuedProviderCalls": 1,
+      "syntheticUncertainProviderCallsAfterRestore": 0,
+      "originalLedgerEntriesUnchanged": true,
+      "immutableLedgerTriggerEnforced": true,
+      "exactlyTwoCreditSettlements": true,
+      "uncertainCreditsHeldForReview": true,
+      "generatedAssetAndOriginalMediaTenantIsolation": true,
+      "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "steps": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 423
+      },
+      {
+        "name": "build application images",
+        "passed": true,
+        "durationMs": 101297
+      },
+      {
+        "name": "build official pinned MinIO release",
+        "passed": true,
+        "durationMs": 133232
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 19046
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 4041
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 76
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 3941
+      },
+      {
+        "name": "reject incomplete/corrupt backups while preserving original source",
+        "passed": true,
+        "durationMs": 1262
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 10505
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 5917
+      },
+      {
+        "name": "partial private-object failure, gated startup and clean retry",
+        "passed": true,
+        "durationMs": 8577
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 909
+      },
+      {
+        "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+        "passed": true,
+        "durationMs": 5163
+      },
+      {
+        "name": "restart all three workers without replay or duplicate settlements",
+        "passed": true,
+        "durationMs": 4036
+      }
+    ],
+    "verificationMode": "complete-compose-native-restore",
+    "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+    "databaseDump": {
+      "bytes": 124615,
+      "sha256": "552253da0831d392a9c2c5ff1c55cd1bd7f0c038835fb834df10df6b41a1d930"
+    },
+    "objectBackup": {
+      "objects": 6,
+      "bytes": 27582,
+      "sha256": "3587f686338f190026a0048d7d589658c5ba79bdc1d606f6e3cd62f67b4ab698"
+    },
+    "backupManifest": {
+      "sha256": "f35539cf74354f80afd6c015d064af212cc658f069c5f86628f187e0f6688e86",
+      "databaseBytes": 124615,
+      "privateObjects": 6
+    },
+    "backupFailureCases": [
+      {
+        "name": "truncated-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-metadata",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-writer-quiescence",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "wrong-restore-project",
+        "rejectedBeforeDestructiveAction": true
+      }
+    ],
+    "restoreInterruption": {
+      "cases": [
+        {
+          "atomic": false,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 39,
+          "visibleTablesAfterInterruption": 39,
+          "rollbackToEmptyTarget": false
+        },
+        {
+          "atomic": true,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 0,
+          "visibleTablesAfterInterruption": 0,
+          "rollbackToEmptyTarget": true
+        }
+      ],
+      "checks": {
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true
+      }
+    },
+    "completedAt": "2026-10-19T11:15:09.990Z"
+  },
+  "localNativeInterruptionVerification": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01A",
+    "verificationMode": "standalone-native-postgres-interruption",
+    "passed": true,
+    "startedAt": "2026-10-19T00:06:10.874Z",
+    "project": "omos-compose-verify-73ee1f672e907d94-restore",
+    "checks": {
+      "nonAtomicInterruptionLeavesPartialState": true,
+      "atomicInterruptionRollsBackSchemaAndData": true,
+      "cleanEmptyTargetPreparedForRetry": true,
+      "cleanAtomicRetryRestoresAllSyntheticRows": true,
+      "sourceRecordsUnchanged": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "databaseDump": {
+      "bytes": 3411,
+      "sha256": "e403d31606156e9599f8c34a50cc839b4a10d26bf3bf84eb43fab57dc4caceec"
+    },
+    "interruption": {
+      "cases": [
+        {
+          "atomic": false,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 2,
+          "visibleTablesAfterInterruption": 2,
+          "rollbackToEmptyTarget": false
+        },
+        {
+          "atomic": true,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 0,
+          "visibleTablesAfterInterruption": 0,
+          "rollbackToEmptyTarget": true
+        }
+      ],
+      "checks": {
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true
+      }
+    },
+    "completedAt": "2026-10-19T00:06:19.026Z"
+  },
+  "nativePopulatedPrismaUpgradeAndMigrationRecovery": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01B",
+    "verificationMode": "native-populated-prisma-upgrade-and-migration-recovery",
+    "passed": true,
+    "startedAt": "2026-10-19T11:10:14.819Z",
+    "project": "omos-upgrade-verify-c7987a8141580192",
+    "boundaries": [
+      {
+        "appliedMigrations": 4,
+        "legacyTables": 5,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 7,
+        "legacyTables": 7,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 23,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 24,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      }
+    ],
+    "cases": [
+      {
+        "transaction": "Prisma-default-batch",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      },
+      {
+        "transaction": "explicit-BEGIN-COMMIT",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      }
+    ],
+    "checks": {
+      "populatedNativePrismaUpgrade": true,
+      "legacyQueuedJobAndNullDefaults": true,
+      "immutableLedgerEnforced": true,
+      "actualInterruptedMigration": true,
+      "failedLedgerRetryGate": true,
+      "explicitResolveAndUnchangedSqlRetry": true,
+      "sourceDatabaseUnchanged": true,
+      "noDotenvLoaded": true,
+      "ownedContainerAndNetworkRemoved": true,
+      "realEnvUnchanged": true,
+      "protectedHashesUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "prismaVersion": "6.19.3",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "protectedFileCount": 25,
+    "finishedAt": "2026-10-19T11:10:45.272Z"
+  },
+  "localNativeUpgradeVerification": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01B",
+    "verificationMode": "native-populated-prisma-upgrade-and-migration-recovery",
+    "passed": true,
+    "startedAt": "2026-10-19T00:43:04.016Z",
+    "project": "omos-upgrade-verify-5574bf74851d0d51",
+    "boundaries": [
+      {
+        "appliedMigrations": 4,
+        "legacyTables": 5,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 7,
+        "legacyTables": 7,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 23,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 24,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      }
+    ],
+    "cases": [
+      {
+        "transaction": "Prisma-default-batch",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      },
+      {
+        "transaction": "explicit-BEGIN-COMMIT",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      }
+    ],
+    "checks": {
+      "populatedNativePrismaUpgrade": true,
+      "legacyQueuedJobAndNullDefaults": true,
+      "immutableLedgerEnforced": true,
+      "actualInterruptedMigration": true,
+      "failedLedgerRetryGate": true,
+      "explicitResolveAndUnchangedSqlRetry": true,
+      "sourceDatabaseUnchanged": true,
+      "noDotenvLoaded": true,
+      "ownedContainerAndNetworkRemoved": true,
+      "realEnvUnchanged": true,
+      "protectedHashesUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "prismaVersion": "6.19.3",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "protectedFileCount": 25,
+    "finishedAt": "2026-10-19T00:43:49.432Z"
+  },
+  "priorLocalProviderContractVerification": {
+    "passed": true,
+    "mode": "local-loopback-synthetic-provider-HTTP-contract",
+    "existingCompiledDraftSchema": true,
+    "twoValidCountedRequests": true,
+    "invalidRequestRejectedWithoutCounting": true,
+    "generatedLoopbackListenerClosed": true,
+    "fullContainerAcceptance": false,
+    "liveProvidersCalled": false
+  },
+  "currentLocalVerification": {
+    "unit": 281,
+    "uniqueUnitReceipts": 281,
+    "failedSkippedCancelledTodo": 0,
+    "focusedNewUnitCases": 4,
+    "focusedPassedCases": 13,
+    "actualComposeConfigurationPassed": true,
+    "all25ProtectedHashesUnchanged": true,
+    "fullLocalComposePassed": false,
+    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+    "environment": {
+      "spec_revision": "68",
+      "observations_current": true,
+      "phase": "running",
+      "network_policy": {
+        "mode": "restricted",
+        "state": "enforced"
+      },
+      "secrets": 0,
+      "runtime_variables": 0,
+      "outbound_identities": 0
+    },
+    "localUnitProof": {
+      "uniquePassedReceipts": 281,
+      "failedReceipts": 0,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 281,
+          "failed": 0,
+          "passed": 281,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 281,
+          "suites": 0
+        },
+        "duration_ms": 523227.647288
+      },
+      "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
+    }
+  },
+  "localUnitVerification": {
+    "uniquePassedReceipts": 281,
+    "failedReceipts": 0,
+    "finalSummary": {
+      "success": true,
+      "counts": {
+        "tests": 281,
+        "failed": 0,
+        "passed": 281,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 281,
+        "suites": 0
+      },
+      "duration_ms": 523227.647288
+    },
+    "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
+  },
+  "localFullComposeBlocked": true,
+  "localFullComposeBlock": "Enforced network allowlist rejects storage.googleapis.com dependency downloads; complete fixture acceptance executed independently in ordinary GitHub Actions.",
+  "publication": {
+    "publicCommit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+    "treeSha": "a22f31d111bf715239c03ec2c0ffe0cf10810f01",
+    "remoteBranch": "main",
+    "fullPublicTreeMatchesLocal": true,
+    "allPublicTreeFilesCompared": 551,
+    "publicPathModeAndBlobShaAllMatch": true,
+    "recursiveTreeNotTruncated": true,
+    "all25ProtectedHashesUnchanged": true,
+    "workingTreeClean": true
+  },
+  "artifacts": [
+    {
+      "id": 12182453075,
+      "name": "browser-evidence",
+      "size_in_bytes": 13497553,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12182453075",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12182453075/zip",
+      "expired": false,
+      "created_at": "2026-10-19T11:26:49Z",
+      "expires_at": "2027-01-17T11:09:52Z",
+      "updated_at": "2026-10-19T11:26:49Z",
+      "digest": "sha256:2c6cb55e0013a83ed10c4c6e2e740bd9f1e3c75e4403d9d35c408c01f7ed6e69",
+      "workflow_run": {
+        "id": 39242635642,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0"
+      }
+    },
+    {
+      "id": 12182365568,
+      "name": "native-upgrade-evidence",
+      "size_in_bytes": 923,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12182365568",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12182365568/zip",
+      "expired": false,
+      "created_at": "2026-10-19T11:10:46Z",
+      "expires_at": "2027-01-17T11:09:52Z",
+      "updated_at": "2026-10-19T11:10:46Z",
+      "digest": "sha256:187c9277995db7f7df734ec77a2188730130d91b97c1e4e0888a0853b3dbd663",
+      "workflow_run": {
+        "id": 39242635642,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0"
+      }
+    },
+    {
+      "id": 12181758905,
+      "name": "compose-evidence",
+      "size_in_bytes": 2376,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12181758905",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12181758905/zip",
+      "expired": false,
+      "created_at": "2026-10-19T11:15:11Z",
+      "expires_at": "2027-01-17T11:09:52Z",
+      "updated_at": "2026-10-19T11:15:11Z",
+      "digest": "sha256:04ccaa417e396c1594f26b1106c99b8198d2e73086f33480c3ffcdf8f352618b",
+      "workflow_run": {
+        "id": 39242635642,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0"
+      }
+    }
+  ],
+  "artifactInspection": [
+    {
+      "artifactId": 12182365568,
+      "name": "native-upgrade-evidence",
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "independentArtifactByteInspection": false,
+      "errorType": "URLError",
+      "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "artifactId": 12181758905,
+      "name": "compose-evidence",
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "independentArtifactByteInspection": false,
+      "errorType": "URLError",
+      "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "artifactId": 12182453075,
+      "name": "browser-evidence",
+      "attempted": true,
+      "host": "sdmntprcentralindia.oaiusercontent.com",
+      "bytesDownloadedToWorkspace": false,
+      "independentArtifactByteInspection": false,
+      "errorType": "URLError",
+      "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+  ],
+  "decodedJobLogSha256": {
+    "core-ci.log": "34bcf5f7b4723e61833bee2d6fbb73bf98a78ff0153c6624911ba7a92b6e09bc",
+    "compose-ci.log": "514a2a9acde9407c26dd59e5cf4ea2c810097213f17d0986f32befffe4a228da",
+    "upgrade-ci.log": "477f5ffbd4a031107b613a2016fb0da71a2869bdae9e591ea630c053a9c189db"
+  },
+  "nextTask": "RECOVERY-01E PITR/WAL prerequisites and remaining recovery/master acceptance audit",
+  "nextRecoveryReadOnlyAudit": {
+    "taskId": "RECOVERY-01E-read-only-next-scope-audit",
+    "implementationStarted": false,
+    "observations": [
+      {
+        "file": "compose.yaml",
+        "fact": "Development PostgreSQL17 service uses its named data volume; it does not configure archive_mode, archive_command, a WAL archive, base backup scheduling or a recovery target."
+      },
+      {
+        "file": "docs/MASTER_SPEC.md:72",
+        "fact": "Master requires database backups, backup verification, migration strategy, restore procedures, storage recovery and disaster recovery documentation; passing synthetic restore fixtures does not supply operating production backup scheduling/retention."
+      },
+      {
+        "file": "docs/DEPLOYMENT.md",
+        "fact": "Production backup/PITR, private bucket protection, retention and incident ownership remain deployment responsibilities/open evidence."
+      }
+    ],
+    "nextScope": [
+      "Assess bounded native PostgreSQL physical base-backup/WAL replay verification in owned disposable fixtures, preserving existing user services and all previous assertions.",
+      "Separate fixture PITR feasibility from production scheduling, retained/encrypted database and private-object backups, RPO/RTO, operator ownership and live deployment/master acceptance prerequisites."
+    ],
+    "notClaimed": [
+      "No new physical base backup/WAL replay, production backup service or PITR acceptance executed by RECOVERY-01D."
+    ],
+    "sourceCommit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0"
+  },
+  "limits": [
+    "CI verifies isolated synthetic development fixtures and does not deploy.",
+    "Controlled exception after an acknowledged actual PUT plus seeded quiesced queue/private-output recovery, backup input rejection, predecessor upgrades and migration resolution/retry do not close cross-store atomicity, concurrent/remote writers, real S3/server/network/container crashes, production capacity/retention/encryption, PITR/WAL, real provider reconciliation/charges or full master acceptance.",
+    "Independent artifact byte inspection status is recorded separately; logs, all steps, checks, counts and upload digests were verified."
+  ]
+}

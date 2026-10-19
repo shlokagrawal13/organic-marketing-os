@@ -13726,5 +13726,54 @@
     "expandedFullNativeThreeJobCiPending": true,
     "priorFinalNativeCi": "docs/qa/recovery01c-native-ci-evidence.json",
     "evidence": "docs/qa/recovery01d-evidence.json"
+  },
+  "latestRecovery01E": {
+    "taskId": "RECOVERY-01E",
+    "scope": "Actual physical PostgreSQL base backup and manifest verification, archived WAL named-target recovery, corrupt-base/missing-WAL/unreachable-target controls, unchanged-base retry/promotion/source preservation in an owned no-network/tmpfs fixture.",
+    "localVerification": {
+      "unit": 283,
+      "uniqueUnitReceipts": 283,
+      "failedSkippedCancelledTodo": 0,
+      "focusedNewUnitCases": 2,
+      "actualComposeConfigurationPassed": true,
+      "actualNativePhysicalPitrPassed": true,
+      "nativePitrReceipt": "docs/qa/recovery01e-postgres-pitr-evidence.json",
+      "all25ProtectedHashesUnchanged": true,
+      "fullLocalComposePassed": false,
+      "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision72 rechecked, no bypass. Independent GitHub CI runs complete stack.",
+      "environment": {
+        "revision": "72",
+        "current": true,
+        "phase": "running",
+        "network": {
+          "mode": "restricted",
+          "state": "enforced"
+        },
+        "secretBindings": 0,
+        "outboundIdentities": 0
+      },
+      "localUnitProof": {
+        "uniquePassedReceipts": 283,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 283,
+            "failed": 0,
+            "passed": 283,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 283,
+            "suites": 0
+          },
+          "duration_ms": 545384.575371
+        },
+        "receiptSha256": "ef8689e874580cf16753f459e48ae78e248af96292ca3c1f994a8a1c3b13d874"
+      }
+    },
+    "expandedNativeThreeJobCiPending": true,
+    "priorFinalNativeCi": "docs/qa/recovery01d-native-ci-evidence.json",
+    "evidence": "docs/qa/recovery01e-evidence.json"
   }
 }

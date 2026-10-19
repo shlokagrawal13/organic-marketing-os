@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01E, 2026-10-19 IST
+
+The native-upgrade job now also verifies actual physical PostgreSQL backup and named-target WAL replay, with a separate sanitized artifact. Every previous core/native/14-phase Compose assertion remains. Local283 unit/two new guards/actual native PITR/config passed; require all three exact-source jobs. Prior a41de48/run39242635642 passed all three. See [POSTGRES_PHYSICAL_PITR.md](POSTGRES_PHYSICAL_PITR.md). Synthetic-table PITR does not close application-schema/coordinated private-object recovery or production backup operations. CI verifies and does not deploy.
+
 # Private-object restore failure and clean retry
 
 RECOVERY-01D adds one phase to the existing disposable Compose verifier (fourteen total). It changes verification harnesses only; application code, dependencies, migration SQL and all three CI jobs remain unchanged. Run `MOS_ALLOW_NATIVE_TESTS=isolated-test-services npm run verify:compose`; `--config-only` establishes configuration isolation, not native restore acceptance.

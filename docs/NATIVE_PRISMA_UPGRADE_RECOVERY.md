@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01E, 2026-10-19 IST
+
+The native-upgrade job now also verifies actual physical PostgreSQL backup and named-target WAL replay, with a separate sanitized artifact. Every previous core/native/14-phase Compose assertion remains. Local283 unit/two new guards/actual native PITR/config passed; require all three exact-source jobs. Prior a41de48/run39242635642 passed all three. See [POSTGRES_PHYSICAL_PITR.md](POSTGRES_PHYSICAL_PITR.md). Synthetic-table PITR does not close application-schema/coordinated private-object recovery or production backup operations. CI verifies and does not deploy.
+
 # Native populated Prisma upgrade and migration recovery
 
 RECOVERY-01B adds an independent native PostgreSQL17/Prisma6.19.3 verification job. It exercises actual `prisma migrate deploy`, the `_prisma_migrations` ledger, `migrate resolve --rolled-back` and an unchanged-SQL retry. Application behavior, dependencies and all 24 existing migration SQL files are preserved. This is an isolated fixture harness, not an automatic production repair command.

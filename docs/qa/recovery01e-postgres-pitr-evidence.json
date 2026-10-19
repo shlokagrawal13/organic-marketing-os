@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01E",
+  "verificationMode": "native-physical-base-backup-wal-pitr",
+  "passed": true,
+  "startedAt": "2026-10-19T12:00:44.659Z",
+  "project": "omos-pitr-verify-0a98f6d0f1a2ff7b",
+  "checks": {
+    "noNetworkPortsOrPersistentVolumes": true,
+    "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+    "targetTransactionsArchivedAfterBaseBackup": true,
+    "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+    "missingWalAndUnreachableTargetRejectReadiness": true,
+    "sameVerifiedBaseBackupCleanRetry": true,
+    "namedTargetRowsRestored": true,
+    "laterInsertAndDeleteNotReplayed": true,
+    "actualWalReplayAndPromotion": true,
+    "restoredClusterAcceptsIndependentWrites": true,
+    "sourceRecordsAndTimelineUnchanged": true,
+    "savedBaseBackupUnchanged": true,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true
+  },
+  "liveProvidersCalled": false,
+  "publicDeployment": false,
+  "postgresVersion": "postgres (PostgreSQL) 17.11",
+  "baseBackup": {
+    "manifestSha256": "5243b1666b109bd6c416d13be9f8531a76ea0051353d2f749efd984f07872888",
+    "files": 972
+  },
+  "archivedWal": {
+    "targetSegment": "000000010000000000000003",
+    "targetLsn": "0/3000200",
+    "sha256": "0e7d79f8aa20d41368c7cdb14ceef38c84bbd4c8d2dda782051dc70a3867d7c5"
+  },
+  "failureCases": [
+    {
+      "kind": "missing-wal",
+      "nativeTargetNotReachedFatal": true,
+      "recoveryStartExitedNonZero": true,
+      "sqlConnectionsRejected": true,
+      "sourceUnchanged": true
+    },
+    {
+      "kind": "unreachable",
+      "nativeTargetNotReachedFatal": true,
+      "recoveryStartExitedNonZero": true,
+      "sqlConnectionsRejected": true,
+      "sourceUnchanged": true
+    }
+  ],
+  "recovery": {
+    "targetRows": 2,
+    "sourceRows": 2,
+    "promotedTimeline": 2
+  },
+  "completedAt": "2026-10-19T12:00:53.050Z"
+}

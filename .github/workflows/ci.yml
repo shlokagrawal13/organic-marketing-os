@@ -27,6 +27,15 @@ jobs:
         run: npm ci
       - name: Verify populated native Prisma upgrades and interrupted migration recovery
         run: npm run verify:native-upgrade
+      - name: Verify physical PostgreSQL backup and WAL point-in-time recovery
+        run: npm run verify:postgres-pitr
+      - name: Upload sanitized PostgreSQL PITR evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postgres-pitr-evidence
+          path: .local/postgres-pitr-evidence.json
+          if-no-files-found: error
       - name: Upload sanitized native upgrade evidence
         if: always()
         uses: actions/upload-artifact@v4

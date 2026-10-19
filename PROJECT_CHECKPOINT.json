@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.16-RECOVERY-01D-object-failure-retry-local-verified-native-CI-required",
-  "savedAtUtc": "2026-10-19T11:09:33.741975+00:00",
-  "currentMilestone": "Acknowledged private-object write failure, scoped cleanup/retry and application-start gate implemented; local checks passed, complete exact-source CI required.",
+  "checkpointRevision": "2026-10-19.17-RECOVERY-01E-physical-base-WAL-local-verified-native-CI-required",
+  "savedAtUtc": "2026-10-19T12:10:52.454803+00:00",
+  "currentMilestone": "Actual physical base backup/WAL named-target recovery locally verified with corrupt/missing-target controls; publish and require all three exact-source CI jobs.",
   "activeTaskId": "RECOVERY-01",
   "workInProgress": false,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish RECOVERY-01D and inspect/fix ALL THREE exact-source CI jobs. Require complete fourteen-phase Compose report: actual acknowledged private-object PUT followed by controlled failure, exact residual state, absent app services/denied start callback, owned-bucket cleanup, identical validated retry and gated startup; retain all previous native/core/recovery checks. Then RECOVERY-01E: assess PITR/WAL prerequisites and remaining recovery/master acceptance gaps; live/full-master acceptance remains open.",
+  "nextAction": "Publish RECOVERY-01E and inspect/fix ALL THREE exact-source CI jobs: core, full fourteen-phase Compose recovery and native populated Prisma upgrade plus new physical base-backup/WAL named-target recovery. Require all previous checks and new native corrupt-base/missing-WAL/unreachable-target controls, clean retry/promotion/source preservation and four artifact receipts. Then RECOVERY-01F: populated application-schema physical restore and cross-store point-in-time prerequisites; production backup operations, live/deployed/full-master acceptance remain open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,6 +84,7 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
@@ -94,6 +95,8 @@
     "docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md",
     "docs/DEPLOYMENT.md",
     "docs/HANDOFF.md",
+    "docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md",
+    "docs/POSTGRES_PHYSICAL_PITR.md",
     "docs/POSTGRES_RESTORE_INTERRUPTION.md",
     "docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md",
     "docs/PROJECT_STATUS.md",
@@ -103,17 +106,15 @@
     "docs/TASK_BOARD.md",
     "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/recovery01c-native-ci-evidence.json",
-    "docs/qa/recovery01d-evidence.json",
-    "docs/qa/recovery01d-unit-receipts.json",
+    "docs/qa/recovery01d-native-ci-evidence.json",
+    "docs/qa/recovery01e-evidence.json",
+    "docs/qa/recovery01e-postgres-pitr-evidence.json",
+    "docs/qa/recovery01e-unit-receipts.json",
     "docs/qa/verification-summary.json",
-    "scripts/compose-recovery-fixture.mjs",
-    "scripts/cross-store-backup-verification.mjs",
-    "scripts/private-object-restore.mjs",
-    "scripts/verify-compose-fixture.mjs",
-    "scripts/verify-compose.mjs",
-    "tests/cross-store-backup-verification.test.ts",
-    "tests/private-object-restore.test.ts"
+    "package.json",
+    "scripts/postgres-pitr-verification.mjs",
+    "scripts/verify-postgres-pitr.mjs",
+    "tests/postgres-pitr-verification.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6708,8 +6709,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "18f0b8f1e21d70811ab055d1a0278815f5bc0762",
-    "status": "RECOVERY-01D_local_verified_full_native_three_job_CI_required",
+    "commit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+    "status": "RECOVERY-01E_local_native_and_units_verified_expanded_three_job_CI_required",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6722,7 +6723,7 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "cecd01c9d291f433f9e57cac7cbd3263043554ff",
+    "sourceTree": "a22f31d111bf715239c03ec2c0ffe0cf10810f01",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Last verified public base; current capsule requires own exact-source CI and external final receipt.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
@@ -8059,10 +8060,10 @@
     }
   ],
   "lastChanges": [
-    "Controlled acknowledged-object-write failure and exact native residual inspection; actual absent application services and denied start callback.",
-    "Guarded owned-restore-bucket cleanup and same validated backup retry, unchanged native recovery rows, complete object readback before actual gated startup.",
-    "Retained all core/native-upgrade/backup/atomic/queue/private-output/credit/restart assertions; local281 unit/13 focused/config passed.",
-    "Preserved previous exact-source all-three-job CI receipt and refreshed continuity/QA/source handoff."
+    "Added actual physical PostgreSQL base backup/manifest verification and archived WAL named-target recovery in owned no-network/tmpfs fixture.",
+    "Added corrupt-base/missing-WAL/nonexistent-target failures, exact-target clean retry/promotion, independent restored write and source/base preservation.",
+    "Added one npm command and native-upgrade CI execution/artifact steps, retaining every previous verification job/assertion; local283 unit/native PITR/config passed.",
+    "Retained previous exact-source all-three-job CI receipt and refreshed continuity/QA/source handoff."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8100,11 +8101,11 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RECOVERY-01D:281 local unit cases/13 focused/config passed; new fourteen-phase native assertions require all three exact-source CI jobs. Wider recovery/live/full-master acceptance remains partial.",
+  "latestStatus": "RECOVERY-01E:283 local unit cases, actual native physical backup/WAL replay controls and config passed. Expanded native CI required; application-schema/cross-store PITR and production/live/master acceptance partial.",
   "activeTask": {
-    "id": "RECOVERY-01D",
-    "title": "Private-object restore failure, guarded cleanup/retry and application-start gate",
-    "status": "local_guards_verified_complete_native_publication_CI_required"
+    "id": "RECOVERY-01E",
+    "title": "Physical PostgreSQL base backup and named-target WAL recovery",
+    "status": "local_native_and_units_verified_exact_source_CI_required"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8117,9 +8118,10 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RECOVERY-01D",
-    "description": "Standing-authorized push, all three exact-source CI jobs; no future success claimed.",
+    "taskId": "RECOVERY-01E",
+    "description": "Standing-authorized push, all three exact-source CI jobs including new native PITR; no future success claimed.",
     "paths": [
+      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
@@ -8130,6 +8132,8 @@
       "docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md",
       "docs/DEPLOYMENT.md",
       "docs/HANDOFF.md",
+      "docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md",
+      "docs/POSTGRES_PHYSICAL_PITR.md",
       "docs/POSTGRES_RESTORE_INTERRUPTION.md",
       "docs/PRIVATE_OBJECT_RESTORE_RECOVERY.md",
       "docs/PROJECT_STATUS.md",
@@ -8139,17 +8143,15 @@
       "docs/TASK_BOARD.md",
       "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/recovery01c-native-ci-evidence.json",
-      "docs/qa/recovery01d-evidence.json",
-      "docs/qa/recovery01d-unit-receipts.json",
+      "docs/qa/recovery01d-native-ci-evidence.json",
+      "docs/qa/recovery01e-evidence.json",
+      "docs/qa/recovery01e-postgres-pitr-evidence.json",
+      "docs/qa/recovery01e-unit-receipts.json",
       "docs/qa/verification-summary.json",
-      "scripts/compose-recovery-fixture.mjs",
-      "scripts/cross-store-backup-verification.mjs",
-      "scripts/private-object-restore.mjs",
-      "scripts/verify-compose-fixture.mjs",
-      "scripts/verify-compose.mjs",
-      "tests/cross-store-backup-verification.test.ts",
-      "tests/private-object-restore.test.ts"
+      "package.json",
+      "scripts/postgres-pitr-verification.mjs",
+      "scripts/verify-postgres-pitr.mjs",
+      "tests/postgres-pitr-verification.test.ts"
     ]
   },
   "priorPendingPublication": {
@@ -8622,12 +8624,12 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "RECOVERY-01C",
-    "publicCommit": "18f0b8f1e21d70811ab055d1a0278815f5bc0762",
-    "runId": 39237077202,
+    "taskId": "RECOVERY-01D",
+    "publicCommit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+    "runId": 39242635642,
     "conclusion": "success",
     "allThreeJobsPassed": true,
-    "receipt": "docs/qa/recovery01c-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01d-native-ci-evidence.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8723,45 +8725,45 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "unit": 281,
-    "uniqueUnitReceipts": 281,
+    "unit": 283,
+    "uniqueUnitReceipts": 283,
     "failedSkippedCancelledTodo": 0,
-    "focusedNewUnitCases": 4,
-    "focusedPassedCases": 13,
+    "focusedNewUnitCases": 2,
     "actualComposeConfigurationPassed": true,
+    "actualNativePhysicalPitrPassed": true,
+    "nativePitrReceipt": "docs/qa/recovery01e-postgres-pitr-evidence.json",
     "all25ProtectedHashesUnchanged": true,
     "fullLocalComposePassed": false,
-    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision72 rechecked, no bypass. Independent GitHub CI runs complete stack.",
     "environment": {
-      "spec_revision": "68",
-      "observations_current": true,
+      "revision": "72",
+      "current": true,
       "phase": "running",
-      "network_policy": {
+      "network": {
         "mode": "restricted",
         "state": "enforced"
       },
-      "secrets": 0,
-      "runtime_variables": 0,
-      "outbound_identities": 0
+      "secretBindings": 0,
+      "outboundIdentities": 0
     },
     "localUnitProof": {
-      "uniquePassedReceipts": 281,
+      "uniquePassedReceipts": 283,
       "failedReceipts": 0,
       "finalSummary": {
         "success": true,
         "counts": {
-          "tests": 281,
+          "tests": 283,
           "failed": 0,
-          "passed": 281,
+          "passed": 283,
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "topLevel": 281,
+          "topLevel": 283,
           "suites": 0
         },
-        "duration_ms": 523227.647288
+        "duration_ms": 545384.575371
       },
-      "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
+      "receiptSha256": "ef8689e874580cf16753f459e48ae78e248af96292ca3c1f994a8a1c3b13d874"
     }
   },
   "social01PolicyReview": {
@@ -9268,45 +9270,45 @@
     "requiresUserApprovalText": "I explicitly approve publishing POLICY-01A claim-evidence native-CI closure’s 15 verified docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "verification": {
-    "unit": 281,
-    "uniqueUnitReceipts": 281,
+    "unit": 283,
+    "uniqueUnitReceipts": 283,
     "failedSkippedCancelledTodo": 0,
-    "focusedNewUnitCases": 4,
-    "focusedPassedCases": 13,
+    "focusedNewUnitCases": 2,
     "actualComposeConfigurationPassed": true,
+    "actualNativePhysicalPitrPassed": true,
+    "nativePitrReceipt": "docs/qa/recovery01e-postgres-pitr-evidence.json",
     "all25ProtectedHashesUnchanged": true,
     "fullLocalComposePassed": false,
-    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision68 rechecked, no bypass. Independent ordinary GitHub CI runs full native stack.",
+    "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision72 rechecked, no bypass. Independent GitHub CI runs complete stack.",
     "environment": {
-      "spec_revision": "68",
-      "observations_current": true,
+      "revision": "72",
+      "current": true,
       "phase": "running",
-      "network_policy": {
+      "network": {
         "mode": "restricted",
         "state": "enforced"
       },
-      "secrets": 0,
-      "runtime_variables": 0,
-      "outbound_identities": 0
+      "secretBindings": 0,
+      "outboundIdentities": 0
     },
     "localUnitProof": {
-      "uniquePassedReceipts": 281,
+      "uniquePassedReceipts": 283,
       "failedReceipts": 0,
       "finalSummary": {
         "success": true,
         "counts": {
-          "tests": 281,
+          "tests": 283,
           "failed": 0,
-          "passed": 281,
+          "passed": 283,
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "topLevel": 281,
+          "topLevel": 283,
           "suites": 0
         },
-        "duration_ms": 523227.647288
+        "duration_ms": 545384.575371
       },
-      "receiptSha256": "ecd71d16d33324fc984f1a1996b1dfd78db847dac707bb83684c5b16b6c0b4b0"
+      "receiptSha256": "ef8689e874580cf16753f459e48ae78e248af96292ca3c1f994a8a1c3b13d874"
     }
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
@@ -13861,7 +13863,7 @@
     ],
     "nextTask": "RECOVERY-01C backup failure/quiescence and in-flight queue/cross-store consistency audit"
   },
-  "nextRecoveryIncrement": "RECOVERY-01E",
+  "nextRecoveryIncrement": "RECOVERY-01F",
   "recovery01c": {
     "schemaVersion": 1,
     "taskId": "RECOVERY-01C",
@@ -14075,5 +14077,91 @@
       "CI artifact byte inspection is separate from logs/step results/upload digests."
     ],
     "nextTask": "RECOVERY-01E PITR/WAL prerequisites and remaining recovery/master acceptance audit"
+  },
+  "recovery01e": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01E",
+    "recordedAtUtc": "2026-10-19T12:10:52.454803+00:00",
+    "status": "local_native_physical_PITR_and_units_verified_exact_source_three_job_CI_required",
+    "basePublicCommit": "a41de4832e8bdf2d0326931a48012cf8a8beb9d0",
+    "baseVerifiedRunId": 39242635642,
+    "scope": "Actual physical PostgreSQL base backup and manifest verification, archived WAL named-target recovery, corrupt-base/missing-WAL/unreachable-target controls, unchanged-base retry/promotion/source preservation in an owned no-network/tmpfs fixture.",
+    "localVerification": {
+      "unit": 283,
+      "uniqueUnitReceipts": 283,
+      "failedSkippedCancelledTodo": 0,
+      "focusedNewUnitCases": 2,
+      "actualComposeConfigurationPassed": true,
+      "actualNativePhysicalPitrPassed": true,
+      "nativePitrReceipt": "docs/qa/recovery01e-postgres-pitr-evidence.json",
+      "all25ProtectedHashesUnchanged": true,
+      "fullLocalComposePassed": false,
+      "fullLocalComposeBlock": "Normal configured proxy CONNECT403 at storage.googleapis.com; enforced restricted network revision72 rechecked, no bypass. Independent GitHub CI runs complete stack.",
+      "environment": {
+        "revision": "72",
+        "current": true,
+        "phase": "running",
+        "network": {
+          "mode": "restricted",
+          "state": "enforced"
+        },
+        "secretBindings": 0,
+        "outboundIdentities": 0
+      },
+      "localUnitProof": {
+        "uniquePassedReceipts": 283,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 283,
+            "failed": 0,
+            "passed": 283,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 283,
+            "suites": 0
+          },
+          "duration_ms": 545384.575371
+        },
+        "receiptSha256": "ef8689e874580cf16753f459e48ae78e248af96292ca3c1f994a8a1c3b13d874"
+      }
+    },
+    "implementedNativeAssertions": {
+      "noNetworkPortsOrPersistentVolumes": true,
+      "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+      "targetTransactionsArchivedAfterBaseBackup": true,
+      "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+      "missingWalAndUnreachableTargetRejectReadiness": true,
+      "sameVerifiedBaseBackupCleanRetry": true,
+      "namedTargetRowsRestored": true,
+      "laterInsertAndDeleteNotReplayed": true,
+      "actualWalReplayAndPromotion": true,
+      "restoredClusterAcceptsIndependentWrites": true,
+      "sourceRecordsAndTimelineUnchanged": true,
+      "savedBaseBackupUnchanged": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "pipeline": {
+      "requiredJobs": [
+        "Native application verification",
+        "Disposable Compose and native restore",
+        "Native populated upgrade and migration recovery"
+      ],
+      "addedPhysicalPitrStepAndArtifact": true,
+      "expectedArtifacts": 4,
+      "allPriorAssertionsRetained": true,
+      "deployed": false,
+      "ownExactSourceVerified": false
+    },
+    "applicationDependenciesAndMigrationsChanged": false,
+    "limits": [
+      "Small synthetic table and named restore point, not populated application-schema or coordinated private-object/Redis PITR.",
+      "No durable remote archive/backup scheduling/retention/encryption/monitoring, arbitrary target/timeline or production RPO/RTO acceptance. Live/deployed/full-master acceptance remains open.",
+      "CI artifact byte inspection is separate from logs/step results/upload digests."
+    ],
+    "nextTask": "RECOVERY-01F populated application-schema physical restore and cross-store point-in-time prerequisites"
   }
 }
