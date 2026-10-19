@@ -19,6 +19,13 @@ import {
   restoreApplicationName,
   verifyInterruptedRestore,
 } from "./postgres-restore-verification.mjs";
+import {
+  fixtureWriters,
+  sealFixtureBackup,
+  validateFixtureBackup,
+  withValidatedFixtureBackup,
+  invalidFixtureBackupCases,
+} from "./cross-store-backup-verification.mjs";
 if (process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
     "Set MOS_ALLOW_NATIVE_TESTS=isolated-test-services for disposable Compose verification.",
@@ -50,6 +57,29 @@ const runtimeImage = `${source}-runtime`,
 const ca = process.env.CODEX_PROXY_CERT;
 const override = {
   services: {
+    "fixture-provider": {
+      image: runtimeImage,
+      command: [
+        "node",
+        "--input-type=module",
+        "-e",
+        readFileSync(
+          resolve(root, "scripts/compose-recovery-provider.mjs"),
+          "utf8",
+        ) + "\ncreateRecoveryProvider().listen(4999, '0.0.0.0');",
+      ],
+      healthcheck: {
+        test: [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:4999/stats').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ],
+        interval: "1s",
+        timeout: "3s",
+        retries: 20,
+      },
+    },
     storage: {
       image: storageImage,
       build: { context: root, dockerfile: "Dockerfile.minio" },
@@ -61,7 +91,17 @@ const override = {
       ports: ["127.0.0.1::4000"],
     },
     web: { image: runtimeImage, ports: ["127.0.0.1::3000"] },
-    worker: { image: runtimeImage, env_file: [fixtureEnv] },
+    worker: {
+      image: runtimeImage,
+      env_file: [fixtureEnv],
+      depends_on: { "fixture-provider": { condition: "service_healthy" } },
+      environment: {
+        AI_PRIMARY_URL: "http://fixture-provider:4999",
+        AI_PRIMARY_MODEL: "synthetic-compose-recovery",
+        AI_PRIMARY_KEY: "synthetic-compose-provider-key",
+        AI_FALLBACK_KEY: "",
+      },
+    },
     "render-worker": { image: runtimeImage, env_file: [fixtureEnv] },
     "media-worker": { image: runtimeImage, env_file: [fixtureEnv] },
     mailpit: { ports: ["127.0.0.1::1025", "127.0.0.1::8025"] },
@@ -98,10 +138,15 @@ const fixtureScript = readFileSync(
   resolve(root, "scripts/verify-compose-fixture.mjs"),
   "utf8",
 );
+const recoveryModule =
+  "data:text/javascript;base64," +
+  Buffer.from(
+    readFileSync(resolve(root, "scripts/compose-recovery-fixture.mjs"), "utf8"),
+  ).toString("base64");
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01A",
-  baselineTaskId: "NATIVE-01A",
+  taskId: "RECOVERY-01C",
+  baselineTaskId: "RECOVERY-01B",
   passed: false,
   startedAt: new Date().toISOString(),
   sourceProject: source,
@@ -308,7 +353,7 @@ async function node(project, mode, state = {}, running = true) {
       ];
   return JSON.parse(
     await compose(project, args, {
-      input: `globalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
+      input: `globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
       quiet: true,
     }),
   );
@@ -418,12 +463,14 @@ try {
         "worker",
         "render-worker",
         "media-worker",
+        "fixture-provider",
       ])
         assert.ok(
           rows.some((x) => x.Service === name && x.State === "running"),
           name,
         );
       report.checks.allNineLongRunningServices = true;
+      report.checks.syntheticProviderService = true;
     });
     const state = await phase(
       "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
@@ -445,6 +492,18 @@ try {
       );
       report.checks.realSmtpDelivery = true;
     });
+    let backup;
+    const loadBackup = () => ({
+      source,
+      target: restored,
+      dump: readFileSync(resolve(dir, "database.dump")),
+      objects: JSON.parse(
+        readFileSync(resolve(dir, "private-objects.json"), "utf8"),
+      ).objects,
+      manifest: JSON.parse(
+        readFileSync(resolve(dir, "backup-manifest.json"), "utf8"),
+      ),
+    });
     await phase(
       "quiesced native database and private-object backup",
       async () => {
@@ -456,6 +515,33 @@ try {
           "render-worker",
           "media-worker",
         ]);
+        const stopped = JSON.parse(
+          await compose(source, ["ps", "--all", "--format", "json"], {
+            quiet: true,
+          }).then((s) =>
+            s.trim().startsWith("[")
+              ? s
+              : "[" + s.trim().split("\n").join(",") + "]",
+          ),
+        );
+        for (const name of fixtureWriters)
+          assert.ok(
+            stopped.some(
+              (row) => row.Service === name && row.State === "exited",
+            ),
+            `Writer ${name} is still running.`,
+          );
+        Object.assign(state, await node(source, "recovery-seed", state, false));
+        Object.assign(report.checks, {
+          allFiveWritersStoppedBeforeBackup: true,
+          queuedUncertainAndPrivateOutputSeededWhileQuiesced: true,
+          syntheticUncertainProviderCallsBeforeBackup: 1,
+        });
+        writeFileSync(
+          resolve(dir, "private-state.json"),
+          JSON.stringify(state),
+          { mode: 0o600 },
+        );
         // An isolated fixture-only CHECK function supplies a deterministic COPY
         // barrier for native backend interruption, without fixed kill timing.
         await postgresSql(source, "marketing", restoreBarrierSql);
@@ -491,17 +577,67 @@ try {
           ),
           sha256: checksum(JSON.stringify(objects)),
         };
+        const manifest = sealFixtureBackup({
+          source,
+          target: restored,
+          dump,
+          objects: objects.objects,
+          stoppedWriters: fixtureWriters,
+          references: await node(source, "recovery-references", state, false),
+        });
+        writeFileSync(
+          resolve(dir, "backup-manifest.json"),
+          JSON.stringify(manifest),
+          { mode: 0o600 },
+        );
+        backup = loadBackup();
+        validateFixtureBackup(backup);
+        report.backupManifest = {
+          sha256: checksum(JSON.stringify(manifest)),
+          databaseBytes: manifest.database.bytes,
+          privateObjects: manifest.objects.length,
+        };
+        report.checks.completeSealedBackupPreflight = true;
+        report.checks.everyDatabaseMediaReferenceCovered = true;
+      },
+    );
+    await phase(
+      "reject incomplete/corrupt backups while preserving original source",
+      async () => {
+        const observations = [];
+        for (const item of invalidFixtureBackupCases(backup)) {
+          let callbacks = 0;
+          await assert.rejects(
+            withValidatedFixtureBackup(item.input, () => {
+              callbacks++;
+              throw new Error("Destructive callback must not run.");
+            }),
+          );
+          assert.equal(callbacks, 0);
+          observations.push({
+            name: item.name,
+            rejectedBeforeDestructiveAction: true,
+          });
+        }
+        assert.deepEqual(await node(source, "snapshot", {}, false), {
+          objects: backup.objects,
+        });
+        await node(source, "recovery-baseline", state, false);
+        report.backupFailureCases = observations;
+        report.checks.invalidBackupNeverReachesSourceRemovalOrTargetMutation = true;
+        report.checks.sourceRecordsAndPrivateObjectsIntactAfterRejections = true;
       },
     );
     // Remove the entire original disposable stack and all its data volumes before
     // restoring. The new project cannot accidentally read old volumes/objects.
     await phase("remove original disposable source targets", async () => {
-      await cleanup(source);
+      await withValidatedFixtureBackup(loadBackup(), () => cleanup(source));
       report.checks.originalSourceVolumesRemoved = true;
     });
     await phase(
       "restore into separate PostgreSQL and MinIO targets",
       async () => {
+        validateFixtureBackup(loadBackup());
         await compose(restored, [
           "up",
           "-d",
@@ -529,6 +665,16 @@ try {
               ],
               { quiet: true },
             );
+            assert.equal(
+              (
+                await compose(
+                  restored,
+                  ["exec", "-T", "redis", "redis-cli", "PING"],
+                  { quiet: true },
+                )
+              ).trim(),
+              "PONG",
+            );
             break;
           } catch {
             if (i === 59)
@@ -536,7 +682,20 @@ try {
             await new Promise((r) => setTimeout(r, 500));
           }
         }
-        const dump = readFileSync(resolve(dir, "database.dump"));
+        assert.equal(
+          (
+            await compose(
+              restored,
+              ["exec", "-T", "redis", "redis-cli", "DBSIZE"],
+              { quiet: true },
+            )
+          ).trim(),
+          "0",
+        );
+        report.checks.freshRedisEmptyBeforeApplicationStart = true;
+        const verified = loadBackup();
+        validateFixtureBackup(verified);
+        const dump = verified.dump;
         assert.equal(
           checksum(dump),
           report.databaseDump.sha256,
@@ -545,7 +704,8 @@ try {
         report.restoreInterruption = await verifyInterruptedRestore({
           project: restored,
           query: (sql) => postgresSql(restored, "marketing", sql),
-          reset: resetRestoreDatabase,
+          reset: () =>
+            withValidatedFixtureBackup(loadBackup(), resetRestoreDatabase),
           setPause: (on) =>
             postgresSql(
               restored,
@@ -556,11 +716,12 @@ try {
           progress: (name) => console.log("POSTGRES RECOVERY CHECK: " + name),
         });
         Object.assign(report.checks, report.restoreInterruption.checks);
-        await restoreDatabase(dump, true);
-        report.checks.cleanAtomicNativeDatabaseRetry = true;
-        const objects = JSON.parse(
-          readFileSync(resolve(dir, "private-objects.json"), "utf8"),
+        await withValidatedFixtureBackup(loadBackup(), () =>
+          restoreDatabase(dump, true),
         );
+        report.checks.cleanAtomicNativeDatabaseRetry = true;
+        const objects = { objects: loadBackup().objects };
+        validateFixtureBackup(loadBackup());
         const restoredObjects = await node(
           restored,
           "restore-objects",
@@ -572,17 +733,66 @@ try {
           report.objectBackup.objects,
         );
         Object.assign(report.checks, restoredObjects);
-        await compose(restored, ["up", "-d", "--no-build"]);
+        // Verify restored rows before starting any worker that can consume them.
+        await compose(restored, [
+          "up",
+          "-d",
+          "--no-build",
+          "migrate",
+          "api",
+          "web",
+        ]);
         await ready(restored);
       },
     );
     await phase(
       "restored records/media/tenant access through actual application",
-      async () =>
+      async () => {
         Object.assign(
           report.checks,
           await node(restored, "verify-restored", state),
-        ),
+        );
+        Object.assign(
+          report.checks,
+          await node(restored, "recovery-baseline", state),
+        );
+      },
+    );
+    await phase(
+      "fresh-Redis reconstruction and uncertain/private-output recovery",
+      async () => {
+        await compose(restored, [
+          "up",
+          "-d",
+          "--no-build",
+          "fixture-provider",
+          "worker",
+          "render-worker",
+          "media-worker",
+        ]);
+        const recovered = await node(restored, "recovery-verify", state);
+        state.recoveryAfter = recovered.after;
+        Object.assign(report.checks, recovered.checks);
+        writeFileSync(
+          resolve(dir, "private-state.json"),
+          JSON.stringify(state),
+          { mode: 0o600 },
+        );
+      },
+    );
+    await phase(
+      "restart all three workers without replay or duplicate settlements",
+      async () => {
+        state.restartAfter = Date.now();
+        await compose(restored, [
+          "restart",
+          "worker",
+          "render-worker",
+          "media-worker",
+        ]);
+        const repeated = await node(restored, "recovery-recheck", state);
+        Object.assign(report.checks, repeated.checks);
+      },
     );
   }
   report.passed = true;

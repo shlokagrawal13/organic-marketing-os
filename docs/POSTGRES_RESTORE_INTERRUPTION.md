@@ -1,3 +1,7 @@
+## Current fixture scope — RECOVERY-01C, 2026-10-19 IST
+
+The full Compose verifier now has thirteen phases, a private synthetic provider, seven backup-preflight rejection controls and fresh-Redis queued/uncertain/private-output recovery followed by three-worker restart. Existing native interruption/atomic retry/media/tenant/SMTP checks remain. Current source requires all THREE exact-commit jobs; predecessor f99dba4/run39230879722 passed all three. Older ten-phase/two-job counts below are historical. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).
+
 ## Current verification scope — 2026-10-19 IST
 
 RECOVERY-01A final ba2d4f1/run39179489223 passed both core and complete Compose/atomic restore jobs; retained receipt: `docs/qa/recovery01a-native-ci-evidence.json`. RECOVERY-01B adds a separate native populated Prisma upgrade/interrupted migration job; all THREE current-source jobs are required. Earlier two-job/pending-B notes below are historical. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md) for the new bounded scope and remaining recovery gaps.

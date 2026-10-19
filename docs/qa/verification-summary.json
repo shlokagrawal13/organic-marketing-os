@@ -13579,5 +13579,103 @@
     "ownThreeJobCiPending": true,
     "priorFinalNativeCi": "docs/qa/recovery01a-native-ci-evidence.json",
     "evidence": "docs/qa/recovery01b-evidence.json"
+  },
+  "latestRecovery01C": {
+    "taskId": "RECOVERY-01C",
+    "scope": "Private hash/reference/quiescence backup preflight, seven rejection controls preserving source, fresh-Redis representative queued/uncertain/retained-output recovery and actual three-worker restart; all prior verification retained.",
+    "localVerification": {
+      "unit": 277,
+      "uniqueUnitReceipts": 277,
+      "failedSkippedCancelledTodo": 0,
+      "focusedNewBackupUnitCases": 4,
+      "actualComposeConfigurationPassed": true,
+      "providerHttpAndCompiledDraftSchemaContractPassed": true,
+      "providerContractReceipt": "docs/qa/recovery01c-provider-smoke-evidence.json",
+      "all25ProtectedHashesUnchanged": true,
+      "fullLocalComposePassed": false,
+      "fullLocalComposeBlock": "Enforced network allowlist rejects storage.googleapis.com Go dependency redirects through the normal configured proxy; full current-source MinIO/Compose acceptance runs independently in ordinary GitHub CI.",
+      "localUnitProof": {
+        "uniquePassedReceipts": 277,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 277,
+            "failed": 0,
+            "passed": 277,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 277,
+            "suites": 0
+          },
+          "duration_ms": 517905.274517
+        },
+        "receiptSha256": "e75ee15e7411c5c79808c2c3d609d36576e4f2c01bf22ddf7c98658138d3397d"
+      },
+      "optionalCachedRuntimeContractAttempt": "Normal cached-runtime user could not read package configuration; root diagnostic/runtime copies then exhausted vfs disk. No full container acceptance claimed from those attempts. Explicit local loopback HTTP contract passed afterward.",
+      "localDiskPressureRecovered": {
+        "cause": "Concurrent vfs copies of the large cached fixture runtime exhausted local disk during an optional provider contract check.",
+        "removedFixtureRuntimeImage": "omos-native01a-runtime:latest",
+        "globalPrune": false,
+        "removedRuntimeLeafCache": "jieixz6a88fg4gwuky46ygk1j",
+        "targetedUnusedFixtureCaches": [
+          {
+            "id": "p6nhd5ao9zqs3je4ugxfasnci",
+            "description": "[runtime  9/10] COPY --from=build --chown=node:node /app/apps/web ./apps/web",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          },
+          {
+            "id": "v7nxbth7m6i5kqn5fjz1hfg92",
+            "description": "[runtime  8/10] COPY --from=build --chown=node:node /app/dist ./dist",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          },
+          {
+            "id": "gwzbjpulvx8mqjuw647wbez1p",
+            "description": "[runtime  7/10] COPY --from=build --chown=node:node /app/node_modules/.prisma ./node_modules/.prisma",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          },
+          {
+            "id": "l2jsik4xv7wb4iwn4t2j8s376",
+            "description": "mount / from exec /bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm ci --omit=dev --no-audit --no-fund",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          },
+          {
+            "id": "2em5sw37fkru201gp808of3t0",
+            "description": "[runtime  5/10] COPY scripts/patch-fontkit.mjs scripts/fontkit-controls.mjs scripts/fontkit-southeast.mjs scripts/fontkit-myanmar-data.json ./scripts/",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          },
+          {
+            "id": "b3wsnpi3b045vewap17s2l4er",
+            "description": "[runtime  4/10] COPY package.json package-lock.json ./",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          },
+          {
+            "id": "hkbx0793ajg573shzd62k9gwz",
+            "description": "mount / from exec /bin/sh -c apt-get update && apt-get install -y --no-install-recommends openssl ffmpeg fonts-dejavu-core fonts-noto-core ca-certificates && rm -rf /var/lib/apt/lists/*",
+            "shared": false,
+            "reclaimable": true,
+            "targetedRemovalSucceeded": true
+          }
+        ],
+        "userContainersOrVolumesRemoved": false,
+        "sourceOrCredentialsModified": false
+      }
+    },
+    "expandedFullNativeThreeJobCiPending": true,
+    "priorFinalNativeCi": "docs/qa/recovery01b-native-ci-evidence.json",
+    "evidence": "docs/qa/recovery01c-evidence.json"
   }
 }

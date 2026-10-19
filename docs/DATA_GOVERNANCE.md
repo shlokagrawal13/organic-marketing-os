@@ -1,3 +1,7 @@
+## Cross-store fixture manifests — RECOVERY-01C
+
+Saved native dumps, object bodies/internal keys, reference manifests, session/private state and provider prompt counters stay in ignored private fixture directories. CI uploads only sanitized phase/boolean/count/hash evidence. Generated data never populates runtime business analytics. All user services/volumes/.env and 24 existing migrations are preserved. Quiesced synthetic recovery does not establish production retention/encryption/PITR/provider reconciliation. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).
+
 ## Native upgrade fixture evidence — RECOVERY-01B
 
 Generated synthetic legacy rows and migration probes run only in a random labelled tmpfs PostgreSQL container with a dedicated network and a random loopback port. Real .env and all prior migrations are preserved. Credentials, generated private packages, source row snapshots and raw subprocess logs stay outside source/CI artifacts; only sanitized checks/counts are uploaded. Source handoffs carry no database/media backup. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md).

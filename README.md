@@ -1,3 +1,7 @@
+## Current recovery continuation — RECOVERY-01C
+
+The disposable verifier now rejects corrupt/incomplete cross-store backups before destructive actions and checks fresh-Redis queued/uncertain/private-output recovery plus worker restart. Full acceptance requires all three jobs on the published source. See [current status](PROJECT_STATUS.md) and [scope/evidence](docs/CROSS_STORE_BACKUP_QUEUE_RECOVERY.md). Source ZIPs are not database/media backups; full product acceptance remains partial.
+
 ## Current verification continuation — RECOVERY-01B
 
 Native populated Prisma upgrades and interrupted migration/resolve/retry fixtures are locally verified. The pipeline now requires core, complete Compose/atomic cross-store restore, and native populated upgrade jobs on the same published commit. See [current status](PROJECT_STATUS.md) and [native upgrade scope](docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md). A source ZIP is not a database/media backup; full product acceptance remains partial.

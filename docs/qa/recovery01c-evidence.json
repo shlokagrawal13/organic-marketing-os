@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01C",
+  "recordedAtUtc": "2026-10-19T10:21:26.702126+00:00",
+  "status": "local_guards_config_provider_contract_verified_expanded_full_native_CI_required",
+  "basePublicCommit": "f99dba444dfaa25e8000d780735b065e6b002ffa",
+  "baseVerifiedRunId": 39230879722,
+  "scope": "Private hash/reference/quiescence backup preflight, seven rejection controls preserving source, fresh-Redis representative queued/uncertain/retained-output recovery and actual three-worker restart; all prior verification retained.",
+  "localVerification": {
+    "unit": 277,
+    "uniqueUnitReceipts": 277,
+    "failedSkippedCancelledTodo": 0,
+    "focusedNewBackupUnitCases": 4,
+    "actualComposeConfigurationPassed": true,
+    "providerHttpAndCompiledDraftSchemaContractPassed": true,
+    "providerContractReceipt": "docs/qa/recovery01c-provider-smoke-evidence.json",
+    "all25ProtectedHashesUnchanged": true,
+    "fullLocalComposePassed": false,
+    "fullLocalComposeBlock": "Enforced network allowlist rejects storage.googleapis.com Go dependency redirects through the normal configured proxy; full current-source MinIO/Compose acceptance runs independently in ordinary GitHub CI.",
+    "localUnitProof": {
+      "uniquePassedReceipts": 277,
+      "failedReceipts": 0,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 277,
+          "failed": 0,
+          "passed": 277,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 277,
+          "suites": 0
+        },
+        "duration_ms": 517905.274517
+      },
+      "receiptSha256": "e75ee15e7411c5c79808c2c3d609d36576e4f2c01bf22ddf7c98658138d3397d"
+    },
+    "optionalCachedRuntimeContractAttempt": "Normal cached-runtime user could not read package configuration; root diagnostic/runtime copies then exhausted vfs disk. No full container acceptance claimed from those attempts. Explicit local loopback HTTP contract passed afterward.",
+    "localDiskPressureRecovered": {
+      "cause": "Concurrent vfs copies of the large cached fixture runtime exhausted local disk during an optional provider contract check.",
+      "removedFixtureRuntimeImage": "omos-native01a-runtime:latest",
+      "globalPrune": false,
+      "removedRuntimeLeafCache": "jieixz6a88fg4gwuky46ygk1j",
+      "targetedUnusedFixtureCaches": [
+        {
+          "id": "p6nhd5ao9zqs3je4ugxfasnci",
+          "description": "[runtime  9/10] COPY --from=build --chown=node:node /app/apps/web ./apps/web",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        },
+        {
+          "id": "v7nxbth7m6i5kqn5fjz1hfg92",
+          "description": "[runtime  8/10] COPY --from=build --chown=node:node /app/dist ./dist",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        },
+        {
+          "id": "gwzbjpulvx8mqjuw647wbez1p",
+          "description": "[runtime  7/10] COPY --from=build --chown=node:node /app/node_modules/.prisma ./node_modules/.prisma",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        },
+        {
+          "id": "l2jsik4xv7wb4iwn4t2j8s376",
+          "description": "mount / from exec /bin/sh -c if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm ci --omit=dev --no-audit --no-fund",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        },
+        {
+          "id": "2em5sw37fkru201gp808of3t0",
+          "description": "[runtime  5/10] COPY scripts/patch-fontkit.mjs scripts/fontkit-controls.mjs scripts/fontkit-southeast.mjs scripts/fontkit-myanmar-data.json ./scripts/",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        },
+        {
+          "id": "b3wsnpi3b045vewap17s2l4er",
+          "description": "[runtime  4/10] COPY package.json package-lock.json ./",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        },
+        {
+          "id": "hkbx0793ajg573shzd62k9gwz",
+          "description": "mount / from exec /bin/sh -c apt-get update && apt-get install -y --no-install-recommends openssl ffmpeg fonts-dejavu-core fonts-noto-core ca-certificates && rm -rf /var/lib/apt/lists/*",
+          "shared": false,
+          "reclaimable": true,
+          "targetedRemovalSucceeded": true
+        }
+      ],
+      "userContainersOrVolumesRemoved": false,
+      "sourceOrCredentialsModified": false
+    }
+  },
+  "fullComposeAssertionsRequireOwnCi": {
+    "phases": 13,
+    "backupRejectionControls": 7,
+    "referencedObjectsAndWriterQuiescence": true,
+    "freshRedisBeforeAppStart": true,
+    "representativeStates": [
+      "QUEUED AI",
+      "stale RUNNING AI",
+      "QUEUED render",
+      "OUTPUT_READY image generation"
+    ],
+    "queuedSyntheticProviderCallsAfterRestore": 1,
+    "uncertainSyntheticProviderCallsAfterRestore": 0,
+    "oldLedgerPreservedAndTriggerEnforced": true,
+    "exactlyTwoSettlements": true,
+    "threeWorkerRestartNoReplay": true
+  },
+  "pipeline": {
+    "requiredJobs": [
+      "Native application verification",
+      "Disposable Compose and native restore",
+      "Native populated upgrade and migration recovery"
+    ],
+    "allPriorAssertionsRetained": true,
+    "deployed": false,
+    "ownExactSourceVerified": false
+  },
+  "applicationDependenciesAndMigrationsChanged": false,
+  "limits": [
+    "Seeded quiesced saved states; original synthetic uncertain acceptance is injected by seeder, not a new killed-worker acceptance experiment. Existing actual crash tests remain.",
+    "Hash manifest is fixture integrity evidence, not an authenticated/signed production backup format.",
+    "No cross-store atomicity during later PUT failures, arbitrary concurrent/remote writers, server/network/container crashes, production backup capacity/retention/encryption, live provider reconciliation/charges, PITR/WAL or full master acceptance.",
+    "CI artifact byte access is checked separately from logs and upload digests."
+  ],
+  "nextTask": "RECOVERY-01D controlled private-object restore failure and clean retry/application-start gating"
+}

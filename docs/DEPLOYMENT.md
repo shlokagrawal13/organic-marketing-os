@@ -1,3 +1,7 @@
+## Recovery verification scope — RECOVERY-01C
+
+All three CI jobs remain verification-only. The expanded Compose harness validates saved private backups before source deletion/target mutation and runs restored queued work only after exact database/media baseline checks. Its synthetic provider, seeded data and hash manifest are fixture tooling; no production backup scheduler, signed backup format, automatic repair or deployment was added. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).
+
 ## Current verification pipeline — RECOVERY-01B
 
 GitHub Actions now runs three verification jobs: core application checks; complete disposable Compose/atomic native DB/private-media restore; and native populated Prisma predecessor/interrupted migration recovery. Require all three on the exact published source. The migration fault SQL exists only in ignored private fixture packages and never enters application migration deployment. No production repair automation/deployment was added. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md).

@@ -298,7 +298,32 @@ try {
     );
     assert.equal(forbidden.status, 403);
     console.log(JSON.stringify({ objects }));
+  } else if (mode.startsWith("recovery-")) {
+    console.log(
+      JSON.stringify(
+        await globalThis.__composeRecovery({
+          mode,
+          state,
+          db,
+          store,
+          require,
+          call,
+          files,
+          sha,
+          sleep,
+        }),
+      ),
+    );
   } else if (mode === "restore-objects") {
+    // Validate the complete set before the first bucket or object write.
+    const keys = new Set();
+    for (const object of state.objects) {
+      assert.ok(!keys.has(object.key));
+      keys.add(object.key);
+      const bytes = Buffer.from(object.body, "base64");
+      assert.equal(bytes.toString("base64"), object.body);
+      assert.equal(sha(bytes), object.sha256);
+    }
     await store.ready();
     for (const object of state.objects) {
       assert.equal(sha(Buffer.from(object.body, "base64")), object.sha256);
