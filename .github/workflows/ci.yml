@@ -9,6 +9,32 @@ permissions:
   contents: read
 
 jobs:
+  native-upgrade:
+    name: Native populated upgrade and migration recovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      MOS_ALLOW_NATIVE_TESTS: "isolated-test-services"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Verify populated native Prisma upgrades and interrupted migration recovery
+        run: npm run verify:native-upgrade
+      - name: Upload sanitized native upgrade evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-upgrade-evidence
+          path: .local/native-upgrade-evidence.json
+          if-no-files-found: error
+
   compose:
     name: Disposable Compose and native restore
     runs-on: ubuntu-latest

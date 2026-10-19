@@ -13529,5 +13529,55 @@
       "Quiesced native database/private-object restore does not close PITR, interrupted restore/migration, in-flight queue recovery, live providers or full master acceptance.",
       "Independent artifact byte inspection status is recorded separately; logs, all steps, checks, counts and upload digests were verified."
     ]
+  },
+  "latestRecovery01B": {
+    "taskId": "RECOVERY-01B",
+    "scope": "Actual native Prisma deploy at populated predecessor boundaries and fixture-only interrupted migration/P3009/resolve/unchanged-SQL retry; all previous core/Compose atomic cross-store checks retained.",
+    "localVerification": {
+      "nativeReceipt": "docs/qa/recovery01b-native-upgrade-evidence.json",
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "prismaVersion": "6.19.3",
+      "predecessorBoundaries": [
+        4,
+        7,
+        23,
+        24
+      ],
+      "legacyTables": 8,
+      "actualInterruptedMigrationCases": 2,
+      "bothBatchesVisibleProbeTablesAfterTermination": 0,
+      "ordinaryRetryBlockedP3009": true,
+      "explicitResolveUnchangedSqlRetryPassed": true,
+      "all25ProtectedHashesUnchanged": true,
+      "unit": 273,
+      "uniqueUnitReceipts": 273,
+      "failedSkippedCancelledTodo": 0,
+      "localUnitProof": {
+        "uniquePassedReceipts": 273,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 273,
+            "failed": 0,
+            "passed": 273,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 273,
+            "suites": 0
+          },
+          "duration_ms": 477354.040058
+        },
+        "receiptSha256": "602ef1e45ffeac34ee454c6a57a4bec8f20d936fc351f9f88d0cf913625cdf8a"
+      },
+      "realEnvironmentUnchanged": true,
+      "fixtureCleanup": true,
+      "localFullComposePassed": false,
+      "localFullComposeBlock": "Enforced managed network disallows storage.googleapis.com Go dependency redirects. Ordinary independent GitHub CI executes the complete MinIO/Compose fixture; no bypass or dependency relay is used."
+    },
+    "ownThreeJobCiPending": true,
+    "priorFinalNativeCi": "docs/qa/recovery01a-native-ci-evidence.json",
+    "evidence": "docs/qa/recovery01b-evidence.json"
   }
 }

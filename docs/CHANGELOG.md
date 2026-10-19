@@ -1,3 +1,7 @@
+## RECOVERY-01B native populated Prisma upgrade — 2026-10-19 IST
+
+Actual Prisma deployments at 4→7→23→24 migrations preserve populated legacy rows, immutable credits and original SQL checksums. Two actual interrupted fixture migrations verify failed-history/P3009 retry gating, explicit resolve and unchanged-file retry. Fresh local273unit and native fixture checks passed; own THREE exact-source CI jobs are required. Prior ba2d4f1/run39179489223 passed all old core/Compose restore checks. This is bounded synthetic acceptance; PITR/in-flight consistency/live/full master remain open. See `docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md`. Next after publication/CI: RECOVERY-01C backup failure/quiescence and queue/cross-store consistency audit.
+
 ## RECOVERY-01A interrupted native restore — 2026-10-19 IST
 
 Native PostgreSQL17.11 negative control retained two tables after interrupted non-atomic restore; the atomic case rolled back to zero and clean retry restored all synthetic rows. Full Compose now uses the same COPY-barrier interruption probes and final `pg_restore --single-transaction`, retaining all prior cross-store/application checks. Five fixture guards/config passed; 25 protected hashes unchanged. Require own exact-source BOTH CI jobs for current populated acceptance. Prior NATIVE-01A final060a7d1/run39177109393 passed270/38/28/5 and full Compose/five-object restore. Wider native upgrade/migration interruption, PITR/live/full-master acceptance remain open. See `docs/POSTGRES_RESTORE_INTERRUPTION.md`.

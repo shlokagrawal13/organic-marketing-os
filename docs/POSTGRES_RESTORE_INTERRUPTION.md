@@ -1,3 +1,7 @@
+## Current verification scope — 2026-10-19 IST
+
+RECOVERY-01A final ba2d4f1/run39179489223 passed both core and complete Compose/atomic restore jobs; retained receipt: `docs/qa/recovery01a-native-ci-evidence.json`. RECOVERY-01B adds a separate native populated Prisma upgrade/interrupted migration job; all THREE current-source jobs are required. Earlier two-job/pending-B notes below are historical. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md) for the new bounded scope and remaining recovery gaps.
+
 # Native PostgreSQL interrupted restore
 
 RECOVERY-01A fixes the Compose verifier's native restore command to use `pg_restore --exit-on-error --single-transaction` for a fresh disposable target. `--exit-on-error` alone stops after a failure but can leave earlier restored schema/data committed. This is verification tooling for synthetic isolated fixtures; no production restore endpoint, backup scheduler or deployment is introduced.

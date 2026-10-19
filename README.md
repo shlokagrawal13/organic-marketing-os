@@ -1,3 +1,7 @@
+## Current verification continuation — RECOVERY-01B
+
+Native populated Prisma upgrades and interrupted migration/resolve/retry fixtures are locally verified. The pipeline now requires core, complete Compose/atomic cross-store restore, and native populated upgrade jobs on the same published commit. See [current status](PROJECT_STATUS.md) and [native upgrade scope](docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md). A source ZIP is not a database/media backup; full product acceptance remains partial.
+
 ## Current continuation — RECOVERY-01A, 2026-10-19 IST
 
 Native PostgreSQL17.11 interruption tests reproduced partial restore under `--exit-on-error` alone (two visible fixture tables after backend termination). `--single-transaction` rolled restored relations back to zero; clean retry restored all synthetic rows, preserved source rows and cleaned up the isolated tmpfs/no-network container. Five focused fixture guards and actual Compose configuration passed; all 25 protected master/migration hashes are unchanged.

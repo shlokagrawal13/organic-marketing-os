@@ -1,3 +1,7 @@
+## Native upgrade fixture evidence — RECOVERY-01B
+
+Generated synthetic legacy rows and migration probes run only in a random labelled tmpfs PostgreSQL container with a dedicated network and a random loopback port. Real .env and all prior migrations are preserved. Credentials, generated private packages, source row snapshots and raw subprocess logs stay outside source/CI artifacts; only sanitized checks/counts are uploaded. Source handoffs carry no database/media backup. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md).
+
 ## RECOVERY-01A interrupted native restore — 2026-10-19 IST
 
 Native PostgreSQL17.11 negative control retained two tables after interrupted non-atomic restore; the atomic case rolled back to zero and clean retry restored all synthetic rows. Full Compose now uses the same COPY-barrier interruption probes and final `pg_restore --single-transaction`, retaining all prior cross-store/application checks. Five fixture guards/config passed; 25 protected hashes unchanged. Require own exact-source BOTH CI jobs for current populated acceptance. Prior NATIVE-01A final060a7d1/run39177109393 passed270/38/28/5 and full Compose/five-object restore. Wider native upgrade/migration interruption, PITR/live/full-master acceptance remain open. See `docs/POSTGRES_RESTORE_INTERRUPTION.md`.

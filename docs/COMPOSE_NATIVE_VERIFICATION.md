@@ -1,3 +1,7 @@
+## Current verification scope — 2026-10-19 IST
+
+RECOVERY-01A final ba2d4f1/run39179489223 passed both core and complete Compose/atomic restore jobs; retained receipt: `docs/qa/recovery01a-native-ci-evidence.json`. RECOVERY-01B adds a separate native populated Prisma upgrade/interrupted migration job; all THREE current-source jobs are required. Earlier two-job/pending-B notes below are historical. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md) for the new bounded scope and remaining recovery gaps.
+
 # Disposable Compose and native cross-store verification
 
 NATIVE-01A adds `MOS_ALLOW_NATIVE_TESTS=isolated-test-services npm run verify:compose` for the actual checked-in Dockerfiles and Compose services. Node 24, a local Docker Engine socket and modern Compose v2 (tested v2.40.3) are required. No npm install is needed on the host: the verifier uses Node standard libraries and the built runtime image. `--config-only` validates isolation only and writes a separate report; it does not establish startup or restore acceptance.

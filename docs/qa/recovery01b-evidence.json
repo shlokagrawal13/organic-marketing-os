@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01B",
+  "recordedAtUtc": "2026-10-19T09:31:20.661430+00:00",
+  "status": "local_native_populated_prisma_upgrade_and_interrupted_migration_recovery_verified_own_three_job_CI_pending",
+  "basePublicCommit": "ba2d4f1f02937d51fae5c1a361e37bb4d2674c0c",
+  "baseVerifiedRunId": 39179489223,
+  "scope": "Actual native Prisma deploy at populated predecessor boundaries and fixture-only interrupted migration/P3009/resolve/unchanged-SQL retry; all previous core/Compose atomic cross-store checks retained.",
+  "localVerification": {
+    "nativeReceipt": "docs/qa/recovery01b-native-upgrade-evidence.json",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "prismaVersion": "6.19.3",
+    "predecessorBoundaries": [
+      4,
+      7,
+      23,
+      24
+    ],
+    "legacyTables": 8,
+    "actualInterruptedMigrationCases": 2,
+    "bothBatchesVisibleProbeTablesAfterTermination": 0,
+    "ordinaryRetryBlockedP3009": true,
+    "explicitResolveUnchangedSqlRetryPassed": true,
+    "all25ProtectedHashesUnchanged": true,
+    "unit": 273,
+    "uniqueUnitReceipts": 273,
+    "failedSkippedCancelledTodo": 0,
+    "localUnitProof": {
+      "uniquePassedReceipts": 273,
+      "failedReceipts": 0,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 273,
+          "failed": 0,
+          "passed": 273,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 273,
+          "suites": 0
+        },
+        "duration_ms": 477354.040058
+      },
+      "receiptSha256": "602ef1e45ffeac34ee454c6a57a4bec8f20d936fc351f9f88d0cf913625cdf8a"
+    },
+    "realEnvironmentUnchanged": true,
+    "fixtureCleanup": true,
+    "localFullComposePassed": false,
+    "localFullComposeBlock": "Enforced managed network disallows storage.googleapis.com Go dependency redirects. Ordinary independent GitHub CI executes the complete MinIO/Compose fixture; no bypass or dependency relay is used."
+  },
+  "pipeline": {
+    "requiredJobs": [
+      "Native application verification",
+      "Disposable Compose and native restore",
+      "Native populated upgrade and migration recovery"
+    ],
+    "allPriorAssertionsRetained": true,
+    "deployed": false,
+    "ownExactSourceVerified": false
+  },
+  "noApplicationMigrationOrDependencyChanges": true,
+  "limits": [
+    "Representative synthetic predecessor rows, not every historical version/dataset.",
+    "Zero partial DDL in these two single SQL batches does not certify arbitrary migrations atomic.",
+    "No automatic production repair, PITR/WAL replay, in-flight queue/cross-store consistency, production capacity, live providers or full master acceptance.",
+    "Independent CI artifact byte access is checked separately from logs and upload digests."
+  ],
+  "nextTask": "RECOVERY-01C backup failure/quiescence and in-flight queue/cross-store consistency audit"
+}

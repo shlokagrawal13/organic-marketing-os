@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.13-RECOVERY-01A-native-interruption-local-verified",
-  "createdAtUtc": "2026-10-19T00:08:55.751382+00:00",
+  "checkpointRevision": "2026-10-19.14-RECOVERY-01B-native-Prisma-upgrade-local-verified",
+  "createdAtUtc": "2026-10-19T09:32:33.618716+00:00",
   "scope": "Portable source and saved project context; not runtime/database/media backup.",
   "hashAlgorithm": "sha256",
   "manifestIsSelfExcluded": true,
@@ -16,8 +16,8 @@
       "sha256": "185e012307bd42a66946eca8499cb78f77a29d9a2a97bcf1d789a01946aa5a62"
     },
     ".github/workflows/ci.yml": {
-      "bytes": 5374,
-      "sha256": "275598e7fa56f511484fd556b625052f95650e8c0e0d52aa29bc6b5d976cbb7d"
+      "bytes": 6214,
+      "sha256": "79a279dfdfdcbef937e74978c9ea3cbe3d7a2b3e97e82c23a6f21226b3b33a78"
     },
     ".github/workflows/diagnostic.yml": {
       "bytes": 411,
@@ -44,28 +44,28 @@
       "sha256": "2c221af10b982fce1292eaa2896a4650635b5c70720da428f69ad043e32e8183"
     },
     "PROJECT_CHECKPOINT.json": {
-      "bytes": 576116,
-      "sha256": "e13b6b18d5beaf5076eb3e97278d7d2da25672584d2fd5db615bc563806d8714"
+      "bytes": 572865,
+      "sha256": "b666ec375215d6d173379f8e92de9eadc3971c1e3d7a45f05d8633e0793e5382"
     },
     "PROJECT_STATUS.md": {
-      "bytes": 194682,
-      "sha256": "262fc34efba0e19ab6df9759c5b6314e1f292987ea4358c6c6ec494dcb08cae4"
+      "bytes": 197142,
+      "sha256": "072a653b97c5468603d741d802c594b5dc8ff34f198a5ee7e55fd700a2ac2d9b"
     },
     "README.md": {
-      "bytes": 81441,
-      "sha256": "8fb05be502202bc19e038db09306887f0be11118043566371a3263d72724b132"
+      "bytes": 81936,
+      "sha256": "aaf298cb7c91fdee06d17035a8727b979947740d1bed79542f121a3484cbe166"
     },
     "REQUIREMENTS_MATRIX.md": {
       "bytes": 106,
       "sha256": "c979855c645c4e74b40f9f9a192abc450d94758edc5616baa5a4ba5ee7d139a5"
     },
     "RESUME_PROMPT.txt": {
-      "bytes": 16160,
-      "sha256": "58d8b8d01c64f27f19e0a3ae4c0ab6e7038a8282c8b554893da5babc5db5a198"
+      "bytes": 1407,
+      "sha256": "42694cc34a5d15d4f89161a1ff48949c49a96d611c53919285cf28d33a018088"
     },
     "START_HERE.md": {
-      "bytes": 173404,
-      "sha256": "f8ec53dd0843a3e6295102e0c0665059b06f99d00e4309b9152a6c59a08e9422"
+      "bytes": 175864,
+      "sha256": "852a233f9414fac54ed9b44c26e1130f4b927818881a69cc74845fd59481bac8"
     },
     "apps/api/src/ai.ts": {
       "bytes": 15032,
@@ -328,20 +328,20 @@
       "sha256": "56d99699cb53ef8e428d57093ec77eb897a16c0f3767a94cad6cb2eafb0b938a"
     },
     "docs/CHANGELOG.md": {
-      "bytes": 183784,
-      "sha256": "37fb12930f2fdb0f203200e39b88f048176d4b9398a1573c4a426f685568ad88"
+      "bytes": 184533,
+      "sha256": "29a3bd56aa1bb4b75bff0e34c8739e5cb82d12772ebebe8ab1197b85f8624332"
     },
     "docs/CJK_RENDERING.md": {
       "bytes": 5367,
       "sha256": "b82f083b6795001fbcf140a55955027b3fd133e6425e6809464fbca6583ac593"
     },
     "docs/COMPOSE_NATIVE_VERIFICATION.md": {
-      "bytes": 4965,
-      "sha256": "25be2974bef0c9dfc035e7b0a4376fd8e81c4d3f13db1b752dcae7b38e0943fe"
+      "bytes": 5498,
+      "sha256": "81355ddb5223609037be39113da388347c7158f91dc1ec7e07648cd860406c93"
     },
     "docs/DATA_GOVERNANCE.md": {
-      "bytes": 5789,
-      "sha256": "a8aedddc79c2259b0d4fc76feeb7b054a789d51001f006c85fcecbb7a70ca0ac"
+      "bytes": 6343,
+      "sha256": "c8908848b09ae52935fff4aacdfd625250fdd5d36b869e00faff24d03c5531d0"
     },
     "docs/DECISION_LOG.md": {
       "bytes": 5612,
@@ -352,8 +352,8 @@
       "sha256": "874456cce4171ff44920ddcd13547992a3ddf1f4eb05866e4dac9a5080a899fe"
     },
     "docs/DEPLOYMENT.md": {
-      "bytes": 6823,
-      "sha256": "59facafd482663a63cb16971a8b319fe4b9c1699bb2e9555ce3459d847d0e3f1"
+      "bytes": 7391,
+      "sha256": "b22d8db88b50e2c096817b697b3d1459de480e51b5a35ab476825b2f56c250e0"
     },
     "docs/DESIGN_SYSTEM.md": {
       "bytes": 1454,
@@ -380,8 +380,8 @@
       "sha256": "b8c752cddf374e4fcefa95febb15923d76dba5d0f69ddfa8cd9bbf461c17feee"
     },
     "docs/HANDOFF.md": {
-      "bytes": 190949,
-      "sha256": "1b3cc89ec4584ff4e40eb43a81024bb1ec74fa5cb2d358d150a65b4b1fd62128"
+      "bytes": 193409,
+      "sha256": "fefb6802b8a09d32f15eb1663b16f57994128608014b8ac2d779e894b4d4e04c"
     },
     "docs/IMPLEMENTATION_PLAN.md": {
       "bytes": 4581,
@@ -398,6 +398,10 @@
     "docs/MODEL_ROUTER.md": {
       "bytes": 3168,
       "sha256": "9b800b4f1ebcc1937e6a804b97656c133b814d3f5e3d2c3cc29a05fe4a63d1a7"
+    },
+    "docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md": {
+      "bytes": 5787,
+      "sha256": "09056d987f9ac3edcb6a7b4fad6ee56467774455ceb055314a824353462264ae"
     },
     "docs/OBSERVABILITY.md": {
       "bytes": 1733,
@@ -420,16 +424,16 @@
       "sha256": "5c12926762bd918b945b5882544e4117bd6c501381222dffa1037c2b2857498a"
     },
     "docs/POSTGRES_RESTORE_INTERRUPTION.md": {
-      "bytes": 4509,
-      "sha256": "c803e520c5fbafd8b13aa7487c22427aaac9de19050663a8b6e594d153cbc067"
+      "bytes": 5042,
+      "sha256": "8b3021a1210d63ebf912e1c6fa50cbd0393a713387b5e0f4e0e8f4ce073f0ab2"
     },
     "docs/PRODUCT_OPERATIONS_GUIDE.md": {
       "bytes": 2896,
       "sha256": "a23631f1f0891df57e4d594a845ac7d60d6ab7f0e98955c6d3fd251612f91c4d"
     },
     "docs/PROJECT_STATUS.md": {
-      "bytes": 194682,
-      "sha256": "262fc34efba0e19ab6df9759c5b6314e1f292987ea4358c6c6ec494dcb08cae4"
+      "bytes": 197142,
+      "sha256": "072a653b97c5468603d741d802c594b5dc8ff34f198a5ee7e55fd700a2ac2d9b"
     },
     "docs/PROVIDER_CATALOG.md": {
       "bytes": 2320,
@@ -440,8 +444,8 @@
       "sha256": "6a168f1a08ef260c618d968b94f4a042c42ed65f8945cfb09dbd28a5558f1424"
     },
     "docs/REQUIREMENTS_MATRIX.md": {
-      "bytes": 208281,
-      "sha256": "5bc13e7e13f79264e4408e3f45a411c107df6b2139d78437268e4db73a35e923"
+      "bytes": 209030,
+      "sha256": "34b4a51540d5c243d4452543c2c71fb9e6e9055c1066da309f7d75289425d918"
     },
     "docs/RESEARCH_COVERAGE.md": {
       "bytes": 16719,
@@ -456,8 +460,8 @@
       "sha256": "5d84fa5b357f8642b5e7e93f14b7370ba04f5ef5328901456229ec7085fe160c"
     },
     "docs/RESUME_CONTEXT.md": {
-      "bytes": 52031,
-      "sha256": "a6d57d1bd3eb0fa3923e5c2d08d80f78efa7db05a696b3e3a908dab2da8deb1a"
+      "bytes": 54491,
+      "sha256": "f55a2babd2ab4ebd699db1fc5e781282ee3cec1f0dda9a4ff66be8134217e26d"
     },
     "docs/SEASONAL_CALENDAR_INSIGHTS.md": {
       "bytes": 5591,
@@ -468,8 +472,8 @@
       "sha256": "f955408f7522bc86cdce6ff85873b636cb73f3ce7dc1e469fc41b9994d74a015"
     },
     "docs/SESSION_LOG.md": {
-      "bytes": 240365,
-      "sha256": "21a8839d24e90158a5c28bc0d2b2d7c6a18b33dba06c4387c42df042e68e8a49"
+      "bytes": 241114,
+      "sha256": "541d4d63338a05c51c1ec2af0aab25161c7f8d1637d2586a34adef020ea31876"
     },
     "docs/SETUP.md": {
       "bytes": 3847,
@@ -488,12 +492,12 @@
       "sha256": "dab843d62f64acefb82b817395d2d78b66d07854a35d46fa808e3d38cb5f8771"
     },
     "docs/TASK_BOARD.md": {
-      "bytes": 179595,
-      "sha256": "671b93d6bd5db09c709845bd2d4da5c83c2f87a488ede29f8ed15d10a7436996"
+      "bytes": 180344,
+      "sha256": "4af4444f4ca62bbba901ed17d060f6ca635219e7e59a00090b7606033e86d529"
     },
     "docs/TEST_STRATEGY.md": {
-      "bytes": 61181,
-      "sha256": "861c0c64e6732f0ae3d9929bc7c26c08aa70e44c01a5efa8509b91826ef545ef"
+      "bytes": 62001,
+      "sha256": "ef810c1ad305c2eeb9bec8af9a1854d4802d5140e942f21dad27d8824385dbaf"
     },
     "docs/TROUBLESHOOTING.md": {
       "bytes": 4797,
@@ -532,8 +536,8 @@
       "sha256": "4049fa10acac00b0353b9d3cc58a04729d7ef1fc66cde1c4859d1306a369f4d9"
     },
     "docs/VERIFICATION_REPORT.md": {
-      "bytes": 217683,
-      "sha256": "3ef38453ad0d7b045f6c3a191f6551438aabddaa282f84414f2958e7485b7bee"
+      "bytes": 218432,
+      "sha256": "64241dc59760880e5bdee58b1ed66fdf8f24be4206cee42e95d616dbd7c64464"
     },
     "docs/VIDEO_PIPELINE.md": {
       "bytes": 79356,
@@ -915,9 +919,25 @@
       "bytes": 2773,
       "sha256": "5235447b6a114b1b01f0f90a7a4edcaeb8e8cf87bcf7498a8341dd5d2f077bc5"
     },
+    "docs/qa/recovery01a-native-ci-evidence.json": {
+      "bytes": 11426,
+      "sha256": "69d61c788b44e5ba8449aeb085089d1c7dc7f94a037f869967a2aaf50ea15d4f"
+    },
     "docs/qa/recovery01a-postgres-interruption-evidence.json": {
       "bytes": 1638,
       "sha256": "373e6b2da1e7cee57ba8314099b67799748b4b8388ee04e715f5c94716f1751a"
+    },
+    "docs/qa/recovery01b-evidence.json": {
+      "bytes": 2897,
+      "sha256": "07a87e7fa1923acbf7e9679b41d987b504be900f413849818477986ca0493179"
+    },
+    "docs/qa/recovery01b-native-upgrade-evidence.json": {
+      "bytes": 2370,
+      "sha256": "815999635409596a8fb7b62d9f104dd94b9420095b909c40bf415405a28d7277"
+    },
+    "docs/qa/recovery01b-unit-receipts.json": {
+      "bytes": 76995,
+      "sha256": "602ef1e45ffeac34ee454c6a57a4bec8f20d936fc351f9f88d0cf913625cdf8a"
     },
     "docs/qa/render-1920x1080.jpg": {
       "bytes": 24565,
@@ -1396,8 +1416,8 @@
       "sha256": "362d2704d40c49d7a1c3d83f7c22ce34e4a4e64d63d3b3ec41cfff7820cdcc8b"
     },
     "docs/qa/verification-summary.json": {
-      "bytes": 530370,
-      "sha256": "bd6508e208f44dcc5a94b84847ca9933cf10362e3e5a6f9fa8144ae66866b671"
+      "bytes": 532327,
+      "sha256": "71e0cc354c8d09bbb4956bca3a64d9c6ba8a57d8fdca5b122a1c5046a1e1c623"
     },
     "docs/qa/video-studio-dark.png": {
       "bytes": 199675,
@@ -1436,8 +1456,8 @@
       "sha256": "8b8cd4964e23d388463f202841da3e0687c5441f2435d87023b6a716670eeff1"
     },
     "package.json": {
-      "bytes": 3091,
-      "sha256": "a26052f358305760c170affde1445c6090802ae0b319fcdd656acd38903eef79"
+      "bytes": 3162,
+      "sha256": "1fbef96c7fffdb7147bfe82b7cb6ccd303a2c52fed2831083376e644488dd197"
     },
     "packages/core/agents.ts": {
       "bytes": 11065,
@@ -1767,6 +1787,10 @@
       "bytes": 5895,
       "sha256": "a8c629b529777c192ec46449981b0de417dd875bb5cdf636f4b01d36b74e2889"
     },
+    "scripts/prisma-upgrade-verification.mjs": {
+      "bytes": 1951,
+      "sha256": "6aaa98dafb3ead6270696f9fb07ce2d908054086cb1b08253137622b7a5ee849"
+    },
     "scripts/setup.mjs": {
       "bytes": 1551,
       "sha256": "7d57bdd8a6f807965ab535c3f46cf8c38521cc4ff21a4bb552a78ee1889d8bed"
@@ -1794,6 +1818,10 @@
     "scripts/verify-local.mjs": {
       "bytes": 20919,
       "sha256": "748d45cc42b27c62fca1183dc6a5b4525efb497deaba036c1ef1732289b9a4bc"
+    },
+    "scripts/verify-native-upgrade.mjs": {
+      "bytes": 20756,
+      "sha256": "ac2700b96c27474c59c596b10eadab33d685bb22bc4efd30568df4f451620a63"
     },
     "scripts/verify-postgres-recovery.mjs": {
       "bytes": 7714,
@@ -1938,6 +1966,10 @@
     "tests/media.test.ts": {
       "bytes": 10823,
       "sha256": "44fb76ae7bab5e7b9367a6a9923c96518f53d605a0cf0174b387364277c400e8"
+    },
+    "tests/native-upgrade-verification.test.ts": {
+      "bytes": 1937,
+      "sha256": "77140546d7f922ba69d738caf19b5cd5daca0493995095a167ab70dc4046989d"
     },
     "tests/openai-media.test.ts": {
       "bytes": 11517,

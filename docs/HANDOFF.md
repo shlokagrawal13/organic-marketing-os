@@ -1,3 +1,15 @@
+## Current continuation — RECOVERY-01B, 2026-10-19 IST
+
+Actual Prisma6.19.3/native PostgreSQL17.11 predecessor deployments at 4→7→23→24 migrations preserved representative user/workspace/membership/draft/queued-job, pre-upgrade credit ledger and legacy research rows. Successful Prisma history/checksums, null defaults and immutable-credit UPDATE/DELETE rejection passed. Two fixture-only migrations were interrupted at an actual PostgreSQL barrier; each retained a failed Prisma ledger attempt and rejected an ordinary retry with P3009. Fixture-scoped repair, actual resolve --rolled-back and unchanged-SQL retry succeeded while old data/history and the source database remained unchanged.
+
+Both interrupted single SQL batches exposed zero probe tables; this is not a claim that arbitrary Prisma migrations are atomic. Fresh local full unit suite:273/273, zero failed/skipped/cancelled/todo. Native fixture cleanup, real .env and all25 protected master/migration hashes passed. No application/dependency/migration changes. A third CI job now verifies native populated upgrades alongside every existing core and Compose/atomic PostgreSQL/private-media check.
+
+Predecessor main ba2d4f1 passed both old jobs in run39179489223 (271unit/38HTTP/28browser/5recovery,24migrations,44readability,zero audits; complete Compose and five private objects with actual interrupted atomic restore). Its final receipt is retained in docs/qa/recovery01a-native-ci-evidence.json. This source capsule records local verification; its own ALL THREE CI jobs are pending until the exact published run is read. Local full MinIO remains network-blocked; ordinary independent GitHub CI supplies that acceptance. CI verifies and does not deploy.
+
+Next: Publish this source and verify/fix ALL THREE exact-commit core, Compose/native restore and native populated Prisma upgrade CI jobs; retain final receipt outside the source capsule. Then RECOVERY-01C: audit backup failure/quiescence and in-flight queue/cross-store consistency in bounded disposable fixtures; do not claim PITR/live/full-master acceptance.
+
+Representative predecessor fixtures do not certify all historical datasets, arbitrary migration failures, production capacity, server/network crashes, PITR/WAL replay, in-flight queues, live providers or full master acceptance. Evidence: docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md and docs/qa/recovery01b-evidence.json. Earlier entries below retain their historical scopes.
+
 ## Current continuation — RECOVERY-01A, 2026-10-19 IST
 
 Native PostgreSQL17.11 interruption tests reproduced partial restore under `--exit-on-error` alone (two visible fixture tables after backend termination). `--single-transaction` rolled restored relations back to zero; clean retry restored all synthetic rows, preserved source rows and cleaned up the isolated tmpfs/no-network container. Five focused fixture guards and actual Compose configuration passed; all 25 protected master/migration hashes are unchanged.

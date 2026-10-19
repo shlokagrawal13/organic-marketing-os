@@ -1,3 +1,7 @@
+## Current verification pipeline — RECOVERY-01B
+
+GitHub Actions now runs three verification jobs: core application checks; complete disposable Compose/atomic native DB/private-media restore; and native populated Prisma predecessor/interrupted migration recovery. Require all three on the exact published source. The migration fault SQL exists only in ignored private fixture packages and never enters application migration deployment. No production repair automation/deployment was added. See [NATIVE_PRISMA_UPGRADE_RECOVERY.md](NATIVE_PRISMA_UPGRADE_RECOVERY.md).
+
 # Deployment
 
 **Production deployment is pending.** The provided Compose stack is for local development. Application Docker stages and isolated configuration are locally verified. Full Compose/MinIO and quiesced native cross-store acceptance require the exact-source dedicated CI report; see COMPOSE_NATIVE_VERIFICATION.md for the local network block and acceptance conditions.

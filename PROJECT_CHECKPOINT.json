@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "2026-10-19.13-RECOVERY-01A-native-interruption-local-verified",
-  "savedAtUtc": "2026-10-19T00:08:17.715392+00:00",
-  "currentMilestone": "RECOVERY-01A native interrupted restore/atomic rollback/clean retry locally verified; require both own exact-source CI jobs for populated full Compose acceptance.",
-  "activeTaskId": null,
+  "checkpointRevision": "2026-10-19.14-RECOVERY-01B-native-Prisma-upgrade-local-verified",
+  "savedAtUtc": "2026-10-19T09:31:20.661430+00:00",
+  "currentMilestone": "Representative native Prisma predecessor upgrades/interrupted migration recovery locally verified; publish and verify all three exact-source CI jobs.",
+  "activeTaskId": "RECOVERY-01",
   "workInProgress": false,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish current RECOVERY-01A and inspect BOTH exact-source core and Compose/native-interruption/private-media restore CI jobs; fix failures. Then RECOVERY-01B populated native predecessor upgrade and interrupted migration/retry audit; preserve populated services and real .env.",
+  "nextAction": "Publish this source and verify/fix ALL THREE exact-commit core, Compose/native restore and native populated Prisma upgrade CI jobs; retain final receipt outside the source capsule. Then RECOVERY-01C: audit backup failure/quiescence and in-flight queue/cross-store consistency in bounded disposable fixtures; do not claim PITR/live/full-master acceptance.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,6 +84,7 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".github/workflows/ci.yml",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
@@ -95,6 +96,7 @@
     "docs/DATA_GOVERNANCE.md",
     "docs/DEPLOYMENT.md",
     "docs/HANDOFF.md",
+    "docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md",
     "docs/POSTGRES_RESTORE_INTERRUPTION.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
@@ -103,16 +105,15 @@
     "docs/TASK_BOARD.md",
     "docs/TEST_STRATEGY.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/qa/native01a-native-ci-evidence.json",
-    "docs/qa/recovery01a-evidence.json",
-    "docs/qa/recovery01a-postgres-interruption-evidence.json",
+    "docs/qa/recovery01a-native-ci-evidence.json",
+    "docs/qa/recovery01b-evidence.json",
+    "docs/qa/recovery01b-native-upgrade-evidence.json",
+    "docs/qa/recovery01b-unit-receipts.json",
     "docs/qa/verification-summary.json",
     "package.json",
-    "scripts/compose-verification.mjs",
-    "scripts/postgres-restore-verification.mjs",
-    "scripts/verify-compose.mjs",
-    "scripts/verify-postgres-recovery.mjs",
-    "tests/compose-verification.test.ts"
+    "scripts/prisma-upgrade-verification.mjs",
+    "scripts/verify-native-upgrade.mjs",
+    "tests/native-upgrade-verification.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6707,8 +6708,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
-    "status": "RECOVERY-01A_local_native_interruption_verified_own_publication_and_BOTH_CI_required",
+    "commit": "ba2d4f1f02937d51fae5c1a361e37bb4d2674c0c",
+    "status": "RECOVERY-01B_local_native_upgrade_verified_own_publication_and_THREE_CI_required",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6721,9 +6722,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "8174d0d69471807f7ff24b6edd2e850404b2d50d",
+    "sourceTree": "fbcc55470ecb21e13cc3b447bb227f2102eb5fc9",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last fully verified predecessor. Read current exact HEAD and BOTH own jobs for this newer increment.",
+    "commitMeaning": "Last verified public base; this RECOVERY-01B source capsule requires its own publication/three-job CI and external final receipt.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "e1cbab4c73e5a51227195588edc666f22006bc57",
     "uploadGate": {
@@ -8058,9 +8059,10 @@
     }
   ],
   "lastChanges": [
-    "RESEARCH-01E adds bounded research coverage and missing-data explanations. The latest-100 matching window records eligibility/rejection and source/byte omission counts, with one lookahead flag. Immutable capture counts and current category gaps reach the actual provider and trace. The viewer explains bounded scope and exclusions without exposing omitted source bodies; older jobs retain unknown coverage. Export and populated restore preserve the metadata without changing migrations.",
-    "Isolated shared browser auth/API budgets with a guarded helper and actual 429/200 bootstrap regression; no production code/limits or timeouts changed.",
-    "Generalized guarded fixture rate-budget reset for the independent media HTTP case; verified normal auth/API throttles and bootstrap recovery without altering production limits/timeouts."
+    "Added native populated predecessor Prisma deploy/history/checksum verification at4,7,23,24 migrations.",
+    "Added actual fixture-only migration interruption, failed ledger/P3009 gate, resolve and unchanged-SQL retry on cloned databases; source rows/history remain unchanged.",
+    "Added two focused target/data-preservation regressions and an independent third CI job; retained all previous core/Compose checks.",
+    "Retained final predecessor exact-source native receipt and updated continuity/QA/source handoff."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8098,8 +8100,12 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
   },
   "checkpointVerificationEvidence": "docs/qa/policy01b-evidence-source-evidence.json",
-  "latestStatus": "RESEARCH-01E source is public on main at `0378110432b954c93631f0851f9ee182413589a1` (tree `837efee7163de4c2a6eedf041420852c87a9b2ca`); all 35 published paths and the full tree matched local verification. Exact-source native Actions run `39134469984` passed: 242 unit/export, 33 HTTP, 19 production browser and 5 recovery cases. Builds, readability, migrations, restore and both audits passed. Later continuity CI found a browser bootstrap/navigation timeout. Shared fixture auth/API isolation plus a real limiter/restore regression passed 33 native HTTP, 20 browser and 5 recovery cases. Read the newer HEAD and its full CI from Git/Actions. The first fixture follow-up CI hit an explicit inherited API 429 in the existing media case. Shared HTTP/browser fixture isolation and real auth/API throttle/restore assertions passed complete 33 HTTP, 20 browser and 5 recovery locally; read newer HEAD CI.",
-  "activeTask": null,
+  "latestStatus": "RECOVERY-01B local native PostgreSQL17.11/Prisma6.19.3:4\u21927\u219223\u219224 migrations,8 legacy tables,2 actual interruptions/P3009/resolve/unchanged-SQL retries;273 unit passes. Own three-job CI pending. Wider recovery/live/full master partial.",
+  "activeTask": {
+    "id": "RECOVERY-01B",
+    "title": "Native populated Prisma predecessor upgrade and interrupted migration/resolve/retry",
+    "status": "local_verified_publication_and_own_three_job_CI_pending"
+  },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
     "basePublicCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -8111,9 +8117,10 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RECOVERY-01A",
-    "description": "Standing-authorized push; exact-source core and populated Compose/atomic interruption/private-media restore CI required.",
+    "taskId": "RECOVERY-01B",
+    "description": "Standing-authorized push followed by every exact-source core, Compose/native restore and native populated upgrade CI job; no advance own-CI success claim.",
     "paths": [
+      ".github/workflows/ci.yml",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
@@ -8125,6 +8132,7 @@
       "docs/DATA_GOVERNANCE.md",
       "docs/DEPLOYMENT.md",
       "docs/HANDOFF.md",
+      "docs/NATIVE_PRISMA_UPGRADE_RECOVERY.md",
       "docs/POSTGRES_RESTORE_INTERRUPTION.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
@@ -8133,16 +8141,15 @@
       "docs/TASK_BOARD.md",
       "docs/TEST_STRATEGY.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/qa/native01a-native-ci-evidence.json",
-      "docs/qa/recovery01a-evidence.json",
-      "docs/qa/recovery01a-postgres-interruption-evidence.json",
+      "docs/qa/recovery01a-native-ci-evidence.json",
+      "docs/qa/recovery01b-evidence.json",
+      "docs/qa/recovery01b-native-upgrade-evidence.json",
+      "docs/qa/recovery01b-unit-receipts.json",
       "docs/qa/verification-summary.json",
       "package.json",
-      "scripts/compose-verification.mjs",
-      "scripts/postgres-restore-verification.mjs",
-      "scripts/verify-compose.mjs",
-      "scripts/verify-postgres-recovery.mjs",
-      "tests/compose-verification.test.ts"
+      "scripts/prisma-upgrade-verification.mjs",
+      "scripts/verify-native-upgrade.mjs",
+      "tests/native-upgrade-verification.test.ts"
     ]
   },
   "priorPendingPublication": {
@@ -8615,250 +8622,12 @@
     ]
   },
   "publishedIncrement": {
-    "schemaVersion": 1,
-    "taskId": "RESEARCH-01E",
-    "status": "source_public_native_ci_verified",
-    "publicCommit": "0378110432b954c93631f0851f9ee182413589a1",
-    "parentCommit": "53edf40321894aae1bee124a1b5e49418338cffe",
-    "treeSha": "837efee7163de4c2a6eedf041420852c87a9b2ca",
-    "publishedSourcePathCount": 35,
-    "fullPublicTreeMatchesLocal": true,
-    "run": {
-      "id": 39134469984,
-      "number": 93,
-      "workflow": "Core and recovery verification",
-      "event": "push",
-      "status": "completed",
-      "conclusion": "success",
-      "attempt": 1,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39134469984",
-      "headSha": "0378110432b954c93631f0851f9ee182413589a1",
-      "startedAtUtc": "2026-10-18T14:06:04Z",
-      "updatedAtUtc": "2026-10-18T14:22:17Z"
-    },
-    "job": {
-      "id": 117696061133,
-      "name": "Native application verification",
-      "status": "completed",
-      "conclusion": "success",
-      "run_id": 39134469984,
-      "logs_url": null,
-      "steps": [
-        {
-          "name": "Set up job",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 1
-        },
-        {
-          "name": "Initialize containers",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 2
-        },
-        {
-          "name": "Check out source",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 3
-        },
-        {
-          "name": "Set up Node.js",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 4
-        },
-        {
-          "name": "Install dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 5
-        },
-        {
-          "name": "Set up Java",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 6
-        },
-        {
-          "name": "Install test object storage",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 7
-        },
-        {
-          "name": "Install media dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 8
-        },
-        {
-          "name": "Install pinned test CJK fonts",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 9
-        },
-        {
-          "name": "Build",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 10
-        },
-        {
-          "name": "Run unit tests",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 11
-        },
-        {
-          "name": "Verify bounded small-screen English readability",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 12
-        },
-        {
-          "name": "Audit production dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 13
-        },
-        {
-          "name": "Audit all dependencies",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 14
-        },
-        {
-          "name": "Verify populated upgrade",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 15
-        },
-        {
-          "name": "Verify native application flows",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 16
-        },
-        {
-          "name": "Upload browser evidence",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 17
-        },
-        {
-          "name": "Post Set up Java",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 31
-        },
-        {
-          "name": "Post Set up Node.js",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 32
-        },
-        {
-          "name": "Post Check out source",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 33
-        },
-        {
-          "name": "Stop containers",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 34
-        },
-        {
-          "name": "Complete job",
-          "status": "completed",
-          "conclusion": "success",
-          "number": 35
-        }
-      ]
-    },
-    "verification": {
-      "unit": {
-        "tests": 242,
-        "passed": 242,
-        "failed": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0,
-        "completeFinalCumulativeSummary": true,
-        "artifactReceiptsIndependentlyInspected": false
-      },
-      "http": {
-        "tests": 33,
-        "passed": 33,
-        "failed": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0
-      },
-      "browser": {
-        "tests": 19,
-        "passed": 19,
-        "duration": "1.2m"
-      },
-      "recovery": {
-        "tests": 5,
-        "passed": 5,
-        "failed": 0,
-        "cancelled": 0,
-        "skipped": 0,
-        "todo": 0,
-        "observedRemainingLockMs": 119862
-      },
-      "apiBuild": true,
-      "webProductionBuild": true,
-      "boundedEnglishReadability": {
-        "passed": true,
-        "passedSampleLogLines": 44,
-        "artifactSampleBytesIndependentlyInspected": false
-      },
-      "freshNativePostgresMigrations": 23,
-      "nativeRedis": true,
-      "populatedUpgradeRestore": true,
-      "researchCitationProvenanceAndReviewRestored": true,
-      "queuedStrategyResearchSnapshotRestored": true,
-      "strategyRecommendationsAndCitationReviewRestored": true,
-      "strategyResearchSelectionRestored": true,
-      "strategyResearchCoverageRestored": true,
-      "nativePostgresRestoreVerified": false,
-      "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0
-    },
-    "artifact": {
-      "id": 12138774441,
-      "name": "browser-evidence",
-      "sizeBytes": 8994203,
-      "digest": "sha256:4b4d211d3617dc4a6003416d94c1c66c8bb772fa8c79eab00f21083cdfbc9aa2",
-      "expiresAtUtc": "2027-01-16T14:06:04Z",
-      "digestMatchesUploadLog": true,
-      "bytesDownloadedToWorkspace": false,
-      "downloadedDigestMatches": null,
-      "zipCrcPassed": null,
-      "limitation": {
-        "artifactId": 12138774441,
-        "attempted": true,
-        "host": "sdmntprcentralindia.oaiusercontent.com",
-        "bytesDownloadedToWorkspace": false,
-        "errorType": "URLError",
-        "reason": "Tunnel connection failed: 403 Forbidden",
-        "independentArtifactByteInspection": false
-      }
-    },
-    "decodedJobLogSha256": "e609962a3b5e1f9a0862594df4e7a07925948840b3b5e163df10f2ce46042b3f",
-    "localUnitReceipts": "docs/qa/research01e-unit-receipts.json",
-    "limits": [
-      "Manual citations and observation dates are operator-declared; no automatic source retrieval or factual/rights verification.",
-      "Bounded reference identity/revision/quote checks do not establish factual truth, relevance, semantic entailment or live model quality.",
-      "No live-source/provider or deployed production acceptance occurred.",
-      "Native PostgreSQL plus private-media cross-store restore and full master acceptance remain open.",
-      "Independent CI artifact byte/receipt/image inspection is not claimed; job logs, steps and metadata were inspected."
-    ]
+    "taskId": "RECOVERY-01A",
+    "publicCommit": "ba2d4f1f02937d51fae5c1a361e37bb4d2674c0c",
+    "runId": 39179489223,
+    "conclusion": "success",
+    "allPriorTwoJobsPassed": true,
+    "receipt": "docs/qa/recovery01a-native-ci-evidence.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8954,18 +8723,47 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "nativePostgres": "17.11",
-    "nativeInterruptionCases": 2,
-    "cleanAtomicRetryPassed": true,
-    "sourceSyntheticRecordsUnchanged": true,
-    "fixtureCleanup": true,
+    "nativeReceipt": "docs/qa/recovery01b-native-upgrade-evidence.json",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "prismaVersion": "6.19.3",
+    "predecessorBoundaries": [
+      4,
+      7,
+      23,
+      24
+    ],
+    "legacyTables": 8,
+    "actualInterruptedMigrationCases": 2,
+    "bothBatchesVisibleProbeTablesAfterTermination": 0,
+    "ordinaryRetryBlockedP3009": true,
+    "explicitResolveUnchangedSqlRetryPassed": true,
+    "all25ProtectedHashesUnchanged": true,
+    "unit": 273,
+    "uniqueUnitReceipts": 273,
+    "failedSkippedCancelledTodo": 0,
+    "localUnitProof": {
+      "uniquePassedReceipts": 273,
+      "failedReceipts": 0,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 273,
+          "failed": 0,
+          "passed": 273,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 273,
+          "suites": 0
+        },
+        "duration_ms": 477354.040058
+      },
+      "receiptSha256": "602ef1e45ffeac34ee454c6a57a4bec8f20d936fc351f9f88d0cf913625cdf8a"
+    },
     "realEnvironmentUnchanged": true,
-    "focusedFixtureSafetyUnitTestsPassed": 5,
-    "actualComposeConfigurationPassed": true,
+    "fixtureCleanup": true,
     "localFullComposePassed": false,
-    "localFullComposeBlock": "Current normal proxy probe of storage.googleapis.com returns CONNECT 403; MinIO Go dependencies use this redirect host. Full current-source Compose acceptance is required in ordinary independent GitHub Actions.",
-    "protectedMasterAndMigrationHashesUnchanged": 25,
-    "nativeReceipt": "docs/qa/recovery01a-postgres-interruption-evidence.json"
+    "localFullComposeBlock": "Enforced managed network disallows storage.googleapis.com Go dependency redirects. Ordinary independent GitHub CI executes the complete MinIO/Compose fixture; no bypass or dependency relay is used."
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -9471,18 +9269,47 @@
     "requiresUserApprovalText": "I explicitly approve publishing POLICY-01A claim-evidence native-CI closure’s 15 verified docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "verification": {
-    "nativePostgres": "17.11",
-    "nativeInterruptionCases": 2,
-    "cleanAtomicRetryPassed": true,
-    "sourceSyntheticRecordsUnchanged": true,
-    "fixtureCleanup": true,
+    "nativeReceipt": "docs/qa/recovery01b-native-upgrade-evidence.json",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "prismaVersion": "6.19.3",
+    "predecessorBoundaries": [
+      4,
+      7,
+      23,
+      24
+    ],
+    "legacyTables": 8,
+    "actualInterruptedMigrationCases": 2,
+    "bothBatchesVisibleProbeTablesAfterTermination": 0,
+    "ordinaryRetryBlockedP3009": true,
+    "explicitResolveUnchangedSqlRetryPassed": true,
+    "all25ProtectedHashesUnchanged": true,
+    "unit": 273,
+    "uniqueUnitReceipts": 273,
+    "failedSkippedCancelledTodo": 0,
+    "localUnitProof": {
+      "uniquePassedReceipts": 273,
+      "failedReceipts": 0,
+      "finalSummary": {
+        "success": true,
+        "counts": {
+          "tests": 273,
+          "failed": 0,
+          "passed": 273,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "topLevel": 273,
+          "suites": 0
+        },
+        "duration_ms": 477354.040058
+      },
+      "receiptSha256": "602ef1e45ffeac34ee454c6a57a4bec8f20d936fc351f9f88d0cf913625cdf8a"
+    },
     "realEnvironmentUnchanged": true,
-    "focusedFixtureSafetyUnitTestsPassed": 5,
-    "actualComposeConfigurationPassed": true,
+    "fixtureCleanup": true,
     "localFullComposePassed": false,
-    "localFullComposeBlock": "Current normal proxy probe of storage.googleapis.com returns CONNECT 403; MinIO Go dependencies use this redirect host. Full current-source Compose acceptance is required in ordinary independent GitHub Actions.",
-    "protectedMasterAndMigrationHashesUnchanged": 25,
-    "nativeReceipt": "docs/qa/recovery01a-postgres-interruption-evidence.json"
+    "localFullComposeBlock": "Enforced managed network disallows storage.googleapis.com Go dependency redirects. Ordinary independent GitHub CI executes the complete MinIO/Compose fixture; no bypass or dependency relay is used."
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
     "scope": "POLICY-01B local reconstruction; full app regression plus final hostname-hardening focused rerun; no native CI for this increment",
@@ -13965,5 +13792,76 @@
       "Quiesced native database/private-object restore does not close PITR, interrupted restore/migration, in-flight queue recovery, live providers or full master acceptance.",
       "Independent artifact byte inspection status is recorded separately; logs, all steps, checks, counts and upload digests were verified."
     ]
-  }
+  },
+  "recovery01b": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01B",
+    "recordedAtUtc": "2026-10-19T09:31:20.661430+00:00",
+    "status": "local_native_populated_prisma_upgrade_and_interrupted_migration_recovery_verified_own_three_job_CI_pending",
+    "basePublicCommit": "ba2d4f1f02937d51fae5c1a361e37bb4d2674c0c",
+    "baseVerifiedRunId": 39179489223,
+    "scope": "Actual native Prisma deploy at populated predecessor boundaries and fixture-only interrupted migration/P3009/resolve/unchanged-SQL retry; all previous core/Compose atomic cross-store checks retained.",
+    "localVerification": {
+      "nativeReceipt": "docs/qa/recovery01b-native-upgrade-evidence.json",
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "prismaVersion": "6.19.3",
+      "predecessorBoundaries": [
+        4,
+        7,
+        23,
+        24
+      ],
+      "legacyTables": 8,
+      "actualInterruptedMigrationCases": 2,
+      "bothBatchesVisibleProbeTablesAfterTermination": 0,
+      "ordinaryRetryBlockedP3009": true,
+      "explicitResolveUnchangedSqlRetryPassed": true,
+      "all25ProtectedHashesUnchanged": true,
+      "unit": 273,
+      "uniqueUnitReceipts": 273,
+      "failedSkippedCancelledTodo": 0,
+      "localUnitProof": {
+        "uniquePassedReceipts": 273,
+        "failedReceipts": 0,
+        "finalSummary": {
+          "success": true,
+          "counts": {
+            "tests": 273,
+            "failed": 0,
+            "passed": 273,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "topLevel": 273,
+            "suites": 0
+          },
+          "duration_ms": 477354.040058
+        },
+        "receiptSha256": "602ef1e45ffeac34ee454c6a57a4bec8f20d936fc351f9f88d0cf913625cdf8a"
+      },
+      "realEnvironmentUnchanged": true,
+      "fixtureCleanup": true,
+      "localFullComposePassed": false,
+      "localFullComposeBlock": "Enforced managed network disallows storage.googleapis.com Go dependency redirects. Ordinary independent GitHub CI executes the complete MinIO/Compose fixture; no bypass or dependency relay is used."
+    },
+    "pipeline": {
+      "requiredJobs": [
+        "Native application verification",
+        "Disposable Compose and native restore",
+        "Native populated upgrade and migration recovery"
+      ],
+      "allPriorAssertionsRetained": true,
+      "deployed": false,
+      "ownExactSourceVerified": false
+    },
+    "noApplicationMigrationOrDependencyChanges": true,
+    "limits": [
+      "Representative synthetic predecessor rows, not every historical version/dataset.",
+      "Zero partial DDL in these two single SQL batches does not certify arbitrary migrations atomic.",
+      "No automatic production repair, PITR/WAL replay, in-flight queue/cross-store consistency, production capacity, live providers or full master acceptance.",
+      "Independent CI artifact byte access is checked separately from logs and upload digests."
+    ],
+    "nextTask": "RECOVERY-01C backup failure/quiescence and in-flight queue/cross-store consistency audit"
+  },
+  "nextRecoveryIncrement": "RECOVERY-01C"
 }

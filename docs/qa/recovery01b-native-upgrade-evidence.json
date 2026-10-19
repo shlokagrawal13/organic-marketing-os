@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01B",
+  "verificationMode": "native-populated-prisma-upgrade-and-migration-recovery",
+  "passed": true,
+  "startedAt": "2026-10-19T00:43:04.016Z",
+  "project": "omos-upgrade-verify-5574bf74851d0d51",
+  "boundaries": [
+    {
+      "appliedMigrations": 4,
+      "legacyTables": 5,
+      "rowValuesPreserved": true,
+      "prismaChecksumsVerified": true
+    },
+    {
+      "appliedMigrations": 7,
+      "legacyTables": 7,
+      "rowValuesPreserved": true,
+      "prismaChecksumsVerified": true
+    },
+    {
+      "appliedMigrations": 23,
+      "legacyTables": 8,
+      "rowValuesPreserved": true,
+      "prismaChecksumsVerified": true
+    },
+    {
+      "appliedMigrations": 24,
+      "legacyTables": 8,
+      "rowValuesPreserved": true,
+      "prismaChecksumsVerified": true
+    }
+  ],
+  "cases": [
+    {
+      "transaction": "Prisma-default-batch",
+      "actualBackendTerminated": true,
+      "visibleProbeTablesDuringPause": 0,
+      "visibleProbeTablesAfterTermination": 0,
+      "failedMigrationRecorded": true,
+      "ordinaryRetryBlockedP3009": true,
+      "rolledBackAttemptRetained": true,
+      "unchangedSqlRetrySucceeded": true,
+      "legacyDataAndHistoryPreserved": true,
+      "immutableLedgerEnforced": true
+    },
+    {
+      "transaction": "explicit-BEGIN-COMMIT",
+      "actualBackendTerminated": true,
+      "visibleProbeTablesDuringPause": 0,
+      "visibleProbeTablesAfterTermination": 0,
+      "failedMigrationRecorded": true,
+      "ordinaryRetryBlockedP3009": true,
+      "rolledBackAttemptRetained": true,
+      "unchangedSqlRetrySucceeded": true,
+      "legacyDataAndHistoryPreserved": true,
+      "immutableLedgerEnforced": true
+    }
+  ],
+  "checks": {
+    "populatedNativePrismaUpgrade": true,
+    "legacyQueuedJobAndNullDefaults": true,
+    "immutableLedgerEnforced": true,
+    "actualInterruptedMigration": true,
+    "failedLedgerRetryGate": true,
+    "explicitResolveAndUnchangedSqlRetry": true,
+    "sourceDatabaseUnchanged": true,
+    "noDotenvLoaded": true,
+    "ownedContainerAndNetworkRemoved": true,
+    "realEnvUnchanged": true,
+    "protectedHashesUnchanged": true
+  },
+  "liveProvidersCalled": false,
+  "publicDeployment": false,
+  "prismaVersion": "6.19.3",
+  "postgresVersion": "postgres (PostgreSQL) 17.11",
+  "protectedFileCount": 25,
+  "finishedAt": "2026-10-19T00:43:49.432Z"
+}
