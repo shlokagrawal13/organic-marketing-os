@@ -40,7 +40,11 @@ mkdirSync(dir, { recursive: true, mode: 0o700 });
 const realEnv = resolve(root, ".env"),
   beforeEnv = existsSync(realEnv) ? checksum(readFileSync(realEnv)) : null;
 const dockerEnv = fixtureDockerEnv(process.env);
-const dockerBase = ["--host=unix:///var/run/docker.sock"];
+const dockerBase = [
+  process.platform === "win32"
+    ? "--host=npipe:////./pipe/dockerDesktopLinuxEngine"
+    : "--host=unix:///var/run/docker.sock",
+];
 const secrets = [
   randomBytes(32).toString("hex"),
   randomBytes(32).toString("hex"),
@@ -149,10 +153,20 @@ const objectModule =
   Buffer.from(
     readFileSync(resolve(root, "scripts/private-object-restore.mjs"), "utf8"),
   ).toString("base64");
+const inlineModule = (name) =>
+  "data:text/javascript;base64," +
+  Buffer.from(readFileSync(resolve(root, "scripts", name), "utf8")).toString(
+    "base64",
+  );
+const historyModule = inlineModule("compose-historical-recovery-fixture.mjs");
+const historyObjectsModule = inlineModule("historical-object-verification.mjs");
+const historyEffectsModule = inlineModule(
+  "historical-effect-reconciliation.mjs",
+);
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01D",
-  baselineTaskId: "RECOVERY-01C",
+  taskId: "RECOVERY-01G",
+  baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
   sourceProject: source,
@@ -359,7 +373,7 @@ async function node(project, mode, state = {}, running = true) {
       ];
   return JSON.parse(
     await compose(project, args, {
-      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
+      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
       quiet: true,
     }),
   );
@@ -632,6 +646,56 @@ try {
         report.backupFailureCases = observations;
         report.checks.invalidBackupNeverReachesSourceRemovalOrTargetMutation = true;
         report.checks.sourceRecordsAndPrivateObjectsIntactAfterRejections = true;
+      },
+    );
+    await phase(
+      "historical private-object versions and external-effect reconciliation prerequisites",
+      async () => {
+        const cfg = await config(source);
+        const labels = JSON.parse(
+          await command(
+            [
+              "volume",
+              "inspect",
+              cfg.volumes.media_data.name,
+              "--format",
+              "{{json .Labels}}",
+            ],
+            { quiet: true },
+          ),
+        );
+        assert.equal(labels["com.docker.compose.project"], source);
+        const assertStopped = async () => {
+          const lines = (
+            await compose(source, ["ps", "--all", "--format", "json"], {
+              quiet: true,
+            })
+          ).trim();
+          const rows = lines.split("\n").flatMap((line) => JSON.parse(line));
+          for (const name of fixtureWriters)
+            assert.ok(
+              rows.some(
+                (row) => row.Service === name && row.State === "exited",
+              ),
+            );
+        };
+        await assertStopped();
+        const databasePoint = (
+          await postgresSql(source, "marketing", "SELECT pg_current_wal_lsn();")
+        ).trim();
+        report.historicalRecovery = await node(
+          source,
+          "historical-recovery",
+          { project: source, databasePoint },
+          false,
+        );
+        Object.assign(report.checks, report.historicalRecovery.checks);
+        await assertStopped();
+        assert.deepEqual(await node(source, "snapshot", {}, false), {
+          objects: backup.objects,
+        });
+        await node(source, "recovery-baseline", state, false);
+        report.checks.originalBackupRowsAndObjectsPreservedAfterHistoricalProbe = true;
       },
     );
     // Remove the entire original disposable stack and all its data volumes before

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "taskId": "RECOVERY-01F",
-  "status": "implemented_local_contracts_passed_exact_source_native_CI_pending",
+  "status": "exact_published_source_all_three_jobs_verified",
   "recordedAtUtc": "2026-10-19T16:50:16.405Z",
   "changedPaths": [
     "scripts/application-pitr-fixture.mjs",
@@ -66,15 +66,61 @@
     "dependencies": "npm ci completed: 269 packages, Fontkit patch verified"
   },
   "limits": [
-    "Native physical recovery and all three exact-source CI jobs remain pending at package creation.",
-    "SQL contract checks do not prove WAL recovery; CI must execute the native fixture.",
-    "Historical S3/Redis coordinated recovery, production backup operations, live/deployed and full-master acceptance remain open.",
-    "Historical recovery gate is harness-only; no runtime traffic-switch controller is added.",
-    "All 24 migration files, runtime application code and three CI jobs are unchanged."
+    "CI verifies isolated fixtures and does not deploy.",
+    "Physical PostgreSQL recovery does not establish coordinated historical S3/Redis recovery. The historical readiness gate is harness-only.",
+    "Database tenant/role/revision predicates in the physical fixture are not HTTP authorization evidence; separate unchanged HTTP/browser/Compose tests passed.",
+    "Production durable remote archives, object version retention, scheduling, encryption, monitoring, measured RPO/RTO and remote-effect reconciliation remain open.",
+    "Live-provider/deployed behavior and full-master acceptance remain open.",
+    "Local Windows Docker daemon remained unavailable; actual native execution was in GitHub Actions.",
+    "This final receipt closes the exact source package pending-own-CI entries without changing its verified source. Carry receipt and ZIP together."
   ],
   "publication": {
-    "initialCommit": "6bfca24a71245758d2832cb2c82b8265c2bce9af",
-    "initialRun": 39289498693,
-    "followup": "Windows test path portability; all three jobs required on final source"
-  }
+    "taskId": "RECOVERY-01F",
+    "commit": "40b936fdd29cb2d3754c84602ab3bc10ff4ff03c",
+    "tree": "e8974e2833c5e587ae018111cf5e4e8615c0748c",
+    "runId": 39289873313,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39289873313",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 285,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "readabilitySamples": 44,
+      "migrations": 24,
+      "auditVulnerabilities": 0,
+      "allThreeJobsAndAllRequiredStepsPassed": true,
+      "composePhases": 14,
+      "composePrivateObjects": 6,
+      "nativePhysicalApplicationTables": 37,
+      "nativePhysicalPopulatedTables": 11,
+      "nativePhysicalRows": 19,
+      "physicalBaseFiles": 1196,
+      "promotedTimeline": 2,
+      "localFocusedRecoveryTests": 14
+    },
+    "receipt": "docs/qa/recovery01f-native-ci-evidence.json"
+  },
+  "localSnapshotStatusAtCreation": "implemented_local_contracts_passed_exact_source_native_CI_pending",
+  "ciResults": {
+    "unit": 285,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "readabilitySamples": 44,
+    "migrations": 24,
+    "auditVulnerabilities": 0,
+    "allThreeJobsAndAllRequiredStepsPassed": true,
+    "composePhases": 14,
+    "composePrivateObjects": 6,
+    "nativePhysicalApplicationTables": 37,
+    "nativePhysicalPopulatedTables": 11,
+    "nativePhysicalRows": 19,
+    "physicalBaseFiles": 1196,
+    "promotedTimeline": 2,
+    "localFocusedRecoveryTests": 14
+  },
+  "finalReceipt": "docs/qa/recovery01f-native-ci-evidence.json"
 }

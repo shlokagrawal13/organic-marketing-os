@@ -298,6 +298,19 @@ try {
     );
     assert.equal(forbidden.status, 403);
     console.log(JSON.stringify({ objects }));
+  } else if (mode === "historical-recovery") {
+    console.log(
+      JSON.stringify(
+        await globalThis.__composeHistory({
+          project: state.project,
+          databasePoint: state.databasePoint,
+          store,
+          s3,
+          objectsGate: globalThis.__historyObjects,
+          effectsGate: globalThis.__historyEffects,
+        }),
+      ),
+    );
   } else if (mode.startsWith("recovery-")) {
     console.log(
       JSON.stringify(

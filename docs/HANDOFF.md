@@ -1,3 +1,19 @@
+<!-- RECOVERY01G_CURRENT_START -->
+## RECOVERY-01G current verification — 2026-10-22
+
+Preserved Windows G edits; current focused recovery suite24/24 and actual Compose isolation configuration passed. Native suite now requires15 phases, retaining all14 previous phases. Current local full Compose status: running; not yet accepted. All THREE own-source CI jobs remain required before G acceptance. F40b936f/run39289873313 is separately closed by docs/qa/recovery01f-native-ci-evidence.json.
+
+G reads exact historical object versions after overwrite/delete-marker, denies missing/wrong versions and unreconciled effects, observes provider submission attempts, checks private access, and cleans only its owned version inventory. The sampled LSN is only a fixture correlation label; coordinated DB/object/Redis PITR and production retention/reconciliation remain open. See docs/HISTORICAL_OBJECT_RECOVERY.md, docs/qa/recovery01g-evidence.json and docs/qa/recovery01g-unit-receipts.json. Exact changed paths are recorded in G evidence/checkpoint. Windows named-pipe execution and Python build-context exclusions preserve the existing architecture and all migrations.
+
+Next: normal commit/push, inspect/fix all three exact-final-commit jobs, and retain final CI/package receipt outside the source capsule. Then RECOVERY-01H application-reference/historical-version manifest binding prerequisites. CI verifies fixtures and does not deploy.
+<!-- RECOVERY01G_CURRENT_END -->
+
+## Current recovery state — reconciled 2026-10-22
+
+RECOVERY-01F is verified at 40b936fdd29cb2d3754c84602ab3bc10ff4ff03c, Actions run39289873313: all three jobs and required steps passed (285 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audit vulnerabilities). Final receipt: docs/qa/recovery01f-native-ci-evidence.json. Earlier pending-F/E notes below are historical. F compared exact application rows and captured column metadata; it did not compare every schema property.
+
+RECOVERY-01G Windows changes are preserved and undergoing their own verification. The prior local Compose log ended during MinIO build without a final report; it is not a pass. G adds historical version readback and external-effect reconciliation prerequisites to the full Compose verifier while retaining all 14 existing phases. G requires its own exact final commit and all THREE CI jobs. F's green CI does not verify G. Next: finish local/native G checks, refresh continuity and portable source ZIP, push normally and inspect/fix all three exact-source jobs. Coordinated DB/object/Redis PITR, production operations, live/deployed and full-master acceptance remain open. CI verifies fixtures and does not deploy.
+
 ## Current continuation — RECOVERY-01E, 2026-10-19 IST
 
 Actual PostgreSQL17.11 physical backup and named-target WAL recovery passed locally in an owned no-network/tmpfs-only container. Native pg_basebackup/pg_verifybackup validated 972 files; archived later transactions recovered the exact two-row target and excluded a later insert/delete. PostgreSQL promoted to timeline2, accepted an independent restored write and preserved source rows/timeline. Corrupt base verification blocked startup; missing WAL and nonexistent-target recovery both exited with the native target-not-reached fatal error and rejected SQL connections. The unchanged base reverified, fixture cleaned up and real .env stayed unchanged.

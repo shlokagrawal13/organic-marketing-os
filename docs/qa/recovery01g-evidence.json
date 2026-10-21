@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01G",
+  "recordedAtUtc": "2026-10-21T23:45:49.231Z",
+  "status": "focused_and_configuration_passed_full_compose_in_progress_exact_source_ci_required",
+  "baseCommit": "40b936fdd29cb2d3754c84602ab3bc10ff4ff03c",
+  "baseRun": 39289873313,
+  "changedPaths": [
+    ".dockerignore",
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/APPLICATION_PHYSICAL_RECOVERY.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/HISTORICAL_OBJECT_RECOVERY.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/github-publication.json",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/recovery01f-evidence.json",
+    "docs/qa/recovery01f-native-ci-evidence.json",
+    "docs/qa/recovery01g-evidence.json",
+    "docs/qa/recovery01g-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "scripts/compose-historical-recovery-fixture.mjs",
+    "scripts/compose-recovery-provider.mjs",
+    "scripts/historical-effect-reconciliation.mjs",
+    "scripts/historical-object-verification.mjs",
+    "scripts/verify-compose-fixture.mjs",
+    "scripts/verify-compose.mjs",
+    "tests/historical-effect-reconciliation.test.ts",
+    "tests/historical-object-verification.test.ts",
+    "tests/historical-provider.test.ts"
+  ],
+  "checks": {
+    "focusedUnitPassed": 24,
+    "newUnitCases": 10,
+    "failedSkippedCancelledTodo": 0,
+    "focusedReceiptSha256": "2f8349a7ed61ac7374e4c46910a36dd7bab8014ab25b453482a6f01b40d5cfde",
+    "actualDockerComposeConfigurationPassed": true,
+    "all25ProtectedHashesUnchanged": true,
+    "syntaxAndPrettierPassed": true,
+    "editorDiagnostics": "Tool unavailable in resumed client; syntax checks and focused tests executed."
+  },
+  "localCompose": {
+    "status": "in_progress",
+    "fullReport": null,
+    "priorAttempt": "2026-10-19 log ended during MinIO build without completion; not a pass",
+    "fullReportPath": null,
+    "scopeNote": "Full local run launched before final narrow native-404 assertions/report-precision updates; exact final CI must execute current source."
+  },
+  "environment": {
+    "os": "Windows",
+    "dockerClient": "29.7.2",
+    "dockerDaemonRecheckedAndStarted": true,
+    "realEnvPresent": false,
+    "unrelatedServicesPreserved": true
+  },
+  "implementation": {
+    "existingFourteenComposePhasesRetained": true,
+    "totalExpectedComposePhases": 15,
+    "versionedObjectReferences": 2,
+    "syntheticExternalEffects": 1,
+    "providerCountsTrackSubmissionAttempts": true,
+    "runtimeApplicationChanges": false,
+    "migrationsChanged": false,
+    "workflowChanged": false,
+    "windowsDockerDesktopNamedPipe": true,
+    "pythonEnvironmentExcludedFromBuildContext": true
+  },
+  "reconciliation": {
+    "FVerifiedCommit": "40b936fdd29cb2d3754c84602ab3bc10ff4ff03c",
+    "FVerifiedRun": 39289873313,
+    "FSourceZipCrcAndShaRechecked": true,
+    "oldCheckpointFieldsArchived": true,
+    "uncommittedGPreserved": true
+  },
+  "publication": {
+    "status": "not_yet_published",
+    "allThreeExactSourceJobsRequired": true
+  },
+  "limits": [
+    "Sampled LSN is a correlation label; the objects are created later. No coordinated DB/object checkpoint is established.",
+    "Pinned MinIO and synthetic private provider are controlled fixtures; real cloud retention/IAM/KMS/remote durability and external-effect inventory/reconciliation remain open.",
+    "Historical readiness gates are harness-only, not deployed traffic-switch controls.",
+    "Existing physical application recovery, quiesced logical cross-store recovery and versioned-object experiment remain independent.",
+    "Production operations, live/deployed and full-master acceptance remain open. CI verifies and does not deploy."
+  ]
+}
