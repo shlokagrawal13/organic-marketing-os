@@ -256,10 +256,15 @@ export async function runPhysicalApplication({
       )
     ).json();
     assert.deepEqual(confirmed, state.accepted);
-    assert.deepEqual(r.ledger.slice(0, 2), state.beforeLedger);
-    assert.equal(r.ledger.length, 3);
-    assert.equal(r.ledger[2].kind, "CONSUME");
-    assert.equal(r.account.available, 7);
+    assert.deepEqual(
+      r.ledger.slice(0, state.beforeLedger.length),
+      state.beforeLedger,
+    );
+    assert.equal(r.ledger.length, state.mediaMode ? 5 : 3);
+    if (state.mediaMode)
+      assert.equal(r.ledger.filter((e) => e.kind === "CONSUME").length, 2);
+    else assert.equal(r.ledger[2].kind, "CONSUME");
+    assert.equal(r.account.available, state.mediaMode ? 5 : 7);
     assert.equal(r.account.reserved, 0);
     assert.equal(r.reservation.state, "SETTLED");
     assert.equal(r.usage.length, 1);

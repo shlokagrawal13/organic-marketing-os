@@ -5,6 +5,10 @@ import { spawn } from "node:child_process";
 import { randomBytes, scryptSync } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
+import {
+  physicalMediaIds,
+  createPhysicalMediaReview,
+} from "./physical-media-review.mjs";
 import { runPostgresPitr } from "./verify-postgres-pitr.mjs";
 import { physicalCaptureHash } from "./physical-object-binding.mjs";
 import { applicationSnapshot } from "./application-pitr-fixture.mjs";
@@ -191,13 +195,14 @@ const physicalObjectsModule = inlineModule("physical-object-fixture.mjs");
 const physicalApplicationModule = inlineModule(
   "physical-application-fixture.mjs",
 );
+const physicalMediaModule = inlineModule("physical-media-fixture.mjs");
 const historyObjectsModule = inlineModule("historical-object-verification.mjs");
 const historyEffectsModule = inlineModule(
   "historical-effect-reconciliation.mjs",
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01J",
+  taskId: "RECOVERY-01K",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -412,7 +417,7 @@ async function node(project, mode, state = {}, running = true) {
       ];
   return JSON.parse(
     await compose(project, args, {
-      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__applicationBinding=await import(${JSON.stringify(applicationBindingModule)});\nglobalThis.__physicalBinding=await import(${JSON.stringify(physicalBindingModule)});\nglobalThis.__physicalObjects=(await import(${JSON.stringify(physicalObjectsModule)})).runPhysicalObjects;\nglobalThis.__physicalApplication=(await import(${JSON.stringify(physicalApplicationModule)})).runPhysicalApplication;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
+      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__applicationBinding=await import(${JSON.stringify(applicationBindingModule)});\nglobalThis.__physicalBinding=await import(${JSON.stringify(physicalBindingModule)});\nglobalThis.__physicalObjects=(await import(${JSON.stringify(physicalObjectsModule)})).runPhysicalObjects;\nglobalThis.__physicalApplication=(await import(${JSON.stringify(physicalApplicationModule)})).runPhysicalApplication;\nglobalThis.__physicalMedia=(await import(${JSON.stringify(physicalMediaModule)})).runPhysicalMedia;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
       quiet: true,
     }),
   );
@@ -846,412 +851,547 @@ try {
         report.checks.originalApplicationSourceUnchangedAfterPhysicalObjectProbe = true;
       },
     );
-    await phase(
-      "physical cluster application bucket and fresh-Redis recovery",
-      async () => {
-        let history, capturedApplication;
-        const ids = physicalApplicationIds,
-          password = "Synthetic physical password 123",
-          queuedPrompt = "COMPOSE_RECOVERY_PHYSICAL_" + suffix,
-          salt = randomBytes(16).toString("hex"),
-          passwordHash = `scrypt:${salt}:${scryptSync(password, salt, 64).toString("hex")}`;
-        const appState = {
-          ids,
-          password,
-          queuedPrompt,
-          objectSha256: checksum(Buffer.from("old")),
-        };
-        const writersAbsent = async () => {
-          const output = (
-            await compose(physical, ["ps", "--all", "--format", "json"], {
-              quiet: true,
-            })
-          ).trim();
-          const rows = output
-            ? output.split("\n").flatMap((l) => JSON.parse(l))
-            : [];
-          assert.ok(!rows.some((r) => fixtureWriters.includes(r.Service)));
-        };
-        const query = (sql) =>
-          compose(
-            physical,
-            [
-              "exec",
-              "-T",
-              "postgres",
-              "psql",
-              "-X",
-              "-q",
-              "-At",
-              "-v",
-              "ON_ERROR_STOP=1",
-              "-U",
-              "fixture",
+    for (const mediaMode of [false, true]) {
+      await phase(
+        mediaMode
+          ? "valid historical media and populated physical render/media recovery"
+          : "physical cluster application bucket and fresh-Redis recovery",
+        async () => {
+          let history,
+            capturedApplication,
+            mediaReview,
+            expectedMediaReviewSha256,
+            mediaFixture;
+          const reportKey = mediaMode
+            ? "physicalMediaRecovery"
+            : "physicalApplicationRecovery";
+          const ids = mediaMode
+              ? { ...physicalApplicationIds, ...physicalMediaIds }
+              : physicalApplicationIds,
+            password = "Synthetic physical password 123",
+            queuedPrompt = "COMPOSE_RECOVERY_PHYSICAL_" + suffix,
+            salt = randomBytes(16).toString("hex"),
+            passwordHash = `scrypt:${salt}:${scryptSync(password, salt, 64).toString("hex")}`;
+          const appState = {
+            ids,
+            mediaMode,
+            password,
+            queuedPrompt,
+            objectSha256: checksum(Buffer.from("old")),
+          };
+          const writersAbsent = async () => {
+            const output = (
+              await compose(physical, ["ps", "--all", "--format", "json"], {
+                quiet: true,
+              })
+            ).trim();
+            const rows = output
+              ? output.split("\n").flatMap((l) => JSON.parse(l))
+              : [];
+            assert.ok(!rows.some((r) => fixtureWriters.includes(r.Service)));
+          };
+          const query = (sql) =>
+            compose(
+              physical,
+              [
+                "exec",
+                "-T",
+                "postgres",
+                "psql",
+                "-X",
+                "-q",
+                "-At",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "fixture",
+                "-d",
+                "postgres",
+              ],
+              { input: sql, quiet: true },
+            );
+          try {
+            await writersAbsent();
+            await compose(physical, [
+              "up",
               "-d",
-              "postgres",
-            ],
-            { input: sql, quiet: true },
-          );
-        try {
-          await writersAbsent();
-          await compose(physical, [
-            "up",
-            "-d",
-            "--no-build",
-            "--no-deps",
-            "redis",
-            "storage",
-            "mailpit",
-            "fixture-provider",
-          ]);
-          report.physicalApplicationRecovery = await runPostgresPitr({
-            hooks: {
-              sqlTransform: physicalApplicationSql,
-              prepareApplication: async ({ query }) =>
-                query(`
+              "--no-build",
+              "--no-deps",
+              "redis",
+              "storage",
+              "mailpit",
+              "fixture-provider",
+            ]);
+            if (mediaMode) {
+              mediaFixture = await node(
+                source,
+                "physical-media-prepare",
+                {
+                  ids,
+                  renderSnapshot: state.rows.render.snapshot,
+                  renderOptions: state.rows.render.options,
+                },
+                false,
+              );
+              appState.mediaFixture = mediaFixture;
+            }
+            report[reportKey] = await runPostgresPitr({
+              hooks: {
+                sqlTransform: physicalApplicationSql,
+                prepareApplication: async ({ query }) => {
+                  await query(`
             UPDATE "User" SET "passwordHash"='${passwordHash}';
             INSERT INTO "User" (id,email,name,"passwordHash") VALUES ('pitr-viewer','pitr-viewer@example.test','Synthetic viewer','${passwordHash}');
             INSERT INTO "Membership" ("userId","organizationId",role) VALUES ('pitr-viewer','pitr-a','CLIENT');
             UPDATE "AIJob" SET input='${JSON.stringify({ prompt: queuedPrompt })}',"brandContext"='{"name":"Synthetic physical recovery","creativeDna":{}}' WHERE id='pitr-job';
             UPDATE "AIJob" SET "startedAt"=now()-interval '2 minutes' WHERE id='pitr-uncertain';
-          `),
-              beforeTarget: async (capture) => {
-                capturedApplication = capture.applicationSnapshot;
-                history = await node(
-                  source,
-                  "physical-capture",
-                  {
-                    project: source,
-                    capture,
-                    applicationKey: ids["pitr-a"] + "/historical.png",
-                  },
-                  false,
-                );
-                return { captureSha256: history.captureSha256 };
-              },
-              afterTarget: async (pointReceipt) => {
-                history.pointReceipt = pointReceipt;
-                history.expectedPointReceiptSha256 =
-                  physicalCaptureHash(pointReceipt);
-                Object.assign(
-                  history,
-                  await node(
+          `);
+                  if (mediaMode) await query(mediaFixture.sql);
+                },
+                beforeTarget: async (capture) => {
+                  capturedApplication = capture.applicationSnapshot;
+                  history = await node(
                     source,
-                    "physical-later",
-                    { project: source, ...history },
-                    false,
-                  ),
-                );
-                const request = {
-                  operationId: "history-" + suffix,
-                  requestHash: physicalEffectRequestHash(
-                    capturedApplication.rows.AIJob.find(
-                      (j) => j.id === "pitr-uncertain",
-                    ),
-                  ),
-                };
-                appState.accepted = await node(
-                  physical,
-                  "physical-app-effect",
-                  { request },
-                  false,
-                );
-              },
-              recovered: async ({ exportPhysicalCluster, ...recovered }) => {
-                assert.deepEqual(recovered.pointReceipt, history.pointReceipt);
-                const copied = await exportPhysicalCluster();
-                assert.equal(checksum(copied.bytes), copied.sha256);
-                const cfg = await config(physical);
-                assert.equal(
-                  (
-                    await command(
-                      [
-                        "network",
-                        "inspect",
-                        cfg.networks.default.name,
-                        "--format",
-                        "{{.Internal}}",
-                      ],
-                      { quiet: true },
-                    )
-                  ).trim(),
-                  "true",
-                );
-                await compose(physical, ["create", "--no-build", "postgres"], {
-                  quiet: true,
-                });
-                const ownedLabels = JSON.parse(
-                  await command(
-                    [
-                      "volume",
-                      "inspect",
-                      cfg.volumes.postgres_data.name,
-                      "--format",
-                      "{{json .Labels}}",
-                    ],
-                    { quiet: true },
-                  ),
-                );
-                assert.equal(
-                  ownedLabels["com.docker.compose.project"],
-                  physical,
-                );
-                // This creates only a newly generated, empty, labelled target volume.
-                const transferOutput = await compose(
-                  physical,
-                  [
-                    "run",
-                    "--rm",
-                    "--no-deps",
-                    "-T",
-                    "--entrypoint",
-                    "sh",
-                    "postgres",
-                    "-eu",
-                    "-c",
-                    "test -z \"$(ls -A /var/lib/postgresql/data)\"; cat > /tmp/physical.tar; sha256sum /tmp/physical.tar; tar -C /var/lib/postgresql/data -xf /tmp/physical.tar; rm /tmp/physical.tar; chown -R postgres:postgres /var/lib/postgresql/data; chmod 700 /var/lib/postgresql/data; cat >> /var/lib/postgresql/data/postgresql.conf <<'CONFIG'\nlisten_addresses = '*'\nunix_socket_directories = '/var/run/postgresql'\narchive_mode = off\nrestore_command = ''\nrecovery_target_name = ''\nCONFIG\nprintf \"host all all 0.0.0.0/0 trust\\n\" >> /var/lib/postgresql/data/pg_hba.conf",
-                  ],
-                  { input: copied.bytes, quiet: true },
-                );
-                const importedCopySha256 = transferOutput
-                  .trim()
-                  .split(/\s+/)[0];
-                assert.equal(importedCopySha256, copied.sha256);
-                const labels = JSON.parse(
-                  await command(
-                    [
-                      "volume",
-                      "inspect",
-                      cfg.volumes.postgres_data.name,
-                      "--format",
-                      "{{json .Labels}}",
-                    ],
-                    { quiet: true },
-                  ),
-                );
-                assert.equal(labels["com.docker.compose.project"], physical);
-                await compose(physical, [
-                  "up",
-                  "-d",
-                  "--no-build",
-                  "--no-deps",
-                  "postgres",
-                ]);
-                let imported;
-                for (let i = 0; i < 60; i++) {
-                  try {
-                    imported = await applicationSnapshot(query);
-                    break;
-                  } catch (e) {
-                    if (i === 59) throw e;
-                    await new Promise((r) => setTimeout(r, 500));
-                  }
-                }
-                assert.deepEqual(imported, recovered.applicationSnapshot);
-                const objects = await node(
-                  source,
-                  "physical-export-objects",
-                  { project: source, ...history },
-                  false,
-                );
-                await node(physical, "physical-app-objects", objects, false);
-                const preflight = async () => {
-                  await writersAbsent();
-                  const snapshot = await applicationSnapshot(query);
-                  const current = await node(
-                    physical,
-                    "physical-app-preflight",
-                    {},
+                    "physical-capture",
+                    {
+                      project: source,
+                      capture,
+                      applicationKey: ids["pitr-a"] + "/historical.png",
+                      additionalObjects: mediaFixture?.objects,
+                    },
                     false,
                   );
-                  const redisKeys = Number(
+                  if (mediaMode) {
+                    mediaReview = createPhysicalMediaReview(
+                      capturedApplication,
+                      history.manifest.objects,
+                    );
+                    expectedMediaReviewSha256 =
+                      physicalCaptureHash(mediaReview);
+                  }
+                  return { captureSha256: history.captureSha256 };
+                },
+                afterTarget: async (pointReceipt) => {
+                  history.pointReceipt = pointReceipt;
+                  history.expectedPointReceiptSha256 =
+                    physicalCaptureHash(pointReceipt);
+                  Object.assign(
+                    history,
+                    await node(
+                      source,
+                      "physical-later",
+                      { project: source, ...history },
+                      false,
+                    ),
+                  );
+                  const request = {
+                    operationId: "history-" + suffix,
+                    requestHash: physicalEffectRequestHash(
+                      capturedApplication.rows.AIJob.find(
+                        (j) => j.id === "pitr-uncertain",
+                      ),
+                    ),
+                  };
+                  appState.accepted = await node(
+                    physical,
+                    "physical-app-effect",
+                    { request },
+                    false,
+                  );
+                },
+                recovered: async ({ exportPhysicalCluster, ...recovered }) => {
+                  assert.deepEqual(
+                    recovered.pointReceipt,
+                    history.pointReceipt,
+                  );
+                  const copied = await exportPhysicalCluster();
+                  assert.equal(checksum(copied.bytes), copied.sha256);
+                  const cfg = await config(physical);
+                  assert.equal(
                     (
-                      await compose(
-                        physical,
-                        ["exec", "-T", "redis", "redis-cli", "DBSIZE"],
+                      await command(
+                        [
+                          "network",
+                          "inspect",
+                          cfg.networks.default.name,
+                          "--format",
+                          "{{.Internal}}",
+                        ],
                         { quiet: true },
                       )
                     ).trim(),
+                    "true",
                   );
-                  const accepted = appState.accepted,
-                    effect = {
-                      ...accepted,
-                      jobId: "pitr-uncertain",
-                      happenedAfterPoint: true,
-                    };
-                  return {
-                    ...history,
-                    ...recovered,
-                    physicalCopySha256: copied.sha256,
-                    importedPhysicalCopySha256: importedCopySha256,
-                    importedSnapshotSha256: physicalCaptureHash(snapshot),
-                    queueInventory: physicalQueueInventory(snapshot),
-                    writersIsolated: true,
-                    redisKeys,
-                    queueReconstructionReviewed: true,
-                    objects: current.objects.map((o) => ({
-                      ...o,
-                      bytes: Buffer.from(o.body, "base64"),
-                    })),
-                    effects: {
-                      databasePoint: history.pointReceipt.targetLsn,
-                      inventoryComplete: true,
-                      effects: [effect],
-                      receipts: [
-                        {
-                          ...effect,
-                          databasePoint: history.pointReceipt.targetLsn,
-                          disposition: "DO_NOT_REPLAY",
-                          evidenceKind: "PROVIDER_CONFIRMED",
-                          reviewed: true,
-                        },
+                  await compose(
+                    physical,
+                    ["create", "--no-build", "postgres"],
+                    {
+                      quiet: true,
+                    },
+                  );
+                  const ownedLabels = JSON.parse(
+                    await command(
+                      [
+                        "volume",
+                        "inspect",
+                        cfg.volumes.postgres_data.name,
+                        "--format",
+                        "{{json .Labels}}",
                       ],
-                    },
-                  };
-                };
-                let starts = 0;
-                const evidence = await preflight();
-                for (const changed of [
-                  { objects: [] },
-                  { redisKeys: 1 },
-                  { queueInventory: { ...evidence.queueInventory, AIJob: [] } },
-                  { queueReconstructionReviewed: false },
-                  { effects: { ...evidence.effects, receipts: [] } },
-                  {
-                    effects: {
-                      ...evidence.effects,
-                      receipts: evidence.effects.receipts.map((r) => ({
-                        ...r,
-                        disposition: "REPLAY",
-                      })),
-                    },
-                  },
-                  {
-                    effects: {
-                      ...evidence.effects,
-                      receipts: evidence.effects.receipts.map((r) => ({
-                        ...r,
-                        reviewed: false,
-                      })),
-                    },
-                  },
-                ])
-                  await assert.rejects(
-                    withPhysicalApplicationStart(
-                      { ...evidence, ...changed },
-                      async () => {
-                        starts++;
-                      },
+                      { quiet: true },
                     ),
                   );
-                assert.equal(starts, 0);
-                await writersAbsent();
-                appState.beforeLedger = physicalLedgerBaseline(
-                  recovered.applicationSnapshot.rows.CreditEntry,
-                );
-                await withPhysicalApplicationStart(
-                  await preflight(),
-                  async () => {
-                    starts++;
-                    await compose(physical, [
-                      "up",
-                      "-d",
-                      "--no-build",
+                  assert.equal(
+                    ownedLabels["com.docker.compose.project"],
+                    physical,
+                  );
+                  // This creates only a newly generated, empty, labelled target volume.
+                  const transferOutput = await compose(
+                    physical,
+                    [
+                      "run",
+                      "--rm",
                       "--no-deps",
-                      "api",
-                      "web",
-                      "worker",
-                      "render-worker",
-                      "media-worker",
-                    ]);
-                  },
-                );
-                assert.equal(starts, 1);
-                await ready(physical);
-                const checks = await node(
-                  physical,
-                  "physical-app-http",
-                  appState,
-                );
-                const work = await node(
-                  physical,
-                  "physical-app-workers",
-                  appState,
-                );
-                appState.after = work.after;
-                appState.restartAfter = Date.now();
-                await compose(physical, [
-                  "restart",
-                  "worker",
-                  "render-worker",
-                  "media-worker",
-                ]);
-                const restarted = await node(
-                  physical,
-                  "physical-app-restart",
-                  appState,
-                );
-                const binding = await node(
-                  source,
-                  "physical-verify",
-                  { project: source, ...history, ...recovered },
-                  false,
-                );
-                history.expectedVersions = binding.expectedVersions;
-                return {
-                  ...binding.report,
-                  applicationStartedFromHistoricalObjects: true,
-                  physicalCopySha256: copied.sha256,
-                  importedPhysicalCopySha256: importedCopySha256,
-                  applicationStartCallbacks: starts,
-                  startupControlsDenied: 7,
-                  redisKeysBeforeApplicationStart: evidence.redisKeys,
-                  reviewedEffectEvidence: evidence.effects,
-                  boundedFreshRedisApplicationRecoveryVerified: true,
-                  physicalApplicationProject: physical,
-                  importedSnapshotSha256: physicalCaptureHash(imported),
-                  queueInventory: evidence.queueInventory,
-                  checks: {
-                    ...binding.report.checks,
-                    ...checks,
-                    ...work.checks,
-                    ...restarted.checks,
-                    sevenInvalidStartupPrerequisitesDenied: true,
-                    allWritersAbsentBeforeVerifiedAdmission: true,
-                    physicalDataDirectoryCopiedWithoutLogicalDump: true,
-                    importedFullSnapshotMatchesPhysicalTarget: true,
-                    emptyRedisBeforePhysicalApplicationStart: true,
-                    isolatedApplicationBucketRestoredFromRetainedVersion: true,
-                  },
-                  fixtureOnlyReviewedEffectInventory: true,
-                  queuedRenderOrMediaExecutionClaimed: false,
-                  productionRecoveryClaimed: false,
-                };
+                      "-T",
+                      "--entrypoint",
+                      "sh",
+                      "postgres",
+                      "-eu",
+                      "-c",
+                      "test -z \"$(ls -A /var/lib/postgresql/data)\"; cat > /tmp/physical.tar; sha256sum /tmp/physical.tar; tar -C /var/lib/postgresql/data -xf /tmp/physical.tar; rm /tmp/physical.tar; chown -R postgres:postgres /var/lib/postgresql/data; chmod 700 /var/lib/postgresql/data; cat >> /var/lib/postgresql/data/postgresql.conf <<'CONFIG'\nlisten_addresses = '*'\nunix_socket_directories = '/var/run/postgresql'\narchive_mode = off\nrestore_command = ''\nrecovery_target_name = ''\nCONFIG\nprintf \"host all all 0.0.0.0/0 trust\\n\" >> /var/lib/postgresql/data/pg_hba.conf",
+                    ],
+                    { input: copied.bytes, quiet: true },
+                  );
+                  const importedCopySha256 = transferOutput
+                    .trim()
+                    .split(/\s+/)[0];
+                  assert.equal(importedCopySha256, copied.sha256);
+                  const labels = JSON.parse(
+                    await command(
+                      [
+                        "volume",
+                        "inspect",
+                        cfg.volumes.postgres_data.name,
+                        "--format",
+                        "{{json .Labels}}",
+                      ],
+                      { quiet: true },
+                    ),
+                  );
+                  assert.equal(labels["com.docker.compose.project"], physical);
+                  await compose(physical, [
+                    "up",
+                    "-d",
+                    "--no-build",
+                    "--no-deps",
+                    "postgres",
+                  ]);
+                  let imported;
+                  for (let i = 0; i < 60; i++) {
+                    try {
+                      imported = await applicationSnapshot(query);
+                      break;
+                    } catch (e) {
+                      if (i === 59) throw e;
+                      await new Promise((r) => setTimeout(r, 500));
+                    }
+                  }
+                  assert.deepEqual(imported, recovered.applicationSnapshot);
+                  const objects = await node(
+                    source,
+                    "physical-export-objects",
+                    { project: source, ...history },
+                    false,
+                  );
+                  await node(physical, "physical-app-objects", objects, false);
+                  const preflight = async () => {
+                    await writersAbsent();
+                    const snapshot = await applicationSnapshot(query);
+                    const current = await node(
+                      physical,
+                      "physical-app-preflight",
+                      {},
+                      false,
+                    );
+                    const redisKeys = Number(
+                      (
+                        await compose(
+                          physical,
+                          ["exec", "-T", "redis", "redis-cli", "DBSIZE"],
+                          { quiet: true },
+                        )
+                      ).trim(),
+                    );
+                    const accepted = appState.accepted,
+                      effect = {
+                        ...accepted,
+                        jobId: "pitr-uncertain",
+                        happenedAfterPoint: true,
+                      };
+                    return {
+                      ...history,
+                      ...recovered,
+                      ...(mediaMode
+                        ? { mediaReview, expectedMediaReviewSha256 }
+                        : {}),
+                      physicalCopySha256: copied.sha256,
+                      importedPhysicalCopySha256: importedCopySha256,
+                      importedSnapshotSha256: physicalCaptureHash(snapshot),
+                      queueInventory: physicalQueueInventory(snapshot),
+                      writersIsolated: true,
+                      redisKeys,
+                      queueReconstructionReviewed: true,
+                      objects: current.objects.map((o) => ({
+                        ...o,
+                        bytes: Buffer.from(o.body, "base64"),
+                      })),
+                      effects: {
+                        databasePoint: history.pointReceipt.targetLsn,
+                        inventoryComplete: true,
+                        effects: [effect],
+                        receipts: [
+                          {
+                            ...effect,
+                            databasePoint: history.pointReceipt.targetLsn,
+                            disposition: "DO_NOT_REPLAY",
+                            evidenceKind: "PROVIDER_CONFIRMED",
+                            reviewed: true,
+                          },
+                        ],
+                      },
+                    };
+                  };
+                  let starts = 0;
+                  const evidence = await preflight();
+                  for (const changed of [
+                    { objects: [] },
+                    { redisKeys: 1 },
+                    {
+                      queueInventory: { ...evidence.queueInventory, AIJob: [] },
+                    },
+                    { queueReconstructionReviewed: false },
+                    { effects: { ...evidence.effects, receipts: [] } },
+                    {
+                      effects: {
+                        ...evidence.effects,
+                        receipts: evidence.effects.receipts.map((r) => ({
+                          ...r,
+                          disposition: "REPLAY",
+                        })),
+                      },
+                    },
+                    {
+                      effects: {
+                        ...evidence.effects,
+                        receipts: evidence.effects.receipts.map((r) => ({
+                          ...r,
+                          reviewed: false,
+                        })),
+                      },
+                    },
+                  ])
+                    await assert.rejects(
+                      withPhysicalApplicationStart(
+                        { ...evidence, ...changed },
+                        async () => {
+                          starts++;
+                        },
+                      ),
+                    );
+                  assert.equal(starts, 0);
+                  if (mediaMode) {
+                    for (const changed of [
+                      { mediaReview: undefined },
+                      { expectedMediaReviewSha256: "0".repeat(64) },
+                      { mediaReview: { ...mediaReview, reviewed: false } },
+                    ])
+                      await assert.rejects(
+                        withPhysicalApplicationStart(
+                          { ...evidence, ...changed },
+                          async () => {
+                            starts++;
+                          },
+                        ),
+                      );
+                    assert.equal(starts, 0);
+                  }
+                  await writersAbsent();
+                  appState.beforeLedger = physicalLedgerBaseline(
+                    recovered.applicationSnapshot.rows.CreditEntry,
+                  );
+                  await withPhysicalApplicationStart(
+                    await preflight(),
+                    async () => {
+                      starts++;
+                      await compose(physical, [
+                        "up",
+                        "-d",
+                        "--no-build",
+                        "--no-deps",
+                        "api",
+                        "web",
+                        "worker",
+                        "render-worker",
+                        "media-worker",
+                      ]);
+                    },
+                  );
+                  assert.equal(starts, 1);
+                  await ready(physical);
+                  const checks = await node(
+                    physical,
+                    "physical-app-http",
+                    appState,
+                  );
+                  let mediaWork, mediaRestart;
+                  if (mediaMode) {
+                    try {
+                      mediaWork = await node(
+                        physical,
+                        "physical-media-workers",
+                        appState,
+                      );
+                    } catch (error) {
+                      writeFileSync(
+                        resolve(
+                          root,
+                          ".local/recovery01k-worker-diagnostic.json",
+                        ),
+                        JSON.stringify(
+                          await node(
+                            physical,
+                            "physical-media-diagnostic",
+                            appState,
+                          ),
+                          null,
+                          2,
+                        ),
+                      );
+                      writeFileSync(
+                        resolve(
+                          root,
+                          ".local/recovery01k-worker-diagnostic.log",
+                        ),
+                        await compose(
+                          physical,
+                          [
+                            "logs",
+                            "--no-color",
+                            "--tail",
+                            "100",
+                            "render-worker",
+                            "media-worker",
+                          ],
+                          { quiet: true },
+                        ),
+                      );
+                      throw error;
+                    }
+                    appState.mediaAfter = mediaWork.after;
+                    appState.mediaHashes = mediaWork.hashes;
+                  }
+                  const work = await node(
+                    physical,
+                    "physical-app-workers",
+                    appState,
+                  );
+                  appState.after = work.after;
+                  appState.restartAfter = Date.now();
+                  await compose(physical, [
+                    "restart",
+                    "worker",
+                    "render-worker",
+                    "media-worker",
+                  ]);
+                  const restarted = await node(
+                    physical,
+                    "physical-app-restart",
+                    appState,
+                  );
+                  if (mediaMode)
+                    mediaRestart = await node(
+                      physical,
+                      "physical-media-restart",
+                      appState,
+                    );
+                  const binding = await node(
+                    source,
+                    "physical-verify",
+                    { project: source, ...history, ...recovered },
+                    false,
+                  );
+                  history.expectedVersions = binding.expectedVersions;
+                  return {
+                    ...binding.report,
+                    ...(mediaMode
+                      ? {
+                          mediaReview,
+                          expectedMediaReviewSha256,
+                          mediaOutputHashes: mediaWork.hashes,
+                        }
+                      : {}),
+                    applicationStartedFromHistoricalObjects: true,
+                    physicalCopySha256: copied.sha256,
+                    importedPhysicalCopySha256: importedCopySha256,
+                    applicationStartCallbacks: starts,
+                    startupControlsDenied: mediaMode ? 10 : 7,
+                    redisKeysBeforeApplicationStart: evidence.redisKeys,
+                    reviewedEffectEvidence: evidence.effects,
+                    boundedFreshRedisApplicationRecoveryVerified: true,
+                    physicalApplicationProject: physical,
+                    importedSnapshotSha256: physicalCaptureHash(imported),
+                    queueInventory: evidence.queueInventory,
+                    checks: {
+                      ...binding.report.checks,
+                      ...checks,
+                      ...work.checks,
+                      ...restarted.checks,
+                      ...mediaWork?.checks,
+                      ...mediaRestart?.checks,
+                      sevenInvalidStartupPrerequisitesDenied: true,
+                      ...(mediaMode
+                        ? { unreviewedPopulatedMediaStartupDenied: true }
+                        : {}),
+                      allWritersAbsentBeforeVerifiedAdmission: true,
+                      physicalDataDirectoryCopiedWithoutLogicalDump: true,
+                      importedFullSnapshotMatchesPhysicalTarget: true,
+                      emptyRedisBeforePhysicalApplicationStart: true,
+                      isolatedApplicationBucketRestoredFromRetainedVersion: true,
+                    },
+                    fixtureOnlyReviewedEffectInventory: true,
+                    queuedRenderOrMediaExecutionClaimed: mediaMode,
+                    productionRecoveryClaimed: false,
+                  };
+                },
               },
-            },
-          });
-          assert.equal(report.physicalApplicationRecovery.passed, true);
-          Object.assign(
-            report.checks,
-            report.physicalApplicationRecovery.objectBinding.checks,
-          );
-        } finally {
-          if (history)
-            await node(
-              source,
-              "physical-cleanup",
-              { project: source, ...history },
-              false,
+            });
+            assert.equal(
+              report[reportKey].passed,
+              true,
+              report[reportKey].failure,
             );
-          await cleanup(physical);
-        }
-        await node(source, "recovery-baseline", state, false);
-        assert.deepEqual(await node(source, "snapshot", {}, false), {
-          objects: backup.objects,
-        });
-        report.checks.originalSourcePreservedAfterPhysicalApplicationRecovery = true;
-      },
-    );
+            Object.assign(
+              report.checks,
+              report[reportKey].objectBinding.checks,
+            );
+          } finally {
+            if (history)
+              await node(
+                source,
+                "physical-cleanup",
+                { project: source, ...history },
+                false,
+              );
+            await cleanup(physical);
+          }
+          await node(source, "recovery-baseline", state, false);
+          assert.deepEqual(await node(source, "snapshot", {}, false), {
+            objects: backup.objects,
+          });
+          report.checks.originalSourcePreservedAfterPhysicalApplicationRecovery = true;
+        },
+      );
+    }
     // Remove the entire original disposable stack and all its data volumes before
     // restoring. The new project cannot accidentally read old volumes/objects.
     await phase("remove original disposable source targets", async () => {

@@ -6,6 +6,7 @@ import {
 } from "./physical-object-binding.mjs";
 import { withHistoricalRecoveryPrerequisites } from "./historical-recovery-gate.mjs";
 import { withReconciledHistoricalEffects } from "./historical-effect-reconciliation.mjs";
+import { assertPhysicalMediaReview } from "./physical-media-review.mjs";
 
 export const physicalApplicationIds = {
   "pitr-a": "7cdd0796-a51e-442a-aab9-111111111111",
@@ -90,18 +91,37 @@ export async function withPhysicalApplicationStart(evidence, start) {
     "Queue inventory differs from recovered rows",
   );
   assert.equal(evidence.effects.databasePoint, evidence.pointReceipt.targetLsn);
-  for (const table of [
-    "RenderJob",
-    "MediaGeneration",
-    "PublicationAttempt",
-    "PublicationSchedule",
-    "PublicationIntent",
-  ])
-    assert.equal(
-      evidence.queueInventory[table].length,
-      0,
-      `Unreviewed ${table} jobs in bounded physical fixture`,
+  if (evidence.mediaReview) {
+    assertPhysicalMediaReview(
+      evidence.applicationSnapshot,
+      evidence.mediaReview,
+      evidence.expectedMediaReviewSha256,
     );
+    assert.deepEqual(
+      evidence.mediaReview.objects,
+      evidence.manifest.objects
+        .map(({ key, bytes, sha256, contentType }) => ({
+          key,
+          bytes,
+          sha256,
+          contentType,
+        }))
+        .sort((a, b) => a.key.localeCompare(b.key)),
+      "Reviewed media object inventory changed",
+    );
+  } else
+    for (const table of [
+      "RenderJob",
+      "MediaGeneration",
+      "PublicationAttempt",
+      "PublicationSchedule",
+      "PublicationIntent",
+    ])
+      assert.equal(
+        evidence.queueInventory[table].length,
+        0,
+        `Unreviewed ${table} jobs in bounded physical fixture`,
+      );
   const running = evidence.queueInventory.AIJob.filter(
     (j) => j.status === "RUNNING",
   )

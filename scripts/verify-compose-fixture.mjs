@@ -298,6 +298,21 @@ try {
     );
     assert.equal(forbidden.status, 403);
     console.log(JSON.stringify({ objects }));
+  } else if (mode.startsWith("physical-media-")) {
+    console.log(
+      JSON.stringify(
+        await globalThis.__physicalMedia({
+          mode,
+          state,
+          db,
+          store,
+          require,
+          call,
+          sha,
+          sleep,
+        }),
+      ),
+    );
   } else if (mode.startsWith("physical-app-")) {
     console.log(
       JSON.stringify(
@@ -497,7 +512,10 @@ try {
     // Keep this expected fault recognizable without a data-URL stack trace.
     console.error(error.message);
     process.exitCode = 1;
-  } else if (mode.startsWith("physical-app-")) {
+  } else if (
+    mode.startsWith("physical-app-") ||
+    mode.startsWith("physical-media-")
+  ) {
     console.error(`${mode}: ${error.name}: ${error.message}`);
     console.error(
       (error.stack ?? "").replace(

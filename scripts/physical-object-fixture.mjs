@@ -1,4 +1,4 @@
-// Isolated Compose bucket only. Synthetic physical fixture's sole Asset is "old".
+// Isolated Compose bucket only; original three-byte fixture retained.
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 export async function runPhysicalObjects({
@@ -55,15 +55,28 @@ export async function runPhysicalObjects({
     assert.match(baseBackupManifestSha256, /^[a-f0-9]{64}$/);
     const references =
       binding.physicalApplicationReferences(applicationSnapshot);
-    assert.equal(references.length, 1);
-    assert.equal(
-      references[0].key,
-      state.applicationKey ?? "pitr-a/historical.png",
-    );
-    const bytes = Buffer.from("old"),
-      sha256 = binding.bytesHash(bytes);
-    assert.equal(references[0].bytes, bytes.length);
-    assert.equal(references[0].sha256, sha256);
+    const entries = [
+      {
+        key: state.applicationKey ?? "pitr-a/historical.png",
+        body: Buffer.from("old").toString("base64"),
+        bytes: 3,
+        sha256: binding.bytesHash(Buffer.from("old")),
+        contentType: "image/png",
+      },
+      ...(state.additionalObjects ?? []),
+    ];
+    assert.equal(references.length, entries.length);
+    assert.equal(new Set(entries.map((o) => o.key)).size, entries.length);
+    for (const o of entries) {
+      const reference = references.find((r) => r.key === o.key);
+      assert.ok(reference);
+      const bytes = Buffer.from(o.body, "base64");
+      assert.equal(bytes.length, o.bytes);
+      assert.equal(binding.bytesHash(bytes), o.sha256);
+      if (reference.bytes !== undefined) assert.equal(reference.bytes, o.bytes);
+      if (reference.sha256 !== undefined)
+        assert.equal(reference.sha256, o.sha256);
+    }
     await send(s3.CreateBucketCommand);
     await send(s3.PutBucketTaggingCommand, {
       Tagging: { TagSet: [{ Key: "omos-fixture", Value: project }] },
@@ -73,34 +86,35 @@ export async function runPhysicalObjects({
     });
     assert.equal((await send(s3.GetBucketVersioningCommand)).Status, "Enabled");
     state.expectedVersions = [];
-    const key = applicationGate.historicalApplicationKey(references[0].key);
-    const metadata = {
-      fixture: project,
-      physical: physicalProject,
-      target: targetName,
-    };
-    const versionId = remember(
-      key,
-      await send(s3.PutObjectCommand, {
-        Key: key,
-        Body: bytes,
-        ContentType: "image/png",
-        CacheControl: "private, no-store",
-        Metadata: metadata,
-      }),
-    );
-    const versions = [
-      {
+    const versions = [];
+    for (const o of entries) {
+      const key = applicationGate.historicalApplicationKey(o.key);
+      const metadata = {
+        fixture: project,
+        physical: physicalProject,
+        target: targetName,
+      };
+      const versionId = remember(
         key,
-        sourceKey: references[0].key,
+        await send(s3.PutObjectCommand, {
+          Key: key,
+          Body: Buffer.from(o.body, "base64"),
+          ContentType: o.contentType,
+          CacheControl: "private, no-store",
+          Metadata: metadata,
+        }),
+      );
+      versions.push({
+        key,
+        sourceKey: o.key,
         versionId,
-        bytes: bytes.length,
-        sha256,
-        contentType: "image/png",
+        bytes: o.bytes,
+        sha256: o.sha256,
+        contentType: o.contentType,
         cacheControl: "private, no-store",
         metadata,
-      },
-    ];
+      });
+    }
     const objects = versions.map(({ sourceKey, versionId, ...r }) => ({
       ...r,
       key: sourceKey,
@@ -240,13 +254,21 @@ export async function runPhysicalObjects({
     );
     assert.equal(callbacks, 1);
     assert.equal(JSON.stringify(manifest), saved);
-    const later = state.expectedVersions.find((r) => !r.marker);
-    assert.equal(
-      (
-        await read({ key: later.Key, versionId: later.VersionId })
-      ).bytes.toString(),
-      "new",
-    );
+    for (const original of manifest.versions) {
+      const later = state.expectedVersions.find(
+        (r) =>
+          r.Key === original.key &&
+          !r.marker &&
+          r.VersionId !== original.versionId,
+      );
+      assert.ok(later, "Each original must retain its later overwrite version");
+      assert.equal(
+        (
+          await read({ key: later.Key, versionId: later.VersionId })
+        ).bytes.toString(),
+        "new",
+      );
+    }
     return {
       expectedVersions: state.expectedVersions,
       report: {

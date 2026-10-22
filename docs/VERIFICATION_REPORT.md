@@ -1,3 +1,15 @@
+<!-- RECOVERY01K_CURRENT_START -->
+## RECOVERY-01K populated physical media recovery — 2026-10-23
+
+J final b27947509465ba2f5283932239b73e85e683fe1b/run39786556233 passed ALL THREE jobs and required steps:315 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,18 Compose phases. All four artifact-byte digests/CRCs were verified. Read docs/qa/recovery01j-final-ci-receipt.json. This closes J own-CI pending notices below; older entries are historical.
+
+K adds a nineteenth Compose phase, retaining all previous assertions. Two valid 640×360 PNGs, one queued render and one retained OUTPUT_READY media job are captured before the physical target. Three historical private object versions and the full27-row/37-table snapshot bind the restored cluster. A pinned pre-target media review, exact objects, zero Redis keys and absent writers gate startup; ten invalid prerequisite controls deny callbacks. Actual workers render/ingest, actual API bytes decode with expected dimensions/duration and remain private/tenant-scoped; both credit reservations settle once and all three worker restarts preserve rows/queues/bytes. See docs/PHYSICAL_MEDIA_RECOVERY.md and docs/qa/recovery01k-evidence.json.
+
+Local59 focused tests and cached-image Windows17-phase K-focused runtime verification passed; initial full19-phase attempt failed at K after I/J passed, with fixture cleanup and .env unchanged. No local image rebuild is claimed. All24 migrations and master specification hashes remain unchanged. This source requires ALL THREE jobs on its own exact final commit; carry external recovery01k-final-ci-receipt.json with the portable source ZIP to close that packaging-time pending status.
+
+Next after own CI: RECOVERY-01L missing/corrupt retained media and interrupted render/media worker recovery at the physical target.21 broad task tracks remain open. Production backup operations, real-provider reconciliation, live/deployed and full-master acceptance remain open. CI verifies fixtures and does not deploy.
+<!-- RECOVERY01K_CURRENT_END -->
+
 <!-- RECOVERY01J_CURRENT_START -->
 ## RECOVERY-01J physical application recovery — 2026-10-22
 
