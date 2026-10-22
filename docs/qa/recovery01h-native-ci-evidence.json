@@ -1,0 +1,1583 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01H",
+  "status": "exact_commit_all_three_jobs_verified",
+  "recordedAtUtc": "2026-10-22T01:13:13.868773+00:00",
+  "publicCommit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+  "treeSha": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+  "runId": 39702680294,
+  "ciUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+  "verification": {
+    "unit": 300,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "migrations": 24,
+    "readabilitySamples": 44,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "composePhases": 16,
+    "boundApplicationReferences": 6,
+    "boundHistoricalObjects": 6,
+    "localFocusedTests": 31
+  },
+  "jobs": [
+    {
+      "id": 119575376129,
+      "name": "Native application verification",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39702680294,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install test object storage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install media dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Install pinned test CJK fonts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Verify bounded small-screen English readability",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Audit all dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Verify populated upgrade",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Verify native application flows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Upload browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35
+        }
+      ]
+    },
+    {
+      "id": 119575376358,
+      "name": "Native populated upgrade and migration recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39702680294,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify populated native Prisma upgrades and interrupted migration recovery",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Verify physical PostgreSQL backup and WAL point-in-time recovery",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload sanitized PostgreSQL PITR evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Upload sanitized native upgrade evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 119575376409,
+      "name": "Disposable Compose and native restore",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39702680294,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify complete Compose and native cross-store restore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Upload sanitized Compose evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    }
+  ],
+  "composeRecovery": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01H",
+    "baselineTaskId": "RECOVERY-01D",
+    "passed": true,
+    "startedAt": "2026-10-22T00:56:13.681Z",
+    "sourceProject": "omos-compose-verify-943fc03e0c93f8e9",
+    "restoreProject": "omos-compose-verify-943fc03e0c93f8e9-restore",
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "checks": {
+      "generatedProjectPrivateEnvAndVolumeIsolation": true,
+      "allNineLongRunningServices": true,
+      "syntheticProviderService": true,
+      "health": true,
+      "auth": true,
+      "tenantIsolation": true,
+      "range": true,
+      "realRender": true,
+      "idempotency": true,
+      "noKeyFailure": true,
+      "emailSubmission": true,
+      "realSmtpDelivery": true,
+      "allFiveWritersStoppedBeforeBackup": true,
+      "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
+      "syntheticUncertainProviderCallsBeforeBackup": 1,
+      "completeSealedBackupPreflight": true,
+      "everyDatabaseMediaReferenceCovered": true,
+      "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
+      "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
+      "dedicatedOwnedBucketVersioningEnabled": true,
+      "currentReadsDoNotRepresentHistoricalPoint": true,
+      "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+      "exactHistoricalVersionBytesAndMetadataRecovered": true,
+      "providerConfirmedEffectReviewedWithoutReplay": true,
+      "historicalVersionRemainsPrivate": true,
+      "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+      "otherVersionsAndSavedManifestPreserved": true,
+      "ownedHistoricalBucketAndAllVersionsRemoved": true,
+      "originalBackupRowsAndObjectsPreservedAfterHistoricalProbe": true,
+      "originalSourceVolumesRemoved": true,
+      "freshRedisEmptyBeforeApplicationStart": true,
+      "nonAtomicInterruptionLeavesPartialState": true,
+      "atomicInterruptionRollsBackSchemaAndData": true,
+      "cleanEmptyTargetPreparedForRetry": true,
+      "cleanAtomicNativeDatabaseRetry": true,
+      "partialObjectsObserved": 1,
+      "partialObjectBytesAndMetadataMatch": true,
+      "partialObjectsRemoved": 1,
+      "restoreBucketEmptyAfterCleanup": true,
+      "objectsRestored": 6,
+      "allObjectBytesAndMetadataMatch": true,
+      "controlledFailureAfterAcknowledgedPrivatePut": true,
+      "applicationStartDeniedWhileObjectsIncomplete": true,
+      "allFiveApplicationServicesAbsentDuringPartialRestore": true,
+      "ownedRestoreBucketOnlyCleanup": true,
+      "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
+      "sameValidatedBackupRetriedBeforeApplicationStart": true,
+      "restoredApplicationRowsAndExactHistoricalManifestBound": true,
+      "wrongTenantRowFieldKeySnapshotAndIncompleteManifestRejected": true,
+      "applicationBindingBeforeAnyWriterStart": true,
+      "originalRestoredObjectsUnchangedAfterApplicationBinding": true,
+      "applicationStartAllowedOnlyAfterVerifiedRestore": true,
+      "nativeDatabaseRestore": true,
+      "privateMediaRestore": true,
+      "recordCountsMatch": true,
+      "originalAndRenderedBytesMatch": true,
+      "tenantAndAnonymousIsolationAfterRestore": true,
+      "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
+      "queuedAiReconstructedFromFreshRedis": true,
+      "queuedRenderReconstructedAndProbed": true,
+      "retainedPrivateOutputIngestedWithoutProvider": true,
+      "uncertainAiNotReplayed": true,
+      "syntheticQueuedProviderCalls": 1,
+      "syntheticUncertainProviderCallsAfterRestore": 0,
+      "originalLedgerEntriesUnchanged": true,
+      "immutableLedgerTriggerEnforced": true,
+      "exactlyTwoCreditSettlements": true,
+      "uncertainCreditsHeldForReview": true,
+      "generatedAssetAndOriginalMediaTenantIsolation": true,
+      "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "steps": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 2298
+      },
+      {
+        "name": "build application images",
+        "passed": true,
+        "durationMs": 102466
+      },
+      {
+        "name": "build official pinned MinIO release",
+        "passed": true,
+        "durationMs": 149659
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 16659
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 2029
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 83
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 4104
+      },
+      {
+        "name": "reject incomplete/corrupt backups while preserving original source",
+        "passed": true,
+        "durationMs": 1256
+      },
+      {
+        "name": "historical private-object versions and external-effect reconciliation prerequisites",
+        "passed": true,
+        "durationMs": 2507
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 10577
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 6287
+      },
+      {
+        "name": "bind restored application references to historical versions",
+        "passed": true,
+        "durationMs": 2700
+      },
+      {
+        "name": "partial private-object failure, gated startup and clean retry",
+        "passed": true,
+        "durationMs": 11496
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 977
+      },
+      {
+        "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+        "passed": true,
+        "durationMs": 5226
+      },
+      {
+        "name": "restart all three workers without replay or duplicate settlements",
+        "passed": true,
+        "durationMs": 2377
+      }
+    ],
+    "verificationMode": "complete-compose-native-restore",
+    "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+    "databaseDump": {
+      "bytes": 124617,
+      "sha256": "64a8b5b74566e96646d101bdb385e41e757b0301fdc2024ead7690243b16a8dc"
+    },
+    "objectBackup": {
+      "objects": 6,
+      "bytes": 27582,
+      "sha256": "60105102d2927b1ec63c5a169e868ccf164e29d14ffa23af3947863321eea03b"
+    },
+    "backupManifest": {
+      "sha256": "062ce370adf7ab698dfc9c17951b51ad221d9a9979872ad5a9603ce8ca605609",
+      "databaseBytes": 124617,
+      "privateObjects": 6
+    },
+    "backupFailureCases": [
+      {
+        "name": "truncated-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-metadata",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-writer-quiescence",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "wrong-restore-project",
+        "rejectedBeforeDestructiveAction": true
+      }
+    ],
+    "historicalRecovery": {
+      "checks": {
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true
+      },
+      "objectsAtHistoricalPoint": 2,
+      "syntheticExternalEffects": 1,
+      "acceptedProviderCalls": 1,
+      "providerSubmissionAttempts": 1,
+      "readinessCallbacks": 1,
+      "databasePoint": "0/1AB71F0",
+      "databasePointMeaning": "Sampled source LSN used only as a fixture correlation label; objects are created afterwards.",
+      "coordinatedRecoveryPointEstablished": false,
+      "physicalPitrCombined": false,
+      "productionRetentionClaimed": false
+    },
+    "restoreInterruption": {
+      "cases": [
+        {
+          "atomic": false,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 39,
+          "visibleTablesAfterInterruption": 39,
+          "rollbackToEmptyTarget": false
+        },
+        {
+          "atomic": true,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 0,
+          "visibleTablesAfterInterruption": 0,
+          "rollbackToEmptyTarget": true
+        }
+      ],
+      "checks": {
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true
+      }
+    },
+    "applicationHistoricalBinding": {
+      "checks": {
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "restoredApplicationRowsAndExactHistoricalManifestBound": true,
+        "wrongTenantRowFieldKeySnapshotAndIncompleteManifestRejected": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true
+      },
+      "objectsAtHistoricalPoint": 6,
+      "applicationBinding": {
+        "references": 6,
+        "objects": 6
+      },
+      "databaseSnapshotSha256": "64a8b5b74566e96646d101bdb385e41e757b0301fdc2024ead7690243b16a8dc",
+      "syntheticExternalEffects": 1,
+      "acceptedProviderCalls": 1,
+      "providerSubmissionAttempts": 1,
+      "readinessCallbacks": 1,
+      "databasePoint": "logical-sha256:64a8b5b74566e96646d101bdb385e41e757b0301fdc2024ead7690243b16a8dc",
+      "databasePointMeaning": "Logical dump digest binds source/restored application reference inventories; historical copies are created after logical restore. No physical recovery target binding.",
+      "coordinatedRecoveryPointEstablished": false,
+      "physicalPitrCombined": false,
+      "productionRetentionClaimed": false
+    },
+    "completedAt": "2026-10-22T01:01:43.222Z"
+  },
+  "nativePhysicalRecovery": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01F",
+    "verificationMode": "native-physical-base-backup-wal-pitr",
+    "passed": true,
+    "startedAt": "2026-10-22T00:57:05.132Z",
+    "project": "omos-pitr-verify-07eb6def0ea32160",
+    "checks": {
+      "noNetworkPortsOrPersistentVolumes": true,
+      "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+      "targetTransactionsArchivedAfterBaseBackup": true,
+      "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+      "missingWalAndUnreachableTargetRejectReadiness": true,
+      "sameVerifiedBaseBackupCleanRetry": true,
+      "namedTargetRowsRestored": true,
+      "laterInsertAndDeleteNotReplayed": true,
+      "actualWalReplayAndPromotion": true,
+      "restoredClusterAcceptsIndependentWrites": true,
+      "sourceRecordsAndTimelineUnchanged": true,
+      "savedBaseBackupUnchanged": true,
+      "populatedApplicationSchemaPhysicalRecovery": true,
+      "applicationRowsAndColumnDefinitionsMatchTarget": true,
+      "applicationLaterChangesExcluded": true,
+      "applicationSourcePreserved": true,
+      "historicalObjectPrerequisiteBlocksApplicationStart": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "application": {
+      "appliedMigrationSqlFiles": 24,
+      "migrationHashes": [
+        {
+          "name": "202609190001_foundation",
+          "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+        },
+        {
+          "name": "202609190002_brand",
+          "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+        },
+        {
+          "name": "202609190003_ai",
+          "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+        },
+        {
+          "name": "202609190004_content",
+          "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+        },
+        {
+          "name": "202609190005_media",
+          "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+        },
+        {
+          "name": "202609190006_recovery",
+          "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+        },
+        {
+          "name": "202609200001_credits",
+          "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+        },
+        {
+          "name": "202609270001_billing_entitlements",
+          "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+        },
+        {
+          "name": "202609280001_billing_invoices",
+          "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+        },
+        {
+          "name": "202609290001_model_routing",
+          "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+        },
+        {
+          "name": "202609290002_agent_orchestration",
+          "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+        },
+        {
+          "name": "202610010001_generated_media",
+          "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+        },
+        {
+          "name": "202610090001_publication_preparation",
+          "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+        },
+        {
+          "name": "202610090002_social_attempt_ledger",
+          "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+        },
+        {
+          "name": "202610100001_youtube_oauth_refresh_expiry",
+          "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+        },
+        {
+          "name": "202610100002_social_refresh_boundary",
+          "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+        },
+        {
+          "name": "202610100003_youtube_policy_review",
+          "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+        },
+        {
+          "name": "202610100004_youtube_upload_session",
+          "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+        },
+        {
+          "name": "202610120001_publication_schedule",
+          "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+        },
+        {
+          "name": "202610120002_posting_guidance",
+          "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+        },
+        {
+          "name": "202610140001_content_claim_review",
+          "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+        },
+        {
+          "name": "202610170001_workspace_youtube_policy",
+          "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+        },
+        {
+          "name": "202610180001_research_evidence",
+          "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+        },
+        {
+          "name": "202610180002_research_insight",
+          "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+        }
+      ],
+      "prismaDeployClaimed": false,
+      "tablesCompared": 37,
+      "populatedTables": 11,
+      "rowsCompared": 19,
+      "crossStoreAcceptance": false,
+      "missingHistoricalObjectsBlockedStartup": true,
+      "restoredConstraintsAndRevisionPredicates": true,
+      "httpAuthorizationClaimed": false
+    },
+    "baseBackup": {
+      "manifestSha256": "79b39f277e5669ff62c85964cecfa20e7822fd3735154e89f910763df919357c",
+      "files": 1196
+    },
+    "archivedWal": {
+      "targetSegment": "000000010000000000000003",
+      "targetLsn": "0/3006028",
+      "sha256": "4e1c4ca179eb87a93a1c91d21c5cdb0e3470b6dc3f1f07e456e3f5955ffb6b64"
+    },
+    "failureCases": [
+      {
+        "kind": "missing-wal",
+        "nativeTargetNotReachedFatal": true,
+        "recoveryStartExitedNonZero": true,
+        "sqlConnectionsRejected": true,
+        "sourceUnchanged": true
+      },
+      {
+        "kind": "unreachable",
+        "nativeTargetNotReachedFatal": true,
+        "recoveryStartExitedNonZero": true,
+        "sqlConnectionsRejected": true,
+        "sourceUnchanged": true
+      }
+    ],
+    "recovery": {
+      "targetRows": 2,
+      "sourceRows": 2,
+      "promotedTimeline": 2
+    },
+    "completedAt": "2026-10-22T00:57:29.821Z"
+  },
+  "nativePrismaUpgrade": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01B",
+    "verificationMode": "native-populated-prisma-upgrade-and-migration-recovery",
+    "passed": true,
+    "startedAt": "2026-10-22T00:56:32.279Z",
+    "project": "omos-upgrade-verify-a5b7d06d66b96f1f",
+    "boundaries": [
+      {
+        "appliedMigrations": 4,
+        "legacyTables": 5,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 7,
+        "legacyTables": 7,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 23,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 24,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      }
+    ],
+    "cases": [
+      {
+        "transaction": "Prisma-default-batch",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      },
+      {
+        "transaction": "explicit-BEGIN-COMMIT",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      }
+    ],
+    "checks": {
+      "populatedNativePrismaUpgrade": true,
+      "legacyQueuedJobAndNullDefaults": true,
+      "immutableLedgerEnforced": true,
+      "actualInterruptedMigration": true,
+      "failedLedgerRetryGate": true,
+      "explicitResolveAndUnchangedSqlRetry": true,
+      "sourceDatabaseUnchanged": true,
+      "noDotenvLoaded": true,
+      "ownedContainerAndNetworkRemoved": true,
+      "realEnvUnchanged": true,
+      "protectedHashesUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "prismaVersion": "6.19.3",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "protectedFileCount": 25,
+    "finishedAt": "2026-10-22T00:57:04.967Z"
+  },
+  "artifacts": [
+    {
+      "id": 12393971266,
+      "name": "postgres-pitr-evidence",
+      "size_in_bytes": 2597,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393971266",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393971266/zip",
+      "expired": false,
+      "created_at": "2026-10-22T00:57:30Z",
+      "expires_at": "2027-01-20T00:56:07Z",
+      "updated_at": "2026-10-22T00:57:30Z",
+      "digest": "sha256:2cf4d0fab5496724f504f9a30095e9b91b83bdd44a38ee13fad0d736ae4c48ae",
+      "workflow_run": {
+        "id": 39702680294,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "f33276cbe55d6363e3f44abea1278b81d247881e"
+      }
+    },
+    {
+      "id": 12393932453,
+      "name": "compose-evidence",
+      "size_in_bytes": 3065,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393932453",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393932453/zip",
+      "expired": false,
+      "created_at": "2026-10-22T01:01:43Z",
+      "expires_at": "2027-01-20T00:56:07Z",
+      "updated_at": "2026-10-22T01:01:43Z",
+      "digest": "sha256:b2ecdd43863aefd4816624d42f2bb6a11ad6bf21e30a1180711d73e38864cf5e",
+      "workflow_run": {
+        "id": 39702680294,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "f33276cbe55d6363e3f44abea1278b81d247881e"
+      }
+    },
+    {
+      "id": 12393503525,
+      "name": "browser-evidence",
+      "size_in_bytes": 13493508,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393503525",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393503525/zip",
+      "expired": false,
+      "created_at": "2026-10-22T01:12:19Z",
+      "expires_at": "2027-01-20T00:56:07Z",
+      "updated_at": "2026-10-22T01:12:19Z",
+      "digest": "sha256:44607a4118b234b90e2a51ba756f8549199ef683dd2209b0f8f7e861e60b21f7",
+      "workflow_run": {
+        "id": 39702680294,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "f33276cbe55d6363e3f44abea1278b81d247881e"
+      }
+    },
+    {
+      "id": 12393497318,
+      "name": "native-upgrade-evidence",
+      "size_in_bytes": 926,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393497318",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12393497318/zip",
+      "expired": false,
+      "created_at": "2026-10-22T00:57:32Z",
+      "expires_at": "2027-01-20T00:56:07Z",
+      "updated_at": "2026-10-22T00:57:32Z",
+      "digest": "sha256:bc16fd878257068d375ad1df1692480d5de171c162331bf4fa8aabd949bd2c11",
+      "workflow_run": {
+        "id": 39702680294,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "f33276cbe55d6363e3f44abea1278b81d247881e"
+      }
+    }
+  ],
+  "artifactByteProof": [
+    {
+      "name": "postgres-pitr-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 1,
+      "payloadMatchesDecodedJobReport": true
+    },
+    {
+      "name": "compose-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 1,
+      "payloadMatchesDecodedJobReport": true
+    },
+    {
+      "name": "browser-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 153,
+      "uniqueUnitReceipts": 300
+    },
+    {
+      "name": "native-upgrade-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 1,
+      "payloadMatchesDecodedJobReport": true
+    }
+  ],
+  "readability": {
+    "schemaVersion": 1,
+    "scope": "Synthetic short English text on black, rescaled decoded frames; not physical-device, platform UI, all-content or multilingual acceptance.",
+    "expected": "clear video title read every caption",
+    "passed": true,
+    "expectedSamples": 36,
+    "exports": 18,
+    "samples": [
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-9-16-720-320.png",
+        "sha256": "8233f15e7e46b7a19e2565138353f4b061ae2204a4e49b7496dd3054c381f769",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-9-16-720-390.png",
+        "sha256": "93b5ce5fdd500e9de586ceabc8c57bbeebb994a415d7dfc9635512d4599db150",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-9-16-1080-320.png",
+        "sha256": "2dd193cd21a213aa25d5c66e4703ed32a06c6c8bd106687879066533e3971000",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-9-16-1080-390.png",
+        "sha256": "adab448b82517e24bf8e7a7aeef3add4581d754f5a7a28729a5f71664e29def1",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "standard-16-9-720-568.png",
+        "sha256": "3b5f7219ae4312d144acdae7e2a74dab7401f433f961a779d05d5b088fde0c68",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "standard-16-9-720-844.png",
+        "sha256": "9e68171b062c2692b19bd30f01aff37ad9865bb009159f4a2b79ecd7f154c26d",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "standard-16-9-1080-568.png",
+        "sha256": "4a0cabc9dd3af4ec1df483e8fd5ef2d916cd3306a10970ca8922dedca68aa009",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "standard-16-9-1080-844.png",
+        "sha256": "25c5466a62f474406e19443108d04fcff0f296ac7c5f50b083ec802fe09ca98b",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-1-1-720-320.png",
+        "sha256": "473c7cf32263689b1b40dc3956364cfc279e2cfcef6a3fcf900686fed7d33699",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-1-1-720-390.png",
+        "sha256": "202289d7ccdf5266ce84681eb75eaf8471985c35a56a577cd05c2f92db3a8f87",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-1-1-1080-320.png",
+        "sha256": "0066cc9465713b45b884be0ad3ead69e80522ed19ff3d2ba24bb43c21ffec36e",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-1-1-1080-390.png",
+        "sha256": "96df5d0b85a5db4db665f38f34f53bd40f65a564e8448bf7b1fad87496423eff",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-9-16-720-320.png",
+        "sha256": "5a48e709afcbcbb23b8b556ca7fe13987f6abd6e467daab269807e99709a2f38",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-9-16-720-390.png",
+        "sha256": "0270419360ea9a580e0d9f37268b0b2bbac32291dae855fa10dc6f84198e82bc",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-9-16-1080-320.png",
+        "sha256": "9f4b5eff0967b4bdc462411a36ce501edcaae8db9480b11acc55918c2eb14c15",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-9-16-1080-390.png",
+        "sha256": "a33899aebb14382387d673b1c3961af4a1ebbe6df56e5390bed71af5d9b58ab6",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "inset-v1-16-9-720-568.png",
+        "sha256": "add2f7525bb4c25f2a7890dbe48141b6f7193dfb3816878720aa1dd14caab79c",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "inset-v1-16-9-720-844.png",
+        "sha256": "7c60061ce2000d48ec78fea9680c3b58b93d7b9e781a5c3d8629ced08e6f801a",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "inset-v1-16-9-1080-568.png",
+        "sha256": "62c5244291daeea2441e422dddae5f559a21bd800a4b74e6da1c8d095e674df4",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "inset-v1-16-9-1080-844.png",
+        "sha256": "d52e6288abb8bb1e8802c4fb6d0e984077a059c2966ef901705b4ec88a21ecd0",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-1-1-720-320.png",
+        "sha256": "fbab19c28f67f42edea506de10bea97ae27af6a3706db45184319fadce64a472",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-1-1-720-390.png",
+        "sha256": "2f545222f854c56e6e53b768353646ce765ba32c085059121e9fc6a073a779bc",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-1-1-1080-320.png",
+        "sha256": "07d4aebe367abc247706296a7acaac211322967354f59afa37583d7ebed03815",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-1-1-1080-390.png",
+        "sha256": "3bba0a48ab7acc41ea3f48b913b300c6589bdb2e294338b4b8c1b3176a6cc6e1",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-720-320.png",
+        "sha256": "cfb1ac0260f103dbdecede78c7442f9e2df5839de35d370607d8e8fd65779eea",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-720-390.png",
+        "sha256": "3dfbc7ce3a1af9fa7c54e5e3863489d8d68295ea85b175053c9a05a5d01eaa7a",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-1080-320.png",
+        "sha256": "2cde407d9b4b045f63598f57df32b22dbcfca6efa13ce93978da0154b2a746c1",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-1080-390.png",
+        "sha256": "343dca8748fa7e6dbe8f3e0dd31ca37f7db23a89c59436ec3bd40053fc9e7317",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-720-568.png",
+        "sha256": "492a2c86258d1635e5361b8951ec2c0f1b5ef8d61ed466731b8e82c0c9997081",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-720-844.png",
+        "sha256": "920fd1e4fb5b8ba5b1274f99f723c137dec36d45c8e822e466808fca6acf6489",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-1080-568.png",
+        "sha256": "9f9bb94b8e7035c06643f72df754297e06aa3125761f94a442e96ded2bd585bc",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-1080-844.png",
+        "sha256": "f13b96f7f37afb5428951eed34c8f12874091ad24cbab610ef1d7306d567a6bb",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-720-320.png",
+        "sha256": "e2f17c2a29ad10239dc4a8da7afcbbd7aba8b763ba9462fc45044b1cefee1e6b",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-720-390.png",
+        "sha256": "22c650af246ee27ba87dfd99a08b036832d9b7a3dc5e7db13c0721214598c62e",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-1080-320.png",
+        "sha256": "a9bf3785e8cb180e1479151ddc70314a5237cb476c019dc8d596e1d3b2b63c56",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-1080-390.png",
+        "sha256": "85f24666eaa6e1012afe009a465e72745cd6fc1bfd3df21a915e84c4d27bbec3",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      }
+    ],
+    "negativeControlPassed": true,
+    "busy": {
+      "scope": "Fixed 720p synthetic high-detail portrait asset; OCR on reviewed 320px title/caption regions for Extra margins and Device safe. Not physical-device or arbitrary content acceptance.",
+      "expectedSamples": 8,
+      "exports": 2,
+      "samples": [
+        {
+          "placement": "extra-margins",
+          "scene": "short",
+          "area": "title",
+          "file": "busy-extra-margins-short-title.png",
+          "frameSha256": "e8d542771fa7e834d0e9804c37f1199a547630e05e9eb7400ae15b3431a13d2a",
+          "sha256": "9d8ade022e490efbccfb169ae04f1959019d91f82ad9ce59acae2073161eaf18",
+          "expected": "clear video title",
+          "recognized": "clear video title",
+          "passed": true
+        },
+        {
+          "placement": "extra-margins",
+          "scene": "short",
+          "area": "caption",
+          "file": "busy-extra-margins-short-caption.png",
+          "frameSha256": "e8d542771fa7e834d0e9804c37f1199a547630e05e9eb7400ae15b3431a13d2a",
+          "sha256": "8f51bff82b5469cf01a27d04893bd2373ed839e8a2209cf8d3af9561b5561c5c",
+          "expected": "read every caption",
+          "recognized": "read every caption",
+          "passed": true
+        },
+        {
+          "placement": "extra-margins",
+          "scene": "long",
+          "area": "title",
+          "file": "busy-extra-margins-long-title.png",
+          "frameSha256": "835dbdab9e86110d6df402706db907e6f9ac43bf3464bc0aa938aac16094c8d8",
+          "sha256": "e6d313ec8a87fd6e9153e16e8621174afaf5486961510c858f538b48b7b1880c",
+          "expected": "plan your next campaign with clear goals",
+          "recognized": "plan your next campaign with clear goals",
+          "passed": true
+        },
+        {
+          "placement": "extra-margins",
+          "scene": "long",
+          "area": "caption",
+          "file": "busy-extra-margins-long-caption.png",
+          "frameSha256": "835dbdab9e86110d6df402706db907e6f9ac43bf3464bc0aa938aac16094c8d8",
+          "sha256": "c87e7923ac8ae1408b282fe717773fd9e81d69bd5fd07ae41d372e5fe55f131a",
+          "expected": "keep the key message easy to read on small screens",
+          "recognized": "keep the key message easy to read on small screens",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "short",
+          "area": "title",
+          "file": "busy-device-safe-short-title.png",
+          "frameSha256": "5a2f0507e40718e1269d7c7f96d865b28b51fe824063a221d7ca27ee2d410411",
+          "sha256": "326ec4ed327a633231bd79816514a8d0da36395b0ead2f4548df455c677eddfa",
+          "expected": "clear video title",
+          "recognized": "clear video title",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "short",
+          "area": "caption",
+          "file": "busy-device-safe-short-caption.png",
+          "frameSha256": "5a2f0507e40718e1269d7c7f96d865b28b51fe824063a221d7ca27ee2d410411",
+          "sha256": "797ae6cd2838a6396a19a537ed110c84eb628b7cfc20b3bec0e5c84c972714eb",
+          "expected": "read every caption",
+          "recognized": "read every caption",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "long",
+          "area": "title",
+          "file": "busy-device-safe-long-title.png",
+          "frameSha256": "32d87a65c0b2d32b699fd118441c0aafee5f0f6c3a66279bf3083d5ef8e42a95",
+          "sha256": "537ad4e59c656f01e2c83702feda98c74152aecbf8ab43dd1593641fa69f810b",
+          "expected": "plan your next campaign with clear goals",
+          "recognized": "plan your next campaign with clear goals",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "long",
+          "area": "caption",
+          "file": "busy-device-safe-long-caption.png",
+          "frameSha256": "32d87a65c0b2d32b699fd118441c0aafee5f0f6c3a66279bf3083d5ef8e42a95",
+          "sha256": "1c0a2082659f84acadceba9f2b8502de612318a77a9daaa2f0f642aa897f85c3",
+          "expected": "keep the key message easy to read on small screens",
+          "recognized": "keep the key message easy to read on small screens",
+          "passed": true
+        }
+      ],
+      "backgroundSha256": "ac8454483163a3bb10b23b8e689a03db139f830b4f51cdb0294fe111073e6f93"
+    },
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "tesseract": "tesseract 5.3.4",
+    "fontSha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280"
+  },
+  "decodedJobLogSha256": {
+    "core": "6fc51382fdf7ba0ef235ebc71376845ba844bed8cecc8a70bce7cd7f64686269",
+    "compose": "02cca3a9d93d6d1bf0f42cccfbfe0d4cb6e284e08be316294d67370c5012a990",
+    "native": "74c49ecbd7099710755f06a50b110198ad85ee8c846feadca70c10848a03dcd4"
+  },
+  "changedPaths": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/APPLICATION_OBJECT_BINDING.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/github-publication.json",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/recovery01g-final-ci-receipt.json",
+    "docs/qa/recovery01h-evidence.json",
+    "docs/qa/recovery01h-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "scripts/application-object-binding.mjs",
+    "scripts/compose-historical-recovery-fixture.mjs",
+    "scripts/compose-recovery-fixture.mjs",
+    "scripts/verify-compose-fixture.mjs",
+    "scripts/verify-compose.mjs",
+    "tests/application-object-binding.test.ts"
+  ],
+  "nextTask": "RECOVERY-01I pre-target historical application manifest and physical snapshot binding",
+  "remainingOpenTracks": 21,
+  "limits": [
+    "CI verifies fixtures and does not deploy.",
+    "Historical copies created after logical restore; physical DB/S3/Redis PITR is not established.",
+    "Production retention/durability/backup operations and real-provider, deployed/live/full-master acceptance remain open."
+  ],
+  "sourcePackage": {
+    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01h-implementation-source.zip",
+    "files": 581,
+    "bytes": 15672485,
+    "sha256": "206bd421c70325f1e1bb25e6c094e478ceca4aea0dfe8b3a158bb227bc168688",
+    "zipCrcPassed": true,
+    "allEntriesMatchPublishedGitBlobs": true
+  }
+}

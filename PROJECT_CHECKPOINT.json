@@ -3,7 +3,7 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
   "checkpointRevision": "recovery01h-20261022",
-  "savedAtUtc": "2026-10-22T00:55:11.493Z",
+  "savedAtUtc": "2026-10-22T01:13:30.987Z",
   "currentMilestone": "RECOVERY-01H bounded logical application-reference/version binding",
   "activeTaskId": "RECOVERY-01",
   "workInProgress": true,
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish H normally and inspect/fix ALL THREE jobs and required steps on its exact final commit; retain external final receipt with the source ZIP. Then I pre-target historical manifest/physical application snapshot binding.",
+  "nextAction": "Inspect/fix all THREE jobs on the exact final documentation closure commit; retain final external receipt with source ZIP. Then RECOVERY-01I pre-target historical application manifest/physical snapshot binding.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -102,16 +102,10 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/recovery01g-final-ci-receipt.json",
+    "docs/qa/recovery01g-evidence.json",
     "docs/qa/recovery01h-evidence.json",
-    "docs/qa/recovery01h-unit-receipts.json",
-    "docs/qa/verification-summary.json",
-    "scripts/application-object-binding.mjs",
-    "scripts/compose-historical-recovery-fixture.mjs",
-    "scripts/compose-recovery-fixture.mjs",
-    "scripts/verify-compose-fixture.mjs",
-    "scripts/verify-compose.mjs",
-    "tests/application-object-binding.test.ts"
+    "docs/qa/recovery01h-native-ci-evidence.json",
+    "docs/qa/verification-summary.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6698,16 +6692,16 @@
     "redis": "SOCIAL-01 configurable posting-policy own native Redis CI passed; local selected verifier used native Redis test tooling."
   },
   "accessState": {
-    "github": "Public main U CI fix ca7d7a34eddd791df55f0996c41b77d27179db9e; own Actions 37608908118 attempt 1 verified successful.",
-    "nativeExecution": "Full isolated local PGlite/Redis 7.2.11/S3Proxy/FFmpeg/browser/recovery verifier passed with authorized loopback service permission after S3Proxy was initially blocked. Native application CI is separate; complete Compose and native/cross-store restore remain open.",
+    "github": "Normal H implementation push and all-three-job exact-source CI verified: f33276cbe55d6363e3f44abea1278b81d247881e/run39702680294",
+    "nativeExecution": "Windows Docker29.7.2 cached-image H16-phase runtime diagnostic and focused31 tests passed. H implementation CI built exact source; all three jobs and16 Compose phases passed. Final continuity commit requires own CI.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
-    "status": "G_final_exact_commit_verified_H_in_progress",
+    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+    "status": "H_implementation_verified_final_documentation_closure_requires_own_ci",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6720,9 +6714,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
+    "sourceTree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last verified publication; current H work requires its own exact-commit CI.",
+    "commitMeaning": "Last verified H implementation; external final receipt binds subsequent continuity closure.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "e1cbab4c73e5a51227195588edc666f22006bc57",
     "uploadGate": {
@@ -6734,16 +6728,16 @@
       "resolved": true
     },
     "publication": {
-      "taskId": "RECOVERY-01G",
-      "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
-      "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
-      "runId": 39698034764,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
+      "taskId": "RECOVERY-01H",
+      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+      "runId": 39702680294,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 295,
+        "unit": 300,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -6751,13 +6745,12 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 15,
-        "historicalObjectReferences": 2,
-        "syntheticAcceptedEffects": 1,
-        "syntheticSubmissionAttempts": 1,
-        "localFocusedUnit": 24
+        "composePhases": 16,
+        "boundApplicationReferences": 6,
+        "boundHistoricalObjects": 6,
+        "localFocusedTests": 31
       },
-      "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
     },
     "currentUploadGate": {
       "slice": "EDITOR-01V",
@@ -7655,16 +7648,16 @@
       "requiresSeparatePublicScopeAuthorization": true
     },
     "latestPublication": {
-      "taskId": "RECOVERY-01G",
-      "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
-      "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
-      "runId": 39698034764,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
+      "taskId": "RECOVERY-01H",
+      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+      "runId": 39702680294,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 295,
+        "unit": 300,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -7672,15 +7665,14 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 15,
-        "historicalObjectReferences": 2,
-        "syntheticAcceptedEffects": 1,
-        "syntheticSubmissionAttempts": 1,
-        "localFocusedUnit": 24
+        "composePhases": 16,
+        "boundApplicationReferences": 6,
+        "boundHistoricalObjects": 6,
+        "localFocusedTests": 31
       },
-      "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
     },
-    "latestApplicationSourceCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+    "latestApplicationSourceCommit": "f33276cbe55d6363e3f44abea1278b81d247881e",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7874,16 +7866,16 @@
     "prisma/migrations/202610180001_research_evidence/migration.sql": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5",
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
   },
-  "checkpointVerificationEvidence": "docs/qa/recovery01g-native-ci-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/recovery01h-native-ci-evidence.json",
   "latestStatus": {
     "taskId": "RECOVERY-01H",
-    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
-    "nextAction": "Publish H normally and inspect/fix ALL THREE jobs and required steps on its exact final commit; retain external final receipt with the source ZIP. Then I pre-target historical manifest/physical application snapshot binding."
+    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
+    "nextAction": "Inspect/fix all THREE jobs on the exact final documentation closure commit; retain final external receipt with source ZIP. Then RECOVERY-01I pre-target historical application manifest/physical snapshot binding."
   },
   "activeTask": {
     "id": "RECOVERY-01H",
-    "title": "Application reference/historical version binding",
-    "status": "local_increment_requires_own_exact_commit_all_three_jobs"
+    "title": "Verified H implementation final continuity closure",
+    "status": "documentation_closure_requires_own_ci"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -7896,9 +7888,9 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RECOVERY-01H",
-    "status": "standing_authorized_normal_push_and_exact_source_ci_required",
-    "baseCommit": "dd2b34eca47b6f90784034107933a217a1c45660",
+    "taskId": "RECOVERY-01H documentation closure",
+    "status": "standing_authorized_normal_push_and_own_exact_source_all_three_jobs_required",
+    "baseCommit": "f33276cbe55d6363e3f44abea1278b81d247881e",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -7918,19 +7910,14 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01g-final-ci-receipt.json",
+      "docs/qa/recovery01g-evidence.json",
       "docs/qa/recovery01h-evidence.json",
-      "docs/qa/recovery01h-unit-receipts.json",
-      "docs/qa/verification-summary.json",
-      "scripts/application-object-binding.mjs",
-      "scripts/compose-historical-recovery-fixture.mjs",
-      "scripts/compose-recovery-fixture.mjs",
-      "scripts/verify-compose-fixture.mjs",
-      "scripts/verify-compose.mjs",
-      "tests/application-object-binding.test.ts"
+      "docs/qa/recovery01h-native-ci-evidence.json",
+      "docs/qa/verification-summary.json"
     ],
-    "requiresAllThreeJobsOnOwnCommit": true,
-    "finalReceipt": "External recovery01h-final-ci-receipt.json carried with portable ZIP"
+    "implementationVerified": true,
+    "currentClosureOwnCiPassed": false,
+    "finalReceipt": "External recovery01h-final-ci-receipt.json carried with source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8402,17 +8389,16 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "RECOVERY-01G",
-    "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
-    "runId": 39695812351,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+    "taskId": "RECOVERY-01H",
+    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+    "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+    "runId": 39702680294,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 295,
+      "unit": 300,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -8420,13 +8406,12 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 15,
-      "historicalObjectReferences": 2,
-      "syntheticAcceptedEffects": 1,
-      "syntheticSubmissionAttempts": 1,
-      "localFocusedUnit": 24
+      "composePhases": 16,
+      "boundApplicationReferences": 6,
+      "boundHistoricalObjects": 6,
+      "localFocusedTests": 31
     },
-    "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8523,29 +8508,18 @@
   },
   "currentVerification": {
     "taskId": "RECOVERY-01H",
-    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
-    "local": {
-      "focusedTests": 31,
-      "newUnitCases": 5,
-      "syntaxChecked": true,
-      "protectedHashesUnchanged": 25,
-      "diagnostic": null,
-      "initialHFailure": {
-        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
-        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
-      }
-    },
-    "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01G",
-      "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
-      "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
-      "runId": 39698034764,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
+    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
+    "verifiedImplementationPublication": {
+      "taskId": "RECOVERY-01H",
+      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+      "runId": 39702680294,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 295,
+        "unit": 300,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -8553,14 +8527,49 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 15,
-        "historicalObjectReferences": 2,
-        "syntheticAcceptedEffects": 1,
-        "syntheticSubmissionAttempts": 1,
-        "localFocusedUnit": 24
+        "composePhases": 16,
+        "boundApplicationReferences": 6,
+        "boundHistoricalObjects": 6,
+        "localFocusedTests": 31
       },
-      "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
-    }
+      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    },
+    "results": {
+      "unit": 300,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 16,
+      "boundApplicationReferences": 6,
+      "boundHistoricalObjects": 6,
+      "localFocusedTests": 31
+    },
+    "local": {
+      "focusedTests": 31,
+      "newUnitCases": 5,
+      "syntaxChecked": true,
+      "protectedHashesUnchanged": 25,
+      "diagnostic": {
+        "passed": true,
+        "mode": "diagnostic-existing-images-runtime-assertions",
+        "steps": 16,
+        "cleanup": true,
+        "reportSha256": "3c367299b00f3b6056343c6ad588f8841dfe644c20e8c553cfc2d801520a3eb2",
+        "runtimeAssertionsRetained": true,
+        "imageBuildsSkipped": true,
+        "environmentUnchanged": true
+      },
+      "initialHFailure": {
+        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
+        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
+      }
+    },
+    "closureOnly": true,
+    "currentClosureOwnCiPassed": false
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -8876,9 +8885,8 @@
     "closurePublicationNativeCi": true
   },
   "lastPublishedFiles": {
-    "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
+    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
     "paths": [
-      ".dockerignore",
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
@@ -8886,10 +8894,9 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "docs/APPLICATION_PHYSICAL_RECOVERY.md",
+      "docs/APPLICATION_OBJECT_BINDING.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
-      "docs/HISTORICAL_OBJECT_RECOVERY.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/RESUME_CONTEXT.md",
@@ -8898,23 +8905,18 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01f-evidence.json",
-      "docs/qa/recovery01f-native-ci-evidence.json",
-      "docs/qa/recovery01g-evidence.json",
-      "docs/qa/recovery01g-native-ci-evidence.json",
-      "docs/qa/recovery01g-unit-receipts.json",
+      "docs/qa/recovery01g-final-ci-receipt.json",
+      "docs/qa/recovery01h-evidence.json",
+      "docs/qa/recovery01h-unit-receipts.json",
       "docs/qa/verification-summary.json",
+      "scripts/application-object-binding.mjs",
       "scripts/compose-historical-recovery-fixture.mjs",
-      "scripts/compose-recovery-provider.mjs",
-      "scripts/historical-effect-reconciliation.mjs",
-      "scripts/historical-object-verification.mjs",
+      "scripts/compose-recovery-fixture.mjs",
       "scripts/verify-compose-fixture.mjs",
       "scripts/verify-compose.mjs",
-      "tests/historical-effect-reconciliation.test.ts",
-      "tests/historical-object-verification.test.ts",
-      "tests/historical-provider.test.ts"
+      "tests/application-object-binding.test.ts"
     ],
-    "meaning": "Last verified published G closure; H scope in pendingPublication"
+    "meaning": "Verified H implementation; closure paths in pendingPublication"
   },
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
@@ -9071,29 +9073,18 @@
   },
   "verification": {
     "taskId": "RECOVERY-01H",
-    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
-    "local": {
-      "focusedTests": 31,
-      "newUnitCases": 5,
-      "syntaxChecked": true,
-      "protectedHashesUnchanged": 25,
-      "diagnostic": null,
-      "initialHFailure": {
-        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
-        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
-      }
-    },
-    "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01G",
-      "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
-      "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
-      "runId": 39698034764,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
+    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
+    "verifiedImplementationPublication": {
+      "taskId": "RECOVERY-01H",
+      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+      "runId": 39702680294,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 295,
+        "unit": 300,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -9101,14 +9092,49 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 15,
-        "historicalObjectReferences": 2,
-        "syntheticAcceptedEffects": 1,
-        "syntheticSubmissionAttempts": 1,
-        "localFocusedUnit": 24
+        "composePhases": 16,
+        "boundApplicationReferences": 6,
+        "boundHistoricalObjects": 6,
+        "localFocusedTests": 31
       },
-      "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
-    }
+      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    },
+    "results": {
+      "unit": 300,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 16,
+      "boundApplicationReferences": 6,
+      "boundHistoricalObjects": 6,
+      "localFocusedTests": 31
+    },
+    "local": {
+      "focusedTests": 31,
+      "newUnitCases": 5,
+      "syntaxChecked": true,
+      "protectedHashesUnchanged": 25,
+      "diagnostic": {
+        "passed": true,
+        "mode": "diagnostic-existing-images-runtime-assertions",
+        "steps": 16,
+        "cleanup": true,
+        "reportSha256": "3c367299b00f3b6056343c6ad588f8841dfe644c20e8c553cfc2d801520a3eb2",
+        "runtimeAssertionsRetained": true,
+        "imageBuildsSkipped": true,
+        "environmentUnchanged": true
+      },
+      "initialHFailure": {
+        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
+        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
+      }
+    },
+    "closureOnly": true,
+    "currentClosureOwnCiPassed": false
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
     "scope": "POLICY-01B local reconstruction; full app regression plus final hostname-hardening focused rerun; no native CI for this increment",
@@ -9968,9 +9994,9 @@
     ]
   },
   "contextResume": {
-    "evidence": "docs/qa/context-resume-evidence.json",
+    "evidence": "docs/qa/recovery01h-native-ci-evidence.json",
     "resumeContext": "docs/RESUME_CONTEXT.md",
-    "lastVerifiedPublicMain": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+    "lastVerifiedPublicMain": "f33276cbe55d6363e3f44abea1278b81d247881e",
     "pastedContextSuperseded": true,
     "documentationOnly": false,
     "publicPushAttempted": true
@@ -14092,7 +14118,7 @@
     "schemaVersion": 1,
     "taskId": "RECOVERY-01G",
     "recordedAtUtc": "2026-10-21T23:45:49.231Z",
-    "status": "implementation_exact_source_all_three_jobs_verified_documentation_closure_ci_required",
+    "status": "exact_final_commit_all_three_jobs_verified",
     "baseCommit": "40b936fdd29cb2d3754c84602ab3bc10ff4ff03c",
     "baseRun": 39289873313,
     "changedPaths": [
@@ -14142,11 +14168,242 @@
       "editorDiagnostics": "Tool unavailable in resumed client; syntax checks and focused tests executed."
     },
     "localCompose": {
-      "status": "in_progress",
-      "fullReport": null,
-      "priorAttempt": "2026-10-19 log ended during MinIO build without completion; not a pass",
-      "fullReportPath": null,
-      "scopeNote": "Full local run launched before final narrow native-404 assertions/report-precision updates; exact final CI must execute current source."
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01G",
+      "baselineTaskId": "RECOVERY-01D",
+      "passed": false,
+      "startedAt": "2026-10-21T23:38:39.701Z",
+      "sourceProject": "omos-compose-verify-9f07e8881f75f3fd",
+      "restoreProject": "omos-compose-verify-9f07e8881f75f3fd-restore",
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "checks": {
+        "generatedProjectPrivateEnvAndVolumeIsolation": true,
+        "allNineLongRunningServices": true,
+        "syntheticProviderService": true,
+        "health": true,
+        "auth": true,
+        "tenantIsolation": true,
+        "range": true,
+        "realRender": true,
+        "idempotency": true,
+        "noKeyFailure": true,
+        "emailSubmission": true,
+        "realSmtpDelivery": true,
+        "allFiveWritersStoppedBeforeBackup": true,
+        "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
+        "syntheticUncertainProviderCallsBeforeBackup": 1,
+        "completeSealedBackupPreflight": true,
+        "everyDatabaseMediaReferenceCovered": true,
+        "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
+        "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true,
+        "originalBackupRowsAndObjectsPreservedAfterHistoricalProbe": true,
+        "originalSourceVolumesRemoved": true,
+        "freshRedisEmptyBeforeApplicationStart": true,
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true,
+        "cleanAtomicNativeDatabaseRetry": true,
+        "partialObjectsObserved": 1,
+        "partialObjectBytesAndMetadataMatch": true,
+        "partialObjectsRemoved": 1,
+        "restoreBucketEmptyAfterCleanup": true,
+        "objectsRestored": 6,
+        "allObjectBytesAndMetadataMatch": true,
+        "controlledFailureAfterAcknowledgedPrivatePut": true,
+        "applicationStartDeniedWhileObjectsIncomplete": true,
+        "allFiveApplicationServicesAbsentDuringPartialRestore": true,
+        "ownedRestoreBucketOnlyCleanup": true,
+        "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
+        "sameValidatedBackupRetriedBeforeApplicationStart": true,
+        "applicationStartAllowedOnlyAfterVerifiedRestore": true,
+        "nativeDatabaseRestore": true,
+        "privateMediaRestore": true,
+        "recordCountsMatch": true,
+        "originalAndRenderedBytesMatch": true,
+        "tenantAndAnonymousIsolationAfterRestore": true,
+        "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "steps": [
+        {
+          "name": "isolated configuration",
+          "passed": true,
+          "durationMs": 8943
+        },
+        {
+          "name": "build application images",
+          "passed": true,
+          "durationMs": 1725001
+        },
+        {
+          "name": "build official pinned MinIO release",
+          "passed": true,
+          "durationMs": 839061
+        },
+        {
+          "name": "complete Compose startup",
+          "passed": true,
+          "durationMs": 120971
+        },
+        {
+          "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+          "passed": true,
+          "durationMs": 28405
+        },
+        {
+          "name": "real SMTP delivery",
+          "passed": true,
+          "durationMs": 1653
+        },
+        {
+          "name": "quiesced native database and private-object backup",
+          "passed": true,
+          "durationMs": 38829
+        },
+        {
+          "name": "reject incomplete/corrupt backups while preserving original source",
+          "passed": true,
+          "durationMs": 9453
+        },
+        {
+          "name": "historical private-object versions and external-effect reconciliation prerequisites",
+          "passed": true,
+          "durationMs": 23024
+        },
+        {
+          "name": "remove original disposable source targets",
+          "passed": true,
+          "durationMs": 16110
+        },
+        {
+          "name": "restore into separate PostgreSQL and MinIO targets",
+          "passed": true,
+          "durationMs": 42117
+        },
+        {
+          "name": "partial private-object failure, gated startup and clean retry",
+          "passed": true,
+          "durationMs": 88472
+        },
+        {
+          "name": "restored records/media/tenant access through actual application",
+          "passed": true,
+          "durationMs": 9156
+        },
+        {
+          "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+          "passed": false,
+          "durationMs": 109119
+        }
+      ],
+      "verificationMode": "complete-compose-native-restore",
+      "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+      "databaseDump": {
+        "bytes": 124704,
+        "sha256": "cbf583d926e8ef339a255693d84723b3bd7780ca8488438d165b9ccc73cc1530"
+      },
+      "objectBackup": {
+        "objects": 6,
+        "bytes": 27582,
+        "sha256": "3db575caba2cafc42c9376d75a4c6696fc6e4dbcf463a84123866ae3594189f7"
+      },
+      "backupManifest": {
+        "sha256": "4c48a6b8aa5f58059e52460c4b079f7d6fe3f0564efb94e12953e80fbf00c590",
+        "databaseBytes": 124704,
+        "privateObjects": 6
+      },
+      "backupFailureCases": [
+        {
+          "name": "truncated-native-dump",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "modified-native-dump",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "missing-private-object",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "modified-private-object",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "modified-private-metadata",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "missing-writer-quiescence",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "wrong-restore-project",
+          "rejectedBeforeDestructiveAction": true
+        }
+      ],
+      "historicalRecovery": {
+        "checks": {
+          "dedicatedOwnedBucketVersioningEnabled": true,
+          "currentReadsDoNotRepresentHistoricalPoint": true,
+          "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+          "exactHistoricalVersionBytesAndMetadataRecovered": true,
+          "providerConfirmedEffectReviewedWithoutReplay": true,
+          "historicalVersionRemainsPrivate": true,
+          "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+          "otherVersionsAndSavedManifestPreserved": true,
+          "ownedHistoricalBucketAndAllVersionsRemoved": true
+        },
+        "objectsAtHistoricalPoint": 2,
+        "syntheticExternalEffects": 1,
+        "acceptedProviderCalls": 1,
+        "providerSubmissionAttempts": 1,
+        "readinessCallbacks": 1,
+        "databasePoint": "0/1B00F10",
+        "physicalPitrCombined": false,
+        "productionRetentionClaimed": false
+      },
+      "restoreInterruption": {
+        "cases": [
+          {
+            "atomic": false,
+            "reachedNativeCopyBarrier": true,
+            "backendTerminated": true,
+            "restoreExitedNonZero": true,
+            "visibleTablesDuringRestore": 39,
+            "visibleTablesAfterInterruption": 39,
+            "rollbackToEmptyTarget": false
+          },
+          {
+            "atomic": true,
+            "reachedNativeCopyBarrier": true,
+            "backendTerminated": true,
+            "restoreExitedNonZero": true,
+            "visibleTablesDuringRestore": 0,
+            "visibleTablesAfterInterruption": 0,
+            "rollbackToEmptyTarget": true
+          }
+        ],
+        "checks": {
+          "nonAtomicInterruptionLeavesPartialState": true,
+          "atomicInterruptionRollsBackSchemaAndData": true,
+          "cleanEmptyTargetPreparedForRetry": true
+        }
+      },
+      "completedAt": "2026-10-22T00:30:44.232Z",
+      "failureSummary": "Queued AI job entered FAILED during fresh-Redis recovery. The original assertion reason was truncated by an encoded data-URI stack; the cause was not recovered.",
+      "rawLogSha256": "7174da5fef63ad29fd5038388ce73d175f4a831857e83230f3ab889e1ee60225"
     },
     "environment": {
       "os": "Windows",
@@ -14176,11 +14433,10 @@
     },
     "publication": {
       "taskId": "RECOVERY-01G",
-      "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-      "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-      "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
-      "runId": 39695812351,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+      "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
+      "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
+      "runId": 39698034764,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
@@ -14199,7 +14455,7 @@
         "syntheticSubmissionAttempts": 1,
         "localFocusedUnit": 24
       },
-      "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+      "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
     },
     "limits": [
       "Sampled LSN is a correlation label; the objects are created later. No coordinated DB/object checkpoint is established.",
@@ -14744,6 +15000,43 @@
       }
     ],
     "finalImplementationReceipt": "docs/qa/recovery01g-native-ci-evidence.json",
+    "priorClosureCapture": {
+      "status": "implementation_exact_source_all_three_jobs_verified_documentation_closure_ci_required",
+      "localCompose": {
+        "status": "in_progress",
+        "fullReport": null,
+        "priorAttempt": "2026-10-19 log ended during MinIO build without completion; not a pass",
+        "fullReportPath": null,
+        "scopeNote": "Full local run launched before final narrow native-404 assertions/report-precision updates; exact final CI must execute current source."
+      },
+      "publication": {
+        "taskId": "RECOVERY-01G",
+        "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+        "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+        "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
+        "runId": 39695812351,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+        "status": "completed",
+        "conclusion": "success",
+        "allThreeJobsAndRequiredStepsPassed": true,
+        "results": {
+          "unit": 295,
+          "http": 38,
+          "browser": 28,
+          "recovery": 5,
+          "migrations": 24,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "composePhases": 15,
+          "historicalObjectReferences": 2,
+          "syntheticAcceptedEffects": 1,
+          "syntheticSubmissionAttempts": 1,
+          "localFocusedUnit": 24
+        },
+        "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+      }
+    },
     "finalPublication": {
       "taskId": "RECOVERY-01G",
       "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
@@ -14770,244 +15063,7 @@
       },
       "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
     },
-    "localFullCompose": {
-      "schemaVersion": 1,
-      "taskId": "RECOVERY-01G",
-      "baselineTaskId": "RECOVERY-01D",
-      "passed": false,
-      "startedAt": "2026-10-21T23:38:39.701Z",
-      "sourceProject": "omos-compose-verify-9f07e8881f75f3fd",
-      "restoreProject": "omos-compose-verify-9f07e8881f75f3fd-restore",
-      "liveProvidersCalled": false,
-      "publicDeployment": false,
-      "checks": {
-        "generatedProjectPrivateEnvAndVolumeIsolation": true,
-        "allNineLongRunningServices": true,
-        "syntheticProviderService": true,
-        "health": true,
-        "auth": true,
-        "tenantIsolation": true,
-        "range": true,
-        "realRender": true,
-        "idempotency": true,
-        "noKeyFailure": true,
-        "emailSubmission": true,
-        "realSmtpDelivery": true,
-        "allFiveWritersStoppedBeforeBackup": true,
-        "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
-        "syntheticUncertainProviderCallsBeforeBackup": 1,
-        "completeSealedBackupPreflight": true,
-        "everyDatabaseMediaReferenceCovered": true,
-        "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
-        "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
-        "dedicatedOwnedBucketVersioningEnabled": true,
-        "currentReadsDoNotRepresentHistoricalPoint": true,
-        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
-        "exactHistoricalVersionBytesAndMetadataRecovered": true,
-        "providerConfirmedEffectReviewedWithoutReplay": true,
-        "historicalVersionRemainsPrivate": true,
-        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
-        "otherVersionsAndSavedManifestPreserved": true,
-        "ownedHistoricalBucketAndAllVersionsRemoved": true,
-        "originalBackupRowsAndObjectsPreservedAfterHistoricalProbe": true,
-        "originalSourceVolumesRemoved": true,
-        "freshRedisEmptyBeforeApplicationStart": true,
-        "nonAtomicInterruptionLeavesPartialState": true,
-        "atomicInterruptionRollsBackSchemaAndData": true,
-        "cleanEmptyTargetPreparedForRetry": true,
-        "cleanAtomicNativeDatabaseRetry": true,
-        "partialObjectsObserved": 1,
-        "partialObjectBytesAndMetadataMatch": true,
-        "partialObjectsRemoved": 1,
-        "restoreBucketEmptyAfterCleanup": true,
-        "objectsRestored": 6,
-        "allObjectBytesAndMetadataMatch": true,
-        "controlledFailureAfterAcknowledgedPrivatePut": true,
-        "applicationStartDeniedWhileObjectsIncomplete": true,
-        "allFiveApplicationServicesAbsentDuringPartialRestore": true,
-        "ownedRestoreBucketOnlyCleanup": true,
-        "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
-        "sameValidatedBackupRetriedBeforeApplicationStart": true,
-        "applicationStartAllowedOnlyAfterVerifiedRestore": true,
-        "nativeDatabaseRestore": true,
-        "privateMediaRestore": true,
-        "recordCountsMatch": true,
-        "originalAndRenderedBytesMatch": true,
-        "tenantAndAnonymousIsolationAfterRestore": true,
-        "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
-        "fixtureCleanup": true,
-        "realEnvironmentUnchanged": true
-      },
-      "steps": [
-        {
-          "name": "isolated configuration",
-          "passed": true,
-          "durationMs": 8943
-        },
-        {
-          "name": "build application images",
-          "passed": true,
-          "durationMs": 1725001
-        },
-        {
-          "name": "build official pinned MinIO release",
-          "passed": true,
-          "durationMs": 839061
-        },
-        {
-          "name": "complete Compose startup",
-          "passed": true,
-          "durationMs": 120971
-        },
-        {
-          "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
-          "passed": true,
-          "durationMs": 28405
-        },
-        {
-          "name": "real SMTP delivery",
-          "passed": true,
-          "durationMs": 1653
-        },
-        {
-          "name": "quiesced native database and private-object backup",
-          "passed": true,
-          "durationMs": 38829
-        },
-        {
-          "name": "reject incomplete/corrupt backups while preserving original source",
-          "passed": true,
-          "durationMs": 9453
-        },
-        {
-          "name": "historical private-object versions and external-effect reconciliation prerequisites",
-          "passed": true,
-          "durationMs": 23024
-        },
-        {
-          "name": "remove original disposable source targets",
-          "passed": true,
-          "durationMs": 16110
-        },
-        {
-          "name": "restore into separate PostgreSQL and MinIO targets",
-          "passed": true,
-          "durationMs": 42117
-        },
-        {
-          "name": "partial private-object failure, gated startup and clean retry",
-          "passed": true,
-          "durationMs": 88472
-        },
-        {
-          "name": "restored records/media/tenant access through actual application",
-          "passed": true,
-          "durationMs": 9156
-        },
-        {
-          "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
-          "passed": false,
-          "durationMs": 109119
-        }
-      ],
-      "verificationMode": "complete-compose-native-restore",
-      "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
-      "databaseDump": {
-        "bytes": 124704,
-        "sha256": "cbf583d926e8ef339a255693d84723b3bd7780ca8488438d165b9ccc73cc1530"
-      },
-      "objectBackup": {
-        "objects": 6,
-        "bytes": 27582,
-        "sha256": "3db575caba2cafc42c9376d75a4c6696fc6e4dbcf463a84123866ae3594189f7"
-      },
-      "backupManifest": {
-        "sha256": "4c48a6b8aa5f58059e52460c4b079f7d6fe3f0564efb94e12953e80fbf00c590",
-        "databaseBytes": 124704,
-        "privateObjects": 6
-      },
-      "backupFailureCases": [
-        {
-          "name": "truncated-native-dump",
-          "rejectedBeforeDestructiveAction": true
-        },
-        {
-          "name": "modified-native-dump",
-          "rejectedBeforeDestructiveAction": true
-        },
-        {
-          "name": "missing-private-object",
-          "rejectedBeforeDestructiveAction": true
-        },
-        {
-          "name": "modified-private-object",
-          "rejectedBeforeDestructiveAction": true
-        },
-        {
-          "name": "modified-private-metadata",
-          "rejectedBeforeDestructiveAction": true
-        },
-        {
-          "name": "missing-writer-quiescence",
-          "rejectedBeforeDestructiveAction": true
-        },
-        {
-          "name": "wrong-restore-project",
-          "rejectedBeforeDestructiveAction": true
-        }
-      ],
-      "historicalRecovery": {
-        "checks": {
-          "dedicatedOwnedBucketVersioningEnabled": true,
-          "currentReadsDoNotRepresentHistoricalPoint": true,
-          "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
-          "exactHistoricalVersionBytesAndMetadataRecovered": true,
-          "providerConfirmedEffectReviewedWithoutReplay": true,
-          "historicalVersionRemainsPrivate": true,
-          "permanentlyMissingHistoricalVersionRejectsReadiness": true,
-          "otherVersionsAndSavedManifestPreserved": true,
-          "ownedHistoricalBucketAndAllVersionsRemoved": true
-        },
-        "objectsAtHistoricalPoint": 2,
-        "syntheticExternalEffects": 1,
-        "acceptedProviderCalls": 1,
-        "providerSubmissionAttempts": 1,
-        "readinessCallbacks": 1,
-        "databasePoint": "0/1B00F10",
-        "physicalPitrCombined": false,
-        "productionRetentionClaimed": false
-      },
-      "restoreInterruption": {
-        "cases": [
-          {
-            "atomic": false,
-            "reachedNativeCopyBarrier": true,
-            "backendTerminated": true,
-            "restoreExitedNonZero": true,
-            "visibleTablesDuringRestore": 39,
-            "visibleTablesAfterInterruption": 39,
-            "rollbackToEmptyTarget": false
-          },
-          {
-            "atomic": true,
-            "reachedNativeCopyBarrier": true,
-            "backendTerminated": true,
-            "restoreExitedNonZero": true,
-            "visibleTablesDuringRestore": 0,
-            "visibleTablesAfterInterruption": 0,
-            "rollbackToEmptyTarget": true
-          }
-        ],
-        "checks": {
-          "nonAtomicInterruptionLeavesPartialState": true,
-          "atomicInterruptionRollsBackSchemaAndData": true,
-          "cleanEmptyTargetPreparedForRetry": true
-        }
-      },
-      "completedAt": "2026-10-22T00:30:44.232Z",
-      "failureSummary": "Queued AI job entered FAILED during fresh-Redis recovery. The original assertion reason was truncated by an encoded data-URI stack; the cause was not recovered.",
-      "rawLogSha256": "7174da5fef63ad29fd5038388ce73d175f4a831857e83230f3ab889e1ee60225"
-    },
+    "finalReceipt": "docs/qa/recovery01g-final-ci-receipt.json",
     "localDiagnosticRerun": {
       "passed": true,
       "runtimeAssertionsRetained": true,
@@ -15270,7 +15326,8 @@
       },
       "initialFailureReproduced": false,
       "initialCause": "Unobserved; original detail truncated. No speculative cause is claimed."
-    }
+    },
+    "currentClosureOwnCiPassed": true
   },
   "reconciliationHistory01G": {
     "recordedAtUtc": "2026-10-21T23:37:09.018Z",
@@ -15896,16 +15953,16 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01G",
-    "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
-    "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
-    "runId": 39698034764,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
+    "taskId": "RECOVERY-01H",
+    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+    "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+    "runId": 39702680294,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 295,
+      "unit": 300,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -15913,19 +15970,18 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 15,
-      "historicalObjectReferences": 2,
-      "syntheticAcceptedEffects": 1,
-      "syntheticSubmissionAttempts": 1,
-      "localFocusedUnit": 24
+      "composePhases": 16,
+      "boundApplicationReferences": 6,
+      "boundHistoricalObjects": 6,
+      "localFocusedTests": 31
     },
-    "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
     "taskId": "RECOVERY-01H",
-    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
-    "recordedAtUtc": "2026-10-22T00:55:11.493Z",
+    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
+    "recordedAtUtc": "2026-10-22T01:04:30.839Z",
     "baseCommit": "dd2b34eca47b6f90784034107933a217a1c45660",
     "baseRunId": 39698034764,
     "scope": "Typed restored application references bound to exact historical versions; logical restore only",
@@ -15934,7 +15990,16 @@
       "newUnitCases": 5,
       "syntaxChecked": true,
       "protectedHashesUnchanged": 25,
-      "diagnostic": null,
+      "diagnostic": {
+        "passed": true,
+        "mode": "diagnostic-existing-images-runtime-assertions",
+        "steps": 16,
+        "cleanup": true,
+        "reportSha256": "3c367299b00f3b6056343c6ad588f8841dfe644c20e8c553cfc2d801520a3eb2",
+        "runtimeAssertionsRetained": true,
+        "imageBuildsSkipped": true,
+        "environmentUnchanged": true
+      },
       "initialHFailure": {
         "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
         "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
@@ -16466,8 +16531,10 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
+      "docs/qa/recovery01g-evidence.json",
       "docs/qa/recovery01g-final-ci-receipt.json",
       "docs/qa/recovery01h-evidence.json",
+      "docs/qa/recovery01h-native-ci-evidence.json",
       "docs/qa/recovery01h-unit-receipts.json",
       "docs/qa/verification-summary.json",
       "scripts/application-object-binding.mjs",
@@ -16476,6 +16543,106 @@
       "scripts/verify-compose-fixture.mjs",
       "scripts/verify-compose.mjs",
       "tests/application-object-binding.test.ts"
-    ]
+    ],
+    "publication": {
+      "taskId": "RECOVERY-01H",
+      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
+      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
+      "runId": 39702680294,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 300,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 16,
+        "boundApplicationReferences": 6,
+        "boundHistoricalObjects": 6,
+        "localFocusedTests": 31
+      },
+      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    },
+    "artifactByteProof": [
+      {
+        "name": "postgres-pitr-evidence",
+        "sha256Matched": true,
+        "zipCrcPassed": true,
+        "entries": 1,
+        "payloadMatchesDecodedJobReport": true
+      },
+      {
+        "name": "compose-evidence",
+        "sha256Matched": true,
+        "zipCrcPassed": true,
+        "entries": 1,
+        "payloadMatchesDecodedJobReport": true
+      },
+      {
+        "name": "browser-evidence",
+        "sha256Matched": true,
+        "zipCrcPassed": true,
+        "entries": 153,
+        "uniqueUnitReceipts": 300
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "sha256Matched": true,
+        "zipCrcPassed": true,
+        "entries": 1,
+        "payloadMatchesDecodedJobReport": true
+      }
+    ],
+    "finalImplementationReceipt": "docs/qa/recovery01h-native-ci-evidence.json"
+  },
+  "reconciliationHistory01H": {
+    "priorCheckpointVerificationEvidence": "docs/qa/recovery01g-native-ci-evidence.json",
+    "priorContextResume": {
+      "evidence": "docs/qa/context-resume-evidence.json",
+      "resumeContext": "docs/RESUME_CONTEXT.md",
+      "lastVerifiedPublicMain": "060a7d1af0eca551f0f3ac41d2015c8b59662dc7",
+      "pastedContextSuperseded": true,
+      "documentationOnly": false,
+      "publicPushAttempted": true
+    },
+    "priorPublishedIncrement": {
+      "taskId": "RECOVERY-01G",
+      "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+      "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+      "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
+      "runId": 39695812351,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 295,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 15,
+        "historicalObjectReferences": 2,
+        "syntheticAcceptedEffects": 1,
+        "syntheticSubmissionAttempts": 1,
+        "localFocusedUnit": 24
+      },
+      "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+    },
+    "priorAccessState": {
+      "github": "Public main U CI fix ca7d7a34eddd791df55f0996c41b77d27179db9e; own Actions 37608908118 attempt 1 verified successful.",
+      "nativeExecution": "Full isolated local PGlite/Redis 7.2.11/S3Proxy/FFmpeg/browser/recovery verifier passed with authorized loopback service permission after S3Proxy was initially blocked. Native application CI is separate; complete Compose and native/cross-store restore remain open.",
+      "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
+      "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent."
+    }
   }
 }
