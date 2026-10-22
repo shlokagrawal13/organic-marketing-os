@@ -1,3 +1,15 @@
+<!-- RECOVERY01I_CURRENT_START -->
+## RECOVERY-01I pre-target physical/object binding — 2026-10-22
+
+H final 8f636d4f4dd3f99bda50d991631a530e052cfa6c/run39704487708 passed ALL THREE jobs and required steps:300 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,16 Compose phases. Final receipt: docs/qa/recovery01h-final-ci-receipt.json. It closes prior H own-CI pending notices below; earlier notices are historical.
+
+I captures a real MinIO version/reference manifest before PostgreSQL creates its named physical recovery point. The manifest binds the physical fixture/base backup, approved application snapshot and typed Asset reference. Later SQL deletes the reference, while S3 overwrites/deletes the current object. Recovered full application rows/column metadata and exact historical bytes must match the saved capture. Changed point/base/snapshot/inventory, current/missing versions and permanent version loss deny the probe; ownership-scoped cleanup and all previous16 Compose phases/assertions remain. See docs/PRE_TARGET_PHYSICAL_OBJECT_BINDING.md and docs/qa/recovery01i-evidence.json.
+
+Local38 focused tests and standalone native rerun pass. The separate cached-image Windows runtime check passed all17 phases; no image rebuild is claimed. Initial native/Compose rejection-assertion failures are retained. Native pg_ctl false-ready status was observed; negative cases now require foreground PostgreSQL exit1 plus native fatal and SQL rejection. No assertion was weakened; precise timing cause is not claimed.25 protected master/migration hashes remain unchanged. This source requires ALL THREE jobs on its own exact final commit; carry external recovery01i-final-ci-receipt.json with its portable ZIP to close that status.
+
+The physical probe binds one synthetic Asset; it does not start the application from historical objects or establish coordinated Redis/real-provider recovery. Production retention/remote backup/RPO-RTO, live/deployed/full-master acceptance remain open. CI verifies fixtures and does not deploy. Next after I acceptance: RECOVERY-01J physical restore into an application bucket with fresh-Redis/reviewed-effect startup prerequisites.21 broad task tracks remain open.
+<!-- RECOVERY01I_CURRENT_END -->
+
 <!-- RECOVERY01H_CURRENT_START -->
 ## RECOVERY-01H verified implementation and final continuity — 2026-10-22
 

@@ -5,6 +5,8 @@ import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { runPostgresPitr } from "./verify-postgres-pitr.mjs";
+import { physicalCaptureHash } from "./physical-object-binding.mjs";
 import {
   fixtureProject,
   assertFixtureProject,
@@ -160,13 +162,15 @@ const inlineModule = (name) =>
   );
 const historyModule = inlineModule("compose-historical-recovery-fixture.mjs");
 const applicationBindingModule = inlineModule("application-object-binding.mjs");
+const physicalBindingModule = inlineModule("physical-object-binding.mjs");
+const physicalObjectsModule = inlineModule("physical-object-fixture.mjs");
 const historyObjectsModule = inlineModule("historical-object-verification.mjs");
 const historyEffectsModule = inlineModule(
   "historical-effect-reconciliation.mjs",
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01H",
+  taskId: "RECOVERY-01I",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -380,7 +384,7 @@ async function node(project, mode, state = {}, running = true) {
       ];
   return JSON.parse(
     await compose(project, args, {
-      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__applicationBinding=await import(${JSON.stringify(applicationBindingModule)});\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
+      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__applicationBinding=await import(${JSON.stringify(applicationBindingModule)});\nglobalThis.__physicalBinding=await import(${JSON.stringify(physicalBindingModule)});\nglobalThis.__physicalObjects=(await import(${JSON.stringify(physicalObjectsModule)})).runPhysicalObjects;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
       quiet: true,
     }),
   );
@@ -703,6 +707,87 @@ try {
         });
         await node(source, "recovery-baseline", state, false);
         report.checks.originalBackupRowsAndObjectsPreservedAfterHistoricalProbe = true;
+      },
+    );
+    await phase(
+      "pre-target historical versions bound to physical application recovery",
+      async () => {
+        let history;
+        const stopped = async () => {
+          const lines = (
+            await compose(source, ["ps", "--all", "--format", "json"], {
+              quiet: true,
+            })
+          ).trim();
+          const rows = lines.split("\n").flatMap((l) => JSON.parse(l));
+          for (const name of fixtureWriters)
+            assert.ok(
+              rows.some((r) => r.Service === name && r.State === "exited"),
+            );
+        };
+        await stopped();
+        try {
+          report.physicalObjectRecovery = await runPostgresPitr({
+            hooks: {
+              beforeTarget: async (capture) => {
+                history = await node(
+                  source,
+                  "physical-capture",
+                  { project: source, capture },
+                  false,
+                );
+                return { captureSha256: history.captureSha256 };
+              },
+              afterTarget: async (pointReceipt) => {
+                history.pointReceipt = pointReceipt;
+                history.expectedPointReceiptSha256 =
+                  physicalCaptureHash(pointReceipt);
+                Object.assign(
+                  history,
+                  await node(
+                    source,
+                    "physical-later",
+                    { project: source, ...history },
+                    false,
+                  ),
+                );
+              },
+              recovered: async (recovered) => {
+                assert.deepEqual(recovered.pointReceipt, history.pointReceipt);
+                const result = await node(
+                  source,
+                  "physical-verify",
+                  { project: source, ...history, ...recovered },
+                  false,
+                );
+                history.expectedVersions = result.expectedVersions;
+                return result.report;
+              },
+            },
+          });
+          assert.equal(report.physicalObjectRecovery.passed, true);
+          Object.assign(
+            report.checks,
+            report.physicalObjectRecovery.objectBinding.checks,
+          );
+        } finally {
+          if (history)
+            Object.assign(
+              report.checks,
+              await node(
+                source,
+                "physical-cleanup",
+                { project: source, ...history },
+                false,
+              ),
+            );
+        }
+        await stopped();
+        await node(source, "recovery-baseline", state, false);
+        assert.deepEqual(await node(source, "snapshot", {}, false), {
+          objects: backup.objects,
+        });
+        report.checks.originalApplicationSourceUnchangedAfterPhysicalObjectProbe = true;
       },
     );
     // Remove the entire original disposable stack and all its data volumes before

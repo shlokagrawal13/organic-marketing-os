@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01I",
+  "recordedAtUtc": "2026-10-22T11:45:08.520Z",
+  "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+  "baseCommit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+  "baseRunId": 39704487708,
+  "local": {
+    "focusedTests": 38,
+    "newUnitCases": 7,
+    "syntaxAndFormattingChecked": true,
+    "protectedHashesUnchanged": 25,
+    "nativeStandalonePassed": true,
+    "nativeStandaloneEvidenceSha256": "c7fabd06a9586e85377b8dcdcf6b82ba0e2158cc7acf1f06c441a1161838a3ad",
+    "composeDiagnostic": {
+      "passed": true,
+      "phases": 17,
+      "mode": "diagnostic-existing-images-runtime-assertions",
+      "cleanup": true,
+      "environmentUnchanged": true,
+      "reportSha256": "027c1a84d222593a52064b3a3da1078575436423639fccf7134eaf39ee62880d",
+      "imageBuildsSkipped": true
+    },
+    "initialFailures": {
+      "native": {
+        "passed": false,
+        "message": "Missing expected rejection in existing unreachable-target path",
+        "sha256": "4cc43b251bea45c82222b6e988d80a914196aafb30532bf224d7be4dfbafeb68"
+      },
+      "compose": {
+        "passed": false,
+        "phase": "physical object probe; native rejection assertion failed",
+        "sha256": "3e5d60c6b4b35cc2a82fc81293f25d4bf0432d68e6d39fdec984435d9efb259b"
+      },
+      "cause": "Observed pg_ctl native status0 with target-not-reached FATAL; negative starts now require foreground PostgreSQL exit1, native fatal and SQL rejection. Precise pg_ctl timing cause is not claimed.",
+      "pgCtlEvidenceSha256": "a224d9919c115b7ef5d10dd73dca34be98d7905cb496fa355a81d3e8564f68a0",
+      "pgCtlObservation": {
+        "nativeStartExitCodes": {
+          "missing-wal": 1,
+          "unreachable": 0
+        },
+        "targetNotReachedFatalObserved": true,
+        "cleanup": true,
+        "fix": "Foreground native PostgreSQL exit1 required for negative cases; timeout excluded; successful retry still requires pg_ctl0 and SQL checks"
+      }
+    }
+  },
+  "scope": "Real MinIO version manifest captured before native named physical restore point; recovered full application snapshot and one Asset version bound",
+  "runtimeApplicationChanged": false,
+  "migrationsChanged": false,
+  "dependenciesChanged": false,
+  "workflowChanged": false,
+  "previousSixteenComposePhasesRetained": true,
+  "totalComposePhases": 17,
+  "limits": [
+    "One synthetic Asset version is bound; all object-bearing tables are not populated.",
+    "Harness readiness probe only: application is not served from historical bucket; Redis/external-effects checks remain separate.",
+    "No production retention/durability/backup operations or live/deployed/full-master acceptance.",
+    "CI verifies fixtures and does not deploy."
+  ],
+  "nextTask": "RECOVERY-01J physical restore to application bucket with fresh-Redis/reviewed-effect startup prerequisites",
+  "changedPaths": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PRE_TARGET_PHYSICAL_OBJECT_BINDING.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/github-publication.json",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/recovery01h-evidence.json",
+    "docs/qa/recovery01h-final-ci-receipt.json",
+    "docs/qa/recovery01i-evidence.json",
+    "docs/qa/recovery01i-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "scripts/physical-object-binding.mjs",
+    "scripts/physical-object-fixture.mjs",
+    "scripts/postgres-pitr-verification.mjs",
+    "scripts/verify-compose-fixture.mjs",
+    "scripts/verify-compose.mjs",
+    "scripts/verify-postgres-pitr.mjs",
+    "tests/physical-object-binding.test.ts",
+    "tests/postgres-pitr-verification.test.ts"
+  ]
+}

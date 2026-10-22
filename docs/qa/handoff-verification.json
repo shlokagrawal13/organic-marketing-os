@@ -1,13 +1,13 @@
 {
-  "checkpointRevision": "recovery01h-20261022",
+  "checkpointRevision": "recovery01i-20261022",
   "applicationVersion": "0.9.2",
   "verifiedDate": "2026-10-22",
   "lastVerifiedPublication": {
     "taskId": "RECOVERY-01H",
-    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-    "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
-    "runId": 39702680294,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+    "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+    "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
+    "runId": 39704487708,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -25,15 +25,15 @@
       "boundHistoricalObjects": 6,
       "localFocusedTests": 31
     },
-    "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
   },
   "sourcePackage": {
-    "taskId": "RECOVERY-01H",
-    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01h-source.zip",
-    "scope": "Portable source/context/evidence; runtime bytes and credentials excluded",
-    "metadata": "Exact final ZIP digest and own-commit CI in external recovery01h-final-ci-receipt.json"
+    "taskId": "RECOVERY-01I",
+    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01i-source.zip",
+    "scope": "Portable source/context/evidence; not native DB/media backup",
+    "metadata": "Exact ZIP digest and own-commit CI in external recovery01i-final-ci-receipt.json"
   },
-  "currentSourcePackageStatus": "Final H continuity source capsule; own exact-commit CI closed by external final receipt",
+  "currentSourcePackageStatus": "Current I source requires exact own-commit all-three-job CI; paired external final receipt closes status.",
   "priorHandoffVerification": {
     "checkpointRevision": "2026-10-07.15",
     "applicationVersion": "0.9.2",
@@ -630,14 +630,54 @@
     }
   },
   "currentWork": {
-    "taskId": "RECOVERY-01H",
-    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
-    "verifiedImplementationPublication": {
+    "taskId": "RECOVERY-01I",
+    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+    "local": {
+      "focusedTests": 38,
+      "newUnitCases": 7,
+      "syntaxAndFormattingChecked": true,
+      "protectedHashesUnchanged": 25,
+      "nativeStandalonePassed": true,
+      "nativeStandaloneEvidenceSha256": "c7fabd06a9586e85377b8dcdcf6b82ba0e2158cc7acf1f06c441a1161838a3ad",
+      "composeDiagnostic": {
+        "passed": true,
+        "phases": 17,
+        "mode": "diagnostic-existing-images-runtime-assertions",
+        "cleanup": true,
+        "environmentUnchanged": true,
+        "reportSha256": "027c1a84d222593a52064b3a3da1078575436423639fccf7134eaf39ee62880d",
+        "imageBuildsSkipped": true
+      },
+      "initialFailures": {
+        "native": {
+          "passed": false,
+          "message": "Missing expected rejection in existing unreachable-target path",
+          "sha256": "4cc43b251bea45c82222b6e988d80a914196aafb30532bf224d7be4dfbafeb68"
+        },
+        "compose": {
+          "passed": false,
+          "phase": "physical object probe; native rejection assertion failed",
+          "sha256": "3e5d60c6b4b35cc2a82fc81293f25d4bf0432d68e6d39fdec984435d9efb259b"
+        },
+        "cause": "Observed pg_ctl native status0 with target-not-reached FATAL; negative starts now require foreground PostgreSQL exit1, native fatal and SQL rejection. Precise pg_ctl timing cause is not claimed.",
+        "pgCtlEvidenceSha256": "a224d9919c115b7ef5d10dd73dca34be98d7905cb496fa355a81d3e8564f68a0",
+        "pgCtlObservation": {
+          "nativeStartExitCodes": {
+            "missing-wal": 1,
+            "unreachable": 0
+          },
+          "targetNotReachedFatalObserved": true,
+          "cleanup": true,
+          "fix": "Foreground native PostgreSQL exit1 required for negative cases; timeout excluded; successful retry still requires pg_ctl0 and SQL checks"
+        }
+      }
+    },
+    "priorVerifiedPublication": {
       "taskId": "RECOVERY-01H",
-      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
-      "runId": 39702680294,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+      "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+      "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
+      "runId": 39704487708,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
@@ -655,44 +695,8 @@
         "boundHistoricalObjects": 6,
         "localFocusedTests": 31
       },
-      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
-    },
-    "results": {
-      "unit": 300,
-      "http": 38,
-      "browser": 28,
-      "recovery": 5,
-      "migrations": 24,
-      "readabilitySamples": 44,
-      "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0,
-      "composePhases": 16,
-      "boundApplicationReferences": 6,
-      "boundHistoricalObjects": 6,
-      "localFocusedTests": 31
-    },
-    "local": {
-      "focusedTests": 31,
-      "newUnitCases": 5,
-      "syntaxChecked": true,
-      "protectedHashesUnchanged": 25,
-      "diagnostic": {
-        "passed": true,
-        "mode": "diagnostic-existing-images-runtime-assertions",
-        "steps": 16,
-        "cleanup": true,
-        "reportSha256": "3c367299b00f3b6056343c6ad588f8841dfe644c20e8c553cfc2d801520a3eb2",
-        "runtimeAssertionsRetained": true,
-        "imageBuildsSkipped": true,
-        "environmentUnchanged": true
-      },
-      "initialHFailure": {
-        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
-        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
-      }
-    },
-    "closureOnly": true,
-    "currentClosureOwnCiPassed": false
+      "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
+    }
   },
   "FSourcePackageReinspection": {
     "date": "2026-10-22",
@@ -700,11 +704,12 @@
     "sha256": "e705a54519dd606ff270c8bfe3bc5f8e0680af33e9af046cf85896dfede1817b"
   },
   "lastVerifiedSourcePackage": {
-    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01h-implementation-source.zip",
-    "files": 581,
-    "bytes": 15672485,
-    "sha256": "206bd421c70325f1e1bb25e6c094e478ceca4aea0dfe8b3a158bb227bc168688",
+    "archive": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01h-source.zip",
+    "files": 582,
+    "bytes": 15686929,
+    "sha256": "7a07a0329bedb1465be355aff0d241376605c1b4f248d495c67936049b1bb956",
     "zipCrcPassed": true,
-    "allEntriesMatchPublishedGitBlobs": true
+    "allFilesMatchPublishedWorkspace": true,
+    "runtimeDataAndCredentialsExcluded": true
   }
 }

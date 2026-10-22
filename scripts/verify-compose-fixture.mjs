@@ -298,6 +298,20 @@ try {
     );
     assert.equal(forbidden.status, 403);
     console.log(JSON.stringify({ objects }));
+  } else if (mode.startsWith("physical-")) {
+    console.log(
+      JSON.stringify(
+        await globalThis.__physicalObjects({
+          mode,
+          state,
+          store,
+          s3,
+          binding: globalThis.__physicalBinding,
+          applicationGate: globalThis.__applicationBinding,
+          objectsGate: globalThis.__historyObjects,
+        }),
+      ),
+    );
   } else if (mode === "historical-recovery" || mode === "application-history") {
     console.log(
       JSON.stringify(

@@ -5,7 +5,30 @@ import { checksum } from "../scripts/compose-verification.mjs";
 import {
   assertPitrCase,
   withVerifiedPhysicalBackup,
+  nativeStartExit,
 } from "../scripts/postgres-pitr-verification.mjs";
+test("Native start status requires one complete explicit marker", () => {
+  assert.equal(
+    nativeStartExit("waiting for startup\nOMOS_NATIVE_START_EXIT=0\n"),
+    0,
+  );
+  for (const text of [
+    "",
+    "pg_ctl failed",
+    "OMOS_NATIVE_START_EXIT=1\nOMOS_NATIVE_START_EXIT=0\n",
+    "OMOS_NATIVE_START_EXIT=-1\n",
+    "OMOS_NATIVE_START_EXIT=256\n",
+    "OMOS_NATIVE_START_EXIT=garbage\n",
+  ])
+    assert.throws(() => nativeStartExit(text));
+});
+test("Native start marker preserves a failed server status even after successful outer transport", () => {
+  const code = nativeStartExit(
+    "pg_ctl: could not start server\nOMOS_NATIVE_START_EXIT=1\n",
+  );
+  assert.equal(code, 1);
+  assert.throws(() => assert.equal(code, 0));
+});
 test("Physical recovery reset rejects source/base/archive paths and non-fixture identities", () => {
   const project = "omos-pitr-verify-0123456789abcdef";
   assert.doesNotThrow(() => assertPitrCase(project, "retry", "/fixture/retry"));

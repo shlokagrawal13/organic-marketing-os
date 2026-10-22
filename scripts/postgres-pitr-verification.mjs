@@ -14,3 +14,14 @@ export async function withVerifiedPhysicalBackup(verify, start) {
   assert.match(result, /backup successfully verified/);
   return await start();
 }
+export function nativeStartExit(output) {
+  const matches = [...output.matchAll(/^OMOS_NATIVE_START_EXIT=(\d+)\r?$/gm)];
+  assert.equal(
+    matches.length,
+    1,
+    "Missing or ambiguous native startup exit marker",
+  );
+  const code = Number(matches[0][1]);
+  assert.ok(Number.isInteger(code) && code >= 0 && code <= 255);
+  return code;
+}

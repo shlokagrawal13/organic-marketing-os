@@ -13,7 +13,7 @@
     "schemaMigrations": 24,
     "readabilitySamples": 44
   },
-  "environment": "Exact H implementation three-job CI accepted; final continuity payload requires own exact-source three-job run",
+  "environment": "H final three-job CI verified; current I requires own exact final-commit CI",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -72,9 +72,9 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "taskId": "RECOVERY-01H",
-    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
-    "nextAction": "Inspect/fix all THREE jobs on the exact final documentation closure commit; retain final external receipt with source ZIP. Then RECOVERY-01I pre-target historical application manifest/physical snapshot binding."
+    "taskId": "RECOVERY-01I",
+    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+    "nextAction": "Publish I normally and inspect/fix ALL THREE jobs on its exact final commit; retain external final receipt with source ZIP. Then J physical application-bucket restore/fresh-Redis/reviewed-effect prerequisites."
   },
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
@@ -135,10 +135,10 @@
   },
   "latestNativeRun": {
     "taskId": "RECOVERY-01H",
-    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-    "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
-    "runId": 39702680294,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+    "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+    "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
+    "runId": 39704487708,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -156,7 +156,7 @@
       "boundHistoricalObjects": 6,
       "localFocusedTests": 31
     },
-    "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -218,10 +218,10 @@
   },
   "githubActions": {
     "taskId": "RECOVERY-01H",
-    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-    "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
-    "runId": 39702680294,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+    "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+    "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
+    "runId": 39704487708,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -239,7 +239,7 @@
       "boundHistoricalObjects": 6,
       "localFocusedTests": 31
     },
-    "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -13628,17 +13628,57 @@
     },
     "environment": "POLICY-01D exact public source and own successful native GitHub Actions run 39020625965"
   },
-  "sourceCommit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-  "taskId": "RECOVERY-01H",
+  "sourceCommit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+  "taskId": "RECOVERY-01I",
   "currentWork": {
-    "taskId": "RECOVERY-01H",
-    "status": "implementation_verified_final_documentation_closure_requires_own_ci",
-    "verifiedImplementationPublication": {
+    "taskId": "RECOVERY-01I",
+    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+    "local": {
+      "focusedTests": 38,
+      "newUnitCases": 7,
+      "syntaxAndFormattingChecked": true,
+      "protectedHashesUnchanged": 25,
+      "nativeStandalonePassed": true,
+      "nativeStandaloneEvidenceSha256": "c7fabd06a9586e85377b8dcdcf6b82ba0e2158cc7acf1f06c441a1161838a3ad",
+      "composeDiagnostic": {
+        "passed": true,
+        "phases": 17,
+        "mode": "diagnostic-existing-images-runtime-assertions",
+        "cleanup": true,
+        "environmentUnchanged": true,
+        "reportSha256": "027c1a84d222593a52064b3a3da1078575436423639fccf7134eaf39ee62880d",
+        "imageBuildsSkipped": true
+      },
+      "initialFailures": {
+        "native": {
+          "passed": false,
+          "message": "Missing expected rejection in existing unreachable-target path",
+          "sha256": "4cc43b251bea45c82222b6e988d80a914196aafb30532bf224d7be4dfbafeb68"
+        },
+        "compose": {
+          "passed": false,
+          "phase": "physical object probe; native rejection assertion failed",
+          "sha256": "3e5d60c6b4b35cc2a82fc81293f25d4bf0432d68e6d39fdec984435d9efb259b"
+        },
+        "cause": "Observed pg_ctl native status0 with target-not-reached FATAL; negative starts now require foreground PostgreSQL exit1, native fatal and SQL rejection. Precise pg_ctl timing cause is not claimed.",
+        "pgCtlEvidenceSha256": "a224d9919c115b7ef5d10dd73dca34be98d7905cb496fa355a81d3e8564f68a0",
+        "pgCtlObservation": {
+          "nativeStartExitCodes": {
+            "missing-wal": 1,
+            "unreachable": 0
+          },
+          "targetNotReachedFatalObserved": true,
+          "cleanup": true,
+          "fix": "Foreground native PostgreSQL exit1 required for negative cases; timeout excluded; successful retry still requires pg_ctl0 and SQL checks"
+        }
+      }
+    },
+    "priorVerifiedPublication": {
       "taskId": "RECOVERY-01H",
-      "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-      "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
-      "runId": 39702680294,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+      "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+      "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
+      "runId": 39704487708,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
@@ -13656,51 +13696,15 @@
         "boundHistoricalObjects": 6,
         "localFocusedTests": 31
       },
-      "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
-    },
-    "results": {
-      "unit": 300,
-      "http": 38,
-      "browser": 28,
-      "recovery": 5,
-      "migrations": 24,
-      "readabilitySamples": 44,
-      "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0,
-      "composePhases": 16,
-      "boundApplicationReferences": 6,
-      "boundHistoricalObjects": 6,
-      "localFocusedTests": 31
-    },
-    "local": {
-      "focusedTests": 31,
-      "newUnitCases": 5,
-      "syntaxChecked": true,
-      "protectedHashesUnchanged": 25,
-      "diagnostic": {
-        "passed": true,
-        "mode": "diagnostic-existing-images-runtime-assertions",
-        "steps": 16,
-        "cleanup": true,
-        "reportSha256": "3c367299b00f3b6056343c6ad588f8841dfe644c20e8c553cfc2d801520a3eb2",
-        "runtimeAssertionsRetained": true,
-        "imageBuildsSkipped": true,
-        "environmentUnchanged": true
-      },
-      "initialHFailure": {
-        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
-        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
-      }
-    },
-    "closureOnly": true,
-    "currentClosureOwnCiPassed": false
+      "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
+    }
   },
   "nativeCi": {
     "taskId": "RECOVERY-01H",
-    "commit": "f33276cbe55d6363e3f44abea1278b81d247881e",
-    "tree": "18c3add62317ee0e7e188b5e6ca2da619ec9b6b7",
-    "runId": 39702680294,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39702680294",
+    "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
+    "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
+    "runId": 39704487708,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -13718,7 +13722,7 @@
       "boundHistoricalObjects": 6,
       "localFocusedTests": 31
     },
-    "receipt": "docs/qa/recovery01h-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
   },
   "preRecovery01FActiveViews": {
     "latestIncrement": "RECOVERY-01A local native interruption/rollback/retry verified; read current exact-source BOTH CI jobs",
