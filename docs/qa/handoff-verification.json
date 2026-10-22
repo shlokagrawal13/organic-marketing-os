@@ -39,7 +39,7 @@
     "scope": "Portable source/context/evidence; not database/media backup",
     "metadata": "ZIP digest and own-commit CI in external recovery01k-final-ci-receipt.json"
   },
-  "currentSourcePackageStatus": "Own K exact-commit all-three-job CI required; paired external receipt closes packaging-time status",
+  "currentSourcePackageStatus": "New Next16.4.2 final exact-source all-three-job CI required; carry own final receipt with fresh source ZIP",
   "priorHandoffVerification": {
     "checkpointRevision": "2026-10-07.15",
     "applicationVersion": "0.9.2",
@@ -637,7 +637,7 @@
   },
   "currentWork": {
     "taskId": "RECOVERY-01K",
-    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+    "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
     "local": {
       "resumeIntegrity": {
         "passed": true,
@@ -658,7 +658,8 @@
         "imageBuildsSkipped": true,
         "cleanup": true,
         "environmentUnchanged": true,
-        "reportSha256": "4ea3153df708287d680f74f1d1d59a47bdb792395168bf700e22df99dcd37cf6"
+        "reportSha256": "4ea3153df708287d680f74f1d1d59a47bdb792395168bf700e22df99dcd37cf6",
+        "scope": "K-focused17 phases on cached pre-security Next16.3.8 image; final Next16.4.2 requires fresh full19-phase exact-source CI"
       },
       "physicalMedia": {
         "passed": true,
@@ -741,6 +742,32 @@
         "nativeReportSha256": "cbe4a06d8c8bd7ddb9ade3cf532ad8e8c77a8367e7e877afdea79445ccefdce9",
         "cleanup": true,
         "observed": "Actual K media/render/API/credits/worker restarts passed, then the one-object historical verifier selected another key original as the later overwrite. Fixed selection by same key and distinct original version; verify all later objects. New 1-object and 3-object stateful S3-command regression workflows pass. No assertion removed."
+      },
+      "securityFollowup": {
+        "from": "16.3.8",
+        "to": "16.4.2",
+        "reason": "Initial exact-source core CI failed dependency audit for newly indexed Next.js advisories",
+        "advisories": [
+          "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+          "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+          "https://github.com/advisories/GHSA-673q-mjm6-r5xr"
+        ],
+        "release": "https://github.com/vercel/next.js/releases/tag/v16.4.2",
+        "firstAttemptReceipt": "docs/qa/recovery01k-ci-attempt1.json",
+        "initialSourceCommit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+        "initialRunId": 39832920032,
+        "lockedInstallPassed": true,
+        "fullAuditVulnerabilities": 0,
+        "productionAuditVulnerabilities": 0,
+        "fullLocalBuildPassed": true,
+        "postUpgradeFocusedTests": 59,
+        "lockedInstallLogSha256": "2b3a5fa1bd0e2f505e99ced176eeec9ce405c8460f4abf7b4f903a01ffc48c3f",
+        "fullAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
+        "productionAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
+        "buildLogSha256": "f194ae09ed5c0f42b25d1ad6d151cb945de3d8eba71157642dd831308b2c9e3b",
+        "priorLocalCachedComposeNextVersion": "16.3.8",
+        "finalOwnFreshImageThreeJobCiRequired": true,
+        "recordedAtUtc": "2026-10-22T19:04:37.868Z"
       }
     },
     "priorVerifiedPublication": {
@@ -773,6 +800,18 @@
         "physicalApplicationStartCallbacks": 1
       },
       "receipt": "docs/qa/recovery01j-final-ci-receipt.json"
+    },
+    "initialFailedPublication": {
+      "taskId": "RECOVERY-01K",
+      "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+      "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
+      "runId": 39832920032,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "acceptedAsFinal": false,
+      "receipt": "docs/qa/recovery01k-ci-attempt1.json"
     }
   },
   "FSourcePackageReinspection": {
@@ -788,5 +827,17 @@
     "zipCrcPassed": true,
     "allFilesMatchPublishedWorkspace": true,
     "runtimeDataAndCredentialsExcluded": true
+  },
+  "initialFailedPublication": {
+    "taskId": "RECOVERY-01K",
+    "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+    "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
+    "runId": 39832920032,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+    "status": "completed",
+    "conclusion": "failure",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "acceptedAsFinal": false,
+    "receipt": "docs/qa/recovery01k-ci-attempt1.json"
   }
 }
