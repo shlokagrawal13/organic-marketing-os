@@ -1,3 +1,15 @@
+<!-- RECOVERY01J_CURRENT_START -->
+## RECOVERY-01J physical application recovery — 2026-10-22
+
+I final b1386511451e4482d580ae6825590d6b3c0cc306/run39773094289 passed ALL THREE jobs and required steps:307 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,17 Compose phases. All four artifact-byte digests/CRCs were verified. Final receipt: docs/qa/recovery01i-final-ci-receipt.json. This closes I own-CI pending notices below; older entries are historical.
+
+J adds an eighteenth Compose phase while retaining every previous assertion. The clean stopped physically recovered PostgreSQL cluster is copied in memory to an owned empty volume in a separate internal-network stack. Receiver hash and full37-table snapshot must match before any writer starts. Exact retained historical bytes are restored into the private application bucket. Restored users log in through actual APIs; media anonymous/tenant/role failures, stale revision/approval invalidation, empty Redis reconstruction, uncertain-effect no replay, immutable credits/one consumption and all-three-worker restart are verified. Seven invalid startup prerequisite controls deny callbacks. See docs/PHYSICAL_APPLICATION_RECOVERY.md and docs/qa/recovery01j-evidence.json.
+
+Local49 focused tests and separate cached-image Windows18-phase runtime verification passed, cleanup and .env unchanged. No local image rebuild is claimed. The standalone/I native fixture remains19 rows; J is a UUID-resource/credential/context variant with21 rows in11 of37 application tables, using all24 unchanged migrations. All25 protected master/migration hashes remain unchanged. This source requires ALL THREE jobs on its own exact final commit; carry external recovery01j-final-ci-receipt.json with its portable source ZIP to close that status.
+
+J exercises one synthetic Asset/queued AI job and one enumerated post-target provider effect. It serves the original three-byte payload, not a decoded image. Render/media workers complete idle dispatcher cycles; populated physical render/media/publication execution, real-provider reconciliation, production backup operations and live/deployed/full-master acceptance remain open. CI verifies fixtures and does not deploy. Next after own-CI acceptance: RECOVERY-01K valid historical media and populated physical render/media worker recovery.21 broad task tracks remain open.
+<!-- RECOVERY01J_CURRENT_END -->
+
 <!-- RECOVERY01I_CURRENT_START -->
 ## RECOVERY-01I pre-target physical/object binding — 2026-10-22
 

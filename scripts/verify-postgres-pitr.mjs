@@ -126,7 +126,7 @@ export async function runPostgresPitr({ hooks } = {}) {
         "-d",
         "postgres",
       ],
-      sql,
+      hooks?.sqlTransform ? hooks.sqlTransform(sql) : sql,
     );
   }
   const shell = (script) =>
@@ -245,6 +245,8 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     const migrations = applicationMigrations(root);
     for (const migration of migrations) await psql("source", migration.sql);
     await psql("source", applicationSeed);
+    if (hooks?.prepareApplication)
+      await hooks.prepareApplication({ query: (sql) => psql("source", sql) });
     const applicationBase = await applicationSnapshot((sql) =>
       psql("source", sql),
     );
@@ -426,12 +428,54 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
       await applicationSnapshot((sql) => psql("retry", sql)),
       applicationTarget,
     );
+    // Replay telemetry belongs to this recovery startup. A hook may cleanly
+    // restart the promoted cluster to export its physical data directory.
+    assert.equal(
+      (
+        await psql(
+          "retry",
+          `SELECT pg_last_wal_replay_lsn() >= '${targetLsn}'::pg_lsn;`,
+        )
+      ).trim(),
+      "t",
+    );
+    report.checks.nativeReplayLsnVerifiedBeforeOptionalPhysicalExport = true;
     if (hooks) {
       report.objectBinding = await hooks.recovered({
         pointReceipt,
         applicationSnapshot: await applicationSnapshot((sql) =>
           psql("retry", sql),
         ),
+        exportPhysicalCluster: async () => {
+          await owned();
+          await shell("pg_ctl -D /fixture/retry -m fast -w stop\n");
+          try {
+            // A clean, stopped physical data directory, streamed in memory only.
+            // No SQL dump, persistent host backup, or network on the native fixture.
+            const bytes = await docker(
+              [
+                "exec",
+                "-u",
+                "postgres",
+                id,
+                "tar",
+                "-C",
+                "/fixture/retry",
+                "-cf",
+                "-",
+                ".",
+              ],
+              undefined,
+              true,
+            );
+            return { bytes, sha256: checksum(bytes) };
+          } finally {
+            const output = await shell(
+              "pg_ctl -D /fixture/retry -l /fixture/retry.log -t 20 -w start\n",
+            );
+            assert.match(output, /server started/);
+          }
+        },
       });
       assert.equal(report.objectBinding.passed, true);
       report.checks.preTargetHistoricalManifestMatchesPhysicalApplicationSnapshot = true;
@@ -478,7 +522,8 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     report.application.crossStoreAcceptance = false;
     report.application.missingHistoricalObjectsBlockedStartup = true;
     report.application.restoredConstraintsAndRevisionPredicates = true;
-    report.application.httpAuthorizationClaimed = false;
+    report.application.httpAuthorizationClaimed =
+      report.objectBinding?.checks?.restoredHttpAuthentication === true;
     assert.equal(
       (await psql("retry", "SELECT pg_is_in_recovery();")).trim(),
       "f",
@@ -499,7 +544,7 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
       (
         await psql(
           "retry",
-          `SELECT pg_last_wal_replay_lsn() >= '${targetLsn}'::pg_lsn;`,
+          `SELECT pg_current_wal_lsn() >= '${targetLsn}'::pg_lsn;`,
         )
       ).trim(),
       "t",

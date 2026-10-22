@@ -56,7 +56,10 @@ export async function runPhysicalObjects({
     const references =
       binding.physicalApplicationReferences(applicationSnapshot);
     assert.equal(references.length, 1);
-    assert.equal(references[0].key, "pitr-a/historical.png");
+    assert.equal(
+      references[0].key,
+      state.applicationKey ?? "pitr-a/historical.png",
+    );
     const bytes = Buffer.from("old"),
       sha256 = binding.bytesHash(bytes);
     assert.equal(references[0].bytes, bytes.length);
@@ -127,6 +130,19 @@ export async function runPhysicalObjects({
   ]);
   const { manifest } = state;
   const evidence = { project, bucket, references: manifest.versions, read };
+  if (mode === "physical-export-objects") {
+    await objectsGate(evidence, async () => {});
+    const objects = [];
+    for (const v of manifest.versions) {
+      const r = await read(v);
+      objects.push({
+        ...v,
+        key: v.sourceKey,
+        body: r.bytes.toString("base64"),
+      });
+    }
+    return { objects };
+  }
   if (mode === "physical-later") {
     await objectsGate(evidence, async () => {});
     for (const v of manifest.versions) {

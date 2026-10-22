@@ -298,6 +298,22 @@ try {
     );
     assert.equal(forbidden.status, 403);
     console.log(JSON.stringify({ objects }));
+  } else if (mode.startsWith("physical-app-")) {
+    console.log(
+      JSON.stringify(
+        await globalThis.__physicalApplication({
+          mode,
+          state,
+          db,
+          store,
+          s3,
+          require,
+          call,
+          sha,
+          sleep,
+        }),
+      ),
+    );
   } else if (mode.startsWith("physical-")) {
     console.log(
       JSON.stringify(
@@ -480,6 +496,15 @@ try {
   ) {
     // Keep this expected fault recognizable without a data-URL stack trace.
     console.error(error.message);
+    process.exitCode = 1;
+  } else if (mode.startsWith("physical-app-")) {
+    console.error(`${mode}: ${error.name}: ${error.message}`);
+    console.error(
+      (error.stack ?? "").replace(
+        /data:text\/javascript;base64,[A-Za-z0-9+/=]+/g,
+        "[injected fixture module]",
+      ),
+    );
     process.exitCode = 1;
   } else throw error;
 } finally {

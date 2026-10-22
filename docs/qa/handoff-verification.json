@@ -1,18 +1,20 @@
 {
-  "checkpointRevision": "recovery01i-20261022",
+  "checkpointRevision": "recovery01j-20261022",
   "applicationVersion": "0.9.2",
   "verifiedDate": "2026-10-22",
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01H",
-    "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
-    "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
-    "runId": 39704487708,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
+    "taskId": "RECOVERY-01I",
+    "commit": "b1386511451e4482d580ae6825590d6b3c0cc306",
+    "tree": "8b4c8b9283288f4cb60a61e4df695db6867d00ec",
+    "runId": 39773094289,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39773094289",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 300,
+      "physicalBoundReferences": 1,
+      "physicalBoundHistoricalObjects": 1,
+      "unit": 307,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -20,20 +22,20 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 16,
-      "boundApplicationReferences": 6,
-      "boundHistoricalObjects": 6,
-      "localFocusedTests": 31
+      "composePhases": 17,
+      "logicalBoundApplicationReferences": 6,
+      "logicalBoundHistoricalObjects": 6,
+      "localFocusedTests": 38
     },
-    "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01i-final-ci-receipt.json"
   },
   "sourcePackage": {
-    "taskId": "RECOVERY-01I",
-    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01i-source.zip",
-    "scope": "Portable source/context/evidence; not native DB/media backup",
-    "metadata": "Exact ZIP digest and own-commit CI in external recovery01i-final-ci-receipt.json"
+    "taskId": "RECOVERY-01J",
+    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01j-source.zip",
+    "scope": "Portable source/context/evidence; not database/media backup",
+    "metadata": "ZIP digest and own-commit CI in external recovery01j-final-ci-receipt.json"
   },
-  "currentSourcePackageStatus": "Current I source requires exact own-commit all-three-job CI; paired external final receipt closes status.",
+  "currentSourcePackageStatus": "Own J exact-commit all-three-job CI required; paired external receipt closes status",
   "priorHandoffVerification": {
     "checkpointRevision": "2026-10-07.15",
     "applicationVersion": "0.9.2",
@@ -630,59 +632,101 @@
     }
   },
   "currentWork": {
-    "taskId": "RECOVERY-01I",
+    "taskId": "RECOVERY-01J",
     "status": "local_increment_requires_own_exact_commit_all_three_jobs",
     "local": {
-      "focusedTests": 38,
-      "newUnitCases": 7,
+      "focusedTests": 49,
+      "newUnitCases": 8,
       "syntaxAndFormattingChecked": true,
       "protectedHashesUnchanged": 25,
-      "nativeStandalonePassed": true,
-      "nativeStandaloneEvidenceSha256": "c7fabd06a9586e85377b8dcdcf6b82ba0e2158cc7acf1f06c441a1161838a3ad",
       "composeDiagnostic": {
         "passed": true,
-        "phases": 17,
+        "phases": 18,
         "mode": "diagnostic-existing-images-runtime-assertions",
+        "imageBuildsSkipped": true,
         "cleanup": true,
         "environmentUnchanged": true,
-        "reportSha256": "027c1a84d222593a52064b3a3da1078575436423639fccf7134eaf39ee62880d",
-        "imageBuildsSkipped": true
+        "reportSha256": "2fe5048e06d17968a2b3390bee1437b98fd8c877ec02fe9881b374645918830a"
       },
-      "initialFailures": {
-        "native": {
-          "passed": false,
-          "message": "Missing expected rejection in existing unreachable-target path",
-          "sha256": "4cc43b251bea45c82222b6e988d80a914196aafb30532bf224d7be4dfbafeb68"
+      "physicalApplication": {
+        "passed": true,
+        "rows": 21,
+        "tables": 37,
+        "nativeStartExitCodes": {
+          "missing-wal": 1,
+          "unreachable": 1,
+          "retry": 0
         },
-        "compose": {
-          "passed": false,
-          "phase": "physical object probe; native rejection assertion failed",
-          "sha256": "3e5d60c6b4b35cc2a82fc81293f25d4bf0432d68e6d39fdec984435d9efb259b"
-        },
-        "cause": "Observed pg_ctl native status0 with target-not-reached FATAL; negative starts now require foreground PostgreSQL exit1, native fatal and SQL rejection. Precise pg_ctl timing cause is not claimed.",
-        "pgCtlEvidenceSha256": "a224d9919c115b7ef5d10dd73dca34be98d7905cb496fa355a81d3e8564f68a0",
-        "pgCtlObservation": {
-          "nativeStartExitCodes": {
-            "missing-wal": 1,
-            "unreachable": 0
-          },
-          "targetNotReachedFatalObserved": true,
-          "cleanup": true,
-          "fix": "Foreground native PostgreSQL exit1 required for negative cases; timeout excluded; successful retry still requires pg_ctl0 and SQL checks"
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true,
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "sevenInvalidStartupPrerequisitesDenied": true,
+          "allWritersAbsentBeforeVerifiedAdmission": true,
+          "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+          "importedFullSnapshotMatchesPhysicalTarget": true,
+          "emptyRedisBeforePhysicalApplicationStart": true,
+          "isolatedApplicationBucketRestoredFromRetainedVersion": true
         }
+      },
+      "initialFailure": {
+        "sha256": "4c09837b533d08cc34ff9916a6802705eccaf25095c69394c96f5c5eba7f0424",
+        "nativeReportSha256": "24ebfd36de70ef67d9e06e56b5f4aab04f9b76631e8bf2340ac76e1a59e4eb15",
+        "passed": false,
+        "failure": "Compose API/web did not become ready.",
+        "cleanup": true,
+        "nativeExitCodes": {
+          "missing-wal": 1,
+          "unreachable": 1,
+          "retry": 0
+        },
+        "observed": "Internal-network J containers had no published host port; host readiness failed after physical cluster boot. Corrected readiness probes API/web/proxy inside the fixture, with explicit empty J port lists."
+      },
+      "secondFailure": {
+        "passed": false,
+        "sha256": "b9a1289bfafc2dad019b69907dada3b3bc5aedea1dc1ed3a6996a24cd7259f22",
+        "nativeReportSha256": "70bf04f5377cd244a349131a3b3ff4bf7590fe15a6ab322ee5a1d723db0f64bf",
+        "cleanup": true,
+        "observed": "Actual API checks passed; immutable-ledger comparison exposed host-local parsing of SQL timestamp without timezone (5:30 shift). Explicit UTC conversion preserves every field/date assertion; regression checks UTC, Asia/Kolkata and America/Los_Angeles."
+      },
+      "thirdFailure": {
+        "passed": false,
+        "sha256": "6cf673b5891a743eacd132d2039cd1ba22e6c59691226902d2a28598f9b90a4c",
+        "nativeReportSha256": "9ad084ceeab5b30ce2fe7f9cf7e4ef6a3945542b1d7930e7fb28c612023c21a3",
+        "cleanup": true,
+        "observed": "J HTTP/objects/fresh Redis/credits/all-worker restart checks passed, then native replay telemetry was NULL after clean physical-export restart. Original pg_last_wal_replay_lsn assertion retained before optional export; post-hook pg_current_wal_lsn additionally required. No recovery assertion removed."
       }
     },
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01H",
-      "commit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
-      "tree": "ff8057b4763ac4ab71d697ea1eaaf98f926ca6ff",
-      "runId": 39704487708,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39704487708",
+      "taskId": "RECOVERY-01I",
+      "commit": "b1386511451e4482d580ae6825590d6b3c0cc306",
+      "tree": "8b4c8b9283288f4cb60a61e4df695db6867d00ec",
+      "runId": 39773094289,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39773094289",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 300,
+        "physicalBoundReferences": 1,
+        "physicalBoundHistoricalObjects": 1,
+        "unit": 307,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -690,12 +734,12 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 16,
-        "boundApplicationReferences": 6,
-        "boundHistoricalObjects": 6,
-        "localFocusedTests": 31
+        "composePhases": 17,
+        "logicalBoundApplicationReferences": 6,
+        "logicalBoundHistoricalObjects": 6,
+        "localFocusedTests": 38
       },
-      "receipt": "docs/qa/recovery01h-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01i-final-ci-receipt.json"
     }
   },
   "FSourcePackageReinspection": {
@@ -704,10 +748,10 @@
     "sha256": "e705a54519dd606ff270c8bfe3bc5f8e0680af33e9af046cf85896dfede1817b"
   },
   "lastVerifiedSourcePackage": {
-    "archive": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01h-source.zip",
-    "files": 582,
-    "bytes": 15686929,
-    "sha256": "7a07a0329bedb1465be355aff0d241376605c1b4f248d495c67936049b1bb956",
+    "archive": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01i-source.zip",
+    "files": 589,
+    "bytes": 15728974,
+    "sha256": "c55a370c2a2f044a8491577b0b609103cbe7c2756438da89e8dd2b47daa56add",
     "zipCrcPassed": true,
     "allFilesMatchPublishedWorkspace": true,
     "runtimeDataAndCredentialsExcluded": true

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "RECOVERY-01I",
   "recordedAtUtc": "2026-10-22T11:45:08.520Z",
-  "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+  "status": "exact_final_commit_all_three_jobs_verified",
   "baseCommit": "8f636d4f4dd3f99bda50d991631a530e052cfa6c",
   "baseRunId": 39704487708,
   "local": {
@@ -91,5 +91,33 @@
     "scripts/verify-postgres-pitr.mjs",
     "tests/physical-object-binding.test.ts",
     "tests/postgres-pitr-verification.test.ts"
-  ]
+  ],
+  "publication": {
+    "taskId": "RECOVERY-01I",
+    "commit": "b1386511451e4482d580ae6825590d6b3c0cc306",
+    "tree": "8b4c8b9283288f4cb60a61e4df695db6867d00ec",
+    "runId": 39773094289,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39773094289",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "physicalBoundReferences": 1,
+      "physicalBoundHistoricalObjects": 1,
+      "unit": 307,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 17,
+      "logicalBoundApplicationReferences": 6,
+      "logicalBoundHistoricalObjects": 6,
+      "localFocusedTests": 38
+    },
+    "receipt": "docs/qa/recovery01i-final-ci-receipt.json"
+  },
+  "currentClosureOwnCiPassed": true
 }
