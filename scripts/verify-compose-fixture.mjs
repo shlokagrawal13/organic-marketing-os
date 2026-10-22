@@ -298,7 +298,7 @@ try {
     );
     assert.equal(forbidden.status, 403);
     console.log(JSON.stringify({ objects }));
-  } else if (mode === "historical-recovery") {
+  } else if (mode === "historical-recovery" || mode === "application-history") {
     console.log(
       JSON.stringify(
         await globalThis.__composeHistory({
@@ -308,6 +308,27 @@ try {
           s3,
           objectsGate: globalThis.__historyObjects,
           effectsGate: globalThis.__historyEffects,
+          ...(mode === "application-history"
+            ? {
+                applicationBinding: {
+                  ...state.binding,
+                  recovered: await globalThis.__composeRecovery({
+                    mode: "recovery-references",
+                    state,
+                    db,
+                    store,
+                    require,
+                    call,
+                    files,
+                  }),
+                },
+                bindApplication:
+                  globalThis.__applicationBinding
+                    .assertApplicationObjectBinding,
+                applicationKey:
+                  globalThis.__applicationBinding.historicalApplicationKey,
+              }
+            : {}),
         }),
       ),
     );

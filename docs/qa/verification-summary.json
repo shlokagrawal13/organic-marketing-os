@@ -13,7 +13,7 @@
     "schemaMigrations": 24,
     "readabilitySamples": 44
   },
-  "environment": "Exact G implementation three-job run39695812351; final documentation closure requires its own run",
+  "environment": "G final three-job CI verified; current H requires own final exact-commit CI",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -71,7 +71,11 @@
     "blockedResultCannotBeApproved": true,
     "freshFullHarnessExecution": true
   },
-  "latestIncrement": "G implementation f6ac3ec/run39695812351 all three jobs verified (295unit/38HTTP/28browser/5recovery,15 Compose phases,zero audits); documentation closure requires its exact-source CI.",
+  "latestIncrement": {
+    "taskId": "RECOVERY-01H",
+    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+    "nextAction": "Publish H normally and inspect/fix ALL THREE jobs and required steps on its exact final commit; retain external final receipt with the source ZIP. Then I pre-target historical manifest/physical application snapshot binding."
+  },
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
     "policyVersion": "youtube-upload-policy-2026-10-17",
@@ -131,11 +135,10 @@
   },
   "latestNativeRun": {
     "taskId": "RECOVERY-01G",
-    "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
-    "runId": 39695812351,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+    "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
+    "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
+    "runId": 39698034764,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -154,7 +157,7 @@
       "syntheticSubmissionAttempts": 1,
       "localFocusedUnit": 24
     },
-    "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -216,11 +219,10 @@
   },
   "githubActions": {
     "taskId": "RECOVERY-01G",
-    "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
-    "runId": 39695812351,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+    "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
+    "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
+    "runId": 39698034764,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -239,7 +241,7 @@
       "syntheticSubmissionAttempts": 1,
       "localFocusedUnit": 24
     },
-    "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -13628,20 +13630,55 @@
     },
     "environment": "POLICY-01D exact public source and own successful native GitHub Actions run 39020625965"
   },
-  "sourceCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-  "taskId": "RECOVERY-01G",
+  "sourceCommit": "dd2b34eca47b6f90784034107933a217a1c45660",
+  "taskId": "RECOVERY-01H",
   "currentWork": {
-    "taskId": "RECOVERY-01G",
-    "status": "verified_implementation_documentation_closure_pending_own_ci",
-    "evidence": "docs/qa/recovery01g-native-ci-evidence.json"
+    "taskId": "RECOVERY-01H",
+    "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+    "local": {
+      "focusedTests": 31,
+      "newUnitCases": 5,
+      "syntaxChecked": true,
+      "protectedHashesUnchanged": 25,
+      "diagnostic": null,
+      "initialHFailure": {
+        "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
+        "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
+      }
+    },
+    "priorVerifiedPublication": {
+      "taskId": "RECOVERY-01G",
+      "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
+      "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
+      "runId": 39698034764,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 295,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 15,
+        "historicalObjectReferences": 2,
+        "syntheticAcceptedEffects": 1,
+        "syntheticSubmissionAttempts": 1,
+        "localFocusedUnit": 24
+      },
+      "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
+    }
   },
   "nativeCi": {
     "taskId": "RECOVERY-01G",
-    "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
-    "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
-    "runId": 39695812351,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
+    "commit": "dd2b34eca47b6f90784034107933a217a1c45660",
+    "tree": "5e15e49ce21b001025a171e1778dfd70b7b9544d",
+    "runId": 39698034764,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39698034764",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -13660,7 +13697,7 @@
       "syntheticSubmissionAttempts": 1,
       "localFocusedUnit": 24
     },
-    "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01g-final-ci-receipt.json"
   },
   "preRecovery01FActiveViews": {
     "latestIncrement": "RECOVERY-01A local native interruption/rollback/retry verified; read current exact-source BOTH CI jobs",

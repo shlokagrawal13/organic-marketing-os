@@ -1,0 +1,557 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01H",
+  "status": "local_increment_requires_own_exact_commit_all_three_jobs",
+  "recordedAtUtc": "2026-10-22T00:55:11.493Z",
+  "baseCommit": "dd2b34eca47b6f90784034107933a217a1c45660",
+  "baseRunId": 39698034764,
+  "scope": "Typed restored application references bound to exact historical versions; logical restore only",
+  "local": {
+    "focusedTests": 31,
+    "newUnitCases": 5,
+    "syntaxChecked": true,
+    "protectedHashesUnchanged": 25,
+    "diagnostic": null,
+    "initialHFailure": {
+      "kind": "Duplicate local map identifier failed syntax/import before fixture seed",
+      "fixed": "Renamed map; syntax checks and all31 focused tests pass; rerun uses corrected injected source"
+    }
+  },
+  "priorWindowsGFailure": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01G",
+    "baselineTaskId": "RECOVERY-01D",
+    "passed": false,
+    "startedAt": "2026-10-21T23:38:39.701Z",
+    "sourceProject": "omos-compose-verify-9f07e8881f75f3fd",
+    "restoreProject": "omos-compose-verify-9f07e8881f75f3fd-restore",
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "checks": {
+      "generatedProjectPrivateEnvAndVolumeIsolation": true,
+      "allNineLongRunningServices": true,
+      "syntheticProviderService": true,
+      "health": true,
+      "auth": true,
+      "tenantIsolation": true,
+      "range": true,
+      "realRender": true,
+      "idempotency": true,
+      "noKeyFailure": true,
+      "emailSubmission": true,
+      "realSmtpDelivery": true,
+      "allFiveWritersStoppedBeforeBackup": true,
+      "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
+      "syntheticUncertainProviderCallsBeforeBackup": 1,
+      "completeSealedBackupPreflight": true,
+      "everyDatabaseMediaReferenceCovered": true,
+      "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
+      "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
+      "dedicatedOwnedBucketVersioningEnabled": true,
+      "currentReadsDoNotRepresentHistoricalPoint": true,
+      "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+      "exactHistoricalVersionBytesAndMetadataRecovered": true,
+      "providerConfirmedEffectReviewedWithoutReplay": true,
+      "historicalVersionRemainsPrivate": true,
+      "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+      "otherVersionsAndSavedManifestPreserved": true,
+      "ownedHistoricalBucketAndAllVersionsRemoved": true,
+      "originalBackupRowsAndObjectsPreservedAfterHistoricalProbe": true,
+      "originalSourceVolumesRemoved": true,
+      "freshRedisEmptyBeforeApplicationStart": true,
+      "nonAtomicInterruptionLeavesPartialState": true,
+      "atomicInterruptionRollsBackSchemaAndData": true,
+      "cleanEmptyTargetPreparedForRetry": true,
+      "cleanAtomicNativeDatabaseRetry": true,
+      "partialObjectsObserved": 1,
+      "partialObjectBytesAndMetadataMatch": true,
+      "partialObjectsRemoved": 1,
+      "restoreBucketEmptyAfterCleanup": true,
+      "objectsRestored": 6,
+      "allObjectBytesAndMetadataMatch": true,
+      "controlledFailureAfterAcknowledgedPrivatePut": true,
+      "applicationStartDeniedWhileObjectsIncomplete": true,
+      "allFiveApplicationServicesAbsentDuringPartialRestore": true,
+      "ownedRestoreBucketOnlyCleanup": true,
+      "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
+      "sameValidatedBackupRetriedBeforeApplicationStart": true,
+      "applicationStartAllowedOnlyAfterVerifiedRestore": true,
+      "nativeDatabaseRestore": true,
+      "privateMediaRestore": true,
+      "recordCountsMatch": true,
+      "originalAndRenderedBytesMatch": true,
+      "tenantAndAnonymousIsolationAfterRestore": true,
+      "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "steps": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 8943
+      },
+      {
+        "name": "build application images",
+        "passed": true,
+        "durationMs": 1725001
+      },
+      {
+        "name": "build official pinned MinIO release",
+        "passed": true,
+        "durationMs": 839061
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 120971
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 28405
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 1653
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 38829
+      },
+      {
+        "name": "reject incomplete/corrupt backups while preserving original source",
+        "passed": true,
+        "durationMs": 9453
+      },
+      {
+        "name": "historical private-object versions and external-effect reconciliation prerequisites",
+        "passed": true,
+        "durationMs": 23024
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 16110
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 42117
+      },
+      {
+        "name": "partial private-object failure, gated startup and clean retry",
+        "passed": true,
+        "durationMs": 88472
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 9156
+      },
+      {
+        "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+        "passed": false,
+        "durationMs": 109119
+      }
+    ],
+    "verificationMode": "complete-compose-native-restore",
+    "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+    "databaseDump": {
+      "bytes": 124704,
+      "sha256": "cbf583d926e8ef339a255693d84723b3bd7780ca8488438d165b9ccc73cc1530"
+    },
+    "objectBackup": {
+      "objects": 6,
+      "bytes": 27582,
+      "sha256": "3db575caba2cafc42c9376d75a4c6696fc6e4dbcf463a84123866ae3594189f7"
+    },
+    "backupManifest": {
+      "sha256": "4c48a6b8aa5f58059e52460c4b079f7d6fe3f0564efb94e12953e80fbf00c590",
+      "databaseBytes": 124704,
+      "privateObjects": 6
+    },
+    "backupFailureCases": [
+      {
+        "name": "truncated-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-metadata",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-writer-quiescence",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "wrong-restore-project",
+        "rejectedBeforeDestructiveAction": true
+      }
+    ],
+    "historicalRecovery": {
+      "checks": {
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true
+      },
+      "objectsAtHistoricalPoint": 2,
+      "syntheticExternalEffects": 1,
+      "acceptedProviderCalls": 1,
+      "providerSubmissionAttempts": 1,
+      "readinessCallbacks": 1,
+      "databasePoint": "0/1B00F10",
+      "physicalPitrCombined": false,
+      "productionRetentionClaimed": false
+    },
+    "restoreInterruption": {
+      "cases": [
+        {
+          "atomic": false,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 39,
+          "visibleTablesAfterInterruption": 39,
+          "rollbackToEmptyTarget": false
+        },
+        {
+          "atomic": true,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 0,
+          "visibleTablesAfterInterruption": 0,
+          "rollbackToEmptyTarget": true
+        }
+      ],
+      "checks": {
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true
+      }
+    },
+    "completedAt": "2026-10-22T00:30:44.232Z",
+    "failureSummary": "Queued AI job entered FAILED during fresh-Redis recovery. The original assertion reason was truncated by an encoded data-URI stack; the cause was not recovered.",
+    "rawLogSha256": "7174da5fef63ad29fd5038388ce73d175f4a831857e83230f3ab889e1ee60225"
+  },
+  "priorWindowsGDiagnostic": {
+    "passed": true,
+    "runtimeAssertionsRetained": true,
+    "imageBuildsSkippedAndInspected": true,
+    "publishedSourceUnchanged": true,
+    "report": {
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01G",
+      "baselineTaskId": "RECOVERY-01D",
+      "passed": true,
+      "startedAt": "2026-10-22T00:33:06.258Z",
+      "sourceProject": "omos-compose-verify-9985b3cb04fe38aa",
+      "restoreProject": "omos-compose-verify-9985b3cb04fe38aa-restore",
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "checks": {
+        "generatedProjectPrivateEnvAndVolumeIsolation": true,
+        "allNineLongRunningServices": true,
+        "syntheticProviderService": true,
+        "health": true,
+        "auth": true,
+        "tenantIsolation": true,
+        "range": true,
+        "realRender": true,
+        "idempotency": true,
+        "noKeyFailure": true,
+        "emailSubmission": true,
+        "realSmtpDelivery": true,
+        "allFiveWritersStoppedBeforeBackup": true,
+        "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
+        "syntheticUncertainProviderCallsBeforeBackup": 1,
+        "completeSealedBackupPreflight": true,
+        "everyDatabaseMediaReferenceCovered": true,
+        "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
+        "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true,
+        "originalBackupRowsAndObjectsPreservedAfterHistoricalProbe": true,
+        "originalSourceVolumesRemoved": true,
+        "freshRedisEmptyBeforeApplicationStart": true,
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true,
+        "cleanAtomicNativeDatabaseRetry": true,
+        "partialObjectsObserved": 1,
+        "partialObjectBytesAndMetadataMatch": true,
+        "partialObjectsRemoved": 1,
+        "restoreBucketEmptyAfterCleanup": true,
+        "objectsRestored": 6,
+        "allObjectBytesAndMetadataMatch": true,
+        "controlledFailureAfterAcknowledgedPrivatePut": true,
+        "applicationStartDeniedWhileObjectsIncomplete": true,
+        "allFiveApplicationServicesAbsentDuringPartialRestore": true,
+        "ownedRestoreBucketOnlyCleanup": true,
+        "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
+        "sameValidatedBackupRetriedBeforeApplicationStart": true,
+        "applicationStartAllowedOnlyAfterVerifiedRestore": true,
+        "nativeDatabaseRestore": true,
+        "privateMediaRestore": true,
+        "recordCountsMatch": true,
+        "originalAndRenderedBytesMatch": true,
+        "tenantAndAnonymousIsolationAfterRestore": true,
+        "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
+        "queuedAiReconstructedFromFreshRedis": true,
+        "queuedRenderReconstructedAndProbed": true,
+        "retainedPrivateOutputIngestedWithoutProvider": true,
+        "uncertainAiNotReplayed": true,
+        "syntheticQueuedProviderCalls": 1,
+        "syntheticUncertainProviderCallsAfterRestore": 0,
+        "originalLedgerEntriesUnchanged": true,
+        "immutableLedgerTriggerEnforced": true,
+        "exactlyTwoCreditSettlements": true,
+        "uncertainCreditsHeldForReview": true,
+        "generatedAssetAndOriginalMediaTenantIsolation": true,
+        "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "steps": [
+        {
+          "name": "isolated configuration",
+          "passed": true,
+          "durationMs": 1196
+        },
+        {
+          "name": "inspect cached application images; no rebuild in diagnostic rerun",
+          "passed": true,
+          "durationMs": 937
+        },
+        {
+          "name": "inspect cached pinned MinIO image; no rebuild in diagnostic rerun",
+          "passed": true,
+          "durationMs": 377
+        },
+        {
+          "name": "complete Compose startup",
+          "passed": true,
+          "durationMs": 69306
+        },
+        {
+          "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+          "passed": true,
+          "durationMs": 17045
+        },
+        {
+          "name": "real SMTP delivery",
+          "passed": true,
+          "durationMs": 503
+        },
+        {
+          "name": "quiesced native database and private-object backup",
+          "passed": true,
+          "durationMs": 20941
+        },
+        {
+          "name": "reject incomplete/corrupt backups while preserving original source",
+          "passed": true,
+          "durationMs": 7932
+        },
+        {
+          "name": "historical private-object versions and external-effect reconciliation prerequisites",
+          "passed": true,
+          "durationMs": 13837
+        },
+        {
+          "name": "remove original disposable source targets",
+          "passed": true,
+          "durationMs": 13311
+        },
+        {
+          "name": "restore into separate PostgreSQL and MinIO targets",
+          "passed": true,
+          "durationMs": 33474
+        },
+        {
+          "name": "partial private-object failure, gated startup and clean retry",
+          "passed": true,
+          "durationMs": 51243
+        },
+        {
+          "name": "restored records/media/tenant access through actual application",
+          "passed": true,
+          "durationMs": 6158
+        },
+        {
+          "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+          "passed": true,
+          "durationMs": 27903
+        },
+        {
+          "name": "restart all three workers without replay or duplicate settlements",
+          "passed": true,
+          "durationMs": 8757
+        }
+      ],
+      "verificationMode": "diagnostic-existing-images-runtime-assertions",
+      "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+      "databaseDump": {
+        "bytes": 124677,
+        "sha256": "da7d58557e0c18f51e93558911242e9950e5ca7373bffb8c1573990e8284989f"
+      },
+      "objectBackup": {
+        "objects": 6,
+        "bytes": 27582,
+        "sha256": "d13b5dc1cf488eebc4b8ec12ea46ade717665df35ae9c63acca5ca01f91bedea"
+      },
+      "backupManifest": {
+        "sha256": "117926218c1f93502b008e2aa8acce450c11da853f090cc2c922f8405dd5fede",
+        "databaseBytes": 124677,
+        "privateObjects": 6
+      },
+      "backupFailureCases": [
+        {
+          "name": "truncated-native-dump",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "modified-native-dump",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "missing-private-object",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "modified-private-object",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "modified-private-metadata",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "missing-writer-quiescence",
+          "rejectedBeforeDestructiveAction": true
+        },
+        {
+          "name": "wrong-restore-project",
+          "rejectedBeforeDestructiveAction": true
+        }
+      ],
+      "historicalRecovery": {
+        "checks": {
+          "dedicatedOwnedBucketVersioningEnabled": true,
+          "currentReadsDoNotRepresentHistoricalPoint": true,
+          "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+          "exactHistoricalVersionBytesAndMetadataRecovered": true,
+          "providerConfirmedEffectReviewedWithoutReplay": true,
+          "historicalVersionRemainsPrivate": true,
+          "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+          "otherVersionsAndSavedManifestPreserved": true,
+          "ownedHistoricalBucketAndAllVersionsRemoved": true
+        },
+        "objectsAtHistoricalPoint": 2,
+        "syntheticExternalEffects": 1,
+        "acceptedProviderCalls": 1,
+        "providerSubmissionAttempts": 1,
+        "readinessCallbacks": 1,
+        "databasePoint": "0/1B241C8",
+        "databasePointMeaning": "Sampled source LSN used only as a fixture correlation label; objects are created afterwards.",
+        "coordinatedRecoveryPointEstablished": false,
+        "physicalPitrCombined": false,
+        "productionRetentionClaimed": false
+      },
+      "restoreInterruption": {
+        "cases": [
+          {
+            "atomic": false,
+            "reachedNativeCopyBarrier": true,
+            "backendTerminated": true,
+            "restoreExitedNonZero": true,
+            "visibleTablesDuringRestore": 39,
+            "visibleTablesAfterInterruption": 39,
+            "rollbackToEmptyTarget": false
+          },
+          {
+            "atomic": true,
+            "reachedNativeCopyBarrier": true,
+            "backendTerminated": true,
+            "restoreExitedNonZero": true,
+            "visibleTablesDuringRestore": 0,
+            "visibleTablesAfterInterruption": 0,
+            "rollbackToEmptyTarget": true
+          }
+        ],
+        "checks": {
+          "nonAtomicInterruptionLeavesPartialState": true,
+          "atomicInterruptionRollsBackSchemaAndData": true,
+          "cleanEmptyTargetPreparedForRetry": true
+        }
+      },
+      "completedAt": "2026-10-22T00:37:55.128Z"
+    },
+    "initialFailureReproduced": false,
+    "initialCause": "Unobserved; original detail truncated. No speculative cause is claimed."
+  },
+  "limits": [
+    "Historical copies created after logical restore; no physical recovery-target/version binding.",
+    "No coordinated PostgreSQL/S3/Redis PITR or production retention acceptance.",
+    "CI verifies fixtures and does not deploy; live/deployed/full-master acceptance remains open."
+  ],
+  "nextTask": "RECOVERY-01I historical manifest captured before physical recovery target",
+  "changedPaths": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/APPLICATION_OBJECT_BINDING.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/github-publication.json",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/recovery01g-final-ci-receipt.json",
+    "docs/qa/recovery01h-evidence.json",
+    "docs/qa/recovery01h-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "scripts/application-object-binding.mjs",
+    "scripts/compose-historical-recovery-fixture.mjs",
+    "scripts/compose-recovery-fixture.mjs",
+    "scripts/verify-compose-fixture.mjs",
+    "scripts/verify-compose.mjs",
+    "tests/application-object-binding.test.ts"
+  ]
+}

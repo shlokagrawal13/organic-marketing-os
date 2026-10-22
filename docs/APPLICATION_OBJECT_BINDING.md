@@ -1,0 +1,17 @@
+# Recovered application references and historical versions
+
+RECOVERY-01H extends the disposable Compose fixture after its native logical restore and successful private-object retry, before any of the five application writers starts. The original fifteen phases and every existing assertion remain; the nested binding phase makes sixteen required phases. No application, migration, dependency or workflow behavior changes.
+
+The sealed backup now retains typed references for Asset.objectKey, RenderSegment.objectKey, RenderJob.outputKey/thumbnailKey/captionsKey and MediaGeneration.outputKey. Each entry includes its row ID, organization ID, field and key, with database length/hash constraints where present. The fixture queries the restored database independently and requires an exact match, preserving separate row identities when several rows share a key. Missing or extra rows, a changed tenant, row, field or key, duplicate identities and an incorrect dump digest fail closed.
+
+In a separate owned versioned bucket, the harness copies each unique referenced object's restored bytes and verifies them against the sealed object inventory. Keys map deterministically to synthetic SHA-256 names. The manifest must contain exactly one explicit version per unique referenced key and match the sealed size, hash, content type, cache control and metadata. The fixture then overwrites those copies and adds a delete marker. Exact historical readback must still match. Wrong/current/missing versions and permanently lost historical bytes retain G's rejection controls and guarded version-specific cleanup.
+
+The logical dump SHA-256 identifies H's database evidence and the reviewed synthetic external-effect receipt. Missing/mismatched receipts deny readiness; the private provider must show one accepted effect and one submission attempt. Redis must be empty and all application writers absent before the experiment. The restored database rows and original restored private objects must remain unchanged afterward, before the existing application-start gate and fresh-Redis reconstruction proceed.
+
+This proves a bounded reference-to-manifest contract against a real logical restore. Historical copies are created after that restore; they are not versions captured at a physical PostgreSQL recovery target. It does not prove combined physical DB/S3/Redis PITR, production retention/durability, real-provider inventory completeness or HTTP authorization. The complete master, live-provider and deployed acceptance remain open. CI verifies fixtures and does not deploy.
+
+Evidence belongs in docs/qa/recovery01h-evidence.json and the external exact-final-commit CI receipt carried with the portable source ZIP. G's final dd2b34eca47b6f90784034107933a217a1c45660/run39698034764 receipt is retained in docs/qa/recovery01g-final-ci-receipt.json; its prior Windows cold-run failure and successful cached-image diagnostic remain separate, without an invented root cause.
+
+The historical readiness callback is a harness probe. Its deliberate permanent-version-loss test and cleanup operate on the disposable copies; application startup continues to use the independently verified original logical-restore objects. The experiment does not serve the application from the historical bucket.
+
+Next: RECOVERY-01I, capture a historical application-reference/version manifest before a physical recovery target, and compare the recovered application snapshot against it in an isolated fixture. This remains separate work from production backup operations.

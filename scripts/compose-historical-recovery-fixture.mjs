@@ -8,10 +8,18 @@ export async function runHistoricalRecovery({
   s3,
   objectsGate,
   effectsGate,
+  applicationBinding,
+  bindApplication,
+  applicationKey,
 }) {
   assert.match(project, /^omos-compose-verify-[a-f0-9]{16}$/);
   assert.equal(project.length, 36);
-  assert.match(databasePoint, /^[0-9A-F]+\/[0-9A-F]+$/);
+  if (applicationBinding)
+    assert.equal(
+      databasePoint,
+      `logical-sha256:${applicationBinding.snapshotSha256}`,
+    );
+  else assert.match(databasePoint, /^[0-9A-F]+\/[0-9A-F]+$/);
   const bucket = `omos-history-${project.slice(-16)}`;
   const send = (Command, input = {}) =>
     store.client.send(new Command({ Bucket: bucket, ...input }));
@@ -57,26 +65,51 @@ export async function runHistoricalRecovery({
     });
     assert.equal((await send(s3.GetBucketVersioningCommand)).Status, "Enabled");
     checks.dedicatedOwnedBucketVersioningEnabled = true;
-    for (const key of ["synthetic/overwritten", "synthetic/deleted"]) {
-      const bytes = Buffer.from(`Synthetic historical bytes for ${key}`);
+    const entries = applicationBinding
+      ? [...new Set(applicationBinding.expected.map((r) => r.key))]
+          .sort()
+          .map((sourceKey) => {
+            const o = applicationBinding.objects.find(
+              (o) => o.key === sourceKey,
+            );
+            assert.ok(o);
+            return { ...o, key: applicationKey(sourceKey), sourceKey };
+          })
+      : ["synthetic/overwritten", "synthetic/deleted"].map((key) => ({
+          key,
+          contentType: "application/octet-stream",
+          cacheControl: "private, no-store",
+          metadata,
+        }));
+    assert.ok(entries.length >= 2);
+    for (const entry of entries) {
+      const { key } = entry;
+      const bytes = applicationBinding
+        ? await store.read(entry.sourceKey, 64 * 1024 * 1024)
+        : Buffer.from(`Synthetic historical bytes for ${key}`);
+      if (applicationBinding) {
+        assert.equal(bytes.length, entry.bytes);
+        assert.equal(sha(bytes), entry.sha256);
+      }
       const versionId = remember(
         key,
         await send(s3.PutObjectCommand, {
           Key: key,
           Body: bytes,
-          ContentType: "application/octet-stream",
-          CacheControl: "private, no-store",
-          Metadata: metadata,
+          ContentType: entry.contentType,
+          CacheControl: entry.cacheControl ?? undefined,
+          Metadata: entry.metadata,
         }),
       );
       references.push({
         key,
+        ...(entry.sourceKey ? { sourceKey: entry.sourceKey } : {}),
         versionId,
         bytes: bytes.length,
         sha256: sha(bytes),
-        contentType: "application/octet-stream",
-        cacheControl: "private, no-store",
-        metadata,
+        contentType: entry.contentType,
+        cacheControl: entry.cacheControl ?? null,
+        metadata: entry.metadata ?? {},
       });
     }
     assert.equal((await fetch(provider + "/" + operationId)).status, 404);
@@ -148,6 +181,31 @@ export async function runHistoricalRecovery({
       callbacks++;
     };
     const objectEvidence = { project, bucket, references, read };
+    let bindingResult;
+    if (applicationBinding) {
+      const evidence = { ...applicationBinding, versions: references };
+      const invalid = [
+        { recovered: applicationBinding.recovered.slice(1) },
+        ...["organizationId", "id", "key", "field"].map((field) => ({
+          recovered: applicationBinding.recovered.map((r, i) =>
+            i ? r : { ...r, [field]: "wrong" },
+          ),
+        })),
+        { snapshotSha256: "0".repeat(64) },
+        { versions: references.slice(1) },
+        { versions: [...references, references[0]] },
+        {
+          versions: references.map((r, i) =>
+            i ? r : { ...r, sha256: "0".repeat(64) },
+          ),
+        },
+      ];
+      for (const change of invalid)
+        assert.throws(() => bindApplication({ ...evidence, ...change }));
+      bindingResult = bindApplication(evidence);
+      checks.restoredApplicationRowsAndExactHistoricalManifestBound = true;
+      checks.wrongTenantRowFieldKeySnapshotAndIncompleteManifestRejected = true;
+    }
     await assert.rejects(
       objectsGate(
         { ...objectEvidence, read: ({ key }) => read({ key }) },
@@ -159,7 +217,10 @@ export async function runHistoricalRecovery({
         {
           ...objectEvidence,
           references: [
-            { ...references[0], versionId: expectedVersions[2].VersionId },
+            {
+              ...references[0],
+              versionId: expectedVersions[references.length].VersionId,
+            },
           ],
         },
         ready,
@@ -195,6 +256,8 @@ export async function runHistoricalRecovery({
     );
     assert.equal(callbacks, 0);
     checks.wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness = true;
+    if (applicationBinding)
+      bindApplication({ ...applicationBinding, versions: references });
     await objectsGate(objectEvidence, () =>
       effectsGate({ ...inventory, receipts: [receipt] }, ready),
     );
@@ -242,14 +305,21 @@ export async function runHistoricalRecovery({
     checks.otherVersionsAndSavedManifestPreserved = true;
     return {
       checks,
-      objectsAtHistoricalPoint: 2,
+      objectsAtHistoricalPoint: references.length,
+      ...(bindingResult
+        ? {
+            applicationBinding: bindingResult,
+            databaseSnapshotSha256: applicationBinding.snapshotSha256,
+          }
+        : {}),
       syntheticExternalEffects: 1,
       acceptedProviderCalls: 1,
       providerSubmissionAttempts: 1,
       readinessCallbacks: callbacks,
       databasePoint,
-      databasePointMeaning:
-        "Sampled source LSN used only as a fixture correlation label; objects are created afterwards.",
+      databasePointMeaning: applicationBinding
+        ? "Logical dump digest binds source/restored application reference inventories; historical copies are created after logical restore. No physical recovery target binding."
+        : "Sampled source LSN used only as a fixture correlation label; objects are created afterwards.",
       coordinatedRecoveryPointEstablished: false,
       physicalPitrCombined: false,
       productionRetentionClaimed: false,

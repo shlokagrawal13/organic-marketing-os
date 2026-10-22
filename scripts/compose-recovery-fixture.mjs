@@ -213,16 +213,31 @@ export async function runComposeRecovery(ctx) {
     const references = [];
     for (const asset of await db.asset.findMany())
       references.push({
+        entity: "Asset",
+        id: asset.id,
+        organizationId: asset.organizationId,
+        field: "objectKey",
         key: asset.objectKey,
         bytes: asset.bytes,
         sha256: asset.sha256,
       });
     for (const segment of await db.renderSegment.findMany())
-      references.push({ key: segment.objectKey, bytes: segment.bytes });
+      references.push({
+        entity: "RenderSegment",
+        id: segment.id,
+        organizationId: segment.organizationId,
+        field: "objectKey",
+        key: segment.objectKey,
+        bytes: segment.bytes,
+      });
     for (const render of await db.renderJob.findMany())
       for (const field of ["outputKey", "thumbnailKey", "captionsKey"])
         if (render[field])
           references.push({
+            entity: "RenderJob",
+            id: render.id,
+            organizationId: render.organizationId,
+            field,
             key: render[field],
             ...(field === "outputKey" ? { bytes: render.outputBytes } : {}),
           });
@@ -230,6 +245,10 @@ export async function runComposeRecovery(ctx) {
       where: { outputKey: { not: null } },
     }))
       references.push({
+        entity: "MediaGeneration",
+        id: job.id,
+        organizationId: job.organizationId,
+        field: "outputKey",
         key: job.outputKey,
         ...(job.id === r.retained ? { sha256: r.outputSha } : {}),
       });

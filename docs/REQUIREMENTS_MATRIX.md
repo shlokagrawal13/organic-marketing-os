@@ -1,3 +1,13 @@
+<!-- RECOVERY01H_CURRENT_START -->
+## RECOVERY-01H application reference binding — 2026-10-22
+
+G final dd2b34eca47b6f90784034107933a217a1c45660/run39698034764 passed ALL THREE jobs and required steps:295 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability and zero audits,15 Compose phases. Its final receipt is now retained in docs/qa/recovery01g-final-ci-receipt.json. This closes stale G own-CI pending records below; old notices are historical. The original Windows cold queued-AI failure remains recorded; its cached-image rerun passed without reproducing a cause.
+
+H captures typed Asset/RenderSegment/RenderJob/MediaGeneration references in the sealed logical backup and compares restored tenant/row/field/key identities against an exact historical-version manifest before any writer starts. Missing/extra/altered references and wrong dump/bytes/metadata fail closed. All fifteen prior Compose phases/assertions, fresh-Redis recovery and reviewed-effect/no-replay controls remain; the nested H phase makes sixteen. Local31 focused tests and protected25 master/migration hashes pass. Local cached-image diagnostic is pending; no native local pass is claimed.
+
+This payload requires ALL THREE jobs on its own exact final published commit. Carry the external recovery01h-final-ci-receipt.json with the source ZIP; that receipt closes this capsule’s own-CI status. See docs/APPLICATION_OBJECT_BINDING.md and docs/qa/recovery01h-evidence.json. Historical copies are created after logical restore; combined physical DB/S3/Redis PITR, production operations, real-provider/live/deployed/full-master acceptance remain open. CI verifies fixtures and does not deploy. Next after H acceptance: RECOVERY-01I pre-target historical manifest/physical application recovery binding.21 broad task tracks remain open, not a count of individual fixes.
+<!-- RECOVERY01H_CURRENT_END -->
+
 <!-- RECOVERY01G_CURRENT_START -->
 ## RECOVERY-01G verified implementation and evidence closure — 2026-10-22
 

@@ -159,13 +159,14 @@ const inlineModule = (name) =>
     "base64",
   );
 const historyModule = inlineModule("compose-historical-recovery-fixture.mjs");
+const applicationBindingModule = inlineModule("application-object-binding.mjs");
 const historyObjectsModule = inlineModule("historical-object-verification.mjs");
 const historyEffectsModule = inlineModule(
   "historical-effect-reconciliation.mjs",
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01G",
+  taskId: "RECOVERY-01H",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -219,7 +220,13 @@ function command(args, { input, raw = false, quiet = false } = {}) {
         : reject(
             new Error(
               redact(
-                `Docker operation failed (${code}): ${Buffer.concat(err).toString().slice(-5000)}`,
+                `Docker operation failed (${code}): ${Buffer.concat(err)
+                  .toString()
+                  .replace(
+                    /data:text\/javascript;base64,[A-Za-z0-9+/=]+/g,
+                    "[injected fixture module]",
+                  )
+                  .slice(-5000)}`,
                 secrets,
               ),
             ),
@@ -373,7 +380,7 @@ async function node(project, mode, state = {}, running = true) {
       ];
   return JSON.parse(
     await compose(project, args, {
-      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
+      input: `globalThis.__composeObjects=await import(${JSON.stringify(objectModule)});\n globalThis.__composeRecovery=(await import(${JSON.stringify(recoveryModule)})).runComposeRecovery;\nglobalThis.__composeHistory=(await import(${JSON.stringify(historyModule)})).runHistoricalRecovery;\nglobalThis.__historyObjects=(await import(${JSON.stringify(historyObjectsModule)})).withVerifiedHistoricalObjects;\nglobalThis.__historyEffects=(await import(${JSON.stringify(historyEffectsModule)})).withReconciledHistoricalEffects;\nglobalThis.__applicationBinding=await import(${JSON.stringify(applicationBindingModule)});\nglobalThis.__composeFixtureState=${JSON.stringify(state)};\n${fixtureScript}`,
       quiet: true,
     }),
   );
@@ -876,6 +883,57 @@ try {
           sameValidatedBackupRetriedBeforeApplicationStart: true,
         });
         // Verify restored rows before starting any worker that can consume them.
+        await phase(
+          "bind restored application references to historical versions",
+          async () => {
+            await assertWritersAbsent();
+            assert.equal(
+              (
+                await compose(
+                  restored,
+                  ["exec", "-T", "redis", "redis-cli", "DBSIZE"],
+                  { quiet: true },
+                )
+              ).trim(),
+              "0",
+            );
+            await compose(restored, [
+              "up",
+              "-d",
+              "--no-build",
+              "fixture-provider",
+            ]);
+            const verified = loadBackup();
+            validateFixtureBackup(verified);
+            report.applicationHistoricalBinding = await node(
+              restored,
+              "application-history",
+              {
+                ...state,
+                project: source,
+                databasePoint: `logical-sha256:${checksum(verified.dump)}`,
+                binding: {
+                  snapshotSha256: checksum(verified.dump),
+                  expectedSnapshotSha256: verified.manifest.database.sha256,
+                  expected: verified.manifest.references,
+                  objects: verified.manifest.objects,
+                },
+              },
+              false,
+            );
+            Object.assign(
+              report.checks,
+              report.applicationHistoricalBinding.checks,
+            );
+            await assertWritersAbsent();
+            await baseline();
+            assert.deepEqual(await node(restored, "snapshot", {}, false), {
+              objects: verified.objects,
+            });
+            report.checks.applicationBindingBeforeAnyWriterStart = true;
+            report.checks.originalRestoredObjectsUnchangedAfterApplicationBinding = true;
+          },
+        );
         await gate.start(() =>
           compose(restored, [
             "up",
