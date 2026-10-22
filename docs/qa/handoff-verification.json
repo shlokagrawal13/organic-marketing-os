@@ -1,43 +1,41 @@
 {
-  "checkpointRevision": "2026-10-22.02-RECOVERY-01G-local-verification-own-CI-required",
+  "checkpointRevision": "2026-10-22.03-RECOVERY-01G-implementation-verified-closure-CI-required",
   "applicationVersion": "0.9.2",
   "verifiedDate": "2026-10-22",
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01F",
-    "commit": "40b936fdd29cb2d3754c84602ab3bc10ff4ff03c",
-    "tree": "e8974e2833c5e587ae018111cf5e4e8615c0748c",
-    "runId": 39289873313,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39289873313",
+    "taskId": "RECOVERY-01G",
+    "commit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+    "publicCommit": "f6ac3ecb59bcc26ae03bc402636a197a1367b1b8",
+    "tree": "d4a596d6665b32cfc2c196c9a50d2edd2ba3a27b",
+    "runId": 39695812351,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39695812351",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 285,
+      "unit": 295,
       "http": 38,
       "browser": 28,
       "recovery": 5,
-      "readabilitySamples": 44,
       "migrations": 24,
-      "auditVulnerabilities": 0,
-      "allThreeJobsAndAllRequiredStepsPassed": true,
-      "composePhases": 14,
-      "composePrivateObjects": 6,
-      "nativePhysicalApplicationTables": 37,
-      "nativePhysicalPopulatedTables": 11,
-      "nativePhysicalRows": 19,
-      "physicalBaseFiles": 1196,
-      "promotedTimeline": 2,
-      "localFocusedRecoveryTests": 14
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 15,
+      "historicalObjectReferences": 2,
+      "syntheticAcceptedEffects": 1,
+      "syntheticSubmissionAttempts": 1,
+      "localFocusedUnit": 24
     },
-    "receipt": "docs/qa/recovery01f-native-ci-evidence.json"
+    "receipt": "docs/qa/recovery01g-native-ci-evidence.json"
   },
   "sourcePackage": {
-    "taskId": "RECOVERY-01G",
+    "taskId": "RECOVERY-01G closure",
     "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01g-source.zip",
-    "scope": "Portable source/context/evidence only; runtime data, credentials and raw logs excluded",
-    "status": "Created after saving records; exact bytes/hash recorded in external final receipt to avoid self-reference"
+    "scope": "Portable source/context/evidence; runtime data, secrets and raw logs excluded",
+    "metadata": "Exact final ZIP bytes/hash recorded in external final receipt; all entries checked at packaging"
   },
-  "currentSourcePackageStatus": "G portable source capsule records current checks and pending own CI; external final receipt will close exact run.",
+  "currentSourcePackageStatus": "Repackaged final documentation closure; its exact-source CI is required separately from the verified implementation receipt.",
   "priorHandoffVerification": {
     "checkpointRevision": "2026-10-07.15",
     "applicationVersion": "0.9.2",
@@ -635,10 +633,8 @@
   },
   "currentWork": {
     "taskId": "RECOVERY-01G",
-    "status": "focused_and_configuration_passed_full_compose_in_progress_exact_source_ci_required",
-    "evidence": "docs/qa/recovery01g-evidence.json",
-    "lastVerifiedSourceCommit": "40b936fdd29cb2d3754c84602ab3bc10ff4ff03c",
-    "ownCiPassed": false
+    "status": "verified_implementation_documentation_closure_pending_own_ci",
+    "evidence": "docs/qa/recovery01g-native-ci-evidence.json"
   },
   "FSourcePackageReinspection": {
     "date": "2026-10-22",
@@ -646,13 +642,14 @@
     "sha256": "e705a54519dd606ff270c8bfe3bc5f8e0680af33e9af046cf85896dfede1817b"
   },
   "lastVerifiedSourcePackage": {
-    "archive": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01f-source.zip",
-    "files": 564,
-    "bytes": 15570444,
-    "sha256": "e705a54519dd606ff270c8bfe3bc5f8e0680af33e9af046cf85896dfede1817b",
-    "zipCrcPassedAtCreation": true,
-    "allIncludedFilesByteMatchedAtCreation": true,
-    "privateRuntimeDataExcluded": true,
-    "postCreationReinspection": "PermissionError under subsequently restricted sandbox; archive was successfully created and verified before commit 40b936f. Current workspace manifest and Git blobs verified independently."
+    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01g-implementation-source.zip",
+    "files": 574,
+    "bytes": 15614281,
+    "sha256": "fedc17ddbdbfef201e094013784d26089530492a4f1e11b3a05954c45a40b174",
+    "zipCrcPassed": true,
+    "allFilesMatchPublishedWorkspace": true,
+    "runtimeDataAndCredentialsExcluded": true,
+    "archiveAtReceiptCreation": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01g-source.zip",
+    "relocation": "Retained byte-identical implementation source archive before final closure repackaging"
   }
 }
