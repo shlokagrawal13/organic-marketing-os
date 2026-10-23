@@ -8,6 +8,7 @@ export async function runPhysicalMedia({
   state,
   db,
   store,
+  s3,
   require,
   call,
   sha,
@@ -126,7 +127,7 @@ export async function runPhysicalMedia({
         "''",
       ) +
       "'";
-    const sql = `
+    let sql = `
       INSERT INTO "Asset" (id,"organizationId",name,kind,"mimeType",bytes,sha256,"objectKey",width,height,"rightsNote","createdBy") VALUES (${q(ids.validAsset)},${q(org)},'Synthetic valid physical image','IMAGE','image/png',${source.length},${q(sha(source))},${q(sourceKey)},640,360,'Synthetic FFmpeg image','pitr-owner');
       UPDATE "CreditAccount" SET available=5,reserved=5,revision=3 WHERE "organizationId"=${q(org)} AND available=7 AND reserved=3;
       INSERT INTO "CreditEntry" (id,"organizationId","operationKey","requestHash",kind,"availableDelta","reservedDelta","availableAfter","reservedAfter",sequence,reference,reason) VALUES ('pitr-media-reserve',${q(org)},'reserve-media','fixture','RESERVE',-2,2,5,5,3,'physical-media','Synthetic media reservation');
@@ -135,6 +136,11 @@ export async function runPhysicalMedia({
       INSERT INTO "RenderInput" ("renderId","assetId") VALUES (${q(ids.render)},${q(ids.validAsset)});
       INSERT INTO "MediaGeneration" (id,"organizationId","actorId","requestKey","requestHash",request,configuration,state,"outputKey","providerRequestId","quotedCostUsd","quotedCredits","creditReservationId","startedAt","updatedAt") VALUES (${q(ids.media)},${q(org)},'pitr-owner',${q(ids.media)},${q(sha(Buffer.from(JSON.stringify(request))))},${q(request)},${q(config)},'OUTPUT_READY',${q(outputKey)},'synthetic-physical-retained',0.1,2,'pitr-media-reservation',now(),now());
     `;
+    if (state.interruptedMode)
+      sql += `
+        UPDATE "RenderJob" SET status='RUNNING',"runToken"='physical-interrupted-render',"startedAt"=now()-interval '2 minutes',"heartbeatAt"=now()-interval '2 minutes' WHERE id=${q(ids.render)};
+        UPDATE "MediaGeneration" SET "runToken"='physical-interrupted-media',"heartbeatAt"=now()-interval '2 minutes' WHERE id=${q(ids.media)};
+      `;
     return {
       sql,
       objects,
@@ -144,6 +150,40 @@ export async function runPhysicalMedia({
       retainedSha256: sha(retained),
       renderSnapshot: snapshot,
     };
+  }
+  if (mode === "physical-media-object-fault") {
+    const object = state.object;
+    assert.ok(
+      [state.mediaFixture.sourceKey, state.mediaFixture.outputKey].includes(
+        object.key,
+      ),
+    );
+    const bytes = Buffer.from(object.body, "base64");
+    assert.equal(sha(bytes), object.sha256);
+    if (state.fault === "missing")
+      await store.client.send(
+        new s3.DeleteObjectCommand({ Bucket: store.bucket, Key: object.key }),
+      );
+    else {
+      assert.ok(["corrupt", "restore"].includes(state.fault));
+      const body = Buffer.from(bytes);
+      if (state.fault === "corrupt") {
+        body[body.length - 1] ^= 1;
+        assert.equal(body.length, bytes.length);
+        assert.notEqual(sha(body), object.sha256);
+      }
+      await store.client.send(
+        new s3.PutObjectCommand({
+          Bucket: store.bucket,
+          Key: object.key,
+          Body: body,
+          ContentType: object.contentType,
+          CacheControl: object.cacheControl,
+          Metadata: object.metadata,
+        }),
+      );
+    }
+    return { key: object.key, fault: state.fault };
   }
   const current = async () =>
     JSON.parse(
@@ -169,6 +209,13 @@ export async function runPhysicalMedia({
         reservation: await db.creditReservation.findUniqueOrThrow({
           where: { id: "pitr-media-reservation" },
         }),
+        ...(state.interruption
+          ? {
+              interruptedRender: await db.renderJob.findUniqueOrThrow({
+                where: { id: state.interruption.originalRenderId },
+              }),
+            }
+          : {}),
       }),
     );
   const Redis = require("ioredis"),
@@ -180,6 +227,84 @@ export async function runPhysicalMedia({
     (n) => new Queue(n, { connection }),
   );
   try {
+    if (mode === "physical-media-interrupted") {
+      let row;
+      for (let i = 0; i < 100; i++) {
+        row = await db.renderJob.findUniqueOrThrow({
+          where: { id: ids.render },
+        });
+        if (row.status === "FAILED") break;
+        await sleep(200);
+      }
+      assert.equal(row.status, "FAILED");
+      assert.match(row.error, /worker was interrupted/i);
+      assert.equal(row.stage, "Worker interrupted");
+      assert.equal(row.outputKey, null);
+      assert.equal(await queues[0].getJob(ids.render), undefined);
+      assert.equal(
+        await db.renderJob.count({ where: { organizationId: org } }),
+        1,
+      );
+      const path = `/workspaces/${org}/renders/${ids.render}/retry`;
+      const body = { requestKey: "7cdd0796-a51e-442a-aab9-999999999999" };
+      assert.equal((await call(path, "POST", body)).status, 401);
+      const cookies = {};
+      for (const who of ["owner", "client", "viewer"]) {
+        const login = await call("/auth/login", "POST", {
+          email: `pitr-${who}@example.test`,
+          password: state.password,
+        });
+        assert.equal(login.status, 201);
+        cookies[who] = login.cookie;
+      }
+      assert.equal(
+        (await call(path, "POST", body, cookies.client)).status,
+        404,
+      );
+      assert.equal(
+        (await call(path, "POST", body, cookies.viewer)).status,
+        403,
+      );
+      const retry = await call(path, "POST", body, cookies.owner);
+      assert.equal(retry.status, 201);
+      assert.notEqual(retry.data.id, ids.render);
+      const duplicate = await call(path, "POST", body, cookies.owner);
+      assert.equal(duplicate.status, 201);
+      assert.equal(duplicate.data.id, retry.data.id);
+      assert.equal(
+        await db.renderJob.count({ where: { organizationId: org } }),
+        2,
+      );
+      const next = await db.renderJob.findUniqueOrThrow({
+        where: { id: retry.data.id },
+      });
+      assert.deepEqual(next.snapshot, row.snapshot);
+      assert.deepEqual(next.options, row.options);
+      assert.equal(next.contentRevision, row.contentRevision);
+      assert.deepEqual(
+        await db.renderInput.findMany({
+          where: { renderId: next.id },
+          select: { assetId: true },
+        }),
+        [{ assetId: ids.validAsset }],
+      );
+      assert.equal(
+        await db.auditLog.count({
+          where: { action: "render.retried", entityId: next.id },
+        }),
+        1,
+      );
+      return {
+        originalRenderId: ids.render,
+        retryRenderId: next.id,
+        failedRender: JSON.parse(JSON.stringify(row)),
+        checks: {
+          physicalStaleRenderFailedWithoutAutomaticReplay: true,
+          physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed: true,
+          physicalRenderRetryPreservedFrozenInputs: true,
+        },
+      };
+    }
     if (mode === "physical-media-diagnostic")
       return {
         now: new Date().toISOString(),
@@ -246,6 +371,26 @@ export async function runPhysicalMedia({
       assert.deepEqual(await current(), state.mediaAfter);
     }
     const r = await current();
+    if (state.interruption) {
+      assert.deepEqual(r.interruptedRender, state.interruption.failedRender);
+      assert.equal(
+        await queues[0].getJob(state.interruption.originalRenderId),
+        undefined,
+      );
+      assert.notEqual(r.media.runToken, "physical-interrupted-media");
+      assert.equal(r.media.runToken, null);
+      assert.equal(r.media.heartbeatAt, null);
+      assert.equal(
+        await db.renderJob.count({ where: { organizationId: org } }),
+        2,
+      );
+      assert.equal(
+        await db.auditLog.count({
+          where: { action: "media_generation.completed", entityId: ids.media },
+        }),
+        1,
+      );
+    }
     assert.equal(r.media.outputKey, null);
     assert.equal(r.media.providerRequestId, "synthetic-physical-retained");
     assert.equal(r.reservation.state, "SETTLED");
@@ -360,6 +505,12 @@ export async function runPhysicalMedia({
         physicalOutputDimensionsDurationAndDecodePassed: true,
         physicalNewOutputsPrivateAndTenantScoped: true,
         physicalMediaReservationsSettledOnce: true,
+        ...(state.interruption
+          ? {
+              physicalStaleMediaLeaseReclaimedWithoutSubmission: true,
+              physicalInterruptedRenderPreservedAfterRetry: true,
+            }
+          : {}),
         ...(mode === "physical-media-restart"
           ? { physicalMediaRowsQueuesAndBytesStableAfterRestart: true }
           : {}),

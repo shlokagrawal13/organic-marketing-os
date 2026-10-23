@@ -21,6 +21,7 @@ import {
   assertPitrCase,
   withVerifiedPhysicalBackup,
   nativeStartExit,
+  waitForPromotedSql,
 } from "./postgres-pitr-verification.mjs";
 export async function runPostgresPitr({ hooks } = {}) {
   if (process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
@@ -423,6 +424,10 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     report.checks.missingWalAndUnreachableTargetRejectReadiness = true;
     const retry = await prepare("retry", target, "archive");
     await withVerifiedPhysicalBackup(() => verify("/fixture/base"), retry);
+    report.sqlReadiness = await waitForPromotedSql(() =>
+      psql("retry", "SELECT NOT pg_is_in_recovery();"),
+    );
+    report.checks.actualPromotedSqlAdmissionBeforeSnapshot = true;
     assert.equal((await psql("retry", snapshotSql)).trim(), expected);
     assert.deepEqual(
       await applicationSnapshot((sql) => psql("retry", sql)),
@@ -474,6 +479,9 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
               "pg_ctl -D /fixture/retry -l /fixture/retry.log -t 20 -w start\n",
             );
             assert.match(output, /server started/);
+            report.sqlReadinessAfterPhysicalExport = await waitForPromotedSql(
+              () => psql("retry", "SELECT NOT pg_is_in_recovery();"),
+            );
           }
         },
       });

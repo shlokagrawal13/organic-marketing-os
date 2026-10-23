@@ -306,6 +306,7 @@ try {
           state,
           db,
           store,
+          s3,
           require,
           call,
           sha,

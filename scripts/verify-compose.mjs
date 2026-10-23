@@ -202,7 +202,7 @@ const historyEffectsModule = inlineModule(
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01K",
+  taskId: "RECOVERY-01L",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -851,20 +851,26 @@ try {
         report.checks.originalApplicationSourceUnchangedAfterPhysicalObjectProbe = true;
       },
     );
-    for (const mediaMode of [false, true]) {
+    for (const recoveryMode of ["application", "media", "interrupted-media"]) {
+      const mediaMode = recoveryMode !== "application",
+        interruptedMode = recoveryMode === "interrupted-media";
       await phase(
-        mediaMode
-          ? "valid historical media and populated physical render/media recovery"
-          : "physical cluster application bucket and fresh-Redis recovery",
+        interruptedMode
+          ? "physical retained-media faults and interrupted worker leases"
+          : mediaMode
+            ? "valid historical media and populated physical render/media recovery"
+            : "physical cluster application bucket and fresh-Redis recovery",
         async () => {
           let history,
             capturedApplication,
             mediaReview,
             expectedMediaReviewSha256,
             mediaFixture;
-          const reportKey = mediaMode
-            ? "physicalMediaRecovery"
-            : "physicalApplicationRecovery";
+          const reportKey = interruptedMode
+            ? "physicalInterruptedMediaRecovery"
+            : mediaMode
+              ? "physicalMediaRecovery"
+              : "physicalApplicationRecovery";
           const ids = mediaMode
               ? { ...physicalApplicationIds, ...physicalMediaIds }
               : physicalApplicationIds,
@@ -875,6 +881,7 @@ try {
           const appState = {
             ids,
             mediaMode,
+            interruptedMode,
             password,
             queuedPrompt,
             objectSha256: checksum(Buffer.from("old")),
@@ -928,6 +935,7 @@ try {
                 "physical-media-prepare",
                 {
                   ids,
+                  interruptedMode,
                   renderSnapshot: state.rows.render.snapshot,
                   renderOptions: state.rows.render.options,
                 },
@@ -965,6 +973,7 @@ try {
                     mediaReview = createPhysicalMediaReview(
                       capturedApplication,
                       history.manifest.objects,
+                      { interrupted: interruptedMode },
                     );
                     expectedMediaReviewSha256 =
                       physicalCaptureHash(mediaReview);
@@ -1215,6 +1224,64 @@ try {
                       );
                     assert.equal(starts, 0);
                   }
+                  const objectFaults = [];
+                  if (interruptedMode) {
+                    for (const key of [
+                      mediaFixture.sourceKey,
+                      mediaFixture.outputKey,
+                    ]) {
+                      const object = objects.objects.find((o) => o.key === key);
+                      assert.ok(object);
+                      for (const fault of ["missing", "corrupt"]) {
+                        try {
+                          await node(
+                            physical,
+                            "physical-media-object-fault",
+                            { ...appState, object, fault },
+                            false,
+                          );
+                          const changed = await preflight();
+                          await assert.rejects(
+                            withPhysicalApplicationStart(changed, async () => {
+                              starts++;
+                            }),
+                            /Application bucket inventory changed|Historical private object bytes changed/,
+                          );
+                          assert.equal(starts, 0);
+                          assert.equal(changed.redisKeys, 0);
+                          await writersAbsent();
+                          assert.deepEqual(
+                            await applicationSnapshot(query),
+                            imported,
+                          );
+                          objectFaults.push({
+                            key,
+                            fault,
+                            startCallbacks: 0,
+                            redisKeys: 0,
+                            applicationSnapshotUnchanged: true,
+                          });
+                        } finally {
+                          await node(
+                            physical,
+                            "physical-media-object-fault",
+                            { ...appState, object, fault: "restore" },
+                            false,
+                          );
+                        }
+                        const restoredEvidence = await preflight();
+                        const readback = restoredEvidence.objects.find(
+                          (o) => o.key === key,
+                        );
+                        assert.equal(checksum(readback.bytes), object.sha256);
+                        assert.equal(
+                          readback.bytes.length,
+                          Buffer.from(object.body, "base64").length,
+                        );
+                      }
+                    }
+                    assert.equal(objectFaults.length, 4);
+                  }
                   await writersAbsent();
                   appState.beforeLedger = physicalLedgerBaseline(
                     recovered.applicationSnapshot.rows.CreditEntry,
@@ -1243,6 +1310,17 @@ try {
                     "physical-app-http",
                     appState,
                   );
+                  if (interruptedMode) {
+                    appState.interruption = await node(
+                      physical,
+                      "physical-media-interrupted",
+                      appState,
+                    );
+                    appState.ids = {
+                      ...ids,
+                      render: appState.interruption.retryRenderId,
+                    };
+                  }
                   let mediaWork, mediaRestart;
                   if (mediaMode) {
                     try {
@@ -1255,7 +1333,7 @@ try {
                       writeFileSync(
                         resolve(
                           root,
-                          ".local/recovery01k-worker-diagnostic.json",
+                          ".local/recovery01l-worker-diagnostic.json",
                         ),
                         JSON.stringify(
                           await node(
@@ -1270,7 +1348,7 @@ try {
                       writeFileSync(
                         resolve(
                           root,
-                          ".local/recovery01k-worker-diagnostic.log",
+                          ".local/recovery01l-worker-diagnostic.log",
                         ),
                         await compose(
                           physical,
@@ -1328,13 +1406,32 @@ try {
                           mediaReview,
                           expectedMediaReviewSha256,
                           mediaOutputHashes: mediaWork.hashes,
+                          ...(interruptedMode
+                            ? {
+                                objectFaults,
+                                interruptedRender: {
+                                  originalRenderId:
+                                    appState.interruption.originalRenderId,
+                                  retryRenderId:
+                                    appState.interruption.retryRenderId,
+                                  originalFailedRowSha256: physicalCaptureHash(
+                                    appState.interruption.failedRender,
+                                  ),
+                                  checks: appState.interruption.checks,
+                                },
+                              }
+                            : {}),
                         }
                       : {}),
                     applicationStartedFromHistoricalObjects: true,
                     physicalCopySha256: copied.sha256,
                     importedPhysicalCopySha256: importedCopySha256,
                     applicationStartCallbacks: starts,
-                    startupControlsDenied: mediaMode ? 10 : 7,
+                    startupControlsDenied: interruptedMode
+                      ? 14
+                      : mediaMode
+                        ? 10
+                        : 7,
                     redisKeysBeforeApplicationStart: evidence.redisKeys,
                     reviewedEffectEvidence: evidence.effects,
                     boundedFreshRedisApplicationRecoveryVerified: true,
@@ -1348,6 +1445,14 @@ try {
                       ...restarted.checks,
                       ...mediaWork?.checks,
                       ...mediaRestart?.checks,
+                      ...appState.interruption?.checks,
+                      ...(interruptedMode
+                        ? {
+                            physicalMissingAndCorruptMediaDenyWriters: true,
+                            physicalMediaFaultsPreserveDatabaseAndEmptyRedis: true,
+                            physicalMediaFaultsRepairedFromVerifiedHistoricalBytes: true,
+                          }
+                        : {}),
                       sevenInvalidStartupPrerequisitesDenied: true,
                       ...(mediaMode
                         ? { unreviewedPopulatedMediaStartupDenied: true }

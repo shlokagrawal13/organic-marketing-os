@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "recovery01k-20261023",
-  "savedAtUtc": "2026-10-22T19:04:37.868Z",
-  "currentMilestone": "RECOVERY-01K populated physical media recovery",
+  "checkpointRevision": "recovery01l-20261023",
+  "savedAtUtc": "2026-10-23T14:55:51.489Z",
+  "currentMilestone": "RECOVERY-01L media faults and interrupted physical leases",
   "activeTaskId": "RECOVERY-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish the Next16.4.2 security follow-up and inspect/fix ALL THREE jobs on its exact final commit. Then RECOVERY-01L physical media fault/interruption recovery.",
+  "nextAction": "Publish L normally and inspect/fix ALL THREE jobs and required steps on its exact final commit with fresh images; pair the final receipt with source ZIP. Then RECOVERY-01M barrier-controlled real worker process interruption during rendering/private-output ingestion and ambiguous media-provider recovery at a physical target.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -91,9 +91,10 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
+    "apps/api/src/render-worker.ts",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
-    "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+    "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
     "docs/PHYSICAL_MEDIA_RECOVERY.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
@@ -103,23 +104,20 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/recovery01j-evidence.json",
-    "docs/qa/recovery01j-final-ci-receipt.json",
-    "docs/qa/recovery01k-ci-attempt1.json",
     "docs/qa/recovery01k-evidence.json",
-    "docs/qa/recovery01k-unit-receipts.json",
+    "docs/qa/recovery01k-final-ci-receipt.json",
+    "docs/qa/recovery01l-evidence.json",
+    "docs/qa/recovery01l-unit-receipts.json",
     "docs/qa/verification-summary.json",
-    "package-lock.json",
-    "package.json",
-    "scripts/physical-application-fixture.mjs",
-    "scripts/physical-application-start.mjs",
     "scripts/physical-media-fixture.mjs",
     "scripts/physical-media-review.mjs",
-    "scripts/physical-object-fixture.mjs",
+    "scripts/postgres-pitr-verification.mjs",
     "scripts/verify-compose-fixture.mjs",
     "scripts/verify-compose.mjs",
+    "scripts/verify-postgres-pitr.mjs",
     "tests/physical-media-review.test.ts",
-    "tests/physical-object-fixture.test.ts"
+    "tests/postgres-pitr-verification.test.ts",
+    "tests/render-worker-startup.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6706,8 +6704,8 @@
     "redis": "SOCIAL-01 configurable posting-policy own native Redis CI passed; local selected verifier used native Redis test tooling."
   },
   "accessState": {
-    "github": "J exact final all-three-job CI verified; Git normal fetch/push available; K requires own final CI.",
-    "nativeExecution": "Windows Node22.22.2/Docker29.7.2 Linux engine available; local59 focused and cached-image17-phase focused K runtime passed; no local rebuild claimed.",
+    "github": "K exact final all-three-job CI rechecked; Git normal fetch/push and GitHub read available; gh CLI absent.",
+    "nativeExecution": "Windows Node and Docker29.7.2 Linux engine available; local66 focused and L-focused17 fresh-application-image runtime phases pass; fresh-image own CI required.",
     "userWindowsDeployment": "User reported earlier core working; installed version/current DB/media not inspected by agent",
     "paidTestSpend": "No product paid calls, Stripe sandbox charges, or real money movement performed by the agent.",
     "rechecked01J": {
@@ -6724,13 +6722,21 @@
       "githubReadAvailable": true,
       "liveProvidersUsed": false,
       "credentialValuesPrinted": false
+    },
+    "rechecked01L": {
+      "realEnvExists": false,
+      "normalFetchSucceeded": true,
+      "githubReadAvailable": true,
+      "ghCliAvailable": false,
+      "liveProvidersUsed": false,
+      "credentialValuesPrinted": false
     }
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-    "status": "K_initial_core_audit_failed_security_followup_local_requires_final_own_CI",
+    "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+    "status": "K_final_verified_L_local_requires_own_CI",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6743,15 +6749,15 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
+    "sourceTree": "922a23cc32c9dded9985454919794b250869d598",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published initial K candidate failed core audit. J remains last all-three-job verified publication; Next16.4.2 final source requires own CI.",
+    "commitMeaning": "Last verified K final source; L requires own exact-commit all-three-job CI identified by paired final receipt.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+    "lastLocalCheckpointCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
     "uploadGate": {
-      "taskId": "RECOVERY-01K",
-      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "taskId": "RECOVERY-01L",
+      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+      "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6760,9 +6766,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -6772,44 +6779,65 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+      "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
     },
     "publication": {
       "taskId": "RECOVERY-01K",
-      "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-      "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
-      "runId": 39832920032,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+      "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+      "tree": "922a23cc32c9dded9985454919794b250869d598",
+      "runId": 39837076273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
       "status": "completed",
-      "conclusion": "failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "acceptedAsFinal": false,
-      "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "physicalBoundReferences": 1,
+        "physicalBoundHistoricalObjects": 1,
+        "unit": 325,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 19,
+        "logicalBoundApplicationReferences": 6,
+        "logicalBoundHistoricalObjects": 6,
+        "localFocusedTests": 59,
+        "physicalApplicationRows": 21,
+        "physicalApplicationTables": 37,
+        "startupControlsDenied": 7,
+        "physicalApplicationStartCallbacks": 1,
+        "physicalMediaRows": 27,
+        "physicalMediaPopulatedTables": 14,
+        "physicalMediaBoundReferences": 3,
+        "physicalMediaBoundObjects": 3,
+        "physicalMediaStartupControlsDenied": 10,
+        "nextVersion": "16.4.2"
+      },
+      "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
     },
     "currentUploadGate": {
-      "taskId": "RECOVERY-01K",
-      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "taskId": "RECOVERY-01L",
+      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+      "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6818,9 +6846,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -6830,32 +6859,28 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+      "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
     },
     "publicationPreparation": {
-      "taskId": "RECOVERY-01K",
-      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "taskId": "RECOVERY-01L",
+      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+      "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6864,9 +6889,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -6876,27 +6902,23 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+      "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -6920,9 +6942,9 @@
       "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "docsEvidencePublicationGate": {
-      "taskId": "RECOVERY-01K",
-      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "taskId": "RECOVERY-01L",
+      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+      "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6931,9 +6953,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -6943,32 +6966,28 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+      "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
     },
     "nextPublication": {
-      "taskId": "RECOVERY-01K",
-      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "taskId": "RECOVERY-01L",
+      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+      "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6977,9 +6996,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -6989,27 +7009,23 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+      "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
     },
     "previousPublication": {
       "slice": "EDITOR-01U",
@@ -7027,9 +7043,9 @@
       "ciAttempt": 1
     },
     "localEvidencePublication": {
-      "taskId": "RECOVERY-01K",
-      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "taskId": "RECOVERY-01L",
+      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+      "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7038,9 +7054,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -7050,29 +7067,25 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+      "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
     },
-    "lastLocalCheckpointCommitMeaning": "Initial K candidate, not accepted as final; follow-up requires new exact final commit.",
+    "lastLocalCheckpointCommitMeaning": "Last verified source before L; new own final commit is identified by paired external receipt.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -7704,7 +7717,7 @@
       "ciAttempt": 1
     },
     "localClosure": {
-      "taskId": "RECOVERY-01K",
+      "taskId": "RECOVERY-01L",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7713,9 +7726,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/render-worker.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
-        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
         "docs/PHYSICAL_MEDIA_RECOVERY.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
@@ -7725,23 +7739,20 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01j-evidence.json",
-        "docs/qa/recovery01j-final-ci-receipt.json",
-        "docs/qa/recovery01k-ci-attempt1.json",
         "docs/qa/recovery01k-evidence.json",
-        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/recovery01k-final-ci-receipt.json",
+        "docs/qa/recovery01l-evidence.json",
+        "docs/qa/recovery01l-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "package-lock.json",
-        "package.json",
-        "scripts/physical-application-fixture.mjs",
-        "scripts/physical-application-start.mjs",
         "scripts/physical-media-fixture.mjs",
         "scripts/physical-media-review.mjs",
-        "scripts/physical-object-fixture.mjs",
+        "scripts/postgres-pitr-verification.mjs",
         "scripts/verify-compose-fixture.mjs",
         "scripts/verify-compose.mjs",
+        "scripts/verify-postgres-pitr.mjs",
         "tests/physical-media-review.test.ts",
-        "tests/physical-object-fixture.test.ts"
+        "tests/postgres-pitr-verification.test.ts",
+        "tests/render-worker-startup.test.ts"
       ],
       "published": false,
       "requiresSeparatePublicScopeAuthorization": false,
@@ -7749,17 +7760,42 @@
     },
     "latestPublication": {
       "taskId": "RECOVERY-01K",
-      "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-      "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
-      "runId": 39832920032,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+      "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+      "tree": "922a23cc32c9dded9985454919794b250869d598",
+      "runId": 39837076273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
       "status": "completed",
-      "conclusion": "failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "acceptedAsFinal": false,
-      "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "physicalBoundReferences": 1,
+        "physicalBoundHistoricalObjects": 1,
+        "unit": 325,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 19,
+        "logicalBoundApplicationReferences": 6,
+        "logicalBoundHistoricalObjects": 6,
+        "localFocusedTests": 59,
+        "physicalApplicationRows": 21,
+        "physicalApplicationTables": 37,
+        "startupControlsDenied": 7,
+        "physicalApplicationStartCallbacks": 1,
+        "physicalMediaRows": 27,
+        "physicalMediaPopulatedTables": 14,
+        "physicalMediaBoundReferences": 3,
+        "physicalMediaBoundObjects": 3,
+        "physicalMediaStartupControlsDenied": 10,
+        "nextVersion": "16.4.2"
+      },
+      "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+    "latestApplicationSourceCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7774,15 +7810,15 @@
       "id": "NATIVE-01",
       "state": "ready_for_local_work",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "Production/deployed operational acceptance remains open.",
-      "completedIncrement": "Disposable Compose/native fixtures verified through J; Windows Docker/MinIO available and K local17-phase K-focused checks passed."
+      "currentBlocker": "L own fresh-image CI; production/deployed operational acceptance remains open.",
+      "completedIncrement": "Disposable native/Compose fixtures verified through K; L L-focused17 fresh-application-image Windows runtime phases pass."
     },
     {
       "id": "RECOVERY-01",
       "state": "ready_for_local_work",
       "title": "Native populated upgrade and cross-store recovery",
-      "completedIncrement": "A–J bounded fixtures verified; J b279475/run39786556233 all three jobs. K local17-phase K-focused populated physical media checks passed; own exact-source CI pending.",
-      "currentBlocker": "K own all-three-job CI then L physical media fault/interruption recovery; production/live/master acceptance open."
+      "completedIncrement": "A–K bounded fixtures verified; K1cf75fb/run39837076273 all three jobs. L local66 focused and L-focused17 fresh-application-image runtime phases pass; own CI pending.",
+      "currentBlocker": "L own exact-source three-job CI then M real worker process interruption/ambiguous provider outcomes; production/live/master acceptance remains open."
     },
     {
       "id": "AI-LIVE-01",
@@ -7915,9 +7951,8 @@
     }
   ],
   "lastChanges": [
-    "J exact final receipt reconciled across generic current/publication/handoff aliases.",
-    "K populated physical valid-media/render/retained-ingestion/private-output/credits/restart verification; previous18 phases retained.",
-    "Initial K CI failed core audit for Next advisories; exact Next16.4.2 dependency/lockfile security fix, locked install/zero audits/full production build verified locally."
+    "Persisted K final1cf75fb/run39837076273 all-three-job receipt and reconciled generic current/publication/handoff fields.",
+    "L render startup validation ordering fix, actual missing/corrupt private-media admission controls, separate stale-claim review, owner retry/retained ingestion/credits/private-output/restart assertions; all19 prior phases retained."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -7954,16 +7989,16 @@
     "prisma/migrations/202610180001_research_evidence/migration.sql": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5",
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
   },
-  "checkpointVerificationEvidence": "docs/qa/recovery01k-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/recovery01l-evidence.json",
   "latestStatus": {
-    "taskId": "RECOVERY-01K",
-    "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
-    "nextAction": "Publish the Next16.4.2 security follow-up and inspect/fix ALL THREE jobs on its exact final commit. Then RECOVERY-01L physical media fault/interruption recovery."
+    "taskId": "RECOVERY-01L",
+    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+    "nextAction": "Publish L normally and inspect/fix ALL THREE jobs and required steps on its exact final commit with fresh images; pair the final receipt with source ZIP. Then RECOVERY-01M barrier-controlled real worker process interruption during rendering/private-output ingestion and ambiguous media-provider recovery at a physical target."
   },
   "activeTask": {
-    "id": "RECOVERY-01K",
-    "title": "Valid historical media and populated physical render/media recovery",
-    "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs"
+    "id": "RECOVERY-01L",
+    "title": "Physical media faults and interrupted claims",
+    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -7976,9 +8011,9 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RECOVERY-01K",
-    "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
-    "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+    "taskId": "RECOVERY-01L",
+    "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
+    "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -7987,9 +8022,10 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
+      "apps/api/src/render-worker.ts",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
-      "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+      "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
       "docs/PHYSICAL_MEDIA_RECOVERY.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
@@ -7999,27 +8035,23 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01j-evidence.json",
-      "docs/qa/recovery01j-final-ci-receipt.json",
-      "docs/qa/recovery01k-ci-attempt1.json",
       "docs/qa/recovery01k-evidence.json",
-      "docs/qa/recovery01k-unit-receipts.json",
+      "docs/qa/recovery01k-final-ci-receipt.json",
+      "docs/qa/recovery01l-evidence.json",
+      "docs/qa/recovery01l-unit-receipts.json",
       "docs/qa/verification-summary.json",
-      "package-lock.json",
-      "package.json",
-      "scripts/physical-application-fixture.mjs",
-      "scripts/physical-application-start.mjs",
       "scripts/physical-media-fixture.mjs",
       "scripts/physical-media-review.mjs",
-      "scripts/physical-object-fixture.mjs",
+      "scripts/postgres-pitr-verification.mjs",
       "scripts/verify-compose-fixture.mjs",
       "scripts/verify-compose.mjs",
+      "scripts/verify-postgres-pitr.mjs",
       "tests/physical-media-review.test.ts",
-      "tests/physical-object-fixture.test.ts"
+      "tests/postgres-pitr-verification.test.ts",
+      "tests/render-worker-startup.test.ts"
     ],
     "requiresAllThreeJobsOnOwnCommit": true,
-    "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
-    "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+    "finalReceipt": "External recovery01l-final-ci-receipt.json paired with portable source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8492,15 +8524,40 @@
   },
   "publishedIncrement": {
     "taskId": "RECOVERY-01K",
-    "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-    "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
-    "runId": 39832920032,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+    "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+    "tree": "922a23cc32c9dded9985454919794b250869d598",
+    "runId": 39837076273,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
     "status": "completed",
-    "conclusion": "failure",
-    "allThreeJobsAndRequiredStepsPassed": false,
-    "acceptedAsFinal": false,
-    "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "physicalBoundReferences": 1,
+      "physicalBoundHistoricalObjects": 1,
+      "unit": 325,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 19,
+      "logicalBoundApplicationReferences": 6,
+      "logicalBoundHistoricalObjects": 6,
+      "localFocusedTests": 59,
+      "physicalApplicationRows": 21,
+      "physicalApplicationTables": 37,
+      "startupControlsDenied": 7,
+      "physicalApplicationStartCallbacks": 1,
+      "physicalMediaRows": 27,
+      "physicalMediaPopulatedTables": 14,
+      "physicalMediaBoundReferences": 3,
+      "physicalMediaBoundObjects": 3,
+      "physicalMediaStartupControlsDenied": 10,
+      "nextVersion": "16.4.2"
+    },
+    "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8596,32 +8653,49 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "RECOVERY-01K",
-    "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
+    "taskId": "RECOVERY-01L",
+    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
     "local": {
       "resumeIntegrity": {
         "passed": true,
-        "comparedFiles": 595,
+        "files": 604,
         "initialWorkingTreeClean": true,
-        "remoteMainMatchedVerifiedJ": true
+        "remoteMainMatchedVerifiedK": true
       },
-      "apiBuildAfterPrismaGenerationPassed": true,
-      "cachedRenderWorkerMatchesCurrentCompiledSource": true,
-      "focusedTests": 59,
-      "newUnitCases": 10,
+      "focusedTests": 66,
+      "newUnitCases": 18,
       "syntaxAndFormattingChecked": true,
       "protectedHashesUnchanged": 25,
       "composeDiagnostic": {
         "passed": true,
         "phases": 17,
-        "mode": "diagnostic-focused-K-existing-images",
-        "imageBuildsSkipped": true,
+        "mode": "diagnostic-focused-L17-fresh-application-cached-minio",
+        "applicationImagesFreshlyBuilt": true,
+        "pinnedMinioImageReused": true,
+        "sourceNextVersion": "16.4.2",
+        "imageMetadata": {
+          "runtimeImage": "omos-compose-verify-recovery01l-runtime",
+          "runtimeImageId": "sha256:7353ae393d7ae589c37217890d19d2ef4acc8aacbc999407ae54cf224aa03919",
+          "buildImage": "omos-compose-verify-recovery01l-build",
+          "buildImageId": "sha256:33625360642ac3ebde672aafa56f79d9a6e56336a9dfdcbeb73604c3b8e3b99d",
+          "pinnedCachedMinioImage": "omos-compose-verify-9f07e8881f75f3fd-storage",
+          "pinnedCachedMinioImageId": "sha256:3bed8e5bebae6fe5c69f84b6e2f182d7504f298f4e882de8372fff9b92dd13f3",
+          "node": "v24.22.1",
+          "nextVersion": "16.4.2",
+          "compiledRenderWorkerSha256": "e4fda60c0e112ea6d588aeab0a64403bf8681c6479efd7e0c3ac5716fb7d95d7",
+          "compiledWorkerMatchesCurrentHostBuild": true,
+          "renderWorkerSourceSha256": "92ced7f46534ac6fbc7417f801673b5e9c0b1c360f8971770d150ebb30d42ef4",
+          "runtimeBuildLogSha256": "8d65a2ff4954bd17525b9db928c2729cfb6bc211647dd489e470bbc7677833a2",
+          "buildStageLogSha256": "33734e30461c5ae7fdce2cd9e7518aa97a6c8a1d4093c7411e9490abc3db8733",
+          "recordedAtUtc": "2026-10-23T14:52:47.664Z"
+        },
+        "scope": "L-focused17 runtime phases with fresh application images and inspected pinned cached MinIO; source retains all20 phases for exact final CI",
         "cleanup": true,
         "environmentUnchanged": true,
-        "reportSha256": "4ea3153df708287d680f74f1d1d59a47bdb792395168bf700e22df99dcd37cf6",
-        "scope": "K-focused17 phases on cached pre-security Next16.3.8 image; final Next16.4.2 requires fresh full19-phase exact-source CI"
+        "reportSha256": "309fb528f7c0ca8a93841f362a9eb95ef383285681405a7dafe4aca6b6fd124a",
+        "rawLogSha256": "e91f7cd528b70fe2e5750eb67847df4485e210208aba6853f7ace89589b6526b"
       },
-      "physicalMedia": {
+      "physicalInterruptedMedia": {
         "passed": true,
         "rows": 27,
         "tables": 37,
@@ -8630,12 +8704,37 @@
           "references": 3,
           "objects": 3
         },
-        "startupControlsDenied": 10,
-        "nativeStartExitCodes": {
-          "missing-wal": 1,
-          "unreachable": 1,
-          "retry": 0
-        },
+        "startupControlsDenied": 14,
+        "objectFaults": [
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          }
+        ],
         "checks": {
           "capturedBeforePhysicalTarget": true,
           "exactRecoveredApplicationSnapshotBound": true,
@@ -8663,7 +8762,15 @@
           "physicalOutputDimensionsDurationAndDecodePassed": true,
           "physicalNewOutputsPrivateAndTenantScoped": true,
           "physicalMediaReservationsSettledOnce": true,
+          "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+          "physicalInterruptedRenderPreservedAfterRetry": true,
           "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+          "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+          "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+          "physicalRenderRetryPreservedFrozenInputs": true,
+          "physicalMissingAndCorruptMediaDenyWriters": true,
+          "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+          "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
           "sevenInvalidStartupPrerequisitesDenied": true,
           "unreviewedPopulatedMediaStartupDenied": true,
           "allWritersAbsentBeforeVerifiedAdmission": true,
@@ -8672,77 +8779,71 @@
           "emptyRedisBeforePhysicalApplicationStart": true,
           "isolatedApplicationBucketRestoredFromRetainedVersion": true
         },
+        "nativeStartExitCodes": {
+          "missing-wal": 1,
+          "unreachable": 1,
+          "retry": 0
+        },
         "outputHashes": {
           "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
           "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
           "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
-          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
-          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
-          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
           "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
-        }
+        },
+        "reviewVersion": 2
       },
       "initialFailure": {
         "passed": false,
-        "reportSha256": "3328ff25412a5bb7a53568534c3bae1f18311fa77ef5a1d0d2f2d9afa9e1c837",
-        "cleanup": true,
-        "observed": {
-          "failure": "First full 19-phase attempt reached K application startup, then render dispatcher marked the render FAILED with its stale-heartbeat interruption message.",
-          "predecessorPhases": "All I/J physical assertions passed in that attempt; the entire failed run is not counted as a pass.",
-          "followup": "A fresh isolated K-focused attempt uses added worker/queue/clock/log capture on failure. The successful path retains all media, queue, credit, isolation and restart assertions.",
-          "cause": "Not established by the first attempt. Do not claim a production worker fix or suppress lease checks. Track interrupted-worker and operational/load acceptance in RECOVERY-01L and NATIVE/SECURITY work.",
-          "hostBuild": "An optional standalone API compile initially found missing Prisma-generated types. npm run db:generate then npm run build:api passed; generated files are ignored, schema and migrations unchanged.",
-          "cachedRenderWorkerSha256": "b92d3749053a8e0db64030873d16dca4d90e66a8b296ad675d7b12b5a2cb9cdc",
-          "cachedWorkerMatchesCurrentCompiledSource": true
-        }
+        "reportSha256": "725f9d6c1a8d8a4301ab7013d61447d74403162d17cd9de712e465d9f467c0c2",
+        "nativeReportSha256": "d1a9af1dca92b4bb548b5868d0f655351cf45861c5b6956354680e7dbe08faf7",
+        "rawLogSha256": "bbf361d0834e4d77c6a02dfc66219bcda5cc0bb9b54809045770d71161e52dc1",
+        "fixtureCleanup": true,
+        "environmentUnchanged": true,
+        "phase": "K predecessor positive physical retry before L",
+        "observed": "pg_ctl returned0; SQL was rejected at20:56:02.253 UTC, PostgreSQL logged ready at20:56:02.285 UTC. Added bounded positive promoted-SQL admission; native exit1/FATAL/SQL-rejection negative cases and all exact snapshots/WAL/promotion assertions remain. Initial K render-heartbeat failure has a separate unknown cause.",
+        "readinessGapMilliseconds": 32
+      },
+      "apiBuildPassed": true,
+      "apiBuildLogSha256": "36463e6a3b6ba06120442bdef0b6c067021b69ddc7485d41f6e0e2df13edf6ae",
+      "renderBootRegression": {
+        "actualEntrypointCasesPassed": 3,
+        "priorPublishedSourceCasesFailedAsExpected": 3,
+        "negativeLogSha256": "d67609188adea916779df8e08f1d3ea2df35b43cc16f8222b26ca4b7fb9654ed"
       },
       "secondFailure": {
         "passed": false,
-        "reportSha256": "caec417a05b42c7cbeb6ee1350dba84d4f57491d55043ca691f26ff7f4b215a9",
-        "nativeReportSha256": "cbe4a06d8c8bd7ddb9ade3cf532ad8e8c77a8367e7e877afdea79445ccefdce9",
-        "cleanup": true,
-        "observed": "Actual K media/render/API/credits/worker restarts passed, then the one-object historical verifier selected another key original as the later overwrite. Fixed selection by same key and distinct original version; verify all later objects. New 1-object and 3-object stateful S3-command regression workflows pass. No assertion removed."
+        "reportSha256": "333d884c3eb3d2b03f1a856e5296f9ffeb9afb5df67018db13c0c199cedc3b84",
+        "workerDiagnosticSha256": "58f1dc7bc3b1d30e229072dc0bd8d9b5449c65bd2dcea9a4f293c43f153e47b5",
+        "workerLogSha256": "3397ca4ea55946ba9f006d56f26abea28097edf862348685dcd4fa2dfffcfd99",
+        "rawLogSha256": "97e7299b28b0507155df6c4b1e6474ce83c13c70c7c3c3720b191000a9ef1953",
+        "fixtureCleanup": true,
+        "observed": "K predecessor actual render was claimed before FFmpeg boot validation failed and process restarted; next dispatcher failed stale claim. Autorun/dispatch now wait for validated tools. Old generic boot log did not identify underlying tool failure. Original K initial failure remains separately unproven."
       },
-      "securityFollowup": {
-        "from": "16.3.8",
-        "to": "16.4.2",
-        "reason": "Initial exact-source core CI failed dependency audit for newly indexed Next.js advisories",
-        "advisories": [
-          "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
-          "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
-          "https://github.com/advisories/GHSA-673q-mjm6-r5xr"
-        ],
-        "release": "https://github.com/vercel/next.js/releases/tag/v16.4.2",
-        "firstAttemptReceipt": "docs/qa/recovery01k-ci-attempt1.json",
-        "initialSourceCommit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-        "initialRunId": 39832920032,
-        "lockedInstallPassed": true,
-        "fullAuditVulnerabilities": 0,
-        "productionAuditVulnerabilities": 0,
-        "fullLocalBuildPassed": true,
-        "postUpgradeFocusedTests": 59,
-        "lockedInstallLogSha256": "2b3a5fa1bd0e2f505e99ced176eeec9ce405c8460f4abf7b4f903a01ffc48c3f",
-        "fullAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
-        "productionAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
-        "buildLogSha256": "f194ae09ed5c0f42b25d1ad6d151cb945de3d8eba71157642dd831308b2c9e3b",
-        "priorLocalCachedComposeNextVersion": "16.3.8",
-        "finalOwnFreshImageThreeJobCiRequired": true,
-        "recordedAtUtc": "2026-10-22T19:04:37.868Z"
+      "productionAudit": {
+        "vulnerabilities": 0,
+        "reportSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+      },
+      "fullAudit": {
+        "vulnerabilities": 0,
+        "reportSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
       }
     },
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01J",
-      "commit": "b27947509465ba2f5283932239b73e85e683fe1b",
-      "tree": "3770a8f586f57241d6b236587ddc59f9407353a7",
-      "runId": 39786556233,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39786556233",
+      "taskId": "RECOVERY-01K",
+      "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+      "tree": "922a23cc32c9dded9985454919794b250869d598",
+      "runId": 39837076273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "physicalBoundReferences": 1,
         "physicalBoundHistoricalObjects": 1,
-        "unit": 315,
+        "unit": 325,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -8750,28 +8851,22 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 18,
+        "composePhases": 19,
         "logicalBoundApplicationReferences": 6,
         "logicalBoundHistoricalObjects": 6,
-        "localFocusedTests": 49,
+        "localFocusedTests": 59,
         "physicalApplicationRows": 21,
         "physicalApplicationTables": 37,
         "startupControlsDenied": 7,
-        "physicalApplicationStartCallbacks": 1
+        "physicalApplicationStartCallbacks": 1,
+        "physicalMediaRows": 27,
+        "physicalMediaPopulatedTables": 14,
+        "physicalMediaBoundReferences": 3,
+        "physicalMediaBoundObjects": 3,
+        "physicalMediaStartupControlsDenied": 10,
+        "nextVersion": "16.4.2"
       },
-      "receipt": "docs/qa/recovery01j-final-ci-receipt.json"
-    },
-    "initialFailedPublication": {
-      "taskId": "RECOVERY-01K",
-      "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-      "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
-      "runId": 39832920032,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
-      "status": "completed",
-      "conclusion": "failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "acceptedAsFinal": false,
-      "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+      "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
     }
   },
   "social01PolicyReview": {
@@ -9088,7 +9183,7 @@
     "closurePublicationNativeCi": true
   },
   "lastPublishedFiles": {
-    "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+    "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -9111,9 +9206,12 @@
       "docs/qa/handoff-verification.json",
       "docs/qa/recovery01j-evidence.json",
       "docs/qa/recovery01j-final-ci-receipt.json",
+      "docs/qa/recovery01k-ci-attempt1.json",
       "docs/qa/recovery01k-evidence.json",
       "docs/qa/recovery01k-unit-receipts.json",
       "docs/qa/verification-summary.json",
+      "package-lock.json",
+      "package.json",
       "scripts/physical-application-fixture.mjs",
       "scripts/physical-application-start.mjs",
       "scripts/physical-media-fixture.mjs",
@@ -9124,7 +9222,7 @@
       "tests/physical-media-review.test.ts",
       "tests/physical-object-fixture.test.ts"
     ],
-    "meaning": "Initial K source failed audit; final pending source scope is localChangedPaths"
+    "meaning": "K exact final publication; L scope in pendingPublication"
   },
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
@@ -9280,32 +9378,49 @@
     "requiresUserApprovalText": "I explicitly approve publishing POLICY-01A claim-evidence native-CI closure’s 15 verified docs/evidence/checkpoint files to public GitHub repo shlokagrawal13/organic-marketing-os main."
   },
   "verification": {
-    "taskId": "RECOVERY-01K",
-    "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
+    "taskId": "RECOVERY-01L",
+    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
     "local": {
       "resumeIntegrity": {
         "passed": true,
-        "comparedFiles": 595,
+        "files": 604,
         "initialWorkingTreeClean": true,
-        "remoteMainMatchedVerifiedJ": true
+        "remoteMainMatchedVerifiedK": true
       },
-      "apiBuildAfterPrismaGenerationPassed": true,
-      "cachedRenderWorkerMatchesCurrentCompiledSource": true,
-      "focusedTests": 59,
-      "newUnitCases": 10,
+      "focusedTests": 66,
+      "newUnitCases": 18,
       "syntaxAndFormattingChecked": true,
       "protectedHashesUnchanged": 25,
       "composeDiagnostic": {
         "passed": true,
         "phases": 17,
-        "mode": "diagnostic-focused-K-existing-images",
-        "imageBuildsSkipped": true,
+        "mode": "diagnostic-focused-L17-fresh-application-cached-minio",
+        "applicationImagesFreshlyBuilt": true,
+        "pinnedMinioImageReused": true,
+        "sourceNextVersion": "16.4.2",
+        "imageMetadata": {
+          "runtimeImage": "omos-compose-verify-recovery01l-runtime",
+          "runtimeImageId": "sha256:7353ae393d7ae589c37217890d19d2ef4acc8aacbc999407ae54cf224aa03919",
+          "buildImage": "omos-compose-verify-recovery01l-build",
+          "buildImageId": "sha256:33625360642ac3ebde672aafa56f79d9a6e56336a9dfdcbeb73604c3b8e3b99d",
+          "pinnedCachedMinioImage": "omos-compose-verify-9f07e8881f75f3fd-storage",
+          "pinnedCachedMinioImageId": "sha256:3bed8e5bebae6fe5c69f84b6e2f182d7504f298f4e882de8372fff9b92dd13f3",
+          "node": "v24.22.1",
+          "nextVersion": "16.4.2",
+          "compiledRenderWorkerSha256": "e4fda60c0e112ea6d588aeab0a64403bf8681c6479efd7e0c3ac5716fb7d95d7",
+          "compiledWorkerMatchesCurrentHostBuild": true,
+          "renderWorkerSourceSha256": "92ced7f46534ac6fbc7417f801673b5e9c0b1c360f8971770d150ebb30d42ef4",
+          "runtimeBuildLogSha256": "8d65a2ff4954bd17525b9db928c2729cfb6bc211647dd489e470bbc7677833a2",
+          "buildStageLogSha256": "33734e30461c5ae7fdce2cd9e7518aa97a6c8a1d4093c7411e9490abc3db8733",
+          "recordedAtUtc": "2026-10-23T14:52:47.664Z"
+        },
+        "scope": "L-focused17 runtime phases with fresh application images and inspected pinned cached MinIO; source retains all20 phases for exact final CI",
         "cleanup": true,
         "environmentUnchanged": true,
-        "reportSha256": "4ea3153df708287d680f74f1d1d59a47bdb792395168bf700e22df99dcd37cf6",
-        "scope": "K-focused17 phases on cached pre-security Next16.3.8 image; final Next16.4.2 requires fresh full19-phase exact-source CI"
+        "reportSha256": "309fb528f7c0ca8a93841f362a9eb95ef383285681405a7dafe4aca6b6fd124a",
+        "rawLogSha256": "e91f7cd528b70fe2e5750eb67847df4485e210208aba6853f7ace89589b6526b"
       },
-      "physicalMedia": {
+      "physicalInterruptedMedia": {
         "passed": true,
         "rows": 27,
         "tables": 37,
@@ -9314,12 +9429,37 @@
           "references": 3,
           "objects": 3
         },
-        "startupControlsDenied": 10,
-        "nativeStartExitCodes": {
-          "missing-wal": 1,
-          "unreachable": 1,
-          "retry": 0
-        },
+        "startupControlsDenied": 14,
+        "objectFaults": [
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          }
+        ],
         "checks": {
           "capturedBeforePhysicalTarget": true,
           "exactRecoveredApplicationSnapshotBound": true,
@@ -9347,7 +9487,15 @@
           "physicalOutputDimensionsDurationAndDecodePassed": true,
           "physicalNewOutputsPrivateAndTenantScoped": true,
           "physicalMediaReservationsSettledOnce": true,
+          "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+          "physicalInterruptedRenderPreservedAfterRetry": true,
           "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+          "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+          "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+          "physicalRenderRetryPreservedFrozenInputs": true,
+          "physicalMissingAndCorruptMediaDenyWriters": true,
+          "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+          "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
           "sevenInvalidStartupPrerequisitesDenied": true,
           "unreviewedPopulatedMediaStartupDenied": true,
           "allWritersAbsentBeforeVerifiedAdmission": true,
@@ -9356,77 +9504,71 @@
           "emptyRedisBeforePhysicalApplicationStart": true,
           "isolatedApplicationBucketRestoredFromRetainedVersion": true
         },
+        "nativeStartExitCodes": {
+          "missing-wal": 1,
+          "unreachable": 1,
+          "retry": 0
+        },
         "outputHashes": {
           "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
           "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
           "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
-          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
-          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
-          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
           "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
-        }
+        },
+        "reviewVersion": 2
       },
       "initialFailure": {
         "passed": false,
-        "reportSha256": "3328ff25412a5bb7a53568534c3bae1f18311fa77ef5a1d0d2f2d9afa9e1c837",
-        "cleanup": true,
-        "observed": {
-          "failure": "First full 19-phase attempt reached K application startup, then render dispatcher marked the render FAILED with its stale-heartbeat interruption message.",
-          "predecessorPhases": "All I/J physical assertions passed in that attempt; the entire failed run is not counted as a pass.",
-          "followup": "A fresh isolated K-focused attempt uses added worker/queue/clock/log capture on failure. The successful path retains all media, queue, credit, isolation and restart assertions.",
-          "cause": "Not established by the first attempt. Do not claim a production worker fix or suppress lease checks. Track interrupted-worker and operational/load acceptance in RECOVERY-01L and NATIVE/SECURITY work.",
-          "hostBuild": "An optional standalone API compile initially found missing Prisma-generated types. npm run db:generate then npm run build:api passed; generated files are ignored, schema and migrations unchanged.",
-          "cachedRenderWorkerSha256": "b92d3749053a8e0db64030873d16dca4d90e66a8b296ad675d7b12b5a2cb9cdc",
-          "cachedWorkerMatchesCurrentCompiledSource": true
-        }
+        "reportSha256": "725f9d6c1a8d8a4301ab7013d61447d74403162d17cd9de712e465d9f467c0c2",
+        "nativeReportSha256": "d1a9af1dca92b4bb548b5868d0f655351cf45861c5b6956354680e7dbe08faf7",
+        "rawLogSha256": "bbf361d0834e4d77c6a02dfc66219bcda5cc0bb9b54809045770d71161e52dc1",
+        "fixtureCleanup": true,
+        "environmentUnchanged": true,
+        "phase": "K predecessor positive physical retry before L",
+        "observed": "pg_ctl returned0; SQL was rejected at20:56:02.253 UTC, PostgreSQL logged ready at20:56:02.285 UTC. Added bounded positive promoted-SQL admission; native exit1/FATAL/SQL-rejection negative cases and all exact snapshots/WAL/promotion assertions remain. Initial K render-heartbeat failure has a separate unknown cause.",
+        "readinessGapMilliseconds": 32
+      },
+      "apiBuildPassed": true,
+      "apiBuildLogSha256": "36463e6a3b6ba06120442bdef0b6c067021b69ddc7485d41f6e0e2df13edf6ae",
+      "renderBootRegression": {
+        "actualEntrypointCasesPassed": 3,
+        "priorPublishedSourceCasesFailedAsExpected": 3,
+        "negativeLogSha256": "d67609188adea916779df8e08f1d3ea2df35b43cc16f8222b26ca4b7fb9654ed"
       },
       "secondFailure": {
         "passed": false,
-        "reportSha256": "caec417a05b42c7cbeb6ee1350dba84d4f57491d55043ca691f26ff7f4b215a9",
-        "nativeReportSha256": "cbe4a06d8c8bd7ddb9ade3cf532ad8e8c77a8367e7e877afdea79445ccefdce9",
-        "cleanup": true,
-        "observed": "Actual K media/render/API/credits/worker restarts passed, then the one-object historical verifier selected another key original as the later overwrite. Fixed selection by same key and distinct original version; verify all later objects. New 1-object and 3-object stateful S3-command regression workflows pass. No assertion removed."
+        "reportSha256": "333d884c3eb3d2b03f1a856e5296f9ffeb9afb5df67018db13c0c199cedc3b84",
+        "workerDiagnosticSha256": "58f1dc7bc3b1d30e229072dc0bd8d9b5449c65bd2dcea9a4f293c43f153e47b5",
+        "workerLogSha256": "3397ca4ea55946ba9f006d56f26abea28097edf862348685dcd4fa2dfffcfd99",
+        "rawLogSha256": "97e7299b28b0507155df6c4b1e6474ce83c13c70c7c3c3720b191000a9ef1953",
+        "fixtureCleanup": true,
+        "observed": "K predecessor actual render was claimed before FFmpeg boot validation failed and process restarted; next dispatcher failed stale claim. Autorun/dispatch now wait for validated tools. Old generic boot log did not identify underlying tool failure. Original K initial failure remains separately unproven."
       },
-      "securityFollowup": {
-        "from": "16.3.8",
-        "to": "16.4.2",
-        "reason": "Initial exact-source core CI failed dependency audit for newly indexed Next.js advisories",
-        "advisories": [
-          "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
-          "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
-          "https://github.com/advisories/GHSA-673q-mjm6-r5xr"
-        ],
-        "release": "https://github.com/vercel/next.js/releases/tag/v16.4.2",
-        "firstAttemptReceipt": "docs/qa/recovery01k-ci-attempt1.json",
-        "initialSourceCommit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-        "initialRunId": 39832920032,
-        "lockedInstallPassed": true,
-        "fullAuditVulnerabilities": 0,
-        "productionAuditVulnerabilities": 0,
-        "fullLocalBuildPassed": true,
-        "postUpgradeFocusedTests": 59,
-        "lockedInstallLogSha256": "2b3a5fa1bd0e2f505e99ced176eeec9ce405c8460f4abf7b4f903a01ffc48c3f",
-        "fullAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
-        "productionAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
-        "buildLogSha256": "f194ae09ed5c0f42b25d1ad6d151cb945de3d8eba71157642dd831308b2c9e3b",
-        "priorLocalCachedComposeNextVersion": "16.3.8",
-        "finalOwnFreshImageThreeJobCiRequired": true,
-        "recordedAtUtc": "2026-10-22T19:04:37.868Z"
+      "productionAudit": {
+        "vulnerabilities": 0,
+        "reportSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+      },
+      "fullAudit": {
+        "vulnerabilities": 0,
+        "reportSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
       }
     },
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01J",
-      "commit": "b27947509465ba2f5283932239b73e85e683fe1b",
-      "tree": "3770a8f586f57241d6b236587ddc59f9407353a7",
-      "runId": 39786556233,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39786556233",
+      "taskId": "RECOVERY-01K",
+      "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+      "tree": "922a23cc32c9dded9985454919794b250869d598",
+      "runId": 39837076273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "physicalBoundReferences": 1,
         "physicalBoundHistoricalObjects": 1,
-        "unit": 315,
+        "unit": 325,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -9434,28 +9576,22 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 18,
+        "composePhases": 19,
         "logicalBoundApplicationReferences": 6,
         "logicalBoundHistoricalObjects": 6,
-        "localFocusedTests": 49,
+        "localFocusedTests": 59,
         "physicalApplicationRows": 21,
         "physicalApplicationTables": 37,
         "startupControlsDenied": 7,
-        "physicalApplicationStartCallbacks": 1
+        "physicalApplicationStartCallbacks": 1,
+        "physicalMediaRows": 27,
+        "physicalMediaPopulatedTables": 14,
+        "physicalMediaBoundReferences": 3,
+        "physicalMediaBoundObjects": 3,
+        "physicalMediaStartupControlsDenied": 10,
+        "nextVersion": "16.4.2"
       },
-      "receipt": "docs/qa/recovery01j-final-ci-receipt.json"
-    },
-    "initialFailedPublication": {
-      "taskId": "RECOVERY-01K",
-      "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
-      "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
-      "runId": 39832920032,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
-      "status": "completed",
-      "conclusion": "failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "acceptedAsFinal": false,
-      "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+      "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
     }
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
@@ -10316,14 +10452,14 @@
     ]
   },
   "contextResume": {
-    "evidence": "docs/qa/recovery01j-final-ci-receipt.json",
+    "evidence": "docs/qa/recovery01k-final-ci-receipt.json",
     "resumeContext": "docs/RESUME_CONTEXT.md",
-    "lastVerifiedPublicMain": "b27947509465ba2f5283932239b73e85e683fe1b",
+    "lastVerifiedPublicMain": "1cf75fbd0429f7976296b926875b8d533ea8d675",
     "pastedContextSuperseded": true,
     "documentationOnly": false,
     "publicPushAttempted": true,
-    "currentTask": "RECOVERY-01K",
-    "nextAction": "Publish the Next16.4.2 security follow-up and inspect/fix ALL THREE jobs on its exact final commit. Then RECOVERY-01L physical media fault/interruption recovery.",
+    "currentTask": "RECOVERY-01L",
+    "nextAction": "Publish L normally and inspect/fix ALL THREE jobs and required steps on its exact final commit with fresh images; pair the final receipt with source ZIP. Then RECOVERY-01M barrier-controlled real worker process interruption during rendering/private-output ingestion and ambiguous media-provider recovery at a physical target.",
     "initialFailedPublication": {
       "taskId": "RECOVERY-01K",
       "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
@@ -14024,7 +14160,7 @@
     ],
     "nextTask": "RECOVERY-01C backup failure/quiescence and in-flight queue/cross-store consistency audit"
   },
-  "nextRecoveryIncrement": "RECOVERY-01L",
+  "nextRecoveryIncrement": "RECOVERY-01M",
   "recovery01c": {
     "schemaVersion": 1,
     "taskId": "RECOVERY-01C",
@@ -16289,18 +16425,18 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01J",
-    "commit": "b27947509465ba2f5283932239b73e85e683fe1b",
-    "tree": "3770a8f586f57241d6b236587ddc59f9407353a7",
-    "runId": 39786556233,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39786556233",
+    "taskId": "RECOVERY-01K",
+    "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+    "tree": "922a23cc32c9dded9985454919794b250869d598",
+    "runId": 39837076273,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
       "physicalBoundReferences": 1,
       "physicalBoundHistoricalObjects": 1,
-      "unit": 315,
+      "unit": 325,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -16308,16 +16444,22 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 18,
+      "composePhases": 19,
       "logicalBoundApplicationReferences": 6,
       "logicalBoundHistoricalObjects": 6,
-      "localFocusedTests": 49,
+      "localFocusedTests": 59,
       "physicalApplicationRows": 21,
       "physicalApplicationTables": 37,
       "startupControlsDenied": 7,
-      "physicalApplicationStartCallbacks": 1
+      "physicalApplicationStartCallbacks": 1,
+      "physicalMediaRows": 27,
+      "physicalMediaPopulatedTables": 14,
+      "physicalMediaBoundReferences": 3,
+      "physicalMediaBoundObjects": 3,
+      "physicalMediaStartupControlsDenied": 10,
+      "nextVersion": "16.4.2"
     },
-    "receipt": "docs/qa/recovery01j-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -19659,7 +19801,7 @@
     "schemaVersion": 1,
     "taskId": "RECOVERY-01K",
     "recordedAtUtc": "2026-10-22T19:04:37.868Z",
-    "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
+    "status": "exact_final_commit_all_three_jobs_verified",
     "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
     "baseRunId": 39786556233,
     "priorVerifiedPublication": {
@@ -19901,6 +20043,52 @@
       "priorLocalCachedComposeNextVersion": "16.3.8",
       "finalOwnFreshImageThreeJobCiRequired": true,
       "recordedAtUtc": "2026-10-22T19:04:37.868Z"
+    },
+    "publication": {
+      "taskId": "RECOVERY-01K",
+      "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+      "tree": "922a23cc32c9dded9985454919794b250869d598",
+      "runId": 39837076273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "physicalBoundReferences": 1,
+        "physicalBoundHistoricalObjects": 1,
+        "unit": 325,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 19,
+        "logicalBoundApplicationReferences": 6,
+        "logicalBoundHistoricalObjects": 6,
+        "localFocusedTests": 59,
+        "physicalApplicationRows": 21,
+        "physicalApplicationTables": 37,
+        "startupControlsDenied": 7,
+        "physicalApplicationStartCallbacks": 1,
+        "physicalMediaRows": 27,
+        "physicalMediaPopulatedTables": 14,
+        "physicalMediaBoundReferences": 3,
+        "physicalMediaBoundObjects": 3,
+        "physicalMediaStartupControlsDenied": 10,
+        "nextVersion": "16.4.2"
+      },
+      "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
+    },
+    "currentClosureOwnCiPassed": true,
+    "finalReceiptImport": {
+      "path": "docs/qa/recovery01k-final-ci-receipt.json",
+      "originalExternalSha256": "70962c67cf150baab18a74b913c374c1f07c66e86e9b583294ca4059f0a29c15",
+      "normalizedSourceSha256": "6f0df76a458aa89b4a1fbac54f132407924f84ba574d243831228df54cf69b2f",
+      "lineEndings": "LF",
+      "jsonContentUnchanged": true,
+      "originalExternalReceiptPreserved": true
     }
   },
   "initialRecovery01kPublication": {
@@ -19914,5 +20102,536 @@
     "allThreeJobsAndRequiredStepsPassed": false,
     "acceptedAsFinal": false,
     "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+  },
+  "reconciliationHistory01L": {
+    "recordedAtUtc": "2026-10-22T20:41:39.669Z",
+    "priorActiveTask": {
+      "id": "RECOVERY-01K",
+      "title": "Valid historical media and populated physical render/media recovery",
+      "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs"
+    },
+    "priorPendingPublication": {
+      "taskId": "RECOVERY-01K",
+      "status": "standing_authorized_next_security_followup_requires_new_exact_final_commit_all_three_jobs",
+      "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
+      "paths": [
+        "AGENTS.md",
+        "CHECKPOINT_MANIFEST.json",
+        "PROJECT_CHECKPOINT.json",
+        "PROJECT_STATUS.md",
+        "REQUIREMENTS_MATRIX.md",
+        "RESUME_PROMPT.txt",
+        "START_HERE.md",
+        "docs/CHANGELOG.md",
+        "docs/HANDOFF.md",
+        "docs/PHYSICAL_APPLICATION_RECOVERY.md",
+        "docs/PHYSICAL_MEDIA_RECOVERY.md",
+        "docs/PROJECT_STATUS.md",
+        "docs/REQUIREMENTS_MATRIX.md",
+        "docs/RESUME_CONTEXT.md",
+        "docs/SESSION_LOG.md",
+        "docs/TASK_BOARD.md",
+        "docs/VERIFICATION_REPORT.md",
+        "docs/qa/github-publication.json",
+        "docs/qa/handoff-verification.json",
+        "docs/qa/recovery01j-evidence.json",
+        "docs/qa/recovery01j-final-ci-receipt.json",
+        "docs/qa/recovery01k-ci-attempt1.json",
+        "docs/qa/recovery01k-evidence.json",
+        "docs/qa/recovery01k-unit-receipts.json",
+        "docs/qa/verification-summary.json",
+        "package-lock.json",
+        "package.json",
+        "scripts/physical-application-fixture.mjs",
+        "scripts/physical-application-start.mjs",
+        "scripts/physical-media-fixture.mjs",
+        "scripts/physical-media-review.mjs",
+        "scripts/physical-object-fixture.mjs",
+        "scripts/verify-compose-fixture.mjs",
+        "scripts/verify-compose.mjs",
+        "tests/physical-media-review.test.ts",
+        "tests/physical-object-fixture.test.ts"
+      ],
+      "requiresAllThreeJobsOnOwnCommit": true,
+      "finalReceipt": "External recovery01k-final-ci-receipt.json paired with portable source ZIP",
+      "parentCandidate": "5e90488fc9ac0319cd421f64c4061a506fa18799"
+    },
+    "priorVerification": {
+      "taskId": "RECOVERY-01K",
+      "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
+      "local": {
+        "resumeIntegrity": {
+          "passed": true,
+          "comparedFiles": 595,
+          "initialWorkingTreeClean": true,
+          "remoteMainMatchedVerifiedJ": true
+        },
+        "apiBuildAfterPrismaGenerationPassed": true,
+        "cachedRenderWorkerMatchesCurrentCompiledSource": true,
+        "focusedTests": 59,
+        "newUnitCases": 10,
+        "syntaxAndFormattingChecked": true,
+        "protectedHashesUnchanged": 25,
+        "composeDiagnostic": {
+          "passed": true,
+          "phases": 17,
+          "mode": "diagnostic-focused-K-existing-images",
+          "imageBuildsSkipped": true,
+          "cleanup": true,
+          "environmentUnchanged": true,
+          "reportSha256": "4ea3153df708287d680f74f1d1d59a47bdb792395168bf700e22df99dcd37cf6",
+          "scope": "K-focused17 phases on cached pre-security Next16.3.8 image; final Next16.4.2 requires fresh full19-phase exact-source CI"
+        },
+        "physicalMedia": {
+          "passed": true,
+          "rows": 27,
+          "tables": 37,
+          "populatedTables": 14,
+          "bound": {
+            "references": 3,
+            "objects": 3
+          },
+          "startupControlsDenied": 10,
+          "nativeStartExitCodes": {
+            "missing-wal": 1,
+            "unreachable": 1,
+            "retry": 0
+          },
+          "checks": {
+            "capturedBeforePhysicalTarget": true,
+            "exactRecoveredApplicationSnapshotBound": true,
+            "wrongPointBaseManifestAndInventoryRejected": true,
+            "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+            "currentAndMissingVersionsDenyReadiness": true,
+            "anonymousHistoricalReadDenied": true,
+            "permanentlyLostVersionDeniesReadiness": true,
+            "savedManifestAndLaterVersionPreserved": true,
+            "restoredHttpAuthentication": true,
+            "historicalMediaServedByActualApi": true,
+            "anonymousAndCrossTenantMediaDenied": true,
+            "restoredClientRoleDeniedWrite": true,
+            "restoredRevisionConflictAndApprovalInvalidation": true,
+            "laterDatabaseChangesExcluded": true,
+            "physicallyRecoveredQueuedJobReconstructed": true,
+            "postTargetEffectNotReplayed": true,
+            "uncertainJobFailedForReview": true,
+            "oneCreditSettlementAndOriginalLedgerPreserved": true,
+            "restoredLedgerImmutable": true,
+            "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+            "physicalValidImagesDecoded": true,
+            "physicalRenderQueueCompleted": true,
+            "physicalRetainedMediaIngestedWithoutSubmission": true,
+            "physicalOutputDimensionsDurationAndDecodePassed": true,
+            "physicalNewOutputsPrivateAndTenantScoped": true,
+            "physicalMediaReservationsSettledOnce": true,
+            "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+            "sevenInvalidStartupPrerequisitesDenied": true,
+            "unreviewedPopulatedMediaStartupDenied": true,
+            "allWritersAbsentBeforeVerifiedAdmission": true,
+            "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+            "importedFullSnapshotMatchesPhysicalTarget": true,
+            "emptyRedisBeforePhysicalApplicationStart": true,
+            "isolatedApplicationBucketRestoredFromRetainedVersion": true
+          },
+          "outputHashes": {
+            "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+            "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+            "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+            "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+            "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+            "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+            "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+          }
+        },
+        "initialFailure": {
+          "passed": false,
+          "reportSha256": "3328ff25412a5bb7a53568534c3bae1f18311fa77ef5a1d0d2f2d9afa9e1c837",
+          "cleanup": true,
+          "observed": {
+            "failure": "First full 19-phase attempt reached K application startup, then render dispatcher marked the render FAILED with its stale-heartbeat interruption message.",
+            "predecessorPhases": "All I/J physical assertions passed in that attempt; the entire failed run is not counted as a pass.",
+            "followup": "A fresh isolated K-focused attempt uses added worker/queue/clock/log capture on failure. The successful path retains all media, queue, credit, isolation and restart assertions.",
+            "cause": "Not established by the first attempt. Do not claim a production worker fix or suppress lease checks. Track interrupted-worker and operational/load acceptance in RECOVERY-01L and NATIVE/SECURITY work.",
+            "hostBuild": "An optional standalone API compile initially found missing Prisma-generated types. npm run db:generate then npm run build:api passed; generated files are ignored, schema and migrations unchanged.",
+            "cachedRenderWorkerSha256": "b92d3749053a8e0db64030873d16dca4d90e66a8b296ad675d7b12b5a2cb9cdc",
+            "cachedWorkerMatchesCurrentCompiledSource": true
+          }
+        },
+        "secondFailure": {
+          "passed": false,
+          "reportSha256": "caec417a05b42c7cbeb6ee1350dba84d4f57491d55043ca691f26ff7f4b215a9",
+          "nativeReportSha256": "cbe4a06d8c8bd7ddb9ade3cf532ad8e8c77a8367e7e877afdea79445ccefdce9",
+          "cleanup": true,
+          "observed": "Actual K media/render/API/credits/worker restarts passed, then the one-object historical verifier selected another key original as the later overwrite. Fixed selection by same key and distinct original version; verify all later objects. New 1-object and 3-object stateful S3-command regression workflows pass. No assertion removed."
+        },
+        "securityFollowup": {
+          "from": "16.3.8",
+          "to": "16.4.2",
+          "reason": "Initial exact-source core CI failed dependency audit for newly indexed Next.js advisories",
+          "advisories": [
+            "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+            "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+            "https://github.com/advisories/GHSA-673q-mjm6-r5xr"
+          ],
+          "release": "https://github.com/vercel/next.js/releases/tag/v16.4.2",
+          "firstAttemptReceipt": "docs/qa/recovery01k-ci-attempt1.json",
+          "initialSourceCommit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+          "initialRunId": 39832920032,
+          "lockedInstallPassed": true,
+          "fullAuditVulnerabilities": 0,
+          "productionAuditVulnerabilities": 0,
+          "fullLocalBuildPassed": true,
+          "postUpgradeFocusedTests": 59,
+          "lockedInstallLogSha256": "2b3a5fa1bd0e2f505e99ced176eeec9ce405c8460f4abf7b4f903a01ffc48c3f",
+          "fullAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
+          "productionAuditReportSha256": "b855aec3f46a4a03035b0ad04266e3257acd9411068b866dd491d9489b03c4e6",
+          "buildLogSha256": "f194ae09ed5c0f42b25d1ad6d151cb945de3d8eba71157642dd831308b2c9e3b",
+          "priorLocalCachedComposeNextVersion": "16.3.8",
+          "finalOwnFreshImageThreeJobCiRequired": true,
+          "recordedAtUtc": "2026-10-22T19:04:37.868Z"
+        }
+      },
+      "priorVerifiedPublication": {
+        "taskId": "RECOVERY-01J",
+        "commit": "b27947509465ba2f5283932239b73e85e683fe1b",
+        "tree": "3770a8f586f57241d6b236587ddc59f9407353a7",
+        "runId": 39786556233,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39786556233",
+        "status": "completed",
+        "conclusion": "success",
+        "allThreeJobsAndRequiredStepsPassed": true,
+        "results": {
+          "physicalBoundReferences": 1,
+          "physicalBoundHistoricalObjects": 1,
+          "unit": 315,
+          "http": 38,
+          "browser": 28,
+          "recovery": 5,
+          "migrations": 24,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "composePhases": 18,
+          "logicalBoundApplicationReferences": 6,
+          "logicalBoundHistoricalObjects": 6,
+          "localFocusedTests": 49,
+          "physicalApplicationRows": 21,
+          "physicalApplicationTables": 37,
+          "startupControlsDenied": 7,
+          "physicalApplicationStartCallbacks": 1
+        },
+        "receipt": "docs/qa/recovery01j-final-ci-receipt.json"
+      },
+      "initialFailedPublication": {
+        "taskId": "RECOVERY-01K",
+        "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+        "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
+        "runId": 39832920032,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+        "status": "completed",
+        "conclusion": "failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "acceptedAsFinal": false,
+        "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+      }
+    },
+    "priorRepositoryPublication": {
+      "taskId": "RECOVERY-01K",
+      "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
+      "tree": "04bfceb41b91c1008022d27cf9023a2deb7d1672",
+      "runId": 39832920032,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39832920032",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "acceptedAsFinal": false,
+      "receipt": "docs/qa/recovery01k-ci-attempt1.json"
+    }
+  },
+  "recovery01l": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01L",
+    "recordedAtUtc": "2026-10-23T14:55:51.489Z",
+    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+    "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+    "baseRunId": 39837076273,
+    "priorVerifiedPublication": {
+      "taskId": "RECOVERY-01K",
+      "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+      "tree": "922a23cc32c9dded9985454919794b250869d598",
+      "runId": 39837076273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "physicalBoundReferences": 1,
+        "physicalBoundHistoricalObjects": 1,
+        "unit": 325,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 19,
+        "logicalBoundApplicationReferences": 6,
+        "logicalBoundHistoricalObjects": 6,
+        "localFocusedTests": 59,
+        "physicalApplicationRows": 21,
+        "physicalApplicationTables": 37,
+        "startupControlsDenied": 7,
+        "physicalApplicationStartCallbacks": 1,
+        "physicalMediaRows": 27,
+        "physicalMediaPopulatedTables": 14,
+        "physicalMediaBoundReferences": 3,
+        "physicalMediaBoundObjects": 3,
+        "physicalMediaStartupControlsDenied": 10,
+        "nextVersion": "16.4.2"
+      },
+      "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
+    },
+    "local": {
+      "resumeIntegrity": {
+        "passed": true,
+        "files": 604,
+        "initialWorkingTreeClean": true,
+        "remoteMainMatchedVerifiedK": true
+      },
+      "focusedTests": 66,
+      "newUnitCases": 18,
+      "syntaxAndFormattingChecked": true,
+      "protectedHashesUnchanged": 25,
+      "composeDiagnostic": {
+        "passed": true,
+        "phases": 17,
+        "mode": "diagnostic-focused-L17-fresh-application-cached-minio",
+        "applicationImagesFreshlyBuilt": true,
+        "pinnedMinioImageReused": true,
+        "sourceNextVersion": "16.4.2",
+        "imageMetadata": {
+          "runtimeImage": "omos-compose-verify-recovery01l-runtime",
+          "runtimeImageId": "sha256:7353ae393d7ae589c37217890d19d2ef4acc8aacbc999407ae54cf224aa03919",
+          "buildImage": "omos-compose-verify-recovery01l-build",
+          "buildImageId": "sha256:33625360642ac3ebde672aafa56f79d9a6e56336a9dfdcbeb73604c3b8e3b99d",
+          "pinnedCachedMinioImage": "omos-compose-verify-9f07e8881f75f3fd-storage",
+          "pinnedCachedMinioImageId": "sha256:3bed8e5bebae6fe5c69f84b6e2f182d7504f298f4e882de8372fff9b92dd13f3",
+          "node": "v24.22.1",
+          "nextVersion": "16.4.2",
+          "compiledRenderWorkerSha256": "e4fda60c0e112ea6d588aeab0a64403bf8681c6479efd7e0c3ac5716fb7d95d7",
+          "compiledWorkerMatchesCurrentHostBuild": true,
+          "renderWorkerSourceSha256": "92ced7f46534ac6fbc7417f801673b5e9c0b1c360f8971770d150ebb30d42ef4",
+          "runtimeBuildLogSha256": "8d65a2ff4954bd17525b9db928c2729cfb6bc211647dd489e470bbc7677833a2",
+          "buildStageLogSha256": "33734e30461c5ae7fdce2cd9e7518aa97a6c8a1d4093c7411e9490abc3db8733",
+          "recordedAtUtc": "2026-10-23T14:52:47.664Z"
+        },
+        "scope": "L-focused17 runtime phases with fresh application images and inspected pinned cached MinIO; source retains all20 phases for exact final CI",
+        "cleanup": true,
+        "environmentUnchanged": true,
+        "reportSha256": "309fb528f7c0ca8a93841f362a9eb95ef383285681405a7dafe4aca6b6fd124a",
+        "rawLogSha256": "e91f7cd528b70fe2e5750eb67847df4485e210208aba6853f7ace89589b6526b"
+      },
+      "physicalInterruptedMedia": {
+        "passed": true,
+        "rows": 27,
+        "tables": 37,
+        "populatedTables": 14,
+        "bound": {
+          "references": 3,
+          "objects": 3
+        },
+        "startupControlsDenied": 14,
+        "objectFaults": [
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          }
+        ],
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true,
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "physicalValidImagesDecoded": true,
+          "physicalRenderQueueCompleted": true,
+          "physicalRetainedMediaIngestedWithoutSubmission": true,
+          "physicalOutputDimensionsDurationAndDecodePassed": true,
+          "physicalNewOutputsPrivateAndTenantScoped": true,
+          "physicalMediaReservationsSettledOnce": true,
+          "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+          "physicalInterruptedRenderPreservedAfterRetry": true,
+          "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+          "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+          "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+          "physicalRenderRetryPreservedFrozenInputs": true,
+          "physicalMissingAndCorruptMediaDenyWriters": true,
+          "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+          "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
+          "sevenInvalidStartupPrerequisitesDenied": true,
+          "unreviewedPopulatedMediaStartupDenied": true,
+          "allWritersAbsentBeforeVerifiedAdmission": true,
+          "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+          "importedFullSnapshotMatchesPhysicalTarget": true,
+          "emptyRedisBeforePhysicalApplicationStart": true,
+          "isolatedApplicationBucketRestoredFromRetainedVersion": true
+        },
+        "nativeStartExitCodes": {
+          "missing-wal": 1,
+          "unreachable": 1,
+          "retry": 0
+        },
+        "outputHashes": {
+          "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+          "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+          "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/ac256b31-86d1-4cb3-8ec6-34e2b39ccd9d/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+        },
+        "reviewVersion": 2
+      },
+      "initialFailure": {
+        "passed": false,
+        "reportSha256": "725f9d6c1a8d8a4301ab7013d61447d74403162d17cd9de712e465d9f467c0c2",
+        "nativeReportSha256": "d1a9af1dca92b4bb548b5868d0f655351cf45861c5b6956354680e7dbe08faf7",
+        "rawLogSha256": "bbf361d0834e4d77c6a02dfc66219bcda5cc0bb9b54809045770d71161e52dc1",
+        "fixtureCleanup": true,
+        "environmentUnchanged": true,
+        "phase": "K predecessor positive physical retry before L",
+        "observed": "pg_ctl returned0; SQL was rejected at20:56:02.253 UTC, PostgreSQL logged ready at20:56:02.285 UTC. Added bounded positive promoted-SQL admission; native exit1/FATAL/SQL-rejection negative cases and all exact snapshots/WAL/promotion assertions remain. Initial K render-heartbeat failure has a separate unknown cause.",
+        "readinessGapMilliseconds": 32
+      },
+      "apiBuildPassed": true,
+      "apiBuildLogSha256": "36463e6a3b6ba06120442bdef0b6c067021b69ddc7485d41f6e0e2df13edf6ae",
+      "renderBootRegression": {
+        "actualEntrypointCasesPassed": 3,
+        "priorPublishedSourceCasesFailedAsExpected": 3,
+        "negativeLogSha256": "d67609188adea916779df8e08f1d3ea2df35b43cc16f8222b26ca4b7fb9654ed"
+      },
+      "secondFailure": {
+        "passed": false,
+        "reportSha256": "333d884c3eb3d2b03f1a856e5296f9ffeb9afb5df67018db13c0c199cedc3b84",
+        "workerDiagnosticSha256": "58f1dc7bc3b1d30e229072dc0bd8d9b5449c65bd2dcea9a4f293c43f153e47b5",
+        "workerLogSha256": "3397ca4ea55946ba9f006d56f26abea28097edf862348685dcd4fa2dfffcfd99",
+        "rawLogSha256": "97e7299b28b0507155df6c4b1e6474ce83c13c70c7c3c3720b191000a9ef1953",
+        "fixtureCleanup": true,
+        "observed": "K predecessor actual render was claimed before FFmpeg boot validation failed and process restarted; next dispatcher failed stale claim. Autorun/dispatch now wait for validated tools. Old generic boot log did not identify underlying tool failure. Original K initial failure remains separately unproven."
+      },
+      "productionAudit": {
+        "vulnerabilities": 0,
+        "reportSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+      },
+      "fullAudit": {
+        "vulnerabilities": 0,
+        "reportSha256": "e00f2e753cff10d1df3cb871cc170e5d2c04c547e38d5436d51a40bad6b0db11"
+      }
+    },
+    "positiveSqlReadinessFollowup": {
+      "nativeExitAssertionsRetained": true,
+      "negativeTargetFatalAndSqlRejectionRetained": true,
+      "boundedPromotedSqlRequired": true,
+      "unrelatedSqlErrorsFailImmediately": true
+    },
+    "runtimeApplicationChanged": true,
+    "runtimeChangedPaths": [
+      "apps/api/src/render-worker.ts"
+    ],
+    "migrationsChanged": false,
+    "dependenciesChanged": false,
+    "workflowChanged": false,
+    "previousNineteenComposePhasesRetained": true,
+    "totalComposePhases": 20,
+    "renderStartupFix": {
+      "autorunDisabledUntilToolValidation": true,
+      "noDispatchBeforeValidation": true,
+      "shutdownDuringValidationDoesNotStart": true,
+      "boundedBootFailureLogged": true
+    },
+    "scope": "Actual private-store missing/corrupt destination bytes deny physical application admission; seeded stale render/media claims require explicit owner retry or retained-output ingestion with exact credits/private bytes/restart checks",
+    "limits": [
+      "Seeded stale claims do not establish actual process termination, lease races, production timing/load behavior or the cause of initial K Windows interruption.",
+      "Destination S3 missing/corrupt controls do not establish immutable-version corruption or production retention/durability.",
+      "No generation resubmission or real-provider inventory/reconciliation acceptance; populated publication, production backup operations and RPO/RTO remain open.",
+      "CI verifies fixtures and does not deploy; live/deployed/full-master acceptance remains open."
+    ],
+    "nextTask": "RECOVERY-01M barrier-controlled real worker process interruption during rendering/private-output ingestion and ambiguous media-provider recovery at a physical target",
+    "changedPaths": [
+      "AGENTS.md",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "REQUIREMENTS_MATRIX.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
+      "apps/api/src/render-worker.ts",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md",
+      "docs/PHYSICAL_MEDIA_RECOVERY.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/RESUME_CONTEXT.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/qa/github-publication.json",
+      "docs/qa/handoff-verification.json",
+      "docs/qa/recovery01k-evidence.json",
+      "docs/qa/recovery01k-final-ci-receipt.json",
+      "docs/qa/recovery01l-evidence.json",
+      "docs/qa/recovery01l-unit-receipts.json",
+      "docs/qa/verification-summary.json",
+      "scripts/physical-media-fixture.mjs",
+      "scripts/physical-media-review.mjs",
+      "scripts/postgres-pitr-verification.mjs",
+      "scripts/verify-compose-fixture.mjs",
+      "scripts/verify-compose.mjs",
+      "scripts/verify-postgres-pitr.mjs",
+      "tests/physical-media-review.test.ts",
+      "tests/postgres-pitr-verification.test.ts",
+      "tests/render-worker-startup.test.ts"
+    ]
   }
 }

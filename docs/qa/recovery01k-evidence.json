@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "RECOVERY-01K",
   "recordedAtUtc": "2026-10-22T19:04:37.868Z",
-  "status": "local_increment_and_next_security_fix_require_new_exact_final_commit_all_three_jobs",
+  "status": "exact_final_commit_all_three_jobs_verified",
   "baseCommit": "b27947509465ba2f5283932239b73e85e683fe1b",
   "baseRunId": 39786556233,
   "priorVerifiedPublication": {
@@ -244,5 +244,51 @@
     "priorLocalCachedComposeNextVersion": "16.3.8",
     "finalOwnFreshImageThreeJobCiRequired": true,
     "recordedAtUtc": "2026-10-22T19:04:37.868Z"
+  },
+  "publication": {
+    "taskId": "RECOVERY-01K",
+    "commit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
+    "tree": "922a23cc32c9dded9985454919794b250869d598",
+    "runId": 39837076273,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39837076273",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "physicalBoundReferences": 1,
+      "physicalBoundHistoricalObjects": 1,
+      "unit": 325,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 19,
+      "logicalBoundApplicationReferences": 6,
+      "logicalBoundHistoricalObjects": 6,
+      "localFocusedTests": 59,
+      "physicalApplicationRows": 21,
+      "physicalApplicationTables": 37,
+      "startupControlsDenied": 7,
+      "physicalApplicationStartCallbacks": 1,
+      "physicalMediaRows": 27,
+      "physicalMediaPopulatedTables": 14,
+      "physicalMediaBoundReferences": 3,
+      "physicalMediaBoundObjects": 3,
+      "physicalMediaStartupControlsDenied": 10,
+      "nextVersion": "16.4.2"
+    },
+    "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
+  },
+  "currentClosureOwnCiPassed": true,
+  "finalReceiptImport": {
+    "path": "docs/qa/recovery01k-final-ci-receipt.json",
+    "originalExternalSha256": "70962c67cf150baab18a74b913c374c1f07c66e86e9b583294ca4059f0a29c15",
+    "normalizedSourceSha256": "6f0df76a458aa89b4a1fbac54f132407924f84ba574d243831228df54cf69b2f",
+    "lineEndings": "LF",
+    "jsonContentUnchanged": true,
+    "originalExternalReceiptPreserved": true
   }
 }

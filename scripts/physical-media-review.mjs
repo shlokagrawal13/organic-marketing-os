@@ -6,9 +6,14 @@ export const physicalMediaIds = {
   render: "7cdd0796-a51e-442a-aab9-888888888888",
   media: "7cdd0796-a51e-442a-aab9-666666666666",
 };
-export function createPhysicalMediaReview(snapshot, objects) {
+export function createPhysicalMediaReview(
+  snapshot,
+  objects,
+  { interrupted = false, leaseReferenceUtc = new Date().toISOString() } = {},
+) {
   return {
-    version: 1,
+    version: interrupted ? 2 : 1,
+    ...(interrupted ? { leaseReferenceUtc } : {}),
     snapshotSha256: physicalCaptureHash(snapshot),
     jobsSha256: physicalCaptureHash({
       renders: snapshot.rows.RenderJob,
@@ -26,7 +31,9 @@ export function createPhysicalMediaReview(snapshot, objects) {
     renderId: physicalMediaIds.render,
     mediaId: physicalMediaIds.media,
     assetId: physicalMediaIds.validAsset,
-    renderDisposition: "RECONSTRUCT_LOCAL_RENDER",
+    renderDisposition: interrupted
+      ? "FAIL_STALE_RENDER_THEN_OWNER_RETRY"
+      : "RECONSTRUCT_LOCAL_RENDER",
     mediaDisposition: "INGEST_RETAINED_OUTPUT_ONLY",
     reviewed: true,
   };
@@ -43,9 +50,15 @@ export function assertPhysicalMediaReview(snapshot, review, expectedSha256) {
     physicalCaptureHash(snapshot),
     "Physical media review snapshot changed",
   );
-  assert.equal(review.version, 1);
+  assert.ok([1, 2].includes(review.version));
   assert.equal(review.reviewed, true);
-  assert.equal(review.renderDisposition, "RECONSTRUCT_LOCAL_RENDER");
+  const interrupted = review.version === 2;
+  assert.equal(
+    review.renderDisposition,
+    interrupted
+      ? "FAIL_STALE_RENDER_THEN_OWNER_RETRY"
+      : "RECONSTRUCT_LOCAL_RENDER",
+  );
   assert.equal(review.mediaDisposition, "INGEST_RETAINED_OUTPUT_ONLY");
   for (const [name, key] of [
     ["renderId", "render"],
@@ -76,11 +89,35 @@ export function assertPhysicalMediaReview(snapshot, review, expectedSha256) {
     input = rows.RenderInput[0],
     a = rows.Asset.find((a) => a.id === review.assetId);
   assert.equal(r.id, review.renderId);
-  assert.equal(r.status, "QUEUED");
+  assert.equal(r.status, interrupted ? "RUNNING" : "QUEUED");
   assert.equal(r.outputKey, null);
   assert.equal(m.id, review.mediaId);
   assert.equal(m.state, "OUTPUT_READY");
   assert.equal(m.assetId, null);
+  if (interrupted) {
+    assert.match(
+      review.leaseReferenceUtc,
+      /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/,
+    );
+    const reference = Date.parse(review.leaseReferenceUtc);
+    assert.ok(Number.isFinite(reference));
+    for (const row of [r, m]) {
+      assert.equal(typeof row.runToken, "string");
+      assert.ok(row.runToken.length > 0);
+      // PostgreSQL timestamp-without-time-zone values in this fixture are UTC.
+      assert.match(
+        row.heartbeatAt,
+        /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?$/,
+      );
+      const heartbeat = Date.parse(row.heartbeatAt + "Z");
+      assert.ok(
+        Number.isFinite(heartbeat) && heartbeat < reference - 60000,
+        "Interrupted media review requires a stale claim",
+      );
+    }
+    assert.equal(r.thumbnailKey, null);
+    assert.equal(r.captionsKey, null);
+  }
   assert.equal(m.organizationId, r.organizationId);
   assert.equal(m.quotedCredits, 2);
   assert.ok(a);

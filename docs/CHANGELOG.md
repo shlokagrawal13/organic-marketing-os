@@ -1,3 +1,15 @@
+<!-- RECOVERY01L_CURRENT_START -->
+## RECOVERY-01L physical media faults and stale claims — 2026-10-23
+
+K final 1cf75fbd0429f7976296b926875b8d533ea8d675/run39837076273 passed ALL THREE jobs and every required step:325 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero full/production audit vulnerabilities,19 Compose phases. All four artifact-byte digests/CRCs were verified. Read docs/qa/recovery01k-final-ci-receipt.json. This closes K own-CI pending notices below; the earlier red5e90488/run39832920032 remains a historical dependency-audit failure.
+
+L fixes render startup so tool validation precedes BullMQ consumption and dispatch. Three actual-entrypoint regression tests pass on the fix and fail on prior published source. L also adds a twentieth Compose phase while retaining all19 prior phases and assertions. Four actual S3 missing/corrupt controls cover both retained PNGs, denying startup with zero callbacks/Redis keys and an unchanged full database snapshot. Verified historical bytes repair each object before admission. A separate pinned pre-target review admits only known stale claims: actual dispatcher fails the old render without replay; tenant/role-checked owner HTTP retry is idempotent and preserves frozen revision/inputs; actual workers complete one render and retained-media ingestion without provider resubmission. Credits settle once, private bytes decode, and all three restarts preserve original failed/terminal rows, queues, ledger and hashes. See docs/PHYSICAL_MEDIA_FAULT_RECOVERY.md and docs/qa/recovery01l-evidence.json.
+
+Local66 focused tests including18 new guards, bounded positive PostgreSQL SQL-readiness follow-up, syntax/format/diff checks and zero full/production audits and L-focused17 fresh-application-image Windows runtime phases pass, cleanup and .env unchanged. Application runtime/build images were freshly built with Next16.4.2 and the fixed worker; pinned MinIO was inspected and reused. All24 migrations/master hashes are unchanged. L still requires ALL THREE jobs on its own exact final commit, with fresh images. Carry external recovery01l-final-ci-receipt.json with the fresh portable source ZIP to close this packaging-time pending status.
+
+Stale claims are synthetic frozen rows, not a real process-kill test or diagnosis of K's initial Windows timing failure. Production retention/durability/backup operations, real-provider, populated publication, live/deployed/full-master acceptance remain open. CI verifies fixtures and does not deploy. Next after own CI: RECOVERY-01M barrier-controlled real worker process interruption during rendering/private-output ingestion and ambiguous media-provider recovery at a physical target.21 broad task tracks remain open.
+<!-- RECOVERY01L_CURRENT_END -->
+
 <!-- RECOVERY01K_CURRENT_START -->
 ## RECOVERY-01K populated physical media recovery — 2026-10-23
 

@@ -6,7 +6,90 @@ import {
   assertPitrCase,
   withVerifiedPhysicalBackup,
   nativeStartExit,
+  waitForPromotedSql,
 } from "../scripts/postgres-pitr-verification.mjs";
+
+test("Physical positive readiness requires actual promoted SQL even after native startup", async () => {
+  let calls = 0;
+  assert.deepEqual(
+    await waitForPromotedSql(async () => {
+      calls++;
+      return "t\n";
+    }),
+    { attempts: 1, sqlAcceptedAndPromoted: true },
+  );
+  assert.equal(calls, 1);
+});
+test("Physical positive readiness retries the observed transient SQL rejection", async () => {
+  let calls = 0,
+    waits = 0;
+  const r = await waitForPromotedSql(
+    async () => {
+      if (++calls === 1)
+        throw Error(
+          "psql: FATAL:  the database system is not accepting connections\nDETAIL: Hot standby mode is disabled.",
+        );
+      return "t";
+    },
+    {
+      attempts: 3,
+      delay: async () => {
+        waits++;
+      },
+    },
+  );
+  assert.equal(r.attempts, 2);
+  assert.equal(waits, 1);
+});
+test("Physical positive readiness waits for promotion while SQL is available in recovery", async () => {
+  let calls = 0;
+  const r = await waitForPromotedSql(async () => (++calls < 3 ? "f" : "t"), {
+    attempts: 3,
+    delay: async () => {},
+  });
+  assert.equal(r.attempts, 3);
+});
+test("Physical positive readiness fails closed after bounded rejection or absent promotion", async () => {
+  for (const transient of [true, false]) {
+    let calls = 0,
+      waits = 0;
+    await assert.rejects(
+      waitForPromotedSql(
+        async () => {
+          calls++;
+          if (transient)
+            throw Error("FATAL: the database system is starting up");
+          return "f";
+        },
+        {
+          attempts: 3,
+          delay: async () => {
+            waits++;
+          },
+        },
+      ),
+      /bounded readiness/,
+    );
+    assert.equal(calls, 3);
+    assert.equal(waits, 2);
+  }
+});
+test("Physical positive readiness never retries unrelated SQL errors or invalid results", async () => {
+  for (const result of ["syntax", "checksum", "", "false", "t\nf"]) {
+    let calls = 0;
+    await assert.rejects(
+      waitForPromotedSql(
+        async () => {
+          calls++;
+          if (["syntax", "checksum"].includes(result)) throw Error(result);
+          return result;
+        },
+        { attempts: 3, delay: async () => assert.fail("must not retry") },
+      ),
+    );
+    assert.equal(calls, 1);
+  }
+});
 test("Native start status requires one complete explicit marker", () => {
   assert.equal(
     nativeStartExit("waiting for startup\nOMOS_NATIVE_START_EXIT=0\n"),

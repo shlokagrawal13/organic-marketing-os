@@ -221,6 +221,7 @@ const worker = new Worker(
   },
   {
     connection: connection as any,
+    autorun: false,
     concurrency: 1,
     lockDuration: 120000,
     stalledInterval: 30000,
@@ -230,21 +231,34 @@ const worker = new Worker(
 worker.on("error", () =>
   console.error(JSON.stringify({ event: "render.worker_error" })),
 );
-const timer = setInterval(dispatch, 2000);
+let timer: ReturnType<typeof setInterval> | undefined;
 async function boot() {
   await runProcess(process.env.FFMPEG_PATH || "ffmpeg", ["-version"], {
     timeout: 5000,
   });
+  if (closing) return;
+  // Never claim queued work before tool validation. A failed boot must leave
+  // jobs untouched so a healthy container can reconstruct them from the DB.
+  void worker.run().catch(() => {
+    console.error(JSON.stringify({ event: "render.worker_error" }));
+    void close();
+  });
+  timer = setInterval(dispatch, 2000);
   await dispatch();
 }
-boot().catch(() => {
-  console.error("FFmpeg is required by the render worker.");
+boot().catch((error) => {
+  console.error(
+    JSON.stringify({
+      event: "render.boot_failed",
+      message: (error as Error).message.slice(0, 1500),
+    }),
+  );
   process.exit(1);
 });
 async function close() {
   if (closing) return;
   closing = true;
-  clearInterval(timer);
+  if (timer) clearInterval(timer);
   for (const a of active) a.abort();
   await worker.close();
   await queue.close();

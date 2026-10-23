@@ -25,3 +25,31 @@ export function nativeStartExit(output) {
   assert.ok(Number.isInteger(code) && code >= 0 && code <= 255);
   return code;
 }
+
+// pg_ctl can report startup before a promoted hot_standby=off cluster admits SQL.
+// This positive-path gate never replaces native exit or negative-target checks.
+export async function waitForPromotedSql(
+  probe,
+  { attempts = 40, delay = () => new Promise((r) => setTimeout(r, 250)) } = {},
+) {
+  assert.ok(Number.isInteger(attempts) && attempts > 0 && attempts <= 100);
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const result = (await probe()).trim();
+      assert.ok(["t", "f"].includes(result), "Unexpected SQL promotion result");
+      if (result === "t")
+        return { attempts: i + 1, sqlAcceptedAndPromoted: true };
+    } catch (error) {
+      if (
+        !/FATAL:\s+the database system is (?:not accepting connections|starting up)/.test(
+          error.message,
+        )
+      )
+        throw error;
+    }
+    if (i + 1 < attempts) await delay();
+  }
+  throw new Error(
+    "Recovered cluster did not admit promoted SQL within the bounded readiness check",
+  );
+}
