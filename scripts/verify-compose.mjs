@@ -1,6 +1,7 @@
 // Complete local-development Compose acceptance against generated disposable projects.
 // No real .env, existing project/volume, live provider or public cloud is used.
 import assert from "node:assert/strict";
+import { keepVerificationAlive } from "./verification-lifecycle.mjs";
 import { spawn } from "node:child_process";
 import { randomBytes, scryptSync } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -9,6 +10,7 @@ import {
   physicalMediaIds,
   createPhysicalMediaReview,
 } from "./physical-media-review.mjs";
+import { interruptPhysicalWorkers } from "./physical-worker-interruption.mjs";
 import { runPostgresPitr } from "./verify-postgres-pitr.mjs";
 import { physicalCaptureHash } from "./physical-object-binding.mjs";
 import { applicationSnapshot } from "./application-pitr-fixture.mjs";
@@ -202,7 +204,7 @@ const historyEffectsModule = inlineModule(
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01L",
+  taskId: "RECOVERY-01M",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -507,6 +509,7 @@ async function cleanup(project) {
     { quiet: true },
   );
 }
+const releaseLifecycle = keepVerificationAlive();
 try {
   await phase("isolated configuration", async () => {
     await config(source);
@@ -851,26 +854,36 @@ try {
         report.checks.originalApplicationSourceUnchangedAfterPhysicalObjectProbe = true;
       },
     );
-    for (const recoveryMode of ["application", "media", "interrupted-media"]) {
+    for (const recoveryMode of [
+      "application",
+      "media",
+      "interrupted-media",
+      "process-interruption",
+    ]) {
       const mediaMode = recoveryMode !== "application",
-        interruptedMode = recoveryMode === "interrupted-media";
+        interruptedMode = recoveryMode === "interrupted-media",
+        processMode = recoveryMode === "process-interruption";
       await phase(
-        interruptedMode
-          ? "physical retained-media faults and interrupted worker leases"
-          : mediaMode
-            ? "valid historical media and populated physical render/media recovery"
-            : "physical cluster application bucket and fresh-Redis recovery",
+        processMode
+          ? "physical worker process kills and ambiguous media provider recovery"
+          : interruptedMode
+            ? "physical retained-media faults and interrupted worker leases"
+            : mediaMode
+              ? "valid historical media and populated physical render/media recovery"
+              : "physical cluster application bucket and fresh-Redis recovery",
         async () => {
           let history,
             capturedApplication,
             mediaReview,
             expectedMediaReviewSha256,
             mediaFixture;
-          const reportKey = interruptedMode
-            ? "physicalInterruptedMediaRecovery"
-            : mediaMode
-              ? "physicalMediaRecovery"
-              : "physicalApplicationRecovery";
+          const reportKey = processMode
+            ? "physicalWorkerProcessRecovery"
+            : interruptedMode
+              ? "physicalInterruptedMediaRecovery"
+              : mediaMode
+                ? "physicalMediaRecovery"
+                : "physicalApplicationRecovery";
           const ids = mediaMode
               ? { ...physicalApplicationIds, ...physicalMediaIds }
               : physicalApplicationIds,
@@ -882,6 +895,8 @@ try {
             ids,
             mediaMode,
             interruptedMode,
+            processMode,
+            nonce: suffix,
             password,
             queuedPrompt,
             objectSha256: checksum(Buffer.from("old")),
@@ -936,6 +951,7 @@ try {
                 {
                   ids,
                   interruptedMode,
+                  processMode,
                   renderSnapshot: state.rows.render.snapshot,
                   renderOptions: state.rows.render.options,
                 },
@@ -973,7 +989,10 @@ try {
                     mediaReview = createPhysicalMediaReview(
                       capturedApplication,
                       history.manifest.objects,
-                      { interrupted: interruptedMode },
+                      {
+                        interrupted: interruptedMode,
+                        processInterruption: processMode,
+                      },
                     );
                     expectedMediaReviewSha256 =
                       physicalCaptureHash(mediaReview);
@@ -1225,7 +1244,7 @@ try {
                     assert.equal(starts, 0);
                   }
                   const objectFaults = [];
-                  if (interruptedMode) {
+                  if (interruptedMode || processMode) {
                     for (const key of [
                       mediaFixture.sourceKey,
                       mediaFixture.outputKey,
@@ -1297,20 +1316,41 @@ try {
                         "--no-deps",
                         "api",
                         "web",
-                        "worker",
-                        "render-worker",
-                        "media-worker",
+                        ...(processMode
+                          ? []
+                          : ["worker", "render-worker", "media-worker"]),
                       ]);
                     },
                   );
                   assert.equal(starts, 1);
                   await ready(physical);
+                  if (processMode) {
+                    appState.processInterruption =
+                      await interruptPhysicalWorkers({
+                        project: physical,
+                        nonce: suffix,
+                        appState,
+                        compose,
+                        command,
+                        node,
+                        query,
+                      });
+                    await compose(physical, [
+                      "up",
+                      "-d",
+                      "--no-build",
+                      "--no-deps",
+                      "worker",
+                      "render-worker",
+                      "media-worker",
+                    ]);
+                  }
                   const checks = await node(
                     physical,
                     "physical-app-http",
                     appState,
                   );
-                  if (interruptedMode) {
+                  if (interruptedMode || processMode) {
                     appState.interruption = await node(
                       physical,
                       "physical-media-interrupted",
@@ -1406,7 +1446,7 @@ try {
                           mediaReview,
                           expectedMediaReviewSha256,
                           mediaOutputHashes: mediaWork.hashes,
-                          ...(interruptedMode
+                          ...(interruptedMode || processMode
                             ? {
                                 objectFaults,
                                 interruptedRender: {
@@ -1423,15 +1463,15 @@ try {
                             : {}),
                         }
                       : {}),
+                    ...(processMode
+                      ? { processInterruption: appState.processInterruption }
+                      : {}),
                     applicationStartedFromHistoricalObjects: true,
                     physicalCopySha256: copied.sha256,
                     importedPhysicalCopySha256: importedCopySha256,
                     applicationStartCallbacks: starts,
-                    startupControlsDenied: interruptedMode
-                      ? 14
-                      : mediaMode
-                        ? 10
-                        : 7,
+                    startupControlsDenied:
+                      interruptedMode || processMode ? 14 : mediaMode ? 10 : 7,
                     redisKeysBeforeApplicationStart: evidence.redisKeys,
                     reviewedEffectEvidence: evidence.effects,
                     boundedFreshRedisApplicationRecoveryVerified: true,
@@ -1446,7 +1486,8 @@ try {
                       ...mediaWork?.checks,
                       ...mediaRestart?.checks,
                       ...appState.interruption?.checks,
-                      ...(interruptedMode
+                      ...appState.processInterruption?.checks,
+                      ...(interruptedMode || processMode
                         ? {
                             physicalMissingAndCorruptMediaDenyWriters: true,
                             physicalMediaFaultsPreserveDatabaseAndEmptyRedis: true,
@@ -1809,6 +1850,7 @@ try {
     process.exitCode = 1;
     report.cleanupFailure = redact(error.message, secrets);
   }
+  releaseLifecycle();
   const after = existsSync(realEnv) ? checksum(readFileSync(realEnv)) : null;
   report.checks.realEnvironmentUnchanged = beforeEnv === after;
   if (beforeEnv !== after) {

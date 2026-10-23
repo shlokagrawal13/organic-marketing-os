@@ -1,11 +1,107 @@
 // Isolated Compose fixture only. No upstream calls, real keys or business data.
 import { createServer } from "node:http";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 export function createRecoveryProvider() {
   const calls = {};
   const effects = new Map();
+  const workerBarriers = new Map(),
+    mediaEffects = new Map();
   return createServer(async (req, res) => {
     res.setHeader("Content-Type", "application/json");
+    if (req.url?.startsWith("/worker-")) {
+      try {
+        const match =
+          /^\/(worker-barriers|worker-media)\/([a-f0-9]{16})(?:\/(render|media))?$/.exec(
+            req.url,
+          );
+        if (!match) throw Error("Invalid barrier identity");
+        const [, route, nonce, kind] = match;
+        if (req.method === "GET" && route === "worker-barriers" && !kind) {
+          res.end(
+            JSON.stringify({
+              barriers: [...(workerBarriers.get(nonce)?.values() || [])],
+              media: mediaEffects.get(nonce) || null,
+            }),
+          );
+          return;
+        }
+        if (req.method !== "POST") throw Error("Invalid method");
+        let body = "";
+        for await (const part of req) {
+          body += part;
+          if (body.length > 10000) throw Error("Large barrier");
+        }
+        const value = JSON.parse(body);
+        if (route === "worker-media" && !kind) {
+          if (
+            value.model !== "fixture-image" ||
+            value.prompt !== "COMPOSE_RECOVERY_PHYSICAL_AMBIGUOUS" ||
+            !/^[a-f0-9-]{36}:[a-f0-9-]{36}$/.test(
+              req.headers["idempotency-key"] || "",
+            )
+          )
+            throw Error("Invalid fixture generation");
+          const hash = createHash("sha256").update(body).digest("hex");
+          const prior = mediaEffects.get(nonce);
+          if (prior) {
+            prior.submissionAttempts++;
+            res.writeHead(409);
+            res.end("{}");
+            return;
+          }
+          mediaEffects.set(nonce, {
+            idempotencyKey: req.headers["idempotency-key"],
+            requestSha256: hash,
+            providerRequestId: randomUUID(),
+            acceptedCalls: 1,
+            submissionAttempts: 1,
+            responseHeld: true,
+            acceptedAtUtc: new Date().toISOString(),
+          });
+          // Intentionally leave the actual adapter request unacknowledged to the worker.
+          // The observer reads the provider receipt, then kills the worker process.
+          return;
+        }
+        if (
+          route !== "worker-barriers" ||
+          !kind ||
+          !Number.isInteger(value.pid) ||
+          value.pid < 1 ||
+          !Number.isInteger(value.bytes) ||
+          value.bytes < 100 ||
+          !/^[a-f0-9]{64}$/.test(value.sha256) ||
+          typeof value.key !== "string" ||
+          !value.key.startsWith("7cdd0796-a51e-442a-aab9-111111111111/")
+        )
+          throw Error("Invalid barrier receipt");
+        if (
+          value.boundary !==
+          (kind === "render"
+            ? "encoded-segment-put-acknowledged"
+            : "retained-output-read-before-ingest")
+        )
+          throw Error("Invalid boundary");
+        const rows = workerBarriers.get(nonce) || new Map();
+        if (rows.has(kind)) {
+          res.writeHead(409);
+          res.end("{}");
+          return;
+        }
+        rows.set(kind, {
+          kind,
+          ...value,
+          observedAtUtc: new Date().toISOString(),
+        });
+        workerBarriers.set(nonce, rows);
+        res.writeHead(201);
+        res.end("{}");
+        return;
+      } catch {
+        res.writeHead(400);
+        res.end("{}");
+        return;
+      }
+    }
     if (req.method === "GET" && req.url === "/stats") {
       res.end(JSON.stringify(calls));
       return;

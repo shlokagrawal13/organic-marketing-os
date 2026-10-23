@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "RECOVERY-01L",
   "recordedAtUtc": "2026-10-23T14:55:51.489Z",
-  "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+  "status": "exact_final_commit_all_three_jobs_verified",
   "baseCommit": "1cf75fbd0429f7976296b926875b8d533ea8d675",
   "baseRunId": 39837076273,
   "priorVerifiedPublication": {
@@ -282,5 +282,53 @@
     "tests/physical-media-review.test.ts",
     "tests/postgres-pitr-verification.test.ts",
     "tests/render-worker-startup.test.ts"
-  ]
+  ],
+  "publication": {
+    "taskId": "RECOVERY-01L",
+    "commit": "0aa3f994791565b0b508ccc216b12faa3e0bca8b",
+    "tree": "4d0032b1ca609b4a648ad79179b9afed962cd419",
+    "runId": 39974681959,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39974681959",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "physicalBoundReferences": 1,
+      "physicalBoundHistoricalObjects": 1,
+      "unit": 343,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 20,
+      "logicalBoundApplicationReferences": 6,
+      "logicalBoundHistoricalObjects": 6,
+      "localFocusedTests": 66,
+      "physicalApplicationRows": 21,
+      "physicalApplicationTables": 37,
+      "startupControlsDenied": 7,
+      "physicalApplicationStartCallbacks": 1,
+      "physicalMediaRows": 27,
+      "physicalMediaPopulatedTables": 14,
+      "physicalMediaBoundReferences": 3,
+      "physicalMediaBoundObjects": 3,
+      "physicalMediaStartupControlsDenied": 10,
+      "physicalInterruptedMediaRows": 27,
+      "physicalInterruptedMediaStartupControlsDenied": 14,
+      "actualMissingCorruptMediaControls": 4,
+      "nextVersion": "16.4.2"
+    },
+    "receipt": "docs/qa/recovery01l-final-ci-receipt.json"
+  },
+  "currentClosureOwnCiPassed": true,
+  "finalReceiptImport": {
+    "source": "docs/qa/recovery01l-final-ci-receipt.json",
+    "sha256": "6f4a00d1659e02bbe749b127c567b9328d958a110eed8d62441fba89b8e7e466",
+    "originalExternalSha256": "ccf56a5d281b0f7d9229153c852d1f8e265a017012c97851db63b8ead60da450",
+    "externalOriginalUnchanged": true,
+    "normalization": "Imported copy only: CRLF to LF for Git whitespace guard; JSON deep-equal to original external receipt. No evidence value changed."
+  }
 }

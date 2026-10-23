@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { physicalCaptureHash } from "./physical-object-binding.mjs";
 export const physicalMediaIds = {
+  ambiguous: "7cdd0796-a51e-442a-aab9-aaaaaaaaaaaa",
   validAsset: "7cdd0796-a51e-442a-aab9-777777777777",
   render: "7cdd0796-a51e-442a-aab9-888888888888",
   media: "7cdd0796-a51e-442a-aab9-666666666666",
@@ -9,10 +10,20 @@ export const physicalMediaIds = {
 export function createPhysicalMediaReview(
   snapshot,
   objects,
-  { interrupted = false, leaseReferenceUtc = new Date().toISOString() } = {},
+  {
+    interrupted = false,
+    processInterruption = false,
+    leaseReferenceUtc = new Date().toISOString(),
+  } = {},
 ) {
   return {
-    version: interrupted ? 2 : 1,
+    version: processInterruption ? 3 : interrupted ? 2 : 1,
+    ...(processInterruption
+      ? {
+          ambiguousDisposition: "SUBMIT_ONCE_THEN_REVIEW_UNKNOWN",
+          ambiguousId: physicalMediaIds.ambiguous,
+        }
+      : {}),
     ...(interrupted ? { leaseReferenceUtc } : {}),
     snapshotSha256: physicalCaptureHash(snapshot),
     jobsSha256: physicalCaptureHash({
@@ -50,7 +61,8 @@ export function assertPhysicalMediaReview(snapshot, review, expectedSha256) {
     physicalCaptureHash(snapshot),
     "Physical media review snapshot changed",
   );
-  assert.ok([1, 2].includes(review.version));
+  assert.ok([1, 2, 3].includes(review.version));
+  const processInterruption = review.version === 3;
   assert.equal(review.reviewed, true);
   const interrupted = review.version === 2;
   assert.equal(
@@ -74,7 +86,7 @@ export function assertPhysicalMediaReview(snapshot, review, expectedSha256) {
   ])
     assert.equal(rows[table].length, 0, `Unreviewed ${table}`);
   assert.equal(rows.RenderJob.length, 1);
-  assert.equal(rows.MediaGeneration.length, 1);
+  assert.equal(rows.MediaGeneration.length, processInterruption ? 2 : 1);
   assert.equal(rows.RenderInput.length, 1);
   assert.equal(
     review.jobsSha256,
@@ -85,12 +97,13 @@ export function assertPhysicalMediaReview(snapshot, review, expectedSha256) {
     }),
   );
   const r = rows.RenderJob[0],
-    m = rows.MediaGeneration[0],
+    m = rows.MediaGeneration.find((x) => x.id === physicalMediaIds.media),
     input = rows.RenderInput[0],
     a = rows.Asset.find((a) => a.id === review.assetId);
   assert.equal(r.id, review.renderId);
   assert.equal(r.status, interrupted ? "RUNNING" : "QUEUED");
   assert.equal(r.outputKey, null);
+  assert.ok(m);
   assert.equal(m.id, review.mediaId);
   assert.equal(m.state, "OUTPUT_READY");
   assert.equal(m.assetId, null);
@@ -148,6 +161,49 @@ export function assertPhysicalMediaReview(snapshot, review, expectedSha256) {
       assert.equal(o.bytes, a.bytes);
       assert.equal(o.sha256, a.sha256);
     }
+  }
+  if (processInterruption) {
+    assert.equal(
+      review.ambiguousDisposition,
+      "SUBMIT_ONCE_THEN_REVIEW_UNKNOWN",
+    );
+    assert.equal(review.ambiguousId, physicalMediaIds.ambiguous);
+    assert.equal(r.runToken, null);
+    assert.equal(r.heartbeatAt, null);
+    assert.equal(m.runToken, null);
+    assert.equal(m.heartbeatAt, null);
+    const queued = rows.MediaGeneration.find(
+      (x) => x.id === review.ambiguousId,
+    );
+    assert.ok(queued);
+    assert.equal(queued.organizationId, r.organizationId);
+    assert.equal(queued.state, "QUEUED");
+    for (const key of [
+      "runToken",
+      "heartbeatAt",
+      "outputKey",
+      "assetId",
+      "providerJobId",
+      "providerRequestId",
+    ])
+      assert.equal(queued[key], null);
+    assert.equal(queued.quotedCredits, 2);
+    assert.equal(queued.startedAt, null);
+    assert.equal(queued.request.kind, "image");
+    assert.equal(queued.request.model, "fixture-image");
+    assert.equal(queued.request.prompt, "COMPOSE_RECOVERY_PHYSICAL_AMBIGUOUS");
+    assert.deepEqual(queued.request.sourceAssetIds, []);
+    assert.equal(queued.configuration.baseUrl, "http://127.0.0.1:4998/v1");
+    assert.equal(queued.configuration.model, "fixture-image");
+    assert.equal(queued.configuration.credits, 2);
+    const reserve = rows.CreditReservation.find(
+      (x) => x.id === queued.creditReservationId,
+    );
+    assert.ok(reserve);
+    assert.notEqual(reserve.id, m.creditReservationId);
+    assert.equal(reserve.organizationId, r.organizationId);
+    assert.equal(reserve.credits, 2);
+    assert.equal(reserve.state, "RESERVED");
   }
   return { renderId: r.id, mediaId: m.id, assetId: a.id };
 }

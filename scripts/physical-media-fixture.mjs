@@ -141,6 +141,24 @@ export async function runPhysicalMedia({
         UPDATE "RenderJob" SET status='RUNNING',"runToken"='physical-interrupted-render',"startedAt"=now()-interval '2 minutes',"heartbeatAt"=now()-interval '2 minutes' WHERE id=${q(ids.render)};
         UPDATE "MediaGeneration" SET "runToken"='physical-interrupted-media',"heartbeatAt"=now()-interval '2 minutes' WHERE id=${q(ids.media)};
       `;
+    if (state.processMode) {
+      const ambiguousRequest = {
+        ...request,
+        model: "fixture-image",
+        prompt: "COMPOSE_RECOVERY_PHYSICAL_AMBIGUOUS",
+      };
+      const ambiguousConfig = {
+        ...config,
+        baseUrl: "http://127.0.0.1:4998/v1",
+        model: "fixture-image",
+      };
+      sql += `
+        UPDATE "CreditAccount" SET available=3,reserved=7,revision=4 WHERE "organizationId"=${q(org)} AND available=5 AND reserved=5;
+        INSERT INTO "CreditEntry" (id,"organizationId","operationKey","requestHash",kind,"availableDelta","reservedDelta","availableAfter","reservedAfter",sequence,reference,reason) VALUES ('pitr-ambiguous-reserve',${q(org)},'reserve-ambiguous','fixture','RESERVE',-2,2,3,7,4,'physical-ambiguous','Synthetic ambiguous reservation');
+        INSERT INTO "CreditReservation" (id,"organizationId",reference,credits) VALUES ('pitr-ambiguous-reservation',${q(org)},'physical-ambiguous',2);
+        INSERT INTO "MediaGeneration" (id,"organizationId","actorId","requestKey","requestHash",request,configuration,state,"quotedCostUsd","quotedCredits","creditReservationId","updatedAt") VALUES (${q(ids.ambiguous)},${q(org)},'pitr-owner',${q(ids.ambiguous)},${q(sha(Buffer.from(JSON.stringify(ambiguousRequest))))},${q(ambiguousRequest)},${q(ambiguousConfig)},'QUEUED',0.1,2,'pitr-ambiguous-reservation',now());
+      `;
+    }
     return {
       sql,
       objects,
@@ -209,6 +227,17 @@ export async function runPhysicalMedia({
         reservation: await db.creditReservation.findUniqueOrThrow({
           where: { id: "pitr-media-reservation" },
         }),
+        ...(state.processMode
+          ? {
+              ambiguous: await db.mediaGeneration.findUniqueOrThrow({
+                where: { id: ids.ambiguous },
+              }),
+              ambiguousReservation:
+                await db.creditReservation.findUniqueOrThrow({
+                  where: { id: "pitr-ambiguous-reservation" },
+                }),
+            }
+          : {}),
         ...(state.interruption
           ? {
               interruptedRender: await db.renderJob.findUniqueOrThrow({
@@ -218,6 +247,120 @@ export async function runPhysicalMedia({
           : {}),
       }),
     );
+  if (
+    mode === "physical-media-process-barriers" ||
+    mode === "physical-media-process-expiry"
+  ) {
+    assert.equal(state.processMode, true);
+    const observe = async () => {
+      const r = await fetch(
+        "http://fixture-provider:4999/worker-barriers/" + state.nonce,
+        { signal: AbortSignal.timeout(5000) },
+      );
+      assert.equal(r.status, 200);
+      return r.json();
+    };
+    const claims = async () =>
+      Promise.all([
+        db.renderJob.findUniqueOrThrow({ where: { id: ids.render } }),
+        db.mediaGeneration.findUniqueOrThrow({ where: { id: ids.media } }),
+        db.mediaGeneration.findUniqueOrThrow({ where: { id: ids.ambiguous } }),
+      ]);
+    if (mode === "physical-media-process-barriers") {
+      let observed;
+      for (let i = 0; i < 120; i++) {
+        observed = await observe();
+        if (observed.barriers.length === 2 && observed.media) break;
+        await sleep(500);
+      }
+      assert.equal(observed.barriers.length, 2);
+      assert.ok(observed.media);
+      const [render, media, ambiguous] = await claims();
+      assert.equal(render.status, "RUNNING");
+      assert.equal(render.outputKey, null);
+      assert.equal(render.thumbnailKey, null);
+      assert.equal(render.captionsKey, null);
+      assert.equal(media.state, "OUTPUT_READY");
+      assert.equal(media.assetId, null);
+      assert.equal(ambiguous.state, "SUBMITTING");
+      assert.equal(ambiguous.outputKey, null);
+      assert.equal(ambiguous.providerRequestId, null);
+      for (const row of [render, media, ambiguous]) {
+        assert.match(row.runToken, /^[a-f0-9-]{36}$/);
+        assert.ok(row.heartbeatAt.getTime() > Date.now() - 10000);
+      }
+      for (const id of ["pitr-media-reservation", "pitr-ambiguous-reservation"])
+        assert.equal(
+          (await db.creditReservation.findUniqueOrThrow({ where: { id } }))
+            .state,
+          "RESERVED",
+        );
+      assert.equal(
+        await db.renderSegment.count({ where: { organizationId: org } }),
+        0,
+      );
+      assert.equal(
+        await db.auditLog.count({
+          where: {
+            action: { in: ["render.completed", "media_generation.completed"] },
+            organizationId: org,
+          },
+        }),
+        0,
+      );
+      for (const b of observed.barriers) {
+        assert.ok(b.pid > 0);
+        const bytes = await store.read(b.key, 10000000);
+        assert.equal(sha(bytes), b.sha256);
+        assert.equal(bytes.length, b.bytes);
+        if (b.kind === "render") {
+          assert.equal(b.width, 1280);
+          assert.equal(b.height, 720);
+          probe(bytes, "mp4", true);
+        } else assert.equal(b.sha256, state.mediaFixture.retainedSha256);
+      }
+      assert.equal(observed.media.idempotencyKey, org + ":" + ids.ambiguous);
+      assert.equal(observed.media.submissionAttempts, 1);
+      assert.equal(observed.media.acceptedCalls, 1);
+      assert.equal(observed.media.responseHeld, true);
+      return {
+        ...observed,
+        claimRunTokenHashes: [render, media, ambiguous].map((r) =>
+          sha(Buffer.from(r.runToken)),
+        ),
+        checks: {
+          actualDatabaseClaimsAndLiveHeartbeatsObserved: true,
+          noTerminalDatabaseWritesBeforeProcessKill: true,
+        },
+      };
+    }
+    const started = Date.now(),
+      before = await claims();
+    for (const row of before) assert.ok(row.runToken && row.heartbeatAt);
+    let expired = false;
+    for (let i = 0; i < 85; i++) {
+      const rows = await claims();
+      assert.deepEqual(rows, before);
+      if (rows.every((r) => r.heartbeatAt.getTime() < Date.now() - 60000)) {
+        expired = true;
+        break;
+      }
+      await sleep(1000);
+    }
+    assert.ok(expired, "Natural database lease expiry did not occur");
+    assert.deepEqual(await observe(), {
+      barriers: state.barrier.barriers,
+      media: state.barrier.media,
+    });
+    return {
+      elapsedMs: Date.now() - started,
+      leaseAgeMilliseconds: before.map(
+        (r) => Date.now() - r.heartbeatAt.getTime(),
+      ),
+      claimsUnchanged: true,
+      providerReceiptUnchanged: true,
+    };
+  }
   const Redis = require("ioredis"),
     { Queue } = require("bullmq"),
     connection = new Redis(process.env.REDIS_URL, {
@@ -391,6 +534,37 @@ export async function runPhysicalMedia({
         1,
       );
     }
+    if (state.processMode) {
+      assert.equal(r.ambiguous.state, "UNKNOWN");
+      assert.match(
+        r.ambiguous.error,
+        /interrupted.*submission|submission.*interrupted/i,
+      );
+      assert.equal(r.ambiguous.outputKey, null);
+      assert.equal(r.ambiguous.assetId, null);
+      assert.equal(r.ambiguous.providerRequestId, null);
+      assert.equal(r.ambiguous.runToken, null);
+      assert.equal(r.ambiguousReservation.state, "REVIEW");
+      assert.equal(r.ambiguousReservation.credits, 2);
+      assert.equal(r.ambiguousReservation.consumed, 0);
+      assert.equal(
+        await db.auditLog.count({
+          where: {
+            action: "media_generation.interrupted",
+            entityId: ids.ambiguous,
+          },
+        }),
+        1,
+      );
+      assert.equal(await queues[1].getJob(ids.ambiguous), undefined);
+      const receipt = await (
+        await fetch(
+          "http://fixture-provider:4999/worker-barriers/" + state.nonce,
+        )
+      ).json();
+      assert.deepEqual(receipt.media, state.processInterruption.barrier.media);
+      assert.equal(receipt.media.submissionAttempts, 1);
+    }
     assert.equal(r.media.outputKey, null);
     assert.equal(r.media.providerRequestId, "synthetic-physical-retained");
     assert.equal(r.reservation.state, "SETTLED");
@@ -499,6 +673,13 @@ export async function runPhysicalMedia({
       after: r,
       hashes,
       checks: {
+        ...(state.processMode
+          ? {
+              physicalAmbiguousMediaUnknownWithoutResubmission: true,
+              physicalAmbiguousMediaCreditsHeldForReview: true,
+              physicalAcceptedMediaReceiptStableAcrossRestarts: true,
+            }
+          : {}),
         physicalValidImagesDecoded: true,
         physicalRenderQueueCompleted: true,
         physicalRetainedMediaIngestedWithoutSubmission: true,

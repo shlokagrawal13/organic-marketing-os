@@ -291,3 +291,129 @@ test("Physical interrupted review refuses altered lease reference without the or
   r.leaseReferenceUtc = "2026-10-24T00:00:00.000Z";
   assert.throws(() => assertPhysicalMediaReview(f.snapshot, r, pinned));
 });
+
+function processFixture() {
+  const { snapshot, objects } = fixture();
+  Object.assign(snapshot.rows.RenderJob[0], {
+    runToken: null,
+    heartbeatAt: null,
+  });
+  Object.assign(snapshot.rows.MediaGeneration[0], {
+    runToken: null,
+    heartbeatAt: null,
+  });
+  snapshot.rows.MediaGeneration.push({
+    id: ids.ambiguous,
+    organizationId: "org",
+    state: "QUEUED",
+    runToken: null,
+    heartbeatAt: null,
+    outputKey: null,
+    assetId: null,
+    providerJobId: null,
+    providerRequestId: null,
+    startedAt: null,
+    quotedCredits: 2,
+    creditReservationId: "ambiguous",
+    request: {
+      kind: "image",
+      model: "fixture-image",
+      prompt: "COMPOSE_RECOVERY_PHYSICAL_AMBIGUOUS",
+      sourceAssetIds: [],
+    },
+    configuration: {
+      baseUrl: "http://127.0.0.1:4998/v1",
+      model: "fixture-image",
+      credits: 2,
+    },
+  } as any);
+  snapshot.rows.CreditReservation.push({
+    id: "ambiguous",
+    organizationId: "org",
+    credits: 2,
+    state: "RESERVED",
+  });
+  return { snapshot, objects };
+}
+function processVerify(s, o) {
+  const r = createPhysicalMediaReview(s, o, { processInterruption: true });
+  return assertPhysicalMediaReview(s, r, hash(r));
+}
+test("Physical process review admits exact queued provider request and separate retained output", () => {
+  const f = processFixture();
+  assert.equal(processVerify(f.snapshot, f.objects).renderId, ids.render);
+});
+test("Physical original and stale reviews still reject a second paid request", () => {
+  const f = processFixture();
+  assert.throws(() => verify(f.snapshot, f.objects));
+  const r = createPhysicalMediaReview(f.snapshot, f.objects, {
+    interrupted: true,
+  });
+  assert.throws(() => assertPhysicalMediaReview(f.snapshot, r, hash(r)));
+});
+for (const state of ["SUBMITTING", "PENDING", "UNKNOWN", "SUCCEEDED"])
+  test(
+    "Physical process review refuses unreviewed provider state " + state,
+    () => {
+      const f = processFixture();
+      f.snapshot.rows.MediaGeneration[1].state = state;
+      assert.throws(() => processVerify(f.snapshot, f.objects));
+    },
+  );
+test("Physical process review denies saved provider receipts, outputs and claims", () => {
+  for (const key of [
+    "providerJobId",
+    "providerRequestId",
+    "outputKey",
+    "assetId",
+    "runToken",
+    "heartbeatAt",
+    "startedAt",
+  ]) {
+    const f = processFixture();
+    f.snapshot.rows.MediaGeneration[1][key] = "unreviewed";
+    assert.throws(() => processVerify(f.snapshot, f.objects));
+  }
+});
+test("Physical process review denies foreign origins, paid presets and tenant mismatch", () => {
+  for (const change of [
+    (m) => (m.configuration.baseUrl = "https://api.openai.com/v1"),
+    (m) => (m.configuration.credits = 3),
+    (m) => (m.request.prompt = "other"),
+    (m) => (m.organizationId = "other"),
+    (m) => (m.request.sourceAssetIds = ["other"]),
+  ]) {
+    const f = processFixture();
+    change(f.snapshot.rows.MediaGeneration[1]);
+    assert.throws(() => processVerify(f.snapshot, f.objects));
+  }
+});
+test("Physical process review requires its own unresolved reservation", () => {
+  for (const change of [
+    (s) => (s.rows.MediaGeneration[1].creditReservationId = "reserve"),
+    (s) => (s.rows.CreditReservation[1].state = "REVIEW"),
+    (s) => (s.rows.CreditReservation[1].organizationId = "other"),
+    (s) => (s.rows.CreditReservation[1].credits = 0),
+  ]) {
+    const f = processFixture();
+    change(f.snapshot);
+    assert.throws(() => processVerify(f.snapshot, f.objects));
+  }
+});
+test("Physical process review pin prevents changed submission/replay approval", () => {
+  const f = processFixture();
+  const r = createPhysicalMediaReview(f.snapshot, f.objects, {
+    processInterruption: true,
+  });
+  assert.throws(() =>
+    assertPhysicalMediaReview(
+      f.snapshot,
+      { ...r, ambiguousDisposition: "REPLAY" },
+      hash(r),
+    ),
+  );
+  const changed = { ...r, ambiguousDisposition: "REPLAY" };
+  assert.throws(() =>
+    assertPhysicalMediaReview(f.snapshot, changed, hash(changed)),
+  );
+});

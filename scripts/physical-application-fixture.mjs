@@ -260,12 +260,18 @@ export async function runPhysicalApplication({
       r.ledger.slice(0, state.beforeLedger.length),
       state.beforeLedger,
     );
-    assert.equal(r.ledger.length, state.mediaMode ? 5 : 3);
+    assert.equal(
+      r.ledger.length,
+      state.processMode ? 6 : state.mediaMode ? 5 : 3,
+    );
     if (state.mediaMode)
       assert.equal(r.ledger.filter((e) => e.kind === "CONSUME").length, 2);
     else assert.equal(r.ledger[2].kind, "CONSUME");
-    assert.equal(r.account.available, state.mediaMode ? 5 : 7);
-    assert.equal(r.account.reserved, 0);
+    assert.equal(
+      r.account.available,
+      state.processMode ? 3 : state.mediaMode ? 5 : 7,
+    );
+    assert.equal(r.account.reserved, state.processMode ? 2 : 0);
     assert.equal(r.reservation.state, "SETTLED");
     assert.equal(r.usage.length, 1);
     assert.equal(r.usage[0].jobId, "pitr-job");

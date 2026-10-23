@@ -67,19 +67,25 @@ export async function applicationSnapshot(query) {
     ),
   );
   assert.ok(tables.length >= 37);
-  const rows = {};
-  for (const table of tables) {
-    assert.match(table, /^[A-Za-z_][A-Za-z_0-9]*$/);
-    rows[table] = JSON.parse(
-      await query(
-        `SELECT coalesce(json_agg(t ORDER BY to_jsonb(t)::text),'[]'::json) FROM "${table}" t;`,
-      ),
-    );
-  }
-  const schema = await query(`SELECT json_agg(t ORDER BY t::text) FROM (
-    SELECT table_name,column_name,data_type,is_nullable,column_default FROM information_schema.columns WHERE table_schema='public'
-  ) t;`);
-  return { rows, schema: JSON.parse(schema) };
+  // Preserve the complete projections/order while avoiding one Docker round trip per table.
+  for (const table of tables) assert.match(table, /^[A-Za-z_][A-Za-z_0-9]*$/);
+  const pairs = tables
+    .map(
+      (table) =>
+        `'${table}',(SELECT coalesce(json_agg(t ORDER BY to_jsonb(t)::text),'[]'::json) FROM "${table}" t)`,
+    )
+    .join(",");
+  const snapshot = JSON.parse(
+    await query(`SELECT json_build_object('rows',json_build_object(${pairs}),'schema',(
+    SELECT json_agg(t ORDER BY t::text) FROM (
+      SELECT table_name,column_name,data_type,is_nullable,column_default FROM information_schema.columns WHERE table_schema='public'
+    ) t
+  ));`),
+  );
+  assert.deepEqual(Object.keys(snapshot.rows), tables);
+  for (const table of tables) assert.ok(Array.isArray(snapshot.rows[table]));
+  assert.ok(Array.isArray(snapshot.schema));
+  return snapshot;
 }
 
 export async function verifyRestoredApplication(query) {
