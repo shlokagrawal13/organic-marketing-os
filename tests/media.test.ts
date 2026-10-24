@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { z } from "zod";
 import {
   sniffMedia,
   renderOptions,
@@ -29,6 +30,18 @@ const fixtureScene = {
   sfx: "",
   cta: "",
 };
+
+test("omitted render options still receive parsed defaults after Zod upgrade", () => {
+  const request = z.object({ options: renderOptions.prefault({}) });
+  const expected = renderOptions.parse({});
+  assert.deepEqual(request.parse({}).options, expected);
+  assert.deepEqual(request.parse({ options: {} }).options, expected);
+  assert.equal(
+    request.safeParse({ options: { background: "red;movie=http://internal" } })
+      .success,
+    false,
+  );
+});
 
 test("named render presets normalize geometry, reject conflicts and preserve legacy hashes", () => {
   assert.equal(

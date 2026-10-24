@@ -13,7 +13,7 @@
     "schemaMigrations": 24,
     "readabilitySamples": 44
   },
-  "environment": "M final all-three-job CI verified; N local18 selected phases pass; own fresh-source full22 CI required",
+  "environment": "N first run full22/native passed, core audit failed; patched follow-up local build/zero audits/75+2 focused tests pass; new exact-source CI required.",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -73,8 +73,8 @@
   },
   "latestIncrement": {
     "taskId": "RECOVERY-01N",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
-    "nextAction": "Publish RECOVERY-01N normally, verify all three jobs and required steps on the exact final commit with full22-phase fresh-source Compose, and pair its external final receipt with the source ZIP. Then RECOVERY-01O: WAL-target/cross-store retention and operational recovery prerequisites with explicit production limits."
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
+    "nextAction": "Publish the N security follow-up normally; inspect/fix ALL THREE jobs and required steps, including full22-phase fresh-source Compose and the previously skipped core audits/HTTP/browser, on its exact final commit. Pair external final receipt with fresh source ZIP; then RECOVERY-01O."
   },
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
@@ -976,7 +976,52 @@
       }
     },
     "syntaxAndFormatPassed": true,
-    "protectedHashesUnchanged": 25
+    "protectedHashesUnchanged": 25,
+    "securityFollowup": {
+      "firstPublishedAttempt": {
+        "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+        "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+        "runId": 40091700143,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+        "conclusion": "failure",
+        "nativePassed": true,
+        "composeFull22Passed": true,
+        "coreBuildPassed": true,
+        "unitPassed": 368,
+        "readabilitySamples": 44,
+        "coreAuditVulnerabilities": 5,
+        "requiredCoreStepsSkipped": true,
+        "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+      },
+      "dependencyVersions": {
+        "zod": "4.6.7",
+        "nodemailer": "10.2.1",
+        "bodyParser": "2.4.0",
+        "multer": "2.5.0",
+        "smtpServer": "3.21.1"
+      },
+      "zodCompatibility": "renderOptions.prefault({}) preserves parsed default input behavior for omitted options; default/hash and invalid-input regression pass.",
+      "local": {
+        "lockedInstallPassed": true,
+        "fontkitPatchVerified": true,
+        "auditedPackages": 270,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "prismaGeneratePassed": true,
+        "apiBuildPassed": true,
+        "webProductionBuildPassed": true,
+        "focusedRecoveryTestsPassed": 75,
+        "renderDefaultAndPresetTestsPassed": 2,
+        "focusedLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
+      },
+      "changedProductionFiles": [
+        "apps/api/src/renders.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "protectedHashesUnchanged": 25,
+      "ownFinalCommitAllThreeJobsRequired": true
+    }
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -7820,8 +7865,8 @@
   "latestLocalUiEvidence": "docs/qa/social01-review-ui-evidence.json",
   "latestLocalIncrement": {
     "taskId": "RECOVERY-01N",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
-    "nextAction": "Publish RECOVERY-01N normally, verify all three jobs and required steps on the exact final commit with full22-phase fresh-source Compose, and pair its external final receipt with the source ZIP. Then RECOVERY-01O: WAL-target/cross-store retention and operational recovery prerequisites with explicit production limits."
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
+    "nextAction": "Publish the N security follow-up normally; inspect/fix ALL THREE jobs and required steps, including full22-phase fresh-source Compose and the previously skipped core audits/HTTP/browser, on its exact final commit. Pair external final receipt with fresh source ZIP; then RECOVERY-01O."
   },
   "social01PolicyMaintenance": {
     "localEvidence": "docs/qa/social01-policy-maintenance-evidence.json",
@@ -13519,11 +13564,11 @@
     },
     "environment": "POLICY-01D exact public source and own successful native GitHub Actions run 39020625965"
   },
-  "sourceCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+  "sourceCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
   "taskId": "RECOVERY-01N",
   "currentWork": {
     "taskId": "RECOVERY-01N",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
     "priorVerifiedPublication": {
       "taskId": "RECOVERY-01M",
       "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
@@ -13636,6 +13681,51 @@
       },
       "syntaxAndFormatPassed": true,
       "protectedHashesUnchanged": 25
+    },
+    "securityFollowup": {
+      "firstPublishedAttempt": {
+        "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+        "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+        "runId": 40091700143,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+        "conclusion": "failure",
+        "nativePassed": true,
+        "composeFull22Passed": true,
+        "coreBuildPassed": true,
+        "unitPassed": 368,
+        "readabilitySamples": 44,
+        "coreAuditVulnerabilities": 5,
+        "requiredCoreStepsSkipped": true,
+        "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+      },
+      "dependencyVersions": {
+        "zod": "4.6.7",
+        "nodemailer": "10.2.1",
+        "bodyParser": "2.4.0",
+        "multer": "2.5.0",
+        "smtpServer": "3.21.1"
+      },
+      "zodCompatibility": "renderOptions.prefault({}) preserves parsed default input behavior for omitted options; default/hash and invalid-input regression pass.",
+      "local": {
+        "lockedInstallPassed": true,
+        "fontkitPatchVerified": true,
+        "auditedPackages": 270,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "prismaGeneratePassed": true,
+        "apiBuildPassed": true,
+        "webProductionBuildPassed": true,
+        "focusedRecoveryTestsPassed": 75,
+        "renderDefaultAndPresetTestsPassed": 2,
+        "focusedLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
+      },
+      "changedProductionFiles": [
+        "apps/api/src/renders.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "protectedHashesUnchanged": 25,
+      "ownFinalCommitAllThreeJobsRequired": true
     }
   },
   "nativeCi": {
@@ -14320,7 +14410,7 @@
     },
     "dependencyAuditDate": "2026-10-16"
   },
-  "passedMeaning": "M final CI; N local results separate and require own exact final CI",
+  "passedMeaning": "M final all-three-job CI remains last complete pass; N first run partial and follow-up local results separate.",
   "reconciliationHistory01K": {
     "passed": {
       "unit": 307,
@@ -15186,5 +15276,20 @@
         "receipt": "docs/qa/recovery01k-final-ci-receipt.json"
       }
     }
+  },
+  "latestAttempt": {
+    "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+    "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+    "runId": 40091700143,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+    "conclusion": "failure",
+    "nativePassed": true,
+    "composeFull22Passed": true,
+    "coreBuildPassed": true,
+    "unitPassed": 368,
+    "readabilitySamples": 44,
+    "coreAuditVulnerabilities": 5,
+    "requiredCoreStepsSkipped": true,
+    "evidence": "docs/qa/recovery01n-ci-attempt1.json"
   }
 }

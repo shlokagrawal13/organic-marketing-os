@@ -3,7 +3,7 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
   "checkpointRevision": "recovery01n-20261024",
-  "savedAtUtc": "2026-10-24T11:52:09.786Z",
+  "savedAtUtc": "2026-10-24T19:14:43.903Z",
   "currentMilestone": "RECOVERY-01N online physical point with live claims",
   "activeTaskId": "RECOVERY-01",
   "workInProgress": true,
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish RECOVERY-01N normally, verify all three jobs and required steps on the exact final commit with full22-phase fresh-source Compose, and pair its external final receipt with the source ZIP. Then RECOVERY-01O: WAL-target/cross-store retention and operational recovery prerequisites with explicit production limits.",
+  "nextAction": "Publish the N security follow-up normally; inspect/fix ALL THREE jobs and required steps, including full22-phase fresh-source Compose and the previously skipped core audits/HTTP/browser, on its exact final commit. Pair external final receipt with fresh source ZIP; then RECOVERY-01O.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -91,6 +91,7 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
+    "apps/api/src/renders.ts",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -102,14 +103,12 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/recovery01m-final-ci-receipt.json",
+    "docs/qa/recovery01n-ci-attempt1.json",
     "docs/qa/recovery01n-evidence.json",
-    "docs/qa/recovery01n-unit-receipts.json",
     "docs/qa/verification-summary.json",
-    "scripts/physical-inflight-point.mjs",
-    "scripts/physical-worker-interruption.mjs",
-    "scripts/verify-compose.mjs",
-    "tests/physical-inflight-point.test.ts"
+    "package-lock.json",
+    "package.json",
+    "tests/media.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6737,14 +6736,16 @@
       "githubReadAvailable": true,
       "ghCliAvailable": false,
       "liveProvidersUsed": false,
-      "credentialValuesPrinted": false
+      "credentialValuesPrinted": false,
+      "lockedInstallPassed": true,
+      "zeroAudits": true
     }
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
-    "status": "M_final_verified_N_local_requires_own_CI",
+    "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+    "status": "N_attempt1_core_audit_failed_security_followup_local",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6757,15 +6758,15 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "f354627f1a442c1effb4142fe4aee64d7db481cb",
+    "sourceTree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last verified M final source; N requires own exact-source all-three-job CI and external final receipt.",
+    "commitMeaning": "Latest public N source; native/full22 Compose pass, core audit failed. Last fully verified is M in lastVerifiedPublication.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+    "lastLocalCheckpointCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
     "uploadGate": {
       "taskId": "RECOVERY-01N",
-      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-      "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+      "status": "security_followup_requires_own_exact_source_all_three_jobs",
+      "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6774,6 +6775,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -6785,68 +6787,35 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
     "publication": {
-      "taskId": "RECOVERY-01M",
-      "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
-      "tree": "f354627f1a442c1effb4142fe4aee64d7db481cb",
-      "runId": 39993615176,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39993615176",
-      "status": "completed",
-      "conclusion": "success",
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "results": {
-        "physicalBoundReferences": 1,
-        "physicalBoundHistoricalObjects": 1,
-        "unit": 364,
-        "http": 38,
-        "browser": 28,
-        "recovery": 5,
-        "migrations": 24,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 21,
-        "logicalBoundApplicationReferences": 6,
-        "logicalBoundHistoricalObjects": 6,
-        "localFocusedTests": 71,
-        "physicalApplicationRows": 21,
-        "physicalApplicationTables": 37,
-        "startupControlsDenied": 7,
-        "physicalApplicationStartCallbacks": 1,
-        "physicalMediaRows": 27,
-        "physicalMediaPopulatedTables": 14,
-        "physicalMediaBoundReferences": 3,
-        "physicalMediaBoundObjects": 3,
-        "physicalMediaStartupControlsDenied": 10,
-        "physicalInterruptedMediaRows": 27,
-        "physicalInterruptedMediaStartupControlsDenied": 14,
-        "actualMissingCorruptMediaControls": 4,
-        "nextVersion": "16.4.2",
-        "physicalWorkerProcessRows": 30,
-        "physicalWorkerProcessStartupControlsDenied": 14,
-        "actualKilledWorkerProcesses": 2,
-        "naturalDbLeasesExpired": 3,
-        "ambiguousMediaAcceptedCalls": 1,
-        "ambiguousMediaSubmissionAttempts": 1
-      },
-      "receipt": "docs/qa/recovery01m-final-ci-receipt.json"
+      "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+      "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+      "runId": 40091700143,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+      "conclusion": "failure",
+      "nativePassed": true,
+      "composeFull22Passed": true,
+      "coreBuildPassed": true,
+      "unitPassed": 368,
+      "readabilitySamples": 44,
+      "coreAuditVulnerabilities": 5,
+      "requiredCoreStepsSkipped": true,
+      "evidence": "docs/qa/recovery01n-ci-attempt1.json"
     },
     "currentUploadGate": {
       "taskId": "RECOVERY-01N",
-      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-      "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+      "status": "security_followup_requires_own_exact_source_all_three_jobs",
+      "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6855,6 +6824,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -6866,22 +6836,20 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
     "publicationPreparation": {
       "taskId": "RECOVERY-01N",
-      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-      "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+      "status": "security_followup_requires_own_exact_source_all_three_jobs",
+      "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6890,6 +6858,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -6901,17 +6870,15 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -6936,8 +6903,8 @@
     },
     "docsEvidencePublicationGate": {
       "taskId": "RECOVERY-01N",
-      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-      "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+      "status": "security_followup_requires_own_exact_source_all_three_jobs",
+      "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6946,6 +6913,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -6957,22 +6925,20 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
     "nextPublication": {
       "taskId": "RECOVERY-01N",
-      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-      "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+      "status": "security_followup_requires_own_exact_source_all_three_jobs",
+      "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6981,6 +6947,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -6992,17 +6959,15 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
     "previousPublication": {
       "slice": "EDITOR-01U",
@@ -7021,8 +6986,8 @@
     },
     "localEvidencePublication": {
       "taskId": "RECOVERY-01N",
-      "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-      "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+      "status": "security_followup_requires_own_exact_source_all_three_jobs",
+      "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7031,6 +6996,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -7042,19 +7008,17 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+      "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
-    "lastLocalCheckpointCommitMeaning": "Last verified source before N; N final commit will be identified in paired external receipt.",
+    "lastLocalCheckpointCommitMeaning": "First N published attempt; security follow-up not yet published.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -7695,6 +7659,7 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
+        "apps/api/src/renders.ts",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -7706,66 +7671,33 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01m-final-ci-receipt.json",
+        "docs/qa/recovery01n-ci-attempt1.json",
         "docs/qa/recovery01n-evidence.json",
-        "docs/qa/recovery01n-unit-receipts.json",
         "docs/qa/verification-summary.json",
-        "scripts/physical-inflight-point.mjs",
-        "scripts/physical-worker-interruption.mjs",
-        "scripts/verify-compose.mjs",
-        "tests/physical-inflight-point.test.ts"
+        "package-lock.json",
+        "package.json",
+        "tests/media.test.ts"
       ],
       "published": false,
       "requiresSeparatePublicScopeAuthorization": false,
       "standingAuthorization": "2026-10-18 normal commits/pushes/CI"
     },
     "latestPublication": {
-      "taskId": "RECOVERY-01M",
-      "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
-      "tree": "f354627f1a442c1effb4142fe4aee64d7db481cb",
-      "runId": 39993615176,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39993615176",
-      "status": "completed",
-      "conclusion": "success",
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "results": {
-        "physicalBoundReferences": 1,
-        "physicalBoundHistoricalObjects": 1,
-        "unit": 364,
-        "http": 38,
-        "browser": 28,
-        "recovery": 5,
-        "migrations": 24,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 21,
-        "logicalBoundApplicationReferences": 6,
-        "logicalBoundHistoricalObjects": 6,
-        "localFocusedTests": 71,
-        "physicalApplicationRows": 21,
-        "physicalApplicationTables": 37,
-        "startupControlsDenied": 7,
-        "physicalApplicationStartCallbacks": 1,
-        "physicalMediaRows": 27,
-        "physicalMediaPopulatedTables": 14,
-        "physicalMediaBoundReferences": 3,
-        "physicalMediaBoundObjects": 3,
-        "physicalMediaStartupControlsDenied": 10,
-        "physicalInterruptedMediaRows": 27,
-        "physicalInterruptedMediaStartupControlsDenied": 14,
-        "actualMissingCorruptMediaControls": 4,
-        "nextVersion": "16.4.2",
-        "physicalWorkerProcessRows": 30,
-        "physicalWorkerProcessStartupControlsDenied": 14,
-        "actualKilledWorkerProcesses": 2,
-        "naturalDbLeasesExpired": 3,
-        "ambiguousMediaAcceptedCalls": 1,
-        "ambiguousMediaSubmissionAttempts": 1
-      },
-      "receipt": "docs/qa/recovery01m-final-ci-receipt.json"
+      "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+      "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+      "runId": 40091700143,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+      "conclusion": "failure",
+      "nativePassed": true,
+      "composeFull22Passed": true,
+      "coreBuildPassed": true,
+      "unitPassed": 368,
+      "readabilitySamples": 44,
+      "coreAuditVulnerabilities": 5,
+      "requiredCoreStepsSkipped": true,
+      "evidence": "docs/qa/recovery01n-ci-attempt1.json"
     },
-    "latestApplicationSourceCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+    "latestApplicationSourceCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7780,15 +7712,15 @@
       "id": "NATIVE-01",
       "state": "ready_for_local_work",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "N own fresh-source CI; production/deployed operational acceptance remains open.",
-      "completedIncrement": "Disposable native/Compose fixtures verified through M; N local18 selected runtime phases passed."
+      "currentBlocker": "N new exact-source three-job CI; deployed operations remain open.",
+      "completedIncrement": "N first run full22 Compose/native passed; core audit failed. Patched follow-up local build/audits passed."
     },
     {
       "id": "RECOVERY-01",
       "state": "ready_for_local_work",
       "title": "Native populated upgrade and cross-store recovery",
-      "completedIncrement": "A–M bounded fixtures verified; M c7d6609/run39993615176 all THREE jobs. N local18 selected phases pass; own full22 CI pending.",
-      "currentBlocker": "N own exact-source three-job CI, then WAL-target/operational prerequisites; production/live/master acceptance remains open."
+      "completedIncrement": "A–M verified; N first published run full22 Compose/native passed but core audit failed. Patched follow-up passes local build/audits/focused tests.",
+      "currentBlocker": "N new exact-source three-job CI; production/live/master acceptance remains open."
     },
     {
       "id": "AI-LIVE-01",
@@ -7922,7 +7854,8 @@
   ],
   "lastChanges": [
     "Imported M final exact-source three-job receipt and reconciled stale M publication fields.",
-    "N online physical capture of actual live claims and accepted synthetic provider effect, second owned volume and exact fail-closed admission; 21 prior Compose phases retained."
+    "N online physical capture of actual live claims and accepted synthetic provider effect, second owned volume and exact fail-closed admission; 21 prior Compose phases retained.",
+    "N first published full22/native pass but core production audit failed; patched dependencies/Zod4 compatibility locally verified, new exact-source CI pending."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -7962,13 +7895,13 @@
   "checkpointVerificationEvidence": "docs/qa/recovery01n-evidence.json",
   "latestStatus": {
     "taskId": "RECOVERY-01N",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
-    "nextAction": "Publish RECOVERY-01N normally, verify all three jobs and required steps on the exact final commit with full22-phase fresh-source Compose, and pair its external final receipt with the source ZIP. Then RECOVERY-01O: WAL-target/cross-store retention and operational recovery prerequisites with explicit production limits."
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
+    "nextAction": "Publish the N security follow-up normally; inspect/fix ALL THREE jobs and required steps, including full22-phase fresh-source Compose and the previously skipped core audits/HTTP/browser, on its exact final commit. Pair external final receipt with fresh source ZIP; then RECOVERY-01O."
   },
   "activeTask": {
     "id": "RECOVERY-01N",
     "title": "Online physical point with live claims and provider-effect binding",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs"
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -7982,8 +7915,8 @@
   },
   "pendingPublication": {
     "taskId": "RECOVERY-01N",
-    "status": "standing_authorized_normal_push_own_exact_source_all_three_jobs_required",
-    "baseCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+    "status": "security_followup_requires_own_exact_source_all_three_jobs",
+    "baseCommit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -7992,6 +7925,7 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
+      "apps/api/src/renders.ts",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -8003,17 +7937,15 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01m-final-ci-receipt.json",
+      "docs/qa/recovery01n-ci-attempt1.json",
       "docs/qa/recovery01n-evidence.json",
-      "docs/qa/recovery01n-unit-receipts.json",
       "docs/qa/verification-summary.json",
-      "scripts/physical-inflight-point.mjs",
-      "scripts/physical-worker-interruption.mjs",
-      "scripts/verify-compose.mjs",
-      "tests/physical-inflight-point.test.ts"
+      "package-lock.json",
+      "package.json",
+      "tests/media.test.ts"
     ],
     "requiresAllThreeJobsOnOwnCommit": true,
-    "finalReceipt": "External recovery01n-final-ci-receipt.json paired with portable source ZIP"
+    "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8485,50 +8417,19 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "RECOVERY-01M",
-    "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
-    "tree": "f354627f1a442c1effb4142fe4aee64d7db481cb",
-    "runId": 39993615176,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39993615176",
-    "status": "completed",
-    "conclusion": "success",
-    "allThreeJobsAndRequiredStepsPassed": true,
-    "results": {
-      "physicalBoundReferences": 1,
-      "physicalBoundHistoricalObjects": 1,
-      "unit": 364,
-      "http": 38,
-      "browser": 28,
-      "recovery": 5,
-      "migrations": 24,
-      "readabilitySamples": 44,
-      "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0,
-      "composePhases": 21,
-      "logicalBoundApplicationReferences": 6,
-      "logicalBoundHistoricalObjects": 6,
-      "localFocusedTests": 71,
-      "physicalApplicationRows": 21,
-      "physicalApplicationTables": 37,
-      "startupControlsDenied": 7,
-      "physicalApplicationStartCallbacks": 1,
-      "physicalMediaRows": 27,
-      "physicalMediaPopulatedTables": 14,
-      "physicalMediaBoundReferences": 3,
-      "physicalMediaBoundObjects": 3,
-      "physicalMediaStartupControlsDenied": 10,
-      "physicalInterruptedMediaRows": 27,
-      "physicalInterruptedMediaStartupControlsDenied": 14,
-      "actualMissingCorruptMediaControls": 4,
-      "nextVersion": "16.4.2",
-      "physicalWorkerProcessRows": 30,
-      "physicalWorkerProcessStartupControlsDenied": 14,
-      "actualKilledWorkerProcesses": 2,
-      "naturalDbLeasesExpired": 3,
-      "ambiguousMediaAcceptedCalls": 1,
-      "ambiguousMediaSubmissionAttempts": 1
-    },
-    "receipt": "docs/qa/recovery01m-final-ci-receipt.json"
+    "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+    "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+    "runId": 40091700143,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+    "conclusion": "failure",
+    "nativePassed": true,
+    "composeFull22Passed": true,
+    "coreBuildPassed": true,
+    "unitPassed": 368,
+    "readabilitySamples": 44,
+    "coreAuditVulnerabilities": 5,
+    "requiredCoreStepsSkipped": true,
+    "evidence": "docs/qa/recovery01n-ci-attempt1.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8625,7 +8526,7 @@
   },
   "currentVerification": {
     "taskId": "RECOVERY-01N",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
     "priorVerifiedPublication": {
       "taskId": "RECOVERY-01M",
       "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
@@ -8738,6 +8639,51 @@
       },
       "syntaxAndFormatPassed": true,
       "protectedHashesUnchanged": 25
+    },
+    "securityFollowup": {
+      "firstPublishedAttempt": {
+        "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+        "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+        "runId": 40091700143,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+        "conclusion": "failure",
+        "nativePassed": true,
+        "composeFull22Passed": true,
+        "coreBuildPassed": true,
+        "unitPassed": 368,
+        "readabilitySamples": 44,
+        "coreAuditVulnerabilities": 5,
+        "requiredCoreStepsSkipped": true,
+        "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+      },
+      "dependencyVersions": {
+        "zod": "4.6.7",
+        "nodemailer": "10.2.1",
+        "bodyParser": "2.4.0",
+        "multer": "2.5.0",
+        "smtpServer": "3.21.1"
+      },
+      "zodCompatibility": "renderOptions.prefault({}) preserves parsed default input behavior for omitted options; default/hash and invalid-input regression pass.",
+      "local": {
+        "lockedInstallPassed": true,
+        "fontkitPatchVerified": true,
+        "auditedPackages": 270,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "prismaGeneratePassed": true,
+        "apiBuildPassed": true,
+        "webProductionBuildPassed": true,
+        "focusedRecoveryTestsPassed": 75,
+        "renderDefaultAndPresetTestsPassed": 2,
+        "focusedLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
+      },
+      "changedProductionFiles": [
+        "apps/api/src/renders.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "protectedHashesUnchanged": 25,
+      "ownFinalCommitAllThreeJobsRequired": true
     }
   },
   "social01PolicyReview": {
@@ -9054,7 +9000,7 @@
     "closurePublicationNativeCi": true
   },
   "lastPublishedFiles": {
-    "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+    "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -9065,7 +9011,7 @@
       "START_HERE.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
-      "docs/PHYSICAL_WORKER_INTERRUPTION.md",
+      "docs/PHYSICAL_INFLIGHT_POINT.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/RESUME_CONTEXT.md",
@@ -9074,26 +9020,16 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01l-evidence.json",
-      "docs/qa/recovery01l-final-ci-receipt.json",
-      "docs/qa/recovery01m-evidence.json",
-      "docs/qa/recovery01m-unit-receipts.json",
+      "docs/qa/recovery01m-final-ci-receipt.json",
+      "docs/qa/recovery01n-evidence.json",
+      "docs/qa/recovery01n-unit-receipts.json",
       "docs/qa/verification-summary.json",
-      "scripts/application-pitr-fixture.mjs",
-      "scripts/compose-recovery-provider.mjs",
-      "scripts/physical-application-fixture.mjs",
-      "scripts/physical-media-fixture.mjs",
-      "scripts/physical-media-review.mjs",
-      "scripts/physical-worker-barrier.cjs",
+      "scripts/physical-inflight-point.mjs",
       "scripts/physical-worker-interruption.mjs",
-      "scripts/verification-lifecycle.mjs",
       "scripts/verify-compose.mjs",
-      "tests/application-snapshot.test.ts",
-      "tests/physical-media-review.test.ts",
-      "tests/physical-worker-barrier.test.ts",
-      "tests/verification-lifecycle.test.ts"
+      "tests/physical-inflight-point.test.ts"
     ],
-    "meaning": "M exact final publication; N scope in pendingPublication"
+    "meaning": "N attempt1 published but core audit failed; follow-up pending."
   },
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
@@ -9250,7 +9186,7 @@
   },
   "verification": {
     "taskId": "RECOVERY-01N",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
     "priorVerifiedPublication": {
       "taskId": "RECOVERY-01M",
       "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
@@ -9363,6 +9299,51 @@
       },
       "syntaxAndFormatPassed": true,
       "protectedHashesUnchanged": 25
+    },
+    "securityFollowup": {
+      "firstPublishedAttempt": {
+        "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+        "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+        "runId": 40091700143,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+        "conclusion": "failure",
+        "nativePassed": true,
+        "composeFull22Passed": true,
+        "coreBuildPassed": true,
+        "unitPassed": 368,
+        "readabilitySamples": 44,
+        "coreAuditVulnerabilities": 5,
+        "requiredCoreStepsSkipped": true,
+        "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+      },
+      "dependencyVersions": {
+        "zod": "4.6.7",
+        "nodemailer": "10.2.1",
+        "bodyParser": "2.4.0",
+        "multer": "2.5.0",
+        "smtpServer": "3.21.1"
+      },
+      "zodCompatibility": "renderOptions.prefault({}) preserves parsed default input behavior for omitted options; default/hash and invalid-input regression pass.",
+      "local": {
+        "lockedInstallPassed": true,
+        "fontkitPatchVerified": true,
+        "auditedPackages": 270,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "prismaGeneratePassed": true,
+        "apiBuildPassed": true,
+        "webProductionBuildPassed": true,
+        "focusedRecoveryTestsPassed": 75,
+        "renderDefaultAndPresetTestsPassed": 2,
+        "focusedLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
+      },
+      "changedProductionFiles": [
+        "apps/api/src/renders.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "protectedHashesUnchanged": 25,
+      "ownFinalCommitAllThreeJobsRequired": true
     }
   },
   "priorPolicy01BVerificationBeforeScratchReset": {
@@ -10230,7 +10211,7 @@
     "documentationOnly": false,
     "publicPushAttempted": true,
     "currentTask": "RECOVERY-01N",
-    "nextAction": "Publish RECOVERY-01N normally, verify all three jobs and required steps on the exact final commit with full22-phase fresh-source Compose, and pair its external final receipt with the source ZIP. Then RECOVERY-01O: WAL-target/cross-store retention and operational recovery prerequisites with explicit production limits.",
+    "nextAction": "Publish the N security follow-up normally; inspect/fix ALL THREE jobs and required steps, including full22-phase fresh-source Compose and the previously skipped core audits/HTTP/browser, on its exact final commit. Pair external final receipt with fresh source ZIP; then RECOVERY-01O.",
     "initialFailedPublication": {
       "taskId": "RECOVERY-01K",
       "commit": "5e90488fc9ac0319cd421f64c4061a506fa18799",
@@ -21151,8 +21132,8 @@
   "recovery01n": {
     "schemaVersion": 1,
     "taskId": "RECOVERY-01N",
-    "recordedAtUtc": "2026-10-24T11:52:09.786Z",
-    "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+    "recordedAtUtc": "2026-10-24T19:14:43.903Z",
+    "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
     "priorVerifiedPublication": {
       "taskId": "RECOVERY-01M",
       "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
@@ -21205,7 +21186,9 @@
         "newCases": 4,
         "logSha256": "2f2b0ce87a290d461fc8d02238ff6f19f5ceab76e7d6d510e3a8254bccdcccaf",
         "report": "docs/qa/recovery01n-unit-receipts.json",
-        "reportSha256": "522f0ec013b460ad30bfb480a000e6b8c3f1595a741083117e44eb050a67ca5c"
+        "reportSha256": "522f0ec013b460ad30bfb480a000e6b8c3f1595a741083117e44eb050a67ca5c",
+        "postDependencyUpgradePassed": 75,
+        "postDependencyUpgradeLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
       },
       "fullWindowsUnitAttempt": {
         "passed": false,
@@ -21264,11 +21247,20 @@
         }
       },
       "syntaxAndFormatPassed": true,
-      "protectedHashesUnchanged": 25
+      "protectedHashesUnchanged": 25,
+      "fullBuild": {
+        "prismaGenerate": true,
+        "api": true,
+        "webProduction": true
+      },
+      "zeroAuditVulnerabilities": {
+        "production": 0,
+        "full": 0
+      }
     },
-    "runtimeApplicationChanged": false,
+    "runtimeApplicationChanged": true,
     "migrationsChanged": false,
-    "dependenciesChanged": false,
+    "dependenciesChanged": true,
     "workflowChanged": false,
     "previousTwentyOneComposePhasesRetained": true,
     "totalComposePhases": 22,
@@ -21288,6 +21280,7 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
+      "apps/api/src/renders.ts",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -21299,14 +21292,57 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01m-final-ci-receipt.json",
+      "docs/qa/recovery01n-ci-attempt1.json",
       "docs/qa/recovery01n-evidence.json",
-      "docs/qa/recovery01n-unit-receipts.json",
       "docs/qa/verification-summary.json",
-      "scripts/physical-inflight-point.mjs",
-      "scripts/physical-worker-interruption.mjs",
-      "scripts/verify-compose.mjs",
-      "tests/physical-inflight-point.test.ts"
-    ]
+      "package-lock.json",
+      "package.json",
+      "tests/media.test.ts"
+    ],
+    "securityFollowup": {
+      "firstPublishedAttempt": {
+        "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+        "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+        "runId": 40091700143,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+        "conclusion": "failure",
+        "nativePassed": true,
+        "composeFull22Passed": true,
+        "coreBuildPassed": true,
+        "unitPassed": 368,
+        "readabilitySamples": 44,
+        "coreAuditVulnerabilities": 5,
+        "requiredCoreStepsSkipped": true,
+        "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+      },
+      "dependencyVersions": {
+        "zod": "4.6.7",
+        "nodemailer": "10.2.1",
+        "bodyParser": "2.4.0",
+        "multer": "2.5.0",
+        "smtpServer": "3.21.1"
+      },
+      "zodCompatibility": "renderOptions.prefault({}) preserves parsed default input behavior for omitted options; default/hash and invalid-input regression pass.",
+      "local": {
+        "lockedInstallPassed": true,
+        "fontkitPatchVerified": true,
+        "auditedPackages": 270,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "prismaGeneratePassed": true,
+        "apiBuildPassed": true,
+        "webProductionBuildPassed": true,
+        "focusedRecoveryTestsPassed": 75,
+        "renderDefaultAndPresetTestsPassed": 2,
+        "focusedLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
+      },
+      "changedProductionFiles": [
+        "apps/api/src/renders.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "protectedHashesUnchanged": 25,
+      "ownFinalCommitAllThreeJobsRequired": true
+    }
   }
 }

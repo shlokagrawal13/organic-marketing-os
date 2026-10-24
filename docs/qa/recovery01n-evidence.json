@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "RECOVERY-01N",
-  "recordedAtUtc": "2026-10-24T11:52:09.786Z",
-  "status": "local_increment_requires_own_exact_final_commit_all_three_jobs",
+  "recordedAtUtc": "2026-10-24T19:14:43.903Z",
+  "status": "security_followup_local_verified_requires_new_exact_final_commit_all_three_jobs",
   "priorVerifiedPublication": {
     "taskId": "RECOVERY-01M",
     "commit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
@@ -55,7 +55,9 @@
       "newCases": 4,
       "logSha256": "2f2b0ce87a290d461fc8d02238ff6f19f5ceab76e7d6d510e3a8254bccdcccaf",
       "report": "docs/qa/recovery01n-unit-receipts.json",
-      "reportSha256": "522f0ec013b460ad30bfb480a000e6b8c3f1595a741083117e44eb050a67ca5c"
+      "reportSha256": "522f0ec013b460ad30bfb480a000e6b8c3f1595a741083117e44eb050a67ca5c",
+      "postDependencyUpgradePassed": 75,
+      "postDependencyUpgradeLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
     },
     "fullWindowsUnitAttempt": {
       "passed": false,
@@ -114,11 +116,20 @@
       }
     },
     "syntaxAndFormatPassed": true,
-    "protectedHashesUnchanged": 25
+    "protectedHashesUnchanged": 25,
+    "fullBuild": {
+      "prismaGenerate": true,
+      "api": true,
+      "webProduction": true
+    },
+    "zeroAuditVulnerabilities": {
+      "production": 0,
+      "full": 0
+    }
   },
-  "runtimeApplicationChanged": false,
+  "runtimeApplicationChanged": true,
   "migrationsChanged": false,
-  "dependenciesChanged": false,
+  "dependenciesChanged": true,
   "workflowChanged": false,
   "previousTwentyOneComposePhasesRetained": true,
   "totalComposePhases": 22,
@@ -138,6 +149,7 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
+    "apps/api/src/renders.ts",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PHYSICAL_INFLIGHT_POINT.md",
@@ -149,13 +161,56 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/recovery01m-final-ci-receipt.json",
+    "docs/qa/recovery01n-ci-attempt1.json",
     "docs/qa/recovery01n-evidence.json",
-    "docs/qa/recovery01n-unit-receipts.json",
     "docs/qa/verification-summary.json",
-    "scripts/physical-inflight-point.mjs",
-    "scripts/physical-worker-interruption.mjs",
-    "scripts/verify-compose.mjs",
-    "tests/physical-inflight-point.test.ts"
-  ]
+    "package-lock.json",
+    "package.json",
+    "tests/media.test.ts"
+  ],
+  "securityFollowup": {
+    "firstPublishedAttempt": {
+      "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+      "tree": "7e054f2bf9a3ee3a526fac2e45325bf6ba927551",
+      "runId": 40091700143,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+      "conclusion": "failure",
+      "nativePassed": true,
+      "composeFull22Passed": true,
+      "coreBuildPassed": true,
+      "unitPassed": 368,
+      "readabilitySamples": 44,
+      "coreAuditVulnerabilities": 5,
+      "requiredCoreStepsSkipped": true,
+      "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+    },
+    "dependencyVersions": {
+      "zod": "4.6.7",
+      "nodemailer": "10.2.1",
+      "bodyParser": "2.4.0",
+      "multer": "2.5.0",
+      "smtpServer": "3.21.1"
+    },
+    "zodCompatibility": "renderOptions.prefault({}) preserves parsed default input behavior for omitted options; default/hash and invalid-input regression pass.",
+    "local": {
+      "lockedInstallPassed": true,
+      "fontkitPatchVerified": true,
+      "auditedPackages": 270,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "prismaGeneratePassed": true,
+      "apiBuildPassed": true,
+      "webProductionBuildPassed": true,
+      "focusedRecoveryTestsPassed": 75,
+      "renderDefaultAndPresetTestsPassed": 2,
+      "focusedLogSha256": "7ccca6ca4a073a81977699181a0137486b102e79b061907899de6783cf3be3ac"
+    },
+    "changedProductionFiles": [
+      "apps/api/src/renders.ts",
+      "package.json",
+      "package-lock.json"
+    ],
+    "protectedHashesUnchanged": 25,
+    "ownFinalCommitAllThreeJobsRequired": true
+  }
 }

@@ -119,7 +119,7 @@ export class RendersController {
         contentId: z.string().uuid(),
         revision: z.number().int().positive(),
         requestKey: z.string().uuid(),
-        options: renderOptions.default({}),
+        options: renderOptions.prefault({}),
       })
       .strict()
       .parse(body);

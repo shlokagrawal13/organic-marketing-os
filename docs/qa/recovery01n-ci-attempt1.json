@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01N",
+  "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
+  "runId": 40091700143,
+  "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40091700143",
+  "conclusion": "failure",
+  "notFinalAcceptance": true,
+  "jobs": {
+    "native": {
+      "conclusion": "success",
+      "requiredStepsPassed": true,
+      "nativeUpgradeArtifactSha256": "e8e37484f2ac4d4edc160f8b53568a36f367cfa00da7370d62201fd56366b889",
+      "postgresPitrArtifactSha256": "9d4119dad86280a5230b13393665d1e2b36e60f9ff0f852e8f7a44f4c65aa6da",
+      "bothArtifactCrcPassed": true
+    },
+    "compose": {
+      "conclusion": "success",
+      "requiredStepsPassed": true,
+      "fullPhases": 22,
+      "composeReportPassed": true,
+      "sourceAndRestoredSnapshotEqual": true,
+      "privateObjectsAtPoint": 4,
+      "deniedControls": 9,
+      "freshRedisKeys": 0,
+      "artifactSha256": "b09fba364669f458cc6f19ca32839a57d6be6491b5674655728231b0da6a6b0b",
+      "artifactCrcPassed": true
+    },
+    "core": {
+      "conclusion": "failure",
+      "buildPassed": true,
+      "unitPassed": 368,
+      "readabilityPassed": 44,
+      "productionAuditPassed": false,
+      "productionAuditVulnerabilities": 5,
+      "requiredFullAuditHttpBrowserSkipped": true,
+      "browserArtifactUploaded": true,
+      "browserArtifactBytesVerified": false,
+      "browserArtifactByteGap": "Normal signed artifact download stalled; it was stopped. Logs and upload record were inspected. No artifact-byte claim is made."
+    }
+  },
+  "productionAuditFindings": [
+    {
+      "package": "body-parser",
+      "affected": "2.3.0",
+      "patched": "2.4.0",
+      "advisory": "https://github.com/advisories/GHSA-27r3-jxmh-p828"
+    },
+    {
+      "package": "multer",
+      "affected": "2.4.0",
+      "patched": "2.5.0",
+      "advisory": "https://github.com/advisories/GHSA-q7qp-rjg7-q26m"
+    },
+    {
+      "package": "nodemailer",
+      "affected": "10.0.10",
+      "patched": "10.2.1",
+      "advisories": [
+        "https://github.com/advisories/GHSA-8c8m-p3m8-cjg8",
+        "https://github.com/advisories/GHSA-m943-m63m-w62w",
+        "https://github.com/advisories/GHSA-85x2-q946-cp5h"
+      ]
+    },
+    {
+      "package": "zod",
+      "affected": "3.25.76",
+      "patched": "4.6.7",
+      "advisory": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5"
+    }
+  ],
+  "followup": {
+    "changedDependencies": [
+      "nodemailer 10.2.1",
+      "zod 4.6.7",
+      "multer override 2.5.0",
+      "body-parser lock 2.4.0",
+      "smtp-server lock 3.21.1"
+    ],
+    "zodCompatibility": "renderOptions.prefault({}) preserves parsed default output for omitted request options; explicit regression test added.",
+    "localLockedInstall": "passed; 270 audited packages; zero vulnerabilities",
+    "localProductionAuditVulnerabilities": 0,
+    "localFullAuditVulnerabilities": 0,
+    "exactFollowupCommitAndAllThreeJobsRequired": true
+  }
+}
