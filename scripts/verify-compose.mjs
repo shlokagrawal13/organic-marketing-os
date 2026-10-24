@@ -11,6 +11,7 @@ import {
   createPhysicalMediaReview,
 } from "./physical-media-review.mjs";
 import { interruptPhysicalWorkers } from "./physical-worker-interruption.mjs";
+import { captureInflightPhysicalPoint } from "./physical-inflight-point.mjs";
 import { runPostgresPitr } from "./verify-postgres-pitr.mjs";
 import { physicalCaptureHash } from "./physical-object-binding.mjs";
 import { applicationSnapshot } from "./application-pitr-fixture.mjs";
@@ -52,7 +53,8 @@ const root = resolve(import.meta.dirname, ".."),
   suffix = randomBytes(8).toString("hex"),
   source = fixtureProject(suffix),
   restored = fixtureProject(suffix, true),
-  physical = fixtureProject(randomBytes(8).toString("hex"), true);
+  physical = fixtureProject(randomBytes(8).toString("hex"), true),
+  inflight = fixtureProject(randomBytes(8).toString("hex"), true);
 const dir = resolve(root, ".local", "compose-verification", suffix);
 mkdirSync(dir, { recursive: true, mode: 0o700 });
 const realEnv = resolve(root, ".env"),
@@ -204,7 +206,7 @@ const historyEffectsModule = inlineModule(
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01M",
+  taskId: "RECOVERY-01N",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -286,7 +288,9 @@ function compose(project, args, options) {
       resolve(root, "compose.yaml"),
       "--file",
       overridePath,
-      ...(project === physical ? ["--file", physicalOverridePath] : []),
+      ...([physical, inflight].includes(project)
+        ? ["--file", physicalOverridePath]
+        : []),
       ...args,
     ],
     options,
@@ -1334,6 +1338,38 @@ try {
                         command,
                         node,
                         query,
+                        capturePoint: (barrier) =>
+                          captureInflightPhysicalPoint({
+                            source: physical,
+                            target: inflight,
+                            nonce: suffix,
+                            barrier,
+                            compose,
+                            command,
+                            config,
+                            node,
+                            sourceQuery: query,
+                            targetQuery: (sql) =>
+                              compose(
+                                inflight,
+                                [
+                                  "exec",
+                                  "-T",
+                                  "postgres",
+                                  "psql",
+                                  "-X",
+                                  "-q",
+                                  "-At",
+                                  "-v",
+                                  "ON_ERROR_STOP=1",
+                                  "-U",
+                                  "fixture",
+                                  "-d",
+                                  "postgres",
+                                ],
+                                { input: sql, quiet: true },
+                              ),
+                          }),
                       });
                     await compose(physical, [
                       "up",
@@ -1538,6 +1574,22 @@ try {
         },
       );
     }
+    await phase(
+      "capture real in-flight claims and provider effect in a second physical point",
+      async () => {
+        const point =
+          report.physicalWorkerProcessRecovery.objectBinding.processInterruption
+            .physicalPoint;
+        assert.ok(point);
+        assert.equal(point.deniedControls, 9);
+        assert.equal(point.admissionCallbacks, 1);
+        assert.equal(point.redisKeys, 0);
+        assert.equal(point.sourceSnapshotSha256, point.restoredSnapshotSha256);
+        assert.ok(Object.values(point.checks).every(Boolean));
+        report.inflightPhysicalPoint = point;
+        Object.assign(report.checks, point.checks);
+      },
+    );
     // Remove the entire original disposable stack and all its data volumes before
     // restoring. The new project cannot accidentally read old volumes/objects.
     await phase("remove original disposable source targets", async () => {
@@ -1843,6 +1895,7 @@ try {
       await cleanup(source);
       await cleanup(restored);
       await cleanup(physical);
+      await cleanup(inflight);
       report.checks.fixtureCleanup = true;
     }
   } catch (error) {

@@ -12,6 +12,7 @@ export async function interruptPhysicalWorkers({
   command,
   node,
   query,
+  capturePoint,
 }) {
   assertFixtureProject(project);
   assert.ok(project.endsWith("-restore"));
@@ -104,6 +105,32 @@ export async function interruptPhysicalWorkers({
       { ...appState, nonce },
       false,
     );
+    let physicalPoint;
+    if (capturePoint) {
+      const paused = [];
+      try {
+        for (const { name, kind } of names) {
+          const before = await inspect(name);
+          own(before, kind);
+          assert.equal(before.State.Running, true);
+          await command(["pause", name], { quiet: true });
+          paused.push({ name, kind });
+          const after = await inspect(name);
+          own(after, kind);
+          assert.equal(after.State.Paused, true);
+        }
+        physicalPoint = await capturePoint(barrier);
+        physicalPoint.pausedActualWorkerProcesses = paused.length;
+      } finally {
+        for (const { name, kind } of paused.reverse()) {
+          const value = await inspect(name);
+          own(value, kind);
+          if (value.State.Paused)
+            await command(["unpause", name], { quiet: true });
+          assert.equal((await inspect(name)).State.Paused, false);
+        }
+      }
+    }
     for (const { name, kind } of names) {
       const before = await inspect(name);
       own(before, kind);
@@ -174,6 +201,7 @@ export async function interruptPhysicalWorkers({
     return {
       containers,
       barrier,
+      ...(physicalPoint ? { physicalPoint } : {}),
       expiry,
       rowsAfterKillSha256: physicalCaptureHash(killedSnapshot),
       redisKeysDiscarded: beforeKeys,

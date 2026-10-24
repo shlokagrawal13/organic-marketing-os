@@ -1,3 +1,15 @@
+<!-- RECOVERY01N_CURRENT_START -->
+## RECOVERY-01N online physical point with live claims — 2026-10-24
+
+M final c7d66099a74a97b085f77a58bcfe14e99f29503e/run39993615176 passed ALL THREE jobs and required steps: 364 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability, zero audits and 21 Compose phases. All four artifact ZIP digests/CRCs were checked. Read docs/qa/recovery01m-final-ci-receipt.json; this closes M's historical own-CI pending notice.
+
+N adds a twenty-second Compose phase while retaining all earlier assertions. Actual compiled render/media workers and one synthetic provider effect have live database claims before an online native PostgreSQL backup. Two owned workers are paused only during capture so heartbeat writes cannot alter the point, then unpaused in finally. Native pg_verifybackup, backup manifest and tar digests, complete 37-table application snapshot, four exact private objects, three claim tokens and one accepted-but-unacknowledged provider receipt bind the pinned review. A second generated volume receives the physical tar; full restored rows and private bytes match. Fresh Redis has zero keys and no writers exist. Nine changed-evidence controls deny admission; one exact review admits. The accepted effect stays UNKNOWN/REVIEW with no replay, and M's SIGKILL/lease/retry/credit/restart checks remain. See docs/PHYSICAL_INFLIGHT_POINT.md and docs/qa/recovery01n-evidence.json.
+
+Local75 focused unit tests (four new) and18 selected Windows Compose phases pass with inspected unchanged predecessor images; cleanup and real environment unchanged. A broad Windows unit attempt failed local render font/librsvg prerequisites, which CI installs; no broad local pass is claimed. The first online capture correctly failed when a worker heartbeat changed the snapshot; the scoped pause/unpause guard resolved that, and both attempts are recorded. The PowerShell redirection wrapper emitted NativeCommandError/exit1 despite the verifier's passed=true report, so own exact-source CI is required for clean full22-phase execution. Application runtime, all24 migrations, protected specification, dependencies and workflow are unchanged. This source requires ALL THREE jobs and required steps on its exact final commit, including fresh images. Pair an external recovery01n-final-ci-receipt.json with the portable source ZIP to close packaging-time status.
+
+This second point is after claims in a restored fixture; it does not place them at the earlier named WAL target or establish atomic production cross-store PITR. Redis is rebuilt empty and provider acceptance is synthetic. Production backup/retention/RPO-RTO, real-provider reconciliation, populated publication, live/deployed/full-master acceptance remain open. Next after own CI: RECOVERY-01O WAL-target/cross-store retention and operational recovery prerequisites. 21 broad task tracks remain open. CI verifies fixtures and does not deploy.
+<!-- RECOVERY01N_CURRENT_END -->
+
 <!-- RECOVERY01M_CURRENT_START -->
 ## RECOVERY-01M actual worker interruption after physical restore — 2026-10-23
 

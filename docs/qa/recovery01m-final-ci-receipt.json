@@ -1,0 +1,4373 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01M",
+  "status": "exact_final_commit_all_three_jobs_verified",
+  "recordedAtUtc": "2026-10-23T19:46:22.813781+00:00",
+  "publicCommit": "c7d66099a74a97b085f77a58bcfe14e99f29503e",
+  "treeSha": "f354627f1a442c1effb4142fe4aee64d7db481cb",
+  "runId": 39993615176,
+  "ciUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/39993615176",
+  "verification": {
+    "physicalBoundReferences": 1,
+    "physicalBoundHistoricalObjects": 1,
+    "unit": 364,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "migrations": 24,
+    "readabilitySamples": 44,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "composePhases": 21,
+    "logicalBoundApplicationReferences": 6,
+    "logicalBoundHistoricalObjects": 6,
+    "localFocusedTests": 71,
+    "physicalApplicationRows": 21,
+    "physicalApplicationTables": 37,
+    "startupControlsDenied": 7,
+    "physicalApplicationStartCallbacks": 1,
+    "physicalMediaRows": 27,
+    "physicalMediaPopulatedTables": 14,
+    "physicalMediaBoundReferences": 3,
+    "physicalMediaBoundObjects": 3,
+    "physicalMediaStartupControlsDenied": 10,
+    "physicalInterruptedMediaRows": 27,
+    "physicalInterruptedMediaStartupControlsDenied": 14,
+    "actualMissingCorruptMediaControls": 4,
+    "nextVersion": "16.4.2",
+    "physicalWorkerProcessRows": 30,
+    "physicalWorkerProcessStartupControlsDenied": 14,
+    "actualKilledWorkerProcesses": 2,
+    "naturalDbLeasesExpired": 3,
+    "ambiguousMediaAcceptedCalls": 1,
+    "ambiguousMediaSubmissionAttempts": 1
+  },
+  "jobs": [
+    {
+      "id": 120613143509,
+      "name": "Native application verification",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39993615176,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install test object storage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install media dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Install pinned test CJK fonts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Verify bounded small-screen English readability",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Audit all dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Verify populated upgrade",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Verify native application flows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Upload browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Set up Java",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35
+        }
+      ]
+    },
+    {
+      "id": 120613146536,
+      "name": "Disposable Compose and native restore",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39993615176,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify complete Compose and native cross-store restore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Upload sanitized Compose evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 120613218453,
+      "name": "Native populated upgrade and migration recovery",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39993615176,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify populated native Prisma upgrades and interrupted migration recovery",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Verify physical PostgreSQL backup and WAL point-in-time recovery",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload sanitized PostgreSQL PITR evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Upload sanitized native upgrade evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Check out source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    }
+  ],
+  "composeRecovery": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01M",
+    "baselineTaskId": "RECOVERY-01D",
+    "passed": true,
+    "startedAt": "2026-10-23T17:15:49.822Z",
+    "sourceProject": "omos-compose-verify-237b9f2312c50c01",
+    "restoreProject": "omos-compose-verify-237b9f2312c50c01-restore",
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "checks": {
+      "generatedProjectPrivateEnvAndVolumeIsolation": true,
+      "allNineLongRunningServices": true,
+      "syntheticProviderService": true,
+      "health": true,
+      "auth": true,
+      "tenantIsolation": true,
+      "range": true,
+      "realRender": true,
+      "idempotency": true,
+      "noKeyFailure": true,
+      "emailSubmission": true,
+      "realSmtpDelivery": true,
+      "allFiveWritersStoppedBeforeBackup": true,
+      "queuedUncertainAndPrivateOutputSeededWhileQuiesced": true,
+      "syntheticUncertainProviderCallsBeforeBackup": 1,
+      "completeSealedBackupPreflight": true,
+      "everyDatabaseMediaReferenceCovered": true,
+      "invalidBackupNeverReachesSourceRemovalOrTargetMutation": true,
+      "sourceRecordsAndPrivateObjectsIntactAfterRejections": true,
+      "dedicatedOwnedBucketVersioningEnabled": true,
+      "currentReadsDoNotRepresentHistoricalPoint": true,
+      "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+      "exactHistoricalVersionBytesAndMetadataRecovered": true,
+      "providerConfirmedEffectReviewedWithoutReplay": true,
+      "historicalVersionRemainsPrivate": true,
+      "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+      "otherVersionsAndSavedManifestPreserved": true,
+      "ownedHistoricalBucketAndAllVersionsRemoved": true,
+      "originalBackupRowsAndObjectsPreservedAfterHistoricalProbe": true,
+      "capturedBeforePhysicalTarget": true,
+      "exactRecoveredApplicationSnapshotBound": true,
+      "wrongPointBaseManifestAndInventoryRejected": true,
+      "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+      "currentAndMissingVersionsDenyReadiness": true,
+      "anonymousHistoricalReadDenied": true,
+      "permanentlyLostVersionDeniesReadiness": true,
+      "savedManifestAndLaterVersionPreserved": true,
+      "ownedPhysicalHistoricalVersionsCleaned": true,
+      "originalApplicationSourceUnchangedAfterPhysicalObjectProbe": true,
+      "restoredHttpAuthentication": true,
+      "historicalMediaServedByActualApi": true,
+      "anonymousAndCrossTenantMediaDenied": true,
+      "restoredClientRoleDeniedWrite": true,
+      "restoredRevisionConflictAndApprovalInvalidation": true,
+      "laterDatabaseChangesExcluded": true,
+      "physicallyRecoveredQueuedJobReconstructed": true,
+      "postTargetEffectNotReplayed": true,
+      "uncertainJobFailedForReview": true,
+      "oneCreditSettlementAndOriginalLedgerPreserved": true,
+      "restoredLedgerImmutable": true,
+      "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+      "sevenInvalidStartupPrerequisitesDenied": true,
+      "allWritersAbsentBeforeVerifiedAdmission": true,
+      "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+      "importedFullSnapshotMatchesPhysicalTarget": true,
+      "emptyRedisBeforePhysicalApplicationStart": true,
+      "isolatedApplicationBucketRestoredFromRetainedVersion": true,
+      "originalSourcePreservedAfterPhysicalApplicationRecovery": true,
+      "physicalValidImagesDecoded": true,
+      "physicalRenderQueueCompleted": true,
+      "physicalRetainedMediaIngestedWithoutSubmission": true,
+      "physicalOutputDimensionsDurationAndDecodePassed": true,
+      "physicalNewOutputsPrivateAndTenantScoped": true,
+      "physicalMediaReservationsSettledOnce": true,
+      "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+      "unreviewedPopulatedMediaStartupDenied": true,
+      "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+      "physicalInterruptedRenderPreservedAfterRetry": true,
+      "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+      "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+      "physicalRenderRetryPreservedFrozenInputs": true,
+      "physicalMissingAndCorruptMediaDenyWriters": true,
+      "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+      "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
+      "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+      "physicalAmbiguousMediaCreditsHeldForReview": true,
+      "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+      "actualWorkerProcessesKilledAtAcknowledgedBoundaries": true,
+      "encodedPrivateRenderSegmentVerifiedBeforeKill": true,
+      "retainedPrivateMediaReadBeforeProcessKill": true,
+      "acceptedMediaResponseLostBeforeWorkerReceipt": true,
+      "naturalDatabaseLeasesExpiredWithoutEdits": true,
+      "killedWorkerRowsPreservedUntilRecovery": true,
+      "freshRedisReconstructionAfterKilledWriters": true,
+      "originalSourceVolumesRemoved": true,
+      "freshRedisEmptyBeforeApplicationStart": true,
+      "nonAtomicInterruptionLeavesPartialState": true,
+      "atomicInterruptionRollsBackSchemaAndData": true,
+      "cleanEmptyTargetPreparedForRetry": true,
+      "cleanAtomicNativeDatabaseRetry": true,
+      "partialObjectsObserved": 1,
+      "partialObjectBytesAndMetadataMatch": true,
+      "partialObjectsRemoved": 1,
+      "restoreBucketEmptyAfterCleanup": true,
+      "objectsRestored": 6,
+      "allObjectBytesAndMetadataMatch": true,
+      "controlledFailureAfterAcknowledgedPrivatePut": true,
+      "applicationStartDeniedWhileObjectsIncomplete": true,
+      "allFiveApplicationServicesAbsentDuringPartialRestore": true,
+      "ownedRestoreBucketOnlyCleanup": true,
+      "recoveryDatabaseUnchangedAcrossObjectFailureCleanupRetry": true,
+      "sameValidatedBackupRetriedBeforeApplicationStart": true,
+      "restoredApplicationRowsAndExactHistoricalManifestBound": true,
+      "wrongTenantRowFieldKeySnapshotAndIncompleteManifestRejected": true,
+      "applicationBindingBeforeAnyWriterStart": true,
+      "originalRestoredObjectsUnchangedAfterApplicationBinding": true,
+      "applicationStartAllowedOnlyAfterVerifiedRestore": true,
+      "nativeDatabaseRestore": true,
+      "privateMediaRestore": true,
+      "recordCountsMatch": true,
+      "originalAndRenderedBytesMatch": true,
+      "tenantAndAnonymousIsolationAfterRestore": true,
+      "restoredQueuedUncertainAndPrivateOutputRowsMatch": true,
+      "queuedAiReconstructedFromFreshRedis": true,
+      "queuedRenderReconstructedAndProbed": true,
+      "retainedPrivateOutputIngestedWithoutProvider": true,
+      "uncertainAiNotReplayed": true,
+      "syntheticQueuedProviderCalls": 1,
+      "syntheticUncertainProviderCallsAfterRestore": 0,
+      "originalLedgerEntriesUnchanged": true,
+      "immutableLedgerTriggerEnforced": true,
+      "exactlyTwoCreditSettlements": true,
+      "uncertainCreditsHeldForReview": true,
+      "generatedAssetAndOriginalMediaTenantIsolation": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "steps": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 703
+      },
+      {
+        "name": "build application images",
+        "passed": true,
+        "durationMs": 99248
+      },
+      {
+        "name": "build official pinned MinIO release",
+        "passed": true,
+        "durationMs": 126264
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 16139
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 3995
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 69
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 3890
+      },
+      {
+        "name": "reject incomplete/corrupt backups while preserving original source",
+        "passed": true,
+        "durationMs": 1223
+      },
+      {
+        "name": "historical private-object versions and external-effect reconciliation prerequisites",
+        "passed": true,
+        "durationMs": 2310
+      },
+      {
+        "name": "pre-target historical versions bound to physical application recovery",
+        "passed": true,
+        "durationMs": 12353
+      },
+      {
+        "name": "physical cluster application bucket and fresh-Redis recovery",
+        "passed": true,
+        "durationMs": 39643
+      },
+      {
+        "name": "valid historical media and populated physical render/media recovery",
+        "passed": true,
+        "durationMs": 42462
+      },
+      {
+        "name": "physical retained-media faults and interrupted worker leases",
+        "passed": true,
+        "durationMs": 59435
+      },
+      {
+        "name": "physical worker process kills and ambiguous media provider recovery",
+        "passed": true,
+        "durationMs": 123420
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 10520
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 6363
+      },
+      {
+        "name": "bind restored application references to historical versions",
+        "passed": true,
+        "durationMs": 2501
+      },
+      {
+        "name": "partial private-object failure, gated startup and clean retry",
+        "passed": true,
+        "durationMs": 10912
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 905
+      },
+      {
+        "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+        "passed": true,
+        "durationMs": 5022
+      },
+      {
+        "name": "restart all three workers without replay or duplicate settlements",
+        "passed": true,
+        "durationMs": 4332
+      }
+    ],
+    "verificationMode": "complete-compose-native-restore",
+    "minioVersion": "minio version RELEASE.2025-09-07T16-13-09Z (commit-id=07c3a429bfed433e49018cb0f78a52145d4bedeb)\nRuntime: go1.24.13 linux/amd64\nLicense: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html\nCopyright: 2015-2025 MinIO, Inc.",
+    "databaseDump": {
+      "bytes": 124635,
+      "sha256": "a4b209255bcd009b04e917ba095f51b9551a1c6e0aa96982a186399a63f0904c"
+    },
+    "objectBackup": {
+      "objects": 6,
+      "bytes": 27582,
+      "sha256": "ce31aaed919e9b42bb49fda1479d5fa57c14fdeddda5b72d3d8b7d14e6c1895b"
+    },
+    "backupManifest": {
+      "sha256": "9b3968ec92b6d015d9f7d30cd43083bdcb2fc3a6c8256f07e9a5a8262fb4caec",
+      "databaseBytes": 124635,
+      "privateObjects": 6
+    },
+    "backupFailureCases": [
+      {
+        "name": "truncated-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-native-dump",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-object",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "modified-private-metadata",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "missing-writer-quiescence",
+        "rejectedBeforeDestructiveAction": true
+      },
+      {
+        "name": "wrong-restore-project",
+        "rejectedBeforeDestructiveAction": true
+      }
+    ],
+    "historicalRecovery": {
+      "checks": {
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true
+      },
+      "objectsAtHistoricalPoint": 2,
+      "syntheticExternalEffects": 1,
+      "acceptedProviderCalls": 1,
+      "providerSubmissionAttempts": 1,
+      "readinessCallbacks": 1,
+      "databasePoint": "0/1AB71B0",
+      "databasePointMeaning": "Sampled source LSN used only as a fixture correlation label; objects are created afterwards.",
+      "coordinatedRecoveryPointEstablished": false,
+      "physicalPitrCombined": false,
+      "productionRetentionClaimed": false
+    },
+    "physicalObjectRecovery": {
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01F",
+      "verificationMode": "native-physical-base-backup-wal-pitr",
+      "passed": true,
+      "startedAt": "2026-10-23T17:20:03.759Z",
+      "project": "omos-pitr-verify-b2738128ec17ea90",
+      "checks": {
+        "noNetworkPortsOrPersistentVolumes": true,
+        "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+        "targetTransactionsArchivedAfterBaseBackup": true,
+        "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+        "missingWalAndUnreachableTargetRejectReadiness": true,
+        "actualPromotedSqlAdmissionBeforeSnapshot": true,
+        "nativeReplayLsnVerifiedBeforeOptionalPhysicalExport": true,
+        "preTargetHistoricalManifestMatchesPhysicalApplicationSnapshot": true,
+        "sameVerifiedBaseBackupCleanRetry": true,
+        "namedTargetRowsRestored": true,
+        "laterInsertAndDeleteNotReplayed": true,
+        "actualWalReplayAndPromotion": true,
+        "restoredClusterAcceptsIndependentWrites": true,
+        "sourceRecordsAndTimelineUnchanged": true,
+        "savedBaseBackupUnchanged": true,
+        "populatedApplicationSchemaPhysicalRecovery": true,
+        "applicationRowsAndColumnDefinitionsMatchTarget": true,
+        "applicationLaterChangesExcluded": true,
+        "applicationSourcePreserved": true,
+        "historicalObjectPrerequisiteBlocksApplicationStart": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "application": {
+        "appliedMigrationSqlFiles": 24,
+        "migrationHashes": [
+          {
+            "name": "202609190001_foundation",
+            "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+          },
+          {
+            "name": "202609190002_brand",
+            "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+          },
+          {
+            "name": "202609190003_ai",
+            "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+          },
+          {
+            "name": "202609190004_content",
+            "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+          },
+          {
+            "name": "202609190005_media",
+            "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+          },
+          {
+            "name": "202609190006_recovery",
+            "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+          },
+          {
+            "name": "202609200001_credits",
+            "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+          },
+          {
+            "name": "202609270001_billing_entitlements",
+            "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+          },
+          {
+            "name": "202609280001_billing_invoices",
+            "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+          },
+          {
+            "name": "202609290001_model_routing",
+            "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+          },
+          {
+            "name": "202609290002_agent_orchestration",
+            "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+          },
+          {
+            "name": "202610010001_generated_media",
+            "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+          },
+          {
+            "name": "202610090001_publication_preparation",
+            "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+          },
+          {
+            "name": "202610090002_social_attempt_ledger",
+            "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+          },
+          {
+            "name": "202610100001_youtube_oauth_refresh_expiry",
+            "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+          },
+          {
+            "name": "202610100002_social_refresh_boundary",
+            "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+          },
+          {
+            "name": "202610100003_youtube_policy_review",
+            "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+          },
+          {
+            "name": "202610100004_youtube_upload_session",
+            "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+          },
+          {
+            "name": "202610120001_publication_schedule",
+            "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+          },
+          {
+            "name": "202610120002_posting_guidance",
+            "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+          },
+          {
+            "name": "202610140001_content_claim_review",
+            "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+          },
+          {
+            "name": "202610170001_workspace_youtube_policy",
+            "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+          },
+          {
+            "name": "202610180001_research_evidence",
+            "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+          },
+          {
+            "name": "202610180002_research_insight",
+            "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+          }
+        ],
+        "prismaDeployClaimed": false,
+        "tablesCompared": 37,
+        "populatedTables": 11,
+        "rowsCompared": 19,
+        "crossStoreAcceptance": false,
+        "missingHistoricalObjectsBlockedStartup": true,
+        "restoredConstraintsAndRevisionPredicates": true,
+        "httpAuthorizationClaimed": false
+      },
+      "baseBackup": {
+        "manifestSha256": "bacf94ec1c24d6fa3f06d76e1f1c3acdc6ebf194ee38e9ad8eb346eba8ebb337",
+        "files": 1196
+      },
+      "archivedWal": {
+        "targetSegment": "000000010000000000000003",
+        "targetLsn": "0/3006028",
+        "sha256": "ac769a8a9437f694d6bad912d1fda8cd917ea8e112d468aecc2e6ac94ad89ff2"
+      },
+      "failureCases": [
+        {
+          "kind": "missing-wal",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        },
+        {
+          "kind": "unreachable",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        }
+      ],
+      "nativeStartExitCodes": {
+        "missing-wal": 1,
+        "unreachable": 1,
+        "retry": 0
+      },
+      "nativeStartOutputs": {
+        "missing-wal": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "unreachable": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "retry": "waiting for server to start.... done\nserver started\n\nOMOS_NATIVE_START_EXIT=0\n"
+      },
+      "sqlReadiness": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "objectBinding": {
+        "passed": true,
+        "bound": {
+          "references": 1,
+          "objects": 1
+        },
+        "capturedManifest": {
+          "physicalProject": "omos-pitr-verify-b2738128ec17ea90",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "bacf94ec1c24d6fa3f06d76e1f1c3acdc6ebf194ee38e9ad8eb346eba8ebb337",
+          "applicationSnapshotSha256": "dc1fd3147b5f5630647b18b4826da4f4b09a1b27a77e2b822af559d4e06d2375",
+          "references": [
+            {
+              "entity": "Asset",
+              "id": "pitr-asset",
+              "organizationId": "pitr-a",
+              "field": "objectKey",
+              "key": "pitr-a/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4"
+            }
+          ],
+          "objects": [
+            {
+              "key": "pitr-a/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b2738128ec17ea90",
+                "target": "omos_fixture_target"
+              }
+            }
+          ],
+          "versions": [
+            {
+              "key": "synthetic/ac6d4ee19a01b1c0cad651fdce2bbb5a612550c7a22bcba351e302f1ea96bcd9",
+              "sourceKey": "pitr-a/historical.png",
+              "versionId": "f95b3c17-1d90-48ba-830d-8639db93133d",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b2738128ec17ea90",
+                "target": "omos_fixture_target"
+              }
+            }
+          ]
+        },
+        "pointReceipt": {
+          "physicalProject": "omos-pitr-verify-b2738128ec17ea90",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "bacf94ec1c24d6fa3f06d76e1f1c3acdc6ebf194ee38e9ad8eb346eba8ebb337",
+          "captureSha256": "fd671843fe05c164e218a791338b4035eeee605e956752a4b513028f655eca98",
+          "targetLsn": "0/3006028",
+          "capturedBeforeNamedTarget": true
+        },
+        "pointReceiptSha256": "9b716ca7bc195adf9d8222e8f3ec2f24ff898912e9c46903d5e8ec528dcc15e1",
+        "captureSha256": "fd671843fe05c164e218a791338b4035eeee605e956752a4b513028f655eca98",
+        "applicationSnapshotSha256": "dc1fd3147b5f5630647b18b4826da4f4b09a1b27a77e2b822af559d4e06d2375",
+        "targetLsn": "0/3006028",
+        "readinessCallbacks": 1,
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true
+        },
+        "coordinatedRedisRecoveryClaimed": false,
+        "productionRetentionClaimed": false,
+        "applicationStartedFromHistoricalObjects": false
+      },
+      "recovery": {
+        "targetRows": 2,
+        "sourceRows": 2,
+        "promotedTimeline": 2
+      },
+      "completedAt": "2026-10-23T17:20:14.169Z"
+    },
+    "physicalApplicationRecovery": {
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01F",
+      "verificationMode": "native-physical-base-backup-wal-pitr",
+      "passed": true,
+      "startedAt": "2026-10-23T17:20:16.533Z",
+      "project": "omos-pitr-verify-d0b1e061da6b6386",
+      "checks": {
+        "noNetworkPortsOrPersistentVolumes": true,
+        "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+        "targetTransactionsArchivedAfterBaseBackup": true,
+        "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+        "missingWalAndUnreachableTargetRejectReadiness": true,
+        "actualPromotedSqlAdmissionBeforeSnapshot": true,
+        "nativeReplayLsnVerifiedBeforeOptionalPhysicalExport": true,
+        "preTargetHistoricalManifestMatchesPhysicalApplicationSnapshot": true,
+        "sameVerifiedBaseBackupCleanRetry": true,
+        "namedTargetRowsRestored": true,
+        "laterInsertAndDeleteNotReplayed": true,
+        "actualWalReplayAndPromotion": true,
+        "restoredClusterAcceptsIndependentWrites": true,
+        "sourceRecordsAndTimelineUnchanged": true,
+        "savedBaseBackupUnchanged": true,
+        "populatedApplicationSchemaPhysicalRecovery": true,
+        "applicationRowsAndColumnDefinitionsMatchTarget": true,
+        "applicationLaterChangesExcluded": true,
+        "applicationSourcePreserved": true,
+        "historicalObjectPrerequisiteBlocksApplicationStart": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "application": {
+        "appliedMigrationSqlFiles": 24,
+        "migrationHashes": [
+          {
+            "name": "202609190001_foundation",
+            "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+          },
+          {
+            "name": "202609190002_brand",
+            "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+          },
+          {
+            "name": "202609190003_ai",
+            "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+          },
+          {
+            "name": "202609190004_content",
+            "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+          },
+          {
+            "name": "202609190005_media",
+            "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+          },
+          {
+            "name": "202609190006_recovery",
+            "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+          },
+          {
+            "name": "202609200001_credits",
+            "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+          },
+          {
+            "name": "202609270001_billing_entitlements",
+            "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+          },
+          {
+            "name": "202609280001_billing_invoices",
+            "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+          },
+          {
+            "name": "202609290001_model_routing",
+            "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+          },
+          {
+            "name": "202609290002_agent_orchestration",
+            "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+          },
+          {
+            "name": "202610010001_generated_media",
+            "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+          },
+          {
+            "name": "202610090001_publication_preparation",
+            "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+          },
+          {
+            "name": "202610090002_social_attempt_ledger",
+            "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+          },
+          {
+            "name": "202610100001_youtube_oauth_refresh_expiry",
+            "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+          },
+          {
+            "name": "202610100002_social_refresh_boundary",
+            "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+          },
+          {
+            "name": "202610100003_youtube_policy_review",
+            "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+          },
+          {
+            "name": "202610100004_youtube_upload_session",
+            "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+          },
+          {
+            "name": "202610120001_publication_schedule",
+            "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+          },
+          {
+            "name": "202610120002_posting_guidance",
+            "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+          },
+          {
+            "name": "202610140001_content_claim_review",
+            "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+          },
+          {
+            "name": "202610170001_workspace_youtube_policy",
+            "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+          },
+          {
+            "name": "202610180001_research_evidence",
+            "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+          },
+          {
+            "name": "202610180002_research_insight",
+            "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+          }
+        ],
+        "prismaDeployClaimed": false,
+        "tablesCompared": 37,
+        "populatedTables": 11,
+        "rowsCompared": 21,
+        "crossStoreAcceptance": false,
+        "missingHistoricalObjectsBlockedStartup": true,
+        "restoredConstraintsAndRevisionPredicates": true,
+        "httpAuthorizationClaimed": true
+      },
+      "baseBackup": {
+        "manifestSha256": "b7228200714d902d2ce871709aa3dea2d744d95a5d463d08829fd781623af497",
+        "files": 1196
+      },
+      "archivedWal": {
+        "targetSegment": "000000010000000000000003",
+        "targetLsn": "0/30061D8",
+        "sha256": "eb18d84ecc9da628a21d76df6fd42ab2809a8be25f3330a554bf0efa2069003d"
+      },
+      "failureCases": [
+        {
+          "kind": "missing-wal",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        },
+        {
+          "kind": "unreachable",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        }
+      ],
+      "nativeStartExitCodes": {
+        "missing-wal": 1,
+        "unreachable": 1,
+        "retry": 0
+      },
+      "nativeStartOutputs": {
+        "missing-wal": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "unreachable": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "retry": "waiting for server to start.... done\nserver started\n\nOMOS_NATIVE_START_EXIT=0\n"
+      },
+      "sqlReadiness": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "sqlReadinessAfterPhysicalExport": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "objectBinding": {
+        "passed": true,
+        "bound": {
+          "references": 1,
+          "objects": 1
+        },
+        "capturedManifest": {
+          "physicalProject": "omos-pitr-verify-d0b1e061da6b6386",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "b7228200714d902d2ce871709aa3dea2d744d95a5d463d08829fd781623af497",
+          "applicationSnapshotSha256": "968621edc0902ba6a65a15cc01ff0577898bb78f1c2c905b2f6acf970aef49cb",
+          "references": [
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-333333333333",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4"
+            }
+          ],
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-d0b1e061da6b6386",
+                "target": "omos_fixture_target"
+              }
+            }
+          ],
+          "versions": [
+            {
+              "key": "synthetic/f76b2a02e9dbc1f536d4f43d7c465ebf9e46b0677b023afb890b9c2969feca45",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "versionId": "693698e9-2d25-4389-88e3-dbb74897db17",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-d0b1e061da6b6386",
+                "target": "omos_fixture_target"
+              }
+            }
+          ]
+        },
+        "pointReceipt": {
+          "physicalProject": "omos-pitr-verify-d0b1e061da6b6386",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "b7228200714d902d2ce871709aa3dea2d744d95a5d463d08829fd781623af497",
+          "captureSha256": "d92f1336ff8d1736149143c7f0b23eb1f03ee5199c8c7f186c35480b8de350aa",
+          "targetLsn": "0/30061D8",
+          "capturedBeforeNamedTarget": true
+        },
+        "pointReceiptSha256": "f12f2682ea43e05a49238e6f46f0afe0831aab24cab40104c021e1282cd2bfb0",
+        "captureSha256": "d92f1336ff8d1736149143c7f0b23eb1f03ee5199c8c7f186c35480b8de350aa",
+        "applicationSnapshotSha256": "968621edc0902ba6a65a15cc01ff0577898bb78f1c2c905b2f6acf970aef49cb",
+        "targetLsn": "0/30061D8",
+        "readinessCallbacks": 1,
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true,
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "sevenInvalidStartupPrerequisitesDenied": true,
+          "allWritersAbsentBeforeVerifiedAdmission": true,
+          "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+          "importedFullSnapshotMatchesPhysicalTarget": true,
+          "emptyRedisBeforePhysicalApplicationStart": true,
+          "isolatedApplicationBucketRestoredFromRetainedVersion": true
+        },
+        "coordinatedRedisRecoveryClaimed": false,
+        "productionRetentionClaimed": false,
+        "applicationStartedFromHistoricalObjects": true,
+        "physicalCopySha256": "cc28c70418f8f86bc1fdf4b567b89286cabaf7350a4e42a815afc88b9f8af1c1",
+        "importedPhysicalCopySha256": "cc28c70418f8f86bc1fdf4b567b89286cabaf7350a4e42a815afc88b9f8af1c1",
+        "applicationStartCallbacks": 1,
+        "startupControlsDenied": 7,
+        "redisKeysBeforeApplicationStart": 0,
+        "reviewedEffectEvidence": {
+          "databasePoint": "0/30061D8",
+          "inventoryComplete": true,
+          "effects": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "f6feefc4-1b60-4ad0-a513-9185b8f85eee",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true
+            }
+          ],
+          "receipts": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "f6feefc4-1b60-4ad0-a513-9185b8f85eee",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true,
+              "databasePoint": "0/30061D8",
+              "disposition": "DO_NOT_REPLAY",
+              "evidenceKind": "PROVIDER_CONFIRMED",
+              "reviewed": true
+            }
+          ]
+        },
+        "boundedFreshRedisApplicationRecoveryVerified": true,
+        "physicalApplicationProject": "omos-compose-verify-57d738ed90d89560-restore",
+        "importedSnapshotSha256": "968621edc0902ba6a65a15cc01ff0577898bb78f1c2c905b2f6acf970aef49cb",
+        "queueInventory": {
+          "AIJob": [
+            {
+              "id": "pitr-job",
+              "status": "QUEUED",
+              "requestKey": "queued"
+            },
+            {
+              "id": "pitr-uncertain",
+              "status": "RUNNING",
+              "requestKey": "uncertain"
+            }
+          ],
+          "RenderJob": [],
+          "MediaGeneration": [],
+          "PublicationAttempt": [],
+          "PublicationSchedule": [],
+          "PublicationIntent": []
+        },
+        "fixtureOnlyReviewedEffectInventory": true,
+        "queuedRenderOrMediaExecutionClaimed": false,
+        "productionRecoveryClaimed": false
+      },
+      "recovery": {
+        "targetRows": 2,
+        "sourceRows": 2,
+        "promotedTimeline": 2
+      },
+      "completedAt": "2026-10-23T17:20:42.658Z"
+    },
+    "physicalMediaRecovery": {
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01F",
+      "verificationMode": "native-physical-base-backup-wal-pitr",
+      "passed": true,
+      "startedAt": "2026-10-23T17:20:57.176Z",
+      "project": "omos-pitr-verify-62c5361f93b1b785",
+      "checks": {
+        "noNetworkPortsOrPersistentVolumes": true,
+        "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+        "targetTransactionsArchivedAfterBaseBackup": true,
+        "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+        "missingWalAndUnreachableTargetRejectReadiness": true,
+        "actualPromotedSqlAdmissionBeforeSnapshot": true,
+        "nativeReplayLsnVerifiedBeforeOptionalPhysicalExport": true,
+        "preTargetHistoricalManifestMatchesPhysicalApplicationSnapshot": true,
+        "sameVerifiedBaseBackupCleanRetry": true,
+        "namedTargetRowsRestored": true,
+        "laterInsertAndDeleteNotReplayed": true,
+        "actualWalReplayAndPromotion": true,
+        "restoredClusterAcceptsIndependentWrites": true,
+        "sourceRecordsAndTimelineUnchanged": true,
+        "savedBaseBackupUnchanged": true,
+        "populatedApplicationSchemaPhysicalRecovery": true,
+        "applicationRowsAndColumnDefinitionsMatchTarget": true,
+        "applicationLaterChangesExcluded": true,
+        "applicationSourcePreserved": true,
+        "historicalObjectPrerequisiteBlocksApplicationStart": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "application": {
+        "appliedMigrationSqlFiles": 24,
+        "migrationHashes": [
+          {
+            "name": "202609190001_foundation",
+            "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+          },
+          {
+            "name": "202609190002_brand",
+            "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+          },
+          {
+            "name": "202609190003_ai",
+            "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+          },
+          {
+            "name": "202609190004_content",
+            "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+          },
+          {
+            "name": "202609190005_media",
+            "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+          },
+          {
+            "name": "202609190006_recovery",
+            "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+          },
+          {
+            "name": "202609200001_credits",
+            "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+          },
+          {
+            "name": "202609270001_billing_entitlements",
+            "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+          },
+          {
+            "name": "202609280001_billing_invoices",
+            "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+          },
+          {
+            "name": "202609290001_model_routing",
+            "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+          },
+          {
+            "name": "202609290002_agent_orchestration",
+            "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+          },
+          {
+            "name": "202610010001_generated_media",
+            "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+          },
+          {
+            "name": "202610090001_publication_preparation",
+            "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+          },
+          {
+            "name": "202610090002_social_attempt_ledger",
+            "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+          },
+          {
+            "name": "202610100001_youtube_oauth_refresh_expiry",
+            "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+          },
+          {
+            "name": "202610100002_social_refresh_boundary",
+            "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+          },
+          {
+            "name": "202610100003_youtube_policy_review",
+            "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+          },
+          {
+            "name": "202610100004_youtube_upload_session",
+            "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+          },
+          {
+            "name": "202610120001_publication_schedule",
+            "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+          },
+          {
+            "name": "202610120002_posting_guidance",
+            "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+          },
+          {
+            "name": "202610140001_content_claim_review",
+            "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+          },
+          {
+            "name": "202610170001_workspace_youtube_policy",
+            "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+          },
+          {
+            "name": "202610180001_research_evidence",
+            "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+          },
+          {
+            "name": "202610180002_research_insight",
+            "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+          }
+        ],
+        "prismaDeployClaimed": false,
+        "tablesCompared": 37,
+        "populatedTables": 14,
+        "rowsCompared": 27,
+        "crossStoreAcceptance": false,
+        "missingHistoricalObjectsBlockedStartup": true,
+        "restoredConstraintsAndRevisionPredicates": true,
+        "httpAuthorizationClaimed": true
+      },
+      "baseBackup": {
+        "manifestSha256": "15792efb185bea185e1bc7a3c8ddb2b70048dae495114f920aea957c090658d4",
+        "files": 1196
+      },
+      "archivedWal": {
+        "targetSegment": "000000010000000000000003",
+        "targetLsn": "0/3006180",
+        "sha256": "776b53f5a60094af9fc9e66889645b2781d98a28c7e52f2f126ee902b942022d"
+      },
+      "failureCases": [
+        {
+          "kind": "missing-wal",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        },
+        {
+          "kind": "unreachable",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        }
+      ],
+      "nativeStartExitCodes": {
+        "missing-wal": 1,
+        "unreachable": 1,
+        "retry": 0
+      },
+      "nativeStartOutputs": {
+        "missing-wal": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "unreachable": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "retry": "waiting for server to start.... done\nserver started\n\nOMOS_NATIVE_START_EXIT=0\n"
+      },
+      "sqlReadiness": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "sqlReadinessAfterPhysicalExport": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "objectBinding": {
+        "passed": true,
+        "bound": {
+          "references": 3,
+          "objects": 3
+        },
+        "capturedManifest": {
+          "physicalProject": "omos-pitr-verify-62c5361f93b1b785",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "15792efb185bea185e1bc7a3c8ddb2b70048dae495114f920aea957c090658d4",
+          "applicationSnapshotSha256": "d0481fa0f38119e6e9d57018cc15aa32a1855d91432672a54229799bc9dcec10",
+          "references": [
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-333333333333",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4"
+            },
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-777777777777",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9"
+            },
+            {
+              "entity": "MediaGeneration",
+              "id": "7cdd0796-a51e-442a-aab9-666666666666",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "outputKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png"
+            }
+          ],
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-62c5361f93b1b785",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-62c5361f93b1b785",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-62c5361f93b1b785",
+                "target": "omos_fixture_target"
+              }
+            }
+          ],
+          "versions": [
+            {
+              "key": "synthetic/f76b2a02e9dbc1f536d4f43d7c465ebf9e46b0677b023afb890b9c2969feca45",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "versionId": "085284e1-35b1-470b-b881-33f441c4e028",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-62c5361f93b1b785",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "synthetic/1dd678de5f2cd1662aa6a1c7553246f4986879a6a6628fed821c10f5337ff769",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "versionId": "6404f4e5-f8c2-4e02-949e-0ce39e300f21",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-62c5361f93b1b785",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "synthetic/0d7a00ddb9a782de2f778a76d487f432d973c70fe13a05821c93d22ea8544bf5",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "versionId": "a5faa734-9f88-4e2b-9a5d-6eb098f6bb1a",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-62c5361f93b1b785",
+                "target": "omos_fixture_target"
+              }
+            }
+          ]
+        },
+        "pointReceipt": {
+          "physicalProject": "omos-pitr-verify-62c5361f93b1b785",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "15792efb185bea185e1bc7a3c8ddb2b70048dae495114f920aea957c090658d4",
+          "captureSha256": "ba7d0a353c4fef2b91ea73c6e97444cf0aa21439766e6951255c8d900f3f39df",
+          "targetLsn": "0/3006180",
+          "capturedBeforeNamedTarget": true
+        },
+        "pointReceiptSha256": "22fe538ed501757afc4a21f7ea1501cf48f7743eaed4c52eef0d46c91cfed983",
+        "captureSha256": "ba7d0a353c4fef2b91ea73c6e97444cf0aa21439766e6951255c8d900f3f39df",
+        "applicationSnapshotSha256": "d0481fa0f38119e6e9d57018cc15aa32a1855d91432672a54229799bc9dcec10",
+        "targetLsn": "0/3006180",
+        "readinessCallbacks": 1,
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true,
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "physicalValidImagesDecoded": true,
+          "physicalRenderQueueCompleted": true,
+          "physicalRetainedMediaIngestedWithoutSubmission": true,
+          "physicalOutputDimensionsDurationAndDecodePassed": true,
+          "physicalNewOutputsPrivateAndTenantScoped": true,
+          "physicalMediaReservationsSettledOnce": true,
+          "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+          "sevenInvalidStartupPrerequisitesDenied": true,
+          "unreviewedPopulatedMediaStartupDenied": true,
+          "allWritersAbsentBeforeVerifiedAdmission": true,
+          "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+          "importedFullSnapshotMatchesPhysicalTarget": true,
+          "emptyRedisBeforePhysicalApplicationStart": true,
+          "isolatedApplicationBucketRestoredFromRetainedVersion": true
+        },
+        "coordinatedRedisRecoveryClaimed": false,
+        "productionRetentionClaimed": false,
+        "applicationStartedFromHistoricalObjects": true,
+        "mediaReview": {
+          "version": 1,
+          "snapshotSha256": "d0481fa0f38119e6e9d57018cc15aa32a1855d91432672a54229799bc9dcec10",
+          "jobsSha256": "3f8e5c807991efb41f4af43da7ae494ba401dc826f559310f456792d212718c6",
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png"
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png"
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png"
+            }
+          ],
+          "renderId": "7cdd0796-a51e-442a-aab9-888888888888",
+          "mediaId": "7cdd0796-a51e-442a-aab9-666666666666",
+          "assetId": "7cdd0796-a51e-442a-aab9-777777777777",
+          "renderDisposition": "RECONSTRUCT_LOCAL_RENDER",
+          "mediaDisposition": "INGEST_RETAINED_OUTPUT_ONLY",
+          "reviewed": true
+        },
+        "expectedMediaReviewSha256": "276e6d2b47d42a2d47ec61361b1a14db8843f89b8416ff9fc9bd7fa8356d0d3c",
+        "mediaOutputHashes": {
+          "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+          "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+          "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/7cdd0796-a51e-442a-aab9-888888888888/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+        },
+        "physicalCopySha256": "95e9ad0069499abc1481578d9a4583d7fb38d7b5ed5fb2f6c63afb1d63e9680b",
+        "importedPhysicalCopySha256": "95e9ad0069499abc1481578d9a4583d7fb38d7b5ed5fb2f6c63afb1d63e9680b",
+        "applicationStartCallbacks": 1,
+        "startupControlsDenied": 10,
+        "redisKeysBeforeApplicationStart": 0,
+        "reviewedEffectEvidence": {
+          "databasePoint": "0/3006180",
+          "inventoryComplete": true,
+          "effects": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "f49d2830-6a00-4b75-afbd-b3cd2b4aed97",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true
+            }
+          ],
+          "receipts": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "f49d2830-6a00-4b75-afbd-b3cd2b4aed97",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true,
+              "databasePoint": "0/3006180",
+              "disposition": "DO_NOT_REPLAY",
+              "evidenceKind": "PROVIDER_CONFIRMED",
+              "reviewed": true
+            }
+          ]
+        },
+        "boundedFreshRedisApplicationRecoveryVerified": true,
+        "physicalApplicationProject": "omos-compose-verify-57d738ed90d89560-restore",
+        "importedSnapshotSha256": "d0481fa0f38119e6e9d57018cc15aa32a1855d91432672a54229799bc9dcec10",
+        "queueInventory": {
+          "AIJob": [
+            {
+              "id": "pitr-job",
+              "status": "QUEUED",
+              "requestKey": "queued"
+            },
+            {
+              "id": "pitr-uncertain",
+              "status": "RUNNING",
+              "requestKey": "uncertain"
+            }
+          ],
+          "RenderJob": [
+            {
+              "id": "7cdd0796-a51e-442a-aab9-888888888888",
+              "status": "QUEUED",
+              "requestKey": "7cdd0796-a51e-442a-aab9-888888888888"
+            }
+          ],
+          "MediaGeneration": [
+            {
+              "id": "7cdd0796-a51e-442a-aab9-666666666666",
+              "state": "OUTPUT_READY",
+              "requestKey": "7cdd0796-a51e-442a-aab9-666666666666"
+            }
+          ],
+          "PublicationAttempt": [],
+          "PublicationSchedule": [],
+          "PublicationIntent": []
+        },
+        "fixtureOnlyReviewedEffectInventory": true,
+        "queuedRenderOrMediaExecutionClaimed": true,
+        "productionRecoveryClaimed": false
+      },
+      "recovery": {
+        "targetRows": 2,
+        "sourceRows": 2,
+        "promotedTimeline": 2
+      },
+      "completedAt": "2026-10-23T17:21:25.188Z"
+    },
+    "physicalInterruptedMediaRecovery": {
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01F",
+      "verificationMode": "native-physical-base-backup-wal-pitr",
+      "passed": true,
+      "startedAt": "2026-10-23T17:21:39.706Z",
+      "project": "omos-pitr-verify-b9a33e0a03aff09b",
+      "checks": {
+        "noNetworkPortsOrPersistentVolumes": true,
+        "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+        "targetTransactionsArchivedAfterBaseBackup": true,
+        "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+        "missingWalAndUnreachableTargetRejectReadiness": true,
+        "actualPromotedSqlAdmissionBeforeSnapshot": true,
+        "nativeReplayLsnVerifiedBeforeOptionalPhysicalExport": true,
+        "preTargetHistoricalManifestMatchesPhysicalApplicationSnapshot": true,
+        "sameVerifiedBaseBackupCleanRetry": true,
+        "namedTargetRowsRestored": true,
+        "laterInsertAndDeleteNotReplayed": true,
+        "actualWalReplayAndPromotion": true,
+        "restoredClusterAcceptsIndependentWrites": true,
+        "sourceRecordsAndTimelineUnchanged": true,
+        "savedBaseBackupUnchanged": true,
+        "populatedApplicationSchemaPhysicalRecovery": true,
+        "applicationRowsAndColumnDefinitionsMatchTarget": true,
+        "applicationLaterChangesExcluded": true,
+        "applicationSourcePreserved": true,
+        "historicalObjectPrerequisiteBlocksApplicationStart": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "application": {
+        "appliedMigrationSqlFiles": 24,
+        "migrationHashes": [
+          {
+            "name": "202609190001_foundation",
+            "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+          },
+          {
+            "name": "202609190002_brand",
+            "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+          },
+          {
+            "name": "202609190003_ai",
+            "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+          },
+          {
+            "name": "202609190004_content",
+            "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+          },
+          {
+            "name": "202609190005_media",
+            "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+          },
+          {
+            "name": "202609190006_recovery",
+            "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+          },
+          {
+            "name": "202609200001_credits",
+            "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+          },
+          {
+            "name": "202609270001_billing_entitlements",
+            "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+          },
+          {
+            "name": "202609280001_billing_invoices",
+            "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+          },
+          {
+            "name": "202609290001_model_routing",
+            "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+          },
+          {
+            "name": "202609290002_agent_orchestration",
+            "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+          },
+          {
+            "name": "202610010001_generated_media",
+            "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+          },
+          {
+            "name": "202610090001_publication_preparation",
+            "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+          },
+          {
+            "name": "202610090002_social_attempt_ledger",
+            "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+          },
+          {
+            "name": "202610100001_youtube_oauth_refresh_expiry",
+            "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+          },
+          {
+            "name": "202610100002_social_refresh_boundary",
+            "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+          },
+          {
+            "name": "202610100003_youtube_policy_review",
+            "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+          },
+          {
+            "name": "202610100004_youtube_upload_session",
+            "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+          },
+          {
+            "name": "202610120001_publication_schedule",
+            "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+          },
+          {
+            "name": "202610120002_posting_guidance",
+            "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+          },
+          {
+            "name": "202610140001_content_claim_review",
+            "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+          },
+          {
+            "name": "202610170001_workspace_youtube_policy",
+            "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+          },
+          {
+            "name": "202610180001_research_evidence",
+            "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+          },
+          {
+            "name": "202610180002_research_insight",
+            "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+          }
+        ],
+        "prismaDeployClaimed": false,
+        "tablesCompared": 37,
+        "populatedTables": 14,
+        "rowsCompared": 27,
+        "crossStoreAcceptance": false,
+        "missingHistoricalObjectsBlockedStartup": true,
+        "restoredConstraintsAndRevisionPredicates": true,
+        "httpAuthorizationClaimed": true
+      },
+      "baseBackup": {
+        "manifestSha256": "6ba791a7cb83015e91bcf2eb7bd2be9adc35ecf07080315cbe8bc21b8e61af18",
+        "files": 1196
+      },
+      "archivedWal": {
+        "targetSegment": "000000010000000000000003",
+        "targetLsn": "0/3006180",
+        "sha256": "7cc936cf899a2fdfaa06dc9550a61568b6ea1ad428751ade1afb2c059d01c1e7"
+      },
+      "failureCases": [
+        {
+          "kind": "missing-wal",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        },
+        {
+          "kind": "unreachable",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        }
+      ],
+      "nativeStartExitCodes": {
+        "missing-wal": 1,
+        "unreachable": 1,
+        "retry": 0
+      },
+      "nativeStartOutputs": {
+        "missing-wal": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "unreachable": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "retry": "waiting for server to start.... done\nserver started\n\nOMOS_NATIVE_START_EXIT=0\n"
+      },
+      "sqlReadiness": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "sqlReadinessAfterPhysicalExport": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "objectBinding": {
+        "passed": true,
+        "bound": {
+          "references": 3,
+          "objects": 3
+        },
+        "capturedManifest": {
+          "physicalProject": "omos-pitr-verify-b9a33e0a03aff09b",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "6ba791a7cb83015e91bcf2eb7bd2be9adc35ecf07080315cbe8bc21b8e61af18",
+          "applicationSnapshotSha256": "c3ef6ae40119b8a4ade2a7958bf01e2360b36237bc8deb93beb1192bd6604384",
+          "references": [
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-333333333333",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4"
+            },
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-777777777777",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9"
+            },
+            {
+              "entity": "MediaGeneration",
+              "id": "7cdd0796-a51e-442a-aab9-666666666666",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "outputKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png"
+            }
+          ],
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b9a33e0a03aff09b",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b9a33e0a03aff09b",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b9a33e0a03aff09b",
+                "target": "omos_fixture_target"
+              }
+            }
+          ],
+          "versions": [
+            {
+              "key": "synthetic/f76b2a02e9dbc1f536d4f43d7c465ebf9e46b0677b023afb890b9c2969feca45",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "versionId": "6a61a0aa-c009-4449-99c0-1d057ed0de16",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b9a33e0a03aff09b",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "synthetic/1dd678de5f2cd1662aa6a1c7553246f4986879a6a6628fed821c10f5337ff769",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "versionId": "cf3391a1-9d01-402b-a3ea-2398f8bddbdb",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b9a33e0a03aff09b",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "synthetic/0d7a00ddb9a782de2f778a76d487f432d973c70fe13a05821c93d22ea8544bf5",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "versionId": "146fdb30-37cf-4382-b5dd-9727e0a03ee2",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-b9a33e0a03aff09b",
+                "target": "omos_fixture_target"
+              }
+            }
+          ]
+        },
+        "pointReceipt": {
+          "physicalProject": "omos-pitr-verify-b9a33e0a03aff09b",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "6ba791a7cb83015e91bcf2eb7bd2be9adc35ecf07080315cbe8bc21b8e61af18",
+          "captureSha256": "81622a59be88e46f11dab2269707796a141c1a80b518e1b18a6b6bbed9bc96d8",
+          "targetLsn": "0/3006180",
+          "capturedBeforeNamedTarget": true
+        },
+        "pointReceiptSha256": "257e21bad6dba7eee7c51e62a7709ea965ac2a1393c07e02f8aea45a6433d0db",
+        "captureSha256": "81622a59be88e46f11dab2269707796a141c1a80b518e1b18a6b6bbed9bc96d8",
+        "applicationSnapshotSha256": "c3ef6ae40119b8a4ade2a7958bf01e2360b36237bc8deb93beb1192bd6604384",
+        "targetLsn": "0/3006180",
+        "readinessCallbacks": 1,
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true,
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "physicalValidImagesDecoded": true,
+          "physicalRenderQueueCompleted": true,
+          "physicalRetainedMediaIngestedWithoutSubmission": true,
+          "physicalOutputDimensionsDurationAndDecodePassed": true,
+          "physicalNewOutputsPrivateAndTenantScoped": true,
+          "physicalMediaReservationsSettledOnce": true,
+          "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+          "physicalInterruptedRenderPreservedAfterRetry": true,
+          "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+          "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+          "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+          "physicalRenderRetryPreservedFrozenInputs": true,
+          "physicalMissingAndCorruptMediaDenyWriters": true,
+          "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+          "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
+          "sevenInvalidStartupPrerequisitesDenied": true,
+          "unreviewedPopulatedMediaStartupDenied": true,
+          "allWritersAbsentBeforeVerifiedAdmission": true,
+          "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+          "importedFullSnapshotMatchesPhysicalTarget": true,
+          "emptyRedisBeforePhysicalApplicationStart": true,
+          "isolatedApplicationBucketRestoredFromRetainedVersion": true
+        },
+        "coordinatedRedisRecoveryClaimed": false,
+        "productionRetentionClaimed": false,
+        "applicationStartedFromHistoricalObjects": true,
+        "mediaReview": {
+          "version": 2,
+          "leaseReferenceUtc": "2026-10-23T17:21:44.692Z",
+          "snapshotSha256": "c3ef6ae40119b8a4ade2a7958bf01e2360b36237bc8deb93beb1192bd6604384",
+          "jobsSha256": "ac978e0a4f94fcc0a330776fb17b8b9ffb05275fcea21002c67871105e3de792",
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png"
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png"
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png"
+            }
+          ],
+          "renderId": "7cdd0796-a51e-442a-aab9-888888888888",
+          "mediaId": "7cdd0796-a51e-442a-aab9-666666666666",
+          "assetId": "7cdd0796-a51e-442a-aab9-777777777777",
+          "renderDisposition": "FAIL_STALE_RENDER_THEN_OWNER_RETRY",
+          "mediaDisposition": "INGEST_RETAINED_OUTPUT_ONLY",
+          "reviewed": true
+        },
+        "expectedMediaReviewSha256": "84da41ebf5206c6f34364baff535648f82fdeb9c8c39620024e271d39b73a4d9",
+        "mediaOutputHashes": {
+          "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+          "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+          "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/1d5a8e51-e2ff-4ec1-8672-71c89fd274ef/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/1d5a8e51-e2ff-4ec1-8672-71c89fd274ef/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/1d5a8e51-e2ff-4ec1-8672-71c89fd274ef/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+        },
+        "objectFaults": [
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          }
+        ],
+        "interruptedRender": {
+          "originalRenderId": "7cdd0796-a51e-442a-aab9-888888888888",
+          "retryRenderId": "1d5a8e51-e2ff-4ec1-8672-71c89fd274ef",
+          "originalFailedRowSha256": "8d4408faad456d9ffc764b44f5d80f754fbd9346a1422ca0cbc4c22e3aeae486",
+          "checks": {
+            "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+            "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+            "physicalRenderRetryPreservedFrozenInputs": true
+          }
+        },
+        "physicalCopySha256": "8e2bfb7960b248c1503c1184e5e9145d350ab13985aef5b2de5836cf3606c967",
+        "importedPhysicalCopySha256": "8e2bfb7960b248c1503c1184e5e9145d350ab13985aef5b2de5836cf3606c967",
+        "applicationStartCallbacks": 1,
+        "startupControlsDenied": 14,
+        "redisKeysBeforeApplicationStart": 0,
+        "reviewedEffectEvidence": {
+          "databasePoint": "0/3006180",
+          "inventoryComplete": true,
+          "effects": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "e39c134d-5fe7-4f59-a6d4-76af1b6e42c0",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true
+            }
+          ],
+          "receipts": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "e39c134d-5fe7-4f59-a6d4-76af1b6e42c0",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true,
+              "databasePoint": "0/3006180",
+              "disposition": "DO_NOT_REPLAY",
+              "evidenceKind": "PROVIDER_CONFIRMED",
+              "reviewed": true
+            }
+          ]
+        },
+        "boundedFreshRedisApplicationRecoveryVerified": true,
+        "physicalApplicationProject": "omos-compose-verify-57d738ed90d89560-restore",
+        "importedSnapshotSha256": "c3ef6ae40119b8a4ade2a7958bf01e2360b36237bc8deb93beb1192bd6604384",
+        "queueInventory": {
+          "AIJob": [
+            {
+              "id": "pitr-job",
+              "status": "QUEUED",
+              "requestKey": "queued"
+            },
+            {
+              "id": "pitr-uncertain",
+              "status": "RUNNING",
+              "requestKey": "uncertain"
+            }
+          ],
+          "RenderJob": [
+            {
+              "id": "7cdd0796-a51e-442a-aab9-888888888888",
+              "status": "RUNNING",
+              "requestKey": "7cdd0796-a51e-442a-aab9-888888888888"
+            }
+          ],
+          "MediaGeneration": [
+            {
+              "id": "7cdd0796-a51e-442a-aab9-666666666666",
+              "state": "OUTPUT_READY",
+              "requestKey": "7cdd0796-a51e-442a-aab9-666666666666"
+            }
+          ],
+          "PublicationAttempt": [],
+          "PublicationSchedule": [],
+          "PublicationIntent": []
+        },
+        "fixtureOnlyReviewedEffectInventory": true,
+        "queuedRenderOrMediaExecutionClaimed": true,
+        "productionRecoveryClaimed": false
+      },
+      "recovery": {
+        "targetRows": 2,
+        "sourceRows": 2,
+        "promotedTimeline": 2
+      },
+      "completedAt": "2026-10-23T17:22:24.582Z"
+    },
+    "physicalWorkerProcessRecovery": {
+      "schemaVersion": 1,
+      "taskId": "RECOVERY-01F",
+      "verificationMode": "native-physical-base-backup-wal-pitr",
+      "passed": true,
+      "startedAt": "2026-10-23T17:22:39.124Z",
+      "project": "omos-pitr-verify-c480eee0d44d5672",
+      "checks": {
+        "noNetworkPortsOrPersistentVolumes": true,
+        "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+        "targetTransactionsArchivedAfterBaseBackup": true,
+        "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+        "missingWalAndUnreachableTargetRejectReadiness": true,
+        "actualPromotedSqlAdmissionBeforeSnapshot": true,
+        "nativeReplayLsnVerifiedBeforeOptionalPhysicalExport": true,
+        "preTargetHistoricalManifestMatchesPhysicalApplicationSnapshot": true,
+        "sameVerifiedBaseBackupCleanRetry": true,
+        "namedTargetRowsRestored": true,
+        "laterInsertAndDeleteNotReplayed": true,
+        "actualWalReplayAndPromotion": true,
+        "restoredClusterAcceptsIndependentWrites": true,
+        "sourceRecordsAndTimelineUnchanged": true,
+        "savedBaseBackupUnchanged": true,
+        "populatedApplicationSchemaPhysicalRecovery": true,
+        "applicationRowsAndColumnDefinitionsMatchTarget": true,
+        "applicationLaterChangesExcluded": true,
+        "applicationSourcePreserved": true,
+        "historicalObjectPrerequisiteBlocksApplicationStart": true,
+        "fixtureCleanup": true,
+        "realEnvironmentUnchanged": true
+      },
+      "liveProvidersCalled": false,
+      "publicDeployment": false,
+      "postgresVersion": "postgres (PostgreSQL) 17.11",
+      "application": {
+        "appliedMigrationSqlFiles": 24,
+        "migrationHashes": [
+          {
+            "name": "202609190001_foundation",
+            "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+          },
+          {
+            "name": "202609190002_brand",
+            "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+          },
+          {
+            "name": "202609190003_ai",
+            "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+          },
+          {
+            "name": "202609190004_content",
+            "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+          },
+          {
+            "name": "202609190005_media",
+            "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+          },
+          {
+            "name": "202609190006_recovery",
+            "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+          },
+          {
+            "name": "202609200001_credits",
+            "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+          },
+          {
+            "name": "202609270001_billing_entitlements",
+            "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+          },
+          {
+            "name": "202609280001_billing_invoices",
+            "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+          },
+          {
+            "name": "202609290001_model_routing",
+            "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+          },
+          {
+            "name": "202609290002_agent_orchestration",
+            "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+          },
+          {
+            "name": "202610010001_generated_media",
+            "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+          },
+          {
+            "name": "202610090001_publication_preparation",
+            "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+          },
+          {
+            "name": "202610090002_social_attempt_ledger",
+            "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+          },
+          {
+            "name": "202610100001_youtube_oauth_refresh_expiry",
+            "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+          },
+          {
+            "name": "202610100002_social_refresh_boundary",
+            "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+          },
+          {
+            "name": "202610100003_youtube_policy_review",
+            "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+          },
+          {
+            "name": "202610100004_youtube_upload_session",
+            "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+          },
+          {
+            "name": "202610120001_publication_schedule",
+            "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+          },
+          {
+            "name": "202610120002_posting_guidance",
+            "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+          },
+          {
+            "name": "202610140001_content_claim_review",
+            "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+          },
+          {
+            "name": "202610170001_workspace_youtube_policy",
+            "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+          },
+          {
+            "name": "202610180001_research_evidence",
+            "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+          },
+          {
+            "name": "202610180002_research_insight",
+            "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+          }
+        ],
+        "prismaDeployClaimed": false,
+        "tablesCompared": 37,
+        "populatedTables": 14,
+        "rowsCompared": 30,
+        "crossStoreAcceptance": false,
+        "missingHistoricalObjectsBlockedStartup": true,
+        "restoredConstraintsAndRevisionPredicates": true,
+        "httpAuthorizationClaimed": true
+      },
+      "baseBackup": {
+        "manifestSha256": "51093e4a2b7de1557a62165c4632fdc72f779a7d40b5f3d9da1fc7a39b84256b",
+        "files": 1196
+      },
+      "archivedWal": {
+        "targetSegment": "000000010000000000000003",
+        "targetLsn": "0/3006180",
+        "sha256": "a972ea4e10acededba04585fba2a189b4c63f01304377fba6b09913ab8899eb2"
+      },
+      "failureCases": [
+        {
+          "kind": "missing-wal",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        },
+        {
+          "kind": "unreachable",
+          "startupSupervisor": "foreground-postgres-with-timeout",
+          "nativeExitCode": 1,
+          "nativeTargetNotReachedFatal": true,
+          "recoveryStartExitedNonZero": true,
+          "sqlConnectionsRejected": true,
+          "sourceUnchanged": true
+        }
+      ],
+      "nativeStartExitCodes": {
+        "missing-wal": 1,
+        "unreachable": 1,
+        "retry": 0
+      },
+      "nativeStartOutputs": {
+        "missing-wal": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "unreachable": "\nOMOS_NATIVE_START_EXIT=1\n",
+        "retry": "waiting for server to start.... done\nserver started\n\nOMOS_NATIVE_START_EXIT=0\n"
+      },
+      "sqlReadiness": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "sqlReadinessAfterPhysicalExport": {
+        "attempts": 1,
+        "sqlAcceptedAndPromoted": true
+      },
+      "objectBinding": {
+        "passed": true,
+        "bound": {
+          "references": 3,
+          "objects": 3
+        },
+        "capturedManifest": {
+          "physicalProject": "omos-pitr-verify-c480eee0d44d5672",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "51093e4a2b7de1557a62165c4632fdc72f779a7d40b5f3d9da1fc7a39b84256b",
+          "applicationSnapshotSha256": "1fdccf9b92e960b69d158c64daeb987fea033001af5508e2cbf5e33123788236",
+          "references": [
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-333333333333",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4"
+            },
+            {
+              "entity": "Asset",
+              "id": "7cdd0796-a51e-442a-aab9-777777777777",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "objectKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9"
+            },
+            {
+              "entity": "MediaGeneration",
+              "id": "7cdd0796-a51e-442a-aab9-666666666666",
+              "organizationId": "7cdd0796-a51e-442a-aab9-111111111111",
+              "field": "outputKey",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png"
+            }
+          ],
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-c480eee0d44d5672",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-c480eee0d44d5672",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-c480eee0d44d5672",
+                "target": "omos_fixture_target"
+              }
+            }
+          ],
+          "versions": [
+            {
+              "key": "synthetic/f76b2a02e9dbc1f536d4f43d7c465ebf9e46b0677b023afb890b9c2969feca45",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "versionId": "2774b350-ad7f-447a-9581-1615dbf6df12",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-c480eee0d44d5672",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "synthetic/1dd678de5f2cd1662aa6a1c7553246f4986879a6a6628fed821c10f5337ff769",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "versionId": "32922ada-d407-4598-8bac-6dcd2856bb66",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-c480eee0d44d5672",
+                "target": "omos_fixture_target"
+              }
+            },
+            {
+              "key": "synthetic/0d7a00ddb9a782de2f778a76d487f432d973c70fe13a05821c93d22ea8544bf5",
+              "sourceKey": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "versionId": "64db6519-0445-4509-96d5-272dc47b0229",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png",
+              "cacheControl": "private, no-store",
+              "metadata": {
+                "fixture": "omos-compose-verify-237b9f2312c50c01",
+                "physical": "omos-pitr-verify-c480eee0d44d5672",
+                "target": "omos_fixture_target"
+              }
+            }
+          ]
+        },
+        "pointReceipt": {
+          "physicalProject": "omos-pitr-verify-c480eee0d44d5672",
+          "targetName": "omos_fixture_target",
+          "baseBackupManifestSha256": "51093e4a2b7de1557a62165c4632fdc72f779a7d40b5f3d9da1fc7a39b84256b",
+          "captureSha256": "9ca99d73390241c5e8ef185df28d84506958fe32e542137c2b2d59cd30b96f4b",
+          "targetLsn": "0/3006180",
+          "capturedBeforeNamedTarget": true
+        },
+        "pointReceiptSha256": "f2f3a1c694cbd76cc3260cade8065b97b887797f3a330cbc92dd57beb112f312",
+        "captureSha256": "9ca99d73390241c5e8ef185df28d84506958fe32e542137c2b2d59cd30b96f4b",
+        "applicationSnapshotSha256": "1fdccf9b92e960b69d158c64daeb987fea033001af5508e2cbf5e33123788236",
+        "targetLsn": "0/3006180",
+        "readinessCallbacks": 1,
+        "checks": {
+          "capturedBeforePhysicalTarget": true,
+          "exactRecoveredApplicationSnapshotBound": true,
+          "wrongPointBaseManifestAndInventoryRejected": true,
+          "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+          "currentAndMissingVersionsDenyReadiness": true,
+          "anonymousHistoricalReadDenied": true,
+          "permanentlyLostVersionDeniesReadiness": true,
+          "savedManifestAndLaterVersionPreserved": true,
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+          "physicalAmbiguousMediaCreditsHeldForReview": true,
+          "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+          "physicalValidImagesDecoded": true,
+          "physicalRenderQueueCompleted": true,
+          "physicalRetainedMediaIngestedWithoutSubmission": true,
+          "physicalOutputDimensionsDurationAndDecodePassed": true,
+          "physicalNewOutputsPrivateAndTenantScoped": true,
+          "physicalMediaReservationsSettledOnce": true,
+          "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+          "physicalInterruptedRenderPreservedAfterRetry": true,
+          "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+          "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+          "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+          "physicalRenderRetryPreservedFrozenInputs": true,
+          "actualWorkerProcessesKilledAtAcknowledgedBoundaries": true,
+          "encodedPrivateRenderSegmentVerifiedBeforeKill": true,
+          "retainedPrivateMediaReadBeforeProcessKill": true,
+          "acceptedMediaResponseLostBeforeWorkerReceipt": true,
+          "naturalDatabaseLeasesExpiredWithoutEdits": true,
+          "killedWorkerRowsPreservedUntilRecovery": true,
+          "freshRedisReconstructionAfterKilledWriters": true,
+          "physicalMissingAndCorruptMediaDenyWriters": true,
+          "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+          "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
+          "sevenInvalidStartupPrerequisitesDenied": true,
+          "unreviewedPopulatedMediaStartupDenied": true,
+          "allWritersAbsentBeforeVerifiedAdmission": true,
+          "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+          "importedFullSnapshotMatchesPhysicalTarget": true,
+          "emptyRedisBeforePhysicalApplicationStart": true,
+          "isolatedApplicationBucketRestoredFromRetainedVersion": true
+        },
+        "coordinatedRedisRecoveryClaimed": false,
+        "productionRetentionClaimed": false,
+        "applicationStartedFromHistoricalObjects": true,
+        "mediaReview": {
+          "version": 3,
+          "ambiguousDisposition": "SUBMIT_ONCE_THEN_REVIEW_UNKNOWN",
+          "ambiguousId": "7cdd0796-a51e-442a-aab9-aaaaaaaaaaaa",
+          "snapshotSha256": "1fdccf9b92e960b69d158c64daeb987fea033001af5508e2cbf5e33123788236",
+          "jobsSha256": "0c33c7267d7995374c8a7720dee9271d26ad93ed71d246b92c7385b915bce9d5",
+          "objects": [
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "contentType": "image/png"
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/historical.png",
+              "bytes": 3,
+              "sha256": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4",
+              "contentType": "image/png"
+            },
+            {
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+              "bytes": 1635,
+              "sha256": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "contentType": "image/png"
+            }
+          ],
+          "renderId": "7cdd0796-a51e-442a-aab9-888888888888",
+          "mediaId": "7cdd0796-a51e-442a-aab9-666666666666",
+          "assetId": "7cdd0796-a51e-442a-aab9-777777777777",
+          "renderDisposition": "RECONSTRUCT_LOCAL_RENDER",
+          "mediaDisposition": "INGEST_RETAINED_OUTPUT_ONLY",
+          "reviewed": true
+        },
+        "expectedMediaReviewSha256": "005acbe9b8b91d4069a31f6bbfd16fd99aa63f89b4c8c2adba1980803a51461b",
+        "mediaOutputHashes": {
+          "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+          "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+          "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/b082cf92-4044-4383-b791-e905d3ae6614/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/b082cf92-4044-4383-b791-e905d3ae6614/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/b082cf92-4044-4383-b791-e905d3ae6614/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+        },
+        "objectFaults": [
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "missing",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          },
+          {
+            "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+            "fault": "corrupt",
+            "startCallbacks": 0,
+            "redisKeys": 0,
+            "applicationSnapshotUnchanged": true
+          }
+        ],
+        "interruptedRender": {
+          "originalRenderId": "7cdd0796-a51e-442a-aab9-888888888888",
+          "retryRenderId": "b082cf92-4044-4383-b791-e905d3ae6614",
+          "originalFailedRowSha256": "78d8d03d1844409e964c1b8f609993df2cb609916b07adee2a1fd73ffe3ac939",
+          "checks": {
+            "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+            "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+            "physicalRenderRetryPreservedFrozenInputs": true
+          }
+        },
+        "processInterruption": {
+          "containers": [
+            {
+              "kind": "render",
+              "id": "3bcf304f265cb2b993bc3a0c4195c0d222c1ef02b22a78317042163e02b07b51",
+              "pidBeforeKill": 75308,
+              "entrypoint": "node",
+              "exitCode": 137,
+              "restartCount": 0,
+              "finishedAt": "2026-10-23T17:23:12.99353921Z"
+            },
+            {
+              "kind": "media",
+              "id": "1241b8b198cfb25391399c6cb489597c88ee2e1df887ad56e19a48302f04d60c",
+              "pidBeforeKill": 75445,
+              "entrypoint": "node",
+              "exitCode": 137,
+              "restartCount": 0,
+              "finishedAt": "2026-10-23T17:23:13.131003866Z"
+            }
+          ],
+          "barrier": {
+            "barriers": [
+              {
+                "kind": "media",
+                "pid": 1,
+                "boundary": "retained-output-read-before-ingest",
+                "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+                "bytes": 1635,
+                "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+                "observedAtUtc": "2026-10-23T17:23:12.233Z"
+              },
+              {
+                "kind": "render",
+                "pid": 1,
+                "boundary": "encoded-segment-put-acknowledged",
+                "key": "7cdd0796-a51e-442a-aab9-111111111111/segments/a4dd4da530d12aae4ea07d6332053452612566a5171f2e9fc7898dfc965fd1e6.mp4",
+                "bytes": 9893,
+                "sha256": "d91fb2a1c1a407747657e315af783d3fdcd203761500654d1c42b21ff8d99dbb",
+                "width": 1280,
+                "height": 720,
+                "observedAtUtc": "2026-10-23T17:23:12.510Z"
+              }
+            ],
+            "media": {
+              "idempotencyKey": "7cdd0796-a51e-442a-aab9-111111111111:7cdd0796-a51e-442a-aab9-aaaaaaaaaaaa",
+              "requestSha256": "aa37feeb97b1dc7b0311603951ea7d2ad2d58bfe0026467eb8822261810f4364",
+              "providerRequestId": "20d071c1-1cc4-4054-aece-e4feba36f790",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "responseHeld": true,
+              "acceptedAtUtc": "2026-10-23T17:23:12.220Z"
+            },
+            "claimRunTokenHashes": [
+              "a9c67f81bcf0abae92c8a627e731e8bc736a4167289a9f18a2e5e4a4096f1277",
+              "11e13783580a9a7bb66d7e2c5d37feaad8eb518c565bdcecb60a3f5324a0761f",
+              "4e54713d1e664ad779f67a59b0486755dbca15592c622d62661d602edc46d1c9"
+            ],
+            "checks": {
+              "actualDatabaseClaimsAndLiveHeartbeatsObserved": true,
+              "noTerminalDatabaseWritesBeforeProcessKill": true
+            }
+          },
+          "expiry": {
+            "elapsedMs": 59339,
+            "leaseAgeMilliseconds": [
+              60404,
+              61042,
+              61081
+            ],
+            "claimsUnchanged": true,
+            "providerReceiptUnchanged": true
+          },
+          "rowsAfterKillSha256": "dcda978ac6b6039b8eba8e07f9cb18182a0d7aa3afe34ba897bd1c0dccc23006",
+          "redisKeysDiscarded": 16,
+          "redisKeysBeforeRestart": 0,
+          "checks": {
+            "actualWorkerProcessesKilledAtAcknowledgedBoundaries": true,
+            "encodedPrivateRenderSegmentVerifiedBeforeKill": true,
+            "retainedPrivateMediaReadBeforeProcessKill": true,
+            "acceptedMediaResponseLostBeforeWorkerReceipt": true,
+            "naturalDatabaseLeasesExpiredWithoutEdits": true,
+            "killedWorkerRowsPreservedUntilRecovery": true,
+            "freshRedisReconstructionAfterKilledWriters": true
+          }
+        },
+        "physicalCopySha256": "d1c48033752c4615619666e8b9ad01d44f6ec6a7100b63000cde8f1f94aef6d3",
+        "importedPhysicalCopySha256": "d1c48033752c4615619666e8b9ad01d44f6ec6a7100b63000cde8f1f94aef6d3",
+        "applicationStartCallbacks": 1,
+        "startupControlsDenied": 14,
+        "redisKeysBeforeApplicationStart": 0,
+        "reviewedEffectEvidence": {
+          "databasePoint": "0/3006180",
+          "inventoryComplete": true,
+          "effects": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "cde607ce-399f-47cf-8afd-9a5f99580217",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true
+            }
+          ],
+          "receipts": [
+            {
+              "operationId": "history-237b9f2312c50c01",
+              "requestHash": "35218918b0abad2f2ef82d4323c9b411728b18895b6b6acaff6ccf1544fee655",
+              "provider": "synthetic-history-provider",
+              "providerOperationId": "cde607ce-399f-47cf-8afd-9a5f99580217",
+              "status": "CONFIRMED",
+              "acceptedCalls": 1,
+              "submissionAttempts": 1,
+              "jobId": "pitr-uncertain",
+              "happenedAfterPoint": true,
+              "databasePoint": "0/3006180",
+              "disposition": "DO_NOT_REPLAY",
+              "evidenceKind": "PROVIDER_CONFIRMED",
+              "reviewed": true
+            }
+          ]
+        },
+        "boundedFreshRedisApplicationRecoveryVerified": true,
+        "physicalApplicationProject": "omos-compose-verify-57d738ed90d89560-restore",
+        "importedSnapshotSha256": "1fdccf9b92e960b69d158c64daeb987fea033001af5508e2cbf5e33123788236",
+        "queueInventory": {
+          "AIJob": [
+            {
+              "id": "pitr-job",
+              "status": "QUEUED",
+              "requestKey": "queued"
+            },
+            {
+              "id": "pitr-uncertain",
+              "status": "RUNNING",
+              "requestKey": "uncertain"
+            }
+          ],
+          "RenderJob": [
+            {
+              "id": "7cdd0796-a51e-442a-aab9-888888888888",
+              "status": "QUEUED",
+              "requestKey": "7cdd0796-a51e-442a-aab9-888888888888"
+            }
+          ],
+          "MediaGeneration": [
+            {
+              "id": "7cdd0796-a51e-442a-aab9-666666666666",
+              "state": "OUTPUT_READY",
+              "requestKey": "7cdd0796-a51e-442a-aab9-666666666666"
+            },
+            {
+              "id": "7cdd0796-a51e-442a-aab9-aaaaaaaaaaaa",
+              "state": "QUEUED",
+              "requestKey": "7cdd0796-a51e-442a-aab9-aaaaaaaaaaaa"
+            }
+          ],
+          "PublicationAttempt": [],
+          "PublicationSchedule": [],
+          "PublicationIntent": []
+        },
+        "fixtureOnlyReviewedEffectInventory": true,
+        "queuedRenderOrMediaExecutionClaimed": true,
+        "productionRecoveryClaimed": false
+      },
+      "recovery": {
+        "targetRows": 2,
+        "sourceRows": 2,
+        "promotedTimeline": 2
+      },
+      "completedAt": "2026-10-23T17:24:27.952Z"
+    },
+    "restoreInterruption": {
+      "cases": [
+        {
+          "atomic": false,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 39,
+          "visibleTablesAfterInterruption": 39,
+          "rollbackToEmptyTarget": false
+        },
+        {
+          "atomic": true,
+          "reachedNativeCopyBarrier": true,
+          "backendTerminated": true,
+          "restoreExitedNonZero": true,
+          "visibleTablesDuringRestore": 0,
+          "visibleTablesAfterInterruption": 0,
+          "rollbackToEmptyTarget": true
+        }
+      ],
+      "checks": {
+        "nonAtomicInterruptionLeavesPartialState": true,
+        "atomicInterruptionRollsBackSchemaAndData": true,
+        "cleanEmptyTargetPreparedForRetry": true
+      }
+    },
+    "applicationHistoricalBinding": {
+      "checks": {
+        "dedicatedOwnedBucketVersioningEnabled": true,
+        "currentReadsDoNotRepresentHistoricalPoint": true,
+        "restoredApplicationRowsAndExactHistoricalManifestBound": true,
+        "wrongTenantRowFieldKeySnapshotAndIncompleteManifestRejected": true,
+        "wrongCurrentMissingVersionsAndUnreconciledEffectsBlockReadiness": true,
+        "exactHistoricalVersionBytesAndMetadataRecovered": true,
+        "providerConfirmedEffectReviewedWithoutReplay": true,
+        "historicalVersionRemainsPrivate": true,
+        "permanentlyMissingHistoricalVersionRejectsReadiness": true,
+        "otherVersionsAndSavedManifestPreserved": true,
+        "ownedHistoricalBucketAndAllVersionsRemoved": true
+      },
+      "objectsAtHistoricalPoint": 6,
+      "applicationBinding": {
+        "references": 6,
+        "objects": 6
+      },
+      "databaseSnapshotSha256": "a4b209255bcd009b04e917ba095f51b9551a1c6e0aa96982a186399a63f0904c",
+      "syntheticExternalEffects": 1,
+      "acceptedProviderCalls": 1,
+      "providerSubmissionAttempts": 1,
+      "readinessCallbacks": 1,
+      "databasePoint": "logical-sha256:a4b209255bcd009b04e917ba095f51b9551a1c6e0aa96982a186399a63f0904c",
+      "databasePointMeaning": "Logical dump digest binds source/restored application reference inventories; historical copies are created after logical restore. No physical recovery target binding.",
+      "coordinatedRecoveryPointEstablished": false,
+      "physicalPitrCombined": false,
+      "productionRetentionClaimed": false
+    },
+    "completedAt": "2026-10-23T17:25:30.726Z"
+  },
+  "nativePhysicalRecovery": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01F",
+    "verificationMode": "native-physical-base-backup-wal-pitr",
+    "passed": true,
+    "startedAt": "2026-10-23T17:16:44.173Z",
+    "project": "omos-pitr-verify-7e23f675ea7e22de",
+    "checks": {
+      "noNetworkPortsOrPersistentVolumes": true,
+      "actualPhysicalBaseBackupAndNativeManifestVerified": true,
+      "targetTransactionsArchivedAfterBaseBackup": true,
+      "corruptPhysicalBackupRejectedBeforeRecoveryStart": true,
+      "missingWalAndUnreachableTargetRejectReadiness": true,
+      "actualPromotedSqlAdmissionBeforeSnapshot": true,
+      "nativeReplayLsnVerifiedBeforeOptionalPhysicalExport": true,
+      "sameVerifiedBaseBackupCleanRetry": true,
+      "namedTargetRowsRestored": true,
+      "laterInsertAndDeleteNotReplayed": true,
+      "actualWalReplayAndPromotion": true,
+      "restoredClusterAcceptsIndependentWrites": true,
+      "sourceRecordsAndTimelineUnchanged": true,
+      "savedBaseBackupUnchanged": true,
+      "populatedApplicationSchemaPhysicalRecovery": true,
+      "applicationRowsAndColumnDefinitionsMatchTarget": true,
+      "applicationLaterChangesExcluded": true,
+      "applicationSourcePreserved": true,
+      "historicalObjectPrerequisiteBlocksApplicationStart": true,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "application": {
+      "appliedMigrationSqlFiles": 24,
+      "migrationHashes": [
+        {
+          "name": "202609190001_foundation",
+          "sha256": "e1df375de317a10e58c9612e7f413fdf1417c251cdb59bf4f994339fb022d5ac"
+        },
+        {
+          "name": "202609190002_brand",
+          "sha256": "59263a63fd816511df2f21d49dc7bbe81fa097e8ccf05ee6ba0c8c74793063d1"
+        },
+        {
+          "name": "202609190003_ai",
+          "sha256": "ca00a49584c9ed9698b555b89668811aacb7f91d645570c832b64b97d51b9562"
+        },
+        {
+          "name": "202609190004_content",
+          "sha256": "fb2574eafd1429417f9838cac1d90f7e1a0934c5473a9e5e1bacd7e20f658cb2"
+        },
+        {
+          "name": "202609190005_media",
+          "sha256": "4b3417a6d8a35a11474ce322ce0a6c17588b9e370d51ca58a99c0bf11d8ffa29"
+        },
+        {
+          "name": "202609190006_recovery",
+          "sha256": "06b76ff52c53faeb358e450647a22493f2ff7e61889d96b0b034ce4db2ae0721"
+        },
+        {
+          "name": "202609200001_credits",
+          "sha256": "cb18497b039f561a212eb7b9eaed33bf3413c60388aa894d38056841c3aaf75c"
+        },
+        {
+          "name": "202609270001_billing_entitlements",
+          "sha256": "98cbf52b459e585e1a8cca4927b65cec359733736bb4e293f299091c0fff50eb"
+        },
+        {
+          "name": "202609280001_billing_invoices",
+          "sha256": "5832ef13abbbe27a0e4122f000dba8ccb7be4e1aed0caeea677ada82c210ada4"
+        },
+        {
+          "name": "202609290001_model_routing",
+          "sha256": "218d07143e61ab8ae648e2f601a1b532e0b180e626b996be872b32bd8fbc5090"
+        },
+        {
+          "name": "202609290002_agent_orchestration",
+          "sha256": "1a463dcdd0ae544177e933fa238791a4bad4efaffa954e0394b26fc2c3f93a4f"
+        },
+        {
+          "name": "202610010001_generated_media",
+          "sha256": "bdd4625ab546e3e7b735afde07996dea577f82c39a1280c7a6e3a5379c0a584a"
+        },
+        {
+          "name": "202610090001_publication_preparation",
+          "sha256": "8d73da0dbc9eb7e747bab60e745d5553bab769742bb679e598e434218058758a"
+        },
+        {
+          "name": "202610090002_social_attempt_ledger",
+          "sha256": "8df06f4ac5bac9bfa105bf9403cb6fd0d369f33e1811fdf974373782351f4bc0"
+        },
+        {
+          "name": "202610100001_youtube_oauth_refresh_expiry",
+          "sha256": "d5e0df5497bef9f8076b2ff2d727f660293a2d16097049d5f6925c1aafae7749"
+        },
+        {
+          "name": "202610100002_social_refresh_boundary",
+          "sha256": "d8df3979d13a1328544c6471f2f490857b6f46ebacaaa1192a26352bb6a5af6a"
+        },
+        {
+          "name": "202610100003_youtube_policy_review",
+          "sha256": "37d79959e219993d4b47e995f060dccc832e8933fdc60acb3b15c0f6155d100f"
+        },
+        {
+          "name": "202610100004_youtube_upload_session",
+          "sha256": "5d372adcbcfd2cdb983f74c5de7cab26be26161810c8b41d9f6284088f5f19b9"
+        },
+        {
+          "name": "202610120001_publication_schedule",
+          "sha256": "35df844ed531ea65fbdb59768b7fd806b6fdd31d3d043cc8432dcaeb8d571f00"
+        },
+        {
+          "name": "202610120002_posting_guidance",
+          "sha256": "a014495027f906f7be966356bd2ad6b8c84be17a9053143099f546e5130ffd88"
+        },
+        {
+          "name": "202610140001_content_claim_review",
+          "sha256": "e92478f7e997acc195336112fdf45ef4f00cc31511c7b94d9e30351b9b6c3515"
+        },
+        {
+          "name": "202610170001_workspace_youtube_policy",
+          "sha256": "05fd01d70a56652a77cbde3fd1718ab960ef11c02a71c218793655fc81725121"
+        },
+        {
+          "name": "202610180001_research_evidence",
+          "sha256": "c7a550b30423b6e4ad8b58be4b275bdc3ae1fb3a8c2f0270d3896f59904697a5"
+        },
+        {
+          "name": "202610180002_research_insight",
+          "sha256": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57"
+        }
+      ],
+      "prismaDeployClaimed": false,
+      "tablesCompared": 37,
+      "populatedTables": 11,
+      "rowsCompared": 19,
+      "crossStoreAcceptance": false,
+      "missingHistoricalObjectsBlockedStartup": true,
+      "restoredConstraintsAndRevisionPredicates": true,
+      "httpAuthorizationClaimed": false
+    },
+    "baseBackup": {
+      "manifestSha256": "36ef09cb31a910107d584a7e5537e8882ed5bfda490303586fb55a5585d35c45",
+      "files": 1196
+    },
+    "archivedWal": {
+      "targetSegment": "000000010000000000000003",
+      "targetLsn": "0/3006028",
+      "sha256": "b352f18d35ef17b22723291e646b7ca55c6ef85bb15aee084958455b1af7a194"
+    },
+    "failureCases": [
+      {
+        "kind": "missing-wal",
+        "startupSupervisor": "foreground-postgres-with-timeout",
+        "nativeExitCode": 1,
+        "nativeTargetNotReachedFatal": true,
+        "recoveryStartExitedNonZero": true,
+        "sqlConnectionsRejected": true,
+        "sourceUnchanged": true
+      },
+      {
+        "kind": "unreachable",
+        "startupSupervisor": "foreground-postgres-with-timeout",
+        "nativeExitCode": 1,
+        "nativeTargetNotReachedFatal": true,
+        "recoveryStartExitedNonZero": true,
+        "sqlConnectionsRejected": true,
+        "sourceUnchanged": true
+      }
+    ],
+    "nativeStartExitCodes": {
+      "missing-wal": 1,
+      "unreachable": 1,
+      "retry": 0
+    },
+    "nativeStartOutputs": {
+      "missing-wal": "\nOMOS_NATIVE_START_EXIT=1\n",
+      "unreachable": "\nOMOS_NATIVE_START_EXIT=1\n",
+      "retry": "waiting for server to start.... done\nserver started\n\nOMOS_NATIVE_START_EXIT=0\n"
+    },
+    "sqlReadiness": {
+      "attempts": 1,
+      "sqlAcceptedAndPromoted": true
+    },
+    "recovery": {
+      "targetRows": 2,
+      "sourceRows": 2,
+      "promotedTimeline": 2
+    },
+    "completedAt": "2026-10-23T17:16:52.683Z"
+  },
+  "nativePrismaUpgrade": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01B",
+    "verificationMode": "native-populated-prisma-upgrade-and-migration-recovery",
+    "passed": true,
+    "startedAt": "2026-10-23T17:16:13.867Z",
+    "project": "omos-upgrade-verify-89d168073954eae7",
+    "boundaries": [
+      {
+        "appliedMigrations": 4,
+        "legacyTables": 5,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 7,
+        "legacyTables": 7,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 23,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      },
+      {
+        "appliedMigrations": 24,
+        "legacyTables": 8,
+        "rowValuesPreserved": true,
+        "prismaChecksumsVerified": true
+      }
+    ],
+    "cases": [
+      {
+        "transaction": "Prisma-default-batch",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      },
+      {
+        "transaction": "explicit-BEGIN-COMMIT",
+        "actualBackendTerminated": true,
+        "visibleProbeTablesDuringPause": 0,
+        "visibleProbeTablesAfterTermination": 0,
+        "failedMigrationRecorded": true,
+        "ordinaryRetryBlockedP3009": true,
+        "rolledBackAttemptRetained": true,
+        "unchangedSqlRetrySucceeded": true,
+        "legacyDataAndHistoryPreserved": true,
+        "immutableLedgerEnforced": true
+      }
+    ],
+    "checks": {
+      "populatedNativePrismaUpgrade": true,
+      "legacyQueuedJobAndNullDefaults": true,
+      "immutableLedgerEnforced": true,
+      "actualInterruptedMigration": true,
+      "failedLedgerRetryGate": true,
+      "explicitResolveAndUnchangedSqlRetry": true,
+      "sourceDatabaseUnchanged": true,
+      "noDotenvLoaded": true,
+      "ownedContainerAndNetworkRemoved": true,
+      "realEnvUnchanged": true,
+      "protectedHashesUnchanged": true
+    },
+    "liveProvidersCalled": false,
+    "publicDeployment": false,
+    "prismaVersion": "6.19.3",
+    "postgresVersion": "postgres (PostgreSQL) 17.11",
+    "protectedFileCount": 25,
+    "finishedAt": "2026-10-23T17:16:43.975Z"
+  },
+  "artifacts": [
+    {
+      "id": 12527970612,
+      "name": "browser-evidence",
+      "size_in_bytes": 13479446,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12527970612",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12527970612/zip",
+      "expired": false,
+      "created_at": "2026-10-23T19:44:54Z",
+      "expires_at": "2027-01-21T19:27:57Z",
+      "updated_at": "2026-10-23T19:44:54Z",
+      "digest": "sha256:c36c96e19c04a56cac4171624cb8a60c4a733e59485673d50ac06a347cc56907",
+      "workflow_run": {
+        "id": 39993615176,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "c7d66099a74a97b085f77a58bcfe14e99f29503e"
+      }
+    },
+    {
+      "id": 12519665118,
+      "name": "native-upgrade-evidence",
+      "size_in_bytes": 922,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12519665118",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12519665118/zip",
+      "expired": false,
+      "created_at": "2026-10-23T17:16:54Z",
+      "expires_at": "2027-01-21T17:15:43Z",
+      "updated_at": "2026-10-23T17:16:54Z",
+      "digest": "sha256:369362dd7ef3a9a57eabcb9b675060c6cd9b25fea8c769fce466fcea39405a31",
+      "workflow_run": {
+        "id": 39993615176,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "c7d66099a74a97b085f77a58bcfe14e99f29503e"
+      }
+    },
+    {
+      "id": 12519431016,
+      "name": "postgres-pitr-evidence",
+      "size_in_bytes": 2832,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12519431016",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12519431016/zip",
+      "expired": false,
+      "created_at": "2026-10-23T17:16:53Z",
+      "expires_at": "2027-01-21T17:15:43Z",
+      "updated_at": "2026-10-23T17:16:53Z",
+      "digest": "sha256:6348862028bdbccabef1819bbb5d79737e99c2f09c7c5c8cfe934cfdab57f4e3",
+      "workflow_run": {
+        "id": 39993615176,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "c7d66099a74a97b085f77a58bcfe14e99f29503e"
+      }
+    },
+    {
+      "id": 12518708816,
+      "name": "compose-evidence",
+      "size_in_bytes": 13707,
+      "url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12518708816",
+      "archive_download_url": "https://api.github.com/repos/shlokagrawal13/organic-marketing-os/actions/artifacts/12518708816/zip",
+      "expired": false,
+      "created_at": "2026-10-23T17:25:31Z",
+      "expires_at": "2027-01-21T17:15:43Z",
+      "updated_at": "2026-10-23T17:25:31Z",
+      "digest": "sha256:d6c60f9713a1783a864dd55059b0289efd5c654a431d2bdcc0e8c59978b39897",
+      "workflow_run": {
+        "id": 39993615176,
+        "repository_id": 1389748509,
+        "head_repository_id": 1389748509,
+        "head_branch": "main",
+        "head_sha": "c7d66099a74a97b085f77a58bcfe14e99f29503e"
+      }
+    }
+  ],
+  "artifactByteProof": [
+    {
+      "name": "browser-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 153,
+      "uniqueUnitReceipts": 364
+    },
+    {
+      "name": "native-upgrade-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 1,
+      "payloadMatchesDecodedJobReport": true
+    },
+    {
+      "name": "postgres-pitr-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 1,
+      "payloadMatchesDecodedJobReport": true
+    },
+    {
+      "name": "compose-evidence",
+      "sha256Matched": true,
+      "zipCrcPassed": true,
+      "entries": 1,
+      "payloadMatchesDecodedJobReport": true
+    }
+  ],
+  "readability": {
+    "schemaVersion": 1,
+    "scope": "Synthetic short English text on black, rescaled decoded frames; not physical-device, platform UI, all-content or multilingual acceptance.",
+    "expected": "clear video title read every caption",
+    "passed": true,
+    "expectedSamples": 36,
+    "exports": 18,
+    "samples": [
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-9-16-720-320.png",
+        "sha256": "8233f15e7e46b7a19e2565138353f4b061ae2204a4e49b7496dd3054c381f769",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-9-16-720-390.png",
+        "sha256": "93b5ce5fdd500e9de586ceabc8c57bbeebb994a415d7dfc9635512d4599db150",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-9-16-1080-320.png",
+        "sha256": "2dd193cd21a213aa25d5c66e4703ed32a06c6c8bd106687879066533e3971000",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-9-16-1080-390.png",
+        "sha256": "adab448b82517e24bf8e7a7aeef3add4581d754f5a7a28729a5f71664e29def1",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "standard-16-9-720-568.png",
+        "sha256": "3b5f7219ae4312d144acdae7e2a74dab7401f433f961a779d05d5b088fde0c68",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "standard-16-9-720-844.png",
+        "sha256": "9e68171b062c2692b19bd30f01aff37ad9865bb009159f4a2b79ecd7f154c26d",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "standard-16-9-1080-568.png",
+        "sha256": "4a0cabc9dd3af4ec1df483e8fd5ef2d916cd3306a10970ca8922dedca68aa009",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "standard-16-9-1080-844.png",
+        "sha256": "25c5466a62f474406e19443108d04fcff0f296ac7c5f50b083ec802fe09ca98b",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-1-1-720-320.png",
+        "sha256": "473c7cf32263689b1b40dc3956364cfc279e2cfcef6a3fcf900686fed7d33699",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-1-1-720-390.png",
+        "sha256": "202289d7ccdf5266ce84681eb75eaf8471985c35a56a577cd05c2f92db3a8f87",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "standard-1-1-1080-320.png",
+        "sha256": "0066cc9465713b45b884be0ad3ead69e80522ed19ff3d2ba24bb43c21ffec36e",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "standard",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "standard-1-1-1080-390.png",
+        "sha256": "96df5d0b85a5db4db665f38f34f53bd40f65a564e8448bf7b1fad87496423eff",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-9-16-720-320.png",
+        "sha256": "5a48e709afcbcbb23b8b556ca7fe13987f6abd6e467daab269807e99709a2f38",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-9-16-720-390.png",
+        "sha256": "0270419360ea9a580e0d9f37268b0b2bbac32291dae855fa10dc6f84198e82bc",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-9-16-1080-320.png",
+        "sha256": "9f4b5eff0967b4bdc462411a36ce501edcaae8db9480b11acc55918c2eb14c15",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-9-16-1080-390.png",
+        "sha256": "a33899aebb14382387d673b1c3961af4a1ebbe6df56e5390bed71af5d9b58ab6",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "inset-v1-16-9-720-568.png",
+        "sha256": "add2f7525bb4c25f2a7890dbe48141b6f7193dfb3816878720aa1dd14caab79c",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "inset-v1-16-9-720-844.png",
+        "sha256": "7c60061ce2000d48ec78fea9680c3b58b93d7b9e781a5c3d8629ced08e6f801a",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "inset-v1-16-9-1080-568.png",
+        "sha256": "62c5244291daeea2441e422dddae5f559a21bd800a4b74e6da1c8d095e674df4",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "inset-v1-16-9-1080-844.png",
+        "sha256": "d52e6288abb8bb1e8802c4fb6d0e984077a059c2966ef901705b4ec88a21ecd0",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-1-1-720-320.png",
+        "sha256": "fbab19c28f67f42edea506de10bea97ae27af6a3706db45184319fadce64a472",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-1-1-720-390.png",
+        "sha256": "2f545222f854c56e6e53b768353646ce765ba32c085059121e9fc6a073a779bc",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "inset-v1-1-1-1080-320.png",
+        "sha256": "07d4aebe367abc247706296a7acaac211322967354f59afa37583d7ebed03815",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "inset-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "inset-v1-1-1-1080-390.png",
+        "sha256": "3bba0a48ab7acc41ea3f48b913b300c6589bdb2e294338b4b8c1b3176a6cc6e1",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-720-320.png",
+        "sha256": "cfb1ac0260f103dbdecede78c7442f9e2df5839de35d370607d8e8fd65779eea",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "720",
+        "width": 720,
+        "height": 1280,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-720-390.png",
+        "sha256": "3dfbc7ce3a1af9fa7c54e5e3863489d8d68295ea85b175053c9a05a5d01eaa7a",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-1080-320.png",
+        "sha256": "2cde407d9b4b045f63598f57df32b22dbcfca6efa13ce93978da0154b2a746c1",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "9:16",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1920,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-9-16-1080-390.png",
+        "sha256": "343dca8748fa7e6dbe8f3e0dd31ca37f7db23a89c59436ec3bd40053fc9e7317",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-720-568.png",
+        "sha256": "492a2c86258d1635e5361b8951ec2c0f1b5ef8d61ed466731b8e82c0c9997081",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "720",
+        "width": 1280,
+        "height": 720,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-720-844.png",
+        "sha256": "920fd1e4fb5b8ba5b1274f99f723c137dec36d45c8e822e466808fca6acf6489",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 568,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-1080-568.png",
+        "sha256": "9f9bb94b8e7035c06643f72df754297e06aa3125761f94a442e96ded2bd585bc",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "16:9",
+        "resolution": "1080",
+        "width": 1920,
+        "height": 1080,
+        "displayWidth": 844,
+        "time": 0.5,
+        "file": "device-safe-v1-16-9-1080-844.png",
+        "sha256": "f13b96f7f37afb5428951eed34c8f12874091ad24cbab610ef1d7306d567a6bb",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-720-320.png",
+        "sha256": "e2f17c2a29ad10239dc4a8da7afcbbd7aba8b763ba9462fc45044b1cefee1e6b",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "720",
+        "width": 720,
+        "height": 720,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-720-390.png",
+        "sha256": "22c650af246ee27ba87dfd99a08b036832d9b7a3dc5e7db13c0721214598c62e",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 320,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-1080-320.png",
+        "sha256": "a9bf3785e8cb180e1479151ddc70314a5237cb476c019dc8d596e1d3b2b63c56",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      },
+      {
+        "placement": "device-safe-v1",
+        "aspect": "1:1",
+        "resolution": "1080",
+        "width": 1080,
+        "height": 1080,
+        "displayWidth": 390,
+        "time": 0.5,
+        "file": "device-safe-v1-1-1-1080-390.png",
+        "sha256": "85f24666eaa6e1012afe009a465e72745cd6fc1bfd3df21a915e84c4d27bbec3",
+        "recognized": "clear video title read every caption",
+        "passed": true
+      }
+    ],
+    "negativeControlPassed": true,
+    "busy": {
+      "scope": "Fixed 720p synthetic high-detail portrait asset; OCR on reviewed 320px title/caption regions for Extra margins and Device safe. Not physical-device or arbitrary content acceptance.",
+      "expectedSamples": 8,
+      "exports": 2,
+      "samples": [
+        {
+          "placement": "extra-margins",
+          "scene": "short",
+          "area": "title",
+          "file": "busy-extra-margins-short-title.png",
+          "frameSha256": "e8d542771fa7e834d0e9804c37f1199a547630e05e9eb7400ae15b3431a13d2a",
+          "sha256": "9d8ade022e490efbccfb169ae04f1959019d91f82ad9ce59acae2073161eaf18",
+          "expected": "clear video title",
+          "recognized": "clear video title",
+          "passed": true
+        },
+        {
+          "placement": "extra-margins",
+          "scene": "short",
+          "area": "caption",
+          "file": "busy-extra-margins-short-caption.png",
+          "frameSha256": "e8d542771fa7e834d0e9804c37f1199a547630e05e9eb7400ae15b3431a13d2a",
+          "sha256": "8f51bff82b5469cf01a27d04893bd2373ed839e8a2209cf8d3af9561b5561c5c",
+          "expected": "read every caption",
+          "recognized": "read every caption",
+          "passed": true
+        },
+        {
+          "placement": "extra-margins",
+          "scene": "long",
+          "area": "title",
+          "file": "busy-extra-margins-long-title.png",
+          "frameSha256": "835dbdab9e86110d6df402706db907e6f9ac43bf3464bc0aa938aac16094c8d8",
+          "sha256": "e6d313ec8a87fd6e9153e16e8621174afaf5486961510c858f538b48b7b1880c",
+          "expected": "plan your next campaign with clear goals",
+          "recognized": "plan your next campaign with clear goals",
+          "passed": true
+        },
+        {
+          "placement": "extra-margins",
+          "scene": "long",
+          "area": "caption",
+          "file": "busy-extra-margins-long-caption.png",
+          "frameSha256": "835dbdab9e86110d6df402706db907e6f9ac43bf3464bc0aa938aac16094c8d8",
+          "sha256": "c87e7923ac8ae1408b282fe717773fd9e81d69bd5fd07ae41d372e5fe55f131a",
+          "expected": "keep the key message easy to read on small screens",
+          "recognized": "keep the key message easy to read on small screens",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "short",
+          "area": "title",
+          "file": "busy-device-safe-short-title.png",
+          "frameSha256": "5a2f0507e40718e1269d7c7f96d865b28b51fe824063a221d7ca27ee2d410411",
+          "sha256": "326ec4ed327a633231bd79816514a8d0da36395b0ead2f4548df455c677eddfa",
+          "expected": "clear video title",
+          "recognized": "clear video title",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "short",
+          "area": "caption",
+          "file": "busy-device-safe-short-caption.png",
+          "frameSha256": "5a2f0507e40718e1269d7c7f96d865b28b51fe824063a221d7ca27ee2d410411",
+          "sha256": "797ae6cd2838a6396a19a537ed110c84eb628b7cfc20b3bec0e5c84c972714eb",
+          "expected": "read every caption",
+          "recognized": "read every caption",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "long",
+          "area": "title",
+          "file": "busy-device-safe-long-title.png",
+          "frameSha256": "32d87a65c0b2d32b699fd118441c0aafee5f0f6c3a66279bf3083d5ef8e42a95",
+          "sha256": "537ad4e59c656f01e2c83702feda98c74152aecbf8ab43dd1593641fa69f810b",
+          "expected": "plan your next campaign with clear goals",
+          "recognized": "plan your next campaign with clear goals",
+          "passed": true
+        },
+        {
+          "placement": "device-safe",
+          "scene": "long",
+          "area": "caption",
+          "file": "busy-device-safe-long-caption.png",
+          "frameSha256": "32d87a65c0b2d32b699fd118441c0aafee5f0f6c3a66279bf3083d5ef8e42a95",
+          "sha256": "1c0a2082659f84acadceba9f2b8502de612318a77a9daaa2f0f642aa897f85c3",
+          "expected": "keep the key message easy to read on small screens",
+          "recognized": "keep the key message easy to read on small screens",
+          "passed": true
+        }
+      ],
+      "backgroundSha256": "ac8454483163a3bb10b23b8e689a03db139f830b4f51cdb0294fe111073e6f93"
+    },
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "tesseract": "tesseract 5.3.4",
+    "fontSha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280"
+  },
+  "decodedJobLogSha256": {
+    "core": "adc475017770b0d9701f343b43b14f93f8a9b774e57f4199e02b6d1c20012218",
+    "compose": "0c7e40636b51cfbec91322b7f184f0c7178c1ea060bfd7bb181b145284084970",
+    "native": "644f40b398ebd702f48397183289d4a2d892670a9637b93df1b140a41e2d6434"
+  },
+  "changedPaths": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PHYSICAL_WORKER_INTERRUPTION.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/qa/github-publication.json",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/recovery01l-evidence.json",
+    "docs/qa/recovery01l-final-ci-receipt.json",
+    "docs/qa/recovery01m-evidence.json",
+    "docs/qa/recovery01m-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "scripts/application-pitr-fixture.mjs",
+    "scripts/compose-recovery-provider.mjs",
+    "scripts/physical-application-fixture.mjs",
+    "scripts/physical-media-fixture.mjs",
+    "scripts/physical-media-review.mjs",
+    "scripts/physical-worker-barrier.cjs",
+    "scripts/physical-worker-interruption.mjs",
+    "scripts/verification-lifecycle.mjs",
+    "scripts/verify-compose.mjs",
+    "tests/application-snapshot.test.ts",
+    "tests/physical-media-review.test.ts",
+    "tests/physical-worker-barrier.test.ts",
+    "tests/verification-lifecycle.test.ts"
+  ],
+  "nextTask": "RECOVERY-01N genuine in-flight claim and provider-effect capture across a physical target",
+  "remainingOpenTracks": 21,
+  "limits": [
+    "CI verifies fixtures and does not deploy.",
+    "Bounded physical application/private bucket/fresh Redis AI recovery is verified; Populated physical render/media fixture verified; physical publication, real-provider and production acceptance remain open.",
+    "Production retention/durability/backup operations and real-provider, deployed/live/full-master acceptance remain open.",
+    "Actual process kills/provider acceptance occur after importing a physical target with queued jobs. A physical point containing genuine in-flight claims and provider effects across that point remain next RECOVERY-01N.",
+    "The render barrier is after actual FFmpeg encode/private segment PUT and before cache/terminal writes; every possible kill timing, Redis durability/lock races and orphan retention remain open.",
+    "Local final17 selected phases and preceding I/J/K/L checks used inspected unchanged predecessor application/build and pinned MinIO images; no fresh local rebuild is claimed. The intentionally interrupted serial-query diagnostic and missing-updatedAt fixture failure are preserved separately. Exact final CI ran all21 phases from fresh source.",
+    "The source capsule records own CI pending at creation; this exact final receipt closes that status and must accompany the portable source ZIP. All twenty predecessor Compose phases/assertions remain required."
+  ],
+  "runAttempt": 2,
+  "priorAttempt": {
+    "attempt": 1,
+    "coreJobId": 120551345880,
+    "conclusion": "cancelled",
+    "jobLimitMinutes": 25,
+    "mediaDependencyInstallSeconds": 1427,
+    "buildSeconds": 17,
+    "unitRunSecondsBeforeCancellation": 24,
+    "observation": "GitHub cancelled core at its 25-minute job limit after Ubuntu package downloads consumed 23m47s; no unit test result was claimed from attempt 1.",
+    "sameCommitRerun": true
+  },
+  "successfulCoreAttempt": {
+    "attempt": 2,
+    "jobId": 120613143509,
+    "mediaDependencyInstallSeconds": 22,
+    "unitRunSeconds": 441,
+    "nativeApplicationFlowsSeconds": 467
+  },
+  "sourcePackage": {
+    "archive": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01m-source.zip",
+    "files": 620,
+    "bytes": 16014586,
+    "sha256": "1ddb33272e61983407f286f373e9eba62491066f8fe84d3140721322e23d8bb7",
+    "zipCrcPassed": true,
+    "allFilesMatchPublishedWorkspace": true,
+    "runtimeDataAndCredentialsExcluded": true
+  },
+  "artifactAccess": {
+    "normalDownloadRouteOnly": true,
+    "allFourArtifactBytesVerified": true,
+    "downloads": [
+      {
+        "status": "fulfilled",
+        "value": {
+          "name": "browser-evidence",
+          "artifactId": 12527970612,
+          "status": 200,
+          "bytes": 13479446,
+          "sha256": "c36c96e19c04a56cac4171624cb8a60c4a733e59485673d50ac06a347cc56907",
+          "sha256Matched": true
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "name": "native-upgrade-evidence",
+          "artifactId": 12519665118,
+          "status": 200,
+          "bytes": 922,
+          "sha256": "369362dd7ef3a9a57eabcb9b675060c6cd9b25fea8c769fce466fcea39405a31",
+          "sha256Matched": true
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "name": "postgres-pitr-evidence",
+          "artifactId": 12519431016,
+          "status": 200,
+          "bytes": 2832,
+          "sha256": "6348862028bdbccabef1819bbb5d79737e99c2f09c7c5c8cfe934cfdab57f4e3",
+          "sha256Matched": true
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "name": "compose-evidence",
+          "artifactId": 12518708816,
+          "status": 200,
+          "bytes": 13707,
+          "sha256": "d6c60f9713a1783a864dd55059b0289efd5c654a431d2bdcc0e8c59978b39897",
+          "sha256Matched": true
+        }
+      }
+    ]
+  },
+  "localChecks": {
+    "focusedUnit": {
+      "passed": 71,
+      "newCases": 21,
+      "report": "docs/qa/recovery01m-unit-receipts.json",
+      "sha256": "00da76bc6ae612d2d84556bc06614062176d6834499fddd3195936dce6d9e9dd",
+      "logSha256": "0ea522ac9cfe9b6b1bb2f8fb8e3ff6edb18304a5791e5eeafc753dd82e2df9bb"
+    },
+    "compose": {
+      "passed": true,
+      "selectedPhases": 17,
+      "sourceFullPhases": 21,
+      "mode": "diagnostic-focused17-after-seed-fix-inspected-predecessor-images",
+      "applicationImage": "omos-compose-verify-recovery01l-runtime",
+      "applicationImageId": "sha256:7353ae393d7ae589c37217890d19d2ef4acc8aacbc999407ae54cf224aa03919",
+      "buildImage": "omos-compose-verify-recovery01l-build",
+      "minioImage": "omos-compose-verify-9f07e8881f75f3fd-storage",
+      "imageScope": "Inspected unchanged predecessor application/build and pinned MinIO images; no fresh local image build is claimed. Current harness/provider/barriers injected from source; full21 fresh-source CI required.",
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "reportSha256": "17b9eaa223fb95a3bc6be8e26dac971837f8165de6b2ef2d0c8269645bf8290c",
+      "logSha256": "1512a3b67dc54de66e64ecc97f7e23582d6b626b4de6db812b08b6d1a80e61ff"
+    },
+    "physicalProcess": {
+      "rows": 30,
+      "tables": 37,
+      "populatedTables": 14,
+      "reviewVersion": 3,
+      "bound": {
+        "references": 3,
+        "objects": 3
+      },
+      "deniedControls": 14,
+      "objectFaults": [
+        {
+          "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+          "fault": "missing",
+          "startCallbacks": 0,
+          "redisKeys": 0,
+          "applicationSnapshotUnchanged": true
+        },
+        {
+          "key": "7cdd0796-a51e-442a-aab9-111111111111/physical-valid.png",
+          "fault": "corrupt",
+          "startCallbacks": 0,
+          "redisKeys": 0,
+          "applicationSnapshotUnchanged": true
+        },
+        {
+          "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+          "fault": "missing",
+          "startCallbacks": 0,
+          "redisKeys": 0,
+          "applicationSnapshotUnchanged": true
+        },
+        {
+          "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+          "fault": "corrupt",
+          "startCallbacks": 0,
+          "redisKeys": 0,
+          "applicationSnapshotUnchanged": true
+        }
+      ],
+      "processInterruption": {
+        "containers": [
+          {
+            "kind": "render",
+            "id": "fa7be31fe5dc6d123ec861b31b24232d8150be11f8d4421168c070b554d97939",
+            "pidBeforeKill": 61046,
+            "entrypoint": "node",
+            "exitCode": 137,
+            "restartCount": 0,
+            "finishedAt": "2026-10-23T17:08:44.841682151Z"
+          },
+          {
+            "kind": "media",
+            "id": "8e0cc0f0349126996c01662de2ecf4755306982cc64e0c009d28f93cf00f5416",
+            "pidBeforeKill": 61244,
+            "entrypoint": "node",
+            "exitCode": 137,
+            "restartCount": 0,
+            "finishedAt": "2026-10-23T17:08:45.346731593Z"
+          }
+        ],
+        "barrier": {
+          "barriers": [
+            {
+              "kind": "media",
+              "pid": 1,
+              "boundary": "retained-output-read-before-ingest",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png",
+              "bytes": 1635,
+              "sha256": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "observedAtUtc": "2026-10-23T17:08:38.577Z"
+            },
+            {
+              "kind": "render",
+              "pid": 1,
+              "boundary": "encoded-segment-put-acknowledged",
+              "key": "7cdd0796-a51e-442a-aab9-111111111111/segments/a4dd4da530d12aae4ea07d6332053452612566a5171f2e9fc7898dfc965fd1e6.mp4",
+              "bytes": 9893,
+              "sha256": "d91fb2a1c1a407747657e315af783d3fdcd203761500654d1c42b21ff8d99dbb",
+              "width": 1280,
+              "height": 720,
+              "observedAtUtc": "2026-10-23T17:08:42.407Z"
+            }
+          ],
+          "media": {
+            "idempotencyKey": "7cdd0796-a51e-442a-aab9-111111111111:7cdd0796-a51e-442a-aab9-aaaaaaaaaaaa",
+            "requestSha256": "aa37feeb97b1dc7b0311603951ea7d2ad2d58bfe0026467eb8822261810f4364",
+            "providerRequestId": "ca3f3e99-7249-4d79-ae5e-b8571e041a8f",
+            "acceptedCalls": 1,
+            "submissionAttempts": 1,
+            "responseHeld": true,
+            "acceptedAtUtc": "2026-10-23T17:08:38.648Z"
+          },
+          "claimRunTokenHashes": [
+            "44478e346626cb46fceeaf394fe7f7c12dc998fcc6bad34f5e538121b1fac5a7",
+            "674cc5fe7e73b120a68d04f400b51161cc1d76df61925167a12c79a02832a44a",
+            "3aba75e7dc8fbac14de42f9ce1d21e6168d3a28578c2704a5d21cdfac45cc621"
+          ],
+          "checks": {
+            "actualDatabaseClaimsAndLiveHeartbeatsObserved": true,
+            "noTerminalDatabaseWritesBeforeProcessKill": true
+          }
+        },
+        "expiry": {
+          "elapsedMs": 55910,
+          "leaseAgeMilliseconds": [
+            60914,
+            60857,
+            60730
+          ],
+          "claimsUnchanged": true,
+          "providerReceiptUnchanged": true
+        },
+        "rowsAfterKillSha256": "a760adb59a49ed2e8861d575253438b65adfe75a3c915dd1eea573d42198fe11",
+        "redisKeysDiscarded": 16,
+        "redisKeysBeforeRestart": 0,
+        "checks": {
+          "actualWorkerProcessesKilledAtAcknowledgedBoundaries": true,
+          "encodedPrivateRenderSegmentVerifiedBeforeKill": true,
+          "retainedPrivateMediaReadBeforeProcessKill": true,
+          "acceptedMediaResponseLostBeforeWorkerReceipt": true,
+          "naturalDatabaseLeasesExpiredWithoutEdits": true,
+          "killedWorkerRowsPreservedUntilRecovery": true,
+          "freshRedisReconstructionAfterKilledWriters": true
+        }
+      },
+      "outputHashes": {
+        "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+        "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+        "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+        "7cdd0796-a51e-442a-aab9-111111111111/renders/7ca704d9-9a88-4e52-8505-40a61613a1f1/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+        "7cdd0796-a51e-442a-aab9-111111111111/renders/7ca704d9-9a88-4e52-8505-40a61613a1f1/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+        "7cdd0796-a51e-442a-aab9-111111111111/renders/7ca704d9-9a88-4e52-8505-40a61613a1f1/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+        "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+      },
+      "checks": {
+        "capturedBeforePhysicalTarget": true,
+        "exactRecoveredApplicationSnapshotBound": true,
+        "wrongPointBaseManifestAndInventoryRejected": true,
+        "historicalBytesRemainReadableAfterLaterOverwriteAndDeleteMarker": true,
+        "currentAndMissingVersionsDenyReadiness": true,
+        "anonymousHistoricalReadDenied": true,
+        "permanentlyLostVersionDeniesReadiness": true,
+        "savedManifestAndLaterVersionPreserved": true,
+        "restoredHttpAuthentication": true,
+        "historicalMediaServedByActualApi": true,
+        "anonymousAndCrossTenantMediaDenied": true,
+        "restoredClientRoleDeniedWrite": true,
+        "restoredRevisionConflictAndApprovalInvalidation": true,
+        "laterDatabaseChangesExcluded": true,
+        "physicallyRecoveredQueuedJobReconstructed": true,
+        "postTargetEffectNotReplayed": true,
+        "uncertainJobFailedForReview": true,
+        "oneCreditSettlementAndOriginalLedgerPreserved": true,
+        "restoredLedgerImmutable": true,
+        "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+        "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+        "physicalAmbiguousMediaCreditsHeldForReview": true,
+        "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+        "physicalValidImagesDecoded": true,
+        "physicalRenderQueueCompleted": true,
+        "physicalRetainedMediaIngestedWithoutSubmission": true,
+        "physicalOutputDimensionsDurationAndDecodePassed": true,
+        "physicalNewOutputsPrivateAndTenantScoped": true,
+        "physicalMediaReservationsSettledOnce": true,
+        "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+        "physicalInterruptedRenderPreservedAfterRetry": true,
+        "physicalMediaRowsQueuesAndBytesStableAfterRestart": true,
+        "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+        "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+        "physicalRenderRetryPreservedFrozenInputs": true,
+        "actualWorkerProcessesKilledAtAcknowledgedBoundaries": true,
+        "encodedPrivateRenderSegmentVerifiedBeforeKill": true,
+        "retainedPrivateMediaReadBeforeProcessKill": true,
+        "acceptedMediaResponseLostBeforeWorkerReceipt": true,
+        "naturalDatabaseLeasesExpiredWithoutEdits": true,
+        "killedWorkerRowsPreservedUntilRecovery": true,
+        "freshRedisReconstructionAfterKilledWriters": true,
+        "physicalMissingAndCorruptMediaDenyWriters": true,
+        "physicalMediaFaultsPreserveDatabaseAndEmptyRedis": true,
+        "physicalMediaFaultsRepairedFromVerifiedHistoricalBytes": true,
+        "sevenInvalidStartupPrerequisitesDenied": true,
+        "unreviewedPopulatedMediaStartupDenied": true,
+        "allWritersAbsentBeforeVerifiedAdmission": true,
+        "physicalDataDirectoryCopiedWithoutLogicalDump": true,
+        "importedFullSnapshotMatchesPhysicalTarget": true,
+        "emptyRedisBeforePhysicalApplicationStart": true,
+        "isolatedApplicationBucketRestoredFromRetainedVersion": true
+      }
+    },
+    "priorFullAttempt": {
+      "passed": false,
+      "reason": "M new queued fixture insert omitted required updatedAt; only that fixture SQL fixed, schema unchanged. I/J/K/L passed with batched reader. Final M/core17 rerun required; own CI full21 required.",
+      "reportSha256": "97c171fd7e7fa527d9740f66f7233f8cee282319f3d7373410d301e359359c44",
+      "nativeReportSha256": "beaf01724e110f7d0f8edb016a79e756c9b899a199ee40ef3bb2545967037951",
+      "logSha256": "b9816afac5c1d3f30440f58bc3db70d3d596fe9221f02943e16ced0277717f16",
+      "predecessorPhysicalPhasesPassed": [
+        "I",
+        "J",
+        "K",
+        "L"
+      ],
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    "creditAssertionFailure": {
+      "reportSha256": "dfd28ae13391f7ec9d2d49db78c0b06fcc2cf8570c298a0999ff7c4008dae332",
+      "logSha256": "7a87a88ea470bf43797f6c583de06e3307f96cb85617bec5f55e2aa5421de6c0",
+      "diagnosticSha256": "456e9efd13563ed6d6b269f7acad52accbd9267992799ca0579ed3ef09e00a56",
+      "reason": "New assertion expected null for consumed, but unchanged NOT NULL schema defaults to0; corrected to require exact zero. Diagnostic confirmed UNKNOWN, REVIEW and consumed0; actual process kills/natural leases had passed. No legacy assertion removed."
+    },
+    "unsettledAwaitFailure": {
+      "passed": false,
+      "exitCode": 13,
+      "noFinalReport": true,
+      "phase": "complete Compose startup readiness",
+      "project": "omos-compose-verify-d91011e9be2b2925",
+      "reason": "Node reported unsettled top-level await while only unreferenced readiness timers remained. Added scoped verifier lifecycle guard with actual child-process negative/success/failure tests. Production runtime unchanged.",
+      "logSha256": "f74942036425f0f296bb95ef9f316552ea5d2bf0ca126cea3c8c706814d4cdf3",
+      "fixtureCleanup": true,
+      "containersCleaned": 11,
+      "realEnvironmentUnchanged": true,
+      "recordedAtUtc": "2026-10-23T17:04:22.642Z"
+    },
+    "verificationLifecycle": {
+      "referencedOnlyUntilAsyncCleanupFinishes": true,
+      "actualChildNegativeExit13": true,
+      "childSuccessAndFailureReleasePassed": true,
+      "productionRuntimeUnchanged": true
+    },
+    "snapshotBatching": {
+      "catalogAndCompleteProjectionQueries": 2,
+      "legacyQueries": 39,
+      "all24MigrationRowsColumnsAndDigestEqual": true,
+      "allPreviousAssertionsRetained": true
+    },
+    "syntaxAndFormatPassed": true,
+    "protectedHashesUnchanged": 25,
+    "initialFailure": {
+      "reportSha256": "668f7f95c075005c5d9e3383a0c94cd4a629875d34177362fd58cc08292f9619",
+      "logSha256": "2cae50ce4f2c6aea0af84d96a35f32f315788eec2cc71edd148c51786f526aab",
+      "reason": "Docker operation failed (2): psql: error: connection to server on socket \"/var/run/postgresql/.s.PGSQL.5432\" failed: FATAL:  the database system is shutting down\n\n\nfalse !== true\n",
+      "intentionallyInterrupted": true,
+      "interruption": {
+        "intentional": true,
+        "recordedAtUtc": "2026-10-23T16:36:02.790Z",
+        "project": "omos-compose-verify-ca056d0963bd197e-restore",
+        "container": "40932738a39887ceecb678459b2cc8483fe3b8fdd38d9f3fcdcb03b68f1ef9c4",
+        "reason": "Interrupt slow unbatched per-table Windows diagnostic. Snapshot batching preserves exact complete values/digest in real all24-migration PGlite test; rerun full21 on updated source. Existing harness will record failure and clean all owned fixtures."
+      },
+      "cleanup": true
+    }
+  },
+  "publication": {
+    "normalPushSucceeded": true,
+    "allJobCheckoutLogsMatchFinalCommit": true,
+    "trackedFilesMatchPublishedBlobs": 620,
+    "workingTreeClean": true,
+    "protectedHashesUnchanged": 25,
+    "sourceCapsulePendingOwnCiClosedByThisReceipt": true,
+    "runtimeChangedPaths": [],
+    "migrationsDependenciesWorkflowUnchanged": true
+  },
+  "priorVerifiedPublication": {
+    "taskId": "RECOVERY-01L",
+    "commit": "0aa3f994791565b0b508ccc216b12faa3e0bca8b",
+    "runId": 39974681959,
+    "receipt": "docs/qa/recovery01l-final-ci-receipt.json"
+  }
+}
