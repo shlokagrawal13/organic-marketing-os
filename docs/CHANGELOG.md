@@ -1,3 +1,15 @@
+<!-- RECOVERY01O_CURRENT_START -->
+## RECOVERY-01O retained WAL and private-object recovery set — 2026-10-26
+
+N final 89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc/run40124492777 passed ALL THREE jobs and required steps: 369 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability, zero audits and 22 Compose phases. All four artifact ZIP bytes/digests/CRCs were verified. Read docs/qa/recovery01n-final-ci-receipt.json; this closes N's earlier own-CI pending notice.
+
+O adds a twenty-third Compose phase while retaining all 22 predecessors. The native fixture copies a verified physical base and archived target WAL to separate owned tmpfs paths, denies actual missing/corrupt retained WAL before recovery startup, then promotes the populated 24-migration application schema from those retained copies. A pinned review binds the named point, full application snapshot, three historical S3 versions, exact restored private bytes and the reviewed do-not-replay provider effect. Before writers start, nine changed-evidence controls deny callbacks; one exact set admits the existing HTTP/worker/tenant/credit checks. See docs/PHYSICAL_RETENTION_GATE.md and docs/qa/recovery01o-evidence.json.
+
+Local 82 focused tests, standalone native target recovery, zero full/production audits and 23-phase fresh-image Windows Compose integration pass; fixture cleanup and real .env are unchanged. Final guards also reread the retained base manifest identity and fresh application evidence. The Compose process began before those final guard edits, so exact final-source acceptance requires ALL THREE CI jobs and every required step after normal publication. All 24 migrations, protected master specification and production application runtime remain unchanged. Pair an external recovery01o-final-ci-receipt.json with the fresh portable source ZIP to close packaging-time status.
+
+The retained copies share one disposable tmpfs container; this is not remote durability, scheduled retention or atomic production cross-store PITR. The named WAL point still precedes actual live worker claims; N's later live-claim point is a separate online backup. Real-provider reconciliation, populated publication, production operations, live/deployed and full-master acceptance remain open. Next: RECOVERY-01P bind genuine in-flight claims to a WAL target and independently retained cross-store recovery set. 21 broad task tracks remain open. CI verifies fixtures and does not deploy.
+<!-- RECOVERY01O_CURRENT_END -->
+
 <!-- RECOVERY01N_CURRENT_START -->
 ## RECOVERY-01N online physical point with live claims — 2026-10-24
 

@@ -134,12 +134,12 @@ export async function runPostgresPitr({ hooks } = {}) {
     docker(["exec", "-i", "-u", "postgres", id, "sh", "-eu"], script);
   const verify = (directory) =>
     docker(["exec", "-u", "postgres", id, "pg_verifybackup", directory]);
-  async function prepare(kind, target, archive) {
+  async function prepare(kind, target, archive, base = "base") {
     await owned();
     const directory = `/fixture/${kind}`;
     assertPitrCase(project, kind, directory);
     await shell(`rm -rf ${directory}
-cp -a /fixture/base ${directory}
+cp -a /fixture/${base} ${directory}
 mkdir -p /fixture/socket-${kind}
 cat >> ${directory}/postgresql.conf <<'CONFIG'
 archive_mode = off
@@ -365,6 +365,78 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
       )[0],
     };
     report.checks.targetTransactionsArchivedAfterBaseBackup = true;
+    // Keep a separate, verified recovery set. The successful retry must use
+    // these copies, not the live source archive or the original base path.
+    await shell(
+      "cp -a /fixture/base /fixture/base-retained\ncp -a /fixture/archive /fixture/archive-retained\n",
+    );
+    assert.match(
+      await verify("/fixture/base-retained"),
+      /backup successfully verified/,
+    );
+    const retainedManifestSha256 = (
+      await shell("sha256sum /fixture/base-retained/backup_manifest\n")
+    ).split(" ")[0];
+    const retainedWalSha256 = (
+      await shell(`sha256sum /fixture/archive-retained/${targetWal}\n`)
+    ).split(" ")[0];
+    assert.equal(retainedManifestSha256, report.baseBackup.manifestSha256);
+    assert.equal(retainedWalSha256, report.archivedWal.sha256);
+    report.retainedPhysical = {
+      baseManifestSha256: retainedManifestSha256,
+      targetSegment: targetWal,
+      targetLsn,
+      targetWalSha256: retainedWalSha256,
+      nativeBackupVerified: true,
+    };
+    report.checks.separateRetainedBaseAndWalVerified = true;
+    const retainedWalPath = `/fixture/archive-retained/${targetWal}`;
+    const verifyRetainedBase = async () => {
+      const manifestSha256 = (
+        await shell("sha256sum /fixture/base-retained/backup_manifest\n")
+      ).split(" ")[0];
+      assert.equal(manifestSha256, report.retainedPhysical.baseManifestSha256);
+      return {
+        manifestSha256,
+        output: await verify("/fixture/base-retained"),
+      };
+    };
+    const withRetainedPhysical = (start) =>
+      withVerifiedPhysicalBackup(
+        async () => (await verifyRetainedBase()).output,
+        async () => {
+          const actual = (await shell(`sha256sum ${retainedWalPath}\n`)).split(
+            " ",
+          )[0];
+          assert.equal(actual, report.retainedPhysical.targetWalSha256);
+          return await start();
+        },
+      );
+    await shell(`cp ${retainedWalPath} ${retainedWalPath}.saved\n`);
+    let retainedStarts = 0;
+    try {
+      await shell(`rm ${retainedWalPath}\n`);
+      await assert.rejects(
+        withRetainedPhysical(() => {
+          retainedStarts++;
+        }),
+      );
+      await shell(`cp ${retainedWalPath}.saved ${retainedWalPath}\n`);
+      await shell(
+        `printf X | dd of=${retainedWalPath} bs=1 count=1 conv=notrunc 2>/dev/null\n`,
+      );
+      await assert.rejects(
+        withRetainedPhysical(() => {
+          retainedStarts++;
+        }),
+      );
+    } finally {
+      await shell(
+        `cp ${retainedWalPath}.saved ${retainedWalPath}\nrm ${retainedWalPath}.saved\n`,
+      );
+    }
+    assert.equal(retainedStarts, 0);
+    report.checks.missingOrCorruptRetainedWalDeniesRecoveryStart = true;
     await owned();
     assertPitrCase(project, "corrupt", "/fixture/corrupt");
     await shell(
@@ -422,8 +494,13 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
       });
     }
     report.checks.missingWalAndUnreachableTargetRejectReadiness = true;
-    const retry = await prepare("retry", target, "archive");
-    await withVerifiedPhysicalBackup(() => verify("/fixture/base"), retry);
+    const retry = await prepare(
+      "retry",
+      target,
+      "archive-retained",
+      "base-retained",
+    );
+    await withRetainedPhysical(retry);
     report.sqlReadiness = await waitForPromotedSql(() =>
       psql("retry", "SELECT NOT pg_is_in_recovery();"),
     );
@@ -448,6 +525,12 @@ pg_ctl -D /fixture/source -l /fixture/source.log -t 20 -w start
     if (hooks) {
       report.objectBinding = await hooks.recovered({
         pointReceipt,
+        retainedPhysical: report.retainedPhysical,
+        verifyRetainedBase,
+        readRetainedWalSha256: async () =>
+          (
+            await shell(`sha256sum /fixture/archive-retained/${targetWal}\n`)
+          ).split(" ")[0],
         applicationSnapshot: await applicationSnapshot((sql) =>
           psql("retry", sql),
         ),

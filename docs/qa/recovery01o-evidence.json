@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01O",
+  "recordedAtUtc": "2026-10-25T19:04:03.755Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "RECOVERY-01N",
+    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+    "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
+    "runId": 40124492777,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 369,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 22
+    },
+    "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+  },
+  "scope": "Fixture retained base/WAL copies, actual named-target replay and historical private-version/provider-review admission; previous 22 Compose phases retained.",
+  "checks": {
+    "focusedTests": 82,
+    "uniqueFocusedReceipts": 82,
+    "unitReceiptsSha256": "1b1ef6f15e95b20bb0c65b74cbce2452c432961f5c033f8811f04bd29df9b777",
+    "nativePitrPassed": true,
+    "nativeReportSha256": "4a49e9643bca62a3cc27276e5999604454ede54620cbfda7f52e897067f61d38",
+    "nativeMigrations": 24,
+    "nativeTablesCompared": 37,
+    "missingAndCorruptRetainedWalDenied": true,
+    "composeIntegrationPassed": true,
+    "composePhases": 23,
+    "composeReportSha256": "651d7370ce966bc02c141694aa43b9e8655ae73f353d1255880bcdf52c8a1b1d",
+    "composeCleanupAndRealEnvironmentUnchanged": true,
+    "retainedHistoricalVersions": 3,
+    "retainedGateDeniedControls": 9,
+    "retainedGateAdmittedCallbacks": 1,
+    "composeStartedBeforeFinalNativeControlAndFreshPreflightEdits": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "protectedMasterAndMigrationsChanged": false,
+    "protectedHashesUnchanged": 25,
+    "composeProcessExitCode": 0,
+    "configurationPassed": true,
+    "retainedBaseManifestIdentityReread": true
+  },
+  "retainedRecoverySet": {
+    "reviewSha256": "c2790bdfbcdc99e45355be40111917361055af6b5a6aa1b739c55802194aa0b4",
+    "baseManifestSha256": "e8754999e04d633720646456d2b0f6c722ea1bf13b05e4dfbc6764bab4b2baab",
+    "targetLsn": "0/4006180",
+    "targetWalSegment": "000000010000000000000004",
+    "targetWalSha256": "2f820f00259d3514a7181442ed794a8b4497b6371dc0f5fe065050cdd4c3ee8a",
+    "historicalVersions": 3,
+    "deniedControls": 9,
+    "admittedCallbacks": 1
+  },
+  "nativeRetainedPhysical": {
+    "baseManifestSha256": "f2837738d1f5956cc36c6181878092186eda384e9dae218f7dda4cb96978a441",
+    "targetSegment": "000000010000000000000003",
+    "targetLsn": "0/3006028",
+    "targetWalSha256": "67f6d8adac1dfda048a5107d60abdf6428c562bf1adc80e8ee9e21e6be6d4de2",
+    "nativeBackupVerified": true
+  },
+  "currentSourceOwnCiPending": true,
+  "limitations": [
+    "local retained copies share generated tmpfs; no independent durability or production retention policy",
+    "named WAL target precedes actual worker claims; N live-claim online point is separate",
+    "synthetic provider only; no atomic production PostgreSQL/S3 PITR",
+    "live/deployed/full-master acceptance and 21 broad task tracks remain open"
+  ]
+}

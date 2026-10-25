@@ -12,6 +12,10 @@ import {
 } from "./physical-media-review.mjs";
 import { interruptPhysicalWorkers } from "./physical-worker-interruption.mjs";
 import { captureInflightPhysicalPoint } from "./physical-inflight-point.mjs";
+import {
+  createRetainedRecoveryReview,
+  withRetainedRecoverySet,
+} from "./retained-recovery-set.mjs";
 import { runPostgresPitr } from "./verify-postgres-pitr.mjs";
 import { physicalCaptureHash } from "./physical-object-binding.mjs";
 import { applicationSnapshot } from "./application-pitr-fixture.mjs";
@@ -206,7 +210,7 @@ const historyEffectsModule = inlineModule(
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01N",
+  taskId: "RECOVERY-01O",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -1031,7 +1035,12 @@ try {
                     false,
                   );
                 },
-                recovered: async ({ exportPhysicalCluster, ...recovered }) => {
+                recovered: async ({
+                  exportPhysicalCluster,
+                  verifyRetainedBase,
+                  readRetainedWalSha256,
+                  ...recovered
+                }) => {
                   assert.deepEqual(
                     recovered.pointReceipt,
                     history.pointReceipt,
@@ -1195,6 +1204,74 @@ try {
                   };
                   let starts = 0;
                   const evidence = await preflight();
+                  let retentionGate;
+                  if (processMode) {
+                    const review = createRetainedRecoveryReview({
+                      manifest: history.manifest,
+                      pointReceipt: history.pointReceipt,
+                      applicationSnapshot: recovered.applicationSnapshot,
+                      retainedPhysical: recovered.retainedPhysical,
+                      effects: evidence.effects,
+                    });
+                    const readHistoricalObjects = async () =>
+                      (
+                        await node(
+                          source,
+                          "physical-export-objects",
+                          { project: source, ...history },
+                          false,
+                        )
+                      ).objects;
+                    const gate = {
+                      review,
+                      expectedReviewSha256: physicalCaptureHash(review),
+                      manifest: history.manifest,
+                      pointReceipt: history.pointReceipt,
+                      applicationSnapshot: recovered.applicationSnapshot,
+                      retainedPhysical: recovered.retainedPhysical,
+                      effects: evidence.effects,
+                      verifyRetainedBase,
+                      readRetainedWalSha256,
+                      readHistoricalObjects,
+                      restoredObjects: evidence.objects,
+                      redisKeys: evidence.redisKeys,
+                      writersAbsent: true,
+                    };
+                    let denied = 0;
+                    for (const changed of [
+                      { expectedReviewSha256: "0".repeat(64) },
+                      {
+                        pointReceipt: {
+                          ...gate.pointReceipt,
+                          targetLsn: "0/DEAD",
+                        },
+                      },
+                      {
+                        verifyRetainedBase: async () => ({
+                          manifestSha256: "0".repeat(64),
+                          output: "backup successfully verified",
+                        }),
+                      },
+                      { readRetainedWalSha256: async () => "0".repeat(64) },
+                      { readHistoricalObjects: async () => [] },
+                      { restoredObjects: [] },
+                      { effects: { ...gate.effects, receipts: [] } },
+                      { redisKeys: 1 },
+                      { writersAbsent: false },
+                    ]) {
+                      await assert.rejects(
+                        withRetainedRecoverySet(
+                          { ...gate, ...changed },
+                          async () => {
+                            starts++;
+                          },
+                        ),
+                      );
+                      denied++;
+                    }
+                    assert.equal(starts, 0);
+                    retentionGate = { gate, denied };
+                  }
                   for (const changed of [
                     { objects: [] },
                     { redisKeys: 1 },
@@ -1309,23 +1386,36 @@ try {
                   appState.beforeLedger = physicalLedgerBaseline(
                     recovered.applicationSnapshot.rows.CreditEntry,
                   );
-                  await withPhysicalApplicationStart(
-                    await preflight(),
-                    async () => {
-                      starts++;
-                      await compose(physical, [
-                        "up",
-                        "-d",
-                        "--no-build",
-                        "--no-deps",
-                        "api",
-                        "web",
-                        ...(processMode
-                          ? []
-                          : ["worker", "render-worker", "media-worker"]),
-                      ]);
-                    },
-                  );
+                  const startVerifiedApplication = async (currentEvidence) =>
+                    withPhysicalApplicationStart(
+                      currentEvidence ?? (await preflight()),
+                      async () => {
+                        starts++;
+                        await compose(physical, [
+                          "up",
+                          "-d",
+                          "--no-build",
+                          "--no-deps",
+                          "api",
+                          "web",
+                          ...(processMode
+                            ? []
+                            : ["worker", "render-worker", "media-worker"]),
+                        ]);
+                      },
+                    );
+                  if (retentionGate) {
+                    const currentEvidence = await preflight();
+                    await withRetainedRecoverySet(
+                      {
+                        ...retentionGate.gate,
+                        effects: currentEvidence.effects,
+                        restoredObjects: currentEvidence.objects,
+                        redisKeys: currentEvidence.redisKeys,
+                      },
+                      () => startVerifiedApplication(currentEvidence),
+                    );
+                  } else await startVerifiedApplication();
                   assert.equal(starts, 1);
                   await ready(physical);
                   if (processMode) {
@@ -1500,7 +1590,24 @@ try {
                         }
                       : {}),
                     ...(processMode
-                      ? { processInterruption: appState.processInterruption }
+                      ? {
+                          processInterruption: appState.processInterruption,
+                          retainedRecoverySet: {
+                            reviewSha256:
+                              retentionGate.gate.expectedReviewSha256,
+                            baseManifestSha256:
+                              recovered.retainedPhysical.baseManifestSha256,
+                            targetLsn: recovered.retainedPhysical.targetLsn,
+                            targetWalSegment:
+                              recovered.retainedPhysical.targetSegment,
+                            targetWalSha256:
+                              recovered.retainedPhysical.targetWalSha256,
+                            historicalVersions:
+                              history.manifest.versions.length,
+                            deniedControls: retentionGate.denied,
+                            admittedCallbacks: starts,
+                          },
+                        }
                       : {}),
                     applicationStartedFromHistoricalObjects: true,
                     physicalCopySha256: copied.sha256,
@@ -1588,6 +1695,36 @@ try {
         assert.ok(Object.values(point.checks).every(Boolean));
         report.inflightPhysicalPoint = point;
         Object.assign(report.checks, point.checks);
+      },
+    );
+    await phase(
+      "verify retained WAL target and historical private-object recovery set",
+      async () => {
+        const native = report.physicalWorkerProcessRecovery;
+        const retained = native.objectBinding.retainedRecoverySet;
+        assert.ok(retained);
+        assert.equal(native.checks.separateRetainedBaseAndWalVerified, true);
+        assert.equal(
+          native.checks.missingOrCorruptRetainedWalDeniesRecoveryStart,
+          true,
+        );
+        assert.match(retained.reviewSha256, /^[a-f0-9]{64}$/);
+        assert.equal(
+          retained.baseManifestSha256,
+          native.baseBackup.manifestSha256,
+        );
+        assert.equal(retained.targetLsn, native.archivedWal.targetLsn);
+        assert.equal(
+          retained.targetWalSegment,
+          native.archivedWal.targetSegment,
+        );
+        assert.equal(retained.targetWalSha256, native.archivedWal.sha256);
+        assert.equal(retained.historicalVersions, 3);
+        assert.equal(retained.deniedControls, 9);
+        assert.equal(retained.admittedCallbacks, 1);
+        report.retainedRecoverySet = retained;
+        report.checks.retainedBaseAndWalUsedForNamedTargetRecovery = true;
+        report.checks.historicalVersionAndProviderReviewGateApplicationStart = true;
       },
     );
     // Remove the entire original disposable stack and all its data volumes before
