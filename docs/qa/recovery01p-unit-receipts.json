@@ -1,0 +1,660 @@
+{
+  "passed": [
+    {
+      "name": "Corrupt or incomplete cross-store backup never reaches destructive callbacks",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\cross-store-backup-verification.test.ts",
+      "durationMs": 223.7665
+    },
+    {
+      "name": "Backup preflight binds the source, separate restore identity and every stopped writer",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\cross-store-backup-verification.test.ts",
+      "durationMs": 7.2791
+    },
+    {
+      "name": "Valid sealed cross-store backup permits exactly one action and preserves metadata",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\cross-store-backup-verification.test.ts",
+      "durationMs": 3.4346
+    },
+    {
+      "name": "Backup sealing rejects duplicate keys and malformed private object encodings",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\cross-store-backup-verification.test.ts",
+      "durationMs": 8.3876
+    },
+    {
+      "name": "Application startup stays gated after restore or database verification failure and changed backup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\cross-store-backup-verification.test.ts",
+      "durationMs": 9.9164
+    },
+    {
+      "name": "Historical effect reconciliation accepts complete reviewed receipts in any order and returns the callback result",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 9.7247
+    },
+    {
+      "name": "Historical effect reconciliation accepts an explicitly complete empty inventory only with no receipts",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 65.8087
+    },
+    {
+      "name": "Historical effect reconciliation rejects missing recovery points, incomplete inventories and invalid collections before startup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 17.632
+    },
+    {
+      "name": "Historical effect reconciliation rejects duplicate or ambiguous effects and unobserved provider operations",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 15.7794
+    },
+    {
+      "name": "Historical effect reconciliation rejects missing, unknown and duplicate receipts even when one receipt is valid",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 9.2013
+    },
+    {
+      "name": "Historical effect reconciliation rejects mismatched, ambiguous, unreviewed and replay-permitting receipts",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 7.5933
+    },
+    {
+      "name": "Historical effect reconciliation propagates a callback failure without retrying it",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts",
+      "durationMs": 2.0582
+    },
+    {
+      "name": "Historical readback accepts only an owned bucket and complete explicit version manifest before reads",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-object-verification.test.ts",
+      "durationMs": 62.5729
+    },
+    {
+      "name": "Historical readback rejects unavailable, wrong-version or altered bytes and metadata without readiness",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-object-verification.test.ts",
+      "durationMs": 11.1821
+    },
+    {
+      "name": "Synthetic historical effect receipts retain identity and reject conflicting replays",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-provider.test.ts",
+      "durationMs": 370.8026
+    },
+    {
+      "name": "Physical application starts once with exact transfer, snapshot, objects, empty Redis and reviewed effect",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 65.8206
+    },
+    {
+      "name": "Physical application rejects altered transfer or imported rows before startup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 23.9121
+    },
+    {
+      "name": "Physical application rejects missing changed extra or duplicate private objects",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 15.58
+    },
+    {
+      "name": "Physical application rejects current Redis, active writers and unreviewed queue reconstruction",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 12.1255
+    },
+    {
+      "name": "Physical application requires complete exact recovered queue and running effect inventories",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 19.4815
+    },
+    {
+      "name": "Physical application rejects missing unknown replay unreviewed and wrong-point receipts",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 9.5128
+    },
+    {
+      "name": "Physical application SQL variant only replaces complete synthetic identities and the historical key",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 1.0798
+    },
+    {
+      "name": "Physical immutable-ledger comparison preserves UTC timestamps across host timezones",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts",
+      "durationMs": 7.4747
+    },
+    {
+      "name": "in-flight point admits only the exact restored claims, objects and accepted effect",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-point.test.ts",
+      "durationMs": 54.8838
+    },
+    {
+      "name": "in-flight point denies a changed physical row or object",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-point.test.ts",
+      "durationMs": 24.6336
+    },
+    {
+      "name": "in-flight point denies changed provider receipt or replay approval",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-point.test.ts",
+      "durationMs": 6.5136
+    },
+    {
+      "name": "in-flight point denies changed backup identity, Redis state or live writers",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-point.test.ts",
+      "durationMs": 6.895
+    },
+    {
+      "name": "WAL base must precede all genuine worker claims",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-wal.test.ts",
+      "durationMs": 46.8898
+    },
+    {
+      "name": "WAL-target admission binds exact claims, provider receipt, retained set and source outage",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-wal.test.ts",
+      "durationMs": 23.7304
+    },
+    {
+      "name": "recovered fixture reads original external receipts without submitting new effects",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-wal.test.ts",
+      "durationMs": 467.4522
+    },
+    {
+      "name": "missing original provider receipts fail closed in the recovered fixture",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-wal.test.ts",
+      "durationMs": 80.4649
+    },
+    {
+      "name": "Physical media admits bounded local render and retained-output ingestion",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 92.6435
+    },
+    {
+      "name": "Physical media rejects altered pinned review and snapshot",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 27.7839
+    },
+    {
+      "name": "Physical media refuses provider submission states and completed jobs even with new review",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 37.8599
+    },
+    {
+      "name": "Physical media refuses nonqueued renders and saved render outputs",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 21.2754
+    },
+    {
+      "name": "Physical media rejects publication work and unexpected job identities",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 62.7483
+    },
+    {
+      "name": "Physical media requires matching render inputs and tenant-owned assets",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 10.5945
+    },
+    {
+      "name": "Physical media requires exact reserved credits before ingestion",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 15.7034
+    },
+    {
+      "name": "Physical media requires complete unique PNG bytes and hashes",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 13.7622
+    },
+    {
+      "name": "Physical interrupted review admits stale claims with explicit owner retry disposition",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 4.7941
+    },
+    {
+      "name": "Physical original review continues rejecting interrupted running renders",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 4.4059
+    },
+    {
+      "name": "Physical interrupted review refuses fresh and exact-boundary claims",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 7.3806
+    },
+    {
+      "name": "Physical interrupted review refuses missing ownership and invalid heartbeat timestamps",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 15.9192
+    },
+    {
+      "name": "Physical interrupted review requires a valid pinned UTC lease reference",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 5.3779
+    },
+    {
+      "name": "Physical interrupted review refuses automatic render replay and media resubmission dispositions",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 4.7841
+    },
+    {
+      "name": "Physical interrupted review keeps unknown provider outcomes closed even with a new review",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 4.0844
+    },
+    {
+      "name": "Physical interrupted review rejects saved render outputs and unrelated render states",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 5.3349
+    },
+    {
+      "name": "Physical interrupted review binds the original stale claims to the exact snapshot",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 1.5049
+    },
+    {
+      "name": "Physical interrupted review refuses altered lease reference without the original pin",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 4.0957
+    },
+    {
+      "name": "Physical process review admits exact queued provider request and separate retained output",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 2.257
+    },
+    {
+      "name": "Physical original and stale reviews still reject a second paid request",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 2.4716
+    },
+    {
+      "name": "Physical process review refuses unreviewed provider state SUBMITTING",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 1.5175
+    },
+    {
+      "name": "Physical process review refuses unreviewed provider state PENDING",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 2.7896
+    },
+    {
+      "name": "Physical process review refuses unreviewed provider state UNKNOWN",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 11.3183
+    },
+    {
+      "name": "Physical process review refuses unreviewed provider state SUCCEEDED",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 5.4899
+    },
+    {
+      "name": "Physical process review denies saved provider receipts, outputs and claims",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 16.3635
+    },
+    {
+      "name": "Physical process review denies foreign origins, paid presets and tenant mismatch",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 15.7923
+    },
+    {
+      "name": "Physical process review requires its own unresolved reservation",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 9.8352
+    },
+    {
+      "name": "Physical process review pin prevents changed submission/replay approval",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts",
+      "durationMs": 3.4396
+    },
+    {
+      "name": "Physical binding accepts an unchanged pre-target capture and exact recovered snapshot",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-binding.test.ts",
+      "durationMs": 10.2016
+    },
+    {
+      "name": "Physical binding rejects changed target LSN, fixture, base, name or capture-order receipt",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-binding.test.ts",
+      "durationMs": 28.5559
+    },
+    {
+      "name": "Physical binding rejects changes to any application row or captured column metadata",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-binding.test.ts",
+      "durationMs": 5.5587
+    },
+    {
+      "name": "Physical binding rejects altered saved version manifests and mismatched reference inventories",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-binding.test.ts",
+      "durationMs": 4.9377
+    },
+    {
+      "name": "Physical reference inventory includes all supported fields and preserves shared-key identities",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-binding.test.ts",
+      "durationMs": 1.2625
+    },
+    {
+      "name": "Physical historical fixture retains per-key overwrites and cleans exact versions for 1 objects",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-fixture.test.ts",
+      "durationMs": 156.1383
+    },
+    {
+      "name": "Physical historical fixture retains per-key overwrites and cleans exact versions for 3 objects",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-fixture.test.ts",
+      "durationMs": 17.2198
+    },
+    {
+      "name": "Barrier observer refuses malformed identities and unacknowledged phases",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts",
+      "durationMs": 240.8326
+    },
+    {
+      "name": "Barrier observer acknowledges one exact private boundary and rejects duplicate hits",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts",
+      "durationMs": 55.7172
+    },
+    {
+      "name": "Actual fixture provider retains accepted media before sending a worker response",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts",
+      "durationMs": 101.9451
+    },
+    {
+      "name": "Barrier injection refuses production and absent harness authorization",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts",
+      "durationMs": 45.9279
+    },
+    {
+      "name": "Render barrier follows acknowledged real storage write and holds continuation",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts",
+      "durationMs": 18.0519
+    },
+    {
+      "name": "Render storage failure never acknowledges a crash barrier",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts",
+      "durationMs": 6.5301
+    },
+    {
+      "name": "Physical positive readiness requires actual promoted SQL even after native startup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 6.7701
+    },
+    {
+      "name": "Physical positive readiness retries the observed transient SQL rejection",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 1.422
+    },
+    {
+      "name": "Physical positive readiness waits for promotion while SQL is available in recovery",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 1.04
+    },
+    {
+      "name": "Physical positive readiness fails closed after bounded rejection or absent promotion",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 3.6499
+    },
+    {
+      "name": "Physical positive readiness never retries unrelated SQL errors or invalid results",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 12.8687
+    },
+    {
+      "name": "Native start status requires one complete explicit marker",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 33.0857
+    },
+    {
+      "name": "Native start marker preserves a failed server status even after successful outer transport",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 1.6744
+    },
+    {
+      "name": "Physical recovery reset rejects source/base/archive paths and non-fixture identities",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 10.2214
+    },
+    {
+      "name": "Historical recovery refuses missing, overwritten or mismatched private objects before startup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 8.7973
+    },
+    {
+      "name": "Historical recovery keeps workers gated until queue and external effects are reconciled",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 5.0054
+    },
+    {
+      "name": "Failed or incomplete native backup verification never invokes recovery startup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts",
+      "durationMs": 2.0259
+    },
+    {
+      "name": "retained recovery set admits exact base, WAL, versioned bytes and reviewed effects",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\retained-recovery-set.test.ts",
+      "durationMs": 9.2525
+    },
+    {
+      "name": "retained recovery set denies missing or changed physical bytes before startup",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\retained-recovery-set.test.ts",
+      "durationMs": 20.1165
+    },
+    {
+      "name": "retained recovery set denies missing historical versions, target bytes and replay",
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\retained-recovery-set.test.ts",
+      "durationMs": 13.2455
+    }
+  ],
+  "failed": [],
+  "summaries": [
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 311.2013,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\cross-store-backup-verification.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 7,
+        "failed": 0,
+        "passed": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 7,
+        "suites": 0
+      },
+      "duration_ms": 184.2488,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-effect-reconciliation.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 109.3547,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-object-verification.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 1,
+        "failed": 0,
+        "passed": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 1,
+        "suites": 0
+      },
+      "duration_ms": 655.2152,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\historical-provider.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 8,
+        "failed": 0,
+        "passed": 8,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 8,
+        "suites": 0
+      },
+      "duration_ms": 199.5666,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-application-start.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 123.7958,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-point.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 4,
+        "failed": 0,
+        "passed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 4,
+        "suites": 0
+      },
+      "duration_ms": 877.7084,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-inflight-wal.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 28,
+        "failed": 0,
+        "passed": 28,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 28,
+        "suites": 0
+      },
+      "duration_ms": 594.7014,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-media-review.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 5,
+        "failed": 0,
+        "passed": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 5,
+        "suites": 0
+      },
+      "duration_ms": 104.8188,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-binding.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 2,
+        "failed": 0,
+        "passed": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 2,
+        "suites": 0
+      },
+      "duration_ms": 245.0501,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-object-fixture.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 6,
+        "failed": 0,
+        "passed": 6,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 6,
+        "suites": 0
+      },
+      "duration_ms": 558.8237,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\physical-worker-barrier.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 11,
+        "failed": 0,
+        "passed": 11,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 11,
+        "suites": 0
+      },
+      "duration_ms": 136.1828,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\postgres-pitr-verification.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 3,
+        "failed": 0,
+        "passed": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 3,
+        "suites": 0
+      },
+      "duration_ms": 72.4902,
+      "file": "C:\\Users\\shlok\\Desktop\\organic-marketing-os\\tests\\retained-recovery-set.test.ts"
+    },
+    {
+      "success": true,
+      "counts": {
+        "tests": 86,
+        "failed": 0,
+        "passed": 86,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "topLevel": 86,
+        "suites": 0
+      },
+      "duration_ms": 9986.6934
+    }
+  ],
+  "finalSummary": {
+    "success": true,
+    "counts": {
+      "tests": 86,
+      "failed": 0,
+      "passed": 86,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "topLevel": 86,
+      "suites": 0
+    },
+    "duration_ms": 9986.6934
+  }
+}

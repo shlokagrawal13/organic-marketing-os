@@ -12,6 +12,7 @@ export async function interruptPhysicalWorkers({
   command,
   node,
   query,
+  preparePoint,
   capturePoint,
 }) {
   assertFixtureProject(project);
@@ -30,6 +31,7 @@ export async function interruptPhysicalWorkers({
     assert.equal(value.HostConfig.RestartPolicy.Name, "no");
   };
   try {
+    const preparedPoint = preparePoint ? await preparePoint() : undefined;
     for (const kind of ["render", "media"]) {
       const name = project + "-crash-" + kind;
       const options = {
@@ -119,7 +121,7 @@ export async function interruptPhysicalWorkers({
           own(after, kind);
           assert.equal(after.State.Paused, true);
         }
-        physicalPoint = await capturePoint(barrier);
+        physicalPoint = await capturePoint(barrier, preparedPoint);
         physicalPoint.pausedActualWorkerProcesses = paused.length;
       } finally {
         for (const { name, kind } of paused.reverse()) {

@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "recovery01o-20261026",
-  "savedAtUtc": "2026-10-25T19:04:03.933Z",
-  "currentMilestone": "RECOVERY-01O retained WAL and private-object recovery set",
+  "checkpointRevision": "recovery01p-20261026",
+  "savedAtUtc": "2026-10-26T00:20:00.261Z",
+  "currentMilestone": "RECOVERY-01P live claims at named WAL target",
   "activeTaskId": "RECOVERY-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "RECOVERY-01",
-  "nextAction": "Publish O normally; inspect/fix all three jobs and required steps, including full23-phase fresh-source Compose, on exact final commit. Pair external final CI receipt with fresh source ZIP; then RECOVERY-01P.",
+  "nextAction": "Publish P normally and inspect/fix ALL THREE jobs and every required step on exact final commit, including full24-phase fresh-image Compose. Pair external final receipt and source ZIP. Then close planned local fixture recovery and select next product task from taskboard; production durability and live-provider acceptance stay open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -87,10 +87,10 @@
     "AGENTS.md",
     "START_HERE.md",
     "PROJECT_STATUS.md",
-    "REQUIREMENTS_MATRIX.md",
     "docs/PROJECT_STATUS.md",
     "docs/TASK_BOARD.md",
     "docs/SESSION_LOG.md",
+    "REQUIREMENTS_MATRIX.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
@@ -98,17 +98,18 @@
     "docs/VERIFICATION_REPORT.md",
     "RESUME_PROMPT.txt",
     "PROJECT_CHECKPOINT.json",
-    "docs/PHYSICAL_RETENTION_GATE.md",
-    "docs/qa/recovery01n-final-ci-receipt.json",
-    "docs/qa/recovery01o-unit-receipts.json",
-    "docs/qa/recovery01o-evidence.json",
+    "docs/PHYSICAL_INFLIGHT_WAL_RECOVERY.md",
+    "docs/qa/recovery01o-final-ci-receipt.json",
+    "docs/qa/recovery01p-unit-receipts.json",
+    "docs/qa/recovery01p-evidence.json",
     "docs/qa/handoff-verification.json",
     "docs/qa/github-publication.json",
     "docs/qa/verification-summary.json",
-    "scripts/retained-recovery-set.mjs",
+    "scripts/physical-inflight-wal.mjs",
+    "scripts/physical-worker-interruption.mjs",
+    "scripts/compose-recovery-provider.mjs",
     "scripts/verify-compose.mjs",
-    "scripts/verify-postgres-pitr.mjs",
-    "tests/retained-recovery-set.test.ts",
+    "tests/physical-inflight-wal.test.ts",
     "CHECKPOINT_MANIFEST.json"
   ],
   "sourceOfTruth": {
@@ -6745,8 +6746,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-    "status": "N_final_verified_O_local_pending",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "status": "O_final_verified_P_local_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6759,23 +6760,23 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "d46f1030bab050ff067a68c2f0965e16789a6673",
+    "sourceTree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last all-three-job verified main source; O local source not yet published.",
+    "commitMeaning": "Last all-three-job verified source; P own exact publication pending.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+    "lastLocalCheckpointCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
     "uploadGate": {
-      "taskId": "RECOVERY-01O",
-      "status": "local_verified_requires_own_exact_source_all_three_jobs",
-      "baseCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+      "taskId": "RECOVERY-01P",
+      "status": "local_verified_own_exact_commit_ci_pending",
+      "baseCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
       "paths": [
         "AGENTS.md",
         "START_HERE.md",
         "PROJECT_STATUS.md",
-        "REQUIREMENTS_MATRIX.md",
         "docs/PROJECT_STATUS.md",
         "docs/TASK_BOARD.md",
         "docs/SESSION_LOG.md",
+        "REQUIREMENTS_MATRIX.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -6783,33 +6784,34 @@
         "docs/VERIFICATION_REPORT.md",
         "RESUME_PROMPT.txt",
         "PROJECT_CHECKPOINT.json",
-        "docs/PHYSICAL_RETENTION_GATE.md",
-        "docs/qa/recovery01n-final-ci-receipt.json",
-        "docs/qa/recovery01o-unit-receipts.json",
-        "docs/qa/recovery01o-evidence.json",
+        "docs/PHYSICAL_INFLIGHT_WAL_RECOVERY.md",
+        "docs/qa/recovery01o-final-ci-receipt.json",
+        "docs/qa/recovery01p-unit-receipts.json",
+        "docs/qa/recovery01p-evidence.json",
         "docs/qa/handoff-verification.json",
         "docs/qa/github-publication.json",
         "docs/qa/verification-summary.json",
-        "scripts/retained-recovery-set.mjs",
+        "scripts/physical-inflight-wal.mjs",
+        "scripts/physical-worker-interruption.mjs",
+        "scripts/compose-recovery-provider.mjs",
         "scripts/verify-compose.mjs",
-        "scripts/verify-postgres-pitr.mjs",
-        "tests/retained-recovery-set.test.ts",
+        "tests/physical-inflight-wal.test.ts",
         "CHECKPOINT_MANIFEST.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01o-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External recovery01p-final-ci-receipt.json paired with source ZIP"
     },
     "publication": {
-      "taskId": "RECOVERY-01N",
-      "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-      "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-      "runId": 40124492777,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+      "taskId": "RECOVERY-01O",
+      "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+      "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+      "runId": 40224355433,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 369,
+        "unit": 372,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -6817,22 +6819,22 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 22
+        "composePhases": 23
       },
-      "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
     },
     "currentUploadGate": {
-      "taskId": "RECOVERY-01O",
-      "status": "local_verified_requires_own_exact_source_all_three_jobs",
-      "baseCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+      "taskId": "RECOVERY-01P",
+      "status": "local_verified_own_exact_commit_ci_pending",
+      "baseCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
       "paths": [
         "AGENTS.md",
         "START_HERE.md",
         "PROJECT_STATUS.md",
-        "REQUIREMENTS_MATRIX.md",
         "docs/PROJECT_STATUS.md",
         "docs/TASK_BOARD.md",
         "docs/SESSION_LOG.md",
+        "REQUIREMENTS_MATRIX.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -6840,21 +6842,22 @@
         "docs/VERIFICATION_REPORT.md",
         "RESUME_PROMPT.txt",
         "PROJECT_CHECKPOINT.json",
-        "docs/PHYSICAL_RETENTION_GATE.md",
-        "docs/qa/recovery01n-final-ci-receipt.json",
-        "docs/qa/recovery01o-unit-receipts.json",
-        "docs/qa/recovery01o-evidence.json",
+        "docs/PHYSICAL_INFLIGHT_WAL_RECOVERY.md",
+        "docs/qa/recovery01o-final-ci-receipt.json",
+        "docs/qa/recovery01p-unit-receipts.json",
+        "docs/qa/recovery01p-evidence.json",
         "docs/qa/handoff-verification.json",
         "docs/qa/github-publication.json",
         "docs/qa/verification-summary.json",
-        "scripts/retained-recovery-set.mjs",
+        "scripts/physical-inflight-wal.mjs",
+        "scripts/physical-worker-interruption.mjs",
+        "scripts/compose-recovery-provider.mjs",
         "scripts/verify-compose.mjs",
-        "scripts/verify-postgres-pitr.mjs",
-        "tests/retained-recovery-set.test.ts",
+        "tests/physical-inflight-wal.test.ts",
         "CHECKPOINT_MANIFEST.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01o-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External recovery01p-final-ci-receipt.json paired with source ZIP"
     },
     "publicationPreparation": {
       "taskId": "RECOVERY-01N",
@@ -6946,17 +6949,17 @@
       "finalReceipt": "External recovery01n-final-ci-receipt.json paired with fresh portable source ZIP"
     },
     "nextPublication": {
-      "taskId": "RECOVERY-01O",
-      "status": "local_verified_requires_own_exact_source_all_three_jobs",
-      "baseCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+      "taskId": "RECOVERY-01P",
+      "status": "local_verified_own_exact_commit_ci_pending",
+      "baseCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
       "paths": [
         "AGENTS.md",
         "START_HERE.md",
         "PROJECT_STATUS.md",
-        "REQUIREMENTS_MATRIX.md",
         "docs/PROJECT_STATUS.md",
         "docs/TASK_BOARD.md",
         "docs/SESSION_LOG.md",
+        "REQUIREMENTS_MATRIX.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -6964,21 +6967,22 @@
         "docs/VERIFICATION_REPORT.md",
         "RESUME_PROMPT.txt",
         "PROJECT_CHECKPOINT.json",
-        "docs/PHYSICAL_RETENTION_GATE.md",
-        "docs/qa/recovery01n-final-ci-receipt.json",
-        "docs/qa/recovery01o-unit-receipts.json",
-        "docs/qa/recovery01o-evidence.json",
+        "docs/PHYSICAL_INFLIGHT_WAL_RECOVERY.md",
+        "docs/qa/recovery01o-final-ci-receipt.json",
+        "docs/qa/recovery01p-unit-receipts.json",
+        "docs/qa/recovery01p-evidence.json",
         "docs/qa/handoff-verification.json",
         "docs/qa/github-publication.json",
         "docs/qa/verification-summary.json",
-        "scripts/retained-recovery-set.mjs",
+        "scripts/physical-inflight-wal.mjs",
+        "scripts/physical-worker-interruption.mjs",
+        "scripts/compose-recovery-provider.mjs",
         "scripts/verify-compose.mjs",
-        "scripts/verify-postgres-pitr.mjs",
-        "tests/retained-recovery-set.test.ts",
+        "tests/physical-inflight-wal.test.ts",
         "CHECKPOINT_MANIFEST.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01o-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External recovery01p-final-ci-receipt.json paired with source ZIP"
     },
     "previousPublication": {
       "slice": "EDITOR-01U",
@@ -6996,17 +7000,17 @@
       "ciAttempt": 1
     },
     "localEvidencePublication": {
-      "taskId": "RECOVERY-01O",
-      "status": "local_verified_requires_own_exact_source_all_three_jobs",
-      "baseCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+      "taskId": "RECOVERY-01P",
+      "status": "local_verified_own_exact_commit_ci_pending",
+      "baseCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
       "paths": [
         "AGENTS.md",
         "START_HERE.md",
         "PROJECT_STATUS.md",
-        "REQUIREMENTS_MATRIX.md",
         "docs/PROJECT_STATUS.md",
         "docs/TASK_BOARD.md",
         "docs/SESSION_LOG.md",
+        "REQUIREMENTS_MATRIX.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
@@ -7014,21 +7018,22 @@
         "docs/VERIFICATION_REPORT.md",
         "RESUME_PROMPT.txt",
         "PROJECT_CHECKPOINT.json",
-        "docs/PHYSICAL_RETENTION_GATE.md",
-        "docs/qa/recovery01n-final-ci-receipt.json",
-        "docs/qa/recovery01o-unit-receipts.json",
-        "docs/qa/recovery01o-evidence.json",
+        "docs/PHYSICAL_INFLIGHT_WAL_RECOVERY.md",
+        "docs/qa/recovery01o-final-ci-receipt.json",
+        "docs/qa/recovery01p-unit-receipts.json",
+        "docs/qa/recovery01p-evidence.json",
         "docs/qa/handoff-verification.json",
         "docs/qa/github-publication.json",
         "docs/qa/verification-summary.json",
-        "scripts/retained-recovery-set.mjs",
+        "scripts/physical-inflight-wal.mjs",
+        "scripts/physical-worker-interruption.mjs",
+        "scripts/compose-recovery-provider.mjs",
         "scripts/verify-compose.mjs",
-        "scripts/verify-postgres-pitr.mjs",
-        "tests/retained-recovery-set.test.ts",
+        "tests/physical-inflight-wal.test.ts",
         "CHECKPOINT_MANIFEST.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External recovery01o-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External recovery01p-final-ci-receipt.json paired with source ZIP"
     },
     "lastLocalCheckpointCommitMeaning": "First N published attempt; security follow-up not yet published.",
     "editor01iUploadGate": {
@@ -7695,16 +7700,16 @@
       "standingAuthorization": "2026-10-18 normal commits/pushes/CI"
     },
     "latestPublication": {
-      "taskId": "RECOVERY-01N",
-      "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-      "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-      "runId": 40124492777,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+      "taskId": "RECOVERY-01O",
+      "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+      "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+      "runId": 40224355433,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 369,
+        "unit": 372,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -7712,11 +7717,11 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 22
+        "composePhases": 23
       },
-      "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+    "latestApplicationSourceCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7729,17 +7734,23 @@
     },
     {
       "id": "NATIVE-01",
-      "state": "ready_for_local_work",
+      "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Native Postgres/Redis and actual Compose",
-      "currentBlocker": "N new exact-source three-job CI; deployed operations remain open.",
-      "completedIncrement": "N first run full22 Compose/native passed; core audit failed. Patched follow-up local build/audits passed."
+      "currentBlocker": "P own exact-source three-job CI pending; production/deployed acceptance separate.",
+      "completedIncrement": "O exact-source all-three-job CI verified; P local86 focused and19 runtime phases pass.",
+      "status": "local_verified_own_exact_commit_ci_pending",
+      "nextAction": "Publish P normally and inspect/fix ALL THREE jobs and every required step on exact final commit, including full24-phase fresh-image Compose. Pair external final receipt and source ZIP. Then close planned local fixture recovery and select next product task from taskboard; production durability and live-provider acceptance stay open.",
+      "currentEvidence": "docs/qa/recovery01p-evidence.json"
     },
     {
       "id": "RECOVERY-01",
-      "state": "ready_for_local_work",
+      "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Native populated upgrade and cross-store recovery",
-      "completedIncrement": "A–M verified; N first published run full22 Compose/native passed but core audit failed. Patched follow-up passes local build/audits/focused tests.",
-      "currentBlocker": "N new exact-source three-job CI; production/live/master acceptance remains open."
+      "completedIncrement": "O exact-source all-three-job CI verified; P local86 focused and19 runtime phases pass.",
+      "currentBlocker": "P own exact-source three-job CI pending; production/deployed acceptance separate.",
+      "status": "local_verified_own_exact_commit_ci_pending",
+      "nextAction": "Publish P normally and inspect/fix ALL THREE jobs and every required step on exact final commit, including full24-phase fresh-image Compose. Pair external final receipt and source ZIP. Then close planned local fixture recovery and select next product task from taskboard; production durability and live-provider acceptance stay open.",
+      "currentEvidence": "docs/qa/recovery01p-evidence.json"
     },
     {
       "id": "AI-LIVE-01",
@@ -7872,9 +7883,9 @@
     }
   ],
   "lastChanges": [
-    "Imported N final exact-source three-job receipt and reconciled N publication fields.",
-    "O retained base/WAL recovery and fail-closed historical version/provider admission; 22 predecessor Compose phases retained.",
-    "O local validation passed; own exact final commit and CI pending."
+    "Imported O final exact-source three-job receipt and reconciled active publication fields.",
+    "P genuine live claims recovered through archived WAL with source PostgreSQL/S3 stopped; all predecessor assertions retained.",
+    "P local verification passed; own exact commit CI pending."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -7913,13 +7924,13 @@
   },
   "checkpointVerificationEvidence": "docs/qa/recovery01n-evidence.json",
   "latestStatus": {
-    "taskId": "RECOVERY-01O",
+    "taskId": "RECOVERY-01P",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish O normally; inspect/fix all three jobs and required steps, including full23-phase fresh-source Compose, on exact final commit. Pair external final CI receipt with fresh source ZIP; then RECOVERY-01P."
+    "nextAction": "Publish P normally and inspect/fix ALL THREE jobs and every required step on exact final commit, including full24-phase fresh-image Compose. Pair external final receipt and source ZIP. Then close planned local fixture recovery and select next product task from taskboard; production durability and live-provider acceptance stay open."
   },
   "activeTask": {
-    "id": "RECOVERY-01O",
-    "title": "Retained WAL target and cross-store startup prerequisites",
+    "id": "RECOVERY-01P",
+    "title": "Live claims at named WAL target during source-store outage",
     "status": "local_verified_own_exact_commit_ci_pending"
   },
   "workspaceRecovery": {
@@ -7933,17 +7944,17 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "RECOVERY-01O",
-    "status": "local_verified_requires_own_exact_source_all_three_jobs",
-    "baseCommit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+    "taskId": "RECOVERY-01P",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "baseCommit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
     "paths": [
       "AGENTS.md",
       "START_HERE.md",
       "PROJECT_STATUS.md",
-      "REQUIREMENTS_MATRIX.md",
       "docs/PROJECT_STATUS.md",
       "docs/TASK_BOARD.md",
       "docs/SESSION_LOG.md",
+      "REQUIREMENTS_MATRIX.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
@@ -7951,21 +7962,22 @@
       "docs/VERIFICATION_REPORT.md",
       "RESUME_PROMPT.txt",
       "PROJECT_CHECKPOINT.json",
-      "docs/PHYSICAL_RETENTION_GATE.md",
-      "docs/qa/recovery01n-final-ci-receipt.json",
-      "docs/qa/recovery01o-unit-receipts.json",
-      "docs/qa/recovery01o-evidence.json",
+      "docs/PHYSICAL_INFLIGHT_WAL_RECOVERY.md",
+      "docs/qa/recovery01o-final-ci-receipt.json",
+      "docs/qa/recovery01p-unit-receipts.json",
+      "docs/qa/recovery01p-evidence.json",
       "docs/qa/handoff-verification.json",
       "docs/qa/github-publication.json",
       "docs/qa/verification-summary.json",
-      "scripts/retained-recovery-set.mjs",
+      "scripts/physical-inflight-wal.mjs",
+      "scripts/physical-worker-interruption.mjs",
+      "scripts/compose-recovery-provider.mjs",
       "scripts/verify-compose.mjs",
-      "scripts/verify-postgres-pitr.mjs",
-      "tests/retained-recovery-set.test.ts",
+      "tests/physical-inflight-wal.test.ts",
       "CHECKPOINT_MANIFEST.json"
     ],
     "requiresAllThreeJobsOnOwnCommit": true,
-    "finalReceipt": "External recovery01o-final-ci-receipt.json paired with fresh portable source ZIP"
+    "finalReceipt": "External recovery01p-final-ci-receipt.json paired with source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8437,16 +8449,16 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "RECOVERY-01N",
-    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-    "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-    "runId": 40124492777,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+    "taskId": "RECOVERY-01O",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+    "runId": 40224355433,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 369,
+      "unit": 372,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -8454,9 +8466,9 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 22
+      "composePhases": 23
     },
-    "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8552,19 +8564,19 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "RECOVERY-01O",
+    "taskId": "RECOVERY-01P",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01N",
-      "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-      "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-      "runId": 40124492777,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+      "taskId": "RECOVERY-01O",
+      "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+      "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+      "runId": 40224355433,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 369,
+        "unit": 372,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -8572,34 +8584,27 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 22
+        "composePhases": 23
       },
-      "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
     },
     "local": {
-      "focusedTests": 82,
-      "uniqueFocusedReceipts": 82,
-      "unitReceiptsSha256": "1b1ef6f15e95b20bb0c65b74cbce2452c432961f5c033f8811f04bd29df9b777",
-      "nativePitrPassed": true,
-      "nativeReportSha256": "4a49e9643bca62a3cc27276e5999604454ede54620cbfda7f52e897067f61d38",
-      "nativeMigrations": 24,
-      "nativeTablesCompared": 37,
-      "missingAndCorruptRetainedWalDenied": true,
+      "focusedTests": 86,
+      "failedTests": 0,
+      "unitReceiptsSha256": "f5c28c3a0abe2e54e42dea33f2f2c29e1cc76e40e31a86e1f2cc77eee32b079f",
       "composeIntegrationPassed": true,
-      "composePhases": 23,
-      "composeReportSha256": "651d7370ce966bc02c141694aa43b9e8655ae73f353d1255880bcdf52c8a1b1d",
+      "composePhases": 19,
+      "verificationMode": "diagnostic-p-focused-inspected-unchanged-images",
+      "composeReportSha256": "ced009d3645b647880b8e77b472c4efe07d5e19041ed1a7025c34a50c5a26bd8",
       "composeCleanupAndRealEnvironmentUnchanged": true,
-      "retainedHistoricalVersions": 3,
-      "retainedGateDeniedControls": 9,
-      "retainedGateAdmittedCallbacks": 1,
-      "composeStartedBeforeFinalNativeControlAndFreshPreflightEdits": true,
+      "actualWalFaultsDenied": 2,
+      "admissionControlsDenied": 10,
+      "admissionCallbacks": 1,
+      "historicalObjects": 4,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
       "protectedMasterAndMigrationsChanged": false,
-      "protectedHashesUnchanged": 25,
-      "composeProcessExitCode": 0,
-      "configurationPassed": true,
-      "retainedBaseManifestIdentityReread": true
+      "freshLocalImagesClaimed": false
     }
   },
   "social01PolicyReview": {
@@ -13828,7 +13833,7 @@
     ],
     "nextTask": "RECOVERY-01C backup failure/quiescence and in-flight queue/cross-store consistency audit"
   },
-  "nextRecoveryIncrement": "RECOVERY-01O",
+  "nextRecoveryIncrement": null,
   "recovery01c": {
     "schemaVersion": 1,
     "taskId": "RECOVERY-01C",
@@ -16093,16 +16098,16 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01N",
-    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-    "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-    "runId": 40124492777,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+    "taskId": "RECOVERY-01O",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+    "runId": 40224355433,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 369,
+      "unit": 372,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -16110,9 +16115,9 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 22
+      "composePhases": 23
     },
-    "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -21313,6 +21318,236 @@
       "named WAL target precedes actual worker claims; N live-claim online point is separate",
       "synthetic provider only; no atomic production PostgreSQL/S3 PITR",
       "live/deployed/full-master acceptance and 21 broad task tracks remain open"
+    ]
+  },
+  "localFixtureClosure": {
+    "lastPlannedIncrement": "RECOVERY-01P",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "afterOwnCi": "close local fixture work and move to next product task",
+    "productionGates": [
+      "durable backup/retention/RPO-RTO",
+      "deployed real-provider restore"
+    ]
+  },
+  "recovery01p": {
+    "schemaVersion": 1,
+    "taskId": "RECOVERY-01P",
+    "recordedAtUtc": "2026-10-26T00:20:00.029Z",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "RECOVERY-01O",
+      "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+      "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+      "runId": 40224355433,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 372,
+        "http": 38,
+        "browser": 28,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 23
+      },
+      "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
+    },
+    "scope": "Genuine live claims at a named archived WAL target; separate fixture recovery stores with source PostgreSQL/S3 stopped. All 23 predecessor phases/assertions retained in full verifier.",
+    "checks": {
+      "focusedTests": 86,
+      "failedTests": 0,
+      "unitReceiptsSha256": "f5c28c3a0abe2e54e42dea33f2f2c29e1cc76e40e31a86e1f2cc77eee32b079f",
+      "composeIntegrationPassed": true,
+      "composePhases": 19,
+      "verificationMode": "diagnostic-p-focused-inspected-unchanged-images",
+      "composeReportSha256": "ced009d3645b647880b8e77b472c4efe07d5e19041ed1a7025c34a50c5a26bd8",
+      "composeCleanupAndRealEnvironmentUnchanged": true,
+      "actualWalFaultsDenied": 2,
+      "admissionControlsDenied": 10,
+      "admissionCallbacks": 1,
+      "historicalObjects": 4,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "protectedMasterAndMigrationsChanged": false,
+      "freshLocalImagesClaimed": false
+    },
+    "inflightWalRecovery": {
+      "passed": true,
+      "baseSnapshotSha256": "8e2aeebbf4306299439b9bb978285abae0ac7c44b6070cb7424cdb816c2cc34d",
+      "targetSnapshotSha256": "e783a34f507f2c0cade73225cfeabffb15d72109536b283897767f4188b8ac51",
+      "restoredSnapshotSha256": "e783a34f507f2c0cade73225cfeabffb15d72109536b283897767f4188b8ac51",
+      "targetName": "omos_inflight_4ac1d23a369e5a2b",
+      "targetLsn": "0/7000210",
+      "sourceTimeline": 2,
+      "targetSegment": "000000020000000000000007",
+      "targetWalSha256": "fbd17dc33eb9e752b1ba90ea2e6d21c04788b61eddf2d2393e769688492ac529",
+      "walArchiveSha256": "b54b0e8da8ae35d42c3519076da57bbd75759fced5c05f7dafbebd2c9bbfc5cc",
+      "receiptHash": "e3f88cd973ba6457a8185ec0a493c27e53782772100b5cb04e4cd1c7d33c56f0",
+      "expectedWalReviewSha256": "aa1ebd6e7c7a9f7d9d49e4d640e16239aafd608cd6d6c25652d2d31a50c7d3dc",
+      "historicalObjects": 4,
+      "admissionControlsDenied": 10,
+      "admissionCallbacks": 1,
+      "actualWalFaultsDenied": 2,
+      "sourcePostgresAndStorageStopped": true,
+      "applicationRecovery": {
+        "passed": true,
+        "naturalLeaseExpiryWithoutEdits": true,
+        "checks": {
+          "restoredHttpAuthentication": true,
+          "historicalMediaServedByActualApi": true,
+          "anonymousAndCrossTenantMediaDenied": true,
+          "restoredClientRoleDeniedWrite": true,
+          "restoredRevisionConflictAndApprovalInvalidation": true,
+          "laterDatabaseChangesExcluded": true,
+          "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+          "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+          "physicalRenderRetryPreservedFrozenInputs": true,
+          "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+          "physicalAmbiguousMediaCreditsHeldForReview": true,
+          "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+          "physicalValidImagesDecoded": true,
+          "physicalRenderQueueCompleted": true,
+          "physicalRetainedMediaIngestedWithoutSubmission": true,
+          "physicalOutputDimensionsDurationAndDecodePassed": true,
+          "physicalNewOutputsPrivateAndTenantScoped": true,
+          "physicalMediaReservationsSettledOnce": true,
+          "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+          "physicalInterruptedRenderPreservedAfterRetry": true,
+          "physicallyRecoveredQueuedJobReconstructed": true,
+          "postTargetEffectNotReplayed": true,
+          "uncertainJobFailedForReview": true,
+          "oneCreditSettlementAndOriginalLedgerPreserved": true,
+          "restoredLedgerImmutable": true,
+          "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+          "physicalMediaRowsQueuesAndBytesStableAfterRestart": true
+        },
+        "mediaOutputHashes": {
+          "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+          "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+          "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/6413b0f4-d6a8-4684-9b55-9cc4a9b1bfdd/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/6413b0f4-d6a8-4684-9b55-9cc4a9b1bfdd/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+          "7cdd0796-a51e-442a-aab9-111111111111/renders/6413b0f4-d6a8-4684-9b55-9cc4a9b1bfdd/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+          "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+        }
+      },
+      "checks": {
+        "liveClaimsAbsentFromBasePresentAtWalTarget": true,
+        "actualNativeWalReplayAndPromotion": true,
+        "postTargetMarkersExcluded": true,
+        "independentFixtureStoresRecoverDuringSourceOutage": true,
+        "actualProviderReceiptBoundWithoutResubmission": true,
+        "restoredApplicationWorkersVerified": true
+      }
+    },
+    "localPhaseResults": [
+      {
+        "name": "isolated configuration",
+        "passed": true,
+        "durationMs": 2208
+      },
+      {
+        "name": "inspect unchanged application and pinned MinIO fixture images",
+        "passed": true,
+        "durationMs": 517
+      },
+      {
+        "name": "complete Compose startup",
+        "passed": true,
+        "durationMs": 60896
+      },
+      {
+        "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+        "passed": true,
+        "durationMs": 11344
+      },
+      {
+        "name": "real SMTP delivery",
+        "passed": true,
+        "durationMs": 354
+      },
+      {
+        "name": "quiesced native database and private-object backup",
+        "passed": true,
+        "durationMs": 15881
+      },
+      {
+        "name": "reject incomplete/corrupt backups while preserving original source",
+        "passed": true,
+        "durationMs": 7000
+      },
+      {
+        "name": "historical private-object versions and external-effect reconciliation prerequisites",
+        "passed": true,
+        "durationMs": 10324
+      },
+      {
+        "name": "physical worker process kills and ambiguous media provider recovery",
+        "passed": true,
+        "durationMs": 551096
+      },
+      {
+        "name": "capture real in-flight claims and provider effect in a second physical point",
+        "passed": true,
+        "durationMs": 2
+      },
+      {
+        "name": "verify retained WAL target and historical private-object recovery set",
+        "passed": true,
+        "durationMs": 3
+      },
+      {
+        "name": "restore actual live claims from WAL during source-store outage",
+        "passed": true,
+        "durationMs": 1
+      },
+      {
+        "name": "remove original disposable source targets",
+        "passed": true,
+        "durationMs": 12916
+      },
+      {
+        "name": "restore into separate PostgreSQL and MinIO targets",
+        "passed": true,
+        "durationMs": 26720
+      },
+      {
+        "name": "bind restored application references to historical versions",
+        "passed": true,
+        "durationMs": 11998
+      },
+      {
+        "name": "partial private-object failure, gated startup and clean retry",
+        "passed": true,
+        "durationMs": 49023
+      },
+      {
+        "name": "restored records/media/tenant access through actual application",
+        "passed": true,
+        "durationMs": 3437
+      },
+      {
+        "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+        "passed": true,
+        "durationMs": 16529
+      },
+      {
+        "name": "restart all three workers without replay or duplicate settlements",
+        "passed": true,
+        "durationMs": 5538
+      }
+    ],
+    "currentSourceOwnCiPending": true,
+    "localVerificationLimits": "19-phase P-focused diagnostic uses inspected unchanged O application/MinIO images, skips initial I and separate J/K/L modes and replaces image build with inspection. Full source retains all phases. Exact final CI must build fresh images and pass all24 phases.",
+    "limitations": [
+      "Owned local Docker volumes prove source-store outage isolation, not remote durability or atomic production cross-store PITR.",
+      "The synthetic provider receipt ledger remains available independently; no live-provider reconciliation is claimed.",
+      "Production backup scheduling/retention/RPO-RTO and deployed real-provider recovery remain separate acceptance gates.",
+      "21 broad product task tracks remain open; no automatic RECOVERY-01Q increment is planned."
     ]
   }
 }

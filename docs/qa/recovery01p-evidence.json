@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01P",
+  "recordedAtUtc": "2026-10-26T00:20:00.029Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "RECOVERY-01O",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+    "runId": 40224355433,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 372,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 23
+    },
+    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
+  },
+  "scope": "Genuine live claims at a named archived WAL target; separate fixture recovery stores with source PostgreSQL/S3 stopped. All 23 predecessor phases/assertions retained in full verifier.",
+  "checks": {
+    "focusedTests": 86,
+    "failedTests": 0,
+    "unitReceiptsSha256": "f5c28c3a0abe2e54e42dea33f2f2c29e1cc76e40e31a86e1f2cc77eee32b079f",
+    "composeIntegrationPassed": true,
+    "composePhases": 19,
+    "verificationMode": "diagnostic-p-focused-inspected-unchanged-images",
+    "composeReportSha256": "ced009d3645b647880b8e77b472c4efe07d5e19041ed1a7025c34a50c5a26bd8",
+    "composeCleanupAndRealEnvironmentUnchanged": true,
+    "actualWalFaultsDenied": 2,
+    "admissionControlsDenied": 10,
+    "admissionCallbacks": 1,
+    "historicalObjects": 4,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "protectedMasterAndMigrationsChanged": false,
+    "freshLocalImagesClaimed": false
+  },
+  "inflightWalRecovery": {
+    "passed": true,
+    "baseSnapshotSha256": "8e2aeebbf4306299439b9bb978285abae0ac7c44b6070cb7424cdb816c2cc34d",
+    "targetSnapshotSha256": "e783a34f507f2c0cade73225cfeabffb15d72109536b283897767f4188b8ac51",
+    "restoredSnapshotSha256": "e783a34f507f2c0cade73225cfeabffb15d72109536b283897767f4188b8ac51",
+    "targetName": "omos_inflight_4ac1d23a369e5a2b",
+    "targetLsn": "0/7000210",
+    "sourceTimeline": 2,
+    "targetSegment": "000000020000000000000007",
+    "targetWalSha256": "fbd17dc33eb9e752b1ba90ea2e6d21c04788b61eddf2d2393e769688492ac529",
+    "walArchiveSha256": "b54b0e8da8ae35d42c3519076da57bbd75759fced5c05f7dafbebd2c9bbfc5cc",
+    "receiptHash": "e3f88cd973ba6457a8185ec0a493c27e53782772100b5cb04e4cd1c7d33c56f0",
+    "expectedWalReviewSha256": "aa1ebd6e7c7a9f7d9d49e4d640e16239aafd608cd6d6c25652d2d31a50c7d3dc",
+    "historicalObjects": 4,
+    "admissionControlsDenied": 10,
+    "admissionCallbacks": 1,
+    "actualWalFaultsDenied": 2,
+    "sourcePostgresAndStorageStopped": true,
+    "applicationRecovery": {
+      "passed": true,
+      "naturalLeaseExpiryWithoutEdits": true,
+      "checks": {
+        "restoredHttpAuthentication": true,
+        "historicalMediaServedByActualApi": true,
+        "anonymousAndCrossTenantMediaDenied": true,
+        "restoredClientRoleDeniedWrite": true,
+        "restoredRevisionConflictAndApprovalInvalidation": true,
+        "laterDatabaseChangesExcluded": true,
+        "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+        "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+        "physicalRenderRetryPreservedFrozenInputs": true,
+        "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+        "physicalAmbiguousMediaCreditsHeldForReview": true,
+        "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+        "physicalValidImagesDecoded": true,
+        "physicalRenderQueueCompleted": true,
+        "physicalRetainedMediaIngestedWithoutSubmission": true,
+        "physicalOutputDimensionsDurationAndDecodePassed": true,
+        "physicalNewOutputsPrivateAndTenantScoped": true,
+        "physicalMediaReservationsSettledOnce": true,
+        "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+        "physicalInterruptedRenderPreservedAfterRetry": true,
+        "physicallyRecoveredQueuedJobReconstructed": true,
+        "postTargetEffectNotReplayed": true,
+        "uncertainJobFailedForReview": true,
+        "oneCreditSettlementAndOriginalLedgerPreserved": true,
+        "restoredLedgerImmutable": true,
+        "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+        "physicalMediaRowsQueuesAndBytesStableAfterRestart": true
+      },
+      "mediaOutputHashes": {
+        "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+        "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+        "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+        "7cdd0796-a51e-442a-aab9-111111111111/renders/6413b0f4-d6a8-4684-9b55-9cc4a9b1bfdd/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+        "7cdd0796-a51e-442a-aab9-111111111111/renders/6413b0f4-d6a8-4684-9b55-9cc4a9b1bfdd/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+        "7cdd0796-a51e-442a-aab9-111111111111/renders/6413b0f4-d6a8-4684-9b55-9cc4a9b1bfdd/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+        "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+      }
+    },
+    "checks": {
+      "liveClaimsAbsentFromBasePresentAtWalTarget": true,
+      "actualNativeWalReplayAndPromotion": true,
+      "postTargetMarkersExcluded": true,
+      "independentFixtureStoresRecoverDuringSourceOutage": true,
+      "actualProviderReceiptBoundWithoutResubmission": true,
+      "restoredApplicationWorkersVerified": true
+    }
+  },
+  "localPhaseResults": [
+    {
+      "name": "isolated configuration",
+      "passed": true,
+      "durationMs": 2208
+    },
+    {
+      "name": "inspect unchanged application and pinned MinIO fixture images",
+      "passed": true,
+      "durationMs": 517
+    },
+    {
+      "name": "complete Compose startup",
+      "passed": true,
+      "durationMs": 60896
+    },
+    {
+      "name": "auth, tenant isolation, upload, real render, idempotency and no-key behavior",
+      "passed": true,
+      "durationMs": 11344
+    },
+    {
+      "name": "real SMTP delivery",
+      "passed": true,
+      "durationMs": 354
+    },
+    {
+      "name": "quiesced native database and private-object backup",
+      "passed": true,
+      "durationMs": 15881
+    },
+    {
+      "name": "reject incomplete/corrupt backups while preserving original source",
+      "passed": true,
+      "durationMs": 7000
+    },
+    {
+      "name": "historical private-object versions and external-effect reconciliation prerequisites",
+      "passed": true,
+      "durationMs": 10324
+    },
+    {
+      "name": "physical worker process kills and ambiguous media provider recovery",
+      "passed": true,
+      "durationMs": 551096
+    },
+    {
+      "name": "capture real in-flight claims and provider effect in a second physical point",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "verify retained WAL target and historical private-object recovery set",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "restore actual live claims from WAL during source-store outage",
+      "passed": true,
+      "durationMs": 1
+    },
+    {
+      "name": "remove original disposable source targets",
+      "passed": true,
+      "durationMs": 12916
+    },
+    {
+      "name": "restore into separate PostgreSQL and MinIO targets",
+      "passed": true,
+      "durationMs": 26720
+    },
+    {
+      "name": "bind restored application references to historical versions",
+      "passed": true,
+      "durationMs": 11998
+    },
+    {
+      "name": "partial private-object failure, gated startup and clean retry",
+      "passed": true,
+      "durationMs": 49023
+    },
+    {
+      "name": "restored records/media/tenant access through actual application",
+      "passed": true,
+      "durationMs": 3437
+    },
+    {
+      "name": "fresh-Redis reconstruction and uncertain/private-output recovery",
+      "passed": true,
+      "durationMs": 16529
+    },
+    {
+      "name": "restart all three workers without replay or duplicate settlements",
+      "passed": true,
+      "durationMs": 5538
+    }
+  ],
+  "currentSourceOwnCiPending": true,
+  "localVerificationLimits": "19-phase P-focused diagnostic uses inspected unchanged O application/MinIO images, skips initial I and separate J/K/L modes and replaces image build with inspection. Full source retains all phases. Exact final CI must build fresh images and pass all24 phases.",
+  "limitations": [
+    "Owned local Docker volumes prove source-store outage isolation, not remote durability or atomic production cross-store PITR.",
+    "The synthetic provider receipt ledger remains available independently; no live-provider reconciliation is claimed.",
+    "Production backup scheduling/retention/RPO-RTO and deployed real-provider recovery remain separate acceptance gates.",
+    "21 broad product task tracks remain open; no automatic RECOVERY-01Q increment is planned."
+  ],
+  "additionalChecks": {
+    "finalConfigurationOnlyPassed": true,
+    "protectedHashesUnchanged": 25
+  },
+  "localCommandNotes": [
+    "An unsupported --help invocation was refused by the native-test opt-in guard.",
+    "A mistaken --configuration-only flag started an owned fixture image build; its verifier was stopped before service startup. Correct --config-only passed. No populated services were targeted.",
+    "Initial package validation detected a taskboard/state spelling mismatch; reconciled before packaging."
+  ]
+}

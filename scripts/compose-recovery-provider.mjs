@@ -1,13 +1,33 @@
-// Isolated Compose fixture only. No upstream calls, real keys or business data.
+// Isolated Compose fixture only. Optional read-only fixture receipt proxy;
+// no live-provider calls, real keys or business data.
 import { createServer } from "node:http";
 import { randomUUID, createHash } from "node:crypto";
-export function createRecoveryProvider() {
+export function createRecoveryProvider({ readReceipt } = {}) {
   const calls = {};
   const effects = new Map();
   const workerBarriers = new Map(),
     mediaEffects = new Map();
   return createServer(async (req, res) => {
     res.setHeader("Content-Type", "application/json");
+    if (readReceipt && /^\/(worker-|historical-effects)/.test(req.url || "")) {
+      if (
+        req.method !== "GET" ||
+        !/^\/(?:worker-barriers\/[a-f0-9]{16}|historical-effects\/history-[a-f0-9]{16})$/.test(
+          req.url,
+        )
+      ) {
+        res.writeHead(405);
+        res.end("{}");
+        return;
+      }
+      try {
+        res.end(JSON.stringify(await readReceipt(req.url)));
+      } catch {
+        res.writeHead(503);
+        res.end("{}");
+      }
+      return;
+    }
     if (req.url?.startsWith("/worker-")) {
       try {
         const match =

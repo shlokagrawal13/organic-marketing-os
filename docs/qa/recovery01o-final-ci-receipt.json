@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01O",
+  "status": "exact_final_commit_all_three_jobs_and_artifact_bytes_verified",
+  "recordedAtUtc": "2026-10-25T19:24:23.468Z",
+  "final": true,
+  "sourceCapsulePendingOwnCiClosedByThisReceipt": true,
+  "source": {
+    "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+    "remoteMainMatched": true,
+    "workingTreeClean": true,
+    "checkpointManifestCheck": "632 included files; no drift"
+  },
+  "sourcePackage": {
+    "path": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01o-source.zip",
+    "bytes": 16081312,
+    "sha256": "7f53dc6d672a7d30a11fb1d1ce7d5b43d1a59d513aa176557814f209c1726f72",
+    "zipCrcPassed": true,
+    "sourceAndManifestMatch": true,
+    "sourceFiles": 632,
+    "zipMembers": 633
+  },
+  "githubActions": {
+    "runId": 40224355433,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "startedAtUtc": "2026-10-25T19:05:28Z",
+    "completedAtUtc": "2026-10-25T19:22:35Z",
+    "jobs": [
+      {
+        "id": 121262454094,
+        "name": "Native application verification",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433/job/121262454094",
+        "headSha": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install test object storage",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install media dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned test CJK fonts",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run unit tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify bounded small-screen English readability",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit production dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated upgrade",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify native application flows",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload browser evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 121262454322,
+        "name": "Disposable Compose and native restore",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433/job/121262454322",
+        "headSha": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify complete Compose and native cross-store restore",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized Compose evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 121262454437,
+        "name": "Native populated upgrade and migration recovery",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433/job/121262454437",
+        "headSha": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated native Prisma upgrades and interrupted migration recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify physical PostgreSQL backup and WAL point-in-time recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized PostgreSQL PITR evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized native upgrade evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "verification": {
+    "unit": 372,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "migrations": 24,
+    "reviewedCoreLogUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433/job/121262454094",
+    "passSummaries": [
+      372,
+      38,
+      5
+    ],
+    "failSummaries": [
+      0,
+      0,
+      0
+    ],
+    "coreVerificationPassed": true,
+    "summaryLines": [
+      "2026-10-25T19:06:10.5208786Z found 0 vulnerabilities",
+      "2026-10-25T19:14:09.6551347Z ℹ tests 372",
+      "2026-10-25T19:14:09.6552316Z ℹ pass 372",
+      "2026-10-25T19:14:09.6552722Z ℹ fail 0",
+      "2026-10-25T19:14:33.9544924Z found 0 vulnerabilities",
+      "2026-10-25T19:14:34.4046828Z found 0 vulnerabilities",
+      "2026-10-25T19:14:44.3929718Z 24 migrations found in prisma/migrations",
+      "2026-10-25T19:17:57.9879570Z ℹ tests 38",
+      "2026-10-25T19:17:57.9880390Z ℹ pass 38",
+      "2026-10-25T19:17:57.9880705Z ℹ fail 0",
+      "2026-10-25T19:19:28.6243046Z   28 passed (1.5m)",
+      "2026-10-25T19:22:27.7660695Z ℹ tests 5",
+      "2026-10-25T19:22:27.7661783Z ℹ pass 5",
+      "2026-10-25T19:22:27.7662210Z ℹ fail 0",
+      "2026-10-25T19:22:27.7721786Z Verification passed against configured native PostgreSQL and Redis.",
+      "2026-10-25T19:22:30.5000978Z SHA256 digest of uploaded artifact zip is d151d5785cb51b73a89380a687d2d4f3646927c6567b58b5bb0492ce4cd169e5"
+    ],
+    "readabilitySamples": 44,
+    "composePhases": 23,
+    "retainedHistoricalVersions": 3,
+    "retentionGateDeniedControls": 9,
+    "retentionGateAdmittedCallbacks": 1,
+    "actualMissingAndCorruptRetainedWalDenied": true,
+    "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+    "protectedMasterMigrationHashesUnchanged": 25
+  },
+  "artifacts": [
+    {
+      "id": 12611356765,
+      "name": "browser-evidence",
+      "bytes": 13477960,
+      "zipSha256": "d151d5785cb51b73a89380a687d2d4f3646927c6567b58b5bb0492ce4cd169e5",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 153,
+      "jsonMembers": {
+        ".local/unit-receipts.json": {
+          "bytes": 124018,
+          "sha256": "2f5725926978737942f21ae866b1b629dee1962d74e70b9018737925f17ac5fb",
+          "crc32": "e93704cb"
+        },
+        ".local/readability/run-lBxIUH/report.json": {
+          "bytes": 18940,
+          "sha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+          "crc32": "31013bb8"
+        }
+      },
+      "verification": {
+        "unitPassed": 372,
+        "uniqueUnitReceipts": 372,
+        "readabilitySamples": 44,
+        "readabilityNegativeControlPassed": true
+      }
+    },
+    {
+      "id": 12611115152,
+      "name": "postgres-pitr-evidence",
+      "bytes": 2911,
+      "zipSha256": "4d28d705e4824e67fbd7b21120d5306ae7046a77472318ed552a9ca7ded7a8c8",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "postgres-pitr-evidence.json": {
+          "bytes": 7278,
+          "sha256": "c2ff6fd906d2e2ea7fa76245101ceff947a8bfa020854552d521c211c0bdd9fe",
+          "crc32": "8e0cffbc"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01F",
+        "passed": true
+      }
+    },
+    {
+      "id": 12611036461,
+      "name": "compose-evidence",
+      "bytes": 15129,
+      "zipSha256": "6e085fb7b03c6361fa1fbc2e18a5e8847feee8ec109da5bb64c91f40c909bc6c",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "compose-evidence.json": {
+          "bytes": 122555,
+          "sha256": "30c635d092e2979f58771f06e34d437f921a92edf0b91c2437eba23e8aef1e59",
+          "crc32": "5bda4f29"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01O",
+        "passed": true,
+        "phases": 23,
+        "retainedRecoverySet": {
+          "reviewSha256": "76dafea8c194e4831a6576094f8d7c469d206add28cd5dd73ddb04aa80a80689",
+          "baseManifestSha256": "dbb72d3a6f99ce0100f294c60fc78a0a30fd5405caa61e1077a3580522b2b2c0",
+          "targetLsn": "0/3006180",
+          "targetWalSegment": "000000010000000000000003",
+          "targetWalSha256": "cc6c7e734cf61fa51293ef249786017ecf18b19e13c2411a0770ff943da6a668",
+          "historicalVersions": 3,
+          "deniedControls": 9,
+          "admittedCallbacks": 1
+        },
+        "actualMissingAndCorruptRetainedWalDenied": true,
+        "inflightPointSnapshotEqual": true,
+        "cleanupAndRealEnvironmentUnchanged": true
+      }
+    },
+    {
+      "id": 12610104750,
+      "name": "native-upgrade-evidence",
+      "bytes": 924,
+      "zipSha256": "e57e7a83663271d63a238119723ed4727cde3772cef5a19fa70470300badcd4f",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "native-upgrade-evidence.json": {
+          "bytes": 2370,
+          "sha256": "035630e54ab9c676f089a4ef1c91413148d6c385a35aee95a406cd73c81c8ab9",
+          "crc32": "424f1666"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01B",
+        "passed": true
+      }
+    }
+  ],
+  "priorVerifiedPublication": {
+    "taskId": "RECOVERY-01N",
+    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
+    "runId": 40124492777,
+    "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+  },
+  "scope": "Fixture uses separately retained local base/WAL copies for actual named-target recovery, then gates populated application startup on pinned physical identity, historical private versions, exact restored bytes and reviewed provider effects. All 22 predecessor phases remain.",
+  "limits": [
+    "retained copies share generated tmpfs; independent-site durability and production retention operations are open",
+    "named WAL target precedes actual worker claims; the N live-claim point remains a separate online backup",
+    "synthetic provider only; atomic production PostgreSQL/S3 PITR is not accepted",
+    "CI verifies fixtures and does not deploy"
+  ],
+  "remaining": [
+    "RECOVERY-01P: genuine in-flight claims at a WAL target and independently retained cross-store recovery set",
+    "production durability, scheduled backup/retention, encryption/access and measured RPO/RTO",
+    "real-provider reconciliation, populated publication and live/deployed/full-master acceptance",
+    "21 broad task tracks remain open"
+  ],
+  "deploymentClaimed": false
+}

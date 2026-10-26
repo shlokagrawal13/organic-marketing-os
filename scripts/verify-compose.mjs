@@ -13,6 +13,10 @@ import {
 import { interruptPhysicalWorkers } from "./physical-worker-interruption.mjs";
 import { captureInflightPhysicalPoint } from "./physical-inflight-point.mjs";
 import {
+  prepareInflightWalPoint,
+  captureInflightWalPoint,
+} from "./physical-inflight-wal.mjs";
+import {
   createRetainedRecoveryReview,
   withRetainedRecoverySet,
 } from "./retained-recovery-set.mjs";
@@ -58,7 +62,8 @@ const root = resolve(import.meta.dirname, ".."),
   source = fixtureProject(suffix),
   restored = fixtureProject(suffix, true),
   physical = fixtureProject(randomBytes(8).toString("hex"), true),
-  inflight = fixtureProject(randomBytes(8).toString("hex"), true);
+  inflight = fixtureProject(randomBytes(8).toString("hex"), true),
+  walpoint = fixtureProject(randomBytes(8).toString("hex"), true);
 const dir = resolve(root, ".local", "compose-verification", suffix);
 mkdirSync(dir, { recursive: true, mode: 0o700 });
 const realEnv = resolve(root, ".env"),
@@ -177,6 +182,21 @@ writeFileSync(
     "networks:\n  default:\n    internal: true\n",
   { mode: 0o600 },
 );
+const walSourceOverridePath = resolve(dir, "wal-source.override.yaml");
+writeFileSync(
+  walSourceOverridePath,
+  `services:\n  postgres:\n    command: ${JSON.stringify(["postgres", "-c", "archive_mode=on", "-c", "archive_command=mkdir -p /tmp/omos_fixture_archive && test ! -f /tmp/omos_fixture_archive/%f && cp %p /tmp/omos_fixture_archive/%f"])}\n`,
+  { mode: 0o600 },
+);
+const walTargetOverridePath = resolve(dir, "wal-target.override.yaml");
+const receiptProxyProvider =
+  readFileSync(resolve(root, "scripts/compose-recovery-provider.mjs"), "utf8") +
+  "\ncreateRecoveryProvider({readReceipt:async(path)=>{const r=await fetch('http://provider-receipts:4999'+path);if(!r.ok)throw Error('Provider receipt unavailable');return await r.json();}}).listen(4999,'0.0.0.0');";
+writeFileSync(
+  walTargetOverridePath,
+  `services:\n  postgres:\n    environment:\n      PGDATA: /var/lib/postgresql/data/pgdata\n  fixture-provider:\n    command: ${JSON.stringify(["node", "--input-type=module", "-e", receiptProxyProvider])}\n`,
+  { mode: 0o600 },
+);
 const fixtureScript = readFileSync(
   resolve(root, "scripts/verify-compose-fixture.mjs"),
   "utf8",
@@ -210,7 +230,7 @@ const historyEffectsModule = inlineModule(
 );
 const report = {
   schemaVersion: 1,
-  taskId: "RECOVERY-01O",
+  taskId: "RECOVERY-01P",
   baselineTaskId: "RECOVERY-01D",
   passed: false,
   startedAt: new Date().toISOString(),
@@ -292,9 +312,11 @@ function compose(project, args, options) {
       resolve(root, "compose.yaml"),
       "--file",
       overridePath,
-      ...([physical, inflight].includes(project)
+      ...([physical, inflight, walpoint].includes(project)
         ? ["--file", physicalOverridePath]
         : []),
+      ...(project === physical ? ["--file", walSourceOverridePath] : []),
+      ...(project === walpoint ? ["--file", walTargetOverridePath] : []),
       ...args,
     ],
     options,
@@ -441,7 +463,7 @@ async function port(project, service, target) {
   );
 }
 async function ready(project) {
-  if (project === physical) {
+  if ([physical, walpoint].includes(project)) {
     for (let i = 0; i < 120; i++) {
       try {
         await compose(
@@ -525,6 +547,14 @@ try {
     const physicalConfig = await config(physical);
     assert.equal(physicalConfig.networks.default.internal, true);
     for (const service of Object.values(physicalConfig.services))
+      assert.equal(service.ports?.length ?? 0, 0);
+    const walConfig = await config(walpoint);
+    assert.equal(walConfig.networks.default.internal, true);
+    assert.equal(
+      walConfig.services.postgres.environment.PGDATA,
+      "/var/lib/postgresql/data/pgdata",
+    );
+    for (const service of Object.values(walConfig.services))
       assert.equal(service.ports?.length ?? 0, 0);
     report.checks.generatedProjectPrivateEnvAndVolumeIsolation = true;
   });
@@ -1428,8 +1458,15 @@ try {
                         command,
                         node,
                         query,
-                        capturePoint: (barrier) =>
-                          captureInflightPhysicalPoint({
+                        preparePoint: () =>
+                          prepareInflightWalPoint({
+                            source: physical,
+                            nonce: suffix,
+                            compose,
+                            sourceQuery: query,
+                          }),
+                        capturePoint: async (barrier, prepared) => {
+                          const online = await captureInflightPhysicalPoint({
                             source: physical,
                             target: inflight,
                             nonce: suffix,
@@ -1459,7 +1496,164 @@ try {
                                 ],
                                 { input: sql, quiet: true },
                               ),
-                          }),
+                          });
+                          online.walPoint = await captureInflightWalPoint({
+                            source: physical,
+                            target: walpoint,
+                            nonce: suffix,
+                            prepared,
+                            barrier,
+                            compose,
+                            command,
+                            config,
+                            node,
+                            sourceQuery: query,
+                            recoverApplication: async ({
+                              snapshot,
+                              barrier: capturedBarrier,
+                              query: walQuery,
+                            }) => {
+                              const recoveredState = JSON.parse(
+                                JSON.stringify(appState),
+                              );
+                              recoveredState.processInterruption = {
+                                barrier: capturedBarrier,
+                              };
+                              const rows = [
+                                snapshot.rows.RenderJob.find(
+                                  (r) => r.id === ids.render,
+                                ),
+                                snapshot.rows.MediaGeneration.find(
+                                  (r) => r.id === ids.media,
+                                ),
+                                snapshot.rows.MediaGeneration.find(
+                                  (r) => r.id === ids.ambiguous,
+                                ),
+                              ];
+                              let expired = false;
+                              for (let i = 0; i < 85; i++) {
+                                assert.deepEqual(
+                                  await applicationSnapshot(walQuery),
+                                  snapshot,
+                                );
+                                if (
+                                  rows.every(
+                                    (row) =>
+                                      new Date(row.heartbeatAt).getTime() <
+                                      Date.now() - 60000,
+                                  )
+                                ) {
+                                  expired = true;
+                                  break;
+                                }
+                                await new Promise((resolve) =>
+                                  setTimeout(resolve, 1000),
+                                );
+                              }
+                              assert.ok(
+                                expired,
+                                "Restored WAL-target leases must expire naturally",
+                              );
+                              assert.equal(
+                                Number(
+                                  (
+                                    await compose(
+                                      walpoint,
+                                      [
+                                        "exec",
+                                        "-T",
+                                        "redis",
+                                        "redis-cli",
+                                        "DBSIZE",
+                                      ],
+                                      { quiet: true },
+                                    )
+                                  ).trim(),
+                                ),
+                                0,
+                              );
+                              await compose(
+                                walpoint,
+                                [
+                                  "up",
+                                  "-d",
+                                  "--no-build",
+                                  "--no-deps",
+                                  "api",
+                                  "web",
+                                  "worker",
+                                  "render-worker",
+                                  "media-worker",
+                                ],
+                                { quiet: true },
+                              );
+                              await ready(walpoint);
+                              const http = await node(
+                                walpoint,
+                                "physical-app-http",
+                                recoveredState,
+                              );
+                              recoveredState.interruption = await node(
+                                walpoint,
+                                "physical-media-interrupted",
+                                recoveredState,
+                              );
+                              recoveredState.ids = {
+                                ...ids,
+                                render:
+                                  recoveredState.interruption.retryRenderId,
+                              };
+                              const media = await node(
+                                walpoint,
+                                "physical-media-workers",
+                                recoveredState,
+                              );
+                              recoveredState.mediaAfter = media.after;
+                              recoveredState.mediaHashes = media.hashes;
+                              const work = await node(
+                                walpoint,
+                                "physical-app-workers",
+                                recoveredState,
+                              );
+                              recoveredState.after = work.after;
+                              recoveredState.restartAfter = Date.now();
+                              await compose(
+                                walpoint,
+                                [
+                                  "restart",
+                                  "worker",
+                                  "render-worker",
+                                  "media-worker",
+                                ],
+                                { quiet: true },
+                              );
+                              const restarted = await node(
+                                walpoint,
+                                "physical-app-restart",
+                                recoveredState,
+                              );
+                              const mediaRestart = await node(
+                                walpoint,
+                                "physical-media-restart",
+                                recoveredState,
+                              );
+                              return {
+                                passed: true,
+                                naturalLeaseExpiryWithoutEdits: true,
+                                checks: {
+                                  ...http,
+                                  ...recoveredState.interruption.checks,
+                                  ...media.checks,
+                                  ...work.checks,
+                                  ...restarted.checks,
+                                  ...mediaRestart.checks,
+                                },
+                                mediaOutputHashes: media.hashes,
+                              };
+                            },
+                          });
+                          return online;
+                        },
                       });
                     await compose(physical, [
                       "up",
@@ -1725,6 +1919,27 @@ try {
         report.retainedRecoverySet = retained;
         report.checks.retainedBaseAndWalUsedForNamedTargetRecovery = true;
         report.checks.historicalVersionAndProviderReviewGateApplicationStart = true;
+      },
+    );
+    await phase(
+      "restore actual live claims from WAL during source-store outage",
+      async () => {
+        const point = report.inflightPhysicalPoint.walPoint;
+        assert.equal(point.passed, true);
+        assert.equal(point.actualWalFaultsDenied, 2);
+        assert.equal(point.admissionControlsDenied, 10);
+        assert.equal(point.admissionCallbacks, 1);
+        assert.equal(point.historicalObjects, 4);
+        assert.equal(point.targetSnapshotSha256, point.restoredSnapshotSha256);
+        assert.notEqual(point.baseSnapshotSha256, point.targetSnapshotSha256);
+        assert.equal(point.applicationRecovery.passed, true);
+        assert.ok(Object.values(point.checks).every(Boolean));
+        report.inflightWalRecovery = point;
+        Object.assign(
+          report.checks,
+          point.checks,
+          point.applicationRecovery.checks,
+        );
       },
     );
     // Remove the entire original disposable stack and all its data volumes before
@@ -2033,6 +2248,7 @@ try {
       await cleanup(restored);
       await cleanup(physical);
       await cleanup(inflight);
+      await cleanup(walpoint);
       report.checks.fixtureCleanup = true;
     }
   } catch (error) {

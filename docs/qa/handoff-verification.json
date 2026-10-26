@@ -1,18 +1,18 @@
 {
-  "checkpointRevision": "recovery01o-20261026",
+  "checkpointRevision": "recovery01p-20261026",
   "applicationVersion": "0.9.2",
   "verifiedDate": "2026-10-26",
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01N",
-    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-    "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-    "runId": 40124492777,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+    "taskId": "RECOVERY-01O",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+    "runId": 40224355433,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 369,
+      "unit": 372,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -20,17 +20,17 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 22
+      "composePhases": 23
     },
-    "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
   },
   "sourcePackage": {
-    "taskId": "RECOVERY-01O",
-    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01o-source.zip",
-    "scope": "Portable source/context/evidence; not a database/media backup",
-    "metadata": "Own exact-commit CI in external recovery01o-final-ci-receipt.json"
+    "taskId": "RECOVERY-01P",
+    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01p-source.zip",
+    "scope": "Portable source/context, not a database/media backup",
+    "metadata": "Own exact CI in external recovery01p-final-ci-receipt.json"
   },
-  "currentSourcePackageStatus": "O portable source capsule includes local evidence; exact-commit all-three-job CI requires the external final receipt paired with this ZIP.",
+  "currentSourcePackageStatus": "P local evidence packaged; external final exact-commit receipt required.",
   "priorHandoffVerification": {
     "checkpointRevision": "2026-10-07.15",
     "applicationVersion": "0.9.2",
@@ -627,19 +627,19 @@
     }
   },
   "currentWork": {
-    "taskId": "RECOVERY-01O",
+    "taskId": "RECOVERY-01P",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01N",
-      "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-      "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-      "runId": 40124492777,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+      "taskId": "RECOVERY-01O",
+      "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+      "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+      "runId": 40224355433,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 369,
+        "unit": 372,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -647,34 +647,27 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 22
+        "composePhases": 23
       },
-      "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
     },
     "local": {
-      "focusedTests": 82,
-      "uniqueFocusedReceipts": 82,
-      "unitReceiptsSha256": "1b1ef6f15e95b20bb0c65b74cbce2452c432961f5c033f8811f04bd29df9b777",
-      "nativePitrPassed": true,
-      "nativeReportSha256": "4a49e9643bca62a3cc27276e5999604454ede54620cbfda7f52e897067f61d38",
-      "nativeMigrations": 24,
-      "nativeTablesCompared": 37,
-      "missingAndCorruptRetainedWalDenied": true,
+      "focusedTests": 86,
+      "failedTests": 0,
+      "unitReceiptsSha256": "f5c28c3a0abe2e54e42dea33f2f2c29e1cc76e40e31a86e1f2cc77eee32b079f",
       "composeIntegrationPassed": true,
-      "composePhases": 23,
-      "composeReportSha256": "651d7370ce966bc02c141694aa43b9e8655ae73f353d1255880bcdf52c8a1b1d",
+      "composePhases": 19,
+      "verificationMode": "diagnostic-p-focused-inspected-unchanged-images",
+      "composeReportSha256": "ced009d3645b647880b8e77b472c4efe07d5e19041ed1a7025c34a50c5a26bd8",
       "composeCleanupAndRealEnvironmentUnchanged": true,
-      "retainedHistoricalVersions": 3,
-      "retainedGateDeniedControls": 9,
-      "retainedGateAdmittedCallbacks": 1,
-      "composeStartedBeforeFinalNativeControlAndFreshPreflightEdits": true,
+      "actualWalFaultsDenied": 2,
+      "admissionControlsDenied": 10,
+      "admissionCallbacks": 1,
+      "historicalObjects": 4,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
       "protectedMasterAndMigrationsChanged": false,
-      "protectedHashesUnchanged": 25,
-      "composeProcessExitCode": 0,
-      "configurationPassed": true,
-      "retainedBaseManifestIdentityReread": true
+      "freshLocalImagesClaimed": false
     }
   },
   "FSourcePackageReinspection": {
@@ -704,16 +697,16 @@
     "receipt": "docs/qa/recovery01k-ci-attempt1.json"
   },
   "latestAttempt": {
-    "taskId": "RECOVERY-01N",
-    "commit": "89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc",
-    "tree": "d46f1030bab050ff067a68c2f0965e16789a6673",
-    "runId": 40124492777,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40124492777",
+    "taskId": "RECOVERY-01O",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
+    "runId": 40224355433,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 369,
+      "unit": 372,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -721,9 +714,9 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 22
+      "composePhases": 23
     },
-    "receipt": "docs/qa/recovery01n-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
   },
   "priorFailedAttempt": {
     "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
