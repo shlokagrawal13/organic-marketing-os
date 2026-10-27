@@ -1,3 +1,13 @@
+<!-- UX01B_CORE_BUDGET_START -->
+## UX-01B core CI time budget - 2026-10-27
+
+Fixture-budget follow-up aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c/run40512689694 passed native upgrade, all24 Compose phases, core build,379 unit,44 readability and zero audits. Core media installation spent14min27s downloading116MB at134kB/s. The application flow was cancelled at about25 minutes, matching the configured job cap, before complete HTTP/browser/recovery acceptance. A same-source single-core retry reached GitHub startup_failure with zero jobs and an unexpected-error annotation. Later retry APIs reject the empty current attempt/old job. These are not final acceptance; see docs/qa/ux01b-ci-attempt2.json. Both earlier B attempts and their gaps remain recorded.
+
+The reviewed CI change increases only the core job total budget25 to40 minutes. Every command, test, audit gate, required step and application assertion is unchanged. YAML/format and exact single-value comparison pass. The fixture-budget fix and local5 HTTP/5 browser/exhausted-budget429 control remain; application runtime, dependencies,24 migrations and protected specification are unchanged. The new source needs ALL THREE jobs and every required step on its own exact published commit, including fresh all24-phase Compose. Pair the refreshed source ZIP with external ux01b-final-ci-receipt.json; no previous commit/run substitutes.
+
+Planned recovery fixtures remain closed at P; no Q/R. Production durability/RPO-RTO, live/deployed/full-master acceptance and21 broad product tracks remain open. CI verifies fixtures and does not deploy.
+<!-- UX01B_CORE_BUDGET_END -->
+
 <!-- UX01B_CI_FOLLOWUP_START -->
 ## UX-01B isolated HTTP rate-budget follow-up - 2026-10-27
 

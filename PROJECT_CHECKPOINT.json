@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01b-20261027",
-  "savedAtUtc": "2026-10-27T13:29:44.687Z",
-  "currentMilestone": "UX-01B publication search with isolated HTTP fixture budget",
+  "checkpointRevision": "ux01b-core-budget-20261027",
+  "savedAtUtc": "2026-10-27T14:09:50.550Z",
+  "currentMilestone": "UX-01B full CI with bounded core setup/test budget",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish B fixture-budget follow-up normally; inspect/fix ALL THREE jobs and required steps on new exact final commit. First B CI is not acceptance. Pair fresh source ZIP and external final receipt; then continue product taskboard.",
+  "nextAction": "Publish the reviewed core-budget follow-up normally; require ALL THREE jobs and all required steps on exact new source, then pair refreshed portable source ZIP/external final receipt. Preserve all earlier B attempts and gaps. Continue product taskboard afterwards; no recovery Q/R.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,6 +84,7 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    ".github/workflows/ci.yml",
     "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
@@ -102,10 +103,9 @@
     "docs/WORKSPACE_SEARCH.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01b-ci-attempt1.json",
+    "docs/qa/ux01b-ci-attempt2.json",
     "docs/qa/ux01b-evidence.json",
-    "docs/qa/verification-summary.json",
-    "tests/integration/workspace-search.test.ts"
+    "docs/qa/verification-summary.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6753,8 +6753,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
-    "status": "UX01B_first_ci_failed_fixture_budget_followup_pending",
+    "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+    "status": "UX01B_core_time_budget_followup_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6767,16 +6767,17 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+    "sourceTree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "First B published attempt, not accepted; last verified A recorded separately.",
+    "commitMeaning": "Published fixture-budget follow-up; own core cancelled after slow setup and retry startup failure; last verified A separate.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "lastLocalCheckpointCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
     "uploadGate": {
       "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
       "paths": [
+        ".github/workflows/ci.yml",
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -6795,10 +6796,9 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-ci-attempt1.json",
+        "docs/qa/ux01b-ci-attempt2.json",
         "docs/qa/ux01b-evidence.json",
-        "docs/qa/verification-summary.json",
-        "tests/integration/workspace-search.test.ts"
+        "docs/qa/verification-summary.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
       "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -6823,35 +6823,108 @@
           "fullAuditVulnerabilities": 0,
           "composePhases": 24
         }
+      },
+      "runnerSetupAttempt": {
+        "taskId": "UX-01B",
+        "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+        "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+        "runId": 40512689694,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+        "status": "completed",
+        "conclusion": "startup_failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "attempts": [
+          {
+            "attempt": 1,
+            "nativeUpgrade": "success",
+            "compose": "success",
+            "composePhases": 24,
+            "core": "cancelled",
+            "unitPassed": 379,
+            "unitFailed": 0,
+            "readabilitySamples": 44,
+            "productionAuditVulnerabilities": 0,
+            "fullAuditVulnerabilities": 0,
+            "setup": {
+              "reportedDownload": "116 MB",
+              "reportedDuration": "14min 27s",
+              "reportedRate": "134 kB/s",
+              "startedAt": "2026-10-27T13:31:44Z",
+              "completedAt": "2026-10-27T13:46:24Z"
+            },
+            "incomplete": [
+              "full HTTP suite",
+              "browser suite",
+              "5 application recovery tests"
+            ],
+            "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+          },
+          {
+            "attempt": 2,
+            "conclusion": "startup_failure",
+            "jobsCreated": 0,
+            "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+            "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+            "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+            "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+          }
+        ]
       }
     },
     "publication": {
       "taskId": "UX-01B",
-      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
-      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
-      "runId": 40447671309,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+      "runId": 40512689694,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
       "status": "completed",
-      "conclusion": "failure",
+      "conclusion": "startup_failure",
       "allThreeJobsAndRequiredStepsPassed": false,
-      "receipt": "docs/qa/ux01b-ci-attempt1.json",
-      "results": {
-        "unit": 379,
-        "httpPassed": 40,
-        "httpFailed": 3,
-        "browserExecuted": false,
-        "recoveryExecuted": false,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 24
-      }
+      "receipt": "docs/qa/ux01b-ci-attempt2.json",
+      "attempts": [
+        {
+          "attempt": 1,
+          "nativeUpgrade": "success",
+          "compose": "success",
+          "composePhases": 24,
+          "core": "cancelled",
+          "unitPassed": 379,
+          "unitFailed": 0,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "setup": {
+            "reportedDownload": "116 MB",
+            "reportedDuration": "14min 27s",
+            "reportedRate": "134 kB/s",
+            "startedAt": "2026-10-27T13:31:44Z",
+            "completedAt": "2026-10-27T13:46:24Z"
+          },
+          "incomplete": [
+            "full HTTP suite",
+            "browser suite",
+            "5 application recovery tests"
+          ],
+          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+        },
+        {
+          "attempt": 2,
+          "conclusion": "startup_failure",
+          "jobsCreated": 0,
+          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+        }
+      ]
     },
     "currentUploadGate": {
       "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
       "paths": [
+        ".github/workflows/ci.yml",
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -6870,10 +6943,9 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-ci-attempt1.json",
+        "docs/qa/ux01b-ci-attempt2.json",
         "docs/qa/ux01b-evidence.json",
-        "docs/qa/verification-summary.json",
-        "tests/integration/workspace-search.test.ts"
+        "docs/qa/verification-summary.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
       "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -6898,13 +6970,61 @@
           "fullAuditVulnerabilities": 0,
           "composePhases": 24
         }
+      },
+      "runnerSetupAttempt": {
+        "taskId": "UX-01B",
+        "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+        "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+        "runId": 40512689694,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+        "status": "completed",
+        "conclusion": "startup_failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "attempts": [
+          {
+            "attempt": 1,
+            "nativeUpgrade": "success",
+            "compose": "success",
+            "composePhases": 24,
+            "core": "cancelled",
+            "unitPassed": 379,
+            "unitFailed": 0,
+            "readabilitySamples": 44,
+            "productionAuditVulnerabilities": 0,
+            "fullAuditVulnerabilities": 0,
+            "setup": {
+              "reportedDownload": "116 MB",
+              "reportedDuration": "14min 27s",
+              "reportedRate": "134 kB/s",
+              "startedAt": "2026-10-27T13:31:44Z",
+              "completedAt": "2026-10-27T13:46:24Z"
+            },
+            "incomplete": [
+              "full HTTP suite",
+              "browser suite",
+              "5 application recovery tests"
+            ],
+            "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+          },
+          {
+            "attempt": 2,
+            "conclusion": "startup_failure",
+            "jobsCreated": 0,
+            "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+            "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+            "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+            "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+          }
+        ]
       }
     },
     "publicationPreparation": {
       "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
       "paths": [
+        ".github/workflows/ci.yml",
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -6923,10 +7043,9 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-ci-attempt1.json",
+        "docs/qa/ux01b-ci-attempt2.json",
         "docs/qa/ux01b-evidence.json",
-        "docs/qa/verification-summary.json",
-        "tests/integration/workspace-search.test.ts"
+        "docs/qa/verification-summary.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
       "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -6951,6 +7070,53 @@
           "fullAuditVulnerabilities": 0,
           "composePhases": 24
         }
+      },
+      "runnerSetupAttempt": {
+        "taskId": "UX-01B",
+        "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+        "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+        "runId": 40512689694,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+        "status": "completed",
+        "conclusion": "startup_failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "attempts": [
+          {
+            "attempt": 1,
+            "nativeUpgrade": "success",
+            "compose": "success",
+            "composePhases": 24,
+            "core": "cancelled",
+            "unitPassed": 379,
+            "unitFailed": 0,
+            "readabilitySamples": 44,
+            "productionAuditVulnerabilities": 0,
+            "fullAuditVulnerabilities": 0,
+            "setup": {
+              "reportedDownload": "116 MB",
+              "reportedDuration": "14min 27s",
+              "reportedRate": "134 kB/s",
+              "startedAt": "2026-10-27T13:31:44Z",
+              "completedAt": "2026-10-27T13:46:24Z"
+            },
+            "incomplete": [
+              "full HTTP suite",
+              "browser suite",
+              "5 application recovery tests"
+            ],
+            "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+          },
+          {
+            "attempt": 2,
+            "conclusion": "startup_failure",
+            "jobsCreated": 0,
+            "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+            "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+            "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+            "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+          }
+        ]
       }
     },
     "previousUploadGate": {
@@ -6977,8 +7143,9 @@
     "docsEvidencePublicationGate": {
       "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
       "paths": [
+        ".github/workflows/ci.yml",
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -6997,10 +7164,9 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-ci-attempt1.json",
+        "docs/qa/ux01b-ci-attempt2.json",
         "docs/qa/ux01b-evidence.json",
-        "docs/qa/verification-summary.json",
-        "tests/integration/workspace-search.test.ts"
+        "docs/qa/verification-summary.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
       "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -7025,13 +7191,61 @@
           "fullAuditVulnerabilities": 0,
           "composePhases": 24
         }
+      },
+      "runnerSetupAttempt": {
+        "taskId": "UX-01B",
+        "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+        "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+        "runId": 40512689694,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+        "status": "completed",
+        "conclusion": "startup_failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "attempts": [
+          {
+            "attempt": 1,
+            "nativeUpgrade": "success",
+            "compose": "success",
+            "composePhases": 24,
+            "core": "cancelled",
+            "unitPassed": 379,
+            "unitFailed": 0,
+            "readabilitySamples": 44,
+            "productionAuditVulnerabilities": 0,
+            "fullAuditVulnerabilities": 0,
+            "setup": {
+              "reportedDownload": "116 MB",
+              "reportedDuration": "14min 27s",
+              "reportedRate": "134 kB/s",
+              "startedAt": "2026-10-27T13:31:44Z",
+              "completedAt": "2026-10-27T13:46:24Z"
+            },
+            "incomplete": [
+              "full HTTP suite",
+              "browser suite",
+              "5 application recovery tests"
+            ],
+            "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+          },
+          {
+            "attempt": 2,
+            "conclusion": "startup_failure",
+            "jobsCreated": 0,
+            "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+            "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+            "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+            "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+          }
+        ]
       }
     },
     "nextPublication": {
       "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
       "paths": [
+        ".github/workflows/ci.yml",
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -7050,10 +7264,9 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-ci-attempt1.json",
+        "docs/qa/ux01b-ci-attempt2.json",
         "docs/qa/ux01b-evidence.json",
-        "docs/qa/verification-summary.json",
-        "tests/integration/workspace-search.test.ts"
+        "docs/qa/verification-summary.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
       "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -7078,6 +7291,53 @@
           "fullAuditVulnerabilities": 0,
           "composePhases": 24
         }
+      },
+      "runnerSetupAttempt": {
+        "taskId": "UX-01B",
+        "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+        "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+        "runId": 40512689694,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+        "status": "completed",
+        "conclusion": "startup_failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "attempts": [
+          {
+            "attempt": 1,
+            "nativeUpgrade": "success",
+            "compose": "success",
+            "composePhases": 24,
+            "core": "cancelled",
+            "unitPassed": 379,
+            "unitFailed": 0,
+            "readabilitySamples": 44,
+            "productionAuditVulnerabilities": 0,
+            "fullAuditVulnerabilities": 0,
+            "setup": {
+              "reportedDownload": "116 MB",
+              "reportedDuration": "14min 27s",
+              "reportedRate": "134 kB/s",
+              "startedAt": "2026-10-27T13:31:44Z",
+              "completedAt": "2026-10-27T13:46:24Z"
+            },
+            "incomplete": [
+              "full HTTP suite",
+              "browser suite",
+              "5 application recovery tests"
+            ],
+            "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+          },
+          {
+            "attempt": 2,
+            "conclusion": "startup_failure",
+            "jobsCreated": 0,
+            "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+            "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+            "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+            "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+          }
+        ]
       }
     },
     "previousPublication": {
@@ -7098,8 +7358,9 @@
     "localEvidencePublication": {
       "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
       "paths": [
+        ".github/workflows/ci.yml",
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
         "PROJECT_CHECKPOINT.json",
@@ -7118,10 +7379,9 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-ci-attempt1.json",
+        "docs/qa/ux01b-ci-attempt2.json",
         "docs/qa/ux01b-evidence.json",
-        "docs/qa/verification-summary.json",
-        "tests/integration/workspace-search.test.ts"
+        "docs/qa/verification-summary.json"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
       "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -7146,9 +7406,56 @@
           "fullAuditVulnerabilities": 0,
           "composePhases": 24
         }
+      },
+      "runnerSetupAttempt": {
+        "taskId": "UX-01B",
+        "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+        "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+        "runId": 40512689694,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+        "status": "completed",
+        "conclusion": "startup_failure",
+        "allThreeJobsAndRequiredStepsPassed": false,
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "attempts": [
+          {
+            "attempt": 1,
+            "nativeUpgrade": "success",
+            "compose": "success",
+            "composePhases": 24,
+            "core": "cancelled",
+            "unitPassed": 379,
+            "unitFailed": 0,
+            "readabilitySamples": 44,
+            "productionAuditVulnerabilities": 0,
+            "fullAuditVulnerabilities": 0,
+            "setup": {
+              "reportedDownload": "116 MB",
+              "reportedDuration": "14min 27s",
+              "reportedRate": "134 kB/s",
+              "startedAt": "2026-10-27T13:31:44Z",
+              "completedAt": "2026-10-27T13:46:24Z"
+            },
+            "incomplete": [
+              "full HTTP suite",
+              "browser suite",
+              "5 application recovery tests"
+            ],
+            "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+          },
+          {
+            "attempt": 2,
+            "conclusion": "startup_failure",
+            "jobsCreated": 0,
+            "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+            "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+            "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+            "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+          }
+        ]
       }
     },
-    "lastLocalCheckpointCommitMeaning": "Published first B attempt, not final acceptance.",
+    "lastLocalCheckpointCommitMeaning": "Published predecessor, not final B acceptance.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -7814,27 +8121,52 @@
     },
     "latestPublication": {
       "taskId": "UX-01B",
-      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
-      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
-      "runId": 40447671309,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+      "runId": 40512689694,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
       "status": "completed",
-      "conclusion": "failure",
+      "conclusion": "startup_failure",
       "allThreeJobsAndRequiredStepsPassed": false,
-      "receipt": "docs/qa/ux01b-ci-attempt1.json",
-      "results": {
-        "unit": 379,
-        "httpPassed": 40,
-        "httpFailed": 3,
-        "browserExecuted": false,
-        "recoveryExecuted": false,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 24
-      }
+      "receipt": "docs/qa/ux01b-ci-attempt2.json",
+      "attempts": [
+        {
+          "attempt": 1,
+          "nativeUpgrade": "success",
+          "compose": "success",
+          "composePhases": 24,
+          "core": "cancelled",
+          "unitPassed": 379,
+          "unitFailed": 0,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "setup": {
+            "reportedDownload": "116 MB",
+            "reportedDuration": "14min 27s",
+            "reportedRate": "134 kB/s",
+            "startedAt": "2026-10-27T13:31:44Z",
+            "completedAt": "2026-10-27T13:46:24Z"
+          },
+          "incomplete": [
+            "full HTTP suite",
+            "browser suite",
+            "5 application recovery tests"
+          ],
+          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+        },
+        {
+          "attempt": 2,
+          "conclusion": "startup_failure",
+          "jobsCreated": 0,
+          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+        }
+      ]
     },
-    "latestApplicationSourceCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "latestApplicationSourceCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7941,8 +8273,8 @@
       "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Remaining collaboration and product UX",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "completedIncrement": "A verified; B first CI failed shared HTTP fixture budget after native/all24 Compose passed. Scoped reset/local5 HTTP/5 browser/exhausted-budget control pass.",
-      "nextAction": "Publish B fixture-budget follow-up normally; inspect/fix ALL THREE jobs and required steps on new exact final commit. First B CI is not acceptance. Pair fresh source ZIP and external final receipt; then continue product taskboard.",
+      "completedIncrement": "B app/fixture fix local checks pass; aa8c4eb native/all24 Compose and379 unit passed, core cancelled after slow setup, retry startup failure. Core total budget25 to40 only.",
+      "nextAction": "Publish the reviewed core-budget follow-up normally; require ALL THREE jobs and all required steps on exact new source, then pair refreshed portable source ZIP/external final receipt. Preserve all earlier B attempts and gaps. Continue product taskboard afterwards; no recovery Q/R.",
       "currentEvidence": "docs/qa/ux01b-evidence.json"
     },
     {
@@ -8005,7 +8337,9 @@
     "Preserved all previous search/recovery assertions and upload-approval roles; local focused checks pass.",
     "First B exact CI retained: two jobs green, core HTTP40/43 failed429.",
     "Scoped existing fixture budget reset; production limiter and all assertions unchanged.",
-    "Local full focused5 HTTP/5 browser and actual exhausted-budget429 control with5 HTTP pass."
+    "Local full focused5 HTTP/5 browser and actual exhausted-budget429 control with5 HTTP pass.",
+    "Recorded aa8c4eb native/all24 Compose success, slow setup/core cancellation and startup-failure retry.",
+    "Raised only core total budget25 to40; all required commands/assertions unchanged; new own CI required."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8046,7 +8380,7 @@
   "latestStatus": {
     "taskId": "UX-01B",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish B fixture-budget follow-up normally; inspect/fix ALL THREE jobs and required steps on new exact final commit. First B CI is not acceptance. Pair fresh source ZIP and external final receipt; then continue product taskboard.",
+    "nextAction": "Publish the reviewed core-budget follow-up normally; require ALL THREE jobs and all required steps on exact new source, then pair refreshed portable source ZIP/external final receipt. Preserve all earlier B attempts and gaps. Continue product taskboard afterwards; no recovery Q/R.",
     "initialPublication": {
       "taskId": "UX-01B",
       "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
@@ -8068,6 +8402,53 @@
         "fullAuditVulnerabilities": 0,
         "composePhases": 24
       }
+    },
+    "runnerSetupAttempt": {
+      "taskId": "UX-01B",
+      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+      "runId": 40512689694,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+      "status": "completed",
+      "conclusion": "startup_failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt2.json",
+      "attempts": [
+        {
+          "attempt": 1,
+          "nativeUpgrade": "success",
+          "compose": "success",
+          "composePhases": 24,
+          "core": "cancelled",
+          "unitPassed": 379,
+          "unitFailed": 0,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "setup": {
+            "reportedDownload": "116 MB",
+            "reportedDuration": "14min 27s",
+            "reportedRate": "134 kB/s",
+            "startedAt": "2026-10-27T13:31:44Z",
+            "completedAt": "2026-10-27T13:46:24Z"
+          },
+          "incomplete": [
+            "full HTTP suite",
+            "browser suite",
+            "5 application recovery tests"
+          ],
+          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+        },
+        {
+          "attempt": 2,
+          "conclusion": "startup_failure",
+          "jobsCreated": 0,
+          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+        }
+      ]
     }
   },
   "activeTask": {
@@ -8088,8 +8469,9 @@
   "pendingPublication": {
     "taskId": "UX-01B",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "baseCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "baseCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
     "paths": [
+      ".github/workflows/ci.yml",
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
@@ -8108,10 +8490,9 @@
       "docs/WORKSPACE_SEARCH.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/ux01b-ci-attempt1.json",
+      "docs/qa/ux01b-ci-attempt2.json",
       "docs/qa/ux01b-evidence.json",
-      "docs/qa/verification-summary.json",
-      "tests/integration/workspace-search.test.ts"
+      "docs/qa/verification-summary.json"
     ],
     "requiresAllThreeJobsOnOwnCommit": true,
     "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP",
@@ -8136,6 +8517,53 @@
         "fullAuditVulnerabilities": 0,
         "composePhases": 24
       }
+    },
+    "runnerSetupAttempt": {
+      "taskId": "UX-01B",
+      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+      "runId": 40512689694,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+      "status": "completed",
+      "conclusion": "startup_failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt2.json",
+      "attempts": [
+        {
+          "attempt": 1,
+          "nativeUpgrade": "success",
+          "compose": "success",
+          "composePhases": 24,
+          "core": "cancelled",
+          "unitPassed": 379,
+          "unitFailed": 0,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "setup": {
+            "reportedDownload": "116 MB",
+            "reportedDuration": "14min 27s",
+            "reportedRate": "134 kB/s",
+            "startedAt": "2026-10-27T13:31:44Z",
+            "completedAt": "2026-10-27T13:46:24Z"
+          },
+          "incomplete": [
+            "full HTTP suite",
+            "browser suite",
+            "5 application recovery tests"
+          ],
+          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+        },
+        {
+          "attempt": 2,
+          "conclusion": "startup_failure",
+          "jobsCreated": 0,
+          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+        }
+      ]
     }
   },
   "priorPendingPublication": {
@@ -8609,25 +9037,50 @@
   },
   "publishedIncrement": {
     "taskId": "UX-01B",
-    "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
-    "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
-    "runId": 40447671309,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+    "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+    "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+    "runId": 40512689694,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
     "status": "completed",
-    "conclusion": "failure",
+    "conclusion": "startup_failure",
     "allThreeJobsAndRequiredStepsPassed": false,
-    "receipt": "docs/qa/ux01b-ci-attempt1.json",
-    "results": {
-      "unit": 379,
-      "httpPassed": 40,
-      "httpFailed": 3,
-      "browserExecuted": false,
-      "recoveryExecuted": false,
-      "readabilitySamples": 44,
-      "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0,
-      "composePhases": 24
-    }
+    "receipt": "docs/qa/ux01b-ci-attempt2.json",
+    "attempts": [
+      {
+        "attempt": 1,
+        "nativeUpgrade": "success",
+        "compose": "success",
+        "composePhases": 24,
+        "core": "cancelled",
+        "unitPassed": 379,
+        "unitFailed": 0,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "setup": {
+          "reportedDownload": "116 MB",
+          "reportedDuration": "14min 27s",
+          "reportedRate": "134 kB/s",
+          "startedAt": "2026-10-27T13:31:44Z",
+          "completedAt": "2026-10-27T13:46:24Z"
+        },
+        "incomplete": [
+          "full HTTP suite",
+          "browser suite",
+          "5 application recovery tests"
+        ],
+        "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+      },
+      {
+        "attempt": 2,
+        "conclusion": "startup_failure",
+        "jobsCreated": 0,
+        "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+        "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+        "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+      }
+    ]
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8757,14 +9210,18 @@
       "fullAuditVulnerabilities": 0,
       "migrations": 24,
       "protectedMasterAndMigrationsChanged": false,
-      "dependenciesOrWorkflowChanged": false,
+      "dependenciesOrWorkflowChanged": true,
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "realEnvExists": false,
       "liveProvidersUsed": false,
       "desktopAnd390pxMobileScreenshotsInspected": true,
       "isolatedHttpCaseBudget": true,
-      "actualExhaustedFixtureRejected429": true
+      "actualExhaustedFixtureRejected429": true,
+      "dependenciesChanged": false,
+      "workflowTimeBudgetChanged": true,
+      "ciCommandsOrAssertionsChanged": false,
+      "workflowYamlAndSingleValueDiffVerified": true
     },
     "initialPublication": {
       "taskId": "UX-01B",
@@ -8787,6 +9244,53 @@
         "fullAuditVulnerabilities": 0,
         "composePhases": 24
       }
+    },
+    "runnerSetupAttempt": {
+      "taskId": "UX-01B",
+      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+      "runId": 40512689694,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+      "status": "completed",
+      "conclusion": "startup_failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt2.json",
+      "attempts": [
+        {
+          "attempt": 1,
+          "nativeUpgrade": "success",
+          "compose": "success",
+          "composePhases": 24,
+          "core": "cancelled",
+          "unitPassed": 379,
+          "unitFailed": 0,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "setup": {
+            "reportedDownload": "116 MB",
+            "reportedDuration": "14min 27s",
+            "reportedRate": "134 kB/s",
+            "startedAt": "2026-10-27T13:31:44Z",
+            "completedAt": "2026-10-27T13:46:24Z"
+          },
+          "incomplete": [
+            "full HTTP suite",
+            "browser suite",
+            "5 application recovery tests"
+          ],
+          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+        },
+        {
+          "attempt": 2,
+          "conclusion": "startup_failure",
+          "jobsCreated": 0,
+          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+        }
+      ]
     }
   },
   "social01PolicyReview": {
@@ -9110,10 +9614,6 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/search-query.ts",
-    "apps/web/app/globals.css",
-    "apps/web/app/publication-search-detail.tsx",
-    "apps/web/app/workspace-search.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -9125,13 +9625,10 @@
     "docs/WORKSPACE_SEARCH.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01a-final-ci-receipt.json",
+    "docs/qa/ux01b-ci-attempt1.json",
     "docs/qa/ux01b-evidence.json",
-    "docs/qa/ux01b-unit-receipts.json",
     "docs/qa/verification-summary.json",
-    "tests/integration/workspace-search.test.ts",
-    "tests/ui/workspace-search.spec.ts",
-    "tests/workspace-search.test.ts"
+    "tests/integration/workspace-search.test.ts"
   ],
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
@@ -21933,14 +22430,18 @@
       "fullAuditVulnerabilities": 0,
       "migrations": 24,
       "protectedMasterAndMigrationsChanged": false,
-      "dependenciesOrWorkflowChanged": false,
+      "dependenciesOrWorkflowChanged": true,
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "realEnvExists": false,
       "liveProvidersUsed": false,
       "desktopAnd390pxMobileScreenshotsInspected": true,
       "isolatedHttpCaseBudget": true,
-      "actualExhaustedFixtureRejected429": true
+      "actualExhaustedFixtureRejected429": true,
+      "dependenciesChanged": false,
+      "workflowTimeBudgetChanged": true,
+      "ciCommandsOrAssertionsChanged": false,
+      "workflowYamlAndSingleValueDiffVerified": true
     },
     "localExecution": {
       "taskId": "UX-01B",
@@ -21967,6 +22468,11 @@
         "receipt": "docs/qa/ux01b-ci-attempt1.json",
         "cause": "Cumulative isolated loopback rate budget exhausted before final search cases.",
         "resolution": "Existing guarded fixture reset in beforeEach; unchanged production limiter and all assertions."
+      },
+      {
+        "attempt": "aa8c4eb-own-ci",
+        "receipt": "docs/qa/ux01b-ci-attempt2.json",
+        "resolution": "Core total budget25 to40 only, preserving every required command/step/assertion; normal new reviewed-source publication."
       }
     ],
     "review": {
@@ -22053,6 +22559,56 @@
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "completedAt": "2026-10-27T04:19:53.063Z"
+    },
+    "runnerSetupAttempts": {
+      "schemaVersion": 1,
+      "taskId": "UX-01B",
+      "status": "not_final_acceptance",
+      "sourceCommit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+      "runId": 40512689694,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+      "attempts": [
+        {
+          "attempt": 1,
+          "nativeUpgrade": "success",
+          "compose": "success",
+          "composePhases": 24,
+          "core": "cancelled",
+          "unitPassed": 379,
+          "unitFailed": 0,
+          "readabilitySamples": 44,
+          "productionAuditVulnerabilities": 0,
+          "fullAuditVulnerabilities": 0,
+          "setup": {
+            "reportedDownload": "116 MB",
+            "reportedDuration": "14min 27s",
+            "reportedRate": "134 kB/s",
+            "startedAt": "2026-10-27T13:31:44Z",
+            "completedAt": "2026-10-27T13:46:24Z"
+          },
+          "incomplete": [
+            "full HTTP suite",
+            "browser suite",
+            "5 application recovery tests"
+          ],
+          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+        },
+        {
+          "attempt": 2,
+          "conclusion": "startup_failure",
+          "jobsCreated": 0,
+          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+        }
+      ],
+      "retryApiPreconditions": [
+        "Only jobs from the current attempt can be re-run",
+        "This workflow run cannot be retried"
+      ],
+      "followup": "Increase only core job total budget from25 to40 minutes so observed setup latency leaves time for all existing checks. No commands, tests, assertions, audit levels, application runtime or dependencies are changed. Publish a reviewed new source commit normally and require all three jobs on that exact source."
     }
   },
   "initialUx01bPublication": {
@@ -22078,6 +22634,7 @@
     }
   },
   "incrementChangedPaths": [
+    ".github/workflows/ci.yml",
     "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
@@ -22101,11 +22658,60 @@
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
     "docs/qa/ux01a-final-ci-receipt.json",
+    "docs/qa/ux01b-ci-attempt1.json",
+    "docs/qa/ux01b-ci-attempt2.json",
     "docs/qa/ux01b-evidence.json",
     "docs/qa/ux01b-unit-receipts.json",
     "docs/qa/verification-summary.json",
     "tests/integration/workspace-search.test.ts",
     "tests/ui/workspace-search.spec.ts",
     "tests/workspace-search.test.ts"
-  ]
+  ],
+  "secondUx01bPublication": {
+    "taskId": "UX-01B",
+    "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
+    "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
+    "runId": 40512689694,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+    "status": "completed",
+    "conclusion": "startup_failure",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "receipt": "docs/qa/ux01b-ci-attempt2.json",
+    "attempts": [
+      {
+        "attempt": 1,
+        "nativeUpgrade": "success",
+        "compose": "success",
+        "composePhases": 24,
+        "core": "cancelled",
+        "unitPassed": 379,
+        "unitFailed": 0,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "setup": {
+          "reportedDownload": "116 MB",
+          "reportedDuration": "14min 27s",
+          "reportedRate": "134 kB/s",
+          "startedAt": "2026-10-27T13:31:44Z",
+          "completedAt": "2026-10-27T13:46:24Z"
+        },
+        "incomplete": [
+          "full HTTP suite",
+          "browser suite",
+          "5 application recovery tests"
+        ],
+        "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
+      },
+      {
+        "attempt": 2,
+        "conclusion": "startup_failure",
+        "jobsCreated": 0,
+        "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
+        "requestId": "678B:370C:3CD06:58715:6AE0AE26",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
+        "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
+      }
+    ]
+  }
 }
