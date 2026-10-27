@@ -1,3 +1,11 @@
+<!-- UX01B_CI_FOLLOWUP_START -->
+## UX-01B isolated HTTP rate-budget follow-up - 2026-10-27
+
+First B publication 4d37eaa9d6c86f53704b46ed39d02b39867ced04/run40447671309 passed native upgrade/physical recovery, all24 Compose phases, core build,379 unit,44 readability samples and zero audits. Core HTTP passed40/43; the last three search scenarios hit the shared fixture loopback budget with429. Browser/recovery phases did not execute. This is not final acceptance. See docs/qa/ux01b-ci-attempt1.json.
+
+The follow-up uses the existing isolation-guarded resetFixtureRateBudget before each independent search HTTP scenario. Every authentication/tenant/role/data assertion and the production600-per60-second limiter remain unchanged. Follow-up local5 HTTP/5 browser pass. An additional independent Redis fixture starts with an exhausted API budget: the actual unchanged production limiter returns429, then all5 HTTP cases pass with the isolated case setup. Both fixture cleanups/environment checks pass. API/UI/dependencies/migrations/workflow are unchanged from the first B publication. A new exact final commit must pass ALL THREE jobs and every required step; pair its external final receipt with the refreshed portable source ZIP.
+<!-- UX01B_CI_FOLLOWUP_END -->
+
 # Publication-preparation search (UX-01B)
 
 <!-- UX01B_CURRENT_START -->

@@ -666,7 +666,31 @@
       "realEnvironmentUnchanged": true,
       "realEnvExists": false,
       "liveProvidersUsed": false,
-      "desktopAnd390pxMobileScreenshotsInspected": true
+      "desktopAnd390pxMobileScreenshotsInspected": true,
+      "isolatedHttpCaseBudget": true,
+      "actualExhaustedFixtureRejected429": true
+    },
+    "initialPublication": {
+      "taskId": "UX-01B",
+      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+      "runId": 40447671309,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt1.json",
+      "results": {
+        "unit": 379,
+        "httpPassed": 40,
+        "httpFailed": 3,
+        "browserExecuted": false,
+        "recoveryExecuted": false,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      }
     }
   },
   "FSourcePackageReinspection": {
@@ -696,26 +720,26 @@
     "receipt": "docs/qa/recovery01k-ci-attempt1.json"
   },
   "latestAttempt": {
-    "taskId": "UX-01A",
-    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
-    "runId": 40444776576,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+    "taskId": "UX-01B",
+    "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+    "runId": 40447671309,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
     "status": "completed",
-    "conclusion": "success",
-    "allThreeJobsAndRequiredStepsPassed": true,
+    "conclusion": "failure",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "receipt": "docs/qa/ux01b-ci-attempt1.json",
     "results": {
-      "unit": 378,
-      "http": 41,
-      "browser": 31,
-      "recovery": 5,
-      "migrations": 24,
+      "unit": 379,
+      "httpPassed": 40,
+      "httpFailed": 3,
+      "browserExecuted": false,
+      "recoveryExecuted": false,
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
       "composePhases": 24
-    },
-    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    }
   },
   "priorFailedAttempt": {
     "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",
@@ -731,5 +755,72 @@
     "coreAuditVulnerabilities": 5,
     "requiredCoreStepsSkipped": true,
     "evidence": "docs/qa/recovery01n-ci-attempt1.json"
+  },
+  "ux01b": {
+    "taskId": "UX-01B",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01A",
+      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+      "runId": 40444776576,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 378,
+        "http": 41,
+        "browser": 31,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      },
+      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    },
+    "local": {
+      "focusedUnit": 3,
+      "http": 5,
+      "browser": 5,
+      "apiBuild": true,
+      "webTypecheck": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "migrations": 24,
+      "protectedMasterAndMigrationsChanged": false,
+      "dependenciesOrWorkflowChanged": false,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "realEnvExists": false,
+      "liveProvidersUsed": false,
+      "desktopAnd390pxMobileScreenshotsInspected": true,
+      "isolatedHttpCaseBudget": true,
+      "actualExhaustedFixtureRejected429": true
+    },
+    "initialPublication": {
+      "taskId": "UX-01B",
+      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+      "runId": 40447671309,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt1.json",
+      "results": {
+        "unit": 379,
+        "httpPassed": 40,
+        "httpFailed": 3,
+        "browserExecuted": false,
+        "recoveryExecuted": false,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      }
+    }
   }
 }

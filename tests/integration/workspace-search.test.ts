@@ -1,8 +1,12 @@
 import "../support/isolated";
-import { test, after } from "node:test";
+import { test, after, beforeEach } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { actor, db, base } from "../support/http";
+import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
+// Independent cases share the isolated harness's loopback address. Preserve the
+// production limiter while giving each search scenario its own fixture budget.
+beforeEach(resetFixtureRateBudget);
 const orgs: string[] = [],
   users: string[] = [];
 async function setup() {

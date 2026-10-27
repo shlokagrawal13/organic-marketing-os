@@ -41,19 +41,20 @@
     "realEnvironmentUnchanged": true,
     "realEnvExists": false,
     "liveProvidersUsed": false,
-    "desktopAnd390pxMobileScreenshotsInspected": true
+    "desktopAnd390pxMobileScreenshotsInspected": true,
+    "isolatedHttpCaseBudget": true,
+    "actualExhaustedFixtureRejected429": true
   },
   "localExecution": {
     "taskId": "UX-01B",
     "passed": true,
-    "startedAt": "2026-10-27T04:01:45.277Z",
-    "fixture": "a4699bc070a74dc5",
+    "startedAt": "2026-10-27T04:17:57.563Z",
+    "fixture": "032086a6a80199a0",
     "http": 5,
     "browser": 5,
     "fixtureCleanup": true,
     "realEnvironmentUnchanged": true,
-    "completedAt": "2026-10-27T04:03:05.065Z",
-    "apiBuild": "The final run uses compiled API bytes from the successful local API build; no application Docker image build is claimed."
+    "completedAt": "2026-10-27T04:19:11.579Z"
   },
   "attempts": [
     {
@@ -63,6 +64,12 @@
       "browser": 5,
       "visualFinding": "Mobile screenshot captured the sidebar during its existing viewport transition.",
       "resolution": "Wait for sidebar to leave viewport before both mobile captures; rerun focused fixture checks and inspect final images."
+    },
+    {
+      "attempt": "first-published-ci",
+      "receipt": "docs/qa/ux01b-ci-attempt1.json",
+      "cause": "Cumulative isolated loopback rate budget exhausted before final search cases.",
+      "resolution": "Existing guarded fixture reset in beforeEach; unchanged production limiter and all assertions."
     }
   ],
   "review": {
@@ -85,5 +92,69 @@
     "Local tests use independent generated PostgreSQL17/Redis7 fixture containers and random loopback ports. Existing populated user services and real environment absence are preserved. Metadata-only assets do not prove media/worker acceptance locally.",
     "Analytics, customers/organizations, projects and other broader search/UX, autosave/conflict/nested workspace and accessibility acceptance remain open.",
     "Planned recovery fixtures closed at P; durable production backups/retention/RPO-RTO and deployed real-provider restore remain separate open gates. All three CI jobs and all24 Compose phases must pass on this increment's exact source."
-  ]
+  ],
+  "initialPublication": {
+    "schemaVersion": 1,
+    "taskId": "UX-01B",
+    "attempt": 1,
+    "status": "not_final_acceptance",
+    "sourceCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "runId": 40447671309,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+    "jobs": [
+      {
+        "name": "Native populated upgrade and migration recovery",
+        "id": 122002699026,
+        "headSha": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+        "conclusion": "success"
+      },
+      {
+        "name": "Native application verification",
+        "id": 122002699309,
+        "headSha": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+        "conclusion": "failure"
+      },
+      {
+        "name": "Disposable Compose and native restore",
+        "id": 122002699367,
+        "headSha": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+        "conclusion": "success"
+      }
+    ],
+    "results": {
+      "unit": 379,
+      "httpPassed": 40,
+      "httpFailed": 3,
+      "browserExecuted": false,
+      "recoveryExecuted": false,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 24
+    },
+    "failure": {
+      "kind": "shared_fixture_rate_budget",
+      "observedStatus": 429,
+      "expectedStatus": 200,
+      "failedTests": [
+        "search and result opening enforce authentication, tenant isolation and current membership for every read role",
+        "PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters",
+        "search pagination is deterministic and bounded and reflects edits without a stale index"
+      ],
+      "cause": "Expanded HTTP suite shares one loopback IP. The application retains its 600 API requests per60 seconds limit; earlier suites and two added publication scenarios exhausted that fixture budget before old search cases.",
+      "followup": "Use existing isolation-guarded resetFixtureRateBudget before each independent search HTTP case; retain every assertion and unchanged production limiter. Verify a new exact final commit with all three jobs."
+    }
+  },
+  "rateBudgetControl": {
+    "taskId": "UX-01B",
+    "passed": true,
+    "startedAt": "2026-10-27T04:19:26.362Z",
+    "fixture": "d006de37a12931db",
+    "productionLimiterDeniedExhaustedFixture": true,
+    "http": 5,
+    "browser": 0,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-10-27T04:19:53.063Z"
+  }
 }

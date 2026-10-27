@@ -74,7 +74,29 @@
   "latestIncrement": {
     "taskId": "UX-01B",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish reviewed UX-01B normally; inspect/fix all three jobs and all required steps on exact final commit, then pair final receipt/source ZIP. Afterwards select next product work from taskboard; no Q/R recovery fixtures."
+    "nextAction": "Publish B fixture-budget follow-up normally; inspect/fix ALL THREE jobs and required steps on new exact final commit. First B CI is not acceptance. Pair fresh source ZIP and external final receipt; then continue product taskboard.",
+    "initialPublication": {
+      "taskId": "UX-01B",
+      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+      "runId": 40447671309,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt1.json",
+      "results": {
+        "unit": 379,
+        "httpPassed": 40,
+        "httpFailed": 3,
+        "browserExecuted": false,
+        "recoveryExecuted": false,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      }
+    }
   },
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
@@ -878,7 +900,9 @@
     "realEnvironmentUnchanged": true,
     "realEnvExists": false,
     "liveProvidersUsed": false,
-    "desktopAnd390pxMobileScreenshotsInspected": true
+    "desktopAnd390pxMobileScreenshotsInspected": true,
+    "isolatedHttpCaseBudget": true,
+    "actualExhaustedFixtureRejected429": true
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -15138,26 +15162,26 @@
     }
   },
   "latestAttempt": {
-    "taskId": "UX-01A",
-    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
-    "runId": 40444776576,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+    "taskId": "UX-01B",
+    "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+    "runId": 40447671309,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
     "status": "completed",
-    "conclusion": "success",
-    "allThreeJobsAndRequiredStepsPassed": true,
+    "conclusion": "failure",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "receipt": "docs/qa/ux01b-ci-attempt1.json",
     "results": {
-      "unit": 378,
-      "http": 41,
-      "browser": 31,
-      "recovery": 5,
-      "migrations": 24,
+      "unit": 379,
+      "httpPassed": 40,
+      "httpFailed": 3,
+      "browserExecuted": false,
+      "recoveryExecuted": false,
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
       "composePhases": 24
-    },
-    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    }
   },
   "recovery01o": {
     "priorVerifiedPublication": {
@@ -15331,7 +15355,31 @@
       "realEnvironmentUnchanged": true,
       "realEnvExists": false,
       "liveProvidersUsed": false,
-      "desktopAnd390pxMobileScreenshotsInspected": true
+      "desktopAnd390pxMobileScreenshotsInspected": true,
+      "isolatedHttpCaseBudget": true,
+      "actualExhaustedFixtureRejected429": true
+    },
+    "initialPublication": {
+      "taskId": "UX-01B",
+      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+      "runId": 40447671309,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt1.json",
+      "results": {
+        "unit": 379,
+        "httpPassed": 40,
+        "httpFailed": 3,
+        "browserExecuted": false,
+        "recoveryExecuted": false,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      }
     }
   }
 }

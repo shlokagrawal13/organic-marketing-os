@@ -3,30 +3,30 @@
   "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
   "branch": "main",
   "applicationVersion": "0.9.2",
-  "applicationSourceCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-  "applicationSourceTree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+  "applicationSourceCommit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+  "applicationSourceTree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
   "publishMethod": "normal Git push",
   "nativeCi": {
-    "taskId": "UX-01A",
-    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
-    "runId": 40444776576,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+    "taskId": "UX-01B",
+    "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+    "runId": 40447671309,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
     "status": "completed",
-    "conclusion": "success",
-    "allThreeJobsAndRequiredStepsPassed": true,
+    "conclusion": "failure",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "receipt": "docs/qa/ux01b-ci-attempt1.json",
     "results": {
-      "unit": 378,
-      "http": 41,
-      "browser": 31,
-      "recovery": 5,
-      "migrations": 24,
+      "unit": 379,
+      "httpPassed": 40,
+      "httpFailed": 3,
+      "browserExecuted": false,
+      "recoveryExecuted": false,
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
       "composePhases": 24
-    },
-    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    }
   },
   "currentUnpublishedTask": "UX-01B",
   "priorPublicationRecord": {
@@ -277,26 +277,26 @@
     "receipt": "docs/qa/ux01a-final-ci-receipt.json"
   },
   "latestAttempt": {
-    "taskId": "UX-01A",
-    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
-    "runId": 40444776576,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+    "taskId": "UX-01B",
+    "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+    "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+    "runId": 40447671309,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
     "status": "completed",
-    "conclusion": "success",
-    "allThreeJobsAndRequiredStepsPassed": true,
+    "conclusion": "failure",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "receipt": "docs/qa/ux01b-ci-attempt1.json",
     "results": {
-      "unit": 378,
-      "http": 41,
-      "browser": 31,
-      "recovery": 5,
-      "migrations": 24,
+      "unit": 379,
+      "httpPassed": 40,
+      "httpFailed": 3,
+      "browserExecuted": false,
+      "recoveryExecuted": false,
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
       "composePhases": 24
-    },
-    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    }
   },
   "recovery01o": {
     "status": "local_verified_own_exact_commit_ci_pending",
@@ -448,7 +448,31 @@
       "realEnvironmentUnchanged": true,
       "realEnvExists": false,
       "liveProvidersUsed": false,
-      "desktopAnd390pxMobileScreenshotsInspected": true
+      "desktopAnd390pxMobileScreenshotsInspected": true,
+      "isolatedHttpCaseBudget": true,
+      "actualExhaustedFixtureRejected429": true
+    },
+    "initialPublication": {
+      "taskId": "UX-01B",
+      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
+      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
+      "runId": 40447671309,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
+      "status": "completed",
+      "conclusion": "failure",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "receipt": "docs/qa/ux01b-ci-attempt1.json",
+      "results": {
+        "unit": 379,
+        "httpPassed": 40,
+        "httpFailed": 3,
+        "browserExecuted": false,
+        "recoveryExecuted": false,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      }
     }
   }
 }
