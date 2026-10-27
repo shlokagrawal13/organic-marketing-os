@@ -45,6 +45,7 @@ import CreditsWorkspace from "./credits-workspace";
 import SocialConnectionsPanel from "./social-connections-panel";
 import WorkspaceYoutubePolicyPanel from "./workspace-youtube-policy-panel";
 import ResearchWorkspace from "./research-workspace";
+import WorkspaceSearch, { type SearchResult } from "./workspace-search";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -160,6 +161,7 @@ export default function Workspace({
     [contentDirty, setContentDirty] = useState(false);
   const [policyDirty, setPolicyDirty] = useState(false);
   const [researchDirty, setResearchDirty] = useState(false);
+  const [searchTarget, setSearchTarget] = useState<SearchResult | null>(null);
   const [orgId, setOrgId] = useState(session.memberships[0].organizationId),
     [view, setView] = useState("dashboard"),
     [navOpen, setNavOpen] = useState(false),
@@ -245,6 +247,7 @@ export default function Workspace({
     setContentDirty(false);
     setPolicyDirty(false);
     setResearchDirty(false);
+    setSearchTarget(null);
     setNavVersion((v) => v + 1);
     setView(next);
     setNavOpen(false);
@@ -295,6 +298,7 @@ export default function Workspace({
   }
   const items = [
     { id: "dashboard", label: "Command center", icon: LayoutDashboard },
+    { id: "search", label: "Workspace search", icon: Search },
     { id: "brand", label: "Brand Brain", icon: Brain },
     { id: "dna", label: "Creative DNA", icon: Palette },
     { id: "research", label: "Research", icon: Search },
@@ -315,6 +319,7 @@ export default function Workspace({
   ];
   const titles: Any = {
     dashboard: "Command center",
+    search: "Workspace search",
     brand: "Brand Brain",
     dna: "Creative DNA",
     activity: "Activity",
@@ -501,6 +506,10 @@ export default function Workspace({
             </div>
           ) : (
             <>
+              {view === "search" && <WorkspaceSearch key={base} base={base} onOpen={result => {
+                go(result.kind === "content" ? "content" : result.kind === "campaign" ? "campaigns" : "assets");
+                setSearchTarget(result);
+              }} />}
               {[
                 "create",
                 "content",
@@ -515,6 +524,8 @@ export default function Workspace({
                   role={member.role}
                   onNavigate={go}
                   onDirtyChange={setContentDirty}
+                  initialContentId={searchTarget?.kind === "content" ? searchTarget.id : undefined}
+                  initialCampaignId={searchTarget?.kind === "campaign" ? searchTarget.id : undefined}
                 />
               )}
               {["assets", "video"].includes(view) && (
@@ -524,6 +535,7 @@ export default function Workspace({
                   role={member.role}
                   view={view}
                   onNavigate={go}
+                  initialAssetId={searchTarget?.kind === "asset" ? searchTarget.id : undefined}
                 />
               )}
               {view === "research" && <ResearchWorkspace

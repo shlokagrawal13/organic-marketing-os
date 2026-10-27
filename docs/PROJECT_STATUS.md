@@ -1,3 +1,15 @@
+<!-- UX01A_CURRENT_START -->
+## UX-01A workspace search - 2026-10-27
+
+RECOVERY-01P final 2bacb67629706b472b370e0ae5481984a5240ef3/run40249061054 passed ALL THREE jobs and every required step: 376 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability samples, zero audits and all24 Compose phases. All four artifact ZIP bytes/digests/CRCs were verified. [P final receipt](https://github.com/shlokagrawal13/organic-marketing-os/blob/main/docs/qa/recovery01p-final-ci-receipt.json) closes P's packaged own-CI pending status; older recovery notices below are historical. Planned local/CI recovery-fixture work is closed; no Q/R is planned. Production durability/retention/RPO-RTO and deployed real-provider restore remain open separately.
+
+The next product increment adds workspace search across saved content, campaigns and asset names/tags using PostgreSQL full-text queries. Every SQL branch is tenant-bound, reads follow existing membership/role rules, and results omit private object keys/full bodies. Whole-word query, type/archive filters, deterministic bounded pagination, exact record opening, workspace-switch cancellation and existing unsaved-change confirmation are implemented. A reviewed delayed-content response race is fixed with selection generations and a new-draft browser regression. See docs/WORKSPACE_SEARCH.md and docs/qa/ux01a-evidence.json.
+
+Local2 focused unit,3 native HTTP and3 browser tests pass; API build, web typecheck and zero full/production audits pass. Twenty-four unchanged migrations were applied to an independent disposable fixture. Existing user services and environment absence remain unchanged; no paid/provider calls. Initial test-harness failures are recorded in evidence. This exact new source still requires ALL THREE jobs and every required step on its own published commit. Pair external ux01a-final-ci-receipt.json with the fresh portable source ZIP to close packaging-time status; P's green run does not verify UX-01A.
+
+Global search beyond these three domains, autosave/conflict handling, nested workspaces, wider UX/accessibility and 21 broad product tracks remain open. Live/deployed/full-master acceptance remains open. CI verifies fixtures and does not deploy.
+<!-- UX01A_CURRENT_END -->
+
 <!-- RECOVERY01P_CURRENT_START -->
 ## RECOVERY-01P live claims at a named WAL target - 2026-10-26
 

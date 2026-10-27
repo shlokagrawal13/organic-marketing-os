@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "taskId": "RECOVERY-01P",
+  "status": "exact_final_commit_all_three_jobs_and_artifact_bytes_verified",
+  "recordedAtUtc": "2026-10-26T00:40:29.640Z",
+  "final": true,
+  "sourceCapsulePendingOwnCiClosedByThisReceipt": true,
+  "source": {
+    "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
+    "remoteMainMatched": true,
+    "workingTreeClean": true,
+    "checkpointManifestCheck": "638 included files; no drift"
+  },
+  "sourcePackage": {
+    "path": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-recovery01p-source.zip",
+    "bytes": 16112287,
+    "sha256": "17f3cbe59332e9139ba1ec69f58403fad88b1ef65c9e52b10a16472173cdcee2",
+    "zipCrcPassed": true,
+    "sourceAndManifestMatch": true,
+    "sourceFiles": 638,
+    "zipMembers": 639
+  },
+  "githubActions": {
+    "runId": 40249061054,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "startedAtUtc": "2026-10-26T00:22:39Z",
+    "completedAtUtc": "2026-10-26T00:39:18Z",
+    "jobs": [
+      {
+        "id": 121336745616,
+        "name": "Native application verification",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054/job/121336745616",
+        "headSha": "2bacb67629706b472b370e0ae5481984a5240ef3",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install test object storage",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install media dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned test CJK fonts",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run unit tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify bounded small-screen English readability",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit production dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated upgrade",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify native application flows",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload browser evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 121336745946,
+        "name": "Disposable Compose and native restore",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054/job/121336745946",
+        "headSha": "2bacb67629706b472b370e0ae5481984a5240ef3",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify complete Compose and native cross-store restore",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized Compose evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 121336745964,
+        "name": "Native populated upgrade and migration recovery",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054/job/121336745964",
+        "headSha": "2bacb67629706b472b370e0ae5481984a5240ef3",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated native Prisma upgrades and interrupted migration recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify physical PostgreSQL backup and WAL point-in-time recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized PostgreSQL PITR evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized native upgrade evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "verification": {
+    "unit": 376,
+    "http": 38,
+    "browser": 28,
+    "recovery": 5,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "sourceJobId": 121336745616,
+    "observedPassCounts": [
+      376,
+      38,
+      5
+    ],
+    "auditLogLines": [
+      "2026-10-26T00:23:24.4000739Z found 0 vulnerabilities",
+      "2026-10-26T00:31:48.4224812Z found 0 vulnerabilities",
+      "2026-10-26T00:31:48.8651097Z found 0 vulnerabilities"
+    ],
+    "migrations": 24,
+    "readabilitySamples": 44,
+    "composePhases": 24,
+    "retainedHistoricalVersions": 3,
+    "retentionGateDeniedControls": 9,
+    "retentionGateAdmittedCallbacks": 1,
+    "walTargetActualFaultsDenied": 2,
+    "walTargetAdmissionControlsDenied": 10,
+    "walTargetAdmissionCallbacks": 1,
+    "walTargetPrivateObjects": 4,
+    "sourcePostgresAndStorageStoppedDuringRecovery": true,
+    "actualMissingAndCorruptRetainedWalDenied": true,
+    "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+    "protectedMasterMigrationHashesUnchanged": 25
+  },
+  "artifacts": [
+    {
+      "id": 12619984752,
+      "name": "browser-evidence",
+      "bytes": 13503911,
+      "zipSha256": "7fef1a4879f6f33c868ed7a688f947ce32746adde00199e1a9f1518a424619f1",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 153,
+      "jsonMembers": {
+        ".local/unit-receipts.json": {
+          "bytes": 125475,
+          "sha256": "0d36a6ea7e249bc1afe76c90b61392f41a50a73f6e952ad6b34a752cfe2a8bd1",
+          "crc32": "8135fa1c"
+        },
+        ".local/readability/run-TKHAui/report.json": {
+          "bytes": 18940,
+          "sha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+          "crc32": "31013bb8"
+        }
+      },
+      "verification": {
+        "unitPassed": 376,
+        "uniqueUnitReceipts": 376,
+        "readabilitySamples": 44,
+        "readabilityNegativeControlPassed": true
+      }
+    },
+    {
+      "id": 12619899346,
+      "name": "compose-evidence",
+      "bytes": 16813,
+      "zipSha256": "debc6df5cf11f5bcabbb401863daae0d361b458e0e97d3b70a010b2ec92c7717",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "compose-evidence.json": {
+          "bytes": 135819,
+          "sha256": "1c35176c3d8b4de1ca51f0268174202845686d4cc5ebc7ce01b76c5780bbf099",
+          "crc32": "ffbb16f8"
+        }
+      },
+      "verification": {
+        "inflightWalRecovery": {
+          "passed": true,
+          "baseSnapshotSha256": "5540154b79c714eb85034fbae2c03d260ea6f9c617b9d4261e8fc9abca336806",
+          "targetSnapshotSha256": "0082231b6c9b47d1e1ffc1b30b41b82ee019283aa6d7b23b534c0118180d85e7",
+          "restoredSnapshotSha256": "0082231b6c9b47d1e1ffc1b30b41b82ee019283aa6d7b23b534c0118180d85e7",
+          "targetName": "omos_inflight_4ebafe3d64ca30e7",
+          "targetLsn": "0/70001D8",
+          "sourceTimeline": 2,
+          "targetSegment": "000000020000000000000007",
+          "targetWalSha256": "13ae8c4f80d6b10799a0626a5d0112dba81bf90084ed11739db714815bfb69eb",
+          "walArchiveSha256": "02a1a3e93c4164404a25e6767a9df19459436524e766757abca3888fc5436078",
+          "receiptHash": "bdf7efa016eb08c9deef8f7a4f8cf72613e233716b93e1983653f95532ad1fc7",
+          "expectedWalReviewSha256": "1ad5b8d857355b5b94aaa8966ded19f3b5d30bef51ea4dbe20c426f2976bb335",
+          "historicalObjects": 4,
+          "admissionControlsDenied": 10,
+          "admissionCallbacks": 1,
+          "actualWalFaultsDenied": 2,
+          "sourcePostgresAndStorageStopped": true,
+          "applicationRecovery": {
+            "passed": true,
+            "naturalLeaseExpiryWithoutEdits": true,
+            "checks": {
+              "restoredHttpAuthentication": true,
+              "historicalMediaServedByActualApi": true,
+              "anonymousAndCrossTenantMediaDenied": true,
+              "restoredClientRoleDeniedWrite": true,
+              "restoredRevisionConflictAndApprovalInvalidation": true,
+              "laterDatabaseChangesExcluded": true,
+              "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+              "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+              "physicalRenderRetryPreservedFrozenInputs": true,
+              "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+              "physicalAmbiguousMediaCreditsHeldForReview": true,
+              "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+              "physicalValidImagesDecoded": true,
+              "physicalRenderQueueCompleted": true,
+              "physicalRetainedMediaIngestedWithoutSubmission": true,
+              "physicalOutputDimensionsDurationAndDecodePassed": true,
+              "physicalNewOutputsPrivateAndTenantScoped": true,
+              "physicalMediaReservationsSettledOnce": true,
+              "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+              "physicalInterruptedRenderPreservedAfterRetry": true,
+              "physicallyRecoveredQueuedJobReconstructed": true,
+              "postTargetEffectNotReplayed": true,
+              "uncertainJobFailedForReview": true,
+              "oneCreditSettlementAndOriginalLedgerPreserved": true,
+              "restoredLedgerImmutable": true,
+              "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+              "physicalMediaRowsQueuesAndBytesStableAfterRestart": true
+            },
+            "mediaOutputHashes": {
+              "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/525eabbc-b9af-45a2-8cdb-29b68092908b/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/525eabbc-b9af-45a2-8cdb-29b68092908b/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/525eabbc-b9af-45a2-8cdb-29b68092908b/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+              "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+            }
+          },
+          "checks": {
+            "liveClaimsAbsentFromBasePresentAtWalTarget": true,
+            "actualNativeWalReplayAndPromotion": true,
+            "postTargetMarkersExcluded": true,
+            "independentFixtureStoresRecoverDuringSourceOutage": true,
+            "actualProviderReceiptBoundWithoutResubmission": true,
+            "restoredApplicationWorkersVerified": true
+          }
+        },
+        "taskId": "RECOVERY-01P",
+        "passed": true,
+        "phases": 24,
+        "retainedRecoverySet": {
+          "reviewSha256": "861d8bb64e5dba08149cde12caa6329d03835aff5867d2969b332561aad15c70",
+          "baseManifestSha256": "96d3baa37cbaa5cde8b748bd18e307d95decc01e2d5d1f8f2909cd82da0c88ce",
+          "targetLsn": "0/3006180",
+          "targetWalSegment": "000000010000000000000003",
+          "targetWalSha256": "f85f98f671b18c5e33ff0540ad64eaca738f73bd9fdb949d511438159ef10a73",
+          "historicalVersions": 3,
+          "deniedControls": 9,
+          "admittedCallbacks": 1
+        },
+        "actualMissingAndCorruptRetainedWalDenied": true,
+        "inflightPointSnapshotEqual": true,
+        "cleanupAndRealEnvironmentUnchanged": true
+      }
+    },
+    {
+      "id": 12619587211,
+      "name": "native-upgrade-evidence",
+      "bytes": 924,
+      "zipSha256": "e2ba7f37dcba1f417c082f778cbf648a5feac12750032ba3183a37ea68ed0be1",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "native-upgrade-evidence.json": {
+          "bytes": 2370,
+          "sha256": "473b9bc0f1e535eeb5005595f14a196d41487819e717a1770827038ac90d1ec5",
+          "crc32": "1c720f1d"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01B",
+        "passed": true
+      }
+    },
+    {
+      "id": 12619208275,
+      "name": "postgres-pitr-evidence",
+      "bytes": 2910,
+      "zipSha256": "cd5f7bd39da63eda073653f6babc3a18588858f053a296e33ee5ada5810c2bad",
+      "uploadDigestMatched": true,
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "postgres-pitr-evidence.json": {
+          "bytes": 7278,
+          "sha256": "fa6bc1104a20eff0682dee6110ecf4fc76d9a74d9926834add23d780e73461b1",
+          "crc32": "7ec32744"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01F",
+        "passed": true
+      }
+    }
+  ],
+  "priorVerifiedPublication": {
+    "taskId": "RECOVERY-01O",
+    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
+    "runId": 40224355433,
+    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
+  },
+  "scope": "Native base precedes actual live worker claims; named archived WAL target restores full application claims into independent owned stores during source PostgreSQL/S3 outage. All 23 predecessor phases retained.",
+  "limits": [
+    "independent local fixture stores are not remote durability or production scheduled retention/RPO-RTO",
+    "synthetic provider receipt ledger remains available; real-provider/deployed acceptance open",
+    "atomic production cross-store PITR is not accepted",
+    "CI verifies fixtures and does not deploy"
+  ],
+  "localFixtureRecovery": {
+    "status": "closed",
+    "lastPlannedIncrement": "RECOVERY-01P",
+    "next": "Move to next product task from taskboard; no automatic Q/R recovery increment."
+  },
+  "remaining": [
+    "production durability, scheduled backup/retention, encryption/access and measured RPO/RTO",
+    "deployed real-provider restore, populated publication and full-master acceptance",
+    "21 broad product task tracks remain open"
+  ],
+  "deploymentClaimed": false
+}

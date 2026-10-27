@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01A",
+  "recordedAtUtc": "2026-10-27T03:31:14.830Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "RECOVERY-01P",
+    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
+    "runId": 40249061054,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 376,
+      "http": 38,
+      "browser": 28,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 24
+    },
+    "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
+  },
+  "scope": "Tenant-scoped PostgreSQL full-text search across saved content, campaigns and asset metadata, with exact result opening and existing unsaved-change confirmation.",
+  "checks": {
+    "focusedUnit": 2,
+    "http": 3,
+    "browser": 3,
+    "apiBuild": true,
+    "webTypecheck": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "migrations": 24,
+    "protectedMasterAndMigrationsChanged": false,
+    "dependenciesOrWorkflowChanged": false,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "realEnvExists": false,
+    "liveProvidersUsed": false,
+    "desktopAnd390pxMobileScreenshotsInspected": true
+  },
+  "localExecution": {
+    "taskId": "UX-01A",
+    "passed": true,
+    "startedAt": "2026-10-27T03:29:09.768Z",
+    "fixture": "58f9b222334d71e0",
+    "http": 3,
+    "browser": 3,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-10-27T03:30:54.325Z",
+    "apiBuild": "Passed in prior run of unchanged API source; final focused run reused those compiled API bytes."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "httpPassed": 3,
+      "browserPassed": 1,
+      "browserFailed": 1,
+      "cause": "Delayed-response test unregistered a route before its async handler completed; route.fulfill raised Route is already handled. Await handler completion before unroute.",
+      "cleanup": true
+    },
+    {
+      "attempt": "unit-import",
+      "cause": "Importing a decorated Nest controller through tsx without decorator metadata failed. Query/schema extracted to a pure module; final two unit tests pass."
+    },
+    {
+      "attempt": "harness-prestart",
+      "cause": "Harness assumed a real .env existed. Environment is actually absent; hash guard now compares optional presence without creating it. No fixture started in that attempt."
+    },
+    {
+      "attempt": 2,
+      "httpPassed": 3,
+      "browserPassed": 2,
+      "browserFailed": 1,
+      "cause": "Search error locator also matched the Next.js route announcer alert. Scoped the assertion to the expected search error while retaining request-error/retry checks.",
+      "cleanup": true
+    },
+    {
+      "attempt": "package-preflight",
+      "cause": "Root/docs status links differed after relative-link adjustment. Synced both status copies byte-for-byte with a common repository link before packaging."
+    }
+  ],
+  "review": {
+    "readOnlyReviewCompleted": true,
+    "finding": "Delayed initial content selection could replace a newer draft and clear dirty state.",
+    "resolution": "Shared selection generation invalidates delayed responses on new draft, open, back and view changes; browser regression holds the old response during new draft editing."
+  },
+  "currentSourceOwnCiPending": true,
+  "limitations": [
+    "Search covers content, campaigns and asset names/tags only. Other global domains, nested workspaces, autosave/conflict resolution and broader UX acceptance remain open.",
+    "Whole-word simple-dictionary matching, all words required; no fuzzy search, stemming, semantic search or large-tenant load acceptance claimed. Content uses existing FTS expression/index; campaigns/assets use existing tenant indexes. Offset <=1000 and page <=50 bound result retrieval, not total database scan cost.",
+    "Local HTTP/browser checks use independent generated PostgreSQL/Redis fixture containers and random loopback ports. Existing user services/ports/volumes were not fixtures. Asset rows are metadata-only; no object decode/worker/live-provider acceptance is claimed locally.",
+    "Full exact-source unit/HTTP/browser/readability/native-upgrade/24-phase Compose checks require all three published CI jobs. CI verifies fixtures and does not deploy.",
+    "RECOVERY-01P local/CI fixture work is closed. Production durable backup/retention/RPO-RTO and deployed real-provider restore remain separate open gates."
+  ]
+}

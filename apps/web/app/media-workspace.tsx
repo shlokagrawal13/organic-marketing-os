@@ -49,13 +49,15 @@ export default function MediaWorkspace({
   role,
   view,
   onNavigate,
+  initialAssetId,
 }: {
   base: string;
   role: string;
   view: string;
   onNavigate: (v: string) => void;
+  initialAssetId?: string;
 }) {
-  if (view === "assets") return <AssetLibrary base={base} role={role} />;
+  if (view === "assets") return <AssetLibrary base={base} role={role} initialAssetId={initialAssetId} />;
   return (
     <>
       <div className="page-heading">
@@ -73,7 +75,8 @@ export default function MediaWorkspace({
     </>
   );
 }
-function AssetLibrary({ base, role }: { base: string; role: string }) {
+function AssetLibrary({ base, role, initialAssetId }: { base: string; role: string; initialAssetId?: string }) {
+  const [focusedId, setFocusedId] = useState(initialAssetId);
   const [showGeneration, setShowGeneration] = useState(false);
   const [items, setItems] = useState<Any[]>([]),
     [total, setTotal] = useState(0),
@@ -97,7 +100,7 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
     setLoading(true);
     try {
       const [data, s] = await Promise.all([
-        api(
+        focusedId ? api(`${base}/assets/${focusedId}`).then(item => ({ items: [item], total: 1 })) : api(
           `${base}/assets?take=100&archived=${archived}&q=${encodeURIComponent(query)}${kind ? `&kind=${kind}` : ""}`,
         ),
         api(base + "/assets/status"),
@@ -112,7 +115,7 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
     } finally {
       if (current === generation.current) setLoading(false);
     }
-  }, [base, query, kind, archived]);
+  }, [base, query, kind, archived, focusedId]);
   useEffect(() => {
     const timer = setTimeout(load, 250);
     return () => {
@@ -311,7 +314,7 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
               aria-label="Search assets"
               placeholder="Search name or exact tag"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => { setFocusedId(undefined); setQuery(e.target.value); }}
             />
           </label>
           <label>
@@ -319,7 +322,7 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
             <select
               aria-label="Asset type"
               value={kind}
-              onChange={(e) => setKind(e.target.value)}
+              onChange={(e) => { setFocusedId(undefined); setKind(e.target.value); }}
             >
               <option value="">All media</option>
               <option value="IMAGE">Images</option>
@@ -331,7 +334,7 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
             <input
               type="checkbox"
               checked={archived}
-              onChange={(e) => setArchived(e.target.checked)}
+              onChange={(e) => { setFocusedId(undefined); setArchived(e.target.checked); }}
             />
             Archived
           </label>
@@ -339,6 +342,7 @@ function AssetLibrary({ base, role }: { base: string; role: string }) {
             {items.length} shown · {total} total
           </span>
         </div>
+        {focusedId && <button className="button" onClick={() => setFocusedId(undefined)}>Show all assets</button>}
         {loading ? (
           <p className="page-loading" role="status">
             Loading assets…

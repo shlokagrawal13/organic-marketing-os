@@ -557,6 +557,14 @@ const campaignSchema = z
 @UseGuards(TenantGuard)
 export class CampaignsController {
   constructor(private db: Db) {}
+  @Get(":id") async get(@Req() req: AuthedRequest, @Param("id") id: string) {
+    const row = await this.db.campaign.findFirst({
+      where: { id: idSchema.parse(id), organizationId: req.organizationId },
+      include: { _count: { select: { content: true } } },
+    });
+    if (!row) throw new NotFoundException("Campaign not found.");
+    return row;
+  }
   @Get() list(@Req() req: AuthedRequest) {
     return this.db.campaign.findMany({
       where: { organizationId: req.organizationId },

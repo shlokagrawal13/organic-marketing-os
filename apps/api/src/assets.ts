@@ -220,6 +220,11 @@ export class AssetsController {
     ]);
     return { items: items.map(publicAsset), total };
   }
+  @Get(":id") async get(@Req() req: AuthedRequest, @Param("id") id: string) {
+    const row = await this.db.asset.findFirst({ where: { id: idSchema.parse(id), organizationId: req.organizationId } });
+    if (!row) throw new NotFoundException("Asset not found.");
+    return publicAsset(row);
+  }
   @Post()
   @Roles(...writerRoles)
   @UseGuards(UploadGuard)

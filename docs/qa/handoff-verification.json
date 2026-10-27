@@ -1,18 +1,18 @@
 {
-  "checkpointRevision": "recovery01p-20261026",
+  "checkpointRevision": "ux01a-20261027",
   "applicationVersion": "0.9.2",
-  "verifiedDate": "2026-10-26",
+  "verifiedDate": "2026-10-27",
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01O",
-    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
-    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
-    "runId": 40224355433,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
+    "taskId": "RECOVERY-01P",
+    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
+    "runId": 40249061054,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 372,
+      "unit": 376,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -20,17 +20,17 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 23
+      "composePhases": 24
     },
-    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
   },
   "sourcePackage": {
-    "taskId": "RECOVERY-01P",
-    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-recovery01p-source.zip",
-    "scope": "Portable source/context, not a database/media backup",
-    "metadata": "Own exact CI in external recovery01p-final-ci-receipt.json"
+    "taskId": "UX-01A",
+    "archive": "C:/Users/shlok/Desktop/organic-marketing-os-ux01a-source.zip",
+    "scope": "Portable source/context, not database/media backup",
+    "metadata": "Own exact CI in external ux01a-final-ci-receipt.json"
   },
-  "currentSourcePackageStatus": "P local evidence packaged; external final exact-commit receipt required.",
+  "currentSourcePackageStatus": "UX-01A local evidence packaged; own exact final receipt required.",
   "priorHandoffVerification": {
     "checkpointRevision": "2026-10-07.15",
     "applicationVersion": "0.9.2",
@@ -627,19 +627,19 @@
     }
   },
   "currentWork": {
-    "taskId": "RECOVERY-01P",
+    "taskId": "UX-01A",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01O",
-      "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
-      "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
-      "runId": 40224355433,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
+      "taskId": "RECOVERY-01P",
+      "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
+      "runId": 40249061054,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 372,
+        "unit": 376,
         "http": 38,
         "browser": 28,
         "recovery": 5,
@@ -647,27 +647,26 @@
         "readabilitySamples": 44,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "composePhases": 23
+        "composePhases": 24
       },
-      "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
+      "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
     },
     "local": {
-      "focusedTests": 86,
-      "failedTests": 0,
-      "unitReceiptsSha256": "f5c28c3a0abe2e54e42dea33f2f2c29e1cc76e40e31a86e1f2cc77eee32b079f",
-      "composeIntegrationPassed": true,
-      "composePhases": 19,
-      "verificationMode": "diagnostic-p-focused-inspected-unchanged-images",
-      "composeReportSha256": "ced009d3645b647880b8e77b472c4efe07d5e19041ed1a7025c34a50c5a26bd8",
-      "composeCleanupAndRealEnvironmentUnchanged": true,
-      "actualWalFaultsDenied": 2,
-      "admissionControlsDenied": 10,
-      "admissionCallbacks": 1,
-      "historicalObjects": 4,
+      "focusedUnit": 2,
+      "http": 3,
+      "browser": 3,
+      "apiBuild": true,
+      "webTypecheck": true,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
+      "migrations": 24,
       "protectedMasterAndMigrationsChanged": false,
-      "freshLocalImagesClaimed": false
+      "dependenciesOrWorkflowChanged": false,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "realEnvExists": false,
+      "liveProvidersUsed": false,
+      "desktopAnd390pxMobileScreenshotsInspected": true
     }
   },
   "FSourcePackageReinspection": {
@@ -697,16 +696,16 @@
     "receipt": "docs/qa/recovery01k-ci-attempt1.json"
   },
   "latestAttempt": {
-    "taskId": "RECOVERY-01O",
-    "commit": "6e0da77aef2f9c5baa55773ce81f83ab07e122ba",
-    "tree": "b57333e03bf627cf45577a3100ffa06fc7b9160a",
-    "runId": 40224355433,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40224355433",
+    "taskId": "RECOVERY-01P",
+    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
+    "runId": 40249061054,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 372,
+      "unit": 376,
       "http": 38,
       "browser": 28,
       "recovery": 5,
@@ -714,9 +713,9 @@
       "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 23
+      "composePhases": 24
     },
-    "receipt": "docs/qa/recovery01o-final-ci-receipt.json"
+    "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
   },
   "priorFailedAttempt": {
     "commit": "0bcaeda20c3740c57840efb544ba25a3bed66ee6",

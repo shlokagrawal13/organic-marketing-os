@@ -123,12 +123,16 @@ export default function ContentWorkspace({
   role,
   onNavigate,
   onDirtyChange,
+  initialContentId,
+  initialCampaignId,
 }: {
   base: string;
   view: string;
   role: string;
   onNavigate: (v: string) => void;
   onDirtyChange: (v: boolean) => void;
+  initialContentId?: string;
+  initialCampaignId?: string;
 }) {
   const [items, setItems] = useState<Any[]>([]),
     [assets, setAssets] = useState<Any[]>([]),
@@ -159,6 +163,7 @@ export default function ContentWorkspace({
     );
   const [researchSelection, setResearchSelection] = useState<ResearchSelection>({ categories: [], market: "", language: "" });
   const campaignDialog = useRef<HTMLDialogElement>(null);
+  const selectionGeneration = useRef(0);
   const editable = ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role),
     approver = ["OWNER", "ADMIN", "EDITOR"].includes(role);
   const load = useCallback(async () => {
@@ -166,7 +171,7 @@ export default function ContentWorkspace({
     try {
       const [c, ca, j, s, a] = await Promise.all([
         api(base + "/content?take=100"),
-        api(base + "/campaigns"),
+        initialCampaignId ? api(base + "/campaigns/" + initialCampaignId).then(c => [c]) : api(base + "/campaigns"),
         api(base + "/ai/jobs"),
         api(base + "/ai/status"),
         api(base + "/assets?take=100"),
@@ -182,7 +187,7 @@ export default function ContentWorkspace({
     } finally {
       setLoading(false);
     }
-  }, [base]);
+  }, [base, initialCampaignId]);
   useEffect(() => {
     setResearchSelection({ categories: [], market: "", language: "" });
   }, [base]);
@@ -193,11 +198,22 @@ export default function ContentWorkspace({
     onDirtyChange(dirty);
   }, [dirty, onDirtyChange]);
   useEffect(() => {
+    selectionGeneration.current++;
     setDetail(null);
     setDirty(false);
     setError("");
     setNotice("");
   }, [view]);
+  useEffect(() => {
+    if (!initialContentId) return;
+    let active = true;
+    const generation = ++selectionGeneration.current;
+    api(base + "/content/" + initialContentId).then(data => {
+      if (!active || generation !== selectionGeneration.current) return;
+      setDetail(data); setDraft(pick(data.item)); hydrateClaimResolutions(data); setDirty(false);
+    }).catch(e => { if (active && generation === selectionGeneration.current) setError((e as Error).message); });
+    return () => { active = false; };
+  }, [base, initialContentId]);
   useEffect(() => {
     if (!jobs.some((j) => ["QUEUED", "RUNNING"].includes(j.status))) return;
     const timer = setInterval(async () => {
@@ -258,7 +274,9 @@ export default function ContentWorkspace({
     );
   }
   async function open(id: string) {
+    const generation = ++selectionGeneration.current;
     const data = await api(base + `/content/${id}`);
+    if (generation !== selectionGeneration.current) return;
     setDetail(data);
     setDraft(pick(data.item));
     hydrateClaimResolutions(data);
@@ -266,6 +284,7 @@ export default function ContentWorkspace({
     setAck(false);
   }
   function create(initial: Any = emptyDraft) {
+    selectionGeneration.current++;
     setDraft(pick(initial));
     setDetail({
       item: { id: null, status: "DRAFT", revision: 0 },
@@ -425,8 +444,10 @@ export default function ContentWorkspace({
             <button
               className="text-button"
               onClick={() => {
-                if (!dirty || confirm("Discard unsaved content changes?"))
+                if (!dirty || confirm("Discard unsaved content changes?")) {
+                  selectionGeneration.current++;
                   setDetail(null);
+                }
               }}
             >
               <ArrowLeft size={17} />
@@ -1645,6 +1666,7 @@ export default function ContentWorkspace({
                 </button>
               </div>
               <div className="campaign-grid">
+                {initialCampaignId && <button className="button" onClick={() => onNavigate("campaigns")}>Show all campaigns</button>}
                 {campaigns.map((c) => (
                   <section className="panel campaign-card" key={c.id}>
                     <div className="section-top">
