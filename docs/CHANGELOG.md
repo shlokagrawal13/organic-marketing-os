@@ -1,3 +1,9 @@
+<!-- UX01C_CURRENT_START -->
+## Current: UX-01C — 2026-10-28
+
+Read [active handoff](ACTIVE_HANDOFF.md) for concise current context and acceptance. UX-01B final81287c3/run40518599731 passed all three jobs/every required step; docs/qa/ux01b-final-ci-receipt.json closes its older pending notices. C adds draft/scene autosave and conflict recovery; see docs/DRAFT_AUTOSAVE.md and docs/qa/ux01c-evidence.json. Local focused checks pass; C requires ALL THREE jobs/every required step on its own exact final commit, paired external receipt/source ZIP. Older entries are historical. Recovery fixtures closed at P; no Q/R. Production/live/deployed/full-master gates remain open; CI does not deploy.
+<!-- UX01C_CURRENT_END -->
+
 <!-- UX01B_CORE_BUDGET_START -->
 ## UX-01B core CI time budget - 2026-10-27
 

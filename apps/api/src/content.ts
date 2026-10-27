@@ -248,8 +248,11 @@ export class ContentController {
     @Body() body: unknown,
   ) {
     idSchema.parse(id);
-    const { revision, ...data } = parse(
-      contentInput.extend({ revision: z.number().int().positive() }),
+    const { revision, autosave, ...data } = parse(
+      contentInput.extend({
+        revision: z.number().int().positive(),
+        autosave: z.literal(true).optional(),
+      }),
       body,
     );
     return this.db.$transaction(async (tx) => {
@@ -260,7 +263,7 @@ export class ContentController {
           id,
           organizationId: req.organizationId,
           revision,
-          status: { not: "ARCHIVED" },
+          status: autosave ? "DRAFT" : { not: "ARCHIVED" },
         },
         data: {
           ...data,

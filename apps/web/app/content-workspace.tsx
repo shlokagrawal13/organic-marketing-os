@@ -29,6 +29,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { api, download } from "./api-client";
+import { useDraftPersistence } from "./use-draft-persistence";
 import { RenderPanel } from "./media-workspace";
 import YoutubePolicyReview from "./youtube-policy-review";
 import { CaptionEditor } from "./caption-editor";
@@ -141,7 +142,7 @@ export default function ContentWorkspace({
     [jobs, setJobs] = useState<Any[]>([]),
     [aiStatus, setAiStatus] = useState<Any>({ configured: false, usage: [] }),
     [loading, setLoading] = useState(true),
-    [busy, setBusy] = useState(false),
+    [actionBusy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   const [detail, setDetail] = useState<Any | null>(null),
@@ -166,6 +167,44 @@ export default function ContentWorkspace({
   const selectionGeneration = useRef(0);
   const editable = ["OWNER", "ADMIN", "EDITOR", "CREATOR"].includes(role),
     approver = ["OWNER", "ADMIN", "EDITOR"].includes(role);
+  const persistence = useDraftPersistence({
+    base,
+    scope: `${base}:${view}:${selectionGeneration.current}:${detail?.item.id ?? "new"}`,
+    item: detail?.item,
+    draft,
+    dirty,
+    editable,
+    busy: actionBusy,
+    onSaved(data, unchanged) {
+      setDetail(data);
+      if (unchanged) {
+        setDraft(pick(data.item));
+        hydrateClaimResolutions(data);
+      }
+      setDirty(!unchanged);
+      setAck(false);
+      setError("");
+      setNotice(unchanged ? "Draft saved." : "");
+      setItems((previous) => {
+        const updated = {
+          ...data.item,
+          campaign:
+            campaigns.find(campaign => campaign.id === data.item.campaignId) || null,
+        };
+        const exists = previous.some((item) => item.id === data.item.id);
+        const next = exists
+          ? previous.map((item) =>
+              item.id === data.item.id ? { ...item, ...updated } : item,
+            )
+          : [updated, ...previous];
+        return next.sort(
+          (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+        );
+      });
+      if (!detail?.item.id) setTotal((total) => total + 1);
+    },
+  });
+  const busy = actionBusy || persistence.saving;
   const load = useCallback(async () => {
     setLoading(true);
     try {
@@ -298,18 +337,7 @@ export default function ContentWorkspace({
   }
   async function save(e?: React.FormEvent) {
     e?.preventDefault();
-    await run(async () => {
-      const saved = await api(
-        base + "/content" + (detail?.item.id ? `/${detail.item.id}` : ""),
-        detail?.item.id ? "PUT" : "POST",
-        {
-          ...draft,
-          ...(detail?.item.id ? { revision: detail.item.revision } : {}),
-        },
-      );
-      await open(saved.id);
-      await load();
-    }, "Draft saved.");
+    await persistence.save();
   }
   async function transition(action: string, extra: Any = {}) {
     await run(
@@ -447,6 +475,7 @@ export default function ContentWorkspace({
                 if (!dirty || confirm("Discard unsaved content changes?")) {
                   selectionGeneration.current++;
                   setDetail(null);
+                  setDirty(false);
                 }
               }}
             >
@@ -480,7 +509,11 @@ export default function ContentWorkspace({
               <button
                 className="button primary"
                 disabled={
-                  busy || !editable || detail.item.status === "ARCHIVED"
+                  busy ||
+                  !editable ||
+                  detail.item.status === "ARCHIVED" ||
+                  persistence.failure?.kind === "conflict" ||
+                  persistence.failure?.kind === "uncertain"
                 }
                 onClick={() => save()}
               >
@@ -489,11 +522,58 @@ export default function ContentWorkspace({
               </button>
             </div>
           </div>
+          <div className="panel" aria-label="Draft save status">
+            <p role="status" aria-live="polite">
+              {persistence.saving
+                ? "Saving draft…"
+                : persistence.failure
+                  ? "Autosave paused"
+                  : persistence.eligible
+                    ? dirty
+                      ? "Unsaved changes — autosave in 2 seconds after editing stops."
+                      : persistence.saved
+                        ? "All changes saved."
+                        : "Autosave is on for this saved draft."
+                    : !editable
+                      ? "Read-only access. Changes cannot be saved."
+                      : !detail.item.id
+                        ? "Save this new draft once to enable autosave."
+                        : "Autosave is off outside Draft. Use Save draft to return edited content to Draft."}
+            </p>
+            {persistence.saving && (
+              <p className="field-help">
+                A save already in progress may still finish if you leave this
+                editor.
+              </p>
+            )}
+            {persistence.failure && (
+              <div className="alert error" role="alert">
+                {persistence.failure.message}
+              </div>
+            )}
+            {persistence.failure && detail.item.id && (
+              <button
+                className="button"
+                disabled={busy}
+                onClick={() => {
+                  if (
+                    confirm(
+                      "Discard local edits and reload the latest saved revision? Export first if you need to keep them.",
+                    )
+                  ) {
+                    void run(() => open(detail.item.id));
+                  }
+                }}
+              >
+                Reload latest saved revision
+              </button>
+            )}
+          </div>
           <div className="editor-layout">
             <form className="editor-fields" onSubmit={save}>
               <fieldset
                 disabled={
-                  !editable || busy || detail.item.status === "ARCHIVED"
+                  !editable || actionBusy || detail.item.status === "ARCHIVED"
                 }
               >
                 <section className="panel">

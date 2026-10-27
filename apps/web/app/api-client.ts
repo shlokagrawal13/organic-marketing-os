@@ -1,7 +1,13 @@
-export async function api(path: string, method = "GET", body?: unknown) {
+export async function api(
+  path: string,
+  method = "GET",
+  body?: unknown,
+  signal?: AbortSignal,
+) {
   const res = await fetch(`/api${path}`, {
     method,
     credentials: "include",
+    ...(signal ? { signal } : {}),
     headers: {
       "Content-Type": "application/json",
       "X-Requested-With": "MarketingOS",

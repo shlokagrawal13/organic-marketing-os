@@ -72,78 +72,9 @@
     "freshFullHarnessExecution": true
   },
   "latestIncrement": {
-    "taskId": "UX-01B",
+    "taskId": "UX-01C",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish the reviewed core-budget follow-up normally; require ALL THREE jobs and all required steps on exact new source, then pair refreshed portable source ZIP/external final receipt. Preserve all earlier B attempts and gaps. Continue product taskboard afterwards; no recovery Q/R.",
-    "initialPublication": {
-      "taskId": "UX-01B",
-      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
-      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
-      "runId": 40447671309,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
-      "status": "completed",
-      "conclusion": "failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "receipt": "docs/qa/ux01b-ci-attempt1.json",
-      "results": {
-        "unit": 379,
-        "httpPassed": 40,
-        "httpFailed": 3,
-        "browserExecuted": false,
-        "recoveryExecuted": false,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 24
-      }
-    },
-    "runnerSetupAttempt": {
-      "taskId": "UX-01B",
-      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
-      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
-      "runId": 40512689694,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
-      "status": "completed",
-      "conclusion": "startup_failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "receipt": "docs/qa/ux01b-ci-attempt2.json",
-      "attempts": [
-        {
-          "attempt": 1,
-          "nativeUpgrade": "success",
-          "compose": "success",
-          "composePhases": 24,
-          "core": "cancelled",
-          "unitPassed": 379,
-          "unitFailed": 0,
-          "readabilitySamples": 44,
-          "productionAuditVulnerabilities": 0,
-          "fullAuditVulnerabilities": 0,
-          "setup": {
-            "reportedDownload": "116 MB",
-            "reportedDuration": "14min 27s",
-            "reportedRate": "134 kB/s",
-            "startedAt": "2026-10-27T13:31:44Z",
-            "completedAt": "2026-10-27T13:46:24Z"
-          },
-          "incomplete": [
-            "full HTTP suite",
-            "browser suite",
-            "5 application recovery tests"
-          ],
-          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
-        },
-        {
-          "attempt": 2,
-          "conclusion": "startup_failure",
-          "jobsCreated": 0,
-          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
-          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
-          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
-          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
-        }
-      ]
-    }
+    "nextAction": "Review/publish UX-01C normally, inspect/fix ALL THREE jobs and all required steps on exact final commit; verify four artifact bytes/reports and pair external ux01c-final-ci-receipt.json with source ZIP. Then continue product taskboard; no recovery Q/R."
   },
   "policy01dPlatformPolicyProvenance": {
     "status": "source_public_native_ci_verified_closure_local",
@@ -204,50 +135,57 @@
   },
   "latestNativeRun": {
     "taskId": "UX-01B",
-    "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
-    "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
-    "runId": 40512689694,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+    "runId": 40518599731,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
     "status": "completed",
-    "conclusion": "startup_failure",
-    "allThreeJobsAndRequiredStepsPassed": false,
-    "receipt": "docs/qa/ux01b-ci-attempt2.json",
-    "attempts": [
-      {
-        "attempt": 1,
-        "nativeUpgrade": "success",
-        "compose": "success",
-        "composePhases": 24,
-        "core": "cancelled",
-        "unitPassed": 379,
-        "unitFailed": 0,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "setup": {
-          "reportedDownload": "116 MB",
-          "reportedDuration": "14min 27s",
-          "reportedRate": "134 kB/s",
-          "startedAt": "2026-10-27T13:31:44Z",
-          "completedAt": "2026-10-27T13:46:24Z"
-        },
-        "incomplete": [
-          "full HTTP suite",
-          "browser suite",
-          "5 application recovery tests"
-        ],
-        "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
-      },
-      {
-        "attempt": 2,
-        "conclusion": "startup_failure",
-        "jobsCreated": 0,
-        "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
-        "requestId": "678B:370C:3CD06:58715:6AE0AE26",
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
-        "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
-      }
-    ]
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 379,
+      "http": 43,
+      "browser": 33,
+      "recovery": 5,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "sourceJobId": 122238957996,
+      "observedPassCounts": [
+        379,
+        43,
+        5
+      ],
+      "auditLogLines": [
+        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+      ],
+      "searchTestLines": [
+        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
+        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
+        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
+        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
+        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
+        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
+        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
+        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
+        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      ],
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedMasterMigrationHashesUnchanged": 25,
+      "searchFocusedUnit": 3,
+      "searchHttp": 5,
+      "searchBrowser": 5,
+      "coreJobBudgetMinutes": 40,
+      "ciCommandsAndAssertionsUnchanged": true,
+      "scopedFixtureRateBudgetReset": true,
+      "actualExhaustedFixtureRejected429": true,
+      "exhaustedBudgetControlHttpPassed": 5
+    },
+    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
   },
   "priorFullSuite": {
     "sourceCommit": "51cd7ae5cb2f3898dd3dea49d464ee156f7449a0",
@@ -309,50 +247,57 @@
   },
   "githubActions": {
     "taskId": "UX-01B",
-    "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
-    "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
-    "runId": 40512689694,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+    "runId": 40518599731,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
     "status": "completed",
-    "conclusion": "startup_failure",
-    "allThreeJobsAndRequiredStepsPassed": false,
-    "receipt": "docs/qa/ux01b-ci-attempt2.json",
-    "attempts": [
-      {
-        "attempt": 1,
-        "nativeUpgrade": "success",
-        "compose": "success",
-        "composePhases": 24,
-        "core": "cancelled",
-        "unitPassed": 379,
-        "unitFailed": 0,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "setup": {
-          "reportedDownload": "116 MB",
-          "reportedDuration": "14min 27s",
-          "reportedRate": "134 kB/s",
-          "startedAt": "2026-10-27T13:31:44Z",
-          "completedAt": "2026-10-27T13:46:24Z"
-        },
-        "incomplete": [
-          "full HTTP suite",
-          "browser suite",
-          "5 application recovery tests"
-        ],
-        "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
-      },
-      {
-        "attempt": 2,
-        "conclusion": "startup_failure",
-        "jobsCreated": 0,
-        "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
-        "requestId": "678B:370C:3CD06:58715:6AE0AE26",
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
-        "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
-      }
-    ]
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 379,
+      "http": 43,
+      "browser": 33,
+      "recovery": 5,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "sourceJobId": 122238957996,
+      "observedPassCounts": [
+        379,
+        43,
+        5
+      ],
+      "auditLogLines": [
+        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+      ],
+      "searchTestLines": [
+        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
+        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
+        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
+        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
+        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
+        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
+        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
+        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
+        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      ],
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedMasterMigrationHashesUnchanged": 25,
+      "searchFocusedUnit": 3,
+      "searchHttp": 5,
+      "searchBrowser": 5,
+      "coreJobBudgetMinutes": 40,
+      "ciCommandsAndAssertionsUnchanged": true,
+      "scopedFixtureRateBudgetReset": true,
+      "actualExhaustedFixtureRejected429": true,
+      "exhaustedBudgetControlHttpPassed": 5
+    },
+    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
   },
   "verifiedDateTimezone": "Asia/Calcutta",
   "editor01cEvidence": {
@@ -984,26 +929,21 @@
   },
   "currentIncrementChecks": {
     "focusedUnit": 3,
-    "http": 5,
-    "browser": 5,
+    "focusedHttp": 7,
+    "focusedBrowser": 14,
+    "newHttp": 2,
+    "newBrowser": 9,
     "apiBuild": true,
     "webTypecheck": true,
+    "migrations": 24,
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0,
-    "migrations": 24,
-    "protectedMasterAndMigrationsChanged": false,
-    "dependenciesOrWorkflowChanged": true,
     "fixtureCleanup": true,
     "realEnvironmentUnchanged": true,
-    "realEnvExists": false,
+    "protectedFilesUnchanged": 25,
+    "dependenciesWorkflowOrMigrationsChanged": false,
     "liveProvidersUsed": false,
-    "desktopAnd390pxMobileScreenshotsInspected": true,
-    "isolatedHttpCaseBudget": true,
-    "actualExhaustedFixtureRejected429": true,
-    "dependenciesChanged": false,
-    "workflowTimeBudgetChanged": true,
-    "ciCommandsOrAssertionsChanged": false,
-    "workflowYamlAndSingleValueDiffVerified": true
+    "realEnvExists": false
   },
   "editor01pEvidence": {
     "scope": "UI-only immutable saved-render review navigation",
@@ -15264,50 +15204,57 @@
   },
   "latestAttempt": {
     "taskId": "UX-01B",
-    "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
-    "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
-    "runId": 40512689694,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
+    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+    "runId": 40518599731,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
     "status": "completed",
-    "conclusion": "startup_failure",
-    "allThreeJobsAndRequiredStepsPassed": false,
-    "receipt": "docs/qa/ux01b-ci-attempt2.json",
-    "attempts": [
-      {
-        "attempt": 1,
-        "nativeUpgrade": "success",
-        "compose": "success",
-        "composePhases": 24,
-        "core": "cancelled",
-        "unitPassed": 379,
-        "unitFailed": 0,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "setup": {
-          "reportedDownload": "116 MB",
-          "reportedDuration": "14min 27s",
-          "reportedRate": "134 kB/s",
-          "startedAt": "2026-10-27T13:31:44Z",
-          "completedAt": "2026-10-27T13:46:24Z"
-        },
-        "incomplete": [
-          "full HTTP suite",
-          "browser suite",
-          "5 application recovery tests"
-        ],
-        "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
-      },
-      {
-        "attempt": 2,
-        "conclusion": "startup_failure",
-        "jobsCreated": 0,
-        "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
-        "requestId": "678B:370C:3CD06:58715:6AE0AE26",
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
-        "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
-      }
-    ]
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 379,
+      "http": 43,
+      "browser": 33,
+      "recovery": 5,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "sourceJobId": 122238957996,
+      "observedPassCounts": [
+        379,
+        43,
+        5
+      ],
+      "auditLogLines": [
+        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+      ],
+      "searchTestLines": [
+        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
+        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
+        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
+        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
+        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
+        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
+        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
+        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
+        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      ],
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedMasterMigrationHashesUnchanged": 25,
+      "searchFocusedUnit": 3,
+      "searchHttp": 5,
+      "searchBrowser": 5,
+      "coreJobBudgetMinutes": 40,
+      "ciCommandsAndAssertionsUnchanged": true,
+      "scopedFixtureRateBudgetReset": true,
+      "actualExhaustedFixtureRejected429": true,
+      "exhaustedBudgetControlHttpPassed": 5
+    },
+    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
   },
   "recovery01o": {
     "priorVerifiedPublication": {
@@ -15443,142 +15390,186 @@
   },
   "ux01b": {
     "taskId": "UX-01B",
-    "status": "local_verified_own_exact_commit_ci_pending",
-    "priorVerifiedPublication": {
-      "taskId": "UX-01A",
-      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
-      "runId": 40444776576,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
-      "status": "completed",
-      "conclusion": "success",
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "results": {
-        "unit": 378,
-        "http": 41,
-        "browser": 31,
-        "recovery": 5,
-        "migrations": 24,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 24
-      },
-      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
-    },
-    "local": {
-      "focusedUnit": 3,
-      "http": 5,
-      "browser": 5,
-      "apiBuild": true,
-      "webTypecheck": true,
-      "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0,
-      "migrations": 24,
-      "protectedMasterAndMigrationsChanged": false,
-      "dependenciesOrWorkflowChanged": true,
-      "fixtureCleanup": true,
-      "realEnvironmentUnchanged": true,
-      "realEnvExists": false,
-      "liveProvidersUsed": false,
-      "desktopAnd390pxMobileScreenshotsInspected": true,
-      "isolatedHttpCaseBudget": true,
-      "actualExhaustedFixtureRejected429": true,
-      "dependenciesChanged": false,
-      "workflowTimeBudgetChanged": true,
-      "ciCommandsOrAssertionsChanged": false,
-      "workflowYamlAndSingleValueDiffVerified": true
-    },
-    "initialPublication": {
-      "taskId": "UX-01B",
-      "commit": "4d37eaa9d6c86f53704b46ed39d02b39867ced04",
-      "tree": "ac71a8d0dd672a9f36292f0bbc222c0efe2202ab",
-      "runId": 40447671309,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40447671309",
-      "status": "completed",
-      "conclusion": "failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "receipt": "docs/qa/ux01b-ci-attempt1.json",
-      "results": {
-        "unit": 379,
-        "httpPassed": 40,
-        "httpFailed": 3,
-        "browserExecuted": false,
-        "recoveryExecuted": false,
-        "readabilitySamples": 44,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 24
-      }
-    },
-    "runnerSetupAttempt": {
-      "taskId": "UX-01B",
-      "commit": "aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c",
-      "tree": "5e0078961d68e66fddd753c77670e82b2dd265f8",
-      "runId": 40512689694,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694",
-      "status": "completed",
-      "conclusion": "startup_failure",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "receipt": "docs/qa/ux01b-ci-attempt2.json",
-      "attempts": [
-        {
-          "attempt": 1,
-          "nativeUpgrade": "success",
-          "compose": "success",
-          "composePhases": 24,
-          "core": "cancelled",
-          "unitPassed": 379,
-          "unitFailed": 0,
-          "readabilitySamples": 44,
-          "productionAuditVulnerabilities": 0,
-          "fullAuditVulnerabilities": 0,
-          "setup": {
-            "reportedDownload": "116 MB",
-            "reportedDuration": "14min 27s",
-            "reportedRate": "134 kB/s",
-            "startedAt": "2026-10-27T13:31:44Z",
-            "completedAt": "2026-10-27T13:46:24Z"
-          },
-          "incomplete": [
-            "full HTTP suite",
-            "browser suite",
-            "5 application recovery tests"
-          ],
-          "cancellationInference": "Cancellation after about25 minutes matches the configured25-minute job timeout after the slow package download; no new application assertion failure observed."
-        },
-        {
-          "attempt": 2,
-          "conclusion": "startup_failure",
-          "jobsCreated": 0,
-          "annotation": "An unexpected error has occurred and we've been automatically notified. Errors are sometimes temporary, so please try again.",
-          "requestId": "678B:370C:3CD06:58715:6AE0AE26",
-          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40512689694/attempts/2",
-          "statusPageAtCheck": "All Systems Operational; no unresolved incidents"
-        }
-      ]
-    }
-  },
-  "lastVerifiedPublication": {
-    "taskId": "UX-01A",
-    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
-    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
-    "runId": 40444776576,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+    "runId": 40518599731,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 378,
-      "http": 41,
-      "browser": 31,
+      "unit": 379,
+      "http": 43,
+      "browser": 33,
       "recovery": 5,
-      "migrations": 24,
-      "readabilitySamples": 44,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "composePhases": 24
+      "sourceJobId": 122238957996,
+      "observedPassCounts": [
+        379,
+        43,
+        5
+      ],
+      "auditLogLines": [
+        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+      ],
+      "searchTestLines": [
+        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
+        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
+        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
+        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
+        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
+        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
+        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
+        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
+        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      ],
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedMasterMigrationHashesUnchanged": 25,
+      "searchFocusedUnit": 3,
+      "searchHttp": 5,
+      "searchBrowser": 5,
+      "coreJobBudgetMinutes": 40,
+      "ciCommandsAndAssertionsUnchanged": true,
+      "scopedFixtureRateBudgetReset": true,
+      "actualExhaustedFixtureRejected429": true,
+      "exhaustedBudgetControlHttpPassed": 5
     },
-    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+  },
+  "lastVerifiedPublication": {
+    "taskId": "UX-01B",
+    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+    "runId": 40518599731,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 379,
+      "http": 43,
+      "browser": 33,
+      "recovery": 5,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "sourceJobId": 122238957996,
+      "observedPassCounts": [
+        379,
+        43,
+        5
+      ],
+      "auditLogLines": [
+        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
+        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+      ],
+      "searchTestLines": [
+        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
+        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
+        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
+        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
+        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
+        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
+        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
+        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
+        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      ],
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedMasterMigrationHashesUnchanged": 25,
+      "searchFocusedUnit": 3,
+      "searchHttp": 5,
+      "searchBrowser": 5,
+      "coreJobBudgetMinutes": 40,
+      "ciCommandsAndAssertionsUnchanged": true,
+      "scopedFixtureRateBudgetReset": true,
+      "actualExhaustedFixtureRejected429": true,
+      "exhaustedBudgetControlHttpPassed": 5
+    },
+    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+  },
+  "ux01c": {
+    "taskId": "UX-01C",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01B",
+      "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+      "runId": 40518599731,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 43,
+        "browser": 33,
+        "recovery": 5,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 122238957996,
+        "observedPassCounts": [
+          379,
+          43,
+          5
+        ],
+        "auditLogLines": [
+          "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
+          "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
+          "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+        ],
+        "searchTestLines": [
+          "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
+          "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
+          "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
+          "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
+          "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
+          "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
+          "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
+          "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
+          "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+        ],
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedMasterMigrationHashesUnchanged": 25,
+        "searchFocusedUnit": 3,
+        "searchHttp": 5,
+        "searchBrowser": 5,
+        "coreJobBudgetMinutes": 40,
+        "ciCommandsAndAssertionsUnchanged": true,
+        "scopedFixtureRateBudgetReset": true,
+        "actualExhaustedFixtureRejected429": true,
+        "exhaustedBudgetControlHttpPassed": 5
+      },
+      "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+    },
+    "local": {
+      "focusedUnit": 3,
+      "focusedHttp": 7,
+      "focusedBrowser": 14,
+      "newHttp": 2,
+      "newBrowser": 9,
+      "apiBuild": true,
+      "webTypecheck": true,
+      "migrations": 24,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "protectedFilesUnchanged": 25,
+      "dependenciesWorkflowOrMigrationsChanged": false,
+      "liveProvidersUsed": false,
+      "realEnvExists": false
+    }
   }
 }
