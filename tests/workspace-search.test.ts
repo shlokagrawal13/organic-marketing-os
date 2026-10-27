@@ -33,8 +33,28 @@ test("search SQL binds malicious input and tenant identifiers without interpolat
   assert.equal(sql.text.includes("tenant-marker"), false);
   assert.equal(
     sql.values.filter((value) => value === "tenant-marker").length,
-    3,
+    4,
   );
   assert.ok(sql.values.includes(q));
   assert.ok(sql.text.includes("plainto_tsquery"));
+});
+
+test("publication search uses frozen text with null defaults and excludes internal snapshot fields", () => {
+  const input = workspaceSearchQuery.parse({
+    q: "saved title",
+    kind: "publication",
+  });
+  assert.equal(input.kind, "publication");
+  const sql = workspaceSearchSql("tenant", input);
+  assert.ok(sql.text.includes('FROM "PublicationIntent", needle'));
+  for (const field of ["title", "body", "hook"])
+    assert.ok(sql.text.includes(`coalesce(snapshot->>'${field}', '')`));
+  for (const field of [
+    "requestHash",
+    "requestKey",
+    "claimReview",
+    "uploadSessionCiphertext",
+    "accessTokenCiphertext",
+  ])
+    assert.equal(sql.text.includes(field), false);
 });

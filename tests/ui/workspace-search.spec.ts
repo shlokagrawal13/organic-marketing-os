@@ -79,6 +79,187 @@ async function setup(page: Page) {
   };
   return { org, user, content, open, search };
 }
+
+async function savedPreparation(w: Awaited<ReturnType<typeof setup>>) {
+  return db.publicationIntent.create({
+    data: {
+      organizationId: w.org.id,
+      contentId: w.content.id,
+      contentRevision: 1,
+      platform: "YouTube",
+      createdBy: w.user.id,
+      requestKey: randomUUID(),
+      requestHash: "synthetic-internal-hash",
+      status: "INVALIDATED",
+      snapshot: {
+        title: "Saved aurora preparation",
+        body: "Frozen browser fixture",
+      },
+    },
+  });
+}
+
+test("publication search opens the exact frozen preparation without publishing and links to current content", async ({
+  page,
+}) => {
+  const w = await setup(page),
+    intent = await savedPreparation(w);
+  await db.contentItem.update({
+    where: { id: w.content.id },
+    data: { title: "Current changed title", revision: 2 },
+  });
+  const mutations: string[] = [];
+  page.on("request", (request) => {
+    if (
+      request.method() !== "GET" &&
+      request.url().includes("/publication-intents")
+    )
+      mutations.push(request.method());
+  });
+  await page.goto("/");
+  await w.open();
+  await page.getByLabel("Search this workspace").fill("aurora");
+  await page.getByLabel("Search type").selectOption("publication");
+  await page
+    .getByRole("button", { name: "Search workspace", exact: true })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "1 results shown" }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Saved aurora preparation", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Publication preparation", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "Saved aurora preparation",
+      exact: true,
+    }),
+  ).toBeVisible();
+  const panel = page.getByRole("region", {
+    name: "Publication preparation details",
+  });
+  await expect(panel).toContainText(intent.id);
+  await expect(panel).toContainText("INVALIDATED");
+  await expect(panel).toContainText(
+    "not evidence of a successful external post",
+  );
+  await page.screenshot({
+    path: "test-results/publication-search-detail.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".sidebar")).not.toBeInViewport();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: "test-results/publication-search-mobile.png",
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "Back to search results" }).click();
+  await expect(page.getByLabel("Search this workspace")).toHaveValue("aurora");
+  await expect(page.getByLabel("Search type")).toHaveValue("publication");
+  await page
+    .getByRole("button", { name: "Saved aurora preparation", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Open current content" }).click();
+  await expect(page.getByLabel("Content title", { exact: true })).toHaveValue(
+    "Current changed title",
+  );
+  expect(mutations).toEqual([]);
+  expect(
+    await db.publicationAttempt.count({ where: { organizationId: w.org.id } }),
+  ).toBe(0);
+});
+
+test("delayed publication detail cannot reappear after returning to results or switching workspace", async ({
+  page,
+}) => {
+  const w = await setup(page),
+    intent = await savedPreparation(w);
+  const other = await db.organization.create({
+    data: { name: "Empty publication search workspace" },
+  });
+  orgs.push(other.id);
+  await db.membership.create({
+    data: { userId: w.user.id, organizationId: other.id, role: "ANALYST" },
+  });
+  await page.goto("/");
+  await page.getByLabel("Active workspace").selectOption(w.org.id);
+  await w.open();
+  await page.getByLabel("Search this workspace").fill("aurora");
+  await page
+    .getByRole("button", { name: "Search workspace", exact: true })
+    .click();
+  const pattern = `**/api/workspaces/${w.org.id}/publication-intents/${intent.id}`;
+  for (const leave of ["back", "workspace"]) {
+    let release!: () => void, started!: () => void, finished!: () => void;
+    const held = new Promise<void>((r) => {
+        release = r;
+      }),
+      requested = new Promise<void>((r) => {
+        started = r;
+      }),
+      fulfilled = new Promise<void>((r) => {
+        finished = r;
+      });
+    await page.route(pattern, async (route) => {
+      const response = await route.fetch();
+      started();
+      await held;
+      await route.fulfill({ response });
+      finished();
+    });
+    try {
+      await page
+        .getByRole("button", { name: "Saved aurora preparation", exact: true })
+        .click();
+      await requested;
+      await expect(
+        page
+          .getByRole("status")
+          .filter({ hasText: "Loading publication preparation" }),
+      ).toBeVisible();
+      if (leave === "back")
+        await page
+          .getByRole("button", { name: "Back to search results" })
+          .click();
+      else {
+        await page.getByLabel("Active workspace").selectOption(other.id);
+        await w.open();
+      }
+      release();
+      await fulfilled;
+      await page.unroute(pattern);
+      await expect(
+        page.getByRole("heading", {
+          name: "Publication preparation",
+          exact: true,
+        }),
+      ).toHaveCount(0);
+      if (leave === "back")
+        await expect(page.getByLabel("Search this workspace")).toHaveValue(
+          "aurora",
+        );
+      else {
+        await expect(page.getByLabel("Search this workspace")).toHaveValue("");
+        await expect(
+          page.getByRole("button", {
+            name: "Saved aurora preparation",
+            exact: true,
+          }),
+        ).toHaveCount(0);
+      }
+    } finally {
+      release();
+    }
+  }
+});
 test("workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation", async ({
   page,
 }) => {
@@ -146,6 +327,7 @@ test("workspace search opens saved content, campaigns and assets and preserves u
   ).toBeVisible();
   await w.search();
   await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".sidebar")).not.toBeInViewport();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

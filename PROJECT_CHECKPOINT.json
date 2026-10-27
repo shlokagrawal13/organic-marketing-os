@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01a-20261027",
-  "savedAtUtc": "2026-10-27T03:31:15.155Z",
-  "currentMilestone": "UX-01A tenant-scoped workspace search",
+  "checkpointRevision": "ux01b-20261027",
+  "savedAtUtc": "2026-10-27T04:03:25.329Z",
+  "currentMilestone": "UX-01B frozen publication-preparation search",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish reviewed UX-01A normally, inspect/fix ALL THREE jobs and all required steps on its exact final commit, and pair final external receipt with fresh source ZIP. Then select next product increment from taskboard; no more planned recovery fixture increments.",
+  "nextAction": "Publish reviewed UX-01B normally; inspect/fix all three jobs and all required steps on exact final commit, then pair final receipt/source ZIP. Afterwards select next product work from taskboard; no Q/R recovery fixtures.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -91,16 +91,10 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/assets.ts",
-    "apps/api/src/content.ts",
-    "apps/api/src/main.ts",
     "apps/api/src/search-query.ts",
-    "apps/api/src/search.ts",
-    "apps/web/app/content-workspace.tsx",
     "apps/web/app/globals.css",
-    "apps/web/app/media-workspace.tsx",
+    "apps/web/app/publication-search-detail.tsx",
     "apps/web/app/workspace-search.tsx",
-    "apps/web/app/workspace.tsx",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
@@ -112,9 +106,9 @@
     "docs/WORKSPACE_SEARCH.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/recovery01p-final-ci-receipt.json",
-    "docs/qa/ux01a-evidence.json",
-    "docs/qa/ux01a-unit-receipts.json",
+    "docs/qa/ux01a-final-ci-receipt.json",
+    "docs/qa/ux01b-evidence.json",
+    "docs/qa/ux01b-unit-receipts.json",
     "docs/qa/verification-summary.json",
     "tests/integration/workspace-search.test.ts",
     "tests/ui/workspace-search.spec.ts",
@@ -6755,13 +6749,19 @@
       "userPopulatedServicesPreserved": true,
       "liveProvidersUsed": false,
       "credentialValuesPrinted": false
+    },
+    "recheckedUx01b": {
+      "realEnvExists": false,
+      "userPopulatedServicesPreserved": true,
+      "liveProvidersUsed": false,
+      "credentialValuesPrinted": false
     }
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
-    "status": "P_final_verified_UX01A_local_pending",
+    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+    "status": "UX01A_final_verified_UX01B_local_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6774,15 +6774,15 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
+    "sourceTree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last all-three-job verified source; UX-01A own exact publication pending.",
+    "commitMeaning": "Last exact-source all-three-job verified predecessor; B own CI pending.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "lastLocalCheckpointCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
     "uploadGate": {
-      "taskId": "UX-01A",
+      "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6791,16 +6791,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/assets.ts",
-        "apps/api/src/content.ts",
-        "apps/api/src/main.ts",
         "apps/api/src/search-query.ts",
-        "apps/api/src/search.ts",
-        "apps/web/app/content-workspace.tsx",
         "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/publication-search-detail.tsx",
         "apps/web/app/workspace-search.tsx",
-        "apps/web/app/workspace.tsx",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -6812,30 +6806,30 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01p-final-ci-receipt.json",
-        "docs/qa/ux01a-evidence.json",
-        "docs/qa/ux01a-unit-receipts.json",
+        "docs/qa/ux01a-final-ci-receipt.json",
+        "docs/qa/ux01b-evidence.json",
+        "docs/qa/ux01b-unit-receipts.json",
         "docs/qa/verification-summary.json",
         "tests/integration/workspace-search.test.ts",
         "tests/ui/workspace-search.spec.ts",
         "tests/workspace-search.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+      "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
     },
     "publication": {
-      "taskId": "RECOVERY-01P",
-      "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
-      "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
-      "runId": 40249061054,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+      "taskId": "UX-01A",
+      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+      "runId": 40444776576,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 376,
-        "http": 38,
-        "browser": 28,
+        "unit": 378,
+        "http": 41,
+        "browser": 31,
         "recovery": 5,
         "migrations": 24,
         "readabilitySamples": 44,
@@ -6843,12 +6837,12 @@
         "fullAuditVulnerabilities": 0,
         "composePhases": 24
       },
-      "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
     },
     "currentUploadGate": {
-      "taskId": "UX-01A",
+      "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6857,16 +6851,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/assets.ts",
-        "apps/api/src/content.ts",
-        "apps/api/src/main.ts",
         "apps/api/src/search-query.ts",
-        "apps/api/src/search.ts",
-        "apps/web/app/content-workspace.tsx",
         "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/publication-search-detail.tsx",
         "apps/web/app/workspace-search.tsx",
-        "apps/web/app/workspace.tsx",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -6878,21 +6866,21 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01p-final-ci-receipt.json",
-        "docs/qa/ux01a-evidence.json",
-        "docs/qa/ux01a-unit-receipts.json",
+        "docs/qa/ux01a-final-ci-receipt.json",
+        "docs/qa/ux01b-evidence.json",
+        "docs/qa/ux01b-unit-receipts.json",
         "docs/qa/verification-summary.json",
         "tests/integration/workspace-search.test.ts",
         "tests/ui/workspace-search.spec.ts",
         "tests/workspace-search.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+      "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
     },
     "publicationPreparation": {
-      "taskId": "UX-01A",
+      "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6901,16 +6889,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/assets.ts",
-        "apps/api/src/content.ts",
-        "apps/api/src/main.ts",
         "apps/api/src/search-query.ts",
-        "apps/api/src/search.ts",
-        "apps/web/app/content-workspace.tsx",
         "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/publication-search-detail.tsx",
         "apps/web/app/workspace-search.tsx",
-        "apps/web/app/workspace.tsx",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -6922,16 +6904,16 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01p-final-ci-receipt.json",
-        "docs/qa/ux01a-evidence.json",
-        "docs/qa/ux01a-unit-receipts.json",
+        "docs/qa/ux01a-final-ci-receipt.json",
+        "docs/qa/ux01b-evidence.json",
+        "docs/qa/ux01b-unit-receipts.json",
         "docs/qa/verification-summary.json",
         "tests/integration/workspace-search.test.ts",
         "tests/ui/workspace-search.spec.ts",
         "tests/workspace-search.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+      "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -6955,9 +6937,9 @@
       "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "docsEvidencePublicationGate": {
-      "taskId": "UX-01A",
+      "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6966,16 +6948,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/assets.ts",
-        "apps/api/src/content.ts",
-        "apps/api/src/main.ts",
         "apps/api/src/search-query.ts",
-        "apps/api/src/search.ts",
-        "apps/web/app/content-workspace.tsx",
         "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/publication-search-detail.tsx",
         "apps/web/app/workspace-search.tsx",
-        "apps/web/app/workspace.tsx",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -6987,21 +6963,21 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01p-final-ci-receipt.json",
-        "docs/qa/ux01a-evidence.json",
-        "docs/qa/ux01a-unit-receipts.json",
+        "docs/qa/ux01a-final-ci-receipt.json",
+        "docs/qa/ux01b-evidence.json",
+        "docs/qa/ux01b-unit-receipts.json",
         "docs/qa/verification-summary.json",
         "tests/integration/workspace-search.test.ts",
         "tests/ui/workspace-search.spec.ts",
         "tests/workspace-search.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+      "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
     },
     "nextPublication": {
-      "taskId": "UX-01A",
+      "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7010,16 +6986,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/assets.ts",
-        "apps/api/src/content.ts",
-        "apps/api/src/main.ts",
         "apps/api/src/search-query.ts",
-        "apps/api/src/search.ts",
-        "apps/web/app/content-workspace.tsx",
         "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/publication-search-detail.tsx",
         "apps/web/app/workspace-search.tsx",
-        "apps/web/app/workspace.tsx",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -7031,16 +7001,16 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01p-final-ci-receipt.json",
-        "docs/qa/ux01a-evidence.json",
-        "docs/qa/ux01a-unit-receipts.json",
+        "docs/qa/ux01a-final-ci-receipt.json",
+        "docs/qa/ux01b-evidence.json",
+        "docs/qa/ux01b-unit-receipts.json",
         "docs/qa/verification-summary.json",
         "tests/integration/workspace-search.test.ts",
         "tests/ui/workspace-search.spec.ts",
         "tests/workspace-search.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+      "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
     },
     "previousPublication": {
       "slice": "EDITOR-01U",
@@ -7058,9 +7028,9 @@
       "ciAttempt": 1
     },
     "localEvidencePublication": {
-      "taskId": "UX-01A",
+      "taskId": "UX-01B",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+      "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7069,16 +7039,10 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/assets.ts",
-        "apps/api/src/content.ts",
-        "apps/api/src/main.ts",
         "apps/api/src/search-query.ts",
-        "apps/api/src/search.ts",
-        "apps/web/app/content-workspace.tsx",
         "apps/web/app/globals.css",
-        "apps/web/app/media-workspace.tsx",
+        "apps/web/app/publication-search-detail.tsx",
         "apps/web/app/workspace-search.tsx",
-        "apps/web/app/workspace.tsx",
         "docs/CHANGELOG.md",
         "docs/HANDOFF.md",
         "docs/PROJECT_STATUS.md",
@@ -7090,18 +7054,18 @@
         "docs/WORKSPACE_SEARCH.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/recovery01p-final-ci-receipt.json",
-        "docs/qa/ux01a-evidence.json",
-        "docs/qa/ux01a-unit-receipts.json",
+        "docs/qa/ux01a-final-ci-receipt.json",
+        "docs/qa/ux01b-evidence.json",
+        "docs/qa/ux01b-unit-receipts.json",
         "docs/qa/verification-summary.json",
         "tests/integration/workspace-search.test.ts",
         "tests/ui/workspace-search.spec.ts",
         "tests/workspace-search.test.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+      "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
     },
-    "lastLocalCheckpointCommitMeaning": "Last exact-source verified predecessor; current source package requires its own receipt.",
+    "lastLocalCheckpointCommitMeaning": "Last verified predecessor; B source capsule closes with external own-CI receipt.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -7766,18 +7730,18 @@
       "standingAuthorization": "2026-10-18 normal commits/pushes/CI"
     },
     "latestPublication": {
-      "taskId": "RECOVERY-01P",
-      "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
-      "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
-      "runId": 40249061054,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+      "taskId": "UX-01A",
+      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+      "runId": 40444776576,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 376,
-        "http": 38,
-        "browser": 28,
+        "unit": 378,
+        "http": 41,
+        "browser": 31,
         "recovery": 5,
         "migrations": 24,
         "readabilitySamples": 44,
@@ -7785,9 +7749,9 @@
         "fullAuditVulnerabilities": 0,
         "composePhases": 24
       },
-      "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "latestApplicationSourceCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7894,9 +7858,9 @@
       "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Remaining collaboration and product UX",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "completedIncrement": "UX-01A local2 unit/3 HTTP/3 browser pass; own CI pending.",
-      "nextAction": "Publish reviewed UX-01A normally, inspect/fix ALL THREE jobs and all required steps on its exact final commit, and pair final external receipt with fresh source ZIP. Then select next product increment from taskboard; no more planned recovery fixture increments.",
-      "currentEvidence": "docs/qa/ux01a-evidence.json"
+      "completedIncrement": "A exact three-job CI verified; B local3 focused unit/5 HTTP/5 browser pass.",
+      "nextAction": "Publish reviewed UX-01B normally; inspect/fix all three jobs and all required steps on exact final commit, then pair final receipt/source ZIP. Afterwards select next product work from taskboard; no Q/R recovery fixtures.",
+      "currentEvidence": "docs/qa/ux01b-evidence.json"
     },
     {
       "id": "POLICY-01",
@@ -7953,10 +7917,9 @@
     }
   ],
   "lastChanges": [
-    "Imported exact P final receipt; closed planned local/CI recovery-fixture work without inventing Q/R.",
-    "Tenant-bound PostgreSQL search, filters/pages and exact record opening implemented.",
-    "Delayed initial content response cannot overwrite newer draft selection.",
-    "Local focused checks passed; own exact-source CI required."
+    "Imported A exact final receipt and reconciled current publication/handoff fields.",
+    "Added tenant-bound frozen publication-preparation search and exact read-only detail/current content link.",
+    "Preserved all previous search/recovery assertions and upload-approval roles; local focused checks pass."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -7995,13 +7958,13 @@
   },
   "checkpointVerificationEvidence": "docs/qa/recovery01n-evidence.json",
   "latestStatus": {
-    "taskId": "UX-01A",
+    "taskId": "UX-01B",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish reviewed UX-01A normally, inspect/fix ALL THREE jobs and all required steps on its exact final commit, and pair final external receipt with fresh source ZIP. Then select next product increment from taskboard; no more planned recovery fixture increments."
+    "nextAction": "Publish reviewed UX-01B normally; inspect/fix all three jobs and all required steps on exact final commit, then pair final receipt/source ZIP. Afterwards select next product work from taskboard; no Q/R recovery fixtures."
   },
   "activeTask": {
-    "id": "UX-01A",
-    "title": "Tenant-scoped workspace full-text search",
+    "id": "UX-01B",
+    "title": "Search frozen publication preparations and open read-only details",
     "status": "local_verified_own_exact_commit_ci_pending"
   },
   "workspaceRecovery": {
@@ -8015,9 +7978,9 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "UX-01A",
+    "taskId": "UX-01B",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "baseCommit": "2bacb67629706b472b370e0ae5481984a5240ef3",
+    "baseCommit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -8026,16 +7989,10 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "apps/api/src/assets.ts",
-      "apps/api/src/content.ts",
-      "apps/api/src/main.ts",
       "apps/api/src/search-query.ts",
-      "apps/api/src/search.ts",
-      "apps/web/app/content-workspace.tsx",
       "apps/web/app/globals.css",
-      "apps/web/app/media-workspace.tsx",
+      "apps/web/app/publication-search-detail.tsx",
       "apps/web/app/workspace-search.tsx",
-      "apps/web/app/workspace.tsx",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
@@ -8047,16 +8004,16 @@
       "docs/WORKSPACE_SEARCH.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/recovery01p-final-ci-receipt.json",
-      "docs/qa/ux01a-evidence.json",
-      "docs/qa/ux01a-unit-receipts.json",
+      "docs/qa/ux01a-final-ci-receipt.json",
+      "docs/qa/ux01b-evidence.json",
+      "docs/qa/ux01b-unit-receipts.json",
       "docs/qa/verification-summary.json",
       "tests/integration/workspace-search.test.ts",
       "tests/ui/workspace-search.spec.ts",
       "tests/workspace-search.test.ts"
     ],
     "requiresAllThreeJobsOnOwnCommit": true,
-    "finalReceipt": "External ux01a-final-ci-receipt.json paired with source ZIP"
+    "finalReceipt": "External ux01b-final-ci-receipt.json paired with source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8528,18 +8485,18 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "RECOVERY-01P",
-    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
-    "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
-    "runId": 40249061054,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+    "taskId": "UX-01A",
+    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+    "runId": 40444776576,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 376,
-      "http": 38,
-      "browser": 28,
+      "unit": 378,
+      "http": 41,
+      "browser": 31,
       "recovery": 5,
       "migrations": 24,
       "readabilitySamples": 44,
@@ -8547,7 +8504,7 @@
       "fullAuditVulnerabilities": 0,
       "composePhases": 24
     },
-    "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8643,21 +8600,21 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "UX-01A",
+    "taskId": "UX-01B",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "RECOVERY-01P",
-      "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
-      "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
-      "runId": 40249061054,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+      "taskId": "UX-01A",
+      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+      "runId": 40444776576,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
-        "unit": 376,
-        "http": 38,
-        "browser": 28,
+        "unit": 378,
+        "http": 41,
+        "browser": 31,
         "recovery": 5,
         "migrations": 24,
         "readabilitySamples": 44,
@@ -8665,12 +8622,12 @@
         "fullAuditVulnerabilities": 0,
         "composePhases": 24
       },
-      "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
     },
     "local": {
-      "focusedUnit": 2,
-      "http": 3,
-      "browser": 3,
+      "focusedUnit": 3,
+      "http": 5,
+      "browser": 5,
       "apiBuild": true,
       "webTypecheck": true,
       "productionAuditVulnerabilities": 0,
@@ -8998,7 +8955,43 @@
     "closureArtifactDigest": "sha256:397c49a18da979eb086fa49cc18669f0ef63766904529f4172565036eda2336a",
     "closurePublicationNativeCi": true
   },
-  "lastPublishedFiles": [],
+  "lastPublishedFiles": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "apps/api/src/assets.ts",
+    "apps/api/src/content.ts",
+    "apps/api/src/main.ts",
+    "apps/api/src/search-query.ts",
+    "apps/api/src/search.ts",
+    "apps/web/app/content-workspace.tsx",
+    "apps/web/app/globals.css",
+    "apps/web/app/media-workspace.tsx",
+    "apps/web/app/workspace-search.tsx",
+    "apps/web/app/workspace.tsx",
+    "docs/CHANGELOG.md",
+    "docs/HANDOFF.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/RESUME_CONTEXT.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/VERIFICATION_REPORT.md",
+    "docs/WORKSPACE_SEARCH.md",
+    "docs/qa/github-publication.json",
+    "docs/qa/handoff-verification.json",
+    "docs/qa/recovery01p-final-ci-receipt.json",
+    "docs/qa/ux01a-evidence.json",
+    "docs/qa/ux01a-unit-receipts.json",
+    "docs/qa/verification-summary.json",
+    "tests/integration/workspace-search.test.ts",
+    "tests/ui/workspace-search.spec.ts",
+    "tests/workspace-search.test.ts"
+  ],
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
     "approvedByUser": false,
@@ -16145,18 +16138,18 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "RECOVERY-01P",
-    "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
-    "tree": "0f6ccded80c1615a86399f064705b22b7bcc391c",
-    "runId": 40249061054,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40249061054",
+    "taskId": "UX-01A",
+    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+    "runId": 40444776576,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
-      "unit": 376,
-      "http": 38,
-      "browser": 28,
+      "unit": 378,
+      "http": 41,
+      "browser": 31,
       "recovery": 5,
       "migrations": 24,
       "readabilitySamples": 44,
@@ -16164,7 +16157,7 @@
       "fullAuditVulnerabilities": 0,
       "composePhases": 24
     },
-    "receipt": "docs/qa/recovery01p-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -21645,7 +21638,7 @@
     "schemaVersion": 1,
     "taskId": "UX-01A",
     "recordedAtUtc": "2026-10-27T03:31:14.830Z",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "exact_final_commit_all_three_jobs_verified",
     "priorVerifiedPublication": {
       "taskId": "RECOVERY-01P",
       "commit": "2bacb67629706b472b370e0ae5481984a5240ef3",
@@ -21729,13 +21722,125 @@
       "finding": "Delayed initial content selection could replace a newer draft and clear dirty state.",
       "resolution": "Shared selection generation invalidates delayed responses on new draft, open, back and view changes; browser regression holds the old response during new draft editing."
     },
-    "currentSourceOwnCiPending": true,
+    "currentSourceOwnCiPending": false,
     "limitations": [
       "Search covers content, campaigns and asset names/tags only. Other global domains, nested workspaces, autosave/conflict resolution and broader UX acceptance remain open.",
       "Whole-word simple-dictionary matching, all words required; no fuzzy search, stemming, semantic search or large-tenant load acceptance claimed. Content uses existing FTS expression/index; campaigns/assets use existing tenant indexes. Offset <=1000 and page <=50 bound result retrieval, not total database scan cost.",
       "Local HTTP/browser checks use independent generated PostgreSQL/Redis fixture containers and random loopback ports. Existing user services/ports/volumes were not fixtures. Asset rows are metadata-only; no object decode/worker/live-provider acceptance is claimed locally.",
       "Full exact-source unit/HTTP/browser/readability/native-upgrade/24-phase Compose checks require all three published CI jobs. CI verifies fixtures and does not deploy.",
       "RECOVERY-01P local/CI fixture work is closed. Production durable backup/retention/RPO-RTO and deployed real-provider restore remain separate open gates."
+    ],
+    "finalReceipt": "docs/qa/ux01a-final-ci-receipt.json",
+    "finalPublication": {
+      "taskId": "UX-01A",
+      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+      "runId": 40444776576,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 378,
+        "http": 41,
+        "browser": 31,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      },
+      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    }
+  },
+  "ux01b": {
+    "schemaVersion": 1,
+    "taskId": "UX-01B",
+    "recordedAtUtc": "2026-10-27T04:03:25.111Z",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01A",
+      "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+      "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+      "runId": 40444776576,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 378,
+        "http": 41,
+        "browser": 31,
+        "recovery": 5,
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24
+      },
+      "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+    },
+    "scope": "Frozen publication-preparation full-text search and exact read-only detail opening; current content is separate and may differ.",
+    "checks": {
+      "focusedUnit": 3,
+      "http": 5,
+      "browser": 5,
+      "apiBuild": true,
+      "webTypecheck": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "migrations": 24,
+      "protectedMasterAndMigrationsChanged": false,
+      "dependenciesOrWorkflowChanged": false,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "realEnvExists": false,
+      "liveProvidersUsed": false,
+      "desktopAnd390pxMobileScreenshotsInspected": true
+    },
+    "localExecution": {
+      "taskId": "UX-01B",
+      "passed": true,
+      "startedAt": "2026-10-27T04:01:45.277Z",
+      "fixture": "a4699bc070a74dc5",
+      "http": 5,
+      "browser": 5,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-10-27T04:03:05.065Z",
+      "apiBuild": "The final run uses compiled API bytes from the successful local API build; no application Docker image build is claimed."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "functionalChecksPassed": true,
+        "http": 5,
+        "browser": 5,
+        "visualFinding": "Mobile screenshot captured the sidebar during its existing viewport transition.",
+        "resolution": "Wait for sidebar to leave viewport before both mobile captures; rerun focused fixture checks and inspect final images."
+      }
+    ],
+    "review": {
+      "tenantBoundBranches": 4,
+      "frozenSnapshotFieldsOnly": [
+        "title",
+        "body",
+        "hook",
+        "platform"
+      ],
+      "searchResultFieldsUnchanged": true,
+      "existingReadAndUploadApprovalRolesPreserved": true,
+      "detailCancellationOnBackAndWorkspaceChange": true,
+      "readOnlyDetailMakesNoPublicationMutations": true
+    },
+    "currentSourceOwnCiPending": true,
+    "limitations": [
+      "Publications means saved internal preparations. No confirmed external publication, provider upload, status reconciliation or deployment is claimed. All preparation states are explicitly included.",
+      "Existing tenant/time indexes and bounded page/offset rules remain; no new FTS index, migration or large-tenant performance acceptance.",
+      "Local tests use independent generated PostgreSQL17/Redis7 fixture containers and random loopback ports. Existing populated user services and real environment absence are preserved. Metadata-only assets do not prove media/worker acceptance locally.",
+      "Analytics, customers/organizations, projects and other broader search/UX, autosave/conflict/nested workspace and accessibility acceptance remain open.",
+      "Planned recovery fixtures closed at P; durable production backups/retention/RPO-RTO and deployed real-provider restore remain separate open gates. All three CI jobs and all24 Compose phases must pass on this increment's exact source."
     ]
   }
 }

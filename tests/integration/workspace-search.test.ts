@@ -50,6 +50,217 @@ after(async () => {
   await db.user.deleteMany({ where: { id: { in: users } } });
   await db.$disconnect();
 });
+
+async function preparation(
+  w: Awaited<ReturnType<typeof setup>>,
+  status: "PREPARED" | "INVALIDATED" | "CANCELED" = "PREPARED",
+) {
+  return db.publicationIntent.create({
+    data: {
+      organizationId: w.org.id,
+      contentId: w.content.id,
+      contentRevision: 1,
+      createdBy: w.user.id,
+      platform: "YouTube",
+      requestKey: randomUUID(),
+      requestHash: "private-request-hash",
+      status,
+      snapshot: {
+        title: "Frozen aurora preparation",
+        body: "Saved nebula copy",
+        hook: "तैयारी",
+        claimReview: { sourceUrl: "private-evidence-marker" },
+        objectKey: "private-object-marker",
+      },
+    },
+  });
+}
+
+test("publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing", async () => {
+  const w = await setup(),
+    other = await setup();
+  const intent = await preparation(w),
+    otherIntent = await preparation(other);
+  await db.contentItem.update({
+    where: { id: w.content.id },
+    data: {
+      title: "Current comet title",
+      body: "Changed current copy",
+      revision: 2,
+    },
+  });
+  assert.equal(
+    (await fetch(base + w.path + "/search?q=aurora&kind=publication")).status,
+    401,
+  );
+  assert.equal(
+    (await other.user.call(w.path + "/search?q=aurora&kind=publication"))
+      .status,
+    404,
+  );
+  const before = await db.publicationIntent.findUniqueOrThrow({
+    where: { id: intent.id },
+  });
+  for (const role of [
+    "OWNER",
+    "ADMIN",
+    "EDITOR",
+    "CREATOR",
+    "ANALYST",
+    "CLIENT",
+  ] as const) {
+    const reader = await actor(w.org.id, role);
+    users.push(reader.id);
+    const result = await reader.call(
+      w.path + "/search?q=aurora&kind=publication",
+    );
+    assert.equal(result.status, 200);
+    assert.equal(result.body.items.length, 1);
+    const item = result.body.items[0];
+    assert.equal(item.id, intent.id);
+    assert.equal(item.kind, "publication");
+    assert.equal(item.title, "Frozen aurora preparation");
+    assert.equal(item.status, "PREPARED");
+    assert.equal(item.archived, false);
+    assert.deepEqual(Object.keys(item).sort(), [
+      "archived",
+      "id",
+      "kind",
+      "status",
+      "summary",
+      "title",
+      "updatedAt",
+    ]);
+    assert.equal(JSON.stringify(result.body).includes("private-"), false);
+    assert.equal(
+      (await reader.call(w.path + "/publication-intents/" + intent.id)).status,
+      200,
+    );
+    assert.equal(
+      (await reader.call(w.path + "/publication-intents/" + otherIntent.id))
+        .status,
+      404,
+    );
+    if (["CREATOR", "ANALYST", "CLIENT"].includes(role))
+      assert.equal(
+        (
+          await reader.call(
+            w.path + `/publication-intents/${intent.id}/youtube-attempt`,
+          )
+        ).status,
+        403,
+      );
+    await db.membership.delete({
+      where: {
+        userId_organizationId: { userId: reader.id, organizationId: w.org.id },
+      },
+    });
+    assert.equal(
+      (await reader.call(w.path + "/search?q=aurora&kind=publication")).status,
+      404,
+    );
+  }
+  assert.equal(
+    (await w.user.call(w.path + "/search?q=comet&kind=publication")).body.items
+      .length,
+    0,
+  );
+  assert.equal(
+    (await w.user.call(w.path + "/search?q=nebula&kind=publication")).body
+      .items[0].id,
+    intent.id,
+  );
+  assert.equal(
+    (
+      await w.user.call(
+        w.path +
+          "/search?q=" +
+          encodeURIComponent("तैयारी") +
+          "&kind=publication",
+      )
+    ).body.items[0].id,
+    intent.id,
+  );
+  assert.deepEqual(
+    await db.publicationIntent.findUniqueOrThrow({ where: { id: intent.id } }),
+    before,
+  );
+  assert.equal(
+    await db.publicationAttempt.count({ where: { organizationId: w.org.id } }),
+    0,
+  );
+  assert.equal(
+    await db.publicationSchedule.count({ where: { organizationId: w.org.id } }),
+    0,
+  );
+});
+
+test("publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation", async () => {
+  const w = await setup();
+  const intents = await Promise.all(
+    (["PREPARED", "INVALIDATED", "CANCELED"] as const).map((s) =>
+      preparation(w, s),
+    ),
+  );
+  await db.publicationIntent.create({
+    data: {
+      organizationId: w.org.id,
+      contentId: w.content.id,
+      contentRevision: 1,
+      createdBy: w.user.id,
+      platform: "Fallbackplatform",
+      requestKey: randomUUID(),
+      requestHash: "internal",
+      snapshot: { title: null },
+    },
+  });
+  const path = w.path + "/search?q=aurora&kind=publication";
+  const all = (await w.user.call(path)).body;
+  assert.equal(all.items.length, 3);
+  assert.deepEqual(
+    new Set(all.items.map((x: any) => x.status)),
+    new Set(["PREPARED", "INVALIDATED", "CANCELED"]),
+  );
+  assert.deepEqual(
+    (await w.user.call(path + "&includeArchived=true")).body.items,
+    all.items,
+  );
+  const ids: string[] = [];
+  let skip: number | null = 0;
+  while (skip !== null) {
+    const r = await w.user.call(path + `&take=1&skip=${skip}`);
+    assert.equal(r.status, 200);
+    ids.push(r.body.items[0].id);
+    skip = r.body.nextSkip;
+  }
+  assert.deepEqual(
+    ids,
+    all.items.map((x: any) => x.id),
+  );
+  assert.equal(new Set(ids).size, 3);
+  assert.equal(
+    (await w.user.call(w.path + "/search?q=aurora&kind=content")).body.items
+      .length,
+    0,
+  );
+  assert.equal(
+    (await w.user.call(w.path + "/search?q=aurora")).body.items.length,
+    3,
+  );
+  const fallback = (
+    await w.user.call(w.path + "/search?q=fallbackplatform&kind=publication")
+  ).body.items;
+  assert.equal(fallback.length, 1);
+  assert.equal(fallback[0].title, "");
+  assert.equal(fallback[0].summary, "");
+  await db.publicationIntent.delete({ where: { id: intents[0].id } });
+  assert.equal(
+    (await w.user.call(w.path + "/publication-intents/" + intents[0].id))
+      .status,
+    404,
+  );
+  assert.equal((await w.user.call(path)).body.items.length, 2);
+});
 test("search and result opening enforce authentication, tenant isolation and current membership for every read role", async () => {
   const a = await setup(),
     b = await setup();

@@ -1,3 +1,15 @@
+<!-- UX01B_CURRENT_START -->
+## UX-01B publication-preparation search - 2026-10-27
+
+UX-01A final c2e12212085d0b276e9315eb1ca83e1d1f2402b2/run40444776576 passed ALL THREE jobs and every required step: 378 unit,41 HTTP,31 browser,5 recovery,24 migrations,44 readability samples,zero audits and all24 Compose phases. Four artifact ZIP byte/digest/CRC and embedded reports were verified. The imported docs/qa/ux01a-final-ci-receipt.json closes A's packaged own-CI pending status; earlier pending notices below are historical. Planned recovery fixtures remain closed at P; no Q/R.
+
+B searches saved publication preparations using their frozen title/body/hook/platform, without substituting later content edits. Tenant-bound queries retain the existing seven-field result projection and bounded pagination. PREPARED/INVALIDATED/CANCELED are included explicitly. Exact read-only details show preparation identity/status/revision/platform, explain that preparation is not an external publishing result, and link separately to current content. Detail cancellation on back/workspace changes and existing read/upload-approval roles are preserved. Search/detail UI performs no publication mutation. See docs/WORKSPACE_SEARCH.md and docs/qa/ux01b-evidence.json.
+
+Local3 focused unit,5 native HTTP and5 browser checks pass, along with API build/web typecheck/zero full and production audits. Twenty-four unchanged migrations were applied in independent owned fixtures; populated user services and real environment absence are preserved. Desktop/390px mobile details are checked. This new source requires ALL THREE jobs and every required step on its own exact published commit; pair external ux01b-final-ci-receipt.json with the fresh portable source ZIP. A's green CI does not verify B.
+
+Remaining: other search domains, large-tenant performance, autosave/conflict/nested workspace and wider product UX/accessibility;21 broad product tracks remain open. Production durability/RPO-RTO, deployed real-provider and full-master acceptance remain separate open gates. CI verifies fixtures and does not deploy.
+<!-- UX01B_CURRENT_END -->
+
 <!-- UX01A_CURRENT_START -->
 ## UX-01A workspace search - 2026-10-27
 

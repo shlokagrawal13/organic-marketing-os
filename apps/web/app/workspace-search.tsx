@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { api } from "./api-client";
+import PublicationSearchDetail from "./publication-search-detail";
 
 export type SearchResult = {
-  kind: "content" | "campaign" | "asset";
+  kind: "content" | "campaign" | "asset" | "publication";
   id: string;
   title: string;
   summary: string;
@@ -29,6 +30,7 @@ export default function WorkspaceSearch({
   const [result, setResult] = useState<Results | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [publicationId, setPublicationId] = useState<string | null>(null);
   const generation = useRef(0);
   useEffect(
     () => () => {
@@ -64,6 +66,16 @@ export default function WorkspaceSearch({
       if (current === generation.current) setBusy(false);
     }
   }
+  if (publicationId)
+    return (
+      <PublicationSearchDetail
+        key={`${base}:${publicationId}`}
+        base={base}
+        id={publicationId}
+        onBack={() => setPublicationId(null)}
+        onOpenContent={onOpen}
+      />
+    );
   return (
     <>
       <div className="page-heading">
@@ -71,7 +83,8 @@ export default function WorkspaceSearch({
           <p className="eyebrow">FIND YOUR WORK</p>
           <h1>Workspace search</h1>
           <p>
-            Search content, campaigns and asset names or tags in this workspace.
+            Search content, campaigns, assets and saved publication preparations
+            in this workspace.
           </p>
         </div>
       </div>
@@ -111,6 +124,7 @@ export default function WorkspaceSearch({
                 <option value="content">Content</option>
                 <option value="campaign">Campaigns</option>
                 <option value="asset">Assets</option>
+                <option value="publication">Publication preparations</option>
               </select>
             </label>
             <label className="check-label">
@@ -135,7 +149,8 @@ export default function WorkspaceSearch({
         </form>
         <p className="field-help">
           Enter whole words; all entered words must match. Results show saved
-          records.
+          records. Publication results include every preparation state; they do
+          not indicate a successful external post.
         </p>
         {error && (
           <div className="alert error" role="alert">
@@ -155,11 +170,20 @@ export default function WorkspaceSearch({
           {result?.items.map((item) => (
             <li key={`${item.kind}:${item.id}`}>
               <span className="pill">
-                {item.kind}
+                {item.kind === "publication"
+                  ? "publication preparation"
+                  : item.kind}
                 {item.archived ? " · archived" : ""}
               </span>
               <h2>
-                <button className="text-button" onClick={() => onOpen(item)}>
+                <button
+                  className="text-button"
+                  onClick={() =>
+                    item.kind === "publication"
+                      ? setPublicationId(item.id)
+                      : onOpen(item)
+                  }
+                >
                   {item.title || "Untitled record"}
                 </button>
               </h2>

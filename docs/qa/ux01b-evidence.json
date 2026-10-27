@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01B",
+  "recordedAtUtc": "2026-10-27T04:03:25.111Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "UX-01A",
+    "commit": "c2e12212085d0b276e9315eb1ca83e1d1f2402b2",
+    "tree": "7a7a31f773a7ba5be2a6d5ada698239660f06529",
+    "runId": 40444776576,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40444776576",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 378,
+      "http": 41,
+      "browser": 31,
+      "recovery": 5,
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 24
+    },
+    "receipt": "docs/qa/ux01a-final-ci-receipt.json"
+  },
+  "scope": "Frozen publication-preparation full-text search and exact read-only detail opening; current content is separate and may differ.",
+  "checks": {
+    "focusedUnit": 3,
+    "http": 5,
+    "browser": 5,
+    "apiBuild": true,
+    "webTypecheck": true,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "migrations": 24,
+    "protectedMasterAndMigrationsChanged": false,
+    "dependenciesOrWorkflowChanged": false,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "realEnvExists": false,
+    "liveProvidersUsed": false,
+    "desktopAnd390pxMobileScreenshotsInspected": true
+  },
+  "localExecution": {
+    "taskId": "UX-01B",
+    "passed": true,
+    "startedAt": "2026-10-27T04:01:45.277Z",
+    "fixture": "a4699bc070a74dc5",
+    "http": 5,
+    "browser": 5,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-10-27T04:03:05.065Z",
+    "apiBuild": "The final run uses compiled API bytes from the successful local API build; no application Docker image build is claimed."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "functionalChecksPassed": true,
+      "http": 5,
+      "browser": 5,
+      "visualFinding": "Mobile screenshot captured the sidebar during its existing viewport transition.",
+      "resolution": "Wait for sidebar to leave viewport before both mobile captures; rerun focused fixture checks and inspect final images."
+    }
+  ],
+  "review": {
+    "tenantBoundBranches": 4,
+    "frozenSnapshotFieldsOnly": [
+      "title",
+      "body",
+      "hook",
+      "platform"
+    ],
+    "searchResultFieldsUnchanged": true,
+    "existingReadAndUploadApprovalRolesPreserved": true,
+    "detailCancellationOnBackAndWorkspaceChange": true,
+    "readOnlyDetailMakesNoPublicationMutations": true
+  },
+  "currentSourceOwnCiPending": true,
+  "limitations": [
+    "Publications means saved internal preparations. No confirmed external publication, provider upload, status reconciliation or deployment is claimed. All preparation states are explicitly included.",
+    "Existing tenant/time indexes and bounded page/offset rules remain; no new FTS index, migration or large-tenant performance acceptance.",
+    "Local tests use independent generated PostgreSQL17/Redis7 fixture containers and random loopback ports. Existing populated user services and real environment absence are preserved. Metadata-only assets do not prove media/worker acceptance locally.",
+    "Analytics, customers/organizations, projects and other broader search/UX, autosave/conflict/nested workspace and accessibility acceptance remain open.",
+    "Planned recovery fixtures closed at P; durable production backups/retention/RPO-RTO and deployed real-provider restore remain separate open gates. All three CI jobs and all24 Compose phases must pass on this increment's exact source."
+  ]
+}

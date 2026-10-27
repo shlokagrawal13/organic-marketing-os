@@ -4,7 +4,9 @@ import { z } from "zod";
 export const workspaceSearchQuery = z
   .object({
     q: z.string().trim().min(2).max(200),
-    kind: z.enum(["all", "content", "campaign", "asset"]).default("all"),
+    kind: z
+      .enum(["all", "content", "campaign", "asset", "publication"])
+      .default("all"),
     includeArchived: z.enum(["true", "false"]).default("false"),
     skip: z.coerce.number().int().min(0).max(1000).default(0),
     take: z.coerce.number().int().min(1).max(50).default(20),
@@ -12,7 +14,7 @@ export const workspaceSearchQuery = z
   .strict();
 
 export type SearchRow = {
-  kind: "content" | "campaign" | "asset";
+  kind: "content" | "campaign" | "asset" | "publication";
   id: string;
   title: string;
   summary: string;
@@ -54,6 +56,15 @@ export function workspaceSearchSql(
       WHERE "organizationId" = ${organizationId} AND (${kind} IN ('all', 'asset'))
         AND (${archived} OR "archivedAt" IS NULL)
         AND to_tsvector('simple', name || ' ' || array_to_string(tags, ' ')) @@ needle.query
+      UNION ALL
+      SELECT 'publication', id, left(coalesce(snapshot->>'title', ''), 240),
+        left(coalesce(snapshot->>'body', ''), 240), status::text, false, "createdAt",
+        ts_rank(to_tsvector('simple', coalesce(snapshot->>'title', '') || ' ' ||
+          coalesce(snapshot->>'body', '') || ' ' || coalesce(snapshot->>'hook', '') || ' ' || platform), needle.query)
+      FROM "PublicationIntent", needle
+      WHERE "organizationId" = ${organizationId} AND (${kind} IN ('all', 'publication'))
+        AND to_tsvector('simple', coalesce(snapshot->>'title', '') || ' ' ||
+          coalesce(snapshot->>'body', '') || ' ' || coalesce(snapshot->>'hook', '') || ' ' || platform) @@ needle.query
     )
     SELECT kind, id, title, summary, status, archived, "updatedAt"
     FROM matches ORDER BY rank DESC, "updatedAt" DESC, kind ASC, id ASC
