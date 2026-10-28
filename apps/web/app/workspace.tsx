@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   LayoutDashboard,
   Brain,
@@ -46,6 +46,8 @@ import SocialConnectionsPanel from "./social-connections-panel";
 import WorkspaceYoutubePolicyPanel from "./workspace-youtube-policy-panel";
 import ResearchWorkspace from "./research-workspace";
 import WorkspaceSearch, { type SearchResult } from "./workspace-search";
+import { useRevisionPersistence } from "./use-revision-persistence";
+import BrandSaveStatus from "./brand-save-status";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -173,7 +175,7 @@ export default function Workspace({
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
-    [busy, setBusy] = useState(false);
+    [actionBusy, setBusy] = useState(false);
   const member = session.memberships.find(
       (m: Any) => m.organizationId === orgId,
     ),
@@ -184,15 +186,94 @@ export default function Workspace({
     [dna, setDna] = useState<Any>(initialDna),
     [dirty, setDirty] = useState(false);
   const base = `/workspaces/${orgId}`;
+  const activeBase = useRef(base);
+  activeBase.current = base;
+  const loadGeneration = useRef(0);
+  const metadataGeneration = useRef(0);
+  const [knowledgeEpoch, setKnowledgeEpoch] = useState(0);
+  const knowledgeView = view === "brand" || view === "dna";
+  const brandPersistence = useRevisionPersistence<Any, Any>({
+    scope: `${base}:${knowledgeEpoch}`,
+    payload: { profile, creativeDna: dna },
+    dirty,
+    canSave: editable && !loading,
+    automatic: editable && !loading && knowledgeView && !!brain,
+    creation: !brain,
+    busy: actionBusy,
+    write: (payload, automatic) =>
+      api(
+        base + "/brand",
+        "PUT",
+        {
+          ...payload,
+          revision: brain?.revision || 0,
+          ...(automatic ? { autosave: true } : {}),
+        },
+        AbortSignal.timeout(20000),
+      ),
+    onSaved(r, unchanged) {
+      setBrain(r.brain);
+      setProgress(r.progress);
+      setDirty(!unchanged);
+      if (unchanged) {
+        setProfile({ ...initialProfile, name: org.name, ...r.brain.profile });
+        setDna({ ...initialDna, ...r.brain.creativeDna });
+      }
+      setError("");
+      setNotice(unchanged ? "Brand knowledge saved." : "");
+      const generation = loadGeneration.current;
+      const metadata = ++metadataGeneration.current;
+      Promise.all([
+        api(
+          base + "/brand/versions",
+          "GET",
+          undefined,
+          AbortSignal.timeout(20000),
+        ),
+        api(base + "/activity", "GET", undefined, AbortSignal.timeout(20000)),
+      ])
+        .then(([v, a]) => {
+          if (
+            activeBase.current === base &&
+            generation === loadGeneration.current &&
+            metadata === metadataGeneration.current
+          ) {
+            setVersions(v);
+            setActivity(a);
+          }
+        })
+        .catch(() => {
+          if (
+            activeBase.current === base &&
+            generation === loadGeneration.current &&
+            metadata === metadataGeneration.current
+          )
+            setError(
+              "Brand knowledge was saved, but history could not refresh. Reload the latest saved knowledge to refresh history.",
+            );
+        });
+    },
+  });
+  const busy = actionBusy || brandPersistence.saving;
   const load = useCallback(async () => {
+    if (activeBase.current !== base) return;
+    const generation = ++loadGeneration.current;
+    setKnowledgeEpoch((value) => value + 1);
     setLoading(true);
     setError("");
     try {
       const [b, a, v] = await Promise.all([
-        api(base + "/brand"),
-        api(base + "/activity"),
-        api(base + "/brand/versions"),
+        api(base + "/brand", "GET", undefined, AbortSignal.timeout(20000)),
+        api(base + "/activity", "GET", undefined, AbortSignal.timeout(20000)),
+        api(
+          base + "/brand/versions",
+          "GET",
+          undefined,
+          AbortSignal.timeout(20000),
+        ),
       ]);
+      if (generation !== loadGeneration.current || activeBase.current !== base)
+        return;
       setBrain(b.brain);
       setProgress(b.progress);
       setProfile({ ...initialProfile, name: org.name, ...b.brain?.profile });
@@ -201,13 +282,16 @@ export default function Workspace({
       setVersions(v);
       setDirty(false);
     } catch (e) {
-      setError((e as Error).message);
+      if (generation === loadGeneration.current && activeBase.current === base)
+        setError((e as Error).message);
     } finally {
-      setLoading(false);
+      if (generation === loadGeneration.current && activeBase.current === base)
+        setLoading(false);
     }
   }, [base, org.name]);
   useEffect(() => {
     load();
+    return () => { loadGeneration.current++; };
   }, [load]);
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -241,9 +325,42 @@ export default function Workspace({
     return () => clearInterval(timer);
   }, []);
   function go(next: string, discardConfirmed = false) {
-    if (!discardConfirmed && contentDirty && !confirm("Discard unsaved content changes?")) return;
-    if (!discardConfirmed && policyDirty && !confirm("Discard unsaved YouTube policy changes?")) return;
-    if (!discardConfirmed && researchDirty && !confirm("Discard unsaved research changes?")) return;
+    if (actionBusy && !discardConfirmed) return;
+    if (
+      !discardConfirmed &&
+      contentDirty &&
+      !confirm("Discard unsaved content changes?")
+    )
+      return;
+    if (
+      !discardConfirmed &&
+      policyDirty &&
+      !confirm("Discard unsaved YouTube policy changes?")
+    )
+      return;
+    if (
+      !discardConfirmed &&
+      researchDirty &&
+      !confirm("Discard unsaved research changes?")
+    )
+      return;
+    const leaveKnowledge = !["brand", "dna"].includes(next);
+    if (
+      leaveKnowledge &&
+      dirty &&
+      !discardConfirmed &&
+      !confirm("Discard unsaved brand knowledge changes?")
+    )
+      return;
+    if (leaveKnowledge && knowledgeView) {
+      setKnowledgeEpoch((value) => value + 1);
+      loadGeneration.current++;
+      setLoading(false);
+      setProfile({ ...initialProfile, name: org.name, ...brain?.profile });
+      setDna({ ...initialDna, ...brain?.creativeDna });
+      setDirty(false);
+    }
+    if (!leaveKnowledge && !knowledgeView) void load();
     setContentDirty(false);
     setPolicyDirty(false);
     setResearchDirty(false);
@@ -275,18 +392,7 @@ export default function Workspace({
   }
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    await action(async () => {
-      const r = await api(base + "/brand", "PUT", {
-        profile,
-        creativeDna: dna,
-        revision: brain?.revision || 0,
-      });
-      setBrain(r.brain);
-      setProgress(r.progress);
-      setDirty(false);
-      setVersions(await api(base + "/brand/versions"));
-      setActivity(await api(base + "/activity"));
-    }, "Brand knowledge saved.");
+    await brandPersistence.save();
   }
   function updateProfile(key: string, value: any) {
     setProfile((p) => ({ ...p, [key]: value }));
@@ -368,7 +474,9 @@ export default function Workspace({
             <span className="sr-only">Active workspace</span>
             <select
               value={orgId}
+              disabled={actionBusy}
               onChange={(e) => {
+                if (e.target.value === orgId) return;
                 if (
                   (dirty || contentDirty || policyDirty || researchDirty) &&
                   !confirm("Discard unsaved workspace changes?")
@@ -376,6 +484,15 @@ export default function Workspace({
                   return;
                 setOrgId(e.target.value);
                 go("dashboard", true);
+                setKnowledgeEpoch(value => value + 1);
+                loadGeneration.current++;
+                setLoading(true);
+                setBusy(false);
+                setDirty(false);
+                setBrain(null);
+                setProgress({percent:0,steps:[]});
+                setVersions([]);
+                setActivity([]);
               }}
             >
               {session.memberships.map((m: Any) => (
@@ -392,6 +509,7 @@ export default function Workspace({
           {items.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
+              disabled={actionBusy}
               className={`nav-item ${view === id ? "active" : ""}`}
               onClick={() => go(id)}
               aria-current={view === id ? "page" : undefined}
@@ -411,12 +529,13 @@ export default function Workspace({
               <b>{progress.percent}%</b>
             </div>
             <progress value={progress.percent} max={100} />
-            <button onClick={() => go("brand")}>
+            <button disabled={actionBusy} onClick={() => go("brand")}>
               Continue setup <ArrowRight size={14} />
             </button>
           </div>
           <button
             className={`nav-item ${view === "integrations" ? "active" : ""}`}
+            disabled={actionBusy}
             onClick={() => go("integrations")}
           >
             <Plug size={19} />
@@ -424,6 +543,7 @@ export default function Workspace({
           </button>
           <button
             className={`nav-item ${view === "settings" ? "active" : ""}`}
+            disabled={actionBusy}
             onClick={() => go("settings")}
           >
             <Settings size={19} />
@@ -735,8 +855,14 @@ export default function Workspace({
                           : "Not saved yet"}
                     </span>
                   </div>
+                  <BrandSaveStatus saving={brandPersistence.saving} saved={brandPersistence.saved}
+                    failure={brandPersistence.failure} editable={editable} created={!!brain} dirty={dirty} busy={busy}
+                    onExport={() => download("brand-knowledge-draft.json", {profile, creativeDna:dna})}
+                    onReload={() => {
+                      if (!dirty || confirm("Discard local brand edits and reload the latest saved knowledge? Export first if you need to keep them.")) void load();
+                    }} />
                   <form className="brand-form" onSubmit={save}>
-                    <fieldset disabled={!editable || busy}>
+                    <fieldset disabled={!editable || actionBusy}>
                       <div className="form-main">
                         {view === "brand" ? (
                           <>
@@ -1079,11 +1205,11 @@ export default function Workspace({
                         <p>
                           {view === "brand"
                             ? "Your profile is saved to this workspace. You can update it as your business changes."
-                            : "Creative DNA is stored separately from business knowledge so each can evolve intentionally."}
+                            : "Your business profile and Creative DNA save together. Switching between these editors keeps your local changes."}
                         </p>
                         <button
                           className="button primary wide"
-                          disabled={!editable || busy}
+                          disabled={!editable || busy || brandPersistence.failure?.kind === "conflict" || brandPersistence.failure?.kind === "uncertain"}
                         >
                           {busy ? "Saving…" : "Save brand"}
                           <Check size={16} />
@@ -1117,6 +1243,7 @@ export default function Workspace({
                                   className="icon-button"
                                   title={`Restore revision ${v.revision}`}
                                   aria-label={`Restore revision ${v.revision}`}
+                                  disabled={busy || dirty}
                                   onClick={() =>
                                     action(async () => {
                                       await api(

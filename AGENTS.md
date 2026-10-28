@@ -1,3 +1,9 @@
+<!-- UX01D_CURRENT_START -->
+## Current: UX-01D - 2026-10-28
+
+Read docs/ACTIVE_HANDOFF.md for concise active context. UX-01C final0549b2d/run40572018125 passed ALL THREE jobs/every required step; imported docs/qa/ux01c-final-ci-receipt.json closes C's older pending notices. D adds Brand Brain/Creative DNA autosave, shared revision persistence, local export/confirmed reload and knowledge navigation/read/history guards; see docs/KNOWLEDGE_AUTOSAVE.md and docs/qa/ux01d-evidence.json. Local focused checks pass; D needs ALL THREE jobs/every required step on its own exact final commit, paired external receipt/source ZIP. Older sections are historical. Recovery fixtures closed at P; no Q/R. Production/live/deployed/full-master gates remain open. CI does not deploy.
+<!-- UX01D_CURRENT_END -->
+
 <!-- UX01C_CURRENT_START -->
 ## Current: UX-01C — 2026-10-28
 

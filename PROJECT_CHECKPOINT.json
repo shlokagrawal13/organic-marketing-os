@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01c-20261028",
-  "savedAtUtc": "2026-10-27T19:45:03.400Z",
-  "currentMilestone": "UX-01C saved draft autosave and conflict recovery",
+  "checkpointRevision": "ux01d-20261028",
+  "savedAtUtc": "2026-10-28T08:23:59.848Z",
+  "currentMilestone": "UX-01D knowledge autosave and safe navigation",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Review/publish UX-01C normally, inspect/fix ALL THREE jobs and all required steps on exact final commit; verify four artifact bytes/reports and pair external ux01c-final-ci-receipt.json with source ZIP. Then continue product taskboard; no recovery Q/R.",
+  "nextAction": "Review/publish UX-01D normally; inspect/fix ALL THREE jobs/every required step on its exact final commit. Verify all four artifact bytes/reports and pair external ux01d-final-ci-receipt.json with fresh source ZIP. Then continue product taskboard; no recovery Q/R.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -91,14 +91,15 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/content.ts",
-    "apps/web/app/api-client.ts",
-    "apps/web/app/content-workspace.tsx",
+    "apps/api/src/brand.ts",
+    "apps/web/app/brand-save-status.tsx",
     "apps/web/app/use-draft-persistence.ts",
+    "apps/web/app/use-revision-persistence.ts",
+    "apps/web/app/workspace.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
-    "docs/DRAFT_AUTOSAVE.md",
     "docs/HANDOFF.md",
+    "docs/KNOWLEDGE_AUTOSAVE.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/RESUME_CONTEXT.md",
@@ -107,11 +108,11 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01b-final-ci-receipt.json",
-    "docs/qa/ux01c-evidence.json",
+    "docs/qa/ux01c-final-ci-receipt.json",
+    "docs/qa/ux01d-evidence.json",
     "docs/qa/verification-summary.json",
-    "tests/integration/draft-autosave.test.ts",
-    "tests/ui/draft-autosave.spec.ts"
+    "tests/integration/knowledge-autosave.test.ts",
+    "tests/ui/knowledge-autosave.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -6760,13 +6761,22 @@
       "userPopulatedServicesPreserved": true,
       "liveProvidersUsed": false,
       "credentialValuesPrinted": false
+    },
+    "recheckedUx01d": {
+      "realEnvExists": false,
+      "userPopulatedServicesPreserved": true,
+      "liveProvidersUsed": false,
+      "credentialValuesPrinted": false,
+      "dockerDaemonInitiallyUnavailable": true,
+      "dockerStartedFromInspectedUserInstallation": true,
+      "isolatedFixturesVerified": true
     }
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
-    "status": "UX01B_final_verified_UX01C_local_pending",
+    "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+    "status": "UX01C_final_verified_UX01D_local_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6779,15 +6789,15 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
+    "sourceTree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Last verified predecessor; C own exact-source CI pending.",
+    "commitMeaning": "Last verified predecessor; D own exact-source CI pending.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
-    "lastLocalCheckpointCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "lastLocalCheckpointCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
     "uploadGate": {
-      "taskId": "UX-01C",
+      "taskId": "UX-01D",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6796,14 +6806,15 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/content.ts",
-        "apps/web/app/api-client.ts",
-        "apps/web/app/content-workspace.tsx",
+        "apps/api/src/brand.ts",
+        "apps/web/app/brand-save-status.tsx",
         "apps/web/app/use-draft-persistence.ts",
+        "apps/web/app/use-revision-persistence.ts",
+        "apps/web/app/workspace.tsx",
         "docs/ACTIVE_HANDOFF.md",
         "docs/CHANGELOG.md",
-        "docs/DRAFT_AUTOSAVE.md",
         "docs/HANDOFF.md",
+        "docs/KNOWLEDGE_AUTOSAVE.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/RESUME_CONTEXT.md",
@@ -6812,73 +6823,73 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-final-ci-receipt.json",
-        "docs/qa/ux01c-evidence.json",
+        "docs/qa/ux01c-final-ci-receipt.json",
+        "docs/qa/ux01d-evidence.json",
         "docs/qa/verification-summary.json",
-        "tests/integration/draft-autosave.test.ts",
-        "tests/ui/draft-autosave.spec.ts"
+        "tests/integration/knowledge-autosave.test.ts",
+        "tests/ui/knowledge-autosave.spec.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
     },
     "publication": {
-      "taskId": "UX-01B",
-      "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
-      "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
-      "runId": 40518599731,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+      "taskId": "UX-01C",
+      "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+      "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+      "runId": 40572018125,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
-        "http": 43,
-        "browser": 33,
+        "http": 45,
+        "browser": 42,
         "recovery": 5,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 122238957996,
+        "sourceJobId": 122428422775,
         "observedPassCounts": [
           379,
-          43,
+          45,
           5
         ],
         "auditLogLines": [
-          "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
-          "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
-          "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+          "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+          "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+          "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
         ],
-        "searchTestLines": [
-          "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
-          "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
-          "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
-          "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
-          "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
-          "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
-          "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
-          "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
-          "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+        "autosaveTestLines": [
+          "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+          "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+          "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+          "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+          "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+          "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+          "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+          "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+          "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+          "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
         ],
         "migrations": 24,
         "readabilitySamples": 44,
         "composePhases": 24,
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
         "protectedMasterMigrationHashesUnchanged": 25,
-        "searchFocusedUnit": 3,
-        "searchHttp": 5,
-        "searchBrowser": 5,
-        "coreJobBudgetMinutes": 40,
+        "focusedUnit": 3,
+        "focusedHttp": 7,
+        "focusedBrowser": 14,
+        "newHttp": 2,
+        "newBrowser": 9,
         "ciCommandsAndAssertionsUnchanged": true,
-        "scopedFixtureRateBudgetReset": true,
-        "actualExhaustedFixtureRejected429": true,
-        "exhaustedBudgetControlHttpPassed": 5
+        "productionLimiterUnchanged": true
       },
-      "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01c-final-ci-receipt.json"
     },
     "currentUploadGate": {
-      "taskId": "UX-01C",
+      "taskId": "UX-01D",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6887,14 +6898,15 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/content.ts",
-        "apps/web/app/api-client.ts",
-        "apps/web/app/content-workspace.tsx",
+        "apps/api/src/brand.ts",
+        "apps/web/app/brand-save-status.tsx",
         "apps/web/app/use-draft-persistence.ts",
+        "apps/web/app/use-revision-persistence.ts",
+        "apps/web/app/workspace.tsx",
         "docs/ACTIVE_HANDOFF.md",
         "docs/CHANGELOG.md",
-        "docs/DRAFT_AUTOSAVE.md",
         "docs/HANDOFF.md",
+        "docs/KNOWLEDGE_AUTOSAVE.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/RESUME_CONTEXT.md",
@@ -6903,19 +6915,19 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-final-ci-receipt.json",
-        "docs/qa/ux01c-evidence.json",
+        "docs/qa/ux01c-final-ci-receipt.json",
+        "docs/qa/ux01d-evidence.json",
         "docs/qa/verification-summary.json",
-        "tests/integration/draft-autosave.test.ts",
-        "tests/ui/draft-autosave.spec.ts"
+        "tests/integration/knowledge-autosave.test.ts",
+        "tests/ui/knowledge-autosave.spec.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
     },
     "publicationPreparation": {
-      "taskId": "UX-01C",
+      "taskId": "UX-01D",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6924,14 +6936,15 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/content.ts",
-        "apps/web/app/api-client.ts",
-        "apps/web/app/content-workspace.tsx",
+        "apps/api/src/brand.ts",
+        "apps/web/app/brand-save-status.tsx",
         "apps/web/app/use-draft-persistence.ts",
+        "apps/web/app/use-revision-persistence.ts",
+        "apps/web/app/workspace.tsx",
         "docs/ACTIVE_HANDOFF.md",
         "docs/CHANGELOG.md",
-        "docs/DRAFT_AUTOSAVE.md",
         "docs/HANDOFF.md",
+        "docs/KNOWLEDGE_AUTOSAVE.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/RESUME_CONTEXT.md",
@@ -6940,14 +6953,14 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-final-ci-receipt.json",
-        "docs/qa/ux01c-evidence.json",
+        "docs/qa/ux01c-final-ci-receipt.json",
+        "docs/qa/ux01d-evidence.json",
         "docs/qa/verification-summary.json",
-        "tests/integration/draft-autosave.test.ts",
-        "tests/ui/draft-autosave.spec.ts"
+        "tests/integration/knowledge-autosave.test.ts",
+        "tests/ui/knowledge-autosave.spec.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
     },
     "previousUploadGate": {
       "slice": "EDITOR-01E",
@@ -6971,9 +6984,9 @@
       "userApproval": "User explicitly approved publishing EDITOR-01E’s 21 verified source/docs files to public GitHub repo shlokagrawal13/organic-marketing-os main on 2026-10-04 IST."
     },
     "docsEvidencePublicationGate": {
-      "taskId": "UX-01C",
+      "taskId": "UX-01D",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -6982,14 +6995,15 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/content.ts",
-        "apps/web/app/api-client.ts",
-        "apps/web/app/content-workspace.tsx",
+        "apps/api/src/brand.ts",
+        "apps/web/app/brand-save-status.tsx",
         "apps/web/app/use-draft-persistence.ts",
+        "apps/web/app/use-revision-persistence.ts",
+        "apps/web/app/workspace.tsx",
         "docs/ACTIVE_HANDOFF.md",
         "docs/CHANGELOG.md",
-        "docs/DRAFT_AUTOSAVE.md",
         "docs/HANDOFF.md",
+        "docs/KNOWLEDGE_AUTOSAVE.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/RESUME_CONTEXT.md",
@@ -6998,19 +7012,19 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-final-ci-receipt.json",
-        "docs/qa/ux01c-evidence.json",
+        "docs/qa/ux01c-final-ci-receipt.json",
+        "docs/qa/ux01d-evidence.json",
         "docs/qa/verification-summary.json",
-        "tests/integration/draft-autosave.test.ts",
-        "tests/ui/draft-autosave.spec.ts"
+        "tests/integration/knowledge-autosave.test.ts",
+        "tests/ui/knowledge-autosave.spec.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
     },
     "nextPublication": {
-      "taskId": "UX-01C",
+      "taskId": "UX-01D",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7019,14 +7033,15 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/content.ts",
-        "apps/web/app/api-client.ts",
-        "apps/web/app/content-workspace.tsx",
+        "apps/api/src/brand.ts",
+        "apps/web/app/brand-save-status.tsx",
         "apps/web/app/use-draft-persistence.ts",
+        "apps/web/app/use-revision-persistence.ts",
+        "apps/web/app/workspace.tsx",
         "docs/ACTIVE_HANDOFF.md",
         "docs/CHANGELOG.md",
-        "docs/DRAFT_AUTOSAVE.md",
         "docs/HANDOFF.md",
+        "docs/KNOWLEDGE_AUTOSAVE.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/RESUME_CONTEXT.md",
@@ -7035,14 +7050,14 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-final-ci-receipt.json",
-        "docs/qa/ux01c-evidence.json",
+        "docs/qa/ux01c-final-ci-receipt.json",
+        "docs/qa/ux01d-evidence.json",
         "docs/qa/verification-summary.json",
-        "tests/integration/draft-autosave.test.ts",
-        "tests/ui/draft-autosave.spec.ts"
+        "tests/integration/knowledge-autosave.test.ts",
+        "tests/ui/knowledge-autosave.spec.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
     },
     "previousPublication": {
       "slice": "EDITOR-01U",
@@ -7060,9 +7075,9 @@
       "ciAttempt": 1
     },
     "localEvidencePublication": {
-      "taskId": "UX-01C",
+      "taskId": "UX-01D",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+      "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
       "paths": [
         "AGENTS.md",
         "CHECKPOINT_MANIFEST.json",
@@ -7071,14 +7086,15 @@
         "REQUIREMENTS_MATRIX.md",
         "RESUME_PROMPT.txt",
         "START_HERE.md",
-        "apps/api/src/content.ts",
-        "apps/web/app/api-client.ts",
-        "apps/web/app/content-workspace.tsx",
+        "apps/api/src/brand.ts",
+        "apps/web/app/brand-save-status.tsx",
         "apps/web/app/use-draft-persistence.ts",
+        "apps/web/app/use-revision-persistence.ts",
+        "apps/web/app/workspace.tsx",
         "docs/ACTIVE_HANDOFF.md",
         "docs/CHANGELOG.md",
-        "docs/DRAFT_AUTOSAVE.md",
         "docs/HANDOFF.md",
+        "docs/KNOWLEDGE_AUTOSAVE.md",
         "docs/PROJECT_STATUS.md",
         "docs/REQUIREMENTS_MATRIX.md",
         "docs/RESUME_CONTEXT.md",
@@ -7087,16 +7103,16 @@
         "docs/VERIFICATION_REPORT.md",
         "docs/qa/github-publication.json",
         "docs/qa/handoff-verification.json",
-        "docs/qa/ux01b-final-ci-receipt.json",
-        "docs/qa/ux01c-evidence.json",
+        "docs/qa/ux01c-final-ci-receipt.json",
+        "docs/qa/ux01d-evidence.json",
         "docs/qa/verification-summary.json",
-        "tests/integration/draft-autosave.test.ts",
-        "tests/ui/draft-autosave.spec.ts"
+        "tests/integration/knowledge-autosave.test.ts",
+        "tests/ui/knowledge-autosave.spec.ts"
       ],
       "requiresAllThreeJobsOnOwnCommit": true,
-      "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+      "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
     },
-    "lastLocalCheckpointCommitMeaning": "UX-01B exact final all-three-job acceptance; UX-01C own source still requires final CI.",
+    "lastLocalCheckpointCommitMeaning": "C exact all-three-job acceptance; D own final CI still required.",
     "editor01iUploadGate": {
       "slice": "EDITOR-01I CI portability follow-up",
       "initialRejected": false,
@@ -7761,60 +7777,60 @@
       "standingAuthorization": "2026-10-18 normal commits/pushes/CI"
     },
     "latestPublication": {
-      "taskId": "UX-01B",
-      "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
-      "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
-      "runId": 40518599731,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+      "taskId": "UX-01C",
+      "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+      "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+      "runId": 40572018125,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
-        "http": 43,
-        "browser": 33,
+        "http": 45,
+        "browser": 42,
         "recovery": 5,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 122238957996,
+        "sourceJobId": 122428422775,
         "observedPassCounts": [
           379,
-          43,
+          45,
           5
         ],
         "auditLogLines": [
-          "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
-          "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
-          "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+          "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+          "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+          "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
         ],
-        "searchTestLines": [
-          "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
-          "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
-          "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
-          "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
-          "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
-          "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
-          "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
-          "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
-          "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+        "autosaveTestLines": [
+          "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+          "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+          "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+          "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+          "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+          "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+          "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+          "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+          "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+          "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
         ],
         "migrations": 24,
         "readabilitySamples": 44,
         "composePhases": 24,
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
         "protectedMasterMigrationHashesUnchanged": 25,
-        "searchFocusedUnit": 3,
-        "searchHttp": 5,
-        "searchBrowser": 5,
-        "coreJobBudgetMinutes": 40,
+        "focusedUnit": 3,
+        "focusedHttp": 7,
+        "focusedBrowser": 14,
+        "newHttp": 2,
+        "newBrowser": 9,
         "ciCommandsAndAssertionsUnchanged": true,
-        "scopedFixtureRateBudgetReset": true,
-        "actualExhaustedFixtureRejected429": true,
-        "exhaustedBudgetControlHttpPassed": 5
+        "productionLimiterUnchanged": true
       },
-      "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01c-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "latestApplicationSourceCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7921,9 +7937,9 @@
       "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Remaining collaboration and product UX",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "completedIncrement": "B exact CI closed; C local focused checks pass.",
-      "nextAction": "Review/publish UX-01C normally, inspect/fix ALL THREE jobs and all required steps on exact final commit; verify four artifact bytes/reports and pair external ux01c-final-ci-receipt.json with source ZIP. Then continue product taskboard; no recovery Q/R.",
-      "currentEvidence": "docs/qa/ux01c-evidence.json"
+      "completedIncrement": "C exact CI closed; D local focused checks pass.",
+      "nextAction": "Review/publish UX-01D normally; inspect/fix ALL THREE jobs/every required step on its exact final commit. Verify all four artifact bytes/reports and pair external ux01d-final-ci-receipt.json with fresh source ZIP. Then continue product taskboard; no recovery Q/R.",
+      "currentEvidence": "docs/qa/ux01d-evidence.json"
     },
     {
       "id": "POLICY-01",
@@ -7980,9 +7996,9 @@
     }
   ],
   "lastChanges": [
-    "Imported B exact final receipt and reconciled active current publication fields.",
-    "Added saved-draft and scene autosave with DRAFT-only atomic server admission and serialized revision-safe writes.",
-    "Preserved local edits on conflict/failure and during writes; export, confirmed reload and late-response cancellation verified."
+    "Imported C exact final CI receipt and reconciled current continuity.",
+    "Added knowledge autosave, shared revision serialization, concurrent initial conflict handling and safe export/reload/navigation.",
+    "Guarded stale workspace/history responses; fixed same-workspace selection loader regression; retained and reran all prior focused cases."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8021,13 +8037,13 @@
   },
   "checkpointVerificationEvidence": "docs/qa/recovery01n-evidence.json",
   "latestStatus": {
-    "taskId": "UX-01C",
+    "taskId": "UX-01D",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Review/publish UX-01C normally, inspect/fix ALL THREE jobs and all required steps on exact final commit; verify four artifact bytes/reports and pair external ux01c-final-ci-receipt.json with source ZIP. Then continue product taskboard; no recovery Q/R."
+    "nextAction": "Review/publish UX-01D normally; inspect/fix ALL THREE jobs/every required step on its exact final commit. Verify all four artifact bytes/reports and pair external ux01d-final-ci-receipt.json with fresh source ZIP. Then continue product taskboard; no recovery Q/R."
   },
   "activeTask": {
-    "id": "UX-01C",
-    "title": "Draft/scene autosave and safe revision-conflict recovery",
+    "id": "UX-01D",
+    "title": "Brand Brain/DNA autosave and shared revision safety",
     "status": "local_verified_own_exact_commit_ci_pending"
   },
   "workspaceRecovery": {
@@ -8041,9 +8057,9 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "UX-01C",
+    "taskId": "UX-01D",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "baseCommit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
+    "baseCommit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -8052,14 +8068,15 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "apps/api/src/content.ts",
-      "apps/web/app/api-client.ts",
-      "apps/web/app/content-workspace.tsx",
+      "apps/api/src/brand.ts",
+      "apps/web/app/brand-save-status.tsx",
       "apps/web/app/use-draft-persistence.ts",
+      "apps/web/app/use-revision-persistence.ts",
+      "apps/web/app/workspace.tsx",
       "docs/ACTIVE_HANDOFF.md",
       "docs/CHANGELOG.md",
-      "docs/DRAFT_AUTOSAVE.md",
       "docs/HANDOFF.md",
+      "docs/KNOWLEDGE_AUTOSAVE.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/RESUME_CONTEXT.md",
@@ -8068,14 +8085,14 @@
       "docs/VERIFICATION_REPORT.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/ux01b-final-ci-receipt.json",
-      "docs/qa/ux01c-evidence.json",
+      "docs/qa/ux01c-final-ci-receipt.json",
+      "docs/qa/ux01d-evidence.json",
       "docs/qa/verification-summary.json",
-      "tests/integration/draft-autosave.test.ts",
-      "tests/ui/draft-autosave.spec.ts"
+      "tests/integration/knowledge-autosave.test.ts",
+      "tests/ui/knowledge-autosave.spec.ts"
     ],
     "requiresAllThreeJobsOnOwnCommit": true,
-    "finalReceipt": "External ux01c-final-ci-receipt.json paired with fresh portable source ZIP"
+    "finalReceipt": "External ux01d-final-ci-receipt.json paired with portable source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8547,58 +8564,58 @@
     ]
   },
   "publishedIncrement": {
-    "taskId": "UX-01B",
-    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
-    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
-    "runId": 40518599731,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+    "taskId": "UX-01C",
+    "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+    "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+    "runId": 40572018125,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
       "unit": 379,
-      "http": 43,
-      "browser": 33,
+      "http": 45,
+      "browser": 42,
       "recovery": 5,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "sourceJobId": 122238957996,
+      "sourceJobId": 122428422775,
       "observedPassCounts": [
         379,
-        43,
+        45,
         5
       ],
       "auditLogLines": [
-        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
-        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
-        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+        "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+        "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+        "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
       ],
-      "searchTestLines": [
-        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
-        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
-        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
-        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
-        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
-        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
-        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
-        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
-        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      "autosaveTestLines": [
+        "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+        "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+        "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+        "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+        "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+        "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+        "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+        "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+        "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+        "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
       ],
       "migrations": 24,
       "readabilitySamples": 44,
       "composePhases": 24,
       "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
       "protectedMasterMigrationHashesUnchanged": 25,
-      "searchFocusedUnit": 3,
-      "searchHttp": 5,
-      "searchBrowser": 5,
-      "coreJobBudgetMinutes": 40,
+      "focusedUnit": 3,
+      "focusedHttp": 7,
+      "focusedBrowser": 14,
+      "newHttp": 2,
+      "newBrowser": 9,
       "ciCommandsAndAssertionsUnchanged": true,
-      "scopedFixtureRateBudgetReset": true,
-      "actualExhaustedFixtureRejected429": true,
-      "exhaustedBudgetControlHttpPassed": 5
+      "productionLimiterUnchanged": true
     },
-    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01c-final-ci-receipt.json"
   },
   "social01Evidence": {
     "slice": "SOCIAL-01 local foundation",
@@ -8694,67 +8711,67 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "UX-01C",
+    "taskId": "UX-01D",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "UX-01B",
-      "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
-      "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
-      "runId": 40518599731,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+      "taskId": "UX-01C",
+      "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+      "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+      "runId": 40572018125,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
-        "http": 43,
-        "browser": 33,
+        "http": 45,
+        "browser": 42,
         "recovery": 5,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 122238957996,
+        "sourceJobId": 122428422775,
         "observedPassCounts": [
           379,
-          43,
+          45,
           5
         ],
         "auditLogLines": [
-          "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
-          "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
-          "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+          "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+          "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+          "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
         ],
-        "searchTestLines": [
-          "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
-          "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
-          "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
-          "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
-          "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
-          "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
-          "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
-          "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
-          "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+        "autosaveTestLines": [
+          "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+          "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+          "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+          "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+          "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+          "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+          "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+          "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+          "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+          "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
         ],
         "migrations": 24,
         "readabilitySamples": 44,
         "composePhases": 24,
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
         "protectedMasterMigrationHashesUnchanged": 25,
-        "searchFocusedUnit": 3,
-        "searchHttp": 5,
-        "searchBrowser": 5,
-        "coreJobBudgetMinutes": 40,
+        "focusedUnit": 3,
+        "focusedHttp": 7,
+        "focusedBrowser": 14,
+        "newHttp": 2,
+        "newBrowser": 9,
         "ciCommandsAndAssertionsUnchanged": true,
-        "scopedFixtureRateBudgetReset": true,
-        "actualExhaustedFixtureRejected429": true,
-        "exhaustedBudgetControlHttpPassed": 5
+        "productionLimiterUnchanged": true
       },
-      "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01c-final-ci-receipt.json"
     },
     "local": {
       "focusedUnit": 3,
-      "focusedHttp": 7,
-      "focusedBrowser": 14,
-      "newHttp": 2,
+      "focusedHttp": 10,
+      "focusedBrowser": 23,
+      "newHttp": 3,
       "newBrowser": 9,
       "apiBuild": true,
       "webTypecheck": true,
@@ -9083,7 +9100,6 @@
     "closurePublicationNativeCi": true
   },
   "lastPublishedFiles": [
-    ".github/workflows/ci.yml",
     "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
@@ -9091,7 +9107,13 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
+    "apps/api/src/content.ts",
+    "apps/web/app/api-client.ts",
+    "apps/web/app/content-workspace.tsx",
+    "apps/web/app/use-draft-persistence.ts",
+    "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
+    "docs/DRAFT_AUTOSAVE.md",
     "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
@@ -9099,12 +9121,13 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/WORKSPACE_SEARCH.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01b-ci-attempt2.json",
-    "docs/qa/ux01b-evidence.json",
-    "docs/qa/verification-summary.json"
+    "docs/qa/ux01b-final-ci-receipt.json",
+    "docs/qa/ux01c-evidence.json",
+    "docs/qa/verification-summary.json",
+    "tests/integration/draft-autosave.test.ts",
+    "tests/ui/draft-autosave.spec.ts"
   ],
   "priorPendingPublicationBeforeCaptureRunner": {
     "scope": "SOCIAL-01 manual posting guidance native CI closure docs/evidence only",
@@ -16252,58 +16275,58 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "UX-01B",
-    "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
-    "tree": "51429bfb00386f9d7e3dbbd453b9a3d38a7ec708",
-    "runId": 40518599731,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40518599731",
+    "taskId": "UX-01C",
+    "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+    "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+    "runId": 40572018125,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
       "unit": 379,
-      "http": 43,
-      "browser": 33,
+      "http": 45,
+      "browser": 42,
       "recovery": 5,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "sourceJobId": 122238957996,
+      "sourceJobId": 122428422775,
       "observedPassCounts": [
         379,
-        43,
+        45,
         5
       ],
       "auditLogLines": [
-        "2026-10-27T14:11:09.5870308Z found 0 vulnerabilities",
-        "2026-10-27T14:19:28.4998798Z found 0 vulnerabilities",
-        "2026-10-27T14:19:28.9833879Z found 0 vulnerabilities"
+        "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+        "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+        "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
       ],
-      "searchTestLines": [
-        "2026-10-27T14:22:50.8065648Z ✔ publication search binds frozen preparations to tenant and existing read roles without disclosing internal fields or writing (632.3918ms)",
-        "2026-10-27T14:22:50.9089871Z ✔ publication search includes every preparation state and keeps deterministic pages, null fallbacks and type separation (102.740379ms)",
-        "2026-10-27T14:22:51.4371078Z ✔ search and result opening enforce authentication, tenant isolation and current membership for every read role (527.920652ms)",
-        "2026-10-27T14:22:51.5359335Z ✔ PostgreSQL search matches saved words and tags, handles Unicode, and applies explicit archive/type filters (98.90415ms)",
-        "2026-10-27T14:22:51.6113342Z ✔ search pagination is deterministic and bounded and reflects edits without a stale index (75.172436ms)",
-        "2026-10-27T14:24:26.7198354Z   ✓  29 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (1.1s)",
-        "2026-10-27T14:24:29.2066664Z   ✓  31 tests/ui/workspace-search.spec.ts:263:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.8s)",
-        "2026-10-27T14:24:29.8604038Z   ✓  32 tests/ui/workspace-search.spec.ts:341:5 › search ignores delayed responses after workspace switch and recovers from request errors (639ms)",
-        "2026-10-27T14:24:30.5756871Z   ✓  33 tests/ui/workspace-search.spec.ts:420:5 › delayed searched content cannot replace a newer unsaved draft (653ms)"
+      "autosaveTestLines": [
+        "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+        "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+        "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+        "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+        "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+        "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+        "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+        "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+        "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+        "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
       ],
       "migrations": 24,
       "readabilitySamples": 44,
       "composePhases": 24,
       "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
       "protectedMasterMigrationHashesUnchanged": 25,
-      "searchFocusedUnit": 3,
-      "searchHttp": 5,
-      "searchBrowser": 5,
-      "coreJobBudgetMinutes": 40,
+      "focusedUnit": 3,
+      "focusedHttp": 7,
+      "focusedBrowser": 14,
+      "newHttp": 2,
+      "newBrowser": 9,
       "ciCommandsAndAssertionsUnchanged": true,
-      "scopedFixtureRateBudgetReset": true,
-      "actualExhaustedFixtureRejected429": true,
-      "exhaustedBudgetControlHttpPassed": 5
+      "productionLimiterUnchanged": true
     },
-    "receipt": "docs/qa/ux01b-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01c-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -22204,14 +22227,15 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/content.ts",
-    "apps/web/app/api-client.ts",
-    "apps/web/app/content-workspace.tsx",
+    "apps/api/src/brand.ts",
+    "apps/web/app/brand-save-status.tsx",
     "apps/web/app/use-draft-persistence.ts",
+    "apps/web/app/use-revision-persistence.ts",
+    "apps/web/app/workspace.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
-    "docs/DRAFT_AUTOSAVE.md",
     "docs/HANDOFF.md",
+    "docs/KNOWLEDGE_AUTOSAVE.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/RESUME_CONTEXT.md",
@@ -22220,11 +22244,11 @@
     "docs/VERIFICATION_REPORT.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01b-final-ci-receipt.json",
-    "docs/qa/ux01c-evidence.json",
+    "docs/qa/ux01c-final-ci-receipt.json",
+    "docs/qa/ux01d-evidence.json",
     "docs/qa/verification-summary.json",
-    "tests/integration/draft-autosave.test.ts",
-    "tests/ui/draft-autosave.spec.ts"
+    "tests/integration/knowledge-autosave.test.ts",
+    "tests/ui/knowledge-autosave.spec.ts"
   ],
   "secondUx01bPublication": {
     "taskId": "UX-01B",
@@ -22277,7 +22301,7 @@
     "schemaVersion": 1,
     "taskId": "UX-01C",
     "recordedAtUtc": "2026-10-27T19:45:03.264Z",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "exact_final_commit_all_three_jobs_and_artifact_bytes_verified",
     "priorVerifiedPublication": {
       "taskId": "UX-01B",
       "commit": "81287c38d4edd79ccd837b0ab95935fa22e98a39",
@@ -22405,6 +22429,62 @@
       "browserPassed": 9,
       "browserFailed": 5,
       "reason": "One new select-label locator timed out and four unscoped alerts conflicted with the Next route announcer. Semantic Format selector and save-panel-scoped alerts corrected; all assertions retained. Complete final focused set rerun."
+    },
+    "currentSourceOwnCiPending": false,
+    "finalReceipt": "docs/qa/ux01c-final-ci-receipt.json",
+    "finalPublication": {
+      "taskId": "UX-01C",
+      "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+      "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+      "runId": 40572018125,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 45,
+        "browser": 42,
+        "recovery": 5,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 122428422775,
+        "observedPassCounts": [
+          379,
+          45,
+          5
+        ],
+        "auditLogLines": [
+          "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+          "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+          "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
+        ],
+        "autosaveTestLines": [
+          "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+          "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+          "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+          "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+          "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+          "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+          "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+          "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+          "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+          "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
+        ],
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedMasterMigrationHashesUnchanged": 25,
+        "focusedUnit": 3,
+        "focusedHttp": 7,
+        "focusedBrowser": 14,
+        "newHttp": 2,
+        "newBrowser": 9,
+        "ciCommandsAndAssertionsUnchanged": true,
+        "productionLimiterUnchanged": true
+      },
+      "receipt": "docs/qa/ux01c-final-ci-receipt.json"
     }
   },
   "deliveryWorkflow": {
@@ -22413,5 +22493,132 @@
     "allThreeFinalCiJobsAndRequiredSteps": true,
     "acceptanceChecklistRequired": true,
     "noKnownFailuresHidden": true
+  },
+  "ux01d": {
+    "schemaVersion": 1,
+    "taskId": "UX-01D",
+    "recordedAtUtc": "2026-10-28T08:23:59.650Z",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01C",
+      "commit": "0549b2d617eb5b1ffecee586df391369eb5f4cbd",
+      "tree": "2f7d2f89c983cc9244e2dbc3ce6f0df0d7f440a7",
+      "runId": 40572018125,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/40572018125",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 45,
+        "browser": 42,
+        "recovery": 5,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 122428422775,
+        "observedPassCounts": [
+          379,
+          45,
+          5
+        ],
+        "auditLogLines": [
+          "2026-10-27T19:46:29.5952520Z found 0 vulnerabilities",
+          "2026-10-27T19:55:07.9716781Z found 0 vulnerabilities",
+          "2026-10-27T19:55:08.4568781Z found 0 vulnerabilities"
+        ],
+        "autosaveTestLines": [
+          "2026-10-27T19:55:31.1917636Z ✔ autosave retains tenant/read-only boundaries and revision-atomic scene versions under concurrent writes (681.041352ms)",
+          "2026-10-27T19:58:50.7652450Z   ✓   3 tests/ui/draft-autosave.spec.ts:59:5 › saved draft and scene changes debounce into one revision and survive reload without publication (3.8s)",
+          "2026-10-27T19:58:57.0346881Z   ✓   4 tests/ui/draft-autosave.spec.ts:110:5 › typing during a delayed real save is retained and serialized against the acknowledged revision (6.3s)",
+          "2026-10-27T19:59:05.1899550Z   ✓   5 tests/ui/draft-autosave.spec.ts:153:5 › conflict pauses all retries keeps export and only discards local edits after confirmed reload (8.1s)",
+          "2026-10-27T19:59:10.4985143Z   ✓   6 tests/ui/draft-autosave.spec.ts:212:5 › failed autosave has no retry loop and explicit retry saves retained edits (5.3s)",
+          "2026-10-27T19:59:18.1157204Z   ✓   7 tests/ui/draft-autosave.spec.ts:243:5 › reviewed content requires explicit save and navigation cancels pending draft autosave (7.6s)",
+          "2026-10-27T19:59:20.9148136Z   ✓   8 tests/ui/draft-autosave.spec.ts:280:5 › read-only members have no automatic write path (2.8s)",
+          "2026-10-27T19:59:26.1382098Z   ✓   9 tests/ui/draft-autosave.spec.ts:292:5 › a committed write with a lost response is never replayed automatically or overwritten by explicit retry (5.2s)",
+          "2026-10-27T19:59:31.8527531Z   ✓  10 tests/ui/draft-autosave.spec.ts:326:5 › a delayed save acknowledgement cannot reopen a discarded editor or schedule another write (5.7s)",
+          "2026-10-27T19:59:34.8582936Z   ✓  11 tests/ui/draft-autosave.spec.ts:365:5 › an unconfirmed new-draft creation keeps local edits and blocks duplicate creation (2.9s)"
+        ],
+        "migrations": 24,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedMasterMigrationHashesUnchanged": 25,
+        "focusedUnit": 3,
+        "focusedHttp": 7,
+        "focusedBrowser": 14,
+        "newHttp": 2,
+        "newBrowser": 9,
+        "ciCommandsAndAssertionsUnchanged": true,
+        "productionLimiterUnchanged": true
+      },
+      "receipt": "docs/qa/ux01c-final-ci-receipt.json"
+    },
+    "checks": {
+      "focusedUnit": 3,
+      "focusedHttp": 10,
+      "focusedBrowser": 23,
+      "newHttp": 3,
+      "newBrowser": 9,
+      "apiBuild": true,
+      "webTypecheck": true,
+      "migrations": 24,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "protectedFilesUnchanged": 25,
+      "dependenciesWorkflowOrMigrationsChanged": false,
+      "liveProvidersUsed": false,
+      "realEnvExists": false
+    },
+    "localFixture": {
+      "taskId": "UX-01D",
+      "passed": true,
+      "startedAt": "2026-10-28T08:17:31.489Z",
+      "fixture": "164631e66f6cbd17",
+      "http": 10,
+      "browser": 23,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-10-28T08:21:50.160Z"
+    },
+    "initialLocalAttempt": {
+      "taskId": "UX-01D",
+      "passed": false,
+      "startedAt": "2026-10-28T08:02:24.140Z",
+      "fixture": "8d84d8661b1bc729",
+      "failure": "browser exited 1; inspect .local/ux01d-browser.log",
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-10-28T08:10:28.553Z",
+      "httpPassed": 10,
+      "browserPassed": 20,
+      "browserFailed": 3,
+      "newKnowledgeCasesPassed": 9,
+      "failures": [
+        "Selecting the already active workspace entered loading without a new load; two predecessor search cases exposed it. Explicit no-op guard fixes this regression.",
+        "An existing content delayed-write case lost its editor while development source was changing. Exact cause not established; no assertion changed. The complete frozen-source set was rerun."
+      ]
+    },
+    "acceptanceChecklist": "docs/KNOWLEDGE_AUTOSAVE.md",
+    "limits": [
+      "Brand Brain and Creative DNA save together after explicit first creation; research still requires per-change source authorization and explicit review.",
+      "No offline/browser-crash durability or collaborative merge acceptance. Begun writes may finish after leaving.",
+      "All three jobs and every required step must pass on this own exact final commit; no predecessor run substitutes.",
+      "Other editors/settings, nested workspaces, wider search/performance/UX/accessibility and21 broad tracks remain open.",
+      "Production durability/live-provider/deployed/full-master gates remain separate; CI verifies fixtures and does not deploy."
+    ],
+    "preRestoreGuardVerification": {
+      "taskId": "UX-01D",
+      "passed": true,
+      "startedAt": "2026-10-28T08:11:54.800Z",
+      "fixture": "10ee5945cec57527",
+      "http": 10,
+      "browser": 23,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-10-28T08:16:20.486Z"
+    },
+    "finalRestoreGuard": "Added explicit-action navigation/workspace lock and extended the existing real restore browser case; full final10 HTTP/23 browser rerun passed."
   }
 }
