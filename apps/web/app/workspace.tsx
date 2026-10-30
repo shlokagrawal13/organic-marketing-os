@@ -48,6 +48,7 @@ import ResearchWorkspace from "./research-workspace";
 import WorkspaceSearch, { type SearchResult } from "./workspace-search";
 import { useRevisionPersistence } from "./use-revision-persistence";
 import BrandSaveStatus from "./brand-save-status";
+import WorkspaceSettings from "./workspace-settings";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -161,6 +162,14 @@ export default function Workspace({
 }) {
   const [navVersion, setNavVersion] = useState(0),
     [contentDirty, setContentDirty] = useState(false);
+  const [settingsDirty, setSettingsDirty] = useState(false);
+  const [settingsBusy, setSettingsBusy] = useState(false);
+  const [settingsOverrides, setSettingsOverrides] = useState<
+    Record<string, Any>
+  >({});
+  const rememberSettings = useCallback((value: Any) => {
+    setSettingsOverrides((current) => ({ ...current, [value.id]: value }));
+  }, []);
   const [policyDirty, setPolicyDirty] = useState(false);
   const [researchDirty, setResearchDirty] = useState(false);
   const [searchTarget, setSearchTarget] = useState<SearchResult | null>(null);
@@ -179,13 +188,16 @@ export default function Workspace({
   const member = session.memberships.find(
       (m: Any) => m.organizationId === orgId,
     ),
-    org = member.organization,
+    org = settingsOverrides[orgId] || member.organization,
     editable = ["OWNER", "ADMIN", "EDITOR"].includes(member.role),
     admin = ["OWNER", "ADMIN"].includes(member.role);
   const [profile, setProfile] = useState<Any>(initialProfile),
     [dna, setDna] = useState<Any>(initialDna),
     [dirty, setDirty] = useState(false);
   const base = `/workspaces/${orgId}`;
+  const navigationBusy = actionBusy || settingsBusy;
+  const currentOrgName = useRef(org.name);
+  currentOrgName.current = org.name;
   const activeBase = useRef(base);
   activeBase.current = base;
   const loadGeneration = useRef(0);
@@ -276,7 +288,11 @@ export default function Workspace({
         return;
       setBrain(b.brain);
       setProgress(b.progress);
-      setProfile({ ...initialProfile, name: org.name, ...b.brain?.profile });
+      setProfile({
+        ...initialProfile,
+        name: currentOrgName.current,
+        ...b.brain?.profile,
+      });
       setDna({ ...initialDna, ...b.brain?.creativeDna });
       setActivity(a);
       setVersions(v);
@@ -288,17 +304,23 @@ export default function Workspace({
       if (generation === loadGeneration.current && activeBase.current === base)
         setLoading(false);
     }
-  }, [base, org.name]);
+  }, [base, member.organization.name]);
   useEffect(() => {
     load();
-    return () => { loadGeneration.current++; };
+    return () => {
+      loadGeneration.current++;
+    };
   }, [load]);
   useEffect(() => {
     const url = new URL(window.location.href);
     const youtube = url.searchParams.get("youtube");
     if (youtube !== "connected" && youtube !== "failed") return;
     setView("integrations");
-    setNotice(youtube === "connected" ? "YouTube authorization returned. Verify the channel status below." : "YouTube connection was not completed. Check configuration or retry from Connections.");
+    setNotice(
+      youtube === "connected"
+        ? "YouTube authorization returned. Verify the channel status below."
+        : "YouTube connection was not completed. Check configuration or retry from Connections.",
+    );
     url.searchParams.delete("youtube");
     window.history.replaceState(null, "", url.pathname + url.search + url.hash);
   }, []);
@@ -309,14 +331,14 @@ export default function Workspace({
   }, []);
   useEffect(() => {
     function protect(e: BeforeUnloadEvent) {
-      if (dirty || policyDirty || researchDirty) {
+      if (dirty || policyDirty || researchDirty || settingsDirty) {
         e.preventDefault();
         e.returnValue = "";
       }
     }
     window.addEventListener("beforeunload", protect);
     return () => window.removeEventListener("beforeunload", protect);
-  }, [dirty, policyDirty, researchDirty]);
+  }, [dirty, policyDirty, researchDirty, settingsDirty]);
   useEffect(() => {
     const timer = setInterval(
       () => api("/auth/renew", "POST").catch(() => {}),
@@ -325,7 +347,7 @@ export default function Workspace({
     return () => clearInterval(timer);
   }, []);
   function go(next: string, discardConfirmed = false) {
-    if (actionBusy && !discardConfirmed) return;
+    if (navigationBusy && !discardConfirmed) return;
     if (
       !discardConfirmed &&
       contentDirty &&
@@ -342,6 +364,12 @@ export default function Workspace({
       !discardConfirmed &&
       researchDirty &&
       !confirm("Discard unsaved research changes?")
+    )
+      return;
+    if (
+      !discardConfirmed &&
+      settingsDirty &&
+      !confirm("Discard unsaved workspace settings?")
     )
       return;
     const leaveKnowledge = !["brand", "dna"].includes(next);
@@ -364,6 +392,7 @@ export default function Workspace({
     setContentDirty(false);
     setPolicyDirty(false);
     setResearchDirty(false);
+    setSettingsDirty(false);
     setSearchTarget(null);
     setNavVersion((v) => v + 1);
     setView(next);
@@ -389,6 +418,24 @@ export default function Workspace({
     } finally {
       setBusy(false);
     }
+  }
+  function signOut(allDevices: boolean) {
+    if (navigationBusy) return;
+    if (
+      (dirty ||
+        contentDirty ||
+        policyDirty ||
+        researchDirty ||
+        settingsDirty) &&
+      !confirm(
+        "Discard unsaved changes and sign out? A save already started may still finish.",
+      )
+    )
+      return;
+    void action(async () => {
+      await api(allDevices ? "/auth/logout-all" : "/auth/logout", "POST");
+      onReload();
+    }, "");
   }
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -474,30 +521,35 @@ export default function Workspace({
             <span className="sr-only">Active workspace</span>
             <select
               value={orgId}
-              disabled={actionBusy}
+              disabled={navigationBusy}
               onChange={(e) => {
                 if (e.target.value === orgId) return;
                 if (
-                  (dirty || contentDirty || policyDirty || researchDirty) &&
+                  (dirty ||
+                    contentDirty ||
+                    policyDirty ||
+                    researchDirty ||
+                    settingsDirty) &&
                   !confirm("Discard unsaved workspace changes?")
                 )
                   return;
                 setOrgId(e.target.value);
                 go("dashboard", true);
-                setKnowledgeEpoch(value => value + 1);
+                setKnowledgeEpoch((value) => value + 1);
                 loadGeneration.current++;
                 setLoading(true);
                 setBusy(false);
                 setDirty(false);
                 setBrain(null);
-                setProgress({percent:0,steps:[]});
+                setProgress({ percent: 0, steps: [] });
                 setVersions([]);
                 setActivity([]);
               }}
             >
               {session.memberships.map((m: Any) => (
                 <option key={m.organizationId} value={m.organizationId}>
-                  {m.organization.name}
+                  {settingsOverrides[m.organizationId]?.name ||
+                    m.organization.name}
                 </option>
               ))}
             </select>
@@ -509,7 +561,7 @@ export default function Workspace({
           {items.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
-              disabled={actionBusy}
+              disabled={navigationBusy}
               className={`nav-item ${view === id ? "active" : ""}`}
               onClick={() => go(id)}
               aria-current={view === id ? "page" : undefined}
@@ -529,13 +581,13 @@ export default function Workspace({
               <b>{progress.percent}%</b>
             </div>
             <progress value={progress.percent} max={100} />
-            <button disabled={actionBusy} onClick={() => go("brand")}>
+            <button disabled={navigationBusy} onClick={() => go("brand")}>
               Continue setup <ArrowRight size={14} />
             </button>
           </div>
           <button
             className={`nav-item ${view === "integrations" ? "active" : ""}`}
-            disabled={actionBusy}
+            disabled={navigationBusy}
             onClick={() => go("integrations")}
           >
             <Plug size={19} />
@@ -543,7 +595,7 @@ export default function Workspace({
           </button>
           <button
             className={`nav-item ${view === "settings" ? "active" : ""}`}
-            disabled={actionBusy}
+            disabled={navigationBusy}
             onClick={() => go("settings")}
           >
             <Settings size={19} />
@@ -559,12 +611,8 @@ export default function Workspace({
               className="icon-button"
               aria-label="Sign out"
               title="Sign out"
-              onClick={() =>
-                action(async () => {
-                  await api("/auth/logout", "POST");
-                  onReload();
-                }, "")
-              }
+              disabled={navigationBusy}
+              onClick={() => signOut(false)}
             >
               <LogOut size={17} />
             </button>
@@ -626,10 +674,22 @@ export default function Workspace({
             </div>
           ) : (
             <>
-              {view === "search" && <WorkspaceSearch key={base} base={base} onOpen={result => {
-                go(result.kind === "content" ? "content" : result.kind === "campaign" ? "campaigns" : "assets");
-                setSearchTarget(result);
-              }} />}
+              {view === "search" && (
+                <WorkspaceSearch
+                  key={base}
+                  base={base}
+                  onOpen={(result) => {
+                    go(
+                      result.kind === "content"
+                        ? "content"
+                        : result.kind === "campaign"
+                          ? "campaigns"
+                          : "assets",
+                    );
+                    setSearchTarget(result);
+                  }}
+                />
+              )}
               {[
                 "create",
                 "content",
@@ -644,8 +704,16 @@ export default function Workspace({
                   role={member.role}
                   onNavigate={go}
                   onDirtyChange={setContentDirty}
-                  initialContentId={searchTarget?.kind === "content" ? searchTarget.id : undefined}
-                  initialCampaignId={searchTarget?.kind === "campaign" ? searchTarget.id : undefined}
+                  initialContentId={
+                    searchTarget?.kind === "content"
+                      ? searchTarget.id
+                      : undefined
+                  }
+                  initialCampaignId={
+                    searchTarget?.kind === "campaign"
+                      ? searchTarget.id
+                      : undefined
+                  }
                 />
               )}
               {["assets", "video"].includes(view) && (
@@ -655,13 +723,19 @@ export default function Workspace({
                   role={member.role}
                   view={view}
                   onNavigate={go}
-                  initialAssetId={searchTarget?.kind === "asset" ? searchTarget.id : undefined}
+                  initialAssetId={
+                    searchTarget?.kind === "asset" ? searchTarget.id : undefined
+                  }
                 />
               )}
-              {view === "research" && <ResearchWorkspace
-                key={`${base}:${member.role}:${navVersion}`} base={base} role={member.role}
-                onDirtyChange={setResearchDirty}
-              />}
+              {view === "research" && (
+                <ResearchWorkspace
+                  key={`${base}:${member.role}:${navVersion}`}
+                  base={base}
+                  role={member.role}
+                  onDirtyChange={setResearchDirty}
+                />
+              )}
               {view === "operations" && admin && (
                 <OperationsWorkspace base={base} />
               )}
@@ -855,12 +929,30 @@ export default function Workspace({
                           : "Not saved yet"}
                     </span>
                   </div>
-                  <BrandSaveStatus saving={brandPersistence.saving} saved={brandPersistence.saved}
-                    failure={brandPersistence.failure} editable={editable} created={!!brain} dirty={dirty} busy={busy}
-                    onExport={() => download("brand-knowledge-draft.json", {profile, creativeDna:dna})}
+                  <BrandSaveStatus
+                    saving={brandPersistence.saving}
+                    saved={brandPersistence.saved}
+                    failure={brandPersistence.failure}
+                    editable={editable}
+                    created={!!brain}
+                    dirty={dirty}
+                    busy={busy}
+                    onExport={() =>
+                      download("brand-knowledge-draft.json", {
+                        profile,
+                        creativeDna: dna,
+                      })
+                    }
                     onReload={() => {
-                      if (!dirty || confirm("Discard local brand edits and reload the latest saved knowledge? Export first if you need to keep them.")) void load();
-                    }} />
+                      if (
+                        !dirty ||
+                        confirm(
+                          "Discard local brand edits and reload the latest saved knowledge? Export first if you need to keep them.",
+                        )
+                      )
+                        void load();
+                    }}
+                  />
                   <form className="brand-form" onSubmit={save}>
                     <fieldset disabled={!editable || actionBusy}>
                       <div className="form-main">
@@ -1209,7 +1301,12 @@ export default function Workspace({
                         </p>
                         <button
                           className="button primary wide"
-                          disabled={!editable || busy || brandPersistence.failure?.kind === "conflict" || brandPersistence.failure?.kind === "uncertain"}
+                          disabled={
+                            !editable ||
+                            busy ||
+                            brandPersistence.failure?.kind === "conflict" ||
+                            brandPersistence.failure?.kind === "uncertain"
+                          }
                         >
                           {busy ? "Saving…" : "Save brand"}
                           <Check size={16} />
@@ -1307,8 +1404,17 @@ export default function Workspace({
                     review are available; video posting and external analytics
                     are still pending.
                   </div>
-                  <SocialConnectionsPanel key={base} base={base} role={member.role} />
-                  <WorkspaceYoutubePolicyPanel key={`${base}:${member.role}:${navVersion}`} base={base} role={member.role} onDirtyChange={setPolicyDirty} />
+                  <SocialConnectionsPanel
+                    key={base}
+                    base={base}
+                    role={member.role}
+                  />
+                  <WorkspaceYoutubePolicyPanel
+                    key={`${base}:${member.role}:${navVersion}`}
+                    base={base}
+                    role={member.role}
+                    onDirtyChange={setPolicyDirty}
+                  />
                   <section className="panel connection-list">
                     <div>
                       <div className="connection-icon">
@@ -1388,48 +1494,14 @@ export default function Workspace({
                     </button>
                   </div>
                   <div className="settings-grid">
-                    <section className="panel">
-                      <h3>Workspace details</h3>
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          const data = Object.fromEntries(
-                            new FormData(e.currentTarget),
-                          );
-                          action(async () => {
-                            await api(base, "PATCH", data);
-                            onReload();
-                          }, "Workspace updated.");
-                        }}
-                      >
-                        <label>
-                          Name
-                          <input
-                            name="name"
-                            defaultValue={org.name}
-                            minLength={2}
-                            maxLength={100}
-                            required
-                            disabled={!admin}
-                          />
-                        </label>
-                        <label>
-                          Timezone
-                          <input
-                            name="timezone"
-                            defaultValue={org.timezone}
-                            required
-                            disabled={!admin}
-                          />
-                        </label>
-                        <button
-                          disabled={busy || !admin}
-                          className="button primary"
-                        >
-                          Save workspace
-                        </button>
-                      </form>
-                    </section>
+                    <WorkspaceSettings
+                      key={`${base}:${navVersion}`}
+                      base={base}
+                      editable={admin && !actionBusy}
+                      onDirtyChange={setSettingsDirty}
+                      onBusyChange={setSettingsBusy}
+                      onSaved={rememberSettings}
+                    />
                     <section className="panel">
                       <h3>Your account</h3>
                       <div className="account-row">
@@ -1464,12 +1536,8 @@ export default function Workspace({
                       )}
                       <button
                         className="text-button"
-                        onClick={() =>
-                          action(async () => {
-                            await api("/auth/logout-all", "POST");
-                            onReload();
-                          }, "")
-                        }
+                        disabled={navigationBusy}
+                        onClick={() => signOut(true)}
                       >
                         Sign out of all devices
                       </button>

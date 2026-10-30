@@ -1,3 +1,9 @@
+<!-- UX01E_CURRENT_START -->
+## Current: UX-01E - 2026-10-30
+
+Read docs/ACTIVE_HANDOFF.md for concise active context. UX-01D final a432d67/run40656660621 passed ALL THREE jobs/every required step; imported docs/qa/ux01d-final-ci-receipt.json closes D's older pending notices. E protects workspace settings drafts, navigation/reload/sign-out, explicit save acknowledgement and uncertain-response recovery; see docs/WORKSPACE_SETTINGS_DRAFTS.md and docs/qa/ux01e-evidence.json. Local10 HTTP/29 browser checks pass. Settings remain manually saved; server revision/concurrency support is still open. E needs ALL THREE jobs/every required step on its own exact final commit and paired external receipt/source ZIP. Older sections are historical. Recovery fixtures closed at P; no Q/R. Production/live/deployed/full-master gates remain open; CI does not deploy.
+<!-- UX01E_CURRENT_END -->
+
 <!-- UX01D_CURRENT_START -->
 ## Current: UX-01D - 2026-10-28
 
