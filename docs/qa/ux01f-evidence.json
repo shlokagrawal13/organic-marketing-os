@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01F",
+  "recordedAtUtc": "2026-10-31T13:06:08.571Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "UX-01E",
+    "commit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
+    "tree": "791e52888ddca60876b27bb73c7abdd2df029708",
+    "runId": 41063345723,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41063345723",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 379,
+      "http": 48,
+      "browser": 57,
+      "recovery": 5,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "sourceJobId": 124088334629,
+      "observedPassCounts": [
+        379,
+        48,
+        5
+      ],
+      "auditLogLines": [
+        "2026-10-30T13:27:41.6428070Z found 0 vulnerabilities",
+        "2026-10-30T13:33:55.6570435Z found 0 vulnerabilities",
+        "2026-10-30T13:33:55.9541750Z found 0 vulnerabilities"
+      ],
+      "settingsTestLines": [
+        "2026-10-30T13:39:54.8284283Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
+        "2026-10-30T13:39:55.6509141Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (817ms)",
+        "2026-10-30T13:39:58.5025560Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (2.8s)",
+        "2026-10-30T13:40:01.2800996Z   ✓  46 tests/ui/settings-draft.spec.ts:287:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
+        "2026-10-30T13:40:02.0140705Z   ✓  47 tests/ui/settings-draft.spec.ts:330:5 › all four non-admin roles retain read-only workspace settings and server write denial (729ms)",
+        "2026-10-30T13:40:02.7123921Z   ✓  48 tests/ui/settings-draft.spec.ts:354:5 › settings initial read failure recovers and reopening always loads current server values (662ms)"
+      ],
+      "logSource": "Authenticated GitHub REST job log bytes; UTF-8 text",
+      "coreJobLogBytes": 198809,
+      "coreJobLogSha256": "8d898ee3ef5159b6b2410fc05361ecce0dcda4f1543e1f756a842853375a2281",
+      "migrations": 24,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedMasterMigrationHashesUnchanged": 25,
+      "focusedUnit": 0,
+      "focusedHttp": 10,
+      "focusedBrowser": 29,
+      "newHttp": 0,
+      "newBrowser": 6,
+      "ciCommandsAndAssertionsUnchanged": true,
+      "productionLimiterUnchanged": true
+    },
+    "receipt": "docs/qa/ux01e-final-ci-receipt.json"
+  },
+  "behavior": {
+    "migration": "202610310001_workspace_settings_revision; defaulted Organization.settingsRevision=0, 24 predecessors unchanged",
+    "api": "Strict expectedRevision, tenant/role guard, atomic compare-and-increment, one audit on success, 409/no audit on stale write",
+    "ui": "Explicit save, conflict holds local draft and disables repeat write; exact export and confirmed reload; uncertain responses remain separately blocked",
+    "tests": "Concurrent OWNER/ADMIN writes; malformed/stale/tenant/role checks, monotonic A-B-A revision, audit count; browser conflict/export/cancel/reload/manual merge; predecessor settings flows retained"
+  },
+  "local": {
+    "taskId": "UX-01F",
+    "passed": true,
+    "startedAt": "2026-10-30T19:04:55.831Z",
+    "fixture": "f3d0ea6855b6489e",
+    "http": 11,
+    "browser": 30,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-10-30T19:10:55.909Z",
+    "snapshotUnit": 3,
+    "apiBuild": true,
+    "webTypecheck": true,
+    "prismaGenerate": true,
+    "migrations": 25,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "attempts": {
+    "prettierPrismaParser": "The generic Prettier invocation cannot parse schema.prisma; npx prisma format succeeded. All other selected source files were formatted.",
+    "nativeUpgradeWindows": "The Linux-only unix:///var/run/docker.sock native-upgrade harness cannot connect on Windows. Independent owned local PostgreSQL applied all 25 migrations; exact-source Linux CI must run native upgrade and all 24 Compose phases.",
+    "finalInputBound": "After the 11-HTTP/30-browser owned fixture passed, expectedRevision validation was bounded below PostgreSQL INT32 overflow and one invalid-revision assertion was added. Final API build and formatting were rerun; exact final-source CI is required for that late assertion."
+  },
+  "preserved": {
+    "priorMigrations": 24,
+    "composePhases": 24,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false
+  },
+  "publication": {
+    "required": "Own exact final commit: all three jobs and every required step, four artifact bytes/digests/CRC/reports",
+    "finalReceipt": "External ux01f-final-ci-receipt.json paired with fresh source ZIP"
+  },
+  "limits": [
+    "Manual settings save only; no autosave or automatic field merge",
+    "Browser-crash/offline draft durability not accepted",
+    "Production/live/deployed/full-master acceptance open; CI does not deploy"
+  ]
+}

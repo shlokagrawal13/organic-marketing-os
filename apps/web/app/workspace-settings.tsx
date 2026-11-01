@@ -2,7 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import { api, download } from "./api-client";
 
-type Settings = { id: string; name: string; timezone: string };
+type Settings = {
+  id: string;
+  name: string;
+  timezone: string;
+  settingsRevision: number;
+};
 export default function WorkspaceSettings({
   base,
   editable,
@@ -21,12 +26,13 @@ export default function WorkspaceSettings({
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState("");
   const [uncertain, setUncertain] = useState(false);
+  const [conflicted, setConflicted] = useState(false);
   const [notice, setNotice] = useState("");
   const mounted = useRef(false),
     flight = useRef(false);
   const dirty =
     !!saved && (draft.name !== saved.name || draft.timezone !== saved.timezone);
-  const protectedEdits = dirty || uncertain;
+  const protectedEdits = dirty || uncertain || conflicted;
   useEffect(() => {
     onDirtyChange(protectedEdits);
   }, [protectedEdits, onDirtyChange]);
@@ -47,12 +53,15 @@ export default function WorkspaceSettings({
       !value ||
       value.id !== base.split("/").at(-1) ||
       typeof value.name !== "string" ||
-      typeof value.timezone !== "string"
+      typeof value.timezone !== "string" ||
+      !Number.isSafeInteger(value.settingsRevision) ||
+      value.settingsRevision < 0
     )
       throw new Error("The saved workspace settings could not be confirmed.");
     setSaved(value);
     setDraft({ name: value.name, timezone: value.timezone });
     setUncertain(false);
+    setConflicted(false);
     onSaved(value);
   }
   async function read() {
@@ -81,13 +90,26 @@ export default function WorkspaceSettings({
   }
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (flight.current || !saved || !editable || !dirty || uncertain) return;
+    if (
+      flight.current ||
+      !saved ||
+      !editable ||
+      !dirty ||
+      uncertain ||
+      conflicted
+    )
+      return;
     flight.current = true;
     setBusy(true);
     setError("");
     setNotice("");
     try {
-      const value = await api(base, "PATCH", draft, AbortSignal.timeout(20000));
+      const value = await api(
+        base,
+        "PATCH",
+        { ...draft, expectedRevision: saved.settingsRevision },
+        AbortSignal.timeout(20000),
+      );
       if (!mounted.current) return;
       adopt(value);
       setNotice("Workspace settings saved.");
@@ -96,10 +118,13 @@ export default function WorkspaceSettings({
       const status = (e as Error & { status?: number }).status;
       const unknown = !status || status >= 500;
       setUncertain(unknown);
+      setConflicted(status === 409);
       setError(
         unknown
           ? "The save could not be confirmed. It may have completed. Your local edits are kept; no retry was sent. Export them, then reload the latest settings before saving again."
-          : `Settings were not saved. Your local edits are kept; no retry was sent. ${(e as Error).message}`,
+          : status === 409
+            ? "Workspace settings changed in another session. Your local edits are kept. Export them, then reload the latest settings before saving again."
+            : `Settings were not saved. Your local edits are kept; no retry was sent. ${(e as Error).message}`,
       );
     } finally {
       flight.current = false;
@@ -138,19 +163,21 @@ export default function WorkspaceSettings({
             ? "Updating workspace settings…"
             : uncertain
               ? "Save unconfirmed. Reload before saving again."
-              : dirty
-                ? "Unsaved settings changes."
-                : notice ||
-                  (saved
-                    ? "No unsaved settings changes."
-                    : "Settings are unavailable.")}
+              : conflicted
+                ? "Settings conflict. Reload before saving again."
+                : dirty
+                  ? "Unsaved settings changes."
+                  : notice ||
+                    (saved
+                      ? "No unsaved settings changes."
+                      : "Settings are unavailable.")}
         </p>
         {error && <p role="alert">{error}</p>}
         <div className="button-row">
           <button
             type="submit"
             className="button primary"
-            disabled={!editable || busy || !dirty || uncertain}
+            disabled={!editable || busy || !dirty || uncertain || conflicted}
           >
             Save workspace
           </button>
@@ -163,7 +190,9 @@ export default function WorkspaceSettings({
                 workspaceId: saved?.id,
                 settings: draft,
                 savedSettings: { name: saved?.name, timezone: saved?.timezone },
+                savedRevision: saved?.settingsRevision,
                 saveUnconfirmed: uncertain,
+                settingsConflict: conflicted,
               })
             }
           >

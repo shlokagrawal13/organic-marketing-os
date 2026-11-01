@@ -53,6 +53,7 @@ model Organization {
   id                       String                    @id @default(uuid())
   name                     String
   timezone                 String                    @default("Asia/Kolkata")
+  settingsRevision         Int                       @default(0)
   createdAt                DateTime                  @default(now())
   memberships              Membership[]
   invitations              Invitation[]

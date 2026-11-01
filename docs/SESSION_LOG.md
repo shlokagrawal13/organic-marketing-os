@@ -1,3 +1,8 @@
+## UX-01F workspace settings revision - 2026-10-31
+
+UX-01F adds tenant-bound, server-side workspace settings revisions and safe conflict recovery. UX-01E exact commit 5f13d3d/run41063345723 passed ALL THREE jobs/every required step (379 unit,48 HTTP,57 browser,5 recovery,24 migrations,44 readability,zero audits,24 Compose phases); imported docs/qa/ux01e-final-ci-receipt.json closes E's older pending notice. F's local 11 HTTP/30 browser and3 snapshot-unit checks pass with25 migrations; own exact-commit CI is pending. Manual save remains explicit. All24 prior migrations and all24 Compose phases are preserved; recovery fixtures ended at P. Production/live/deployed/full-master gates remain open; CI does not deploy.
+Implementation: Prisma migration25, atomic NestJS revision check/audit and browser conflict/export/reload path. New native HTTP and browser regressions; prior assertions retained. See [revision design](WORKSPACE_SETTINGS_REVISION.md) and [QA evidence](qa/ux01f-evidence.json). Own exact-source CI and external receipt remain pending at packaging time.
+
 <!-- UX01E_CURRENT_START -->
 ## Current: UX-01E - 2026-10-30
 

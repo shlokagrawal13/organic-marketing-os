@@ -10,6 +10,7 @@ import {
   UseGuards,
   Module,
   BadRequestException,
+  ConflictException,
   NotFoundException,
 } from "@nestjs/common";
 import { z } from "zod";
@@ -37,6 +38,9 @@ const workspace = z
     timezone: timezone.default("Asia/Kolkata"),
   })
   .strict();
+const workspaceUpdate = workspace.extend({
+  expectedRevision: z.number().int().nonnegative().max(2147483646),
+});
 @Controller("organizations")
 export class OrganizationsController {
   constructor(private db: Db) {}
@@ -128,17 +132,26 @@ export class WorkspaceController {
     @Req() req: AuthedRequest,
     @Body() body: unknown,
   ) {
-    const data = parse(workspace, body);
+    const data = parse(workspaceUpdate, body);
+    const { expectedRevision, ...settings } = data;
     return this.db.$transaction(async (tx) => {
-      const org = await tx.organization.update({
+      const updated = await tx.organization.updateMany({
+        where: { id: req.organizationId, settingsRevision: expectedRevision },
+        data: { ...settings, settingsRevision: { increment: 1 } },
+      });
+      if (!updated.count)
+        throw new ConflictException(
+          "Workspace settings changed. Export your local edits and reload before saving.",
+        );
+      const org = await tx.organization.findUniqueOrThrow({
         where: { id: req.organizationId },
-        data,
       });
       await tx.auditLog.create({
         data: {
           organizationId: req.organizationId,
           actorId: req.userId,
           action: "workspace.updated",
+          detail: { settingsRevision: org.settingsRevision },
         },
       });
       return org;

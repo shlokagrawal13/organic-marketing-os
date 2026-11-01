@@ -1,19 +1,19 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-27",
+  "verifiedDate": "2026-10-30",
   "builds": [
     "API TypeScript",
-    "Next.js 16.3.8 production build"
+    "Next.js 16.4.2 production build (UX-01E verified predecessor)"
   ],
   "passed": {
-    "unit": 364,
-    "httpScenarios": 38,
-    "browserScenarios": 28,
+    "unit": 379,
+    "httpScenarios": 48,
+    "browserScenarios": 57,
     "recoveryAndConfigurationScenarios": 5,
     "schemaMigrations": 24,
     "readabilitySamples": 44
   },
-  "environment": "N first run full22/native passed, core audit failed; patched follow-up local build/zero audits/75+2 focused tests pass; new exact-source CI required.",
+  "environment": "UX-01E exact-source three-job CI passed; UX-01F local11 HTTP/30 browser/3 snapshot-unit and25 owned-fixture migrations passed. F own exact-source CI pending.",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -15751,5 +15751,23 @@
       "liveProvidersUsed": false,
       "realEnvExists": false
     }
+  },
+  "currentLocal": {
+    "taskId": "UX-01F",
+    "passed": true,
+    "startedAt": "2026-10-30T19:04:55.831Z",
+    "fixture": "f3d0ea6855b6489e",
+    "http": 11,
+    "browser": 30,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-10-30T19:10:55.909Z",
+    "snapshotUnit": 3,
+    "apiBuild": true,
+    "webTypecheck": true,
+    "prismaGenerate": true,
+    "migrations": 25,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
   }
 }

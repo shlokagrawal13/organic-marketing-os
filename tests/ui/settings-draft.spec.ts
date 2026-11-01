@@ -241,10 +241,15 @@ test("ambiguous committed settings save never replays and failed reload retains 
     .getByLabel("Name", { exact: true })
     .fill("Keep newer local typing");
   expect((await localExport(page)).saveUnconfirmed).toBe(true);
-  await db.organization.update({
-    where: { id: w.org.id },
-    data: { name: "Another administrator changed it" },
+  const admin = await actor(w.org.id, "ADMIN");
+  users.push(admin.id);
+  const laterSave = await admin.call(`/workspaces/${w.org.id}`, "PATCH", {
+    name: "Another administrator changed it",
+    timezone: w.org.timezone,
+    expectedRevision: 1,
   });
+  expect(laterSave.status).toBe(200);
+  expect(laterSave.body.settingsRevision).toBe(2);
   page.once("dialog", (d) => d.dismiss());
   await page
     .getByRole("button", { name: "Reload settings", exact: true })
@@ -281,7 +286,80 @@ test("ambiguous committed settings save never replays and failed reload retains 
     await db.auditLog.count({
       where: { organizationId: w.org.id, action: "workspace.updated" },
     }),
-  ).toBe(1);
+  ).toBe(2);
+});
+
+test("another administrator's acknowledged save blocks stale settings edits until confirmed reload", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  const admin = await actor(w.org.id, "ADMIN");
+  users.push(admin.id);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel.getByLabel("Name", { exact: true }).fill("Keep local proposal");
+  const otherSave = await admin.call(`/workspaces/${w.org.id}`, "PATCH", {
+    name: "Admin's newer name",
+    timezone: "UTC",
+    expectedRevision: 0,
+  });
+  expect(otherSave.status).toBe(200);
+  expect(otherSave.body.settingsRevision).toBe(1);
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(w.panel.getByRole("alert")).toContainText(
+    "changed in another session",
+  );
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Keep local proposal",
+  );
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeDisabled();
+  const exported = await localExport(page);
+  expect(exported.settings.name).toBe("Keep local proposal");
+  expect(exported.savedRevision).toBe(0);
+  expect(exported.settingsConflict).toBe(true);
+  expect(exported.saveUnconfirmed).toBe(false);
+  expect(writes).toBe(1);
+  page.once("dialog", (dialog) => dialog.dismiss());
+  await w.panel
+    .getByRole("button", { name: "Reload settings", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Keep local proposal",
+  );
+  page.once("dialog", (dialog) => dialog.accept());
+  await w.panel
+    .getByRole("button", { name: "Reload settings", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Admin's newer name",
+  );
+  await w.panel
+    .getByLabel("Name", { exact: true })
+    .fill("Reviewed merged name");
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(page.getByLabel("Workspace settings status")).toHaveText(
+    "Workspace settings saved.",
+  );
+  expect((await w.read()).settingsRevision).toBe(2);
+  expect((await w.read()).name).toBe("Reviewed merged name");
+  expect(writes).toBe(2);
+  expect(
+    await db.auditLog.count({
+      where: { organizationId: w.org.id, action: "workspace.updated" },
+    }),
+  ).toBe(2);
 });
 
 test("validation and revoked membership retain settings edits without automatic writes", async ({
