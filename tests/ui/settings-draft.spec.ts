@@ -362,6 +362,86 @@ test("another administrator's acknowledged save blocks stale settings edits unti
   ).toBe(2);
 });
 
+test("conflict review keeps local edits through read failure and merges selected latest fields before manual save", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  const admin = await actor(w.org.id, "ADMIN");
+  users.push(admin.id);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel.getByLabel("Name", { exact: true }).fill("My reviewed name");
+  const other = await admin.call(`/workspaces/${w.org.id}`, "PATCH", {
+    name: "Admin's name",
+    timezone: "Europe/London",
+    expectedRevision: 0,
+  });
+  expect(other.status).toBe(200);
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Settings conflict review")).toBeVisible();
+  expect(writes).toBe(1);
+  await page.route(w.endpoint, (route) => {
+    if (route.request().method() === "GET") return route.abort("failed");
+    return route.continue();
+  });
+  await w.panel.getByRole("button", { name: "Review latest settings" }).click();
+  await expect(w.panel.getByRole("alert")).toContainText(
+    "Could not review the latest settings",
+  );
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "My reviewed name",
+  );
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeDisabled();
+  await page.unroute(w.endpoint);
+  await w.panel.getByRole("button", { name: "Review latest settings" }).click();
+  const review = w.panel.getByLabel("Settings conflict review");
+  await expect(review).toContainText("latest “Admin's name”");
+  await expect(review).toContainText("latest “Europe/London”");
+  await expect(review).toContainText("your draft “My reviewed name”");
+  const before = await localExport(page);
+  expect(before.reviewedLatest.revision).toBe(1);
+  expect(before.settings.name).toBe("My reviewed name");
+  await review.getByRole("button", { name: "Use latest timezone" }).click();
+  await expect(w.panel.getByLabel("Timezone", { exact: true })).toHaveValue(
+    "Europe/London",
+  );
+  expect(writes).toBe(1);
+  await review
+    .getByRole("button", { name: "Accept reviewed revision" })
+    .click();
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeEnabled();
+  expect((await w.read()).name).toBe("Admin's name");
+  expect(writes).toBe(1);
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Workspace settings status")).toHaveText(
+    "Workspace settings saved.",
+  );
+  const saved = await w.read();
+  expect(saved.name).toBe("My reviewed name");
+  expect(saved.timezone).toBe("Europe/London");
+  expect(saved.settingsRevision).toBe(2);
+  expect(writes).toBe(2);
+  expect(
+    await db.auditLog.count({
+      where: { organizationId: w.org.id, action: "workspace.updated" },
+    }),
+  ).toBe(2);
+});
+
 test("validation and revoked membership retain settings edits without automatic writes", async ({
   page,
 }) => {

@@ -1,3 +1,10 @@
+<!-- UX01G_CURRENT_START -->
+## Current: UX-01G - 2026-11-02
+
+UX-01F exact commit ccedd6d/run41306424547 passed ALL THREE jobs and every required step (379 unit,49 HTTP,58 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01f-final-ci-receipt.json closes F's packaged own-CI pending status. UX-01G adds explicit settings conflict review and selective field choice; local1 HTTP/8 browser pass in an owned fixture. G needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+See docs/ACTIVE_HANDOFF.md, docs/WORKSPACE_SETTINGS_CONFLICT_REVIEW.md and docs/qa/ux01g-evidence.json.
+<!-- UX01G_CURRENT_END -->
+
 <!-- UX01F_CURRENT_START -->
 ## Current: UX-01F - 2026-10-31
 

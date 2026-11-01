@@ -1,3 +1,8 @@
+## UX-01G settings conflict review - 2026-11-02
+
+UX-01F exact commit ccedd6d/run41306424547 passed ALL THREE jobs and every required step (379 unit,49 HTTP,58 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01f-final-ci-receipt.json closes F's packaged own-CI pending status. UX-01G adds explicit settings conflict review and selective field choice; local1 HTTP/8 browser pass in an owned fixture. G needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+Implementation: explicit read/compare/field selection/revision acknowledgement and separate manual save. The previous 409/reload and uncertain-response tests remain. See [design](WORKSPACE_SETTINGS_CONFLICT_REVIEW.md) and [QA evidence](qa/ux01g-evidence.json). Own exact-source CI and external receipt remain pending at packaging time.
+
 ## UX-01F workspace settings revision - 2026-10-31
 
 UX-01F adds tenant-bound, server-side workspace settings revisions and safe conflict recovery. UX-01E exact commit 5f13d3d/run41063345723 passed ALL THREE jobs/every required step (379 unit,48 HTTP,57 browser,5 recovery,24 migrations,44 readability,zero audits,24 Compose phases); imported docs/qa/ux01e-final-ci-receipt.json closes E's older pending notice. F's local 11 HTTP/30 browser and3 snapshot-unit checks pass with25 migrations; own exact-commit CI is pending. Manual save remains explicit. All24 prior migrations and all24 Compose phases are preserved; recovery fixtures ended at P. Production/live/deployed/full-master gates remain open; CI does not deploy.

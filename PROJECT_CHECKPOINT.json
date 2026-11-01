@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01f-20261031",
-  "savedAtUtc": "2026-10-31T13:06:08.571Z",
-  "currentMilestone": "UX-01F workspace settings revision/concurrency",
+  "checkpointRevision": "ux01g-20261102",
+  "savedAtUtc": "2026-11-01T18:44:56.482Z",
+  "currentMilestone": "UX-01G workspace settings conflict review",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish UX-01F normally; inspect/fix ALL THREE jobs/every required step on its exact final commit, including migration25 and all24 Compose phases. Verify four artifact bytes/reports and pair external ux01f-final-ci-receipt.json with fresh source ZIP. Then continue product taskboard; no recovery Q/R.",
+  "nextAction": "Publish UX-01G conflict review with fresh source ZIP; verify all three jobs and every required step on its exact final commit, download and inspect four artifact bytes/reports, then pair an external G final CI receipt. No recovery Q/R.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -91,7 +91,6 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/organizations.ts",
     "apps/web/app/workspace-settings.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
@@ -102,18 +101,12 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/WORKSPACE_SETTINGS_REVISION.md",
+    "docs/WORKSPACE_SETTINGS_CONFLICT_REVIEW.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01e-final-ci-receipt.json",
-    "docs/qa/ux01f-evidence.json",
+    "docs/qa/ux01f-final-ci-receipt.json",
+    "docs/qa/ux01g-evidence.json",
     "docs/qa/verification-summary.json",
-    "prisma/migrations/202610310001_workspace_settings_revision/migration.sql",
-    "prisma/schema.prisma",
-    "scripts/application-pitr-fixture.mjs",
-    "scripts/verify-native-upgrade.mjs",
-    "tests/application-snapshot.test.ts",
-    "tests/integration/workspace-settings-revision.test.ts",
     "tests/ui/settings-draft.spec.ts"
   ],
   "sourceOfTruth": {
@@ -6785,8 +6778,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
-    "status": "UX01E_final_verified_UX01F_local_pending",
+    "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+    "status": "UX01F_final_verified_UX01G_local_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6799,7 +6792,7 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "791e52888ddca60876b27bb73c7abdd2df029708",
+    "sourceTree": "7336663e31237ae2cedbf44ef131aba23575fec3",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Last verified predecessor; E own exact-source CI pending.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
@@ -7775,59 +7768,53 @@
       "standingAuthorization": "2026-10-18 normal commits/pushes/CI"
     },
     "latestPublication": {
-      "taskId": "UX-01E",
-      "commit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
-      "tree": "791e52888ddca60876b27bb73c7abdd2df029708",
-      "runId": 41063345723,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41063345723",
+      "taskId": "UX-01F",
+      "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+      "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+      "runId": 41306424547,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
-        "http": 48,
-        "browser": 57,
+        "http": 49,
+        "browser": 58,
         "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 124088334629,
+        "sourceJobId": 124847641138,
         "observedPassCounts": [
           379,
-          48,
+          49,
           5
         ],
         "auditLogLines": [
-          "2026-10-30T13:27:41.6428070Z found 0 vulnerabilities",
-          "2026-10-30T13:33:55.6570435Z found 0 vulnerabilities",
-          "2026-10-30T13:33:55.9541750Z found 0 vulnerabilities"
+          "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+          "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+          "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
         ],
         "settingsTestLines": [
-          "2026-10-30T13:39:54.8284283Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
-          "2026-10-30T13:39:55.6509141Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (817ms)",
-          "2026-10-30T13:39:58.5025560Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (2.8s)",
-          "2026-10-30T13:40:01.2800996Z   ✓  46 tests/ui/settings-draft.spec.ts:287:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
-          "2026-10-30T13:40:02.0140705Z   ✓  47 tests/ui/settings-draft.spec.ts:330:5 › all four non-admin roles retain read-only workspace settings and server write denial (729ms)",
-          "2026-10-30T13:40:02.7123921Z   ✓  48 tests/ui/settings-draft.spec.ts:354:5 › settings initial read failure recovers and reopening always loads current server values (662ms)"
+          "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+          "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+          "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
         ],
-        "logSource": "Authenticated GitHub REST job log bytes; UTF-8 text",
-        "coreJobLogBytes": 198809,
-        "coreJobLogSha256": "8d898ee3ef5159b6b2410fc05361ecce0dcda4f1543e1f756a842853375a2281",
-        "migrations": 24,
-        "readabilitySamples": 44,
-        "composePhases": 24,
+        "coreJobLogBytes": 199048,
+        "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
-        "protectedMasterMigrationHashesUnchanged": 25,
-        "focusedUnit": 0,
-        "focusedHttp": 10,
-        "focusedBrowser": 29,
-        "newHttp": 0,
-        "newBrowser": 6,
-        "ciCommandsAndAssertionsUnchanged": true,
-        "productionLimiterUnchanged": true
+        "protectedPriorMasterMigrationHashesUnchanged": 25,
+        "finalMigrationAdded": "202610310001_workspace_settings_revision"
       },
-      "receipt": "docs/qa/ux01e-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01f-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
+    "latestApplicationSourceCommit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7934,9 +7921,9 @@
       "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Remaining collaboration and product UX",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "completedIncrement": "E exact CI closed; F local revision/concurrency checks pass.",
-      "nextAction": "Publish UX-01F normally; inspect/fix ALL THREE jobs/every required step on its exact final commit, including migration25 and all24 Compose phases. Verify four artifact bytes/reports and pair external ux01f-final-ci-receipt.json with fresh source ZIP. Then continue product taskboard; no recovery Q/R.",
-      "currentEvidence": "docs/qa/ux01f-evidence.json"
+      "completedIncrement": "F exact CI closed; G local conflict-review checks pass.",
+      "nextAction": "Publish UX-01G conflict review with fresh source ZIP; verify all three jobs and every required step on its exact final commit, download and inspect four artifact bytes/reports, then pair an external G final CI receipt. No recovery Q/R.",
+      "currentEvidence": "docs/qa/ux01g-evidence.json"
     },
     {
       "id": "POLICY-01",
@@ -8033,15 +8020,15 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/ux01f-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/ux01g-evidence.json",
   "latestStatus": {
-    "taskId": "UX-01F",
+    "taskId": "UX-01G",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish UX-01F normally; inspect/fix ALL THREE jobs/every required step on its exact final commit, including migration25 and all24 Compose phases. Verify four artifact bytes/reports and pair external ux01f-final-ci-receipt.json with fresh source ZIP. Then continue product taskboard; no recovery Q/R."
+    "nextAction": "Publish UX-01G conflict review with fresh source ZIP; verify all three jobs and every required step on its exact final commit, download and inspect four artifact bytes/reports, then pair an external G final CI receipt. No recovery Q/R."
   },
   "activeTask": {
-    "id": "UX-01F",
-    "title": "Workspace settings optimistic concurrency",
+    "id": "UX-01G",
+    "title": "Workspace settings conflict review",
     "status": "local_verified_own_exact_commit_ci_pending"
   },
   "workspaceRecovery": {
@@ -8055,9 +8042,9 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "UX-01F",
+    "taskId": "UX-01G",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "baseCommit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
+    "baseCommit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -8066,7 +8053,6 @@
       "REQUIREMENTS_MATRIX.md",
       "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "apps/api/src/organizations.ts",
       "apps/web/app/workspace-settings.tsx",
       "docs/ACTIVE_HANDOFF.md",
       "docs/CHANGELOG.md",
@@ -8077,18 +8063,12 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/WORKSPACE_SETTINGS_REVISION.md",
+      "docs/WORKSPACE_SETTINGS_CONFLICT_REVIEW.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/ux01e-final-ci-receipt.json",
-      "docs/qa/ux01f-evidence.json",
+      "docs/qa/ux01f-final-ci-receipt.json",
+      "docs/qa/ux01g-evidence.json",
       "docs/qa/verification-summary.json",
-      "prisma/migrations/202610310001_workspace_settings_revision/migration.sql",
-      "prisma/schema.prisma",
-      "scripts/application-pitr-fixture.mjs",
-      "scripts/verify-native-upgrade.mjs",
-      "tests/application-snapshot.test.ts",
-      "tests/integration/workspace-settings-revision.test.ts",
       "tests/ui/settings-draft.spec.ts"
     ],
     "required": "Exact own three-job CI, all required steps, four artifact bytes/reports, external final receipt and portable source ZIP"
@@ -8710,78 +8690,72 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "UX-01F",
+    "taskId": "UX-01G",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "UX-01E",
-      "commit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
-      "tree": "791e52888ddca60876b27bb73c7abdd2df029708",
-      "runId": 41063345723,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41063345723",
+      "taskId": "UX-01F",
+      "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+      "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+      "runId": 41306424547,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
-        "http": 48,
-        "browser": 57,
+        "http": 49,
+        "browser": 58,
         "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 124088334629,
+        "sourceJobId": 124847641138,
         "observedPassCounts": [
           379,
-          48,
+          49,
           5
         ],
         "auditLogLines": [
-          "2026-10-30T13:27:41.6428070Z found 0 vulnerabilities",
-          "2026-10-30T13:33:55.6570435Z found 0 vulnerabilities",
-          "2026-10-30T13:33:55.9541750Z found 0 vulnerabilities"
+          "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+          "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+          "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
         ],
         "settingsTestLines": [
-          "2026-10-30T13:39:54.8284283Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
-          "2026-10-30T13:39:55.6509141Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (817ms)",
-          "2026-10-30T13:39:58.5025560Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (2.8s)",
-          "2026-10-30T13:40:01.2800996Z   ✓  46 tests/ui/settings-draft.spec.ts:287:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
-          "2026-10-30T13:40:02.0140705Z   ✓  47 tests/ui/settings-draft.spec.ts:330:5 › all four non-admin roles retain read-only workspace settings and server write denial (729ms)",
-          "2026-10-30T13:40:02.7123921Z   ✓  48 tests/ui/settings-draft.spec.ts:354:5 › settings initial read failure recovers and reopening always loads current server values (662ms)"
+          "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+          "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+          "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
         ],
-        "logSource": "Authenticated GitHub REST job log bytes; UTF-8 text",
-        "coreJobLogBytes": 198809,
-        "coreJobLogSha256": "8d898ee3ef5159b6b2410fc05361ecce0dcda4f1543e1f756a842853375a2281",
-        "migrations": 24,
-        "readabilitySamples": 44,
-        "composePhases": 24,
+        "coreJobLogBytes": 199048,
+        "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
-        "protectedMasterMigrationHashesUnchanged": 25,
-        "focusedUnit": 0,
-        "focusedHttp": 10,
-        "focusedBrowser": 29,
-        "newHttp": 0,
-        "newBrowser": 6,
-        "ciCommandsAndAssertionsUnchanged": true,
-        "productionLimiterUnchanged": true
+        "protectedPriorMasterMigrationHashesUnchanged": 25,
+        "finalMigrationAdded": "202610310001_workspace_settings_revision"
       },
-      "receipt": "docs/qa/ux01e-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01f-final-ci-receipt.json"
     },
     "local": {
-      "taskId": "UX-01F",
+      "taskId": "UX-01G",
       "passed": true,
-      "startedAt": "2026-10-30T19:04:55.831Z",
-      "fixture": "f3d0ea6855b6489e",
-      "http": 11,
-      "browser": 30,
+      "startedAt": "2026-11-01T12:56:48.685Z",
+      "fixture": "e718397b81c24f67",
+      "http": 1,
+      "browser": 8,
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
-      "completedAt": "2026-10-30T19:10:55.909Z",
-      "snapshotUnit": 3,
+      "completedAt": "2026-11-01T13:00:27.964Z",
       "apiBuild": true,
       "webTypecheck": true,
-      "prismaGenerate": true,
       "migrations": 25,
       "productionAuditVulnerabilities": 0,
-      "fullAuditVulnerabilities": 0
+      "fullAuditVulnerabilities": 0,
+      "formatAndDiffCheck": true,
+      "webProductionBuild": true
     }
   },
   "social01PolicyReview": {
@@ -16274,57 +16248,51 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "UX-01E",
-    "commit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
-    "tree": "791e52888ddca60876b27bb73c7abdd2df029708",
-    "runId": 41063345723,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41063345723",
+    "taskId": "UX-01F",
+    "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+    "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+    "runId": 41306424547,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
       "unit": 379,
-      "http": 48,
-      "browser": 57,
+      "http": 49,
+      "browser": 58,
       "recovery": 5,
+      "migrations": 25,
+      "readabilitySamples": 44,
+      "composePhases": 24,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "sourceJobId": 124088334629,
+      "sourceJobId": 124847641138,
       "observedPassCounts": [
         379,
-        48,
+        49,
         5
       ],
       "auditLogLines": [
-        "2026-10-30T13:27:41.6428070Z found 0 vulnerabilities",
-        "2026-10-30T13:33:55.6570435Z found 0 vulnerabilities",
-        "2026-10-30T13:33:55.9541750Z found 0 vulnerabilities"
+        "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+        "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+        "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
       ],
       "settingsTestLines": [
-        "2026-10-30T13:39:54.8284283Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
-        "2026-10-30T13:39:55.6509141Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (817ms)",
-        "2026-10-30T13:39:58.5025560Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (2.8s)",
-        "2026-10-30T13:40:01.2800996Z   ✓  46 tests/ui/settings-draft.spec.ts:287:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
-        "2026-10-30T13:40:02.0140705Z   ✓  47 tests/ui/settings-draft.spec.ts:330:5 › all four non-admin roles retain read-only workspace settings and server write denial (729ms)",
-        "2026-10-30T13:40:02.7123921Z   ✓  48 tests/ui/settings-draft.spec.ts:354:5 › settings initial read failure recovers and reopening always loads current server values (662ms)"
+        "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+        "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+        "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+        "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+        "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+        "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+        "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
       ],
-      "logSource": "Authenticated GitHub REST job log bytes; UTF-8 text",
-      "coreJobLogBytes": 198809,
-      "coreJobLogSha256": "8d898ee3ef5159b6b2410fc05361ecce0dcda4f1543e1f756a842853375a2281",
-      "migrations": 24,
-      "readabilitySamples": 44,
-      "composePhases": 24,
+      "coreJobLogBytes": 199048,
+      "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
       "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
-      "protectedMasterMigrationHashesUnchanged": 25,
-      "focusedUnit": 0,
-      "focusedHttp": 10,
-      "focusedBrowser": 29,
-      "newHttp": 0,
-      "newBrowser": 6,
-      "ciCommandsAndAssertionsUnchanged": true,
-      "productionLimiterUnchanged": true
+      "protectedPriorMasterMigrationHashesUnchanged": 25,
+      "finalMigrationAdded": "202610310001_workspace_settings_revision"
     },
-    "receipt": "docs/qa/ux01e-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01f-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -22225,7 +22193,6 @@
     "REQUIREMENTS_MATRIX.md",
     "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/organizations.ts",
     "apps/web/app/workspace-settings.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
@@ -22236,18 +22203,12 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/WORKSPACE_SETTINGS_REVISION.md",
+    "docs/WORKSPACE_SETTINGS_CONFLICT_REVIEW.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01e-final-ci-receipt.json",
-    "docs/qa/ux01f-evidence.json",
+    "docs/qa/ux01f-final-ci-receipt.json",
+    "docs/qa/ux01g-evidence.json",
     "docs/qa/verification-summary.json",
-    "prisma/migrations/202610310001_workspace_settings_revision/migration.sql",
-    "prisma/schema.prisma",
-    "scripts/application-pitr-fixture.mjs",
-    "scripts/verify-native-upgrade.mjs",
-    "tests/application-snapshot.test.ts",
-    "tests/integration/workspace-settings-revision.test.ts",
     "tests/ui/settings-draft.spec.ts"
   ],
   "secondUx01bPublication": {
@@ -22819,7 +22780,7 @@
     "schemaVersion": 1,
     "taskId": "UX-01F",
     "recordedAtUtc": "2026-10-31T13:06:08.571Z",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "exact_final_commit_verified_external_receipt_imported",
     "priorVerifiedPublication": {
       "taskId": "UX-01E",
       "commit": "5f13d3d1dea79f56e104b7b00fd8a059aec51cc2",
@@ -22916,6 +22877,146 @@
     },
     "limits": [
       "Manual settings save only; no autosave or automatic field merge",
+      "Browser-crash/offline draft durability not accepted",
+      "Production/live/deployed/full-master acceptance open; CI does not deploy"
+    ],
+    "finalVerifiedPublication": {
+      "taskId": "UX-01F",
+      "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+      "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+      "runId": 41306424547,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 49,
+        "browser": 58,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 124847641138,
+        "observedPassCounts": [
+          379,
+          49,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+          "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+          "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
+        ],
+        "settingsTestLines": [
+          "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+          "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+          "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
+        ],
+        "coreJobLogBytes": 199048,
+        "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 25,
+        "finalMigrationAdded": "202610310001_workspace_settings_revision"
+      },
+      "receipt": "docs/qa/ux01f-final-ci-receipt.json"
+    }
+  },
+  "ux01g": {
+    "schemaVersion": 1,
+    "taskId": "UX-01G",
+    "recordedAtUtc": "2026-11-01T18:44:56.482Z",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01F",
+      "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+      "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+      "runId": 41306424547,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 49,
+        "browser": 58,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 124847641138,
+        "observedPassCounts": [
+          379,
+          49,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+          "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+          "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
+        ],
+        "settingsTestLines": [
+          "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+          "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+          "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
+        ],
+        "coreJobLogBytes": 199048,
+        "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 25,
+        "finalMigrationAdded": "202610310001_workspace_settings_revision"
+      },
+      "receipt": "docs/qa/ux01f-final-ci-receipt.json"
+    },
+    "behavior": {
+      "conflictReview": "After 409, explicit GET shows last acknowledged/server/local name and timezone; editor may select server fields or retain local fields, then explicitly accepts latest revision without PATCH; manual save remains separate",
+      "failedReview": "Read failure keeps local draft and write block; export includes fetched review values when available",
+      "safety": "Unknown save path remains blocked; no automatic retry or merge; tenant/role and atomic revision guard unchanged"
+    },
+    "local": {
+      "taskId": "UX-01G",
+      "passed": true,
+      "startedAt": "2026-11-01T12:56:48.685Z",
+      "fixture": "e718397b81c24f67",
+      "http": 1,
+      "browser": 8,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-01T13:00:27.964Z",
+      "apiBuild": true,
+      "webTypecheck": true,
+      "migrations": 25,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "formatAndDiffCheck": true,
+      "webProductionBuild": true
+    },
+    "preserved": {
+      "priorMigrations": 25,
+      "composePhases": 24,
+      "masterSpecification": true,
+      "realEnvironmentUnchanged": true,
+      "populatedUserServicesUntouched": true,
+      "liveProvidersUsed": false
+    },
+    "publication": {
+      "required": "Own exact final commit: all three jobs/every required step and four artifact bytes/digests/CRC/reports",
+      "finalReceipt": "External ux01g-final-ci-receipt.json paired with source ZIP"
+    },
+    "limits": [
+      "Explicit selection only; no automatic three-way merge or settings autosave",
       "Browser-crash/offline draft durability not accepted",
       "Production/live/deployed/full-master acceptance open; CI does not deploy"
     ]

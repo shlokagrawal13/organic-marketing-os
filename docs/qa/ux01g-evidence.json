@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01G",
+  "recordedAtUtc": "2026-11-01T18:44:56.482Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "UX-01F",
+    "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+    "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+    "runId": 41306424547,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
+    "status": "completed",
+    "conclusion": "success",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "results": {
+      "unit": 379,
+      "http": 49,
+      "browser": 58,
+      "recovery": 5,
+      "migrations": 25,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "sourceJobId": 124847641138,
+      "observedPassCounts": [
+        379,
+        49,
+        5
+      ],
+      "auditLogLines": [
+        "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+        "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+        "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
+      ],
+      "settingsTestLines": [
+        "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+        "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+        "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+        "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+        "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+        "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+        "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
+      ],
+      "coreJobLogBytes": 199048,
+      "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "protectedPriorMasterMigrationHashesUnchanged": 25,
+      "finalMigrationAdded": "202610310001_workspace_settings_revision"
+    },
+    "receipt": "docs/qa/ux01f-final-ci-receipt.json"
+  },
+  "behavior": {
+    "conflictReview": "After 409, explicit GET shows last acknowledged/server/local name and timezone; editor may select server fields or retain local fields, then explicitly accepts latest revision without PATCH; manual save remains separate",
+    "failedReview": "Read failure keeps local draft and write block; export includes fetched review values when available",
+    "safety": "Unknown save path remains blocked; no automatic retry or merge; tenant/role and atomic revision guard unchanged"
+  },
+  "local": {
+    "taskId": "UX-01G",
+    "passed": true,
+    "startedAt": "2026-11-01T12:56:48.685Z",
+    "fixture": "e718397b81c24f67",
+    "http": 1,
+    "browser": 8,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-11-01T13:00:27.964Z",
+    "apiBuild": true,
+    "webTypecheck": true,
+    "migrations": 25,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "formatAndDiffCheck": true,
+    "webProductionBuild": true
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "composePhases": 24,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false
+  },
+  "publication": {
+    "required": "Own exact final commit: all three jobs/every required step and four artifact bytes/digests/CRC/reports",
+    "finalReceipt": "External ux01g-final-ci-receipt.json paired with source ZIP"
+  },
+  "limits": [
+    "Explicit selection only; no automatic three-way merge or settings autosave",
+    "Browser-crash/offline draft durability not accepted",
+    "Production/live/deployed/full-master acceptance open; CI does not deploy"
+  ]
+}

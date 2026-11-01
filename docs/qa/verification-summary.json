@@ -1,19 +1,19 @@
 {
   "release": "0.9.2",
-  "verifiedDate": "2026-10-30",
+  "verifiedDate": "2026-11-02",
   "builds": [
-    "API TypeScript",
-    "Next.js 16.4.2 production build (UX-01E verified predecessor)"
+    "API TypeScript (isolated UX-01G fixture)",
+    "Next.js 16.4.2 production build (UX-01G local)"
   ],
   "passed": {
     "unit": 379,
-    "httpScenarios": 48,
-    "browserScenarios": 57,
+    "httpScenarios": 49,
+    "browserScenarios": 58,
     "recoveryAndConfigurationScenarios": 5,
-    "schemaMigrations": 24,
+    "schemaMigrations": 25,
     "readabilitySamples": 44
   },
-  "environment": "UX-01E exact-source three-job CI passed; UX-01F local11 HTTP/30 browser/3 snapshot-unit and25 owned-fixture migrations passed. F own exact-source CI pending.",
+  "environment": "UX-01F exact-source three-job CI passed; UX-01G local1 HTTP/8 browser and25 owned-fixture migrations passed. G own exact-source CI pending.",
   "requirements": {
     "headings": 161,
     "labels": {
@@ -15753,21 +15753,21 @@
     }
   },
   "currentLocal": {
-    "taskId": "UX-01F",
+    "taskId": "UX-01G",
     "passed": true,
-    "startedAt": "2026-10-30T19:04:55.831Z",
-    "fixture": "f3d0ea6855b6489e",
-    "http": 11,
-    "browser": 30,
+    "startedAt": "2026-11-01T12:56:48.685Z",
+    "fixture": "e718397b81c24f67",
+    "http": 1,
+    "browser": 8,
     "fixtureCleanup": true,
     "realEnvironmentUnchanged": true,
-    "completedAt": "2026-10-30T19:10:55.909Z",
-    "snapshotUnit": 3,
+    "completedAt": "2026-11-01T13:00:27.964Z",
     "apiBuild": true,
     "webTypecheck": true,
-    "prismaGenerate": true,
     "migrations": 25,
     "productionAuditVulnerabilities": 0,
-    "fullAuditVulnerabilities": 0
+    "fullAuditVulnerabilities": 0,
+    "formatAndDiffCheck": true,
+    "webProductionBuild": true
   }
 }

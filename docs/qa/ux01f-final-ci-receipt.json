@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01F",
+  "status": "exact_final_commit_all_three_jobs_and_artifact_bytes_verified",
+  "recordedAtUtc": "2026-11-01T12:44:40.615Z",
+  "final": true,
+  "sourceCapsulePendingOwnCiClosedByThisReceipt": true,
+  "source": {
+    "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "commit": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+    "tree": "7336663e31237ae2cedbf44ef131aba23575fec3",
+    "remoteMainMatched": true,
+    "workingTreeClean": true,
+    "checkpointManifestCheck": "678 included files; no drift",
+    "changedPaths": [
+      "AGENTS.md",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "REQUIREMENTS_MATRIX.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
+      "apps/api/src/organizations.ts",
+      "apps/web/app/workspace-settings.tsx",
+      "docs/ACTIVE_HANDOFF.md",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/RESUME_CONTEXT.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/WORKSPACE_SETTINGS_REVISION.md",
+      "docs/qa/github-publication.json",
+      "docs/qa/handoff-verification.json",
+      "docs/qa/ux01e-final-ci-receipt.json",
+      "docs/qa/ux01f-evidence.json",
+      "docs/qa/verification-summary.json",
+      "prisma/migrations/202610310001_workspace_settings_revision/migration.sql",
+      "prisma/schema.prisma",
+      "scripts/application-pitr-fixture.mjs",
+      "scripts/verify-native-upgrade.mjs",
+      "tests/application-snapshot.test.ts",
+      "tests/integration/workspace-settings-revision.test.ts",
+      "tests/ui/settings-draft.spec.ts"
+    ]
+  },
+  "sourcePackage": {
+    "path": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-ux01f-source.zip",
+    "bytes": 16288735,
+    "sha256": "2f2b48d093ee5b0d35d1dca5b67c180d9067e94a3dfcb77c8b4ff45cdbb898ad",
+    "zipCrcPassed": true,
+    "sourceAndManifestMatch": true,
+    "sourceFiles": 678,
+    "zipMembers": 679
+  },
+  "githubActions": {
+    "runId": 41306424547,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "startedAtUtc": "2026-11-01T12:25:29Z",
+    "completedAtUtc": "2026-11-01T12:43:13Z",
+    "jobs": [
+      {
+        "id": 124847640936,
+        "name": "Native populated upgrade and migration recovery",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547/job/124847640936",
+        "headSha": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated native Prisma upgrades and interrupted migration recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify physical PostgreSQL backup and WAL point-in-time recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized PostgreSQL PITR evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized native upgrade evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 124847641138,
+        "name": "Native application verification",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547/job/124847641138",
+        "headSha": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install test object storage",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install media dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned test CJK fonts",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run unit tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify bounded small-screen English readability",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit production dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated upgrade",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify native application flows",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload browser evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 124847641183,
+        "name": "Disposable Compose and native restore",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41306424547/job/124847641183",
+        "headSha": "ccedd6defdd92379b9841bce9749ad5443c073b1",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify complete Compose and native cross-store restore",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized Compose evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "verification": {
+    "unit": 379,
+    "http": 49,
+    "browser": 58,
+    "recovery": 5,
+    "migrations": 25,
+    "readabilitySamples": 44,
+    "composePhases": 24,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "sourceJobId": 124847641138,
+    "observedPassCounts": [
+      379,
+      49,
+      5
+    ],
+    "auditLogLines": [
+      "2026-11-01T12:26:11.6154261Z found 0 vulnerabilities",
+      "2026-11-01T12:33:53.8207065Z found 0 vulnerabilities",
+      "2026-11-01T12:33:54.2949735Z found 0 vulnerabilities"
+    ],
+    "settingsTestLines": [
+      "2026-11-01T12:40:17.2513100Z   ✓  43 tests/ui/settings-draft.spec.ts:71:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+      "2026-11-01T12:40:18.2225507Z   ✓  44 tests/ui/settings-draft.spec.ts:139:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (960ms)",
+      "2026-11-01T12:40:21.2676362Z   ✓  45 tests/ui/settings-draft.spec.ts:216:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+      "2026-11-01T12:40:21.9823990Z   ✓  46 tests/ui/settings-draft.spec.ts:292:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+      "2026-11-01T12:40:24.8884329Z   ✓  47 tests/ui/settings-draft.spec.ts:365:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+      "2026-11-01T12:40:25.8845647Z   ✓  48 tests/ui/settings-draft.spec.ts:408:5 › all four non-admin roles retain read-only workspace settings and server write denial (986ms)",
+      "2026-11-01T12:40:26.6761069Z   ✓  49 tests/ui/settings-draft.spec.ts:432:5 › settings initial read failure recovers and reopening always loads current server values (738ms)"
+    ],
+    "coreJobLogBytes": 199048,
+    "coreJobLogSha256": "9558c5bb13821d1a2625c3bfa132bcea98d5632cca4d3acf0f9fbb590f0a5042",
+    "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+    "protectedPriorMasterMigrationHashesUnchanged": 25,
+    "finalMigrationAdded": "202610310001_workspace_settings_revision"
+  },
+  "artifacts": [
+    {
+      "id": 13083613487,
+      "name": "browser-evidence",
+      "bytes": 14999127,
+      "sha256": "fb4ab4a2771742475c2f89a7dc25f91ca2eba9f5a2d11ba21894572d6e86648d",
+      "zipCrcPassed": true,
+      "memberCount": 163,
+      "jsonMembers": {
+        ".local/unit-receipts.json": {
+          "bytes": 126731,
+          "sha256": "421b2fafce211e472cced5af85dd4bd1524c741964e6c8f8b2c9590bb7bf581a",
+          "crc32": "4819f860"
+        },
+        ".local/readability/run-pdHMlf/report.json": {
+          "bytes": 18940,
+          "sha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+          "crc32": "31013bb8"
+        }
+      },
+      "verification": {
+        "unitPassed": 379,
+        "uniqueUnitReceipts": 379,
+        "readabilitySamples": 44,
+        "readabilityNegativeControlPassed": true
+      },
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13083483007,
+      "name": "compose-evidence",
+      "bytes": 16873,
+      "sha256": "72d6550e0b7e4928f1a40deb4294ab51425cd6cb9f1b140ef2659e678b39a78e",
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "compose-evidence.json": {
+          "bytes": 136667,
+          "sha256": "9d8f9090dfe075ec0e2fe86bc180df28090e131cadb5840af092c1ddfce6b0c4",
+          "crc32": "19421693"
+        }
+      },
+      "verification": {
+        "inflightWalRecovery": {
+          "passed": true,
+          "baseSnapshotSha256": "1b809ec5b2b8d676feda83b549f14ad2badc9d18da796c77b0e5e68df9c9ca53",
+          "targetSnapshotSha256": "13570a3ecca089771626dca1a5de63e06e799869fa187f7ea6aee150e87f60cd",
+          "restoredSnapshotSha256": "13570a3ecca089771626dca1a5de63e06e799869fa187f7ea6aee150e87f60cd",
+          "targetName": "omos_inflight_70843b52a7193f1e",
+          "targetLsn": "0/70001D8",
+          "sourceTimeline": 2,
+          "targetSegment": "000000020000000000000007",
+          "targetWalSha256": "b1980ada0a556f600893f58da4a51d87db66348a5f60de68399bdfc8f79576f6",
+          "walArchiveSha256": "b31c962e7cee91e039161d887b238948763bd90a237898405e897421bc420bf2",
+          "receiptHash": "e4fb335df110d321bad10755bc0c69026d4f649900e24ed48f0eca7053bf1596",
+          "expectedWalReviewSha256": "094056e8bd93994c1202c72060571822eaa5aa2135a023724d35ecbcd317168e",
+          "historicalObjects": 4,
+          "admissionControlsDenied": 10,
+          "admissionCallbacks": 1,
+          "actualWalFaultsDenied": 2,
+          "sourcePostgresAndStorageStopped": true,
+          "applicationRecovery": {
+            "passed": true,
+            "naturalLeaseExpiryWithoutEdits": true,
+            "checks": {
+              "restoredHttpAuthentication": true,
+              "historicalMediaServedByActualApi": true,
+              "anonymousAndCrossTenantMediaDenied": true,
+              "restoredClientRoleDeniedWrite": true,
+              "restoredRevisionConflictAndApprovalInvalidation": true,
+              "laterDatabaseChangesExcluded": true,
+              "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+              "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+              "physicalRenderRetryPreservedFrozenInputs": true,
+              "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+              "physicalAmbiguousMediaCreditsHeldForReview": true,
+              "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+              "physicalValidImagesDecoded": true,
+              "physicalRenderQueueCompleted": true,
+              "physicalRetainedMediaIngestedWithoutSubmission": true,
+              "physicalOutputDimensionsDurationAndDecodePassed": true,
+              "physicalNewOutputsPrivateAndTenantScoped": true,
+              "physicalMediaReservationsSettledOnce": true,
+              "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+              "physicalInterruptedRenderPreservedAfterRetry": true,
+              "physicallyRecoveredQueuedJobReconstructed": true,
+              "postTargetEffectNotReplayed": true,
+              "uncertainJobFailedForReview": true,
+              "oneCreditSettlementAndOriginalLedgerPreserved": true,
+              "restoredLedgerImmutable": true,
+              "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+              "physicalMediaRowsQueuesAndBytesStableAfterRestart": true
+            },
+            "mediaOutputHashes": {
+              "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/2cc3783f-bb0e-44bc-9e89-2be937b508c2/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/2cc3783f-bb0e-44bc-9e89-2be937b508c2/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/2cc3783f-bb0e-44bc-9e89-2be937b508c2/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+              "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+            }
+          },
+          "checks": {
+            "liveClaimsAbsentFromBasePresentAtWalTarget": true,
+            "actualNativeWalReplayAndPromotion": true,
+            "postTargetMarkersExcluded": true,
+            "independentFixtureStoresRecoverDuringSourceOutage": true,
+            "actualProviderReceiptBoundWithoutResubmission": true,
+            "restoredApplicationWorkersVerified": true
+          }
+        },
+        "taskId": "RECOVERY-01P",
+        "passed": true,
+        "phases": 24,
+        "retainedRecoverySet": {
+          "reviewSha256": "07bf0a6ac3f73aefda4fa8b6b03ae21cee0e437cc88e5b1f35ad30947ca39198",
+          "baseManifestSha256": "ecbd16edb75d80676de43c58070338defb9ff7036b65379ecdf554efbb40be94",
+          "targetLsn": "0/3006180",
+          "targetWalSegment": "000000010000000000000003",
+          "targetWalSha256": "404ccd72bce53477b360676cec0c9ba06eaa65c246e53c94f948b1754f7e9deb",
+          "historicalVersions": 3,
+          "deniedControls": 9,
+          "admittedCallbacks": 1
+        },
+        "actualMissingAndCorruptRetainedWalDenied": true,
+        "inflightPointSnapshotEqual": true,
+        "cleanupAndRealEnvironmentUnchanged": true
+      },
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13083438506,
+      "name": "native-upgrade-evidence",
+      "bytes": 925,
+      "sha256": "c3ebaf68f6f1a74d4298f788023c4876d57c1f8f59722d3785b1f9eb9ac16703",
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "native-upgrade-evidence.json": {
+          "bytes": 2511,
+          "sha256": "e63058ac7a6b91ebc6aca0b6886ff69d4efad488d23dd708f9402cc503de87d0",
+          "crc32": "1746a923"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01B",
+        "passed": true
+      },
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13083059929,
+      "name": "postgres-pitr-evidence",
+      "bytes": 2961,
+      "sha256": "b1fd42a36941c8dcd33531cd64b1316f56227e9d33ed4f69689c17a6e73ece1e",
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "postgres-pitr-evidence.json": {
+          "bytes": 7440,
+          "sha256": "8207b1b62ed8f252db58123d755422ae49093705b40c26a673fd5c9e0edc9c39",
+          "crc32": "18930803"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01F",
+        "passed": true
+      },
+      "uploadDigestMatched": true
+    }
+  ],
+  "scope": "Workspace settings optimistic concurrency, conflict-safe explicit save and confirmed reload/export. Prior24 migrations and all24 recovery Compose phases preserved; no deployment.",
+  "local": {
+    "taskId": "UX-01F",
+    "passed": true,
+    "startedAt": "2026-10-30T19:04:55.831Z",
+    "fixture": "f3d0ea6855b6489e",
+    "http": 11,
+    "browser": 30,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-10-30T19:10:55.909Z",
+    "snapshotUnit": 3,
+    "apiBuild": true,
+    "webTypecheck": true,
+    "prismaGenerate": true,
+    "migrations": 25,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0
+  },
+  "limits": [
+    "Manual settings save only; no autosave or automatic field merge",
+    "Browser-crash/offline draft durability not accepted",
+    "Production/live/deployed/full-master acceptance open; CI does not deploy"
+  ],
+  "deploymentClaimed": false
+}

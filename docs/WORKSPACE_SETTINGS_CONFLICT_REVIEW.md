@@ -1,0 +1,7 @@
+# Workspace settings conflict review (UX-01G)
+
+After a `409` settings save, the editor keeps the local name and timezone and blocks another write. An authorized editor can explicitly fetch current server settings without discarding the draft. The review shows the last acknowledged, current server and local values for both fields. Each field can be replaced with its latest server value; keeping the local value is the default. Accepting the reviewed revision changes only the editor's acknowledged baseline and does not issue a PATCH. A separate manual Save workspace action submits the chosen draft with the reviewed revision. A newer concurrent write is still rejected by the API's atomic revision check.
+
+A failed review GET keeps the draft and write block. Export includes the proposal, last acknowledged values/revision, conflict flag and any fetched review values. Confirmed reload still discards the proposal, while an unconfirmed or ambiguous save remains on its separate blocked path and cannot use conflict review to assume a commit. Existing tenant membership, role, validation and audit rules remain on the server.
+
+This is explicit field selection, not automatic three-way merge or settings autosave. It does not make browser drafts durable after a crash. The isolated browser test covers a failed review read, a later successful read, no review write, a selected timezone with retained local name, and one manual save with exactly one additional audit. CI verifies fixtures and does not deploy.
