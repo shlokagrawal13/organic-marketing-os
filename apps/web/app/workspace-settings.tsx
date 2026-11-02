@@ -15,6 +15,7 @@ type LocalSettingsExport = {
   saveUnconfirmed: boolean;
   settingsConflict: boolean;
 };
+const backupPrefix = "organic-settings-draft-v1:";
 function parseLocalExport(
   raw: unknown,
   workspaceId: string,
@@ -44,12 +45,14 @@ function parseLocalExport(
 }
 export default function WorkspaceSettings({
   base,
+  userId,
   editable,
   onDirtyChange,
   onBusyChange,
   onSaved,
 }: {
   base: string;
+  userId: string;
   editable: boolean;
   onDirtyChange: (dirty: boolean) => void;
   onBusyChange: (busy: boolean) => void;
@@ -63,8 +66,13 @@ export default function WorkspaceSettings({
   const [conflicted, setConflicted] = useState(false);
   const [latest, setLatest] = useState<Settings | null>(null);
   const [notice, setNotice] = useState("");
+  const [localBackup, setLocalBackup] = useState<LocalSettingsExport | null>(
+    null,
+  );
   const mounted = useRef(false),
-    flight = useRef(false);
+    flight = useRef(false),
+    edited = useRef(false);
+  const backupKey = `${backupPrefix}${userId}:${base.split("/").at(-1)}`;
   const dirty =
     !!saved && (draft.name !== saved.name || draft.timezone !== saved.timezone);
   const protectedEdits = dirty || uncertain || conflicted;
@@ -75,7 +83,32 @@ export default function WorkspaceSettings({
     onBusyChange(busy);
   }, [busy, onBusyChange]);
   useEffect(() => {
+    const onSignOut = (event: Event) => {
+      if ((event as CustomEvent<string>).detail !== userId) return;
+      edited.current = false;
+      clearLocalBackup();
+    };
+    window.addEventListener("organic-settings-signout", onSignOut);
+    return () =>
+      window.removeEventListener("organic-settings-signout", onSignOut);
+  }, [userId, backupKey]);
+  useEffect(() => {
     mounted.current = true;
+    try {
+      const raw = localStorage.getItem(backupKey);
+      if (raw && raw.length <= 65536) {
+        const parsed = parseLocalExport(
+          JSON.parse(raw),
+          base.split("/").at(-1)!,
+        );
+        setLocalBackup(parsed);
+      }
+    } catch {
+      // A malformed or unavailable browser store never blocks server settings.
+      try {
+        localStorage.removeItem(backupKey);
+      } catch {}
+    }
     void read();
     return () => {
       mounted.current = false;
@@ -83,6 +116,38 @@ export default function WorkspaceSettings({
       onBusyChange(false);
     };
   }, []);
+  useEffect(() => {
+    if (!edited.current || !saved || !editable) return;
+    const backup = {
+      workspaceId: saved.id,
+      settings: { name: draft.name, timezone: draft.timezone },
+      savedSettings: { name: saved.name, timezone: saved.timezone },
+      savedRevision: saved.settingsRevision,
+      saveUnconfirmed: uncertain,
+      settingsConflict: conflicted,
+    };
+    try {
+      if (protectedEdits)
+        localStorage.setItem(backupKey, JSON.stringify(backup));
+      else localStorage.removeItem(backupKey);
+    } catch {
+      // Manual export remains available if browser storage is disabled/full.
+    }
+  }, [
+    backupKey,
+    draft,
+    saved,
+    uncertain,
+    conflicted,
+    protectedEdits,
+    editable,
+  ]);
+  function clearLocalBackup() {
+    try {
+      localStorage.removeItem(backupKey);
+    } catch {}
+    setLocalBackup(null);
+  }
   function checked(value: Settings) {
     if (
       !value ||
@@ -95,13 +160,15 @@ export default function WorkspaceSettings({
       throw new Error("The saved workspace settings could not be confirmed.");
     return value;
   }
-  function adopt(value: Settings) {
+  function adopt(value: Settings, discardBackup = true) {
     checked(value);
     setSaved(value);
     setDraft({ name: value.name, timezone: value.timezone });
     setUncertain(false);
     setConflicted(false);
     setLatest(null);
+    edited.current = false;
+    if (discardBackup) clearLocalBackup();
     onSaved(value);
   }
   async function reviewConflict() {
@@ -139,7 +206,7 @@ export default function WorkspaceSettings({
   async function importLocal(file: File) {
     if (flight.current || !saved || !editable) return;
     if (
-      protectedEdits &&
+      (protectedEdits || localBackup) &&
       !confirm(
         "Replace the current local settings draft? Export it first if you need to keep it.",
       )
@@ -169,6 +236,8 @@ export default function WorkspaceSettings({
         name: imported.settings.name,
         timezone: imported.settings.timezone,
       });
+      edited.current = true;
+      setLocalBackup(null);
       setSaved(
         needsReview
           ? {
@@ -200,6 +269,61 @@ export default function WorkspaceSettings({
       if (mounted.current) setBusy(false);
     }
   }
+  async function recoverLocalBackup() {
+    if (!localBackup || !saved || flight.current || !editable) return;
+    const backup = localBackup;
+    if (
+      protectedEdits &&
+      !confirm("Replace the current settings draft with the browser backup?")
+    )
+      return;
+    flight.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      const current = checked(
+        await api(base, "GET", undefined, AbortSignal.timeout(20000)),
+      );
+      if (!mounted.current) return;
+      const needsReview =
+        backup.savedRevision !== current.settingsRevision ||
+        backup.saveUnconfirmed ||
+        backup.settingsConflict;
+      edited.current = true;
+      setDraft({
+        name: backup.settings.name,
+        timezone: backup.settings.timezone,
+      });
+      setSaved(
+        needsReview
+          ? {
+              ...current,
+              name: backup.savedSettings.name,
+              timezone: backup.savedSettings.timezone,
+              settingsRevision: backup.savedRevision,
+            }
+          : current,
+      );
+      setLatest(needsReview ? current : null);
+      setConflicted(needsReview);
+      setUncertain(false);
+      setLocalBackup(null);
+      setNotice(
+        needsReview
+          ? "Browser draft recovered. Review the latest server values before saving."
+          : "Browser draft recovered locally. Choose Save workspace when ready.",
+      );
+      onSaved(current);
+    } catch {
+      if (mounted.current)
+        setError(
+          "Could not check the latest settings. Your browser backup is kept; try recovery again.",
+        );
+    } finally {
+      flight.current = false;
+      if (mounted.current) setBusy(false);
+    }
+  }
   async function read() {
     if (flight.current) return;
     flight.current = true;
@@ -214,7 +338,9 @@ export default function WorkspaceSettings({
         undefined,
         AbortSignal.timeout(20000),
       );
-      if (mounted.current) adopt(value);
+      if (mounted.current) {
+        adopt(value, !!saved);
+      }
     } catch {
       if (mounted.current)
         setError(
@@ -273,6 +399,11 @@ export default function WorkspaceSettings({
     <section className="panel" aria-label="Workspace details">
       <h3>Workspace details</h3>
       <p>Changes are saved only when you choose Save workspace.</p>
+      <p>
+        Unsaved settings are backed up in this browser for this account and
+        workspace. Recovery requires your choice; saving or signing out clears
+        the backup.
+      </p>
       <form onSubmit={save}>
         <label>
           Name
@@ -282,8 +413,11 @@ export default function WorkspaceSettings({
             minLength={2}
             maxLength={100}
             required
-            disabled={!editable || busy || !saved}
-            onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+            disabled={!editable || busy || !saved || !!localBackup}
+            onChange={(e) => {
+              edited.current = true;
+              setDraft({ ...draft, name: e.target.value });
+            }}
           />
         </label>
         <label>
@@ -292,8 +426,11 @@ export default function WorkspaceSettings({
             name="timezone"
             value={draft.timezone}
             required
-            disabled={!editable || busy || !saved}
-            onChange={(e) => setDraft({ ...draft, timezone: e.target.value })}
+            disabled={!editable || busy || !saved || !!localBackup}
+            onChange={(e) => {
+              edited.current = true;
+              setDraft({ ...draft, timezone: e.target.value });
+            }}
           />
         </label>
         <p role="status" aria-label="Workspace settings status">
@@ -311,6 +448,30 @@ export default function WorkspaceSettings({
                       : "Settings are unavailable.")}
         </p>
         {error && <p role="alert">{error}</p>}
+        {localBackup && saved && editable && (
+          <div role="group" aria-label="Browser settings draft backup">
+            <p>
+              A local settings draft from this account and workspace is
+              available. Review it before any server save.
+            </p>
+            <button
+              type="button"
+              className="button"
+              disabled={busy}
+              onClick={() => void recoverLocalBackup()}
+            >
+              Recover browser draft
+            </button>
+            <button
+              type="button"
+              className="button"
+              disabled={busy}
+              onClick={clearLocalBackup}
+            >
+              Discard browser draft
+            </button>
+          </div>
+        )}
         {conflicted && (
           <div aria-label="Settings conflict review">
             <button
@@ -419,7 +580,7 @@ export default function WorkspaceSettings({
             disabled={busy}
             onClick={() => {
               if (
-                !protectedEdits ||
+                !(protectedEdits || localBackup) ||
                 confirm(
                   "Discard local settings edits and reload the latest saved settings? Export first if you need to keep them.",
                 )

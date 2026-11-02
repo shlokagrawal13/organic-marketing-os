@@ -143,6 +143,13 @@ test("settings drafts protect navigation workspace reload and sign out with exac
     page.getByRole("button", { name: "Sign in", exact: true }),
   ).toBeVisible();
   expect(mutations.filter((x) => x.endsWith("/auth/logout"))).toHaveLength(1);
+  expect(
+    await page.evaluate(() =>
+      Object.keys(localStorage).some((key) =>
+        key.startsWith("organic-settings-draft-v1:"),
+      ),
+    ),
+  ).toBe(false);
 });
 
 test("manual settings save serializes actual writes and locks navigation until acknowledgement", async ({
@@ -586,6 +593,136 @@ test("stale or unconfirmed settings exports require explicit review and never wr
   ).toBe(2);
 });
 
+test("browser backup survives reload but requires explicit recovery and manual save", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel
+    .getByLabel("Name", { exact: true })
+    .fill("Crash recovered name");
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Object.keys(localStorage).some((key) =>
+          key.startsWith("organic-settings-draft-v1:"),
+        ),
+      ),
+    )
+    .toBe(true);
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.reload();
+  await w.navigate();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    w.org.name,
+  );
+  await expect(
+    w.panel.getByLabel("Browser settings draft backup"),
+  ).toBeVisible();
+  expect(writes).toBe(0);
+  await w.panel.getByRole("button", { name: "Recover browser draft" }).click();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Crash recovered name",
+  );
+  expect(writes).toBe(0);
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Workspace settings status")).toHaveText(
+    "Workspace settings saved.",
+  );
+  expect((await w.read()).name).toBe("Crash recovered name");
+  expect(writes).toBe(1);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Object.keys(localStorage).some((key) =>
+          key.startsWith("organic-settings-draft-v1:"),
+        ),
+      ),
+    )
+    .toBe(false);
+  await w.panel.getByLabel("Name", { exact: true }).fill("Discarded backup");
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Object.keys(localStorage).some((key) =>
+          key.startsWith("organic-settings-draft-v1:"),
+        ),
+      ),
+    )
+    .toBe(true);
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.reload();
+  await w.navigate();
+  await w.panel.getByRole("button", { name: "Discard browser draft" }).click();
+  await page.reload();
+  await w.navigate();
+  await expect(w.panel.getByLabel("Browser settings draft backup")).toHaveCount(
+    0,
+  );
+});
+
+test("stale browser backup requires revision review and is scoped to the signed-in user", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  const admin = await actor(w.org.id, "ADMIN");
+  users.push(admin.id);
+  await w.panel.getByLabel("Name", { exact: true }).fill("Offline proposal");
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        Object.keys(localStorage).some((key) =>
+          key.startsWith("organic-settings-draft-v1:"),
+        ),
+      ),
+    )
+    .toBe(true);
+  expect(
+    (
+      await admin.call(`/workspaces/${w.org.id}`, "PATCH", {
+        name: "Server newer",
+        expectedRevision: 0,
+      })
+    ).status,
+  ).toBe(200);
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.reload();
+  await w.navigate();
+  await w.panel.getByRole("button", { name: "Recover browser draft" }).click();
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeDisabled();
+  await expect(w.panel.getByLabel("Settings conflict review")).toContainText(
+    "Server newer",
+  );
+  expect((await w.read()).settingsRevision).toBe(1);
+  await page.context().addCookies([
+    {
+      name: "mos_session",
+      value: admin.headers.cookie.split("=")[1],
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  ]);
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.reload();
+  await w.navigate();
+  await expect(w.panel.getByLabel("Browser settings draft backup")).toHaveCount(
+    0,
+  );
+});
+
 test("validation and revoked membership retain settings edits without automatic writes", async ({
   page,
 }) => {
@@ -685,6 +822,10 @@ test("settings initial read failure recovers and reopening always loads current 
   await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
     "Fresh server name",
   );
+  await expect(
+    w.panel.getByLabel("Browser settings draft backup"),
+  ).toBeVisible();
+  await w.panel.getByRole("button", { name: "Discard browser draft" }).click();
   await w.panel.getByLabel("Name", { exact: true }).fill("Temporary edit");
   await w.panel.getByLabel("Name", { exact: true }).fill("Fresh server name");
   await expect(page.getByLabel("Workspace settings status")).toHaveText(

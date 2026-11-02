@@ -434,6 +434,20 @@ export default function Workspace({
       return;
     void action(async () => {
       await api(allDevices ? "/auth/logout-all" : "/auth/logout", "POST");
+      window.dispatchEvent(
+        new CustomEvent("organic-settings-signout", {
+          detail: session.user.id,
+        }),
+      );
+      try {
+        const prefix = `organic-settings-draft-v1:${session.user.id}:`;
+        for (let index = localStorage.length - 1; index >= 0; index--) {
+          const key = localStorage.key(index);
+          if (key?.startsWith(prefix)) localStorage.removeItem(key);
+        }
+      } catch {
+        // Logout still completes when browser storage is unavailable.
+      }
       onReload();
     }, "");
   }
@@ -1497,6 +1511,7 @@ export default function Workspace({
                     <WorkspaceSettings
                       key={`${base}:${navVersion}`}
                       base={base}
+                      userId={session.user.id}
                       editable={admin && !actionBusy}
                       onDirtyChange={setSettingsDirty}
                       onBusyChange={setSettingsBusy}

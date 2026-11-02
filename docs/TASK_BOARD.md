@@ -1,3 +1,10 @@
+<!-- UX01I_CURRENT_START -->
+## Current: UX-01I - 2026-11-03
+
+UX-01H exact commit 2ce3f79/run41505259473 passed ALL THREE jobs and every required step (379 unit,49 HTTP,61 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01h-final-ci-receipt.json closes H's packaged own-CI pending status. UX-01I adds browser-local settings draft backup with explicit recovery and no automatic server write; local1 HTTP/12 browser pass in an owned fixture. I needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+See docs/ACTIVE_HANDOFF.md, docs/WORKSPACE_SETTINGS_BROWSER_BACKUP.md and docs/qa/ux01i-evidence.json.
+<!-- UX01I_CURRENT_END -->
+
 <!-- UX01H_CURRENT_START -->
 ## Current: UX-01H - 2026-11-03
 
