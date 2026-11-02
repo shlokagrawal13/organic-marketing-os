@@ -1,3 +1,10 @@
+<!-- UX01H_CURRENT_START -->
+## Current: UX-01H - 2026-11-03
+
+UX-01G exact commit 9923998/run41338503240 passed ALL THREE jobs and every required step (379 unit,49 HTTP,59 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01g-final-ci-receipt.json closes G's packaged own-CI pending status. UX-01H adds explicit local settings draft import with workspace/revision checks and no automatic write; local1 HTTP/10 browser pass in an owned fixture. H needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+See docs/ACTIVE_HANDOFF.md, docs/WORKSPACE_SETTINGS_IMPORT.md and docs/qa/ux01h-evidence.json.
+<!-- UX01H_CURRENT_END -->
+
 <!-- UX01G_CURRENT_START -->
 ## Current: UX-01G - 2026-11-02
 

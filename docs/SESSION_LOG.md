@@ -1,3 +1,8 @@
+## UX-01H settings draft import - 2026-11-03
+
+UX-01G exact commit 9923998/run41338503240 passed ALL THREE jobs and every required step (379 unit,49 HTTP,59 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01g-final-ci-receipt.json closes G's packaged own-CI pending status. UX-01H adds explicit local settings draft import with workspace/revision checks and no automatic write; local1 HTTP/10 browser pass in an owned fixture. H needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+Implementation: bounded local JSON parsing, workspace/revision validation, fresh server read and explicit review/manual save on stale or uncertain export. Wrong-workspace/malformed files preserve drafts. Prior settings assertions retained. See [design](WORKSPACE_SETTINGS_IMPORT.md) and [QA evidence](qa/ux01h-evidence.json). Own exact-source CI and external receipt remain pending at packaging time.
+
 ## UX-01G settings conflict review - 2026-11-02
 
 UX-01F exact commit ccedd6d/run41306424547 passed ALL THREE jobs and every required step (379 unit,49 HTTP,58 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01f-final-ci-receipt.json closes F's packaged own-CI pending status. UX-01G adds explicit settings conflict review and selective field choice; local1 HTTP/8 browser pass in an owned fixture. G needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.

@@ -8,6 +8,40 @@ type Settings = {
   timezone: string;
   settingsRevision: number;
 };
+type LocalSettingsExport = {
+  settings: { name: string; timezone: string };
+  savedSettings: { name: string; timezone: string };
+  savedRevision: number;
+  saveUnconfirmed: boolean;
+  settingsConflict: boolean;
+};
+function parseLocalExport(
+  raw: unknown,
+  workspaceId: string,
+): LocalSettingsExport {
+  if (!raw || typeof raw !== "object")
+    throw new Error("Invalid settings export.");
+  const item = raw as Record<string, unknown>;
+  if (item.workspaceId !== workspaceId)
+    throw new Error("This settings export belongs to another workspace.");
+  const fields = (value: unknown): value is LocalSettingsExport["settings"] =>
+    !!value &&
+    typeof value === "object" &&
+    typeof (value as Record<string, unknown>).name === "string" &&
+    (value as { name: string }).name.length <= 100 &&
+    typeof (value as Record<string, unknown>).timezone === "string" &&
+    (value as { timezone: string }).timezone.length <= 256;
+  if (
+    !fields(item.settings) ||
+    !fields(item.savedSettings) ||
+    !Number.isSafeInteger(item.savedRevision) ||
+    (item.savedRevision as number) < 0 ||
+    typeof item.saveUnconfirmed !== "boolean" ||
+    typeof item.settingsConflict !== "boolean"
+  )
+    throw new Error("Invalid settings export.");
+  return item as LocalSettingsExport;
+}
 export default function WorkspaceSettings({
   base,
   editable,
@@ -101,6 +135,70 @@ export default function WorkspaceSettings({
     setError("");
     setNotice("Latest revision reviewed. Your draft is not saved yet.");
     onSaved(latest);
+  }
+  async function importLocal(file: File) {
+    if (flight.current || !saved || !editable) return;
+    if (
+      protectedEdits &&
+      !confirm(
+        "Replace the current local settings draft? Export it first if you need to keep it.",
+      )
+    )
+      return;
+    flight.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      if (!file.size || file.size > 65536)
+        throw new Error(
+          "Settings export must be a nonempty JSON file under 64 KB.",
+        );
+      const imported = parseLocalExport(
+        JSON.parse(await file.text()),
+        saved.id,
+      );
+      const current = checked(
+        await api(base, "GET", undefined, AbortSignal.timeout(20000)),
+      );
+      if (!mounted.current) return;
+      const needsReview =
+        imported.savedRevision !== current.settingsRevision ||
+        imported.saveUnconfirmed ||
+        imported.settingsConflict;
+      setDraft({
+        name: imported.settings.name,
+        timezone: imported.settings.timezone,
+      });
+      setSaved(
+        needsReview
+          ? {
+              ...current,
+              name: imported.savedSettings.name,
+              timezone: imported.savedSettings.timezone,
+              settingsRevision: imported.savedRevision,
+            }
+          : current,
+      );
+      setLatest(needsReview ? current : null);
+      setConflicted(needsReview);
+      setUncertain(false);
+      setNotice(
+        needsReview
+          ? "Draft imported. Review the latest server values before saving."
+          : "Draft imported locally. Choose Save workspace when ready.",
+      );
+      onSaved(current);
+    } catch (error) {
+      if (mounted.current)
+        setError(
+          error instanceof SyntaxError
+            ? "Invalid settings export. Your current local edits are kept."
+            : `${(error as Error).message} Your current local edits are kept.`,
+        );
+    } finally {
+      flight.current = false;
+      if (mounted.current) setBusy(false);
+    }
   }
   async function read() {
     if (flight.current) return;
@@ -302,6 +400,19 @@ export default function WorkspaceSettings({
           >
             Export local settings
           </button>
+          <label>
+            Import local settings JSON
+            <input
+              type="file"
+              accept=".json,application/json"
+              disabled={!editable || !saved || busy}
+              onChange={(event) => {
+                const file = event.currentTarget.files?.[0];
+                event.currentTarget.value = "";
+                if (file) void importLocal(file);
+              }}
+            />
+          </label>
           <button
             type="button"
             className="button"

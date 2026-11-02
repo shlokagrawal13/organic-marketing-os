@@ -67,6 +67,15 @@ async function localExport(page: Page) {
   for await (const chunk of stream!) chunks.push(Buffer.from(chunk));
   return JSON.parse(Buffer.concat(chunks).toString("utf8"));
 }
+async function importLocal(page: Page, contents: unknown) {
+  await page.getByLabel("Import local settings JSON").setInputFiles({
+    name: "workspace-settings-local.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(
+      typeof contents === "string" ? contents : JSON.stringify(contents),
+    ),
+  });
+}
 
 test("settings drafts protect navigation workspace reload and sign out with exact local export", async ({
   page,
@@ -435,6 +444,141 @@ test("conflict review keeps local edits through read failure and merges selected
   expect(saved.timezone).toBe("Europe/London");
   expect(saved.settingsRevision).toBe(2);
   expect(writes).toBe(2);
+  expect(
+    await db.auditLog.count({
+      where: { organizationId: w.org.id, action: "workspace.updated" },
+    }),
+  ).toBe(2);
+});
+
+test("exported settings draft imports after reload without accepting another workspace or hidden fields", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel
+    .getByLabel("Name", { exact: true })
+    .fill("Recovered from export");
+  const exported = await localExport(page);
+  page.once("dialog", (dialog) => dialog.accept());
+  await w.panel.getByRole("button", { name: "Reload settings" }).click();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    w.org.name,
+  );
+  await importLocal(page, { ...exported, workspaceId: "another-workspace" });
+  await expect(w.panel.getByRole("alert")).toContainText("another workspace");
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    w.org.name,
+  );
+  await importLocal(page, "{broken json");
+  await expect(w.panel.getByRole("alert")).toContainText(
+    "Invalid settings export",
+  );
+  await importLocal(page, {
+    ...exported,
+    settings: { ...exported.settings, expectedRevision: 999, id: "foreign" },
+    savedSettings: { ...exported.savedSettings, id: "foreign" },
+  });
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Recovered from export",
+  );
+  await expect(w.panel.getByLabel("Workspace settings status")).toHaveText(
+    "Unsaved settings changes.",
+  );
+  expect(writes).toBe(0);
+  page.once("dialog", (dialog) => dialog.dismiss());
+  await importLocal(page, {
+    ...exported,
+    settings: { name: "Do not replace", timezone: "UTC" },
+  });
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Recovered from export",
+  );
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Workspace settings status")).toHaveText(
+    "Workspace settings saved.",
+  );
+  const saved = await w.read();
+  expect(saved.name).toBe("Recovered from export");
+  expect(saved.settingsRevision).toBe(1);
+  expect(writes).toBe(1);
+  expect(
+    await db.auditLog.count({
+      where: { organizationId: w.org.id, action: "workspace.updated" },
+    }),
+  ).toBe(1);
+});
+
+test("stale or unconfirmed settings exports require explicit review and never write on import", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  const admin = await actor(w.org.id, "ADMIN");
+  users.push(admin.id);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel.getByLabel("Name", { exact: true }).fill("Recovered proposal");
+  const exported = await localExport(page);
+  const other = await admin.call(`/workspaces/${w.org.id}`, "PATCH", {
+    name: "Server newer name",
+    timezone: "Europe/London",
+    expectedRevision: 0,
+  });
+  expect(other.status).toBe(200);
+  page.once("dialog", (dialog) => dialog.accept());
+  await w.panel.getByRole("button", { name: "Reload settings" }).click();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Server newer name",
+  );
+  await importLocal(page, exported);
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Recovered proposal",
+  );
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeDisabled();
+  const review = w.panel.getByLabel("Settings conflict review");
+  await expect(review).toContainText("latest “Europe/London”");
+  expect(writes).toBe(0);
+  await review.getByRole("button", { name: "Use latest timezone" }).click();
+  await review
+    .getByRole("button", { name: "Accept reviewed revision" })
+    .click();
+  expect(writes).toBe(0);
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect(w.panel.getByLabel("Workspace settings status")).toHaveText(
+    "Workspace settings saved.",
+  );
+  expect((await w.read()).settingsRevision).toBe(2);
+  expect((await w.read()).timezone).toBe("Europe/London");
+  const uncertainExport = await localExport(page);
+  uncertainExport.settings.name = "Unconfirmed exported proposal";
+  uncertainExport.saveUnconfirmed = true;
+  await importLocal(page, uncertainExport);
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeDisabled();
+  expect(writes).toBe(1);
+  await expect(w.panel.getByLabel("Settings conflict review")).toContainText(
+    "revision 2",
+  );
   expect(
     await db.auditLog.count({
       where: { organizationId: w.org.id, action: "workspace.updated" },
