@@ -38,6 +38,7 @@ import {
   validateRenderScenes,
   sha256,
 } from "../../../packages/core/media";
+import { createRenderNotification } from "./notifications";
 const view = (job: any) => {
   const {
     outputKey,
@@ -250,6 +251,17 @@ export class RendersController {
           action: "render.canceled",
           entityId: id,
         },
+      });
+      const job = await tx.renderJob.findUnique({
+        where: { id },
+        include: { content: { select: { title: true } } },
+      });
+      await createRenderNotification(tx, {
+        organizationId: req.organizationId,
+        renderId: id,
+        actorId: req.userId,
+        status: "CANCELED",
+        contentTitle: job?.content?.title,
       });
       return { ok: true };
     });

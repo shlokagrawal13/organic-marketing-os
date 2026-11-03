@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01A",
+  "recordedAtUtc": "2026-11-03T18:42:00.000Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "behavior": {
+    "migration": "202611030001_in_app_notifications; Notification model with unique (organizationId, eventKey) and indexes; 25 predecessors unchanged",
+    "eventTriggers": "Terminal render events (SUCCEEDED and FAILED in render-worker.ts, CANCELED in renders.ts) create idempotent notifications with eventKey render:<id>:<status>",
+    "api": "Tenant-isolated endpoints at /workspaces/:organizationId/notifications; authorized roles [OWNER, ADMIN, EDITOR, CREATOR, ANALYST]; CLIENT blocked with 403; bounded pagination (take 1-100, default 50), unreadOnly, category, and mine filtering; idempotent single and batch read acknowledgement",
+    "tests": "12 tests in tests/notifications.test.ts covering terminal triggers, duplicate deduplication, retry safety, tenant isolation, concurrent read ack, bounded pagination, role visibility scoping, batch read-all, and audit log preservation"
+  },
+  "local": {
+    "taskId": "NOTIFY-01A",
+    "passed": true,
+    "tests": {
+      "notifications": 12,
+      "applicationSnapshot": 3,
+      "nativeUpgradeVerification": 2,
+      "postgresPitrVerification": 11
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 26,
+    "tables": 38,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "notify-01a",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "Durable in-app notifications only; no external push, email, or webhook delivery",
+    "No realtime WebSocket streaming or latency SLO acceptance claimed",
+    "Windows environment limits: broad unit suite font/librsvg prerequisites defer to Linux CI; full Compose verification requires CI"
+  ]
+}
