@@ -23467,12 +23467,19 @@
   },
   "data01a": {
     "taskId": "DATA-01A",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "ci_passed",
     "branch": "data-01a",
     "completedAtUtc": "2026-11-03T20:45:00.000Z",
     "migrations": 25,
     "api": "/api/workspaces/:organizationId/operations/export (comprehensive NDJSON covering all tenant models with stripped credentials) and DELETE /api/workspaces/:organizationId/operations/members/:targetUserId (safe member revocation)",
     "tests": "6 unit (tests/data-governance.test.ts) + 10 integration (tests/integration/data-export.test.ts)",
-    "limits": "Export covers workspace records without embedding raw media binaries; legal erasure with financial foreign-key deletion remains separate"
+    "limits": "Export covers workspace records without embedding raw media binaries; legal erasure with financial foreign-key deletion remains separate",
+    "commitSha": "ac4602b",
+    "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/2",
+    "ciRunIds": [
+      41722265884,
+      41722258625
+    ],
+    "ciConclusion": "success"
   }
 }

@@ -136,3 +136,4 @@ test("member revocation self-revocation rule prohibits owner removing self via o
   assert.equal(isSelfRevocation("user-1", "user-1"), true);
   assert.equal(isSelfRevocation("user-2", "user-1"), false);
 });
+
