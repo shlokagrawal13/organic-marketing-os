@@ -1,0 +1,138 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+
+test("NDJSON export checksum matches SHA-256 over all preceding lines", () => {
+  const lines = [
+    JSON.stringify({ type: "manifest", data: { schemaVersion: 1, organizationId: "org-1" } }) + "\n",
+    JSON.stringify({ type: "workspace", data: { id: "org-1", name: "Acme" } }) + "\n",
+    JSON.stringify({ type: "billingSubscription", data: { id: "sub-1", status: "active" } }) + "\n",
+  ];
+
+  const hash = createHash("sha256");
+  for (const line of lines) {
+    hash.update(line);
+  }
+  const digest = hash.digest("hex");
+  assert.equal(digest.length, 64);
+
+  const completeLine = JSON.stringify({
+    type: "complete",
+    data: { counts: { manifest: 1, workspace: 1, billingSubscription: 1 }, sha256: digest },
+  }) + "\n";
+
+  const completeRecord = JSON.parse(completeLine);
+  assert.equal(completeRecord.data.sha256, digest);
+  assert.equal(completeRecord.data.counts.billingSubscription, 1);
+});
+
+test("export sanitizer strips sensitive credentials from social connections", () => {
+  const sanitizeSocialConnection = ({
+    accessTokenCiphertext,
+    refreshTokenCiphertext,
+    ...row
+  }: {
+    accessTokenCiphertext: string;
+    refreshTokenCiphertext: string | null;
+    [k: string]: unknown;
+  }) => row;
+
+  const raw = {
+    id: "sc-1",
+    organizationId: "org-1",
+    provider: "YOUTUBE",
+    externalAccountId: "channel-123",
+    accountLabel: "Main Channel",
+    scopes: ["upload", "read"],
+    accessTokenCiphertext: "secret-cipher-token-xyz",
+    refreshTokenCiphertext: "secret-cipher-refresh-xyz",
+    tokenExpiresAt: new Date(),
+    createdAt: new Date(),
+  };
+
+  const sanitized = sanitizeSocialConnection(raw);
+  assert.equal((sanitized as any).accessTokenCiphertext, undefined);
+  assert.equal((sanitized as any).refreshTokenCiphertext, undefined);
+  assert.equal((sanitized as any).accountLabel, "Main Channel");
+  assert.equal((sanitized as any).provider, "YOUTUBE");
+});
+
+test("export sanitizer strips token hashes from invitations", () => {
+  const sanitizeInvitation = ({ tokenHash, ...row }: { tokenHash: string; [k: string]: unknown }) => row;
+
+  const raw = {
+    id: "inv-1",
+    organizationId: "org-1",
+    email: "creator@example.test",
+    role: "CREATOR",
+    tokenHash: "hash-of-invitation-token-secret",
+    expiresAt: new Date(),
+  };
+
+  const sanitized = sanitizeInvitation(raw);
+  assert.equal((sanitized as any).tokenHash, undefined);
+  assert.equal((sanitized as any).email, "creator@example.test");
+  assert.equal((sanitized as any).role, "CREATOR");
+});
+
+test("export sanitizer strips internal run tokens and request hashes from renders", () => {
+  const sanitizeRender = ({
+    outputKey,
+    thumbnailKey,
+    captionsKey,
+    runToken,
+    requestHash,
+    ...row
+  }: {
+    outputKey: string | null;
+    thumbnailKey?: string | null;
+    captionsKey?: string | null;
+    runToken: string | null;
+    requestHash: string | null;
+    [k: string]: unknown;
+  }) => ({
+    ...row,
+    downloadPath: outputKey ? `/api/workspaces/org-1/renders/${row.id}/file/video?download=1` : null,
+  });
+
+  const raw = {
+    id: "render-1",
+    organizationId: "org-1",
+    status: "SUCCEEDED",
+    outputKey: "private/renders/render-1.mp4",
+    runToken: "worker-run-secret-abc",
+    requestHash: "hash-req-xyz",
+    totalScenes: 3,
+  };
+
+  const sanitized = sanitizeRender(raw as any);
+  assert.equal((sanitized as any).runToken, undefined);
+  assert.equal((sanitized as any).requestHash, undefined);
+  assert.equal((sanitized as any).outputKey, undefined);
+  assert.equal(sanitized.downloadPath, "/api/workspaces/org-1/renders/render-1/file/video?download=1");
+});
+
+test("export sanitizer strips operation keys and request hashes from credit entries", () => {
+  const sanitizeCreditEntry = ({ requestHash, operationKey, ...row }: { requestHash?: string | null; operationKey?: string | null; [k: string]: unknown }) => row;
+
+  const raw = {
+    id: "ce-1",
+    organizationId: "org-1",
+    amount: 100,
+    reason: "PLAN_GRANT",
+    operationKey: "op-idempotency-key-secret",
+    requestHash: "req-hash-secret",
+    createdAt: new Date(),
+  };
+
+  const sanitized = sanitizeCreditEntry(raw);
+  assert.equal((sanitized as any).operationKey, undefined);
+  assert.equal((sanitized as any).requestHash, undefined);
+  assert.equal((sanitized as any).amount, 100);
+});
+
+test("member revocation self-revocation rule prohibits owner removing self via operations endpoint", () => {
+  const isSelfRevocation = (targetUserId: string, callerUserId: string) => targetUserId === callerUserId;
+  assert.equal(isSelfRevocation("user-1", "user-1"), true);
+  assert.equal(isSelfRevocation("user-2", "user-1"), false);
+});

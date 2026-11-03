@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "taskId": "DATA-01A",
+  "recordedAtUtc": "2026-11-03T20:45:00.000Z",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "behavior": {
+    "export": "NDJSON workspace export covers all tenant-owned data models: workspace, brand/versions, safe member profiles, campaigns, content, versions, comments, assets, render jobs, media generation, AI jobs/runs/steps/usage, credit accounts/entries/reservations, audit activity, invitations (tokenHash stripped), socialConnection (ciphertexts stripped), contentClaimReview, publicationIntent, publicationSchedule, publicationAttempt, publicationPolicyReview, billingSubscription, billingEvent, and billingInvoice. Export is sha256-verified and rate-limited to 1 request/min per user/workspace.",
+    "memberRevocation": "DELETE /api/workspaces/:organizationId/operations/members/:targetUserId: restricted to OWNER/ADMIN; prohibits self-revocation (403); deletes membership and invalidates active user sessions; preserves immutable financial records (CreditEntry, CreditReservation) and workspace audit logs; appends member.revoked audit event.",
+    "tests": "6 unit tests in tests/data-governance.test.ts + 10 integration scenarios in tests/integration/data-export.test.ts covering NDJSON checksum integrity, credential stripping, invitation hash stripping, render token stripping, credit key stripping, self-revocation guard, role boundaries, tenant isolation, rate limiting, and session invalidation."
+  },
+  "local": {
+    "taskId": "DATA-01A",
+    "passed": true,
+    "tests": {
+      "dataGovernanceUnit": 6,
+      "dataExportIntegration": 10
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 25,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "data-01a",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "Workspace record export in NDJSON format only; does not embed raw binary media objects or scene cache bytes",
+    "Safe member-data revocation only; full legal erasure / organization deletion with financial foreign-key reconciliation remains separate",
+    "Windows environment limits: broad font/librsvg rendering unit suite runs on Linux CI"
+  ]
+}

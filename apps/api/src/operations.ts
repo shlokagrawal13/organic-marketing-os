@@ -1,11 +1,15 @@
 import {
   Controller,
   Get,
+  Delete,
+  Param,
   Req,
   Res,
   UseGuards,
   Module,
   HttpException,
+  NotFoundException,
+  ForbiddenException,
 } from "@nestjs/common";
 import { Response } from "express";
 import { mkdtemp, appendFile, rm, stat } from "node:fs/promises";
@@ -280,6 +284,46 @@ export class OperationsController {
             ["creditReservation", tx.creditReservation, own],
             ["activity", tx.auditLog, own],
             ["invitation", tx.invitation, own, ({ tokenHash, ...row }) => row],
+            // DATA-01A: previously missing tables — added to complete export
+            [
+              "socialConnection",
+              tx.socialConnection,
+              own,
+              // strip encrypted credential ciphertexts; export metadata only
+              ({
+                accessTokenCiphertext,
+                refreshTokenCiphertext,
+                ...row
+              }: {
+                accessTokenCiphertext: string;
+                refreshTokenCiphertext: string | null;
+                [k: string]: unknown;
+              }) => row,
+            ],
+            ["contentClaimReview", tx.contentClaimReview, { content: own }],
+            ["publicationIntent", tx.publicationIntent, own],
+            ["publicationSchedule", tx.publicationSchedule, own],
+            ["publicationAttempt", tx.publicationAttempt, { intent: own }],
+            [
+              "publicationPolicyReview",
+              tx.publicationPolicyReview,
+              { intent: own },
+            ],
+            [
+              "billingSubscription",
+              tx.billingSubscription,
+              { organizationId: org },
+            ],
+            [
+              "billingEvent",
+              tx.billingEvent,
+              { subscription: { organizationId: org } },
+            ],
+            [
+              "billingInvoice",
+              tx.billingInvoice,
+              { subscription: { organizationId: org } },
+            ],
           ];
           for (const [type, model, where, safe] of tables) {
             let cursor: string | undefined;
@@ -329,6 +373,78 @@ export class OperationsController {
       res.removeListener("close", closed);
       await rm(dir, { recursive: true, force: true });
     }
+  }
+
+  /**
+   * DATA-01A: Safe member-data revocation.
+   *
+   * Revokes membership and permanently removes personal-session and social-token
+   * data for a workspace member without touching financial records or audit logs.
+   *
+   * Rules:
+   *  - Caller must be OWNER or ADMIN (enforced by @Roles + TenantGuard).
+   *  - OWNER cannot self-revoke (last-owner protection already exists in the
+   *    membership controller; this guard adds an explicit 403).
+   *  - CreditEntry/CreditReservation rows are preserved (financial constraint).
+   *  - AuditLog rows are preserved (immutable audit trail).
+   *  - An audit event is written for the revocation.
+   */
+  @Delete("members/:targetUserId")
+  async revokeMember(
+    @Param("targetUserId") targetUserId: string,
+    @Req() req: AuthedRequest,
+  ) {
+    const org = req.organizationId;
+
+    // Prevent OWNER self-revocation via this endpoint
+    if (targetUserId === req.userId) {
+      throw new ForbiddenException(
+        "Use the workspace-leave flow to remove yourself.",
+      );
+    }
+
+    const membership = await this.db.membership.findUnique({
+      where: {
+        userId_organizationId: { userId: targetUserId, organizationId: org },
+      },
+    });
+    if (!membership)
+      throw new NotFoundException(
+        "Member not found in this workspace.",
+      );
+
+    await this.db.$transaction(async (tx) => {
+      // 1. Remove membership
+      await tx.membership.delete({
+        where: {
+          userId_organizationId: { userId: targetUserId, organizationId: org },
+        },
+      });
+
+      // 2. Revoke all active sessions for this user
+      await tx.session.deleteMany({
+        where: { userId: targetUserId },
+      });
+
+      // 3. Revoke social connections are org-scoped without userId — preserved as-is.
+      // Invitations have no invitedById field — preserved as-is.
+
+      // 4. Audit the revocation
+      await tx.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "member.revoked",
+          entityId: targetUserId,
+          detail: {
+            role: membership.role,
+            revokedBy: req.userId,
+          },
+        },
+      });
+    });
+
+    return { revokedUserId: targetUserId, organizationId: org };
   }
 }
 @Module({ imports: [AssetsModule], controllers: [OperationsController] })

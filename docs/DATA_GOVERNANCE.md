@@ -26,7 +26,7 @@ Stored records include account identity and hashed authentication data, membersh
 
 OWNER/ADMIN can use Workspace health → Export workspace data or `GET /api/workspaces/:organizationId/operations/export`. The NDJSON export reads all pages of the implemented workspace records in one RepeatableRead database snapshot: workspace, brand/versions, safe member profiles, campaigns, content including archived items, versions/comments, asset metadata, render jobs, AI jobs/usage, activity, invitations with token hashes removed, credit account balances, immutable credit entries and reservations. Credit operation keys/request hashes are omitted.
 
-Agent graph traces are available per job through the authenticated tenant-scoped AI trace route. The consolidated NDJSON export predates the 0.8 graph tables and does not yet include those rows; DATA-01 must add them before claiming a complete account export.
+Agent graph traces are available per job through the authenticated tenant-scoped AI trace route. Under DATA-01A, the consolidated NDJSON export adds the previously omitted tenant-owned tables: `socialConnection` (with encrypted access/refresh token ciphertexts securely stripped), `contentClaimReview`, `publicationIntent`, `publicationSchedule`, `publicationAttempt`, `publicationPolicyReview`, `billingSubscription`, `billingEvent`, and `billingInvoice`.
 
 The final `complete` record contains per-type counts and SHA-256 over every preceding line including newlines. Exports are assembled in a private temporary file before download headers, limited to 64 MiB and a 120-second transaction; an excessive export fails explicitly instead of silently returning a partial page. There is a one-request-per-minute limit per user/workspace, private/no-store delivery and an export audit event. Temporary files are removed after completion/failure/disconnection. No schedule/background export job is implemented.
 
@@ -35,6 +35,13 @@ Password hashes, sessions, auth/invitation tokens, provider credentials, interna
 ## Retention and deletion
 
 Assets hold originals, hashes/tags/rights notes. Renders hold immutable content snapshots, MP4/JPEG/SRT files, caches and approvals. Asset/content archiving retains historical work and access for current members; it does not delete bytes or free source allowance. Session and team access revocation are implemented.
+
+DATA-01A implements safe member-data revocation (`DELETE /api/workspaces/:organizationId/operations/members/:targetUserId`):
+- Authorized to OWNER and ADMIN roles only; non-privileged roles receive 403.
+- Self-revocation is explicitly prohibited (returns 403; members must use the separate workspace-leave flow).
+- Deletes the workspace membership and terminates all active sessions for the target user.
+- Leaves immutable financial records (`CreditEntry`, `CreditReservation`) intact.
+- Preserves the full workspace audit trail and appends a `member.revoked` audit event recording the actor and prior role.
 
 Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 
