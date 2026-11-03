@@ -1,0 +1,495 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01I",
+  "status": "exact_final_commit_all_three_jobs_and_artifact_bytes_verified",
+  "recordedAtUtc": "2026-11-03T16:11:05.051Z",
+  "final": true,
+  "sourceCapsulePendingOwnCiClosedByThisReceipt": true,
+  "source": {
+    "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+    "tree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
+    "remoteMainMatched": true,
+    "workingTreeClean": true,
+    "checkpointManifestCheck": "687 included files; no drift",
+    "changedPaths": [
+      "AGENTS.md",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "REQUIREMENTS_MATRIX.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
+      "apps/web/app/workspace-settings.tsx",
+      "apps/web/app/workspace.tsx",
+      "docs/ACTIVE_HANDOFF.md",
+      "docs/CHANGELOG.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/RESUME_CONTEXT.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/VERIFICATION_REPORT.md",
+      "docs/WORKSPACE_SETTINGS_BROWSER_BACKUP.md",
+      "docs/qa/github-publication.json",
+      "docs/qa/handoff-verification.json",
+      "docs/qa/ux01h-final-ci-receipt.json",
+      "docs/qa/ux01i-evidence.json",
+      "docs/qa/verification-summary.json",
+      "tests/ui/settings-draft.spec.ts"
+    ]
+  },
+  "sourcePackage": {
+    "path": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-ux01i-source.zip",
+    "bytes": 16329177,
+    "sha256": "13c33567a39acd2d1c8fc05beedb3851a4e8bc4567e6149b19e12f9548e7de1d",
+    "zipCrcPassed": true,
+    "sourceAndManifestMatch": true,
+    "sourceFiles": 687,
+    "zipMembers": 688
+  },
+  "githubActions": {
+    "runId": 41511073906,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "startedAtUtc": "2026-11-02T19:33:45Z",
+    "completedAtUtc": "2026-11-02T19:53:12Z",
+    "jobs": [
+      {
+        "id": 125502748031,
+        "name": "Native populated upgrade and migration recovery",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906/job/125502748031",
+        "headSha": "e3bac58364eefc07862f551358e630cb43f6a87d",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated native Prisma upgrades and interrupted migration recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify physical PostgreSQL backup and WAL point-in-time recovery",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized PostgreSQL PITR evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized native upgrade evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 125502748362,
+        "name": "Native application verification",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906/job/125502748362",
+        "headSha": "e3bac58364eefc07862f551358e630cb43f6a87d",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install test object storage",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install media dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned test CJK fonts",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run unit tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify bounded small-screen English readability",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit production dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify populated upgrade",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify native application flows",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload browser evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Java",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 125502748438,
+        "name": "Disposable Compose and native restore",
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906/job/125502748438",
+        "headSha": "e3bac58364eefc07862f551358e630cb43f6a87d",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify complete Compose and native cross-store restore",
+            "conclusion": "success"
+          },
+          {
+            "name": "Upload sanitized Compose evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Check out source",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "verification": {
+    "unit": 379,
+    "http": 49,
+    "browser": 63,
+    "recovery": 5,
+    "migrations": 25,
+    "readabilitySamples": 44,
+    "composePhases": 24,
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "sourceJobId": 125502748362,
+    "observedPassCounts": [
+      379,
+      49,
+      5
+    ],
+    "auditLogLines": [
+      "2026-11-02T19:34:23.4010114Z found 0 vulnerabilities",
+      "2026-11-02T19:43:06.5103250Z found 0 vulnerabilities",
+      "2026-11-02T19:43:06.9436997Z found 0 vulnerabilities"
+    ],
+    "settingsTestLines": [
+      "2026-11-02T19:49:38.2637478Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+      "2026-11-02T19:49:39.2501592Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (974ms)",
+      "2026-11-02T19:49:42.2961397Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+      "2026-11-02T19:49:43.0124705Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+      "2026-11-02T19:49:43.8300971Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (807ms)",
+      "2026-11-02T19:49:44.4958201Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (653ms)",
+      "2026-11-02T19:49:45.3305667Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (823ms)",
+      "2026-11-02T19:49:46.3165283Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (975ms)",
+      "2026-11-02T19:49:47.1326749Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (797ms)",
+      "2026-11-02T19:49:50.0865187Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+      "2026-11-02T19:49:51.1141610Z   ✓  53 tests/ui/settings-draft.spec.ts:769:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.0s)",
+      "2026-11-02T19:49:52.0570414Z   ✓  54 tests/ui/settings-draft.spec.ts:793:5 › settings initial read failure recovers and reopening always loads current server values (887ms)"
+    ],
+    "coreJobLogBytes": 200530,
+    "coreJobLogSha256": "3f1f69daaaf7c4cc955e596e8706d7cbe5c700b82679b3c939d8760b3aa2b0f9",
+    "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+    "protectedPriorMasterMigrationHashesUnchanged": 26
+  },
+  "artifacts": [
+    {
+      "id": 13175226053,
+      "name": "browser-evidence",
+      "bytes": 15127701,
+      "sha256": "2337f8147165e8d496309030d6a660f87848dd9841e8a0a018ca6289e5a30e0b",
+      "zipCrcPassed": true,
+      "memberCount": 163,
+      "jsonMembers": {
+        ".local/unit-receipts.json": {
+          "bytes": 126728,
+          "sha256": "d3e3103060430658001858abcfaf6a5d945e55024dc2915e5a71782d13b90ccd",
+          "crc32": "636b4762"
+        },
+        ".local/readability/run-R15c31/report.json": {
+          "bytes": 18940,
+          "sha256": "9a8c3b4a2d2616e6241a58c446ff5aec7aec5a5e6ba00982eda4e677d2731ec5",
+          "crc32": "31013bb8"
+        }
+      },
+      "verification": {
+        "unitPassed": 379,
+        "uniqueUnitReceipts": 379,
+        "readabilitySamples": 44,
+        "readabilityNegativeControlPassed": true
+      },
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13173942227,
+      "name": "compose-evidence",
+      "bytes": 16876,
+      "sha256": "99f739c977026ec9486f77cbd5f26f10f6b6e60597f0baaff3d2fa0a4f47fc58",
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "compose-evidence.json": {
+          "bytes": 136669,
+          "sha256": "0875349ffaf15aed71a71ed845be7af728f33239dda131a2406c81312027d1c2",
+          "crc32": "5cb34517"
+        }
+      },
+      "verification": {
+        "inflightWalRecovery": {
+          "passed": true,
+          "baseSnapshotSha256": "29edb59a17cccd798b1ae8f1c3d6f7f07472ffab8dcfd98c6becabebbedd04e5",
+          "targetSnapshotSha256": "466239a0c5f92dcf5671962356b8a5a219a3c9c730285ca12fc20c4f29bfc184",
+          "restoredSnapshotSha256": "466239a0c5f92dcf5671962356b8a5a219a3c9c730285ca12fc20c4f29bfc184",
+          "targetName": "omos_inflight_da59e942d8ed54ba",
+          "targetLsn": "0/70001D8",
+          "sourceTimeline": 2,
+          "targetSegment": "000000020000000000000007",
+          "targetWalSha256": "6c0f76255b1f428db7e87c823d494972f6bb0d92db85b4109106e7052c24b8f8",
+          "walArchiveSha256": "bcbe5ca3da1372d2b4d9f21111e9e1fe41a3aec9c1bd2904d7aa605a914a15f8",
+          "receiptHash": "14aa3b07ec9cd1aa655e6d3bd24d4f05bcf92005d201f892505bdf215a5b570e",
+          "expectedWalReviewSha256": "a0a84a2a9fba5658e71e837c09bfd82e8690e34fd068edf9e76d2bf6a5b5958c",
+          "historicalObjects": 4,
+          "admissionControlsDenied": 10,
+          "admissionCallbacks": 1,
+          "actualWalFaultsDenied": 2,
+          "sourcePostgresAndStorageStopped": true,
+          "applicationRecovery": {
+            "passed": true,
+            "naturalLeaseExpiryWithoutEdits": true,
+            "checks": {
+              "restoredHttpAuthentication": true,
+              "historicalMediaServedByActualApi": true,
+              "anonymousAndCrossTenantMediaDenied": true,
+              "restoredClientRoleDeniedWrite": true,
+              "restoredRevisionConflictAndApprovalInvalidation": true,
+              "laterDatabaseChangesExcluded": true,
+              "physicalStaleRenderFailedWithoutAutomaticReplay": true,
+              "physicalRenderOwnerRetryTenantRoleAndIdempotencyPassed": true,
+              "physicalRenderRetryPreservedFrozenInputs": true,
+              "physicalAmbiguousMediaUnknownWithoutResubmission": true,
+              "physicalAmbiguousMediaCreditsHeldForReview": true,
+              "physicalAcceptedMediaReceiptStableAcrossRestarts": true,
+              "physicalValidImagesDecoded": true,
+              "physicalRenderQueueCompleted": true,
+              "physicalRetainedMediaIngestedWithoutSubmission": true,
+              "physicalOutputDimensionsDurationAndDecodePassed": true,
+              "physicalNewOutputsPrivateAndTenantScoped": true,
+              "physicalMediaReservationsSettledOnce": true,
+              "physicalStaleMediaLeaseReclaimedWithoutSubmission": true,
+              "physicalInterruptedRenderPreservedAfterRetry": true,
+              "physicallyRecoveredQueuedJobReconstructed": true,
+              "postTargetEffectNotReplayed": true,
+              "uncertainJobFailedForReview": true,
+              "oneCreditSettlementAndOriginalLedgerPreserved": true,
+              "restoredLedgerImmutable": true,
+              "allThreeWorkersRestartedWithoutReplayOrDuplicateSettlement": true,
+              "physicalMediaRowsQueuesAndBytesStableAfterRestart": true
+            },
+            "mediaOutputHashes": {
+              "source": "b8e72bebd24b12b90fa3bbca94b1164f83484ea00e1c4b6962819211fa7f3fe9",
+              "generated": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f",
+              "video": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/bc3daff8-c23c-40ba-baef-ad8d18d824a8/video.mp4": "7a5089aa4026d3c17663be6e3ceeb2b3ed74c621d3aca09aca418da6617f1b4f",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/bc3daff8-c23c-40ba-baef-ad8d18d824a8/thumbnail.jpg": "8c0b00467f31a7207a0a9314047046ef444ed7f5c7e313ad270b68b392216b82",
+              "7cdd0796-a51e-442a-aab9-111111111111/renders/bc3daff8-c23c-40ba-baef-ad8d18d824a8/captions.srt": "79381a748b00ae97f9ca21cab13f7a8251e0e62120d5d0c6a80d21b919d8fea9",
+              "7cdd0796-a51e-442a-aab9-111111111111/generated/7cdd0796-a51e-442a-aab9-666666666666/retained.png": "ce4b5fdf743e0b0b7eec527f2a1d5aa6d18cf2534d3d2316ad2477cc6cd0a57f"
+            }
+          },
+          "checks": {
+            "liveClaimsAbsentFromBasePresentAtWalTarget": true,
+            "actualNativeWalReplayAndPromotion": true,
+            "postTargetMarkersExcluded": true,
+            "independentFixtureStoresRecoverDuringSourceOutage": true,
+            "actualProviderReceiptBoundWithoutResubmission": true,
+            "restoredApplicationWorkersVerified": true
+          }
+        },
+        "taskId": "RECOVERY-01P",
+        "passed": true,
+        "phases": 24,
+        "retainedRecoverySet": {
+          "reviewSha256": "5630e9d1e9d21dc7a1e695bce2577631b5f6321c7beff588c523d6499ade6a6f",
+          "baseManifestSha256": "f78f40d735e4f3bbbe4f7a548da920039096ca844b6cbe400b0ed0c6a6f5dba5",
+          "targetLsn": "0/3006180",
+          "targetWalSegment": "000000010000000000000003",
+          "targetWalSha256": "2b1ebd93bd13dd2ec17691babb37d316ee06bca926a5db857a92e9d126e812ae",
+          "historicalVersions": 3,
+          "deniedControls": 9,
+          "admittedCallbacks": 1
+        },
+        "actualMissingAndCorruptRetainedWalDenied": true,
+        "inflightPointSnapshotEqual": true,
+        "cleanupAndRealEnvironmentUnchanged": true
+      },
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13173940237,
+      "name": "postgres-pitr-evidence",
+      "bytes": 2963,
+      "sha256": "7eada695e1a5e00d2c6511f8d33d8fb2f34ed7bd8951de9a9fea511ed7801454",
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "postgres-pitr-evidence.json": {
+          "bytes": 7440,
+          "sha256": "34829bd551b25194e5f19ce4cd8a7937a6be9cde29abbd27387f6fa6f2eea0e2",
+          "crc32": "ceb8c905"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01F",
+        "passed": true
+      },
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13173805345,
+      "name": "native-upgrade-evidence",
+      "bytes": 925,
+      "sha256": "731e7fd13e21d78ab0bc1c8eaabfff102de6389066072d7edc38410ac0905ef9",
+      "zipCrcPassed": true,
+      "memberCount": 1,
+      "jsonMembers": {
+        "native-upgrade-evidence.json": {
+          "bytes": 2511,
+          "sha256": "6e4a0dc548b094330db6577f662c69659ab251bfa37df4810366c4e7a2f9a3a9",
+          "crc32": "fcd4e6a0"
+        }
+      },
+      "verification": {
+        "taskId": "RECOVERY-01B",
+        "passed": true
+      },
+      "uploadDigestMatched": true
+    }
+  ],
+  "scope": "Browser-local workspace settings draft backup with explicit recovery, revision review and manual save. All25 prior migrations and all24 recovery Compose phases preserved; no deployment.",
+  "local": {
+    "taskId": "UX-01I",
+    "passed": true,
+    "startedAt": "2026-11-02T19:28:21.001Z",
+    "fixture": "f08ae87464ea6a16",
+    "http": 1,
+    "browser": 12,
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "completedAt": "2026-11-02T19:30:27.389Z",
+    "apiBuild": true,
+    "webTypecheck": true,
+    "webProductionBuild": true,
+    "migrations": 25,
+    "fullAuditVulnerabilities": 0,
+    "productionAuditVulnerabilities": 0,
+    "formatAndDiffCheck": true
+  },
+  "limits": [
+    "Browser storage may be disabled/cleared; local backup is not encrypted or a server/production backup",
+    "No automatic settings server save or merge; live/deployed/full-master acceptance open",
+    "CI does not deploy"
+  ],
+  "deploymentClaimed": false
+}

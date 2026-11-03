@@ -1,3 +1,10 @@
+<!-- UX01J_CURRENT_START -->
+## Current: UX-01J - 2026-11-03
+
+UX-01I exact commit e3bac58/run41511073906 passed ALL THREE jobs and every required step (379 unit,49 HTTP,63 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01i-final-ci-receipt.json closes I's packaged own-CI pending status. UX-01J adds opt-in session-scoped workspace settings autosave; default manual save and all prior assertions remain. Local1 HTTP/15 browser pass in an owned fixture. J needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+See docs/ACTIVE_HANDOFF.md, docs/WORKSPACE_SETTINGS_AUTOSAVE.md and docs/qa/ux01j-evidence.json.
+<!-- UX01J_CURRENT_END -->
+
 <!-- UX01I_CURRENT_START -->
 ## Current: UX-01I - 2026-11-03
 

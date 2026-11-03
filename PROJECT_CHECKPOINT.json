@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01i-20261103",
-  "savedAtUtc": "2026-11-02T19:32:29.504Z",
-  "currentMilestone": "UX-01I browser-local workspace settings draft backup",
+  "checkpointRevision": "ux01j-20261103",
+  "savedAtUtc": "2026-11-03T18:00:33.474Z",
+  "currentMilestone": "UX-01J opt-in workspace settings autosave",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish UX-01I browser-local settings draft backup with fresh source ZIP; verify all three jobs/every required step on its exact final commit, inspect four artifact bytes/reports and pair an external I final CI receipt. No recovery Q/R.",
+  "nextAction": "Publish UX-01J opt-in settings autosave with fresh source ZIP; verify all three jobs/every required step on its exact final commit, inspect four artifact bytes/reports and pair an external J final CI receipt. No recovery Q/R.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -92,7 +92,6 @@
     "RESUME_PROMPT.txt",
     "START_HERE.md",
     "apps/web/app/workspace-settings.tsx",
-    "apps/web/app/workspace.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
@@ -102,11 +101,11 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/WORKSPACE_SETTINGS_BROWSER_BACKUP.md",
+    "docs/WORKSPACE_SETTINGS_AUTOSAVE.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01h-final-ci-receipt.json",
-    "docs/qa/ux01i-evidence.json",
+    "docs/qa/ux01i-final-ci-receipt.json",
+    "docs/qa/ux01j-evidence.json",
     "docs/qa/verification-summary.json",
     "tests/ui/settings-draft.spec.ts"
   ],
@@ -6779,8 +6778,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
-    "status": "UX01H_final_verified_UX01I_local_pending",
+    "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+    "status": "UX01I_final_verified_UX01J_local_pending",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6793,7 +6792,7 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "d2246053d7fe4a87414d6f9581c840d7be2acbd7",
+    "sourceTree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
     "commitMeaning": "Last verified predecessor; E own exact-source CI pending.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
@@ -7769,55 +7768,57 @@
       "standingAuthorization": "2026-10-18 normal commits/pushes/CI"
     },
     "latestPublication": {
-      "taskId": "UX-01H",
-      "commit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
-      "tree": "d2246053d7fe4a87414d6f9581c840d7be2acbd7",
-      "runId": 41505259473,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41505259473",
+      "taskId": "UX-01I",
+      "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+      "tree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
+      "runId": 41511073906,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
         "http": 49,
-        "browser": 61,
+        "browser": 63,
         "recovery": 5,
         "migrations": 25,
         "readabilitySamples": 44,
         "composePhases": 24,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 125482799615,
+        "sourceJobId": 125502748362,
         "observedPassCounts": [
           379,
           49,
           5
         ],
         "auditLogLines": [
-          "2026-11-02T18:56:59.1169792Z found 0 vulnerabilities",
-          "2026-11-02T19:03:18.2488676Z found 0 vulnerabilities",
-          "2026-11-02T19:03:18.6428907Z found 0 vulnerabilities"
+          "2026-11-02T19:34:23.4010114Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.5103250Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.9436997Z found 0 vulnerabilities"
         ],
         "settingsTestLines": [
-          "2026-11-02T19:09:29.3126836Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
-          "2026-11-02T19:09:30.1587811Z   ✓  44 tests/ui/settings-draft.spec.ts:148:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (838ms)",
-          "2026-11-02T19:09:33.1485312Z   ✓  45 tests/ui/settings-draft.spec.ts:225:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
-          "2026-11-02T19:09:33.7974733Z   ✓  46 tests/ui/settings-draft.spec.ts:301:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (641ms)",
-          "2026-11-02T19:09:34.5159427Z   ✓  47 tests/ui/settings-draft.spec.ts:374:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (712ms)",
-          "2026-11-02T19:09:35.0998570Z   ✓  48 tests/ui/settings-draft.spec.ts:454:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (576ms)",
-          "2026-11-02T19:09:35.8002900Z   ✓  49 tests/ui/settings-draft.spec.ts:521:5 › stale or unconfirmed settings exports require explicit review and never write on import (693ms)",
-          "2026-11-02T19:09:38.6467741Z   ✓  50 tests/ui/settings-draft.spec.ts:589:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
-          "2026-11-02T19:09:39.5302903Z   ✓  51 tests/ui/settings-draft.spec.ts:632:5 › all four non-admin roles retain read-only workspace settings and server write denial (876ms)",
-          "2026-11-02T19:09:40.2323898Z   ✓  52 tests/ui/settings-draft.spec.ts:656:5 › settings initial read failure recovers and reopening always loads current server values (667ms)"
+          "2026-11-02T19:49:38.2637478Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-02T19:49:39.2501592Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (974ms)",
+          "2026-11-02T19:49:42.2961397Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-02T19:49:43.0124705Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-02T19:49:43.8300971Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (807ms)",
+          "2026-11-02T19:49:44.4958201Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (653ms)",
+          "2026-11-02T19:49:45.3305667Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (823ms)",
+          "2026-11-02T19:49:46.3165283Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (975ms)",
+          "2026-11-02T19:49:47.1326749Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (797ms)",
+          "2026-11-02T19:49:50.0865187Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-02T19:49:51.1141610Z   ✓  53 tests/ui/settings-draft.spec.ts:769:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.0s)",
+          "2026-11-02T19:49:52.0570414Z   ✓  54 tests/ui/settings-draft.spec.ts:793:5 › settings initial read failure recovers and reopening always loads current server values (887ms)"
         ],
-        "coreJobLogBytes": 201039,
-        "coreJobLogSha256": "24f4f969c851af95352c9b91d11f4d6d728833db022a349137fb1686e303f9e7",
+        "coreJobLogBytes": 200530,
+        "coreJobLogSha256": "3f1f69daaaf7c4cc955e596e8706d7cbe5c700b82679b3c939d8760b3aa2b0f9",
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
         "protectedPriorMasterMigrationHashesUnchanged": 26
       },
-      "receipt": "docs/qa/ux01h-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01i-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
+    "latestApplicationSourceCommit": "e3bac58364eefc07862f551358e630cb43f6a87d",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7924,9 +7925,9 @@
       "state": "local_verified_own_exact_commit_ci_pending",
       "title": "Remaining collaboration and product UX",
       "status": "local_verified_own_exact_commit_ci_pending",
-      "completedIncrement": "H exact CI closed; I local browser backup checks pass.",
-      "nextAction": "Publish UX-01I browser-local settings draft backup with fresh source ZIP; verify all three jobs/every required step on its exact final commit, inspect four artifact bytes/reports and pair an external I final CI receipt. No recovery Q/R.",
-      "currentEvidence": "docs/qa/ux01i-evidence.json"
+      "completedIncrement": "I exact CI closed; J opt-in settings autosave local checks pass.",
+      "nextAction": "Publish UX-01J opt-in settings autosave with fresh source ZIP; verify all three jobs/every required step on its exact final commit, inspect four artifact bytes/reports and pair an external J final CI receipt. No recovery Q/R.",
+      "currentEvidence": "docs/qa/ux01j-evidence.json"
     },
     {
       "id": "POLICY-01",
@@ -8023,15 +8024,15 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/ux01i-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/ux01j-evidence.json",
   "latestStatus": {
-    "taskId": "UX-01I",
+    "taskId": "UX-01J",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish UX-01I browser-local settings draft backup with fresh source ZIP; verify all three jobs/every required step on its exact final commit, inspect four artifact bytes/reports and pair an external I final CI receipt. No recovery Q/R."
+    "nextAction": "Publish UX-01J opt-in settings autosave with fresh source ZIP; verify all three jobs/every required step on its exact final commit, inspect four artifact bytes/reports and pair an external J final CI receipt. No recovery Q/R."
   },
   "activeTask": {
-    "id": "UX-01I",
-    "title": "Browser-local settings draft backup",
+    "id": "UX-01J",
+    "title": "Opt-in workspace settings autosave",
     "status": "local_verified_own_exact_commit_ci_pending"
   },
   "workspaceRecovery": {
@@ -8045,9 +8046,9 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "UX-01I",
+    "taskId": "UX-01J",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "baseCommit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
+    "baseCommit": "e3bac58364eefc07862f551358e630cb43f6a87d",
     "paths": [
       "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
@@ -8057,7 +8058,6 @@
       "RESUME_PROMPT.txt",
       "START_HERE.md",
       "apps/web/app/workspace-settings.tsx",
-      "apps/web/app/workspace.tsx",
       "docs/ACTIVE_HANDOFF.md",
       "docs/CHANGELOG.md",
       "docs/HANDOFF.md",
@@ -8067,11 +8067,11 @@
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
       "docs/VERIFICATION_REPORT.md",
-      "docs/WORKSPACE_SETTINGS_BROWSER_BACKUP.md",
+      "docs/WORKSPACE_SETTINGS_AUTOSAVE.md",
       "docs/qa/github-publication.json",
       "docs/qa/handoff-verification.json",
-      "docs/qa/ux01h-final-ci-receipt.json",
-      "docs/qa/ux01i-evidence.json",
+      "docs/qa/ux01i-final-ci-receipt.json",
+      "docs/qa/ux01j-evidence.json",
       "docs/qa/verification-summary.json",
       "tests/ui/settings-draft.spec.ts"
     ],
@@ -8694,67 +8694,69 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "UX-01I",
+    "taskId": "UX-01J",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "UX-01H",
-      "commit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
-      "tree": "d2246053d7fe4a87414d6f9581c840d7be2acbd7",
-      "runId": 41505259473,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41505259473",
+      "taskId": "UX-01I",
+      "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+      "tree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
+      "runId": 41511073906,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
         "http": 49,
-        "browser": 61,
+        "browser": 63,
         "recovery": 5,
         "migrations": 25,
         "readabilitySamples": 44,
         "composePhases": 24,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 125482799615,
+        "sourceJobId": 125502748362,
         "observedPassCounts": [
           379,
           49,
           5
         ],
         "auditLogLines": [
-          "2026-11-02T18:56:59.1169792Z found 0 vulnerabilities",
-          "2026-11-02T19:03:18.2488676Z found 0 vulnerabilities",
-          "2026-11-02T19:03:18.6428907Z found 0 vulnerabilities"
+          "2026-11-02T19:34:23.4010114Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.5103250Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.9436997Z found 0 vulnerabilities"
         ],
         "settingsTestLines": [
-          "2026-11-02T19:09:29.3126836Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
-          "2026-11-02T19:09:30.1587811Z   ✓  44 tests/ui/settings-draft.spec.ts:148:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (838ms)",
-          "2026-11-02T19:09:33.1485312Z   ✓  45 tests/ui/settings-draft.spec.ts:225:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
-          "2026-11-02T19:09:33.7974733Z   ✓  46 tests/ui/settings-draft.spec.ts:301:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (641ms)",
-          "2026-11-02T19:09:34.5159427Z   ✓  47 tests/ui/settings-draft.spec.ts:374:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (712ms)",
-          "2026-11-02T19:09:35.0998570Z   ✓  48 tests/ui/settings-draft.spec.ts:454:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (576ms)",
-          "2026-11-02T19:09:35.8002900Z   ✓  49 tests/ui/settings-draft.spec.ts:521:5 › stale or unconfirmed settings exports require explicit review and never write on import (693ms)",
-          "2026-11-02T19:09:38.6467741Z   ✓  50 tests/ui/settings-draft.spec.ts:589:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
-          "2026-11-02T19:09:39.5302903Z   ✓  51 tests/ui/settings-draft.spec.ts:632:5 › all four non-admin roles retain read-only workspace settings and server write denial (876ms)",
-          "2026-11-02T19:09:40.2323898Z   ✓  52 tests/ui/settings-draft.spec.ts:656:5 › settings initial read failure recovers and reopening always loads current server values (667ms)"
+          "2026-11-02T19:49:38.2637478Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-02T19:49:39.2501592Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (974ms)",
+          "2026-11-02T19:49:42.2961397Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-02T19:49:43.0124705Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-02T19:49:43.8300971Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (807ms)",
+          "2026-11-02T19:49:44.4958201Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (653ms)",
+          "2026-11-02T19:49:45.3305667Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (823ms)",
+          "2026-11-02T19:49:46.3165283Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (975ms)",
+          "2026-11-02T19:49:47.1326749Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (797ms)",
+          "2026-11-02T19:49:50.0865187Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-02T19:49:51.1141610Z   ✓  53 tests/ui/settings-draft.spec.ts:769:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.0s)",
+          "2026-11-02T19:49:52.0570414Z   ✓  54 tests/ui/settings-draft.spec.ts:793:5 › settings initial read failure recovers and reopening always loads current server values (887ms)"
         ],
-        "coreJobLogBytes": 201039,
-        "coreJobLogSha256": "24f4f969c851af95352c9b91d11f4d6d728833db022a349137fb1686e303f9e7",
+        "coreJobLogBytes": 200530,
+        "coreJobLogSha256": "3f1f69daaaf7c4cc955e596e8706d7cbe5c700b82679b3c939d8760b3aa2b0f9",
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
         "protectedPriorMasterMigrationHashesUnchanged": 26
       },
-      "receipt": "docs/qa/ux01h-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01i-final-ci-receipt.json"
     },
     "local": {
-      "taskId": "UX-01I",
+      "taskId": "UX-01J",
       "passed": true,
-      "startedAt": "2026-11-02T19:28:21.001Z",
-      "fixture": "f08ae87464ea6a16",
+      "startedAt": "2026-11-03T17:52:48.636Z",
+      "fixture": "2efb0db37c3666c0",
       "http": 1,
-      "browser": 12,
+      "browser": 15,
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
-      "completedAt": "2026-11-02T19:30:27.389Z",
+      "completedAt": "2026-11-03T17:57:52.982Z",
       "apiBuild": true,
       "webTypecheck": true,
       "webProductionBuild": true,
@@ -16254,53 +16256,55 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "UX-01H",
-    "commit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
-    "tree": "d2246053d7fe4a87414d6f9581c840d7be2acbd7",
-    "runId": 41505259473,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41505259473",
+    "taskId": "UX-01I",
+    "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+    "tree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
+    "runId": 41511073906,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
       "unit": 379,
       "http": 49,
-      "browser": 61,
+      "browser": 63,
       "recovery": 5,
       "migrations": 25,
       "readabilitySamples": 44,
       "composePhases": 24,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "sourceJobId": 125482799615,
+      "sourceJobId": 125502748362,
       "observedPassCounts": [
         379,
         49,
         5
       ],
       "auditLogLines": [
-        "2026-11-02T18:56:59.1169792Z found 0 vulnerabilities",
-        "2026-11-02T19:03:18.2488676Z found 0 vulnerabilities",
-        "2026-11-02T19:03:18.6428907Z found 0 vulnerabilities"
+        "2026-11-02T19:34:23.4010114Z found 0 vulnerabilities",
+        "2026-11-02T19:43:06.5103250Z found 0 vulnerabilities",
+        "2026-11-02T19:43:06.9436997Z found 0 vulnerabilities"
       ],
       "settingsTestLines": [
-        "2026-11-02T19:09:29.3126836Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.7s)",
-        "2026-11-02T19:09:30.1587811Z   ✓  44 tests/ui/settings-draft.spec.ts:148:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (838ms)",
-        "2026-11-02T19:09:33.1485312Z   ✓  45 tests/ui/settings-draft.spec.ts:225:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
-        "2026-11-02T19:09:33.7974733Z   ✓  46 tests/ui/settings-draft.spec.ts:301:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (641ms)",
-        "2026-11-02T19:09:34.5159427Z   ✓  47 tests/ui/settings-draft.spec.ts:374:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (712ms)",
-        "2026-11-02T19:09:35.0998570Z   ✓  48 tests/ui/settings-draft.spec.ts:454:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (576ms)",
-        "2026-11-02T19:09:35.8002900Z   ✓  49 tests/ui/settings-draft.spec.ts:521:5 › stale or unconfirmed settings exports require explicit review and never write on import (693ms)",
-        "2026-11-02T19:09:38.6467741Z   ✓  50 tests/ui/settings-draft.spec.ts:589:5 › validation and revoked membership retain settings edits without automatic writes (2.8s)",
-        "2026-11-02T19:09:39.5302903Z   ✓  51 tests/ui/settings-draft.spec.ts:632:5 › all four non-admin roles retain read-only workspace settings and server write denial (876ms)",
-        "2026-11-02T19:09:40.2323898Z   ✓  52 tests/ui/settings-draft.spec.ts:656:5 › settings initial read failure recovers and reopening always loads current server values (667ms)"
+        "2026-11-02T19:49:38.2637478Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+        "2026-11-02T19:49:39.2501592Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (974ms)",
+        "2026-11-02T19:49:42.2961397Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+        "2026-11-02T19:49:43.0124705Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+        "2026-11-02T19:49:43.8300971Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (807ms)",
+        "2026-11-02T19:49:44.4958201Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (653ms)",
+        "2026-11-02T19:49:45.3305667Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (823ms)",
+        "2026-11-02T19:49:46.3165283Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (975ms)",
+        "2026-11-02T19:49:47.1326749Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (797ms)",
+        "2026-11-02T19:49:50.0865187Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+        "2026-11-02T19:49:51.1141610Z   ✓  53 tests/ui/settings-draft.spec.ts:769:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.0s)",
+        "2026-11-02T19:49:52.0570414Z   ✓  54 tests/ui/settings-draft.spec.ts:793:5 › settings initial read failure recovers and reopening always loads current server values (887ms)"
       ],
-      "coreJobLogBytes": 201039,
-      "coreJobLogSha256": "24f4f969c851af95352c9b91d11f4d6d728833db022a349137fb1686e303f9e7",
+      "coreJobLogBytes": 200530,
+      "coreJobLogSha256": "3f1f69daaaf7c4cc955e596e8706d7cbe5c700b82679b3c939d8760b3aa2b0f9",
       "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
       "protectedPriorMasterMigrationHashesUnchanged": 26
     },
-    "receipt": "docs/qa/ux01h-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01i-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -22202,7 +22206,6 @@
     "RESUME_PROMPT.txt",
     "START_HERE.md",
     "apps/web/app/workspace-settings.tsx",
-    "apps/web/app/workspace.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
     "docs/HANDOFF.md",
@@ -22212,11 +22215,11 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/VERIFICATION_REPORT.md",
-    "docs/WORKSPACE_SETTINGS_BROWSER_BACKUP.md",
+    "docs/WORKSPACE_SETTINGS_AUTOSAVE.md",
     "docs/qa/github-publication.json",
     "docs/qa/handoff-verification.json",
-    "docs/qa/ux01h-final-ci-receipt.json",
-    "docs/qa/ux01i-evidence.json",
+    "docs/qa/ux01i-final-ci-receipt.json",
+    "docs/qa/ux01j-evidence.json",
     "docs/qa/verification-summary.json",
     "tests/ui/settings-draft.spec.ts"
   ],
@@ -23223,7 +23226,7 @@
     "schemaVersion": 1,
     "taskId": "UX-01I",
     "recordedAtUtc": "2026-11-02T19:32:29.504Z",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "exact_final_commit_verified_external_receipt_imported",
     "priorVerifiedPublication": {
       "taskId": "UX-01H",
       "commit": "2ce3f791dfc7e6fe9cee457c782e798670e4e9a0",
@@ -23311,6 +23314,154 @@
     "limits": [
       "Browser storage may be disabled/cleared; local backup is not encrypted or a server/production backup",
       "No automatic settings server save or merge; live/deployed/full-master acceptance open",
+      "CI does not deploy"
+    ],
+    "finalVerifiedPublication": {
+      "taskId": "UX-01I",
+      "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+      "tree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
+      "runId": 41511073906,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 49,
+        "browser": 63,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 125502748362,
+        "observedPassCounts": [
+          379,
+          49,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-02T19:34:23.4010114Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.5103250Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.9436997Z found 0 vulnerabilities"
+        ],
+        "settingsTestLines": [
+          "2026-11-02T19:49:38.2637478Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-02T19:49:39.2501592Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (974ms)",
+          "2026-11-02T19:49:42.2961397Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-02T19:49:43.0124705Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-02T19:49:43.8300971Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (807ms)",
+          "2026-11-02T19:49:44.4958201Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (653ms)",
+          "2026-11-02T19:49:45.3305667Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (823ms)",
+          "2026-11-02T19:49:46.3165283Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (975ms)",
+          "2026-11-02T19:49:47.1326749Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (797ms)",
+          "2026-11-02T19:49:50.0865187Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-02T19:49:51.1141610Z   ✓  53 tests/ui/settings-draft.spec.ts:769:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.0s)",
+          "2026-11-02T19:49:52.0570414Z   ✓  54 tests/ui/settings-draft.spec.ts:793:5 › settings initial read failure recovers and reopening always loads current server values (887ms)"
+        ],
+        "coreJobLogBytes": 200530,
+        "coreJobLogSha256": "3f1f69daaaf7c4cc955e596e8706d7cbe5c700b82679b3c939d8760b3aa2b0f9",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 26
+      },
+      "receipt": "docs/qa/ux01i-final-ci-receipt.json"
+    }
+  },
+  "ux01j": {
+    "schemaVersion": 1,
+    "taskId": "UX-01J",
+    "recordedAtUtc": "2026-11-03T18:00:33.474Z",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01I",
+      "commit": "e3bac58364eefc07862f551358e630cb43f6a87d",
+      "tree": "5fe46a4e3379d6c0aa0c98dd6fed23c73f4b548a",
+      "runId": 41511073906,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41511073906",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 49,
+        "browser": 63,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 125502748362,
+        "observedPassCounts": [
+          379,
+          49,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-02T19:34:23.4010114Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.5103250Z found 0 vulnerabilities",
+          "2026-11-02T19:43:06.9436997Z found 0 vulnerabilities"
+        ],
+        "settingsTestLines": [
+          "2026-11-02T19:49:38.2637478Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.8s)",
+          "2026-11-02T19:49:39.2501592Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (974ms)",
+          "2026-11-02T19:49:42.2961397Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.0s)",
+          "2026-11-02T19:49:43.0124705Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (705ms)",
+          "2026-11-02T19:49:43.8300971Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (807ms)",
+          "2026-11-02T19:49:44.4958201Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (653ms)",
+          "2026-11-02T19:49:45.3305667Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (823ms)",
+          "2026-11-02T19:49:46.3165283Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (975ms)",
+          "2026-11-02T19:49:47.1326749Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (797ms)",
+          "2026-11-02T19:49:50.0865187Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › validation and revoked membership retain settings edits without automatic writes (2.9s)",
+          "2026-11-02T19:49:51.1141610Z   ✓  53 tests/ui/settings-draft.spec.ts:769:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.0s)",
+          "2026-11-02T19:49:52.0570414Z   ✓  54 tests/ui/settings-draft.spec.ts:793:5 › settings initial read failure recovers and reopening always loads current server values (887ms)"
+        ],
+        "coreJobLogBytes": 200530,
+        "coreJobLogSha256": "3f1f69daaaf7c4cc955e596e8706d7cbe5c700b82679b3c939d8760b3aa2b0f9",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 26
+      },
+      "receipt": "docs/qa/ux01i-final-ci-receipt.json"
+    },
+    "behavior": {
+      "default": "Manual settings save remains default; autosave is explicit and scoped to the current editor session",
+      "write": "Two-second idle debounce uses unchanged tenant-bound atomic expectedRevision PATCH and one acknowledged audit per revision",
+      "safety": "One in-flight write, invalid drafts do not schedule, any failure disables autosave, conflict/uncertain outcomes never retry automatically, import/recovery/reload disables autosave"
+    },
+    "local": {
+      "taskId": "UX-01J",
+      "passed": true,
+      "startedAt": "2026-11-03T17:52:48.636Z",
+      "fixture": "2efb0db37c3666c0",
+      "http": 1,
+      "browser": 15,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-03T17:57:52.982Z",
+      "apiBuild": true,
+      "webTypecheck": true,
+      "webProductionBuild": true,
+      "migrations": 25,
+      "fullAuditVulnerabilities": 0,
+      "productionAuditVulnerabilities": 0,
+      "formatAndDiffCheck": true
+    },
+    "preserved": {
+      "priorMigrations": 25,
+      "composePhases": 24,
+      "masterSpecification": true,
+      "realEnvironmentUnchanged": true,
+      "populatedUserServicesUntouched": true,
+      "liveProvidersUsed": false
+    },
+    "publication": {
+      "required": "Own exact final commit: three jobs/every required step and four artifact bytes/digests/CRC/reports",
+      "finalReceipt": "External ux01j-final-ci-receipt.json paired with source ZIP"
+    },
+    "limits": [
+      "Autosave is opt-in per editor session; no automatic merge or cross-device synchronization",
+      "Live/deployed/full-master acceptance open",
       "CI does not deploy"
     ]
   }

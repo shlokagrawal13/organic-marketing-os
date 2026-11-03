@@ -1,3 +1,8 @@
+## UX-01J opt-in settings autosave - 2026-11-03
+
+UX-01I exact commit e3bac58/run41511073906 passed ALL THREE jobs and every required step (379 unit,49 HTTP,63 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01i-final-ci-receipt.json closes I's packaged own-CI pending status. UX-01J adds opt-in session-scoped workspace settings autosave; default manual save and all prior assertions remain. Local1 HTTP/15 browser pass in an owned fixture. J needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+Implementation: session-only opt-in, idle debounce, atomic revision PATCH, failure pause and explicit conflict/uncertain review. Existing manual settings assertions retained. See [design](WORKSPACE_SETTINGS_AUTOSAVE.md) and [QA evidence](qa/ux01j-evidence.json). Own exact-source CI and external receipt remain pending at packaging time.
+
 ## UX-01I browser-local settings draft backup - 2026-11-03
 
 UX-01H exact commit 2ce3f79/run41505259473 passed ALL THREE jobs and every required step (379 unit,49 HTTP,61 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01h-final-ci-receipt.json closes H's packaged own-CI pending status. UX-01I adds browser-local settings draft backup with explicit recovery and no automatic server write; local1 HTTP/12 browser pass in an owned fixture. I needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.

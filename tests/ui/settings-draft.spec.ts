@@ -723,6 +723,130 @@ test("stale browser backup requires revision review and is scoped to the signed-
   );
 });
 
+test("settings autosave is opt-in, debounced, revision-bound and can be turned off", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel.getByLabel("Name", { exact: true }).fill("Opt-in draft");
+  await page.waitForTimeout(2300);
+  expect(writes).toBe(0);
+  const toggle = w.panel.getByRole("checkbox", {
+    name: /Autosave workspace settings/,
+  });
+  await toggle.check();
+  await expect.poll(async () => (await w.read()).settingsRevision).toBe(1);
+  await expect(w.panel.getByLabel("Workspace settings status")).toHaveText(
+    "Workspace settings autosaved.",
+  );
+  expect((await w.read()).name).toBe("Opt-in draft");
+  expect(writes).toBe(1);
+  await w.panel.getByLabel("Timezone", { exact: true }).fill("Europe/London");
+  await expect.poll(async () => (await w.read()).settingsRevision).toBe(2);
+  expect((await w.read()).timezone).toBe("Europe/London");
+  expect(writes).toBe(2);
+  await toggle.uncheck();
+  await w.panel.getByLabel("Name", { exact: true }).fill("Manual again");
+  await page.waitForTimeout(2300);
+  expect(writes).toBe(2);
+  expect((await w.read()).name).toBe("Opt-in draft");
+  expect(
+    await db.auditLog.count({
+      where: { organizationId: w.org.id, action: "workspace.updated" },
+    }),
+  ).toBe(2);
+});
+
+test("settings autosave stops on a concurrent revision and requires review before manual save", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  const admin = await actor(w.org.id, "ADMIN");
+  users.push(admin.id);
+  let writes = 0;
+  page.on("request", (request) => {
+    if (
+      request.method() === "PATCH" &&
+      request.url().endsWith(`/workspaces/${w.org.id}`)
+    )
+      writes++;
+  });
+  await w.panel
+    .getByRole("checkbox", { name: /Autosave workspace settings/ })
+    .check();
+  await w.panel.getByLabel("Name", { exact: true }).fill("Keep my proposal");
+  expect(
+    (
+      await admin.call(`/workspaces/${w.org.id}`, "PATCH", {
+        name: "Concurrent server edit",
+        expectedRevision: 0,
+      })
+    ).status,
+  ).toBe(200);
+  await expect(w.panel.getByRole("alert")).toContainText(
+    "changed in another session",
+  );
+  await expect(
+    w.panel.getByRole("checkbox", { name: /Autosave workspace settings/ }),
+  ).not.toBeChecked();
+  await expect(w.panel.getByLabel("Name", { exact: true })).toHaveValue(
+    "Keep my proposal",
+  );
+  await page.waitForTimeout(2300);
+  expect(writes).toBe(1);
+  await w.panel.getByRole("button", { name: "Review latest settings" }).click();
+  await expect(w.panel.getByLabel("Settings conflict review")).toContainText(
+    "Concurrent server edit",
+  );
+  await w.panel
+    .getByRole("button", { name: "Accept reviewed revision" })
+    .click();
+  expect(writes).toBe(1);
+  await w.panel
+    .getByRole("button", { name: "Save workspace", exact: true })
+    .click();
+  await expect.poll(async () => (await w.read()).settingsRevision).toBe(2);
+  expect((await w.read()).name).toBe("Keep my proposal");
+  expect(writes).toBe(2);
+});
+
+test("an unconfirmed settings autosave is never replayed", async ({ page }) => {
+  const w = await setup(page);
+  let writes = 0;
+  await page.route(w.endpoint, async (route) => {
+    if (route.request().method() !== "PATCH") return route.continue();
+    writes++;
+    await route.fetch();
+    await route.abort("failed");
+  });
+  await w.panel
+    .getByRole("checkbox", { name: /Autosave workspace settings/ })
+    .check();
+  await w.panel
+    .getByLabel("Name", { exact: true })
+    .fill("Unconfirmed autosave");
+  await expect(w.panel.getByRole("alert")).toContainText(
+    "It may have completed",
+  );
+  await expect(
+    w.panel.getByRole("checkbox", { name: /Autosave workspace settings/ }),
+  ).not.toBeChecked();
+  await page.waitForTimeout(2300);
+  expect(writes).toBe(1);
+  expect((await w.read()).name).toBe("Unconfirmed autosave");
+  expect((await w.read()).settingsRevision).toBe(1);
+  await expect(
+    w.panel.getByRole("button", { name: "Save workspace", exact: true }),
+  ).toBeDisabled();
+});
+
 test("validation and revoked membership retain settings edits without automatic writes", async ({
   page,
 }) => {

@@ -66,16 +66,56 @@ export default function WorkspaceSettings({
   const [conflicted, setConflicted] = useState(false);
   const [latest, setLatest] = useState<Settings | null>(null);
   const [notice, setNotice] = useState("");
+  const [autosaveEnabled, setAutosaveEnabled] = useState(false);
   const [localBackup, setLocalBackup] = useState<LocalSettingsExport | null>(
     null,
   );
   const mounted = useRef(false),
     flight = useRef(false),
-    edited = useRef(false);
+    edited = useRef(false),
+    autosaveEnabledRef = useRef(false);
   const backupKey = `${backupPrefix}${userId}:${base.split("/").at(-1)}`;
   const dirty =
     !!saved && (draft.name !== saved.name || draft.timezone !== saved.timezone);
   const protectedEdits = dirty || uncertain || conflicted;
+  useEffect(() => {
+    if (
+      !autosaveEnabled ||
+      !dirty ||
+      busy ||
+      !editable ||
+      !saved ||
+      uncertain ||
+      conflicted ||
+      localBackup ||
+      draft.name.trim().length < 2 ||
+      draft.name.trim().length > 100
+    )
+      return;
+    try {
+      new Intl.DateTimeFormat("en", { timeZone: draft.timezone });
+    } catch {
+      return;
+    }
+    const timer = setTimeout(() => {
+      if (autosaveEnabledRef.current) void save(undefined, true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [
+    autosaveEnabled,
+    dirty,
+    busy,
+    editable,
+    saved,
+    uncertain,
+    conflicted,
+    localBackup,
+    draft,
+  ]);
+  function stopAutosave() {
+    autosaveEnabledRef.current = false;
+    setAutosaveEnabled(false);
+  }
   useEffect(() => {
     onDirtyChange(protectedEdits);
   }, [protectedEdits, onDirtyChange]);
@@ -232,6 +272,7 @@ export default function WorkspaceSettings({
         imported.savedRevision !== current.settingsRevision ||
         imported.saveUnconfirmed ||
         imported.settingsConflict;
+      stopAutosave();
       setDraft({
         name: imported.settings.name,
         timezone: imported.settings.timezone,
@@ -289,6 +330,7 @@ export default function WorkspaceSettings({
         backup.savedRevision !== current.settingsRevision ||
         backup.saveUnconfirmed ||
         backup.settingsConflict;
+      stopAutosave();
       edited.current = true;
       setDraft({
         name: backup.settings.name,
@@ -326,6 +368,7 @@ export default function WorkspaceSettings({
   }
   async function read() {
     if (flight.current) return;
+    stopAutosave();
     flight.current = true;
     setBusy(true);
     setError("");
@@ -351,15 +394,16 @@ export default function WorkspaceSettings({
       if (mounted.current) setBusy(false);
     }
   }
-  async function save(e: React.FormEvent) {
-    e.preventDefault();
+  async function save(e?: React.FormEvent, automatic = false) {
+    e?.preventDefault();
     if (
       flight.current ||
       !saved ||
       !editable ||
       !dirty ||
       uncertain ||
-      conflicted
+      conflicted ||
+      (automatic && (!autosaveEnabledRef.current || !!localBackup))
     )
       return;
     flight.current = true;
@@ -375,9 +419,14 @@ export default function WorkspaceSettings({
       );
       if (!mounted.current) return;
       adopt(value);
-      setNotice("Workspace settings saved.");
+      setNotice(
+        automatic
+          ? "Workspace settings autosaved."
+          : "Workspace settings saved.",
+      );
     } catch (e) {
       if (!mounted.current) return;
+      stopAutosave();
       const status = (e as Error & { status?: number }).status;
       const unknown = !status || status >= 500;
       setUncertain(unknown);
@@ -398,13 +447,36 @@ export default function WorkspaceSettings({
   return (
     <section className="panel" aria-label="Workspace details">
       <h3>Workspace details</h3>
-      <p>Changes are saved only when you choose Save workspace.</p>
+      <p>
+        Settings use manual Save by default. You can enable autosave for this
+        editor session.
+      </p>
       <p>
         Unsaved settings are backed up in this browser for this account and
         workspace. Recovery requires your choice; saving or signing out clears
         the backup.
       </p>
-      <form onSubmit={save}>
+      <form onSubmit={(event) => void save(event)}>
+        <label>
+          <input
+            type="checkbox"
+            checked={autosaveEnabled}
+            disabled={
+              !editable ||
+              busy ||
+              !saved ||
+              uncertain ||
+              conflicted ||
+              !!localBackup
+            }
+            onChange={(event) => {
+              autosaveEnabledRef.current = event.target.checked;
+              setAutosaveEnabled(event.target.checked);
+            }}
+          />
+          Autosave workspace settings after two seconds of inactivity (this
+          editor session)
+        </label>
         <label>
           Name
           <input
