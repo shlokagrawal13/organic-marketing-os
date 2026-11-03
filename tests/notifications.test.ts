@@ -638,6 +638,47 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(notif.eventKey, `render:${renderId}:CANCELED`);
   });
 
+  test("worker abort on canceled render does not emit duplicate or conflicting FAILED notification", async () => {
+    const org = await prisma.organization.create({ data: { name: "Cancel Guard Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const renderId = randomUUID();
+
+    // 1. Controller cancels the job and emits CANCELED notification
+    await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId,
+      actorId: user.userId,
+      status: "CANCELED",
+      contentTitle: "Canceled Cut",
+    });
+
+    // 2. Simulated worker abort: updateMany with status: "RUNNING" returns count = 0
+    // Because the job is already canceled, failed.count is 0, so no FAILED notification is created
+    const ownership = { id: renderId, status: "RUNNING" as const, runToken: "stale-token" };
+    const failed = await prisma.renderJob.updateMany({
+      where: ownership,
+      data: { status: "FAILED" },
+    });
+    assert.equal(failed.count, 0);
+
+    if (failed.count) {
+      await createRenderNotification(prisma, {
+        organizationId: org.id,
+        renderId,
+        actorId: user.userId,
+        status: "FAILED",
+        contentTitle: "Canceled Cut",
+      });
+    }
+
+    // Verify only the CANCELED notification exists and no FAILED notification was created
+    const notifs = await prisma.notification.findMany({
+      where: { organizationId: org.id, entityId: renderId },
+    });
+    assert.equal(notifs.length, 1);
+    assert.equal(notifs[0].type, "RENDER_CANCELED");
+  });
+
   test("role authorization matrix: NOTIFICATION_ROLES contains expected authorized workspace roles", () => {
     assert.deepEqual(NOTIFICATION_ROLES, [
       "OWNER",

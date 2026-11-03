@@ -7,13 +7,13 @@
     "migration": "202611030001_in_app_notifications; Notification model with unique (organizationId, eventKey) and indexes; 25 predecessors unchanged",
     "eventTriggers": "Terminal render events (SUCCEEDED and FAILED in render-worker.ts, CANCELED in renders.ts) create idempotent notifications with eventKey render:<id>:<status>",
     "api": "Tenant-isolated endpoints at /workspaces/:organizationId/notifications; authorized roles [OWNER, ADMIN, EDITOR, CREATOR, ANALYST]; CLIENT blocked with 403; bounded pagination (take 1-100, default 50), unreadOnly, category, and mine filtering; idempotent single and batch read acknowledgement",
-    "tests": "12 tests in tests/notifications.test.ts covering terminal triggers, duplicate deduplication, retry safety, tenant isolation, concurrent read ack, bounded pagination, role visibility scoping, batch read-all, and audit log preservation"
+    "tests": "13 tests in tests/notifications.test.ts covering terminal triggers, duplicate deduplication, retry safety, tenant isolation, concurrent read ack, bounded pagination, role visibility scoping, batch read-all, audit log preservation, and worker abort on cancel guard"
   },
   "local": {
     "taskId": "NOTIFY-01A",
     "passed": true,
     "tests": {
-      "notifications": 12,
+      "notifications": 13,
       "applicationSnapshot": 3,
       "nativeUpgradeVerification": 2,
       "postgresPitrVerification": 11

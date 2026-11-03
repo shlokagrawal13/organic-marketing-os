@@ -209,7 +209,7 @@ const worker = new Worker(
         : error instanceof RenderFontError
           ? error.message.slice(0, 500)
           : "Media processing failed. Check the selected files and render-worker logs, then retry.";
-      await db.renderJob.updateMany({
+      const failed = await db.renderJob.updateMany({
         where: ownership,
         data: {
           status: "FAILED",
@@ -218,14 +218,16 @@ const worker = new Worker(
           completedAt: new Date(),
         },
       });
-      await createRenderNotification(db, {
-        organizationId: row.organizationId,
-        renderId: row.id,
-        actorId: row.actorId,
-        status: "FAILED",
-        contentTitle: row.content?.title,
-        error: failureReason,
-      });
+      if (failed.count) {
+        await createRenderNotification(db, {
+          organizationId: row.organizationId,
+          renderId: row.id,
+          actorId: row.actorId,
+          status: "FAILED",
+          contentTitle: row.content?.title,
+          error: failureReason,
+        });
+      }
     } finally {
       clearInterval(timer);
       clearTimeout(deadline);
