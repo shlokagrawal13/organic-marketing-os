@@ -78,6 +78,7 @@ function entrypoint() {
     },
     "../../../packages/core/renderer": {},
     "../../../packages/core/render-font": {},
+    "./notifications": { createRenderNotification: async () => {} },
   };
   const source = readFileSync(
     new URL("../apps/api/src/render-worker.ts", import.meta.url),
