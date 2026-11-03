@@ -4,7 +4,70 @@ import assert from "node:assert/strict";
 import { db, actor } from "../support/http";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { randomUUID } from "node:crypto";
-import { createRenderNotification } from "../../apps/api/src/notifications";
+import type { PrismaClient } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
+
+/**
+ * Inline helper that mirrors createRenderNotification from apps/api/src/notifications.ts
+ * without importing NestJS-decorated source (which esbuild cannot parse via tsx).
+ */
+async function createRenderNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    renderId: string;
+    actorId?: string | null;
+    status: "SUCCEEDED" | "FAILED" | "CANCELED";
+    contentTitle?: string | null;
+    error?: string | null;
+  },
+) {
+  const eventKey = `render:${params.renderId}:${params.status}`;
+  const isSuccess = params.status === "SUCCEEDED";
+  const isCanceled = params.status === "CANCELED";
+  const title = isSuccess
+    ? "Render complete"
+    : isCanceled
+      ? "Render canceled"
+      : "Render failed";
+  const contentSnippet = params.contentTitle
+    ? ` for "${params.contentTitle}"`
+    : "";
+  const body = isSuccess
+    ? `Video render${contentSnippet} is ready for review.`
+    : isCanceled
+      ? `Video render${contentSnippet} was canceled.`
+      : params.error
+        ? `Video render${contentSnippet} failed: ${params.error}`
+        : `Video render${contentSnippet} failed.`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: `RENDER_${params.status}`,
+      category: "RENDER",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/renders/${params.renderId}`,
+      entityType: "RENDER_JOB",
+      entityId: params.renderId,
+      eventKey,
+      data: {
+        renderId: params.renderId,
+        status: params.status,
+        ...(params.error ? { error: params.error } : {}),
+      },
+    },
+    update: {},
+  });
+}
 
 const orgs: string[] = [];
 const users: string[] = [];
