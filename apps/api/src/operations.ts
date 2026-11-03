@@ -300,30 +300,25 @@ export class OperationsController {
                 [k: string]: unknown;
               }) => row,
             ],
-            ["contentClaimReview", tx.contentClaimReview, { content: own }],
+            ["contentClaimReview", tx.contentClaimReview, own],
             ["publicationIntent", tx.publicationIntent, own],
             ["publicationSchedule", tx.publicationSchedule, own],
-            ["publicationAttempt", tx.publicationAttempt, { intent: own }],
             [
-              "publicationPolicyReview",
-              tx.publicationPolicyReview,
-              { intent: own },
+              "publicationAttempt",
+              tx.publicationAttempt,
+              own,
+              ({
+                uploadSessionCiphertext,
+                ...row
+              }: {
+                uploadSessionCiphertext?: string | null;
+                [k: string]: unknown;
+              }) => row,
             ],
-            [
-              "billingSubscription",
-              tx.billingSubscription,
-              { organizationId: org },
-            ],
-            [
-              "billingEvent",
-              tx.billingEvent,
-              { subscription: { organizationId: org } },
-            ],
-            [
-              "billingInvoice",
-              tx.billingInvoice,
-              { subscription: { organizationId: org } },
-            ],
+            ["publicationPolicyReview", tx.publicationPolicyReview, own],
+            ["billingSubscription", tx.billingSubscription, own],
+            ["billingEvent", tx.billingEvent, own],
+            ["billingInvoice", tx.billingInvoice, own],
           ];
           for (const [type, model, where, safe] of tables) {
             let cursor: string | undefined;
