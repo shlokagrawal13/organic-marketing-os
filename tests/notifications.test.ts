@@ -318,7 +318,7 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     prisma = new PrismaClient({
       datasources: {
         db: {
-          url: `postgresql://postgres:postgres@127.0.0.1:${socketPort}/postgres`,
+          url: `postgresql://postgres:postgres@127.0.0.1:${socketPort}/postgres?connection_limit=1`,
         },
       },
     });
