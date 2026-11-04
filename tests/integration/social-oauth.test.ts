@@ -396,3 +396,118 @@ test("remote refresh success followed by local authorization failure remains blo
   assert.equal(recovered.refreshPendingAt, null);
   assert.notEqual(recovered.refreshTokenCiphertext, connected.refreshTokenCiphertext);
 });
+
+test("social connection disconnect deletes unreferenced connection, soft-disconnects referenced with zeroed tokens, and cancels active schedules", async () => {
+  const org = await db.organization.create({ data: { name: "Disconnect fixture" } });
+  const otherOrg = await db.organization.create({ data: { name: "Other Disconnect fixture" } });
+  orgs.push(org.id, otherOrg.id);
+  const owner = await actor(org.id);
+  const editor = await actor(org.id, "EDITOR");
+  const outsider = await actor(otherOrg.id);
+  users.push(owner.id, editor.id, outsider.id);
+
+  // 1. Connect first channel
+  const state1 = await begin(org.id, owner);
+  assert.equal(new URL((await callback(state1, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+  const conn1 = await db.socialConnection.findFirstOrThrow({
+    where: { organizationId: org.id, externalAccountId: "UC-isolated-channel" },
+  });
+
+  const route1 = `/workspaces/${org.id}/social-connections/${conn1.id}`;
+
+  // 2. Authorization checks
+  assert.equal((await request(route1, editor, "DELETE")).status, 403);
+  assert.equal((await request(route1, outsider, "DELETE")).status, 404);
+
+  // 3. Test unreferenced disconnect -> hard delete
+  const res1 = await request(route1, owner, "DELETE");
+  assert.equal(res1.status, 200);
+  const body1 = await res1.json();
+  assert.equal(body1.ok, true);
+  assert.equal(body1.disconnected, true);
+  assert.equal(body1.hardDeleted, true);
+
+  // Verify row deleted from DB
+  const deletedRow = await db.socialConnection.findUnique({ where: { id: conn1.id } });
+  assert.equal(deletedRow, null);
+
+  // Verify audit log
+  const auditLog1 = await db.auditLog.findFirst({
+    where: { organizationId: org.id, action: "social_connection.disconnected", entityId: conn1.id },
+  });
+  assert.ok(auditLog1);
+  assert.equal(auditLog1.actorId, owner.id);
+  assert.equal((auditLog1.detail as any).hardDeleted, true);
+
+  // 4. Connect again and attach an active publication schedule
+  const state2 = await begin(org.id, owner);
+  assert.equal(new URL((await callback(state2, owner)).headers.get("location")!).searchParams.get("youtube"), "connected");
+  const conn2 = await db.socialConnection.findFirstOrThrow({
+    where: { organizationId: org.id, externalAccountId: "UC-isolated-channel" },
+  });
+  const route2 = `/workspaces/${org.id}/social-connections/${conn2.id}`;
+
+  const content = await db.contentItem.create({
+    data: {
+      organizationId: org.id,
+      title: "Disconnect test video",
+      type: "VIDEO",
+      status: "APPROVED",
+      currentRevision: 1,
+    },
+  });
+  const intent = await db.publicationIntent.create({
+    data: {
+      organizationId: org.id,
+      contentId: content.id,
+      contentRevision: 1,
+      actorId: owner.id,
+      platform: "YOUTUBE",
+      requestKey: `intent-${conn2.id}`,
+      requestHash: `hash-${conn2.id}`,
+      frozenPayload: {},
+      status: "ACTIVE",
+    },
+  });
+  const schedule = await db.publicationSchedule.create({
+    data: {
+      organizationId: org.id,
+      intentId: intent.id,
+      connectionId: conn2.id,
+      actorId: owner.id,
+      requestKey: `sched-${conn2.id}`,
+      dueAt: new Date(Date.now() + 3600000),
+      status: "SCHEDULED",
+    },
+  });
+
+  // 5. Test referenced disconnect -> soft disconnect, credential erasure, schedule cancellation
+  const res2 = await request(route2, owner, "DELETE");
+  assert.equal(res2.status, 200);
+  const body2 = await res2.json();
+  assert.equal(body2.ok, true);
+  assert.equal(body2.disconnected, true);
+  assert.equal(body2.hardDeleted, false);
+
+  // Verify row retained with zeroed credentials
+  const softRow = await db.socialConnection.findUniqueOrThrow({ where: { id: conn2.id } });
+  assert.equal(softRow.accessTokenCiphertext, "");
+  assert.equal(softRow.refreshTokenCiphertext, null);
+  assert.equal(softRow.tokenExpiresAt, null);
+  assert.equal(softRow.refreshTokenExpiresAt, null);
+  assert.equal(softRow.refreshPendingAt, null);
+  assert.ok(softRow.revokedAt instanceof Date);
+
+  // Verify schedule canceled
+  const updatedSchedule = await db.publicationSchedule.findUniqueOrThrow({ where: { id: schedule.id } });
+  assert.equal(updatedSchedule.status, "CANCELED");
+  assert.equal(updatedSchedule.outcomeCode, "CONNECTION_DISCONNECTED");
+
+  // Verify audit log
+  const auditLog2 = await db.auditLog.findFirst({
+    where: { organizationId: org.id, action: "social_connection.disconnected", entityId: conn2.id },
+  });
+  assert.ok(auditLog2);
+  assert.equal((auditLog2.detail as any).hardDeleted, false);
+});
+

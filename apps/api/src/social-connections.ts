@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Controller,
+  Delete,
   Get,
   Injectable,
   Module,
@@ -264,6 +265,120 @@ export class SocialConnectionsController {
       });
     });
     return { ok: true, providerRevocation: "CONFIRMED" };
+  }
+
+  @Delete(":id") @Roles("OWNER", "ADMIN") async disconnect(
+    @Req() req: AuthedRequest,
+    @Param("id") id: string,
+  ) {
+    idSchema.parse(id);
+    return this.disconnectConnection(req, id);
+  }
+
+  private async disconnectConnection(req: AuthedRequest, id: string) {
+    idSchema.parse(id);
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${req.organizationId} FOR UPDATE`;
+      const row = await tx.socialConnection.findFirst({
+        where: { id, organizationId: req.organizationId },
+      });
+      if (!row) throw new NotFoundException("Social connection not found.");
+
+      const now = new Date();
+
+      await tx.publicationSchedule.updateMany({
+        where: {
+          organizationId: req.organizationId,
+          connectionId: id,
+          status: "SCHEDULED",
+        },
+        data: {
+          status: "CANCELED",
+          completedAt: now,
+          outcomeCode: "CONNECTION_DISCONNECTED",
+        },
+      });
+
+      await tx.publicationAttempt.updateMany({
+        where: {
+          organizationId: req.organizationId,
+          connectionId: id,
+          status: "RESERVED",
+        },
+        data: {
+          status: "BLOCKED",
+          completedAt: now,
+          outcomeCode: "AUTH_REVOKED",
+          version: { increment: 1 },
+        },
+      });
+
+      await tx.publicationAttempt.updateMany({
+        where: {
+          organizationId: req.organizationId,
+          connectionId: id,
+          status: "SUBMITTING",
+        },
+        data: {
+          status: "UNKNOWN",
+          completedAt: now,
+          outcomeCode: "REVOKED_DURING_SUBMISSION",
+          version: { increment: 1 },
+        },
+      });
+
+      const attemptCount = await tx.publicationAttempt.count({
+        where: { connectionId: id },
+      });
+      const reviewCount = await tx.publicationPolicyReview.count({
+        where: { connectionId: id },
+      });
+      const scheduleCount = await tx.publicationSchedule.count({
+        where: { connectionId: id },
+      });
+
+      let hardDeleted = false;
+      if (attemptCount === 0 && reviewCount === 0 && scheduleCount === 0) {
+        await tx.socialConnection.delete({
+          where: { id },
+        });
+        hardDeleted = true;
+      } else {
+        await tx.socialConnection.update({
+          where: { id },
+          data: {
+            accessTokenCiphertext: "",
+            refreshTokenCiphertext: null,
+            tokenExpiresAt: null,
+            refreshTokenExpiresAt: null,
+            refreshPendingAt: null,
+            revokedAt: row.revokedAt ?? now,
+          },
+        });
+      }
+
+      await tx.auditLog.create({
+        data: {
+          organizationId: req.organizationId,
+          actorId: req.userId,
+          action: "social_connection.disconnected",
+          entityId: id,
+          detail: {
+            provider: row.provider,
+            externalAccountId: row.externalAccountId,
+            accountLabel: row.accountLabel,
+            hardDeleted,
+          },
+        },
+      });
+
+      return {
+        ok: true,
+        disconnected: true,
+        hardDeleted,
+        id,
+      };
+    });
   }
 
   @Post(":id/refresh") @Roles("OWNER", "ADMIN") async refresh(
