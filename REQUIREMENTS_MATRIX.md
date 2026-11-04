@@ -1,3 +1,7 @@
+<!-- UX01K_CI_FOLLOWUP_START -->
+First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.
+<!-- UX01K_CI_FOLLOWUP_END -->
+
 <!-- UX01K_CURRENT_START -->
 ## Current: UX-01K - 2026-11-04
 

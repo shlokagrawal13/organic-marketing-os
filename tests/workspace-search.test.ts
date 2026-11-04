@@ -33,7 +33,7 @@ test("search SQL binds malicious input and tenant identifiers without interpolat
   assert.equal(sql.text.includes("tenant-marker"), false);
   assert.equal(
     sql.values.filter((value) => value === "tenant-marker").length,
-    4,
+    5,
   );
   assert.ok(sql.values.includes(q));
   assert.ok(sql.text.includes("plainto_tsquery"));

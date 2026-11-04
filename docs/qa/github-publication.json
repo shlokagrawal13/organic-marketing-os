@@ -1089,9 +1089,37 @@
   },
   "ux01k": {
     "taskId": "UX-01K",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "followup_local_verified_own_exact_commit_ci_pending",
     "baseCommit": "bea0036f24706b82ef2999fc1d892c235a7c6e4f",
     "sourceZip": "external organic-marketing-os-ux01k-source.zip",
-    "finalReceipt": "external ux01k-final-ci-receipt.json"
+    "finalReceipt": "external ux01k-final-ci-receipt.json",
+    "firstFailedRun": {
+      "schemaVersion": 1,
+      "taskId": "UX-01K",
+      "attempt": 1,
+      "recordedAtUtc": "2026-11-04T12:06:40.330Z",
+      "commit": "34330e19e58268785035852b863f539df9b4c1d8",
+      "runId": 41824933052,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052",
+      "acceptance": false,
+      "observed": {
+        "core": "failed Run unit tests: 378 pass, 1 fail; later core gates skipped",
+        "nativeUpgrade": "all required steps passed",
+        "compose": "still in progress at follow-up preparation"
+      },
+      "failure": "Tenant-binding unit test expected four SQL organizationId parameters; research adds a fifth tenant-bound branch. Application and search HTTP/browser checks were locally green; first core CI stopped before audits and HTTP/browser acceptance.",
+      "resolution": "Preserve injection and tenant-marker assertions; change only the expected tenant-bound parameter count from four to five in tests/workspace-search.test.ts.",
+      "followupLocal": {
+        "focusedUnitPassed": 3,
+        "httpPriorExactApplicationSourcePassed": 6,
+        "browserPriorExactApplicationSourcePassed": 6,
+        "priorOwnedFixtureCleaned": true,
+        "applicationRuntimeAndDependenciesUnchanged": true
+      },
+      "coreJobId": 126557129109,
+      "coreJobLogBytes": 144426,
+      "coreJobLogSha256": "c18a85585332ec1360d9b565f7130782f70297ef01adab03de4c1a53fb35e06b",
+      "next": "New exact final commit must pass all three jobs and every required step; first run is not acceptance."
+    }
   }
 }

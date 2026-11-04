@@ -3,7 +3,7 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
   "checkpointRevision": "ux01k-20261104",
-  "savedAtUtc": "2026-11-04T11:53:04.258Z",
+  "savedAtUtc": "2026-11-04T12:06:40.330Z",
   "currentMilestone": "UX-01K research workspace search",
   "activeTaskId": "UX-01",
   "workInProgress": true,
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish UX-01K research workspace search with fresh source ZIP; verify all three jobs and every required step on its exact final commit, inspect four artifact bytes/reports and pair external K final CI receipt. No recovery Q/R.",
+  "nextAction": "Publish UX-01K follow-up after preserving five-tenant-branch security assertion; verify all three jobs/every required step on its new exact final commit and pair external receipt/source ZIP. First K run failed core unit test and is not acceptance.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -112,7 +112,9 @@
     "docs/qa/ux01k-evidence.json",
     "docs/qa/verification-summary.json",
     "tests/integration/workspace-search.test.ts",
-    "tests/ui/workspace-search.spec.ts"
+    "tests/ui/workspace-search.spec.ts",
+    "docs/qa/ux01k-ci-attempt1.json",
+    "tests/workspace-search.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -7934,7 +7936,7 @@
       "title": "Remaining collaboration and product UX",
       "status": "local_verified_own_exact_commit_ci_pending",
       "completedIncrement": "J exact CI closed; K research search local checks pass.",
-      "nextAction": "Publish UX-01K research workspace search with fresh source ZIP; verify all three jobs and every required step on its exact final commit, inspect four artifact bytes/reports and pair external K final CI receipt. No recovery Q/R.",
+      "nextAction": "Publish UX-01K follow-up after preserving five-tenant-branch security assertion; verify all three jobs/every required step on its new exact final commit and pair external receipt/source ZIP. First K run failed core unit test and is not acceptance.",
       "currentEvidence": "docs/qa/ux01k-evidence.json"
     },
     {
@@ -8036,7 +8038,8 @@
   "latestStatus": {
     "taskId": "UX-01K",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish UX-01K research workspace search with fresh source ZIP; verify all three jobs and every required step on its exact final commit, inspect four artifact bytes/reports and pair external K final CI receipt. No recovery Q/R."
+    "nextAction": "Publish UX-01K follow-up after preserving five-tenant-branch security assertion; verify all three jobs/every required step on its new exact final commit and pair external receipt/source ZIP. First K run failed core unit test and is not acceptance.",
+    "ciAttempt1": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052"
   },
   "activeTask": {
     "id": "UX-01K",
@@ -8086,9 +8089,12 @@
       "docs/qa/ux01k-evidence.json",
       "docs/qa/verification-summary.json",
       "tests/integration/workspace-search.test.ts",
-      "tests/ui/workspace-search.spec.ts"
+      "tests/ui/workspace-search.spec.ts",
+      "docs/qa/ux01k-ci-attempt1.json",
+      "tests/workspace-search.test.ts"
     ],
-    "required": "Exact own three-job CI, all required steps, four artifact bytes/reports, external final receipt and portable source ZIP"
+    "required": "Exact own three-job CI, all required steps, four artifact bytes/reports, external final receipt and portable source ZIP",
+    "firstFailedRun": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8779,7 +8785,36 @@
       "migrations": 25,
       "fullAuditVulnerabilities": 0,
       "productionAuditVulnerabilities": 0,
-      "formatAndDiffCheck": true
+      "formatAndDiffCheck": true,
+      "focusedUnitFollowupPassed": 3
+    },
+    "ciAttempt1": {
+      "schemaVersion": 1,
+      "taskId": "UX-01K",
+      "attempt": 1,
+      "recordedAtUtc": "2026-11-04T12:06:40.330Z",
+      "commit": "34330e19e58268785035852b863f539df9b4c1d8",
+      "runId": 41824933052,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052",
+      "acceptance": false,
+      "observed": {
+        "core": "failed Run unit tests: 378 pass, 1 fail; later core gates skipped",
+        "nativeUpgrade": "all required steps passed",
+        "compose": "still in progress at follow-up preparation"
+      },
+      "failure": "Tenant-binding unit test expected four SQL organizationId parameters; research adds a fifth tenant-bound branch. Application and search HTTP/browser checks were locally green; first core CI stopped before audits and HTTP/browser acceptance.",
+      "resolution": "Preserve injection and tenant-marker assertions; change only the expected tenant-bound parameter count from four to five in tests/workspace-search.test.ts.",
+      "followupLocal": {
+        "focusedUnitPassed": 3,
+        "httpPriorExactApplicationSourcePassed": 6,
+        "browserPriorExactApplicationSourcePassed": 6,
+        "priorOwnedFixtureCleaned": true,
+        "applicationRuntimeAndDependenciesUnchanged": true
+      },
+      "coreJobId": 126557129109,
+      "coreJobLogBytes": 144426,
+      "coreJobLogSha256": "c18a85585332ec1360d9b565f7130782f70297ef01adab03de4c1a53fb35e06b",
+      "next": "New exact final commit must pass all three jobs and every required step; first run is not acceptance."
     }
   },
   "social01PolicyReview": {
@@ -22245,7 +22280,9 @@
     "docs/qa/ux01k-evidence.json",
     "docs/qa/verification-summary.json",
     "tests/integration/workspace-search.test.ts",
-    "tests/ui/workspace-search.spec.ts"
+    "tests/ui/workspace-search.spec.ts",
+    "docs/qa/ux01k-ci-attempt1.json",
+    "tests/workspace-search.test.ts"
   ],
   "secondUx01bPublication": {
     "taskId": "UX-01B",
@@ -23646,13 +23683,48 @@
       }
     ],
     "publication": {
-      "required": "Own exact final commit: three jobs/every required step and four artifact bytes/digests/CRC/reports",
+      "required": "Follow-up exact final commit: three jobs/every required step and four artifact bytes/digests/CRC/reports; first run failed core unit assertion",
       "finalReceipt": "External ux01k-final-ci-receipt.json paired with source ZIP"
     },
     "limits": [
       "Saved research discovery does not establish source accuracy/freshness",
       "Large-tenant search performance and other domains remain open",
       "Live/deployed/full-master acceptance open; CI does not deploy"
-    ]
+    ],
+    "ciAttempt1": {
+      "schemaVersion": 1,
+      "taskId": "UX-01K",
+      "attempt": 1,
+      "recordedAtUtc": "2026-11-04T12:06:40.330Z",
+      "commit": "34330e19e58268785035852b863f539df9b4c1d8",
+      "runId": 41824933052,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052",
+      "acceptance": false,
+      "observed": {
+        "core": "failed Run unit tests: 378 pass, 1 fail; later core gates skipped",
+        "nativeUpgrade": "all required steps passed",
+        "compose": "still in progress at follow-up preparation"
+      },
+      "failure": "Tenant-binding unit test expected four SQL organizationId parameters; research adds a fifth tenant-bound branch. Application and search HTTP/browser checks were locally green; first core CI stopped before audits and HTTP/browser acceptance.",
+      "resolution": "Preserve injection and tenant-marker assertions; change only the expected tenant-bound parameter count from four to five in tests/workspace-search.test.ts.",
+      "followupLocal": {
+        "focusedUnitPassed": 3,
+        "httpPriorExactApplicationSourcePassed": 6,
+        "browserPriorExactApplicationSourcePassed": 6,
+        "priorOwnedFixtureCleaned": true,
+        "applicationRuntimeAndDependenciesUnchanged": true
+      },
+      "coreJobId": 126557129109,
+      "coreJobLogBytes": 144426,
+      "coreJobLogSha256": "c18a85585332ec1360d9b565f7130782f70297ef01adab03de4c1a53fb35e06b",
+      "next": "New exact final commit must pass all three jobs and every required step; first run is not acceptance."
+    },
+    "followupLocal": {
+      "focusedUnitPassed": 3,
+      "httpPriorExactApplicationSourcePassed": 6,
+      "browserPriorExactApplicationSourcePassed": 6,
+      "priorOwnedFixtureCleaned": true,
+      "applicationRuntimeAndDependenciesUnchanged": true
+    }
   }
 }

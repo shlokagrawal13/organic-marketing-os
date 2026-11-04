@@ -1,3 +1,7 @@
+## UX-01K CI unit assertion follow-up - 2026-11-04
+
+First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.
+
 ## UX-01K research workspace search - 2026-11-04
 
 UX-01J exact commit bea0036/run41689987187 passed ALL THREE jobs/every required step (379 unit,49 HTTP,66 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact ZIP bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01j-final-ci-receipt.json closes J's packaged own-CI pending status. UX-01K adds tenant-bound saved research to workspace search and exact older-record opening. Local6 HTTP/6 browser pass in an owned fixture. K needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
