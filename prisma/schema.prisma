@@ -83,6 +83,7 @@ model Organization {
   contentClaimReviews      ContentClaimReview[]
   youtubePolicy            WorkspaceYoutubePolicy?
   research                 ResearchRecord[]
+  notifications            Notification[]
 }
 
 enum ResearchCategory {
@@ -862,4 +863,27 @@ model MediaGeneration {
   @@index([organizationId, createdAt])
   @@index([state, nextAttemptAt])
   @@index([state, heartbeatAt])
+}
+
+model Notification {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String?
+  type           String
+  category       String       @default("RENDER")
+  title          String
+  body           String
+  link           String?
+  entityType     String?
+  entityId       String?
+  eventKey       String
+  data           Json         @default("{}")
+  readAt         DateTime?
+  readBy         String?
+  createdAt      DateTime     @default(now())
+
+  @@unique([organizationId, eventKey])
+  @@index([organizationId, createdAt])
+  @@index([organizationId, userId, readAt])
 }

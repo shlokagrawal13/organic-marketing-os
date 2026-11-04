@@ -1,0 +1,168 @@
+# In-App Notifications (NOTIFY-01A)
+
+## Overview & Scope
+NOTIFY-01A introduces a durable, tenant-bound in-app notification increment driven by real terminal render-job events (`SUCCEEDED`, `FAILED`, `CANCELED`). It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, bounded pagination, and single/batch read acknowledgement.
+
+In accordance with bounded scope:
+- No synthetic or mock notification generation.
+- No external delivery channels (email, SMS, or mobile push).
+- No realtime WebSocket or SLO guarantees claimed.
+- `AuditLog` remains append-only and immutable; notifications are stored in a dedicated mutable read-receipt model (`Notification`).
+
+---
+
+## Data Model & Schema
+
+Migration `202611030001_in_app_notifications` introduces the `Notification` table:
+
+```prisma
+model Notification {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String?
+  type           String
+  category       String       @default("GENERAL")
+  title          String
+  body           String
+  link           String?
+  entityType     String?
+  entityId       String?
+  eventKey       String?
+  data           Json         @default("{}")
+  readAt         DateTime?
+  readBy         String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, eventKey])
+  @@index([organizationId, createdAt])
+  @@index([organizationId, userId, readAt])
+}
+```
+
+### Key Schema Properties
+1. **Deduplication Key (`eventKey`)**:
+   Terminal render events construct an event key: `render:${renderId}:${status}`.
+   The compound unique constraint `@@unique([organizationId, eventKey])` guarantees database-level idempotency against duplicate worker messages, retries, or concurrent dispatcher completions.
+2. **Reverse Chronological Index**:
+   `@@index([organizationId, createdAt])` optimizes reverse-chronological paginated listing.
+3. **User & Unread Status Index**:
+   `@@index([organizationId, userId, readAt])` enables efficient unread filtering and badge counts.
+
+---
+
+## Real Terminal Render Event Triggers
+
+Notifications are emitted strictly upon reaching terminal render status:
+
+1. **`render-worker.ts` (Success)**:
+   When video rendering succeeds and the output asset is uploaded, `createRenderNotification(tx, ...)` executes inside the database transaction alongside the terminal `AuditLog` creation:
+   - Type: `RENDER_SUCCEEDED`
+   - Category: `RENDER`
+   - Event Key: `render:${job.id}:SUCCEEDED`
+   - Title: `Render complete`
+   - Body: `Video render for "{title}" is ready for review.`
+
+2. **`render-worker.ts` (Failure)**:
+   When rendering encounters an unrecoverable worker failure, `createRenderNotification(prisma, ...)` executes in the failure handler:
+   - Type: `RENDER_FAILED`
+   - Category: `RENDER`
+   - Event Key: `render:${job.id}:FAILED`
+   - Title: `Render failed`
+   - Body: `Video render for "{title}" failed: {error}`
+
+3. **`renders.ts` (Cancellation)**:
+   When an authorized workspace user cancels an in-flight or queued render job, `createRenderNotification(tx, ...)` executes inside the cancellation transaction alongside the cancellation `AuditLog` entry:
+   - Type: `RENDER_CANCELED`
+   - Category: `RENDER`
+   - Event Key: `render:${job.id}:CANCELED`
+   - Title: `Render canceled`
+   - Body: `Video render for "{title}" was canceled.`
+
+---
+
+## Authorization & Role Matrix
+
+The API controller is mounted at `/workspaces/:organizationId/notifications` and guarded by `TenantGuard`:
+
+| Role | Access Level | Scoping Behavior |
+| :--- | :--- | :--- |
+| `OWNER` | Full | Access to all workspace notifications; optional `mine=true` filter |
+| `ADMIN` | Full | Access to all workspace notifications; optional `mine=true` filter |
+| `EDITOR` | Scoped | Access restricted to notifications addressed to user or unassigned broadcasts (`userId === null`) |
+| `CREATOR` | Scoped | Access restricted to notifications addressed to user or unassigned broadcasts (`userId === null`) |
+| `ANALYST` | Scoped | Access restricted to notifications addressed to user or unassigned broadcasts (`userId === null`) |
+| `CLIENT` | Denied | HTTP 403 Forbidden |
+| Non-member | Denied | HTTP 404 Not Found (TenantGuard boundary) |
+
+---
+
+## API Endpoints
+
+### 1. List Workspace Notifications
+`GET /workspaces/:organizationId/notifications`
+
+**Query Parameters:**
+- `skip`: Integer, $\ge 0$ (default `0`)
+- `take`: Integer, $1 \dots 100$ (default `50`)
+- `unreadOnly`: `"true" | "false"` (optional, filters `readAt === null`)
+- `category`: String, max 50 chars (optional, e.g. `"RENDER"`)
+- `mine`: `"true" | "false"` (optional, for elevated roles)
+
+**Response:**
+```json
+{
+  "items": [
+    {
+      "id": "uuid",
+      "organizationId": "org-uuid",
+      "userId": "user-uuid",
+      "type": "RENDER_SUCCEEDED",
+      "category": "RENDER",
+      "title": "Render complete",
+      "body": "Video render for \"Intro\" is ready for review.",
+      "link": "/workspaces/org-uuid/renders/render-uuid",
+      "entityType": "RENDER_JOB",
+      "entityId": "render-uuid",
+      "eventKey": "render:render-uuid:SUCCEEDED",
+      "data": { "renderId": "render-uuid", "status": "SUCCEEDED" },
+      "readAt": null,
+      "readBy": null,
+      "createdAt": "2026-11-04T00:00:00.000Z",
+      "updatedAt": "2026-11-04T00:00:00.000Z"
+    }
+  ],
+  "total": 1,
+  "unreadCount": 1,
+  "skip": 0,
+  "take": 50
+}
+```
+
+### 2. Get Single Notification
+`GET /workspaces/:organizationId/notifications/:id`
+
+- Returns the notification record.
+- Returns 404 if notification does not exist or belongs to another tenant.
+- Returns 403 if non-elevated user attempts to access a notification assigned to another user.
+
+### 3. Acknowledge Notification Read
+`POST /workspaces/:organizationId/notifications/:id/read`
+`PATCH /workspaces/:organizationId/notifications/:id/read`
+
+- Idempotently marks notification as read (`readAt = now()`, `readBy = actor.id`).
+- Subsequent calls preserve original `readAt` timestamp and return 200 OK.
+
+### 4. Read All Notifications
+`POST /workspaces/:organizationId/notifications/read-all`
+
+- Marks all unread notifications within the actor's scope as read.
+- Returns `{ "acknowledged": <count> }`.
+
+---
+
+## Concurrency & Retry Guarantees
+- **Deduplication**: Replays of the same terminal event with the same `(organizationId, eventKey)` are ignored via atomic `upsert`, preventing duplicate notifications.
+- **Retries**: A retry job generates a distinct `renderId`, correctly yielding a new notification while preserving the terminal failure record of the previous attempt.
+- **Concurrent Acknowledgment**: Concurrent read requests atomically set `readAt` and preserve the first acknowledgement timestamp without regression.

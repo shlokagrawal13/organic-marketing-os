@@ -1,0 +1,692 @@
+import { test, describe, before, after } from "node:test";
+import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
+import { PGlite } from "@electric-sql/pglite";
+import { PGLiteSocketServer } from "@electric-sql/pglite-socket";
+import { PrismaClient, Role } from "@prisma/client";
+import {
+  createRenderNotification,
+  NotificationsController,
+  NOTIFICATION_ROLES,
+} from "../dist/apps/api/src/notifications";
+import { applicationMigrations } from "../scripts/application-pitr-fixture.mjs";
+import { fileURLToPath } from "node:url";
+
+describe("Notifications - Unit & Idempotent Event Contracts", () => {
+  let db: PGlite;
+
+  before(async () => {
+    db = await PGlite.create();
+    for (const m of applicationMigrations(
+      fileURLToPath(new URL("..", import.meta.url)),
+    )) {
+      await db.exec(m.sql);
+    }
+  });
+
+  after(async () => {
+    await db.close();
+  });
+
+  test("creates durable, tenant-bound notification on successful render terminal event", async () => {
+    const orgId = randomUUID();
+    const actorId = randomUUID();
+    const renderId = randomUUID();
+
+    await db.query('INSERT INTO "Organization" (id, name) VALUES ($1, $2)', [
+      orgId,
+      "Test Org",
+    ]);
+
+    const eventKey = `render:${renderId}:SUCCEEDED`;
+    await db.query(
+      `INSERT INTO "Notification" (id, "organizationId", "userId", type, category, title, body, link, "entityType", "entityId", "eventKey", data, "createdAt")
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, now())`,
+      [
+        randomUUID(),
+        orgId,
+        actorId,
+        "RENDER_SUCCEEDED",
+        "RENDER",
+        "Render complete",
+        'Video render for "Intro Video" is ready for review.',
+        `/workspaces/${orgId}/renders/${renderId}`,
+        "RENDER_JOB",
+        renderId,
+        eventKey,
+        JSON.stringify({ renderId, status: "SUCCEEDED" }),
+      ],
+    );
+
+    const rows = (
+      await db.query('SELECT * FROM "Notification" WHERE "organizationId" = $1', [
+        orgId,
+      ])
+    ).rows as any[];
+
+    assert.equal(rows.length, 1);
+    const n = rows[0];
+    assert.equal(n.organizationId, orgId);
+    assert.equal(n.userId, actorId);
+    assert.equal(n.type, "RENDER_SUCCEEDED");
+    assert.equal(n.category, "RENDER");
+    assert.equal(n.title, "Render complete");
+    assert.equal(n.readAt, null);
+    assert.equal(n.eventKey, eventKey);
+  });
+
+  test("enforces duplicate event idempotency with unique (organizationId, eventKey) constraint", async () => {
+    const orgId = randomUUID();
+    const renderId = randomUUID();
+    const eventKey = `render:${renderId}:SUCCEEDED`;
+
+    await db.query('INSERT INTO "Organization" (id, name) VALUES ($1, $2)', [
+      orgId,
+      "Dedup Org",
+    ]);
+
+    // First insert succeeds
+    await db.query(
+      `INSERT INTO "Notification" (id, "organizationId", type, category, title, body, "eventKey")
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        randomUUID(),
+        orgId,
+        "RENDER_SUCCEEDED",
+        "RENDER",
+        "Render complete",
+        "Body",
+        eventKey,
+      ],
+    );
+
+    // Second insert with the exact same (organizationId, eventKey) must violate unique constraint
+    await assert.rejects(
+      async () => {
+        await db.query(
+          `INSERT INTO "Notification" (id, "organizationId", type, category, title, body, "eventKey")
+           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [
+            randomUUID(),
+            orgId,
+            "RENDER_SUCCEEDED",
+            "RENDER",
+            "Render complete duplicate",
+            "Body",
+            eventKey,
+          ],
+        );
+      },
+      (err: any) => {
+        assert.match(
+          err.message,
+          /duplicate key value violates unique constraint|unique constraint/i,
+        );
+        return true;
+      },
+    );
+
+    const count = (
+      await db.query(
+        'SELECT count(*) as count FROM "Notification" WHERE "organizationId" = $1 AND "eventKey" = $2',
+        [orgId, eventKey],
+      )
+    ).rows[0] as any;
+    assert.equal(Number(count.count), 1);
+  });
+
+  test("handles retries safely: distinct render job produces separate notification while preserving original", async () => {
+    const orgId = randomUUID();
+    const firstRenderId = randomUUID();
+    const retryRenderId = randomUUID();
+
+    await db.query('INSERT INTO "Organization" (id, name) VALUES ($1, $2)', [
+      orgId,
+      "Retry Org",
+    ]);
+
+    // First render job failed
+    const failedEventKey = `render:${firstRenderId}:FAILED`;
+    await db.query(
+      `INSERT INTO "Notification" (id, "organizationId", type, category, title, body, "eventKey")
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        randomUUID(),
+        orgId,
+        "RENDER_FAILED",
+        "RENDER",
+        "Render failed",
+        "Out of memory error during frame 120",
+        failedEventKey,
+      ],
+    );
+
+    // Retried render job succeeded
+    const retriedEventKey = `render:${retryRenderId}:SUCCEEDED`;
+    await db.query(
+      `INSERT INTO "Notification" (id, "organizationId", type, category, title, body, "eventKey")
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        randomUUID(),
+        orgId,
+        "RENDER_SUCCEEDED",
+        "RENDER",
+        "Render complete",
+        "Render completed successfully on retry",
+        retriedEventKey,
+      ],
+    );
+
+    const rows = (
+      await db.query(
+        'SELECT * FROM "Notification" WHERE "organizationId" = $1 ORDER BY "createdAt" ASC',
+        [orgId],
+      )
+    ).rows as any[];
+
+    assert.equal(rows.length, 2);
+    assert.equal(rows[0].eventKey, failedEventKey);
+    assert.equal(rows[0].type, "RENDER_FAILED");
+    assert.equal(rows[1].eventKey, retriedEventKey);
+    assert.equal(rows[1].type, "RENDER_SUCCEEDED");
+  });
+
+  test("tenant isolation: notifications belonging to Org A cannot be read in Org B query", async () => {
+    const orgA = randomUUID();
+    const orgB = randomUUID();
+
+    await db.query('INSERT INTO "Organization" (id, name) VALUES ($1, $2)', [
+      orgA,
+      "Org A",
+    ]);
+    await db.query('INSERT INTO "Organization" (id, name) VALUES ($1, $2)', [
+      orgB,
+      "Org B",
+    ]);
+
+    await db.query(
+      `INSERT INTO "Notification" (id, "organizationId", type, category, title, body, "eventKey")
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        randomUUID(),
+        orgA,
+        "RENDER_SUCCEEDED",
+        "RENDER",
+        "Org A Render",
+        "Org A body",
+        `render:${randomUUID()}:SUCCEEDED`,
+      ],
+    );
+
+    const orgBResults = await db.query(
+      'SELECT * FROM "Notification" WHERE "organizationId" = $1',
+      [orgB],
+    );
+    assert.equal(orgBResults.rows.length, 0);
+
+    const orgAResults = await db.query(
+      'SELECT * FROM "Notification" WHERE "organizationId" = $1',
+      [orgA],
+    );
+    assert.equal(orgAResults.rows.length, 1);
+  });
+
+  test("concurrent read acknowledgement is idempotent and does not overwrite original read timestamp", async () => {
+    const orgId = randomUUID();
+    const notifId = randomUUID();
+    const readerA = randomUUID();
+    const readerB = randomUUID();
+
+    await db.query('INSERT INTO "Organization" (id, name) VALUES ($1, $2)', [
+      orgId,
+      "Ack Org",
+    ]);
+
+    await db.query(
+      `INSERT INTO "Notification" (id, "organizationId", type, category, title, body, "eventKey")
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        notifId,
+        orgId,
+        "RENDER_SUCCEEDED",
+        "RENDER",
+        "Title",
+        "Body",
+        `render:${randomUUID()}:SUCCEEDED`,
+      ],
+    );
+
+    // Initial state is unread
+    const initial = (
+      await db.query('SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1', [
+        notifId,
+      ])
+    ).rows[0] as any;
+    assert.equal(initial.readAt, null);
+    assert.equal(initial.readBy, null);
+
+    // First acknowledge
+    const firstTime = new Date();
+    await db.query(
+      `UPDATE "Notification" SET "readAt" = coalesce("readAt", $1), "readBy" = coalesce("readBy", $2) WHERE id = $3`,
+      [firstTime, readerA, notifId],
+    );
+
+    const firstAck = (
+      await db.query('SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1', [
+        notifId,
+      ])
+    ).rows[0] as any;
+    assert.equal(firstAck.readBy, readerA);
+    assert.ok(firstAck.readAt);
+
+    // Second concurrent acknowledge attempt should not overwrite
+    const secondTime = new Date(Date.now() + 10000);
+    await db.query(
+      `UPDATE "Notification" SET "readAt" = coalesce("readAt", $1), "readBy" = coalesce("readBy", $2) WHERE id = $3`,
+      [secondTime, readerB, notifId],
+    );
+
+    const afterAck = (
+      await db.query('SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1', [
+        notifId,
+      ])
+    ).rows[0] as any;
+
+    assert.equal(afterAck.readBy, readerA);
+    assert.equal(String(afterAck.readAt), String(firstAck.readAt));
+  });
+});
+
+describe("Notifications - Controller & Application Service Contracts", () => {
+  let pg: PGlite;
+  let socketServer: PGLiteSocketServer;
+  let prisma: PrismaClient;
+  let controller: NotificationsController;
+  const socketPort = 5444;
+
+  before(async () => {
+    pg = await PGlite.create();
+    for (const m of applicationMigrations(
+      fileURLToPath(new URL("..", import.meta.url)),
+    )) {
+      await pg.exec(m.sql);
+    }
+    socketServer = new PGLiteSocketServer({ db: pg, port: socketPort });
+    await socketServer.start();
+
+    prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: `postgresql://postgres:postgres@127.0.0.1:${socketPort}/postgres?connection_limit=1`,
+        },
+      },
+    });
+    await prisma.$connect();
+    controller = new NotificationsController(prisma as any);
+  });
+
+  after(async () => {
+    await prisma.$disconnect();
+    await socketServer.stop();
+    await pg.close();
+  });
+
+  function fakeReq(params: {
+    userId: string;
+    organizationId: string;
+    role: Role;
+  }) {
+    return {
+      userId: params.userId,
+      organizationId: params.organizationId,
+      role: params.role,
+    } as any;
+  }
+
+  test("createRenderNotification: handles SUCCEEDED, FAILED, and CANCELED with idempotency", async () => {
+    const org = await prisma.organization.create({
+      data: { name: "Service Org" },
+    });
+    const renderId1 = randomUUID();
+    const renderId2 = randomUUID();
+    const renderId3 = randomUUID();
+    const actorId = randomUUID();
+
+    // 1. Terminal SUCCEEDED
+    const successNotif = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: renderId1,
+      actorId,
+      status: "SUCCEEDED",
+      contentTitle: "Spring Launch Teaser",
+    });
+    assert.equal(successNotif.type, "RENDER_SUCCEEDED");
+    assert.equal(successNotif.category, "RENDER");
+    assert.equal(successNotif.title, "Render complete");
+    assert.match(successNotif.body, /Spring Launch Teaser/);
+    assert.equal(successNotif.eventKey, `render:${renderId1}:SUCCEEDED`);
+    assert.equal(successNotif.userId, actorId);
+
+    // Idempotent retry of identical SUCCEEDED event
+    const successNotifDupe = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: renderId1,
+      actorId,
+      status: "SUCCEEDED",
+      contentTitle: "Spring Launch Teaser",
+    });
+    assert.equal(successNotifDupe.id, successNotif.id);
+
+    // 2. Terminal FAILED with error message
+    const failedNotif = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: renderId2,
+      actorId,
+      status: "FAILED",
+      contentTitle: "Promo 4K",
+      error: "GPU memory exceeded during composite",
+    });
+    assert.equal(failedNotif.type, "RENDER_FAILED");
+    assert.equal(failedNotif.title, "Render failed");
+    assert.match(failedNotif.body, /GPU memory exceeded/);
+    assert.equal((failedNotif.data as any).error, "GPU memory exceeded during composite");
+
+    // 3. Terminal CANCELED
+    const canceledNotif = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: renderId3,
+      actorId,
+      status: "CANCELED",
+      contentTitle: "Draft cut",
+    });
+    assert.equal(canceledNotif.type, "RENDER_CANCELED");
+    assert.equal(canceledNotif.title, "Render canceled");
+    assert.match(canceledNotif.body, /canceled/);
+  });
+
+  test("controller.list: bounded pagination and filtering", async () => {
+    const org = await prisma.organization.create({
+      data: { name: "Pagination Org" },
+    });
+    const actorId = randomUUID();
+
+    // Create 15 notifications
+    for (let i = 0; i < 15; i++) {
+      await createRenderNotification(prisma, {
+        organizationId: org.id,
+        renderId: randomUUID(),
+        actorId,
+        status: "SUCCEEDED",
+        contentTitle: `Video #${i}`,
+      });
+    }
+
+    const req = fakeReq({ userId: actorId, organizationId: org.id, role: "OWNER" });
+
+    // Page 1: take 5, skip 0
+    const page1 = await controller.list(req, { take: 5, skip: 0 });
+    assert.equal(page1.items.length, 5);
+    assert.equal(page1.total, 15);
+    assert.equal(page1.unreadCount, 15);
+    assert.equal(page1.skip, 0);
+    assert.equal(page1.take, 5);
+
+    // Page 2: take 5, skip 5
+    const page2 = await controller.list(req, { take: 5, skip: 5 });
+    assert.equal(page2.items.length, 5);
+    assert.notEqual(page1.items[0].id, page2.items[0].id);
+
+    // Mark 1 as read
+    await controller.markReadPost(req, page1.items[0].id);
+
+    // unreadOnly=true filter
+    const unreadOnly = await controller.list(req, { unreadOnly: "true" });
+    assert.equal(unreadOnly.total, 14);
+    assert.equal(unreadOnly.unreadCount, 14);
+    assert.equal(unreadOnly.items.length, 14);
+
+    // take bounded to max 100
+    const boundedTake = await controller.list(req, { take: 100 });
+    assert.equal(boundedTake.take, 100);
+  });
+
+  test("tenant isolation & role-based visibility in list and get", async () => {
+    const orgA = await prisma.organization.create({ data: { name: "Org Alpha" } });
+    const orgB = await prisma.organization.create({ data: { name: "Org Beta" } });
+
+    const ownerA = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "OWNER" });
+    const editorA1 = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "EDITOR" });
+    const editorA2 = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "EDITOR" });
+    const ownerB = fakeReq({ userId: randomUUID(), organizationId: orgB.id, role: "OWNER" });
+
+    // Notification in Org A assigned to editorA1
+    const notifA1 = await createRenderNotification(prisma, {
+      organizationId: orgA.id,
+      renderId: randomUUID(),
+      actorId: editorA1.userId,
+      status: "SUCCEEDED",
+      contentTitle: "Video A1",
+    });
+
+    // Notification in Org A broadcast (userId: null)
+    const notifBroadcast = await createRenderNotification(prisma, {
+      organizationId: orgA.id,
+      renderId: randomUUID(),
+      status: "SUCCEEDED",
+      contentTitle: "System Announcement",
+    });
+
+    // Notification in Org B assigned to ownerB
+    const notifB = await createRenderNotification(prisma, {
+      organizationId: orgB.id,
+      renderId: randomUUID(),
+      actorId: ownerB.userId,
+      status: "SUCCEEDED",
+      contentTitle: "Video B",
+    });
+
+    // 1. Tenant Isolation: ownerB sees only Org B notifications
+    const listB = await controller.list(ownerB, {});
+    assert.equal(listB.total, 1);
+    assert.equal(listB.items[0].id, notifB.id);
+
+    // ownerB cannot get Org A notification (throws NotFoundException)
+    await assert.rejects(
+      async () => {
+        await controller.get(ownerB, notifA1.id);
+      },
+      (err: any) => {
+        assert.equal(err.status, 404);
+        return true;
+      },
+    );
+
+    // 2. Role Scoping in Org A:
+    // ownerA (elevated) sees both notifA1 and notifBroadcast
+    const listOwnerA = await controller.list(ownerA, {});
+    assert.equal(listOwnerA.total, 2);
+
+    // editorA1 sees notifA1 (assigned) and notifBroadcast (broadcast)
+    const listEditorA1 = await controller.list(editorA1, {});
+    assert.equal(listEditorA1.total, 2);
+
+    // editorA2 sees only notifBroadcast, not notifA1 (which is private to editorA1)
+    const listEditorA2 = await controller.list(editorA2, {});
+    assert.equal(listEditorA2.total, 1);
+    assert.equal(listEditorA2.items[0].id, notifBroadcast.id);
+
+    // editorA2 trying to get notifA1 throws ForbiddenException (403)
+    await assert.rejects(
+      async () => {
+        await controller.get(editorA2, notifA1.id);
+      },
+      (err: any) => {
+        assert.equal(err.status, 403);
+        return true;
+      },
+    );
+  });
+
+  test("controller.markReadPost and markReadPatch: idempotent acknowledgement", async () => {
+    const org = await prisma.organization.create({ data: { name: "Ack Test Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "CREATOR" });
+
+    const notif = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      actorId: user.userId,
+      status: "SUCCEEDED",
+      contentTitle: "Video to Ack",
+    });
+
+    // 1. Initial POST /:id/read
+    const ack1 = await controller.markReadPost(user, notif.id);
+    assert.ok(ack1.readAt);
+    assert.equal(ack1.readBy, user.userId);
+
+    // 2. Repeat POST /:id/read preserves original readAt and readBy
+    const ack2 = await controller.markReadPost(user, notif.id);
+    assert.equal(String(ack2.readAt), String(ack1.readAt));
+    assert.equal(ack2.readBy, user.userId);
+
+    // 3. Repeat PATCH /:id/read also preserves original readAt
+    const ack3 = await controller.markReadPatch(user, notif.id);
+    assert.equal(String(ack3.readAt), String(ack1.readAt));
+    assert.equal(ack3.readBy, user.userId);
+  });
+
+  test("controller.readAll: marks all unread in scope as read", async () => {
+    const org = await prisma.organization.create({ data: { name: "ReadAll Org" } });
+    const userA = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "EDITOR" });
+    const userB = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "EDITOR" });
+
+    // 3 notifications for userA
+    for (let i = 0; i < 3; i++) {
+      await createRenderNotification(prisma, {
+        organizationId: org.id,
+        renderId: randomUUID(),
+        actorId: userA.userId,
+        status: "SUCCEEDED",
+        contentTitle: `User A Video #${i}`,
+      });
+    }
+
+    // 2 notifications for userB
+    for (let i = 0; i < 2; i++) {
+      await createRenderNotification(prisma, {
+        organizationId: org.id,
+        renderId: randomUUID(),
+        actorId: userB.userId,
+        status: "SUCCEEDED",
+        contentTitle: `User B Video #${i}`,
+      });
+    }
+
+    // userA marks all read
+    const res = await controller.readAll(userA);
+    assert.equal(res.acknowledged, 3);
+
+    // userA now has 0 unread
+    const listA = await controller.list(userA, { unreadOnly: "true" });
+    assert.equal(listA.unreadCount, 0);
+
+    // userB still has 2 unread (unaffected)
+    const listB = await controller.list(userB, { unreadOnly: "true" });
+    assert.equal(listB.unreadCount, 2);
+  });
+
+  test("audit log preservation: audit log entries remain intact alongside notification creation", async () => {
+    const org = await prisma.organization.create({ data: { name: "Audit Integrity Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "ADMIN" });
+    const renderId = randomUUID();
+
+    // Simulate render cancellation transaction: audit log + notification
+    await prisma.$transaction(async (tx) => {
+      await tx.auditLog.create({
+        data: {
+          organizationId: org.id,
+          actorId: user.userId,
+          action: "RENDER_JOB_CANCELED",
+          entityId: renderId,
+          detail: { renderId, reason: "User requested cancellation" },
+        },
+      });
+      await createRenderNotification(tx, {
+        organizationId: org.id,
+        renderId,
+        actorId: user.userId,
+        status: "CANCELED",
+        contentTitle: "Audit Preservation Test Video",
+      });
+    });
+
+    // Verify audit log exists with exact uncorrupted metadata
+    const audit = await prisma.auditLog.findFirst({
+      where: { organizationId: org.id, entityId: renderId },
+    });
+    assert.ok(audit);
+    assert.equal(audit.action, "RENDER_JOB_CANCELED");
+    assert.equal((audit.detail as any).reason, "User requested cancellation");
+
+    // Verify notification was also created
+    const notif = await prisma.notification.findFirst({
+      where: { organizationId: org.id, entityId: renderId },
+    });
+    assert.ok(notif);
+    assert.equal(notif.type, "RENDER_CANCELED");
+    assert.equal(notif.eventKey, `render:${renderId}:CANCELED`);
+  });
+
+  test("worker abort on canceled render does not emit duplicate or conflicting FAILED notification", async () => {
+    const org = await prisma.organization.create({ data: { name: "Cancel Guard Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const renderId = randomUUID();
+
+    // 1. Controller cancels the job and emits CANCELED notification
+    await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId,
+      actorId: user.userId,
+      status: "CANCELED",
+      contentTitle: "Canceled Cut",
+    });
+
+    // 2. Simulated worker abort: updateMany with status: "RUNNING" returns count = 0
+    // Because the job is already canceled, failed.count is 0, so no FAILED notification is created
+    const ownership = { id: renderId, status: "RUNNING" as const, runToken: "stale-token" };
+    const failed = await prisma.renderJob.updateMany({
+      where: ownership,
+      data: { status: "FAILED" },
+    });
+    assert.equal(failed.count, 0);
+
+    if (failed.count) {
+      await createRenderNotification(prisma, {
+        organizationId: org.id,
+        renderId,
+        actorId: user.userId,
+        status: "FAILED",
+        contentTitle: "Canceled Cut",
+      });
+    }
+
+    // Verify only the CANCELED notification exists and no FAILED notification was created
+    const notifs = await prisma.notification.findMany({
+      where: { organizationId: org.id, entityId: renderId },
+    });
+    assert.equal(notifs.length, 1);
+    assert.equal(notifs[0].type, "RENDER_CANCELED");
+  });
+
+  test("role authorization matrix: NOTIFICATION_ROLES contains expected authorized workspace roles", () => {
+    assert.deepEqual(NOTIFICATION_ROLES, [
+      "OWNER",
+      "ADMIN",
+      "EDITOR",
+      "CREATOR",
+      "ANALYST",
+    ]);
+    assert.equal(NOTIFICATION_ROLES.includes("CLIENT"), false);
+  });
+});

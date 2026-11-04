@@ -8,6 +8,7 @@ import { draftSchema } from "../../../packages/core/ai";
 import { renderOptions, runProcess } from "../../../packages/core/media";
 import { renderVideo } from "../../../packages/core/renderer";
 import { RenderFontError } from "../../../packages/core/render-font";
+import { createRenderNotification } from "./notifications";
 const db = new PrismaClient(),
   store = new ObjectStore();
 const connection = new Redis(
@@ -72,7 +73,10 @@ const worker = new Worker(
   async (job) => {
     const row = await db.renderJob.findUnique({
       where: { id: job.data.id },
-      include: { inputs: { include: { asset: true } } },
+      include: {
+        inputs: { include: { asset: true } },
+        content: { select: { title: true } },
+      },
     });
     if (!row || row.status !== "QUEUED") return;
     const runToken = randomUUID();
@@ -182,6 +186,13 @@ const worker = new Worker(
             },
           },
         });
+        await createRenderNotification(tx, {
+          organizationId: row.organizationId,
+          renderId: row.id,
+          actorId: row.actorId,
+          status: "SUCCEEDED",
+          contentTitle: row.content?.title,
+        });
         return true;
       });
     } catch (error) {
@@ -193,19 +204,30 @@ const worker = new Worker(
           message: (error as Error).message.slice(0, 1500),
         }),
       );
-      await db.renderJob.updateMany({
+      const failureReason = abort.signal.aborted
+        ? "The render was interrupted or exceeded 10 minutes. Retry to reuse completed scenes."
+        : error instanceof RenderFontError
+          ? error.message.slice(0, 500)
+          : "Media processing failed. Check the selected files and render-worker logs, then retry.";
+      const failed = await db.renderJob.updateMany({
         where: ownership,
         data: {
           status: "FAILED",
-          error: abort.signal.aborted
-            ? "The render was interrupted or exceeded 10 minutes. Retry to reuse completed scenes."
-            : error instanceof RenderFontError
-              ? error.message.slice(0, 500)
-              : "Media processing failed. Check the selected files and render-worker logs, then retry.",
+          error: failureReason,
           stage: "Render failed",
           completedAt: new Date(),
         },
       });
+      if (failed.count) {
+        await createRenderNotification(db, {
+          organizationId: row.organizationId,
+          renderId: row.id,
+          actorId: row.actorId,
+          status: "FAILED",
+          contentTitle: row.content?.title,
+          error: failureReason,
+        });
+      }
     } finally {
       clearInterval(timer);
       clearTimeout(deadline);

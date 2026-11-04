@@ -7,3 +7,9 @@ Current: [opt-in settings autosave](WORKSPACE_SETTINGS_AUTOSAVE.md), [QA evidenc
 Acceptance: manual save remains default; explicit per-editor opt-in, two-second valid-draft debounce, existing tenant/revision/audit checks, one in-flight write, no retry on failure, conflict or uncertainty. Import/recovery/reload disables autosave. All earlier settings assertions remain. Other editors, automatic merge, nested workspace and wider UX/search remain open.
 
 Method: focused local checks then full exact-commit CI and artifact review. Preserve assertions, real environment/user services, prior25 migrations/master. Only owned fixtures. Recovery fixtures closed at P; no Q/R.21 broad tracks and production/live-provider/deployed/full-master gates remain open. CI does not deploy; ZIP is source/context, not runtime backup.
+
+<!-- NOTIFY01A_NOTE_START -->
+## NOTIFY-01A integration note - 2026-11-04
+
+NOTIFY-01A backend is complete on branch `notify-01a` (PR #1). Commit `12a2d6e`, CI runs 41707702237 and 41707694099 both passed. Adds `Notification` table (migration 202611030001, 26 migrations total, 38 tables) and `/workspaces/:organizationId/notifications` API (list, get, ack, read-all). Roles: OWNER/ADMIN/EDITOR/CREATOR/ANALYST allowed; CLIENT 403. No external delivery, no realtime/SLO. When UX-01 merges to main, a merge-forward of notify-01a will need: migration count assertions in tests/application-snapshot.test.ts (26), scripts/application-pitr-fixture.mjs (26) and scripts/verify-native-upgrade.mjs (26). See docs/NOTIFICATIONS.md and docs/qa/notify01a-evidence.json.
+<!-- NOTIFY01A_NOTE_END -->

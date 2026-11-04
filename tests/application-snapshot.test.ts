@@ -9,7 +9,7 @@ import {
 } from "../scripts/application-pitr-fixture.mjs";
 import { physicalCaptureHash } from "../scripts/physical-object-binding.mjs";
 import { fileURLToPath } from "node:url";
-test("Batched physical snapshot equals legacy complete rows/columns and digest for all25 migrations", async () => {
+test("Batched physical snapshot equals legacy complete rows/columns and digest for all26 migrations", async () => {
   const db = await PGlite.create();
   try {
     for (const m of applicationMigrations(
@@ -30,7 +30,7 @@ test("Batched physical snapshot equals legacy complete rows/columns and digest f
     };
     const batch = await applicationSnapshot(query);
     assert.equal(calls, 2);
-    assert.equal(Object.keys(batch.rows).length, 37);
+    assert.equal(Object.keys(batch.rows).length, 38);
     const rows = {};
     for (const table of Object.keys(batch.rows))
       rows[table] = JSON.parse(
