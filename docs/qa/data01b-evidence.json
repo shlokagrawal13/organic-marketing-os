@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "taskId": "DATA-01B",
+  "recordedAtUtc": "2026-11-04T20:30:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "disconnectEndpoint": "DELETE /api/workspaces/:organizationId/social-connections/:id implemented with OWNER/ADMIN role authorization; non-privileged roles (EDITOR, CREATOR, ANALYST, CLIENT) rejected with 403/404",
+    "credentialScrubbing": "Scrubs secret credential fields atomically: accessTokenCiphertext set to empty string sentinel, refreshTokenCiphertext set to null, expiration timestamps cleared, and revokedAt set to current timestamp",
+    "inFlightCascade": "Active publication schedules transitioned from SCHEDULED to CANCELED (outcomeCode: CONNECTION_DISCONNECTED); RESERVED attempts transitioned to BLOCKED (AUTH_REVOKED); SUBMITTING attempts marked UNKNOWN (REVOKED_DURING_SUBMISSION)",
+    "referentialIntegrity": "Hard-deletes connection when zero child records (PublicationAttempt, PublicationPolicyReview, PublicationSchedule) reference it; soft-disconnects with scrubbed tokens when historical references exist to preserve foreign key integrity",
+    "auditTrail": "Emits immutable social_connection.disconnected event in AuditLog recording actorId, provider, externalAccountId, accountLabel, and hardDeleted status",
+    "tests": "11 unit tests in tests/data-governance.test.ts and comprehensive HTTP integration test in tests/integration/social-oauth.test.ts verifying authorization, hard-delete, soft-disconnect with credential erasure, in-flight schedule cancellation, and audit log entries"
+  },
+  "local": {
+    "taskId": "DATA-01B",
+    "passed": true,
+    "tests": {
+      "dataGovernance": 11,
+      "socialOauthIntegration": 4
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "migrations": 25,
+    "tables": 37,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "data-01b",
+    "baseBranch": "data-01a",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "External provider OAuth revocation remains bounded by provider network availability; local revocation and credential erasure are guaranteed immediately",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}
+
