@@ -131,6 +131,100 @@ test("export sanitizer strips operation keys and request hashes from credit entr
   assert.equal((sanitized as any).amount, 100);
 });
 
+test("export sanitizer strips requestKey and requestHash from publication intents", () => {
+  const sanitizePublicationIntent = ({
+    requestHash,
+    requestKey,
+    ...row
+  }: {
+    requestHash?: string;
+    requestKey?: string;
+    [k: string]: unknown;
+  }) => row;
+
+  const raw = {
+    id: "intent-1",
+    organizationId: "org-1",
+    contentId: "content-1",
+    contentRevision: 1,
+    platform: "YOUTUBE",
+    snapshot: {},
+    requestKey: "idempotency-key-secret-123",
+    requestHash: "sha256-request-hash-secret-456",
+    status: "PREPARED",
+    createdBy: "user-1",
+    createdAt: new Date(),
+  };
+
+  const sanitized = sanitizePublicationIntent(raw);
+  assert.equal((sanitized as any).requestKey, undefined);
+  assert.equal((sanitized as any).requestHash, undefined);
+  assert.equal((sanitized as any).status, "PREPARED");
+  assert.equal((sanitized as any).contentId, "content-1");
+});
+
+test("export sanitizer strips uploadSessionCiphertext, requestKey, and requestHash from publication attempts", () => {
+  const sanitizePublicationAttempt = ({
+    uploadSessionCiphertext,
+    requestHash,
+    requestKey,
+    ...row
+  }: {
+    uploadSessionCiphertext?: string | null;
+    requestHash?: string;
+    requestKey?: string;
+    [k: string]: unknown;
+  }) => row;
+
+  const raw = {
+    id: "attempt-1",
+    organizationId: "org-1",
+    intentId: "intent-1",
+    connectionId: "conn-1",
+    contentId: "content-1",
+    contentRevision: 1,
+    requestKey: "attempt-key-secret-789",
+    requestHash: "sha256-attempt-hash-secret-abc",
+    status: "RESERVED",
+    uploadSessionCiphertext: "secret-upload-session-ciphertext-xyz",
+    createdAt: new Date(),
+  };
+
+  const sanitized = sanitizePublicationAttempt(raw);
+  assert.equal((sanitized as any).uploadSessionCiphertext, undefined);
+  assert.equal((sanitized as any).requestKey, undefined);
+  assert.equal((sanitized as any).requestHash, undefined);
+  assert.equal((sanitized as any).status, "RESERVED");
+  assert.equal((sanitized as any).intentId, "intent-1");
+});
+
+test("export sanitizer strips requestKey from publication schedules", () => {
+  const sanitizePublicationSchedule = ({
+    requestKey,
+    ...row
+  }: {
+    requestKey?: string;
+    [k: string]: unknown;
+  }) => row;
+
+  const raw = {
+    id: "sched-1",
+    organizationId: "org-1",
+    intentId: "intent-1",
+    connectionId: "conn-1",
+    actorId: "user-1",
+    requestKey: "sched-key-secret-999",
+    dueAt: new Date(),
+    status: "SCHEDULED",
+    createdAt: new Date(),
+  };
+
+  const sanitized = sanitizePublicationSchedule(raw);
+  assert.equal((sanitized as any).requestKey, undefined);
+  assert.equal((sanitized as any).status, "SCHEDULED");
+  assert.equal((sanitized as any).intentId, "intent-1");
+});
+
 test("member revocation self-revocation rule prohibits owner removing self via operations endpoint", () => {
   const isSelfRevocation = (targetUserId: string, callerUserId: string) => targetUserId === callerUserId;
   assert.equal(isSelfRevocation("user-1", "user-1"), true);

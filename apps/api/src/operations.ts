@@ -301,17 +301,45 @@ export class OperationsController {
               }) => row,
             ],
             ["contentClaimReview", tx.contentClaimReview, own],
-            ["publicationIntent", tx.publicationIntent, own],
-            ["publicationSchedule", tx.publicationSchedule, own],
+            [
+              "publicationIntent",
+              tx.publicationIntent,
+              own,
+              ({
+                requestHash,
+                requestKey,
+                ...row
+              }: {
+                requestHash?: string;
+                requestKey?: string;
+                [k: string]: unknown;
+              }) => row,
+            ],
+            [
+              "publicationSchedule",
+              tx.publicationSchedule,
+              own,
+              ({
+                requestKey,
+                ...row
+              }: {
+                requestKey?: string;
+                [k: string]: unknown;
+              }) => row,
+            ],
             [
               "publicationAttempt",
               tx.publicationAttempt,
               own,
               ({
                 uploadSessionCiphertext,
+                requestHash,
+                requestKey,
                 ...row
               }: {
                 uploadSessionCiphertext?: string | null;
+                requestHash?: string;
+                requestKey?: string;
                 [k: string]: unknown;
               }) => row,
             ],

@@ -15,6 +15,12 @@ after(async () => {
     await db.membership.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.creditReservation.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.creditEntry.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.publicationAttempt.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.publicationSchedule.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.publicationPolicyReview.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.publicationIntent.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.socialConnection.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.contentItem.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.creditAccount.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.organization.deleteMany({ where: { id: { in: orgs } } });
   }
@@ -121,6 +127,100 @@ test("export: rate-limited to one request per minute per user/workspace", async 
 test("export: no credential ciphertexts appear in NDJSON output", async () => {
   await resetFixtureRateBudget();
   const org = await db.organization.create({ data: { name: "Secrets Export Org" } });
+  orgs.push(org.id);
+  const owner = await actor(org.id, "OWNER");
+  users.push(owner.id);
+
+  // Populate records containing sensitive credentials, hashes, and idempotency keys
+  const content = await db.contentItem.create({
+    data: {
+      organizationId: org.id,
+      title: "Export Test Content",
+      platform: "YOUTUBE",
+      format: "VIDEO",
+      createdBy: owner.id,
+    },
+  });
+
+  const connection = await db.socialConnection.create({
+    data: {
+      organizationId: org.id,
+      provider: "YOUTUBE",
+      externalAccountId: "channel-export-123",
+      accountLabel: "Export Test Channel",
+      scopes: ["upload"],
+      accessTokenCiphertext: "secret-access-token-ciphertext-raw-value",
+      refreshTokenCiphertext: "secret-refresh-token-ciphertext-raw-value",
+    },
+  });
+
+  const intent = await db.publicationIntent.create({
+    data: {
+      organizationId: org.id,
+      contentId: content.id,
+      contentRevision: 1,
+      platform: "YOUTUBE",
+      snapshot: { title: "Export Test Content" },
+      requestKey: "secret-intent-request-key-xyz-789",
+      requestHash: "secret-intent-request-hash-sha256-456",
+      createdBy: owner.id,
+    },
+  });
+
+  await db.publicationAttempt.create({
+    data: {
+      organizationId: org.id,
+      intentId: intent.id,
+      connectionId: connection.id,
+      contentId: content.id,
+      contentRevision: 1,
+      requestKey: "secret-attempt-request-key-abc-123",
+      requestHash: "secret-attempt-request-hash-sha256-999",
+      uploadSessionCiphertext: "secret-upload-session-ciphertext-val-000",
+    },
+  });
+
+  await db.publicationSchedule.create({
+    data: {
+      organizationId: org.id,
+      intentId: intent.id,
+      connectionId: connection.id,
+      actorId: owner.id,
+      requestKey: "secret-sched-request-key-def-555",
+      dueAt: new Date(Date.now() + 3600000),
+    },
+  });
+
+  const { status, rawBody } = await fetchExport(org.id, owner.headers);
+  assert.equal(status, 200);
+
+  const lines = rawBody.trim().split("\n");
+  const parsed = lines.map((l) => JSON.parse(l));
+
+  // Verify the records were actually exported
+  assert.ok(parsed.some((r) => r.type === "socialConnection"), "socialConnection must be in export");
+  assert.ok(parsed.some((r) => r.type === "publicationIntent"), "publicationIntent must be in export");
+  assert.ok(parsed.some((r) => r.type === "publicationAttempt"), "publicationAttempt must be in export");
+  assert.ok(parsed.some((r) => r.type === "publicationSchedule"), "publicationSchedule must be in export");
+
+  // Credential and secret key fields must never appear in the export body
+  assert.ok(!rawBody.includes("secret-access-token-ciphertext-raw-value"), "accessTokenCiphertext raw value must be redacted");
+  assert.ok(!rawBody.includes("secret-refresh-token-ciphertext-raw-value"), "refreshTokenCiphertext raw value must be redacted");
+  assert.ok(!rawBody.includes("secret-intent-request-key-xyz-789"), "publicationIntent requestKey must be redacted");
+  assert.ok(!rawBody.includes("secret-intent-request-hash-sha256-456"), "publicationIntent requestHash must be redacted");
+  assert.ok(!rawBody.includes("secret-attempt-request-key-abc-123"), "publicationAttempt requestKey must be redacted");
+  assert.ok(!rawBody.includes("secret-attempt-request-hash-sha256-999"), "publicationAttempt requestHash must be redacted");
+  assert.ok(!rawBody.includes("secret-upload-session-ciphertext-val-000"), "uploadSessionCiphertext raw value must be redacted");
+  assert.ok(!rawBody.includes("secret-sched-request-key-def-555"), "publicationSchedule requestKey must be redacted");
+
+  assert.ok(!rawBody.includes('"accessTokenCiphertext"'), "accessTokenCiphertext property must be stripped");
+  assert.ok(!rawBody.includes('"refreshTokenCiphertext"'), "refreshTokenCiphertext property must be stripped");
+  assert.ok(!rawBody.includes('"uploadSessionCiphertext"'), "uploadSessionCiphertext property must be stripped");
+  assert.ok(!rawBody.includes('"tokenHash"'), "tokenHash must be stripped");
+  assert.ok(!rawBody.includes('"runToken"'), "runToken must be stripped");
+  assert.ok(!rawBody.includes('"requestHash"'), "requestHash must be stripped");
+  assert.ok(!rawBody.includes('"requestKey"'), "requestKey must be stripped");
+});
   orgs.push(org.id);
   const owner = await actor(org.id, "OWNER");
   users.push(owner.id);
