@@ -1,3 +1,9 @@
+## UX-01L keyboard focus and UX-01K CI closure - 2026-11-04
+
+- Imported UX-01K exact final commit/run receipt after all three CI jobs, required steps and four artifact bytes passed.
+- Publication preparation search details now focus their heading on opening and restore focus to the exact result on return. Existing query/results and read-only behavior remain; browser regression assertions added.
+- UX-01L own exact-commit CI and wider accessibility, live/deployed and full-master acceptance remain open.
+
 ## UX-01K CI unit assertion follow-up - 2026-11-04
 
 First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.

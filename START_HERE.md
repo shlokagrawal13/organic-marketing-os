@@ -1,3 +1,9 @@
+<!-- UX01L_CURRENT_START -->
+## Current: UX-01L - 2026-11-04
+
+UX-01K exact `main` commit `44cdc01` / [run 41826622865](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865) passed all three CI jobs and every required step. Four artifact ZIP bytes/digests/CRCs and embedded reports were verified; imported `docs/qa/ux01k-final-ci-receipt.json` closes K's packaged pending status. Read [active handoff](docs/ACTIVE_HANDOFF.md). UX-01L restores keyboard focus when opening/returning from saved publication preparation search details; local verification and own exact-commit CI are separate. NOTIFY/DATA branches remain Antigravity-owned and are not integrated into main. Production/live/deployed/full-master gates remain open; CI does not deploy.
+<!-- UX01L_CURRENT_END -->
+
 <!-- UX01K_CI_FOLLOWUP_START -->
 First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.
 <!-- UX01K_CI_FOLLOWUP_END -->

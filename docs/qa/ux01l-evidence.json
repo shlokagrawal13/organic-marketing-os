@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01L",
+  "status": "local_verified_own_exact_commit_ci_pending",
+  "priorVerifiedPublication": {
+    "taskId": "UX-01K",
+    "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
+    "runId": 41826622865,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+    "importedReceipt": "docs/qa/ux01k-final-ci-receipt.json"
+  },
+  "behavior": {
+    "opening": "Focus the read-only publication preparation detail heading after selecting its saved search result",
+    "return": "Restore keyboard focus to the exact result button; use the search input if that result has disappeared",
+    "preserved": "Query, type/archive filters, results, frozen preparation/current content separation and no publication mutation"
+  },
+  "localAttempts": [
+    {
+      "result": "6 HTTP and 5/6 browser passed in an owned fixture; cleanup and real environment unchanged",
+      "failure": "The existing current-content assertion used the default five-second timeout while the local Windows fixture still showed Loading content. Both new keyboard-focus assertions had passed.",
+      "resolution": "Retained the exact current-title assertion and allowed up to 20 seconds for the existing multi-request content load."
+    },
+    {
+      "result": "6 HTTP and 6/6 browser passed in a new owned fixture",
+      "startedAtUtc": "2026-11-04T17:48:16.590Z",
+      "completedAtUtc": "2026-11-04T17:55:17.978Z",
+      "migrations": 25,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    },
+    {
+      "result": "6 HTTP and the keyboard-activation publication browser case passed on final test source",
+      "startedAtUtc": "2026-11-04T21:52:43.493Z",
+      "completedAtUtc": "2026-11-04T21:57:44.176Z",
+      "migrations": 25,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
+    }
+  ],
+  "localChecks": {
+    "webTypecheck": true,
+    "webProductionBuild": true,
+    "format": true,
+    "diffCheck": true,
+    "fullAuditVulnerabilities": 0,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "apiAndDatabaseSchemaUnchanged": true,
+    "dependenciesUnchanged": true,
+    "priorComposePhases": 24,
+    "liveProvidersUsed": false,
+    "populatedUserServicesUntouched": true
+  },
+  "publication": {
+    "required": "UX-01L own exact final commit must pass all three CI jobs and every required step; inspect artifact bytes and pair external final receipt with fresh portable source ZIP",
+    "ciDoesNotDeploy": true
+  },
+  "limits": [
+    "This bounded keyboard-focus improvement does not complete the wider accessibility/device audit",
+    "Other search domains and large-tenant performance remain open",
+    "Live-provider/deployed/full-master acceptance remains open"
+  ]
+}

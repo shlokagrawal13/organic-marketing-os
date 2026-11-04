@@ -32,12 +32,21 @@ export default function WorkspaceSearch({
   const [error, setError] = useState("");
   const [publicationId, setPublicationId] = useState<string | null>(null);
   const generation = useRef(0);
+  const returnFocusId = useRef<string | null>(null);
+  const resultButtons = useRef(new Map<string, HTMLButtonElement>());
+  const searchInput = useRef<HTMLInputElement>(null);
   useEffect(
     () => () => {
       generation.current++;
     },
     [base],
   );
+  useEffect(() => {
+    if (publicationId !== null || returnFocusId.current === null) return;
+    const id = returnFocusId.current;
+    returnFocusId.current = null;
+    (resultButtons.current.get(id) || searchInput.current)?.focus();
+  }, [publicationId]);
   function reset() {
     generation.current++;
     setResult(null);
@@ -99,6 +108,7 @@ export default function WorkspaceSearch({
           <label>
             Search this workspace
             <input
+              ref={searchInput}
               value={query}
               minLength={2}
               maxLength={200}
@@ -179,11 +189,17 @@ export default function WorkspaceSearch({
               <h2>
                 <button
                   className="text-button"
-                  onClick={() =>
-                    item.kind === "publication"
-                      ? setPublicationId(item.id)
-                      : onOpen(item)
-                  }
+                  ref={(button) => {
+                    const key = `${item.kind}:${item.id}`;
+                    if (button) resultButtons.current.set(key, button);
+                    else resultButtons.current.delete(key);
+                  }}
+                  onClick={() => {
+                    if (item.kind === "publication") {
+                      returnFocusId.current = `${item.kind}:${item.id}`;
+                      setPublicationId(item.id);
+                    } else onOpen(item);
+                  }}
                 >
                   {item.title || "Untitled record"}
                 </button>

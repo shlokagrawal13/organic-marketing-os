@@ -1,3 +1,11 @@
+<!-- UX01L_CURRENT_START -->
+## Current: UX-01L - 2026-11-04
+
+UX-01K exact commit `44cdc01` / [run 41826622865](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865) passed all three jobs and every required step: 379 unit, 50 HTTP, 67 browser, 5 recovery, 25 migrations, 44 readability, zero audits and 24 Compose phases. All four artifact ZIP bytes/digests/CRCs and embedded reports were verified; imported `docs/qa/ux01k-final-ci-receipt.json` closes K's own-CI pending status. The first K failed run remains historical.
+
+L adds keyboard focus management for publication preparation search details: heading focus on open and exact result-button focus on return, preserving query/results and read-only behavior. Local owned-fixture checks passed 6 HTTP/6 browser with 25 migrations; a final keyboard-activation regression and own exact-commit CI are separate gates. Wider accessibility, production/live/deployed/full-master acceptance and other product tracks remain open. Codex owns UX/main integration; Antigravity's NOTIFY/DATA branches are separate and not yet integrated.
+<!-- UX01L_CURRENT_END -->
+
 <!-- UX01K_CI_FOLLOWUP_START -->
 First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.
 <!-- UX01K_CI_FOLLOWUP_END -->

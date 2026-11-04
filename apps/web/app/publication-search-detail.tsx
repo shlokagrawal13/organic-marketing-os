@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "./api-client";
 import type { SearchResult } from "./workspace-search";
 
@@ -25,6 +25,10 @@ export default function PublicationSearchDetail({
 }) {
   const [preparation, setPreparation] = useState<Preparation | null>(null);
   const [error, setError] = useState("");
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    heading.current?.focus();
+  }, []);
   useEffect(() => {
     let active = true;
     api(`${base}/publication-intents/${id}`)
@@ -50,7 +54,9 @@ export default function PublicationSearchDetail({
       <button className="text-button" onClick={onBack}>
         Back to search results
       </button>
-      <h1>Publication preparation</h1>
+      <h1 ref={heading} tabIndex={-1}>
+        Publication preparation
+      </h1>
       <p>
         This saved preparation is not evidence of a successful external post.
         Upload attempts and schedules require their separate review.

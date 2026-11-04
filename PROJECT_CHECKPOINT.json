@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01k-20261104",
-  "savedAtUtc": "2026-11-04T12:06:40.330Z",
-  "currentMilestone": "UX-01K research workspace search",
+  "checkpointRevision": "ux01l-20261104",
+  "savedAtUtc": "2026-11-04T21:58:05.048Z",
+  "currentMilestone": "UX-01L publication search detail keyboard focus",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish UX-01K follow-up after preserving five-tenant-branch security assertion; verify all three jobs/every required step on its new exact final commit and pair external receipt/source ZIP. First K run failed core unit test and is not acceptance.",
+  "nextAction": "Publish UX-01L after its owned-fixture focus regression passes; inspect all three CI jobs and every required step on the exact final commit, verify artifacts, pair external final receipt with the fresh portable source ZIP. K is closed by its imported receipt.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,37 +84,23 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "REQUIREMENTS_MATRIX.md",
-    "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/api/src/search-query.ts",
-    "apps/web/AGENTS.md",
-    "apps/web/app/research-workspace.tsx",
+    "apps/web/app/publication-search-detail.tsx",
     "apps/web/app/workspace-search.tsx",
-    "apps/web/app/workspace.tsx",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
-    "docs/HANDOFF.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
-    "docs/RESUME_CONTEXT.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/VERIFICATION_REPORT.md",
-    "docs/WORKSPACE_RESEARCH_SEARCH.md",
-    "docs/qa/github-publication.json",
-    "docs/qa/handoff-verification.json",
-    "docs/qa/ux01j-final-ci-receipt.json",
-    "docs/qa/ux01k-evidence.json",
-    "docs/qa/verification-summary.json",
-    "tests/integration/workspace-search.test.ts",
-    "tests/ui/workspace-search.spec.ts",
-    "docs/qa/ux01k-ci-attempt1.json",
-    "tests/workspace-search.test.ts"
+    "docs/WORKSPACE_SEARCH_FOCUS.md",
+    "docs/qa/ux01k-final-ci-receipt.json",
+    "docs/qa/ux01l-evidence.json",
+    "tests/ui/workspace-search.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -8057,44 +8043,29 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "UX-01K",
+    "taskId": "UX-01L",
     "status": "local_verified_own_exact_commit_ci_pending",
-    "baseCommit": "bea0036f24706b82ef2999fc1d892c235a7c6e4f",
+    "baseCommit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
     "paths": [
-      "AGENTS.md",
       "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "REQUIREMENTS_MATRIX.md",
-      "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "apps/api/src/search-query.ts",
-      "apps/web/AGENTS.md",
-      "apps/web/app/research-workspace.tsx",
+      "apps/web/app/publication-search-detail.tsx",
       "apps/web/app/workspace-search.tsx",
-      "apps/web/app/workspace.tsx",
       "docs/ACTIVE_HANDOFF.md",
       "docs/CHANGELOG.md",
-      "docs/HANDOFF.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
-      "docs/RESUME_CONTEXT.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
-      "docs/VERIFICATION_REPORT.md",
-      "docs/WORKSPACE_RESEARCH_SEARCH.md",
-      "docs/qa/github-publication.json",
-      "docs/qa/handoff-verification.json",
-      "docs/qa/ux01j-final-ci-receipt.json",
-      "docs/qa/ux01k-evidence.json",
-      "docs/qa/verification-summary.json",
-      "tests/integration/workspace-search.test.ts",
-      "tests/ui/workspace-search.spec.ts",
-      "docs/qa/ux01k-ci-attempt1.json",
-      "tests/workspace-search.test.ts"
+      "docs/WORKSPACE_SEARCH_FOCUS.md",
+      "docs/qa/ux01k-final-ci-receipt.json",
+      "docs/qa/ux01l-evidence.json",
+      "tests/ui/workspace-search.spec.ts"
     ],
-    "required": "Exact own three-job CI, all required steps, four artifact bytes/reports, external final receipt and portable source ZIP",
-    "firstFailedRun": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052"
+    "required": "Own exact final commit: all three jobs/every required step, artifacts and portable source ZIP"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8713,108 +8684,83 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "UX-01K",
+    "taskId": "UX-01L",
     "status": "local_verified_own_exact_commit_ci_pending",
     "priorVerifiedPublication": {
-      "taskId": "UX-01J",
-      "commit": "bea0036f24706b82ef2999fc1d892c235a7c6e4f",
-      "tree": "06159eea8a03fcbeb79295d128d536c2348b0d3c",
-      "runId": 41689987187,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41689987187",
+      "taskId": "UX-01K",
+      "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
+      "tree": "a3556caa9eef41effc77259646609f9abf8c055a",
+      "runId": 41826622865,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
       "status": "completed",
       "conclusion": "success",
       "allThreeJobsAndRequiredStepsPassed": true,
       "results": {
         "unit": 379,
-        "http": 49,
-        "browser": 66,
+        "http": 50,
+        "browser": 67,
         "recovery": 5,
         "migrations": 25,
         "readabilitySamples": 44,
         "composePhases": 24,
         "productionAuditVulnerabilities": 0,
         "fullAuditVulnerabilities": 0,
-        "sourceJobId": 126105720334,
+        "sourceJobId": 126562871997,
         "observedPassCounts": [
           379,
-          49,
+          50,
           5
         ],
         "auditLogLines": [
-          "2026-11-03T18:03:29.2893990Z found 0 vulnerabilities",
-          "2026-11-03T18:12:26.0911396Z found 0 vulnerabilities",
-          "2026-11-03T18:12:26.6722131Z found 0 vulnerabilities"
+          "2026-11-04T12:08:30.6502944Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.2206301Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.6157443Z found 0 vulnerabilities"
         ],
-        "settingsTestLines": [
-          "2026-11-03T18:19:03.2890560Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.9s)",
-          "2026-11-03T18:19:04.3216883Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (1.0s)",
-          "2026-11-03T18:19:07.4635892Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.1s)",
-          "2026-11-03T18:19:08.3115813Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (834ms)",
-          "2026-11-03T18:19:09.2649616Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (939ms)",
-          "2026-11-03T18:19:10.0074657Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (728ms)",
-          "2026-11-03T18:19:10.9299412Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (909ms)",
-          "2026-11-03T18:19:12.0086633Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (1.1s)",
-          "2026-11-03T18:19:12.8605856Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (841ms)",
-          "2026-11-03T18:19:23.6822542Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › settings autosave is opt-in, debounced, revision-bound and can be turned off (10.8s)",
-          "2026-11-03T18:19:29.0709326Z   ✓  53 tests/ui/settings-draft.spec.ts:767:5 › settings autosave stops on a concurrent revision and requires review before manual save (5.4s)",
-          "2026-11-03T18:19:34.1843043Z   ✓  54 tests/ui/settings-draft.spec.ts:820:5 › an unconfirmed settings autosave is never replayed (5.1s)",
-          "2026-11-03T18:19:37.1530629Z   ✓  55 tests/ui/settings-draft.spec.ts:850:5 › validation and revoked membership retain settings edits without automatic writes (3.0s)",
-          "2026-11-03T18:19:38.2265352Z   ✓  56 tests/ui/settings-draft.spec.ts:893:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.1s)",
-          "2026-11-03T18:19:39.1450437Z   ✓  57 tests/ui/settings-draft.spec.ts:917:5 › settings initial read failure recovers and reopening always loads current server values (850ms)"
+        "researchLines": [
+          "2026-11-04T12:22:54.8461278Z   ✓  62 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (952ms)",
+          "2026-11-04T12:22:55.4272589Z   ✓  63 tests/ui/workspace-search.spec.ts:180:5 › delayed publication detail cannot reappear after returning to results or switching workspace (572ms)",
+          "2026-11-04T12:22:57.0129999Z   ✓  64 tests/ui/workspace-search.spec.ts:266:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.6s)",
+          "2026-11-04T12:22:57.5793048Z   ✓  65 tests/ui/workspace-search.spec.ts:344:5 › search ignores delayed responses after workspace switch and recovers from request errors (558ms)",
+          "2026-11-04T12:22:58.3810965Z   ✓  66 tests/ui/workspace-search.spec.ts:423:5 › delayed searched content cannot replace a newer unsaved draft (794ms)",
+          "2026-11-04T12:22:58.9718767Z   ✓  67 tests/ui/workspace-search.spec.ts:479:5 › research search opens an exact older record without writing and respects workspace changes (545ms)"
         ],
-        "coreJobLogBytes": 201590,
-        "coreJobLogSha256": "1f80db3e6e6f42bffd9ff30525b337781913be0b2f50fc69b514dd99d965482c",
+        "coreJobLogBytes": 201306,
+        "coreJobLogSha256": "0c27c249c8746d8f167a0b852f47607da88b4e5b4ecfe79a6451469eb4a0dfa5",
         "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
         "protectedPriorMasterMigrationHashesUnchanged": 26
       },
-      "receipt": "docs/qa/ux01j-final-ci-receipt.json"
+      "receipt": "docs/qa/ux01k-final-ci-receipt.json"
     },
     "local": {
-      "taskId": "UX-01K",
+      "taskId": "UX-01L",
       "passed": true,
-      "startedAt": "2026-11-04T11:47:49.154Z",
-      "fixture": "5c2ce7ae90875353",
+      "startedAt": "2026-11-04T17:48:16.590Z",
+      "fixture": "ca68da575d43a831",
       "http": 6,
       "browser": 6,
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
-      "completedAt": "2026-11-04T11:51:19.234Z",
-      "apiBuild": true,
-      "webTypecheck": true,
-      "webProductionBuild": true,
-      "migrations": 25,
-      "fullAuditVulnerabilities": 0,
-      "productionAuditVulnerabilities": 0,
-      "formatAndDiffCheck": true,
-      "focusedUnitFollowupPassed": 3
+      "completedAt": "2026-11-04T17:55:17.978Z"
     },
-    "ciAttempt1": {
-      "schemaVersion": 1,
-      "taskId": "UX-01K",
-      "attempt": 1,
-      "recordedAtUtc": "2026-11-04T12:06:40.330Z",
-      "commit": "34330e19e58268785035852b863f539df9b4c1d8",
-      "runId": 41824933052,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052",
-      "acceptance": false,
-      "observed": {
-        "core": "failed Run unit tests: 378 pass, 1 fail; later core gates skipped",
-        "nativeUpgrade": "all required steps passed",
-        "compose": "still in progress at follow-up preparation"
-      },
-      "failure": "Tenant-binding unit test expected four SQL organizationId parameters; research adds a fifth tenant-bound branch. Application and search HTTP/browser checks were locally green; first core CI stopped before audits and HTTP/browser acceptance.",
-      "resolution": "Preserve injection and tenant-marker assertions; change only the expected tenant-bound parameter count from four to five in tests/workspace-search.test.ts.",
-      "followupLocal": {
-        "focusedUnitPassed": 3,
-        "httpPriorExactApplicationSourcePassed": 6,
-        "browserPriorExactApplicationSourcePassed": 6,
-        "priorOwnedFixtureCleaned": true,
-        "applicationRuntimeAndDependenciesUnchanged": true
-      },
-      "coreJobId": 126557129109,
-      "coreJobLogBytes": 144426,
-      "coreJobLogSha256": "c18a85585332ec1360d9b565f7130782f70297ef01adab03de4c1a53fb35e06b",
-      "next": "New exact final commit must pass all three jobs and every required step; first run is not acceptance."
+    "keyboard": {
+      "taskId": "UX-01L",
+      "passed": true,
+      "startedAt": "2026-11-04T21:52:43.493Z",
+      "fixture": "65b54f0f73543616",
+      "http": 6,
+      "browser": 1,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-04T21:57:44.176Z"
+    },
+    "evidence": "docs/qa/ux01l-evidence.json",
+    "preserved": {
+      "priorMigrations": 25,
+      "composePhases": 24,
+      "masterSpecification": true,
+      "realEnvironmentUnchanged": true,
+      "populatedUserServicesUntouched": true,
+      "liveProvidersUsed": false
     }
   },
   "social01PolicyReview": {
@@ -16307,58 +16253,49 @@
     }
   },
   "lastVerifiedPublication": {
-    "taskId": "UX-01J",
-    "commit": "bea0036f24706b82ef2999fc1d892c235a7c6e4f",
-    "tree": "06159eea8a03fcbeb79295d128d536c2348b0d3c",
-    "runId": 41689987187,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41689987187",
+    "taskId": "UX-01K",
+    "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
+    "tree": "a3556caa9eef41effc77259646609f9abf8c055a",
+    "runId": 41826622865,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
     "status": "completed",
     "conclusion": "success",
     "allThreeJobsAndRequiredStepsPassed": true,
     "results": {
       "unit": 379,
-      "http": 49,
-      "browser": 66,
+      "http": 50,
+      "browser": 67,
       "recovery": 5,
       "migrations": 25,
       "readabilitySamples": 44,
       "composePhases": 24,
       "productionAuditVulnerabilities": 0,
       "fullAuditVulnerabilities": 0,
-      "sourceJobId": 126105720334,
+      "sourceJobId": 126562871997,
       "observedPassCounts": [
         379,
-        49,
+        50,
         5
       ],
       "auditLogLines": [
-        "2026-11-03T18:03:29.2893990Z found 0 vulnerabilities",
-        "2026-11-03T18:12:26.0911396Z found 0 vulnerabilities",
-        "2026-11-03T18:12:26.6722131Z found 0 vulnerabilities"
+        "2026-11-04T12:08:30.6502944Z found 0 vulnerabilities",
+        "2026-11-04T12:15:54.2206301Z found 0 vulnerabilities",
+        "2026-11-04T12:15:54.6157443Z found 0 vulnerabilities"
       ],
-      "settingsTestLines": [
-        "2026-11-03T18:19:03.2890560Z   ✓  43 tests/ui/settings-draft.spec.ts:80:5 › settings drafts protect navigation workspace reload and sign out with exact local export (5.9s)",
-        "2026-11-03T18:19:04.3216883Z   ✓  44 tests/ui/settings-draft.spec.ts:155:5 › manual settings save serializes actual writes and locks navigation until acknowledgement (1.0s)",
-        "2026-11-03T18:19:07.4635892Z   ✓  45 tests/ui/settings-draft.spec.ts:232:5 › ambiguous committed settings save never replays and failed reload retains exact local edits (3.1s)",
-        "2026-11-03T18:19:08.3115813Z   ✓  46 tests/ui/settings-draft.spec.ts:308:5 › another administrator's acknowledged save blocks stale settings edits until confirmed reload (834ms)",
-        "2026-11-03T18:19:09.2649616Z   ✓  47 tests/ui/settings-draft.spec.ts:381:5 › conflict review keeps local edits through read failure and merges selected latest fields before manual save (939ms)",
-        "2026-11-03T18:19:10.0074657Z   ✓  48 tests/ui/settings-draft.spec.ts:461:5 › exported settings draft imports after reload without accepting another workspace or hidden fields (728ms)",
-        "2026-11-03T18:19:10.9299412Z   ✓  49 tests/ui/settings-draft.spec.ts:528:5 › stale or unconfirmed settings exports require explicit review and never write on import (909ms)",
-        "2026-11-03T18:19:12.0086633Z   ✓  50 tests/ui/settings-draft.spec.ts:596:5 › browser backup survives reload but requires explicit recovery and manual save (1.1s)",
-        "2026-11-03T18:19:12.8605856Z   ✓  51 tests/ui/settings-draft.spec.ts:673:5 › stale browser backup requires revision review and is scoped to the signed-in user (841ms)",
-        "2026-11-03T18:19:23.6822542Z   ✓  52 tests/ui/settings-draft.spec.ts:726:5 › settings autosave is opt-in, debounced, revision-bound and can be turned off (10.8s)",
-        "2026-11-03T18:19:29.0709326Z   ✓  53 tests/ui/settings-draft.spec.ts:767:5 › settings autosave stops on a concurrent revision and requires review before manual save (5.4s)",
-        "2026-11-03T18:19:34.1843043Z   ✓  54 tests/ui/settings-draft.spec.ts:820:5 › an unconfirmed settings autosave is never replayed (5.1s)",
-        "2026-11-03T18:19:37.1530629Z   ✓  55 tests/ui/settings-draft.spec.ts:850:5 › validation and revoked membership retain settings edits without automatic writes (3.0s)",
-        "2026-11-03T18:19:38.2265352Z   ✓  56 tests/ui/settings-draft.spec.ts:893:5 › all four non-admin roles retain read-only workspace settings and server write denial (1.1s)",
-        "2026-11-03T18:19:39.1450437Z   ✓  57 tests/ui/settings-draft.spec.ts:917:5 › settings initial read failure recovers and reopening always loads current server values (850ms)"
+      "researchLines": [
+        "2026-11-04T12:22:54.8461278Z   ✓  62 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (952ms)",
+        "2026-11-04T12:22:55.4272589Z   ✓  63 tests/ui/workspace-search.spec.ts:180:5 › delayed publication detail cannot reappear after returning to results or switching workspace (572ms)",
+        "2026-11-04T12:22:57.0129999Z   ✓  64 tests/ui/workspace-search.spec.ts:266:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.6s)",
+        "2026-11-04T12:22:57.5793048Z   ✓  65 tests/ui/workspace-search.spec.ts:344:5 › search ignores delayed responses after workspace switch and recovers from request errors (558ms)",
+        "2026-11-04T12:22:58.3810965Z   ✓  66 tests/ui/workspace-search.spec.ts:423:5 › delayed searched content cannot replace a newer unsaved draft (794ms)",
+        "2026-11-04T12:22:58.9718767Z   ✓  67 tests/ui/workspace-search.spec.ts:479:5 › research search opens an exact older record without writing and respects workspace changes (545ms)"
       ],
-      "coreJobLogBytes": 201590,
-      "coreJobLogSha256": "1f80db3e6e6f42bffd9ff30525b337781913be0b2f50fc69b514dd99d965482c",
+      "coreJobLogBytes": 201306,
+      "coreJobLogSha256": "0c27c249c8746d8f167a0b852f47607da88b4e5b4ecfe79a6451469eb4a0dfa5",
       "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
       "protectedPriorMasterMigrationHashesUnchanged": 26
     },
-    "receipt": "docs/qa/ux01j-final-ci-receipt.json"
+    "receipt": "docs/qa/ux01k-final-ci-receipt.json"
   },
   "recovery01h": {
     "schemaVersion": 1,
@@ -23584,7 +23521,7 @@
     "schemaVersion": 1,
     "taskId": "UX-01K",
     "recordedAtUtc": "2026-11-04T11:53:04.258Z",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "exact_final_commit_verified_external_receipt_imported",
     "priorVerifiedPublication": {
       "taskId": "UX-01J",
       "commit": "bea0036f24706b82ef2999fc1d892c235a7c6e4f",
@@ -23683,8 +23620,9 @@
       }
     ],
     "publication": {
-      "required": "Follow-up exact final commit: three jobs/every required step and four artifact bytes/digests/CRC/reports; first run failed core unit assertion",
-      "finalReceipt": "External ux01k-final-ci-receipt.json paired with source ZIP"
+      "status": "closed_exact_final_commit",
+      "finalReceipt": "docs/qa/ux01k-final-ci-receipt.json",
+      "sourcePackage": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-ux01k-source.zip"
     },
     "limits": [
       "Saved research discovery does not establish source accuracy/freshness",
@@ -23725,6 +23663,131 @@
       "browserPriorExactApplicationSourcePassed": 6,
       "priorOwnedFixtureCleaned": true,
       "applicationRuntimeAndDependenciesUnchanged": true
+    },
+    "finalVerifiedPublication": {
+      "taskId": "UX-01K",
+      "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
+      "tree": "a3556caa9eef41effc77259646609f9abf8c055a",
+      "runId": 41826622865,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 50,
+        "browser": 67,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 126562871997,
+        "observedPassCounts": [
+          379,
+          50,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-04T12:08:30.6502944Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.2206301Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.6157443Z found 0 vulnerabilities"
+        ],
+        "researchLines": [
+          "2026-11-04T12:22:54.8461278Z   ✓  62 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (952ms)",
+          "2026-11-04T12:22:55.4272589Z   ✓  63 tests/ui/workspace-search.spec.ts:180:5 › delayed publication detail cannot reappear after returning to results or switching workspace (572ms)",
+          "2026-11-04T12:22:57.0129999Z   ✓  64 tests/ui/workspace-search.spec.ts:266:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.6s)",
+          "2026-11-04T12:22:57.5793048Z   ✓  65 tests/ui/workspace-search.spec.ts:344:5 › search ignores delayed responses after workspace switch and recovers from request errors (558ms)",
+          "2026-11-04T12:22:58.3810965Z   ✓  66 tests/ui/workspace-search.spec.ts:423:5 › delayed searched content cannot replace a newer unsaved draft (794ms)",
+          "2026-11-04T12:22:58.9718767Z   ✓  67 tests/ui/workspace-search.spec.ts:479:5 › research search opens an exact older record without writing and respects workspace changes (545ms)"
+        ],
+        "coreJobLogBytes": 201306,
+        "coreJobLogSha256": "0c27c249c8746d8f167a0b852f47607da88b4e5b4ecfe79a6451469eb4a0dfa5",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 26
+      },
+      "receipt": "docs/qa/ux01k-final-ci-receipt.json"
+    }
+  },
+  "ux01l": {
+    "taskId": "UX-01L",
+    "status": "local_verified_own_exact_commit_ci_pending",
+    "priorVerifiedPublication": {
+      "taskId": "UX-01K",
+      "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
+      "tree": "a3556caa9eef41effc77259646609f9abf8c055a",
+      "runId": 41826622865,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 50,
+        "browser": 67,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 126562871997,
+        "observedPassCounts": [
+          379,
+          50,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-04T12:08:30.6502944Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.2206301Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.6157443Z found 0 vulnerabilities"
+        ],
+        "researchLines": [
+          "2026-11-04T12:22:54.8461278Z   ✓  62 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (952ms)",
+          "2026-11-04T12:22:55.4272589Z   ✓  63 tests/ui/workspace-search.spec.ts:180:5 › delayed publication detail cannot reappear after returning to results or switching workspace (572ms)",
+          "2026-11-04T12:22:57.0129999Z   ✓  64 tests/ui/workspace-search.spec.ts:266:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.6s)",
+          "2026-11-04T12:22:57.5793048Z   ✓  65 tests/ui/workspace-search.spec.ts:344:5 › search ignores delayed responses after workspace switch and recovers from request errors (558ms)",
+          "2026-11-04T12:22:58.3810965Z   ✓  66 tests/ui/workspace-search.spec.ts:423:5 › delayed searched content cannot replace a newer unsaved draft (794ms)",
+          "2026-11-04T12:22:58.9718767Z   ✓  67 tests/ui/workspace-search.spec.ts:479:5 › research search opens an exact older record without writing and respects workspace changes (545ms)"
+        ],
+        "coreJobLogBytes": 201306,
+        "coreJobLogSha256": "0c27c249c8746d8f167a0b852f47607da88b4e5b4ecfe79a6451469eb4a0dfa5",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 26
+      },
+      "receipt": "docs/qa/ux01k-final-ci-receipt.json"
+    },
+    "local": {
+      "taskId": "UX-01L",
+      "passed": true,
+      "startedAt": "2026-11-04T17:48:16.590Z",
+      "fixture": "ca68da575d43a831",
+      "http": 6,
+      "browser": 6,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-04T17:55:17.978Z"
+    },
+    "keyboard": {
+      "taskId": "UX-01L",
+      "passed": true,
+      "startedAt": "2026-11-04T21:52:43.493Z",
+      "fixture": "65b54f0f73543616",
+      "http": 6,
+      "browser": 1,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-04T21:57:44.176Z"
+    },
+    "evidence": "docs/qa/ux01l-evidence.json",
+    "preserved": {
+      "priorMigrations": 25,
+      "composePhases": 24,
+      "masterSpecification": true,
+      "realEnvironmentUnchanged": true,
+      "populatedUserServicesUntouched": true,
+      "liveProvidersUsed": false
     }
   }
 }

@@ -126,12 +126,18 @@ test("publication search opens the exact frozen preparation without publishing a
   await expect(
     page.getByRole("status").filter({ hasText: "1 results shown" }),
   ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Saved aurora preparation", exact: true })
-    .click();
+  const preparationResult = page.getByRole("button", {
+    name: "Saved aurora preparation",
+    exact: true,
+  });
+  await preparationResult.focus();
+  await page.keyboard.press("Enter");
   await expect(
     page.getByRole("heading", { name: "Publication preparation", exact: true }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Publication preparation", exact: true }),
+  ).toBeFocused();
   await expect(
     page.getByRole("heading", {
       name: "Saved aurora preparation",
@@ -161,7 +167,14 @@ test("publication search opens the exact frozen preparation without publishing a
     path: "test-results/publication-search-mobile.png",
     fullPage: true,
   });
-  await page.getByRole("button", { name: "Back to search results" }).click();
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    page.getByRole("button", { name: "Back to search results" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(
+    page.getByRole("button", { name: "Saved aurora preparation", exact: true }),
+  ).toBeFocused();
   await expect(page.getByLabel("Search this workspace")).toHaveValue("aurora");
   await expect(page.getByLabel("Search type")).toHaveValue("publication");
   await page
@@ -170,6 +183,7 @@ test("publication search opens the exact frozen preparation without publishing a
   await page.getByRole("button", { name: "Open current content" }).click();
   await expect(page.getByLabel("Content title", { exact: true })).toHaveValue(
     "Current changed title",
+    { timeout: 20000 },
   );
   expect(mutations).toEqual([]);
   expect(

@@ -1,3 +1,7 @@
+## UX-01L focus and UX-01K CI closure - 2026-11-04
+
+Imported the external K final receipt for exact `44cdc01` / run 41826622865. All three jobs, every required step and four artifact ZIP bytes/digests/CRCs/embedded reports passed; first K red run remains historical. L restores keyboard focus when opening and returning from read-only publication preparation details in workspace search. The query, filters, results and no-mutation behavior remain. Local owned-fixture verification and own exact-source CI are tracked separately. Antigravity's NOTIFY/DATA worktrees are untouched; their branch CI does not establish merged-main acceptance.
+
 ## UX-01K CI unit assertion follow-up - 2026-11-04
 
 First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.
