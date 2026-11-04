@@ -2,7 +2,16 @@
   "schemaVersion": 1,
   "taskId": "NOTIFY-01B",
   "recordedAtUtc": "2026-11-04T19:15:00.000Z",
-  "status": "local_verified",
+  "status": "ci_passed",
+  "commitSha": "b0d7722",
+  "ciRunIds": [41900726374, 41900736768],
+  "ciRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41900726374",
+  "prRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41900736768",
+  "verifiedJobs": {
+    "nativeVerification": "success",
+    "disposableCompose": "success",
+    "populatedUpgrade": "success"
+  },
   "behavior": {
     "publishingNotifications": "Terminal publication outcomes (CONFIRMED -> PUBLISH_SUCCEEDED, REJECTED -> PUBLISH_FAILED) recorded in recordPublicationOutcome atomically create idempotent notifications with category PUBLISH and eventKey publish:<attemptId>:<status>",
     "aiNotifications": "Media generation runtime failures in finish() create notifications with category AI and eventKey ai:<jobId>:failed",
