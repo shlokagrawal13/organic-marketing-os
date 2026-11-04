@@ -14,7 +14,7 @@ import {
   requireCurrentPublicationClaimReview,
 } from "./claim-reviews";
 import { evaluateManualGuidance, manualGuidanceLifetimeMs } from "./posting-guidance";
-import { createPublishNotification } from "./notifications";
+import { createPublishNotification } from "./notification-events";
 
 type Tx = Prisma.TransactionClient;
 const unresolved = ["RESERVED", "SUBMITTING", "UNKNOWN", "CONFIRMED"] as const;
