@@ -106,6 +106,16 @@ export class NotificationsController {
     return this.acknowledge(req, id);
   }
 
+  @Post(":id/unread")
+  async markUnreadPost(@Req() req: AuthedRequest, @Param("id") id: string) {
+    return this.markUnread(req, id);
+  }
+
+  @Patch(":id/unread")
+  async markUnreadPatch(@Req() req: AuthedRequest, @Param("id") id: string) {
+    return this.markUnread(req, id);
+  }
+
   @Post("read-all")
   async readAll(
     @Req() req: AuthedRequest,
@@ -148,6 +158,25 @@ export class NotificationsController {
       data: {
         readAt: new Date(),
         readBy: req.userId,
+      },
+    });
+    return this.owned(req.organizationId, id, req);
+  }
+
+  private async markUnread(req: AuthedRequest, id: string) {
+    const notification = await this.owned(req.organizationId, id, req);
+    if (!notification.readAt) {
+      return notification;
+    }
+    await this.db.notification.updateMany({
+      where: {
+        id: notification.id,
+        organizationId: req.organizationId,
+        readAt: { not: null },
+      },
+      data: {
+        readAt: null,
+        readBy: null,
       },
     });
     return this.owned(req.organizationId, id, req);

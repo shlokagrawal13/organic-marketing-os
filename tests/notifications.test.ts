@@ -8,6 +8,8 @@ import {
   createRenderNotification,
   createPublishNotification,
   createAiNotification,
+  createCreditsLowNotification,
+  createApprovalRequiredNotification,
   NotificationsController,
   NOTIFICATION_ROLES,
 } from "../dist/apps/api/src/notifications";
@@ -1083,5 +1085,89 @@ describe("Notifications - Controller & Application Service Contracts", () => {
       "ANALYST",
     ]);
     assert.equal(NOTIFICATION_ROLES.includes("CLIENT"), false);
+  });
+
+  test("createCreditsLowNotification: creates BILLING/CREDITS_LOW notification with balance and threshold", async () => {
+    const org = await prisma.organization.create({ data: { name: "Credits Low Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+
+    const n = await createCreditsLowNotification(prisma, {
+      organizationId: org.id,
+      actorId: user.userId,
+      balance: 5,
+      threshold: 20,
+      unit: "credits",
+    });
+
+    assert.equal(n.type, "CREDITS_LOW");
+    assert.equal(n.category, "BILLING");
+    assert.equal(n.title, "Credits low");
+    assert.equal(n.link, `/workspaces/${org.id}/billing`);
+    assert.equal((n.data as any).balance, 5);
+    assert.equal((n.data as any).threshold, 20);
+
+    const list = await controller.list(user, { category: "BILLING" });
+    assert.equal(list.total, 1);
+    assert.equal(list.items[0].type, "CREDITS_LOW");
+  });
+
+  test("createApprovalRequiredNotification: creates APPROVAL/APPROVAL_REQUIRED notification with review metadata", async () => {
+    const org = await prisma.organization.create({ data: { name: "Approval Required Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const reviewId = randomUUID();
+
+    const n = await createApprovalRequiredNotification(prisma, {
+      organizationId: org.id,
+      reviewId,
+      actorId: user.userId,
+      contentTitle: "Viral Reel",
+      platform: "YOUTUBE",
+      policyName: "Default Upload Rules",
+    });
+
+    assert.equal(n.type, "APPROVAL_REQUIRED");
+    assert.equal(n.category, "APPROVAL");
+    assert.equal(n.title, "Approval required");
+    assert.equal(n.link, `/workspaces/${org.id}/reviews/${reviewId}`);
+    assert.equal((n.data as any).policyName, "Default Upload Rules");
+
+    const list = await controller.list(user, { category: "APPROVAL" });
+    assert.equal(list.total, 1);
+    assert.equal(list.items[0].type, "APPROVAL_REQUIRED");
+  });
+
+  test("controller.markUnread: toggles read notification back to unread and updates unread counts", async () => {
+    const org = await prisma.organization.create({ data: { name: "Unread Toggle Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+
+    const n = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      actorId: user.userId,
+      status: "SUCCEEDED",
+    });
+
+    // Mark as read
+    const read = await controller.markReadPost(user, n.id);
+    assert.ok(read.readAt instanceof Date);
+    assert.equal(read.readBy, user.userId);
+
+    // Initial unread count should be 0
+    let list = await controller.list(user, { unreadOnly: "true" });
+    assert.equal(list.unreadCount, 0);
+
+    // Toggle back to unread
+    const unread = await controller.markUnreadPost(user, n.id);
+    assert.equal(unread.readAt, null);
+    assert.equal(unread.readBy, null);
+
+    // Unread count should now be 1
+    list = await controller.list(user, { unreadOnly: "true" });
+    assert.equal(list.unreadCount, 1);
+
+    // Calling markUnread again when already unread is a safe idempotent no-op
+    const repeat = await controller.markUnreadPatch(user, n.id);
+    assert.equal(repeat.readAt, null);
+    assert.equal(repeat.readBy, null);
   });
 });
