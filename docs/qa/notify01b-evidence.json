@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01B",
+  "recordedAtUtc": "2026-11-04T19:15:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "publishingNotifications": "Terminal publication outcomes (CONFIRMED -> PUBLISH_SUCCEEDED, REJECTED -> PUBLISH_FAILED) recorded in recordPublicationOutcome atomically create idempotent notifications with category PUBLISH and eventKey publish:<attemptId>:<status>",
+    "aiNotifications": "Media generation runtime failures in finish() create notifications with category AI and eventKey ai:<jobId>:failed",
+    "categoryScoping": "Notifications list and read-all endpoints support category filtering across RENDER, PUBLISH, and AI categories with atomic acknowledgment",
+    "tests": "20 unit tests in tests/notifications.test.ts covering terminal render triggers, publication confirmed/rejected outcomes, AI generation failures, category filtering, category read-all, duplicate deduplication, tenant isolation, concurrent first-acknowledgement preservation, and atomic failure transactions; all pass locally"
+  },
+  "local": {
+    "taskId": "NOTIFY-01B",
+    "passed": true,
+    "tests": {
+      "notifications": 20
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 26,
+    "tables": 38,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "notify-01b",
+    "baseBranch": "notify-01a",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "In-app notifications only; no external push or email delivery channels",
+    "No realtime WebSocket streaming or latency SLO acceptance claimed",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}

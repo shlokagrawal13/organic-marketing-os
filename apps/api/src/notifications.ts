@@ -88,6 +88,108 @@ export async function createRenderNotification(
   });
 }
 
+export async function createPublishNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    attemptId: string;
+    actorId?: string | null;
+    status: "CONFIRMED" | "REJECTED";
+    platform?: string | null;
+    providerPostId?: string | null;
+    error?: string | null;
+    contentTitle?: string | null;
+  },
+) {
+  const eventKey = `publish:${params.attemptId}:${params.status.toLowerCase()}`;
+  const isSuccess = params.status === "CONFIRMED";
+  const title = isSuccess ? "Publishing successful" : "Publishing failed";
+  const target = params.platform ? ` to ${params.platform}` : "";
+  const contentSnippet = params.contentTitle
+    ? ` for "${params.contentTitle}"`
+    : "";
+  const body = isSuccess
+    ? `Publication attempt${contentSnippet}${target} completed successfully.`
+    : params.error
+      ? `Publication attempt${contentSnippet}${target} failed: ${params.error}`
+      : `Publication attempt${contentSnippet}${target} failed.`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: isSuccess ? "PUBLISH_SUCCEEDED" : "PUBLISH_FAILED",
+      category: "PUBLISH",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/publications`,
+      entityType: "PUBLICATION_ATTEMPT",
+      entityId: params.attemptId,
+      eventKey,
+      data: {
+        attemptId: params.attemptId,
+        status: params.status,
+        ...(params.platform ? { platform: params.platform } : {}),
+        ...(params.providerPostId ? { providerPostId: params.providerPostId } : {}),
+        ...(params.error ? { error: params.error } : {}),
+      },
+    },
+    update: {},
+  });
+}
+
+export async function createAiNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    jobId: string;
+    actorId?: string | null;
+    status: "FAILED";
+    error?: string | null;
+    preset?: string | null;
+  },
+) {
+  const eventKey = `ai:${params.jobId}:failed`;
+  const title = "AI generation failed";
+  const body = params.error
+    ? `Media generation failed: ${params.error}`
+    : "Media generation failed.";
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: "AI_GENERATION_FAILED",
+      category: "AI",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/media`,
+      entityType: "MEDIA_GENERATION",
+      entityId: params.jobId,
+      eventKey,
+      data: {
+        jobId: params.jobId,
+        status: params.status,
+        ...(params.preset ? { preset: params.preset } : {}),
+        ...(params.error ? { error: params.error } : {}),
+      },
+    },
+    update: {},
+  });
+}
+
 const listQuerySchema = z.object({
   skip: z.coerce.number().int().min(0).default(0),
   take: z.coerce.number().int().min(1).max(100).default(50),
@@ -170,7 +272,10 @@ export class NotificationsController {
   }
 
   @Post("read-all")
-  async readAll(@Req() req: AuthedRequest) {
+  async readAll(
+    @Req() req: AuthedRequest,
+    @Query("category") category?: string,
+  ) {
     const isElevated = ["OWNER", "ADMIN"].includes(req.role);
     const userScope: Prisma.NotificationWhereInput = isElevated
       ? {}
@@ -179,6 +284,7 @@ export class NotificationsController {
     const where: Prisma.NotificationWhereInput = {
       organizationId: req.organizationId,
       readAt: null,
+      ...(category ? { category } : {}),
       ...userScope,
     };
 
