@@ -221,20 +221,6 @@ test("export: no credential ciphertexts appear in NDJSON output", async () => {
   assert.ok(!rawBody.includes('"requestHash"'), "requestHash must be stripped");
   assert.ok(!rawBody.includes('"requestKey"'), "requestKey must be stripped");
 });
-  orgs.push(org.id);
-  const owner = await actor(org.id, "OWNER");
-  users.push(owner.id);
-
-  const { status, rawBody } = await fetchExport(org.id, owner.headers);
-  assert.equal(status, 200);
-
-  // Credential fields must never appear in the export body
-  assert.ok(!rawBody.includes("accessTokenCiphertext"), "accessTokenCiphertext must be stripped");
-  assert.ok(!rawBody.includes("refreshTokenCiphertext"), "refreshTokenCiphertext must be stripped");
-  assert.ok(!rawBody.includes("tokenHash"), "tokenHash must be stripped");
-  assert.ok(!rawBody.includes("runToken"), "runToken must be stripped");
-  assert.ok(!rawBody.includes("requestHash"), "requestHash must be stripped");
-});
 
 test("member revocation: removes membership and sessions, preserves audit log", async () => {
   await resetFixtureRateBudget();
