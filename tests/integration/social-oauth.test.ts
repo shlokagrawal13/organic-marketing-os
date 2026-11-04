@@ -61,7 +61,22 @@ before(async () => {
 });
 after(async () => {
   if (app) await app.close();
+  await db.publicationSchedule.deleteMany({
+    where: { organizationId: { in: orgs } },
+  });
+  await db.publicationAttempt.deleteMany({
+    where: { organizationId: { in: orgs } },
+  });
+  await db.publicationPolicyReview.deleteMany({
+    where: { organizationId: { in: orgs } },
+  });
+  await db.publicationIntent.deleteMany({
+    where: { organizationId: { in: orgs } },
+  });
   await db.socialConnection.deleteMany({
+    where: { organizationId: { in: orgs } },
+  });
+  await db.contentItem.deleteMany({
     where: { organizationId: { in: orgs } },
   });
   await db.organization.deleteMany({ where: { id: { in: orgs } } });
@@ -509,5 +524,11 @@ test("social connection disconnect deletes unreferenced connection, soft-disconn
   });
   assert.ok(auditLog2);
   assert.equal((auditLog2.detail as any).hardDeleted, false);
+
+  // Fixture cleanup
+  await db.publicationSchedule.deleteMany({ where: { id: schedule.id } });
+  await db.publicationIntent.deleteMany({ where: { id: intent.id } });
+  await db.contentItem.deleteMany({ where: { id: content.id } });
+  await db.socialConnection.deleteMany({ where: { id: conn2.id } });
 });
 
