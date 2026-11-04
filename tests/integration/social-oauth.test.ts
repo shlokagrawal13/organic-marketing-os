@@ -451,9 +451,9 @@ test("social connection disconnect deletes unreferenced connection, soft-disconn
     data: {
       organizationId: org.id,
       title: "Disconnect test video",
-      type: "VIDEO",
-      status: "APPROVED",
-      currentRevision: 1,
+      platform: "YOUTUBE",
+      format: "VIDEO",
+      createdBy: owner.id,
     },
   });
   const intent = await db.publicationIntent.create({
@@ -461,12 +461,12 @@ test("social connection disconnect deletes unreferenced connection, soft-disconn
       organizationId: org.id,
       contentId: content.id,
       contentRevision: 1,
-      actorId: owner.id,
       platform: "YOUTUBE",
+      snapshot: { title: "Disconnect test video" },
       requestKey: `intent-${conn2.id}`,
       requestHash: `hash-${conn2.id}`,
-      frozenPayload: {},
-      status: "ACTIVE",
+      createdBy: owner.id,
+      status: "PREPARED",
     },
   });
   const schedule = await db.publicationSchedule.create({
