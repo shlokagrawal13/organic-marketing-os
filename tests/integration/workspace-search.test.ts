@@ -424,3 +424,113 @@ test("search pagination is deterministic and bounded and reflects edits without 
     seen[0],
   );
 });
+
+test("research search is tenant-bound, read-only and opens an exact record outside the latest 100", async () => {
+  const a = await setup(),
+    b = await setup();
+  const older = await db.researchRecord.create({
+    data: {
+      organizationId: a.org.id,
+      createdBy: a.user.id,
+      title: "Synthetic aurora evidence",
+      category: "INDUSTRY",
+      temporalScope: "HISTORICAL",
+      summary: "Observation about a nebula audience",
+      sourceLabel: "Private research marker",
+      authorizedSource: true,
+      updatedAt: new Date("2020-01-01"),
+    },
+  });
+  await db.researchRecord.create({
+    data: {
+      organizationId: b.org.id,
+      createdBy: b.user.id,
+      title: "Synthetic aurora other tenant",
+      category: "INDUSTRY",
+      temporalScope: "HISTORICAL",
+      summary: "Other tenant only",
+      authorizedSource: true,
+    },
+  });
+  await db.researchRecord.createMany({
+    data: Array.from({ length: 101 }, (_, i) => ({
+      organizationId: a.org.id,
+      createdBy: a.user.id,
+      title: `Synthetic unrelated evidence ${i}`,
+      category: "INDUSTRY" as const,
+      temporalScope: "HISTORICAL" as const,
+      summary: "No matching terms",
+      authorizedSource: true,
+    })),
+  });
+  const before = await db.researchRecord.findUniqueOrThrow({
+    where: { id: older.id },
+  });
+  assert.equal(
+    (await fetch(base + a.path + "/search?q=aurora&kind=research")).status,
+    401,
+  );
+  assert.equal(
+    (await b.user.call(a.path + "/search?q=aurora&kind=research")).status,
+    404,
+  );
+  for (const role of [
+    "OWNER",
+    "ADMIN",
+    "EDITOR",
+    "CREATOR",
+    "ANALYST",
+    "CLIENT",
+  ] as const) {
+    const reader = await actor(a.org.id, role);
+    users.push(reader.id);
+    const result = await reader.call(a.path + "/search?q=aurora&kind=research");
+    assert.equal(result.status, 200);
+    assert.equal(result.body.items.length, 1);
+    assert.deepEqual(result.body.items[0], {
+      kind: "research",
+      id: older.id,
+      title: older.title,
+      summary: older.summary,
+      status: "UNREVIEWED",
+      archived: false,
+      updatedAt: older.updatedAt.toISOString(),
+    });
+    assert.equal(
+      (await reader.call(a.path + "/research/" + older.id)).status,
+      200,
+    );
+    await db.membership.delete({
+      where: {
+        userId_organizationId: {
+          userId: reader.id,
+          organizationId: a.org.id,
+        },
+      },
+    });
+    assert.equal(
+      (await reader.call(a.path + "/search?q=aurora&kind=research")).status,
+      404,
+    );
+  }
+  assert.equal(
+    (await a.user.call(a.path + "/research")).body.items.some(
+      (x: any) => x.id === older.id,
+    ),
+    false,
+  );
+  assert.equal(
+    (await a.user.call(a.path + "/search?q=nebula&kind=research")).body.items[0]
+      .id,
+    older.id,
+  );
+  assert.equal(
+    (await a.user.call(a.path + "/search?q=aurora&kind=content")).body.items
+      .length,
+    0,
+  );
+  assert.deepEqual(
+    await db.researchRecord.findUniqueOrThrow({ where: { id: older.id } }),
+    before,
+  );
+});

@@ -62,8 +62,8 @@ function draftFrom(item: ResearchRecord): Draft {
     observedAt: localDate(item.observedAt), market: item.market, language: item.language, authorizedSource: false, insight: item.insight ?? null };
 }
 
-export default function ResearchWorkspace({ base, role, onDirtyChange }: {
-  base: string; role: string; onDirtyChange: (dirty: boolean) => void;
+export default function ResearchWorkspace({ base, role, onDirtyChange, initialRecordId }: {
+  base: string; role: string; onDirtyChange: (dirty: boolean) => void; initialRecordId?: string;
 }) {
   const [items, setItems] = useState<ResearchRecord[]>([]);
   const [selectedRecord, setSelected] = useState<ResearchRecord | null>(null);
@@ -125,10 +125,12 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
       const list: { items: ResearchRecord[] } = await api(base + "/research");
       if (sequence !== request.current) return;
       setItems(list.items); setLoaded(true);
-      const id = list.items.find((item) => item.id === preferredId)?.id || list.items[0]?.id;
+      const id = preferredId || list.items[0]?.id;
       if (id) {
         const detail: ResearchRecord = await api(`${base}/research/${id}`);
         if (sequence !== request.current) return;
+        if (!list.items.some((item) => item.id === detail.id))
+          setItems((current) => [detail, ...current]);
         setSelected(detail);
       }
     } catch (err) {
@@ -137,9 +139,9 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
     } finally { if (sequence === request.current) setBusy(false); }
   }, [base]);
   useEffect(() => {
-    void load();
+    void load(initialRecordId);
     return () => { request.current++; };
-  }, [load]);
+  }, [load, initialRecordId]);
 
   function discardAllowed() { return !dirty || confirm("Discard unsaved research changes?"); }
   async function select(id: string) {
@@ -220,7 +222,7 @@ export default function ResearchWorkspace({ base, role, onDirtyChange }: {
     {error && <div className="alert error" role="alert">{error}</div>}
     {notice && <div className="inline-notice" role="status">{notice}</div>}
     <div className="research-toolbar">
-      <p>{loaded ? `${items.length} saved ${items.length === 1 ? "record" : "records"} · Latest 100 shown` : "Workspace research"}</p>
+      <p>{loaded ? `${items.length} saved ${items.length === 1 ? "record" : "records"} · Up to 100 recent records plus the selected search result shown` : "Workspace research"}</p>
       <button className="button" disabled={busy} onClick={() => void load(selected?.id)}>
         {dirty || conflict ? "Discard edits and reload" : "Reload research"}
       </button>

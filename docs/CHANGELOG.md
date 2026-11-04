@@ -1,3 +1,8 @@
+## UX-01K research workspace search - 2026-11-04
+
+UX-01J exact commit bea0036/run41689987187 passed ALL THREE jobs/every required step (379 unit,49 HTTP,66 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact ZIP bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01j-final-ci-receipt.json closes J's packaged own-CI pending status. UX-01K adds tenant-bound saved research to workspace search and exact older-record opening. Local6 HTTP/6 browser pass in an owned fixture. K needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+Implementation: bounded tenant-bound PostgreSQL research search, exact detail opening past the latest100 list, current read roles and no write. Existing search/research assertions retained. See [design](WORKSPACE_RESEARCH_SEARCH.md) and [QA evidence](qa/ux01k-evidence.json). Own exact-source CI and external receipt remain pending at packaging time.
+
 ## UX-01J opt-in settings autosave - 2026-11-03
 
 UX-01I exact commit e3bac58/run41511073906 passed ALL THREE jobs and every required step (379 unit,49 HTTP,63 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01i-final-ci-receipt.json closes I's packaged own-CI pending status. UX-01J adds opt-in session-scoped workspace settings autosave; default manual save and all prior assertions remain. Local1 HTTP/15 browser pass in an owned fixture. J needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.

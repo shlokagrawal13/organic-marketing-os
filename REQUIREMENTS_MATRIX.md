@@ -1,3 +1,10 @@
+<!-- UX01K_CURRENT_START -->
+## Current: UX-01K - 2026-11-04
+
+UX-01J exact commit bea0036/run41689987187 passed ALL THREE jobs/every required step (379 unit,49 HTTP,66 browser,5 recovery,25 migrations,44 readability,zero audits,24 Compose phases); four artifact ZIP bytes/digests/CRCs and embedded reports verified. Imported docs/qa/ux01j-final-ci-receipt.json closes J's packaged own-CI pending status. UX-01K adds tenant-bound saved research to workspace search and exact older-record opening. Local6 HTTP/6 browser pass in an owned fixture. K needs its own exact-commit CI. Recovery fixtures ended at P; production/live/deployed/full-master gates remain open. CI does not deploy.
+See docs/ACTIVE_HANDOFF.md, docs/WORKSPACE_RESEARCH_SEARCH.md and docs/qa/ux01k-evidence.json.
+<!-- UX01K_CURRENT_END -->
+
 <!-- UX01J_CURRENT_START -->
 ## Current: UX-01J - 2026-11-03
 

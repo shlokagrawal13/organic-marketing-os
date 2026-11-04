@@ -698,7 +698,9 @@ export default function Workspace({
                         ? "content"
                         : result.kind === "campaign"
                           ? "campaigns"
-                          : "assets",
+                          : result.kind === "research"
+                            ? "research"
+                            : "assets",
                     );
                     setSearchTarget(result);
                   }}
@@ -748,6 +750,11 @@ export default function Workspace({
                   base={base}
                   role={member.role}
                   onDirtyChange={setResearchDirty}
+                  initialRecordId={
+                    searchTarget?.kind === "research"
+                      ? searchTarget.id
+                      : undefined
+                  }
                 />
               )}
               {view === "operations" && admin && (

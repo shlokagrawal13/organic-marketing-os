@@ -5,7 +5,7 @@ import { api } from "./api-client";
 import PublicationSearchDetail from "./publication-search-detail";
 
 export type SearchResult = {
-  kind: "content" | "campaign" | "asset" | "publication";
+  kind: "content" | "campaign" | "asset" | "publication" | "research";
   id: string;
   title: string;
   summary: string;
@@ -83,8 +83,8 @@ export default function WorkspaceSearch({
           <p className="eyebrow">FIND YOUR WORK</p>
           <h1>Workspace search</h1>
           <p>
-            Search content, campaigns, assets and saved publication preparations
-            in this workspace.
+            Search content, campaigns, assets, research and saved publication
+            preparations in this workspace.
           </p>
         </div>
       </div>
@@ -125,6 +125,7 @@ export default function WorkspaceSearch({
                 <option value="campaign">Campaigns</option>
                 <option value="asset">Assets</option>
                 <option value="publication">Publication preparations</option>
+                <option value="research">Research</option>
               </select>
             </label>
             <label className="check-label">

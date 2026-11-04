@@ -196,6 +196,9 @@ test("delayed publication detail cannot reappear after returning to results or s
   await page
     .getByRole("button", { name: "Search workspace", exact: true })
     .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "1 results shown" }),
+  ).toBeVisible();
   const pattern = `**/api/workspaces/${w.org.id}/publication-intents/${intent.id}`;
   for (const leave of ["back", "workspace"]) {
     let release!: () => void, started!: () => void, finished!: () => void;
@@ -471,4 +474,74 @@ test("delayed searched content cannot replace a newer unsaved draft", async ({
   } finally {
     release();
   }
+});
+
+test("research search opens an exact older record without writing and respects workspace changes", async ({
+  page,
+}) => {
+  const w = await setup(page);
+  const older = await db.researchRecord.create({
+    data: {
+      organizationId: w.org.id,
+      createdBy: w.user.id,
+      title: "Synthetic aurora observation",
+      category: "AUDIENCE",
+      temporalScope: "HISTORICAL",
+      summary: "Saved observation with a unique nebula term",
+      authorizedSource: true,
+      updatedAt: new Date("2020-01-01"),
+    },
+  });
+  await db.researchRecord.createMany({
+    data: Array.from({ length: 101 }, (_, i) => ({
+      organizationId: w.org.id,
+      createdBy: w.user.id,
+      title: `Newer observation ${i}`,
+      category: "AUDIENCE" as const,
+      temporalScope: "HISTORICAL" as const,
+      summary: "Unrelated research",
+      authorizedSource: true,
+    })),
+  });
+  const other = await db.organization.create({
+    data: { name: "Other research workspace" },
+  });
+  orgs.push(other.id);
+  await db.membership.create({
+    data: { userId: w.user.id, organizationId: other.id, role: "ANALYST" },
+  });
+  const writes: string[] = [];
+  page.on("request", (request) => {
+    if (request.url().includes("/research") && request.method() !== "GET")
+      writes.push(request.method());
+  });
+  await page.goto("/");
+  await w.open();
+  await page.getByLabel("Search this workspace").fill("aurora");
+  await page.getByLabel("Search type").selectOption("research");
+  await page
+    .getByRole("button", { name: "Search workspace", exact: true })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "1 results shown" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: older.title, exact: true }).click();
+  const detail = page.getByRole("region", { name: "Research detail" });
+  await expect(
+    detail.getByRole("heading", { name: older.title }),
+  ).toBeVisible();
+  await expect(detail).toContainText(
+    "Saved observation with a unique nebula term",
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.getByLabel("Active workspace").selectOption(other.id);
+  await expect(detail.getByRole("heading", { name: older.title })).toHaveCount(
+    0,
+  );
+  expect(writes).toEqual([]);
 });
