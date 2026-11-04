@@ -1,7 +1,12 @@
-# In-App Notifications (NOTIFY-01A)
+# In-App Notifications (NOTIFY-01A & NOTIFY-01B)
 
 ## Overview & Scope
-NOTIFY-01A introduces a durable, tenant-bound in-app notification increment driven by real terminal render-job events (`SUCCEEDED`, `FAILED`, `CANCELED`). It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, bounded pagination, and single/batch read acknowledgement.
+NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
+- **Render Events (NOTIFY-01A)**: `SUCCEEDED`, `FAILED`, `CANCELED` from video render worker and cancellation flows (`category: "RENDER"`).
+- **Publishing Events (NOTIFY-01B)**: Terminal publication attempt outcomes `CONFIRMED` (`PUBLISH_SUCCEEDED`) and `REJECTED` (`PUBLISH_FAILED`) recorded in `recordPublicationOutcome` (`category: "PUBLISH"`).
+- **AI Generation Events (NOTIFY-01B)**: Asynchronous media generation failures (`AI_GENERATION_FAILED`) recorded in `media-generation-runtime.ts` (`category: "AI"`).
+
+It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI`), bounded pagination, and single/batch read acknowledgement with category scoping.
 
 In accordance with bounded scope:
 - No synthetic or mock notification generation.
@@ -79,6 +84,29 @@ Notifications are emitted strictly upon reaching terminal render status:
    - Title: `Render canceled`
    - Body: `Video render for "{title}" was canceled.`
 
+4. **`publication-attempts.ts` (Publishing Terminal Outcomes - NOTIFY-01B)**:
+   When a publication attempt resolves in `recordPublicationOutcome`, `createPublishNotification(tx, ...)` executes inside the outcome transaction alongside the outcome `AuditLog` entry:
+   - Confirmed Success:
+     - Type: `PUBLISH_SUCCEEDED`
+     - Category: `PUBLISH`
+     - Event Key: `publish:${attempt.id}:confirmed`
+     - Title: `Publishing successful`
+     - Body: `Publication attempt completed successfully.`
+   - Rejected Failure:
+     - Type: `PUBLISH_FAILED`
+     - Category: `PUBLISH`
+     - Event Key: `publish:${attempt.id}:rejected`
+     - Title: `Publishing failed`
+     - Body: `Publication attempt failed: {error}`
+
+5. **`media-generation-runtime.ts` (AI Generation Failures - NOTIFY-01B)**:
+   When an asynchronous media generation job fails during provider execution or unrecoverable error in `finish()`, an in-app notification is created inside the failure transaction:
+   - Type: `AI_GENERATION_FAILED`
+   - Category: `AI`
+   - Event Key: `ai:${job.id}:failed`
+   - Title: `AI generation failed`
+   - Body: `Media generation failed: {error}`
+
 ---
 
 ## Authorization & Role Matrix
@@ -154,8 +182,9 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
 
 ### 4. Read All Notifications
 `POST /workspaces/:organizationId/notifications/read-all`
+`POST /workspaces/:organizationId/notifications/read-all?category=PUBLISH`
 
-- Marks all unread notifications within the actor's scope as read.
+- Marks all unread notifications within the actor's scope (and matching optional `category` query parameter) as read.
 - Returns `{ "acknowledged": <count> }`.
 
 ---

@@ -14,6 +14,7 @@ import {
   requireCurrentPublicationClaimReview,
 } from "./claim-reviews";
 import { evaluateManualGuidance, manualGuidanceLifetimeMs } from "./posting-guidance";
+import { createPublishNotification } from "./notification-events";
 
 type Tx = Prisma.TransactionClient;
 const unresolved = ["RESERVED", "SUBMITTING", "UNKNOWN", "CONFIRMED"] as const;
@@ -523,6 +524,17 @@ export async function recordPublicationOutcome(
         },
       },
     });
+    if (next === "CONFIRMED" || next === "REJECTED") {
+      await createPublishNotification(tx, {
+        organizationId: org,
+        attemptId: attempt.id,
+        actorId: input.actorId,
+        status: next,
+        providerPostId:
+          outcome.kind === "confirmed" ? outcome.providerPostId : null,
+        error: outcome.kind === "rejected" ? outcome.code : null,
+      });
+    }
     return tx.publicationAttempt.findUniqueOrThrow({
       where: { id: attempt.id },
     });

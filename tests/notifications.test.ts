@@ -6,9 +6,12 @@ import { PGLiteSocketServer } from "@electric-sql/pglite-socket";
 import { PrismaClient, Role } from "@prisma/client";
 import {
   createRenderNotification,
+  createPublishNotification,
+  createAiNotification,
   NotificationsController,
   NOTIFICATION_ROLES,
 } from "../dist/apps/api/src/notifications";
+import { recordPublicationOutcome } from "../dist/apps/api/src/publication-attempts";
 import { applicationMigrations } from "../scripts/application-pitr-fixture.mjs";
 import { fileURLToPath } from "node:url";
 
@@ -821,6 +824,254 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     });
     assert.equal(notifs.length, 1);
     assert.equal(notifs[0].type, "RENDER_CANCELED");
+  });
+
+  test("createPublishNotification: handles CONFIRMED and REJECTED outcomes with category PUBLISH and idempotency", async () => {
+    const org = await prisma.organization.create({ data: { name: "Publish Notification Org" } });
+    const actorId = randomUUID();
+    const attemptId = randomUUID();
+
+    // CONFIRMED outcome
+    const notifConfirmed = await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId,
+      actorId,
+      status: "CONFIRMED",
+      platform: "YOUTUBE",
+      providerPostId: "yt-video-12345",
+      contentTitle: "Viral Reel",
+    });
+    assert.equal(notifConfirmed.category, "PUBLISH");
+    assert.equal(notifConfirmed.type, "PUBLISH_SUCCEEDED");
+    assert.equal(notifConfirmed.title, "Publishing successful");
+    assert.ok(notifConfirmed.body.includes("Viral Reel"));
+    assert.equal(notifConfirmed.eventKey, `publish:${attemptId}:confirmed`);
+
+    // Idempotent upsert with same eventKey does not duplicate
+    const duplicate = await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId,
+      actorId,
+      status: "CONFIRMED",
+      platform: "YOUTUBE",
+    });
+    assert.equal(duplicate.id, notifConfirmed.id);
+
+    // REJECTED outcome
+    const failedAttemptId = randomUUID();
+    const notifRejected = await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId: failedAttemptId,
+      actorId,
+      status: "REJECTED",
+      platform: "YOUTUBE",
+      error: "AUTH_TOKEN_EXPIRED",
+      contentTitle: "Failed Reel",
+    });
+    assert.equal(notifRejected.category, "PUBLISH");
+    assert.equal(notifRejected.type, "PUBLISH_FAILED");
+    assert.equal(notifRejected.title, "Publishing failed");
+    assert.ok(notifRejected.body.includes("AUTH_TOKEN_EXPIRED"));
+    assert.equal(notifRejected.eventKey, `publish:${failedAttemptId}:rejected`);
+  });
+
+  test("recordPublicationOutcome: atomically triggers publication notification on CONFIRMED and REJECTED", async () => {
+    const org = await prisma.organization.create({ data: { name: "Atomic Publish Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const content = await prisma.contentItem.create({
+      data: {
+        organizationId: org.id,
+        title: "Atomic Post",
+        platform: "YOUTUBE",
+        format: "VIDEO",
+        createdBy: user.userId,
+      },
+    });
+    const connection = await prisma.socialConnection.create({
+      data: {
+        organizationId: org.id,
+        provider: "YOUTUBE",
+        externalAccountId: "channel-atomic",
+        accountLabel: "Channel Atomic",
+        scopes: ["upload"],
+        accessTokenCiphertext: "cipher-token",
+      },
+    });
+    const intent = await prisma.publicationIntent.create({
+      data: {
+        organizationId: org.id,
+        contentId: content.id,
+        contentRevision: 1,
+        platform: "YOUTUBE",
+        snapshot: { title: "Atomic Post" },
+        requestKey: "req-intent-" + randomUUID(),
+        requestHash: "hash-intent-" + randomUUID(),
+        createdBy: user.userId,
+      },
+    });
+    const attempt = await prisma.publicationAttempt.create({
+      data: {
+        organizationId: org.id,
+        intentId: intent.id,
+        connectionId: connection.id,
+        contentId: content.id,
+        contentRevision: 1,
+        requestKey: "req-attempt-" + randomUUID(),
+        requestHash: "hash-attempt-" + randomUUID(),
+        status: "SUBMITTING",
+        version: 1,
+      },
+    });
+
+    // Record confirmed outcome
+    await recordPublicationOutcome(prisma, {
+      organizationId: org.id,
+      attemptId: attempt.id,
+      expectedVersion: 1,
+      actorId: user.userId,
+      outcome: {
+        kind: "confirmed",
+        providerPostId: "video-published-id",
+        evidence: "receipt",
+      },
+    });
+
+    // Verify notification was created atomically with category PUBLISH
+    const notif = await prisma.notification.findUnique({
+      where: {
+        organizationId_eventKey: {
+          organizationId: org.id,
+          eventKey: `publish:${attempt.id}:confirmed`,
+        },
+      },
+    });
+    assert.ok(notif);
+    assert.equal(notif.category, "PUBLISH");
+    assert.equal(notif.type, "PUBLISH_SUCCEEDED");
+    assert.equal(notif.entityId, attempt.id);
+  });
+
+  test("createAiNotification: handles FAILED media generation with category AI and idempotency", async () => {
+    const org = await prisma.organization.create({ data: { name: "AI Notification Org" } });
+    const actorId = randomUUID();
+    const jobId = randomUUID();
+
+    const notif = await createAiNotification(prisma, {
+      organizationId: org.id,
+      jobId,
+      actorId,
+      status: "FAILED",
+      error: "GPU_TIMEOUT",
+      preset: "CINEMATIC",
+    });
+    assert.equal(notif.category, "AI");
+    assert.equal(notif.type, "AI_GENERATION_FAILED");
+    assert.equal(notif.title, "AI generation failed");
+    assert.ok(notif.body.includes("GPU_TIMEOUT"));
+    assert.equal(notif.eventKey, `ai:${jobId}:failed`);
+
+    // Duplicate call is idempotent
+    const duplicate = await createAiNotification(prisma, {
+      organizationId: org.id,
+      jobId,
+      actorId,
+      status: "FAILED",
+    });
+    assert.equal(duplicate.id, notif.id);
+  });
+
+  test("controller.list: filters by category PUBLISH, AI, and RENDER", async () => {
+    const org = await prisma.organization.create({ data: { name: "Category Filter Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+
+    // Create 1 RENDER, 2 PUBLISH, and 1 AI notification
+    await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      actorId: user.userId,
+      status: "SUCCEEDED",
+    });
+    await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId: randomUUID(),
+      actorId: user.userId,
+      status: "CONFIRMED",
+      platform: "YOUTUBE",
+    });
+    await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId: randomUUID(),
+      actorId: user.userId,
+      status: "REJECTED",
+      error: "QUOTA_EXCEEDED",
+    });
+    await createAiNotification(prisma, {
+      organizationId: org.id,
+      jobId: randomUUID(),
+      actorId: user.userId,
+      status: "FAILED",
+      error: "OOM",
+    });
+
+    const all = await controller.list(user, {});
+    assert.equal(all.total, 4);
+
+    const publishOnly = await controller.list(user, { category: "PUBLISH" });
+    assert.equal(publishOnly.total, 2);
+    assert.ok(publishOnly.items.every((i) => i.category === "PUBLISH"));
+
+    const aiOnly = await controller.list(user, { category: "AI" });
+    assert.equal(aiOnly.total, 1);
+    assert.equal(aiOnly.items[0].category, "AI");
+
+    const renderOnly = await controller.list(user, { category: "RENDER" });
+    assert.equal(renderOnly.total, 1);
+    assert.equal(renderOnly.items[0].category, "RENDER");
+  });
+
+  test("controller.readAll: category-specific batch mark-read marks only target category", async () => {
+    const org = await prisma.organization.create({ data: { name: "Category ReadAll Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+
+    // 2 unread RENDER, 2 unread PUBLISH
+    await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      actorId: user.userId,
+      status: "SUCCEEDED",
+    });
+    await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      actorId: user.userId,
+      status: "SUCCEEDED",
+    });
+    await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId: randomUUID(),
+      actorId: user.userId,
+      status: "CONFIRMED",
+      platform: "YOUTUBE",
+    });
+    await createPublishNotification(prisma, {
+      organizationId: org.id,
+      attemptId: randomUUID(),
+      actorId: user.userId,
+      status: "CONFIRMED",
+      platform: "YOUTUBE",
+    });
+
+    // Mark all PUBLISH notifications as read
+    const res = await controller.readAll(user, "PUBLISH");
+    assert.equal(res.acknowledged, 2);
+
+    // PUBLISH notifications are all read
+    const publishList = await controller.list(user, { category: "PUBLISH", unreadOnly: "true" });
+    assert.equal(publishList.unreadCount, 0);
+
+    // RENDER notifications remain unread
+    const renderList = await controller.list(user, { category: "RENDER", unreadOnly: "true" });
+    assert.equal(renderList.unreadCount, 2);
   });
 
   test("role authorization matrix: NOTIFICATION_ROLES contains expected authorized workspace roles", () => {
