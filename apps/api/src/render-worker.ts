@@ -209,25 +209,27 @@ const worker = new Worker(
         : error instanceof RenderFontError
           ? error.message.slice(0, 500)
           : "Media processing failed. Check the selected files and render-worker logs, then retry.";
-      const failed = await db.renderJob.updateMany({
-        where: ownership,
-        data: {
-          status: "FAILED",
-          error: failureReason,
-          stage: "Render failed",
-          completedAt: new Date(),
-        },
-      });
-      if (failed.count) {
-        await createRenderNotification(db, {
-          organizationId: row.organizationId,
-          renderId: row.id,
-          actorId: row.actorId,
-          status: "FAILED",
-          contentTitle: row.content?.title,
-          error: failureReason,
+      await db.$transaction(async (tx) => {
+        const failed = await tx.renderJob.updateMany({
+          where: ownership,
+          data: {
+            status: "FAILED",
+            error: failureReason,
+            stage: "Render failed",
+            completedAt: new Date(),
+          },
         });
-      }
+        if (failed.count) {
+          await createRenderNotification(tx, {
+            organizationId: row.organizationId,
+            renderId: row.id,
+            actorId: row.actorId,
+            status: "FAILED",
+            contentTitle: row.content?.title,
+            error: failureReason,
+          });
+        }
+      });
     } finally {
       clearInterval(timer);
       clearTimeout(deadline);

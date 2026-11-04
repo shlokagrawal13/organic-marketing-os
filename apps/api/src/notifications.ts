@@ -198,13 +198,18 @@ export class NotificationsController {
     if (notification.readAt) {
       return notification;
     }
-    return this.db.notification.update({
-      where: { id: notification.id },
+    await this.db.notification.updateMany({
+      where: {
+        id: notification.id,
+        organizationId: req.organizationId,
+        readAt: null,
+      },
       data: {
         readAt: new Date(),
         readBy: req.userId,
       },
     });
+    return this.owned(req.organizationId, id, req);
   }
 }
 

@@ -22,18 +22,17 @@ model Notification {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userId         String?
   type           String
-  category       String       @default("GENERAL")
+  category       String       @default("RENDER")
   title          String
   body           String
   link           String?
   entityType     String?
   entityId       String?
-  eventKey       String?
+  eventKey       String
   data           Json         @default("{}")
   readAt         DateTime?
   readBy         String?
   createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
 
   @@unique([organizationId, eventKey])
   @@index([organizationId, createdAt])
@@ -65,7 +64,7 @@ Notifications are emitted strictly upon reaching terminal render status:
    - Body: `Video render for "{title}" is ready for review.`
 
 2. **`render-worker.ts` (Failure)**:
-   When rendering encounters an unrecoverable worker failure, `createRenderNotification(prisma, ...)` executes in the failure handler:
+   When rendering encounters an unrecoverable worker failure, `createRenderNotification(tx, ...)` executes inside the failure transaction alongside the failure status update:
    - Type: `RENDER_FAILED`
    - Category: `RENDER`
    - Event Key: `render:${job.id}:FAILED`
@@ -129,8 +128,7 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
       "data": { "renderId": "render-uuid", "status": "SUCCEEDED" },
       "readAt": null,
       "readBy": null,
-      "createdAt": "2026-11-04T00:00:00.000Z",
-      "updatedAt": "2026-11-04T00:00:00.000Z"
+      "createdAt": "2026-11-04T00:00:00.000Z"
     }
   ],
   "total": 1,

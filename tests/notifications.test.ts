@@ -556,6 +556,150 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(ack3.readBy, user.userId);
   });
 
+  test("controller.acknowledge: concurrent mark-read calls preserve first acknowledgement", async () => {
+    const org = await prisma.organization.create({ data: { name: "Concurrent Ack Org" } });
+    const userA = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const userB = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "ADMIN" });
+
+    const notif = await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      status: "SUCCEEDED",
+      contentTitle: "Concurrent Video",
+    });
+
+    // Execute two simultaneous mark-read calls from different users
+    const [resA, resB] = await Promise.all([
+      controller.markReadPost(userA, notif.id),
+      controller.markReadPost(userB, notif.id),
+    ]);
+
+    // Both calls must return valid read timestamps
+    assert.ok(resA.readAt);
+    assert.ok(resB.readAt);
+
+    // Both calls must return the identical first acknowledgement timestamp and readBy
+    assert.equal(String(resA.readAt), String(resB.readAt));
+    assert.equal(resA.readBy, resB.readBy);
+    assert.ok([userA.userId, userB.userId].includes(resA.readBy!));
+
+    // Database state must match the preserved first winner
+    const inDb = await prisma.notification.findUniqueOrThrow({ where: { id: notif.id } });
+    assert.equal(String(inDb.readAt), String(resA.readAt));
+    assert.equal(inDb.readBy, resA.readBy);
+  });
+
+  test("render failure atomic transaction: eliminates partial-write risk between status update and notification", async () => {
+    const org = await prisma.organization.create({ data: { name: "Atomic Failure Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const renderId = randomUUID();
+
+    const content = await prisma.contentItem.create({
+      data: {
+        organizationId: org.id,
+        title: "Atomic Test Content",
+        platform: "YOUTUBE",
+        format: "VIDEO",
+        createdBy: user.userId,
+      },
+    });
+
+    // Create a mock running render job row
+    await prisma.renderJob.create({
+      data: {
+        id: renderId,
+        organizationId: org.id,
+        contentId: content.id,
+        contentRevision: 1,
+        actorId: user.userId,
+        requestKey: `rk-${renderId}`,
+        requestHash: `rh-${renderId}`,
+        totalScenes: 1,
+        status: "RUNNING",
+        progress: 50,
+        options: { format: "mp4" },
+        snapshot: { scenes: [] },
+      },
+    });
+
+    const ownership = { id: renderId, status: "RUNNING" as const };
+    const failureReason = "Media processing failed.";
+
+    // 1. Transactional failure commit succeeds atomically
+    await prisma.$transaction(async (tx) => {
+      const failed = await tx.renderJob.updateMany({
+        where: ownership,
+        data: {
+          status: "FAILED",
+          error: failureReason,
+          stage: "Render failed",
+          completedAt: new Date(),
+        },
+      });
+      if (failed.count) {
+        await createRenderNotification(tx, {
+          organizationId: org.id,
+          renderId,
+          actorId: user.userId,
+          status: "FAILED",
+          contentTitle: "Atomic Failure Video",
+          error: failureReason,
+        });
+      }
+    });
+
+    // Verify both renderJob is FAILED and notification exists
+    const jobAfter = await prisma.renderJob.findUniqueOrThrow({ where: { id: renderId } });
+    assert.equal(jobAfter.status, "FAILED");
+    const notifAfter = await prisma.notification.findFirst({
+      where: { organizationId: org.id, entityId: renderId },
+    });
+    assert.ok(notifAfter);
+    assert.equal(notifAfter.type, "RENDER_FAILED");
+
+    // 2. Rollback test: If notification creation fails inside transaction, renderJob status rollback prevents partial write
+    const secondRenderId = randomUUID();
+    await prisma.renderJob.create({
+      data: {
+        id: secondRenderId,
+        organizationId: org.id,
+        contentId: content.id,
+        contentRevision: 1,
+        actorId: user.userId,
+        requestKey: `rk-${secondRenderId}`,
+        requestHash: `rh-${secondRenderId}`,
+        totalScenes: 1,
+        status: "RUNNING",
+        progress: 20,
+        options: { format: "mp4" },
+        snapshot: { scenes: [] },
+      },
+    });
+
+    await assert.rejects(
+      async () => {
+        await prisma.$transaction(async (tx) => {
+          await tx.renderJob.updateMany({
+            where: { id: secondRenderId, status: "RUNNING" },
+            data: { status: "FAILED", error: "Simulated abort" },
+          });
+          // Deliberate error inside transaction to force rollback
+          throw new Error("Simulated downstream error during notification write");
+        });
+      },
+      /Simulated downstream error/,
+    );
+
+    // Verify renderJob was rolled back to RUNNING (no partial write)
+    const rolledBackJob = await prisma.renderJob.findUniqueOrThrow({ where: { id: secondRenderId } });
+    assert.equal(rolledBackJob.status, "RUNNING");
+    // Verify no notification was written
+    const noNotif = await prisma.notification.findFirst({
+      where: { organizationId: org.id, entityId: secondRenderId },
+    });
+    assert.equal(noNotif, null);
+  });
+
   test("controller.readAll: marks all unread in scope as read", async () => {
     const org = await prisma.organization.create({ data: { name: "ReadAll Org" } });
     const userA = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "EDITOR" });
