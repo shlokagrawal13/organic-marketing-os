@@ -1,12 +1,14 @@
-# In-App Notifications (NOTIFY-01A & NOTIFY-01B)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B & NOTIFY-01C)
 
 ## Overview & Scope
 NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
 - **Render Events (NOTIFY-01A)**: `SUCCEEDED`, `FAILED`, `CANCELED` from video render worker and cancellation flows (`category: "RENDER"`).
 - **Publishing Events (NOTIFY-01B)**: Terminal publication attempt outcomes `CONFIRMED` (`PUBLISH_SUCCEEDED`) and `REJECTED` (`PUBLISH_FAILED`) recorded in `recordPublicationOutcome` (`category: "PUBLISH"`).
 - **AI Generation Events (NOTIFY-01B)**: Asynchronous media generation failures (`AI_GENERATION_FAILED`) recorded in `media-generation-runtime.ts` (`category: "AI"`).
+- **Billing & Approval Events (NOTIFY-01C)**: Low credit balance alerts (`CREDITS_LOW`, `category: "BILLING"`) and policy review triggers (`APPROVAL_REQUIRED`, `category: "APPROVAL"`).
+- **Notification Center Actions (NOTIFY-01C)**: Mark-as-unread toggle (`POST|PATCH :id/unread`) allowing users/admins to reset read receipts, preserving unread badge counts per MASTER_SPEC §83.
 
-It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI`), bounded pagination, and single/batch read acknowledgement with category scoping.
+It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL`), bounded pagination, and single/batch read/unread actions.
 
 In accordance with bounded scope:
 - No synthetic or mock notification generation.
@@ -186,6 +188,14 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
 
 - Marks all unread notifications within the actor's scope (and matching optional `category` query parameter) as read.
 - Returns `{ "acknowledged": <count> }`.
+
+### 5. Mark Notification Unread (NOTIFY-01C)
+`POST /workspaces/:organizationId/notifications/:id/unread`
+`PATCH /workspaces/:organizationId/notifications/:id/unread`
+
+- Toggles a notification back to unread status (`readAt = null`, `readBy = null`).
+- Accurately increments `unreadCount` badge in subsequent queries.
+- Idempotent: subsequent calls on an already-unread notification safely return 200 OK.
 
 ---
 

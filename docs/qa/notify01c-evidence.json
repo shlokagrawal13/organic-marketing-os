@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01C",
+  "recordedAtUtc": "2026-11-04T22:20:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "markUnread": "POST and PATCH /workspaces/:organizationId/notifications/:id/unread toggle read notifications back to unread status (readAt: null, readBy: null), accurately updating unread badge counts; idempotent on already unread notifications",
+    "creditsLowNotifications": "createCreditsLowNotification generates idempotent CREDITS_LOW notifications with category BILLING, eventKey credits:low:<orgId>:<balance>, linking to /workspaces/:orgId/billing",
+    "approvalRequiredNotifications": "createApprovalRequiredNotification generates idempotent APPROVAL_REQUIRED notifications with category APPROVAL, eventKey approval:required:<reviewId>, linking to /workspaces/:orgId/reviews/:reviewId",
+    "tests": "23 unit tests in tests/notifications.test.ts covering terminal render triggers, publication confirmed/rejected outcomes, AI generation failures, credits low alerts, approval required triggers, unread toggle actions, category filtering, category read-all, duplicate deduplication, tenant isolation, concurrent first-acknowledgement preservation, and atomic failure transactions; all pass locally"
+  },
+  "local": {
+    "taskId": "NOTIFY-01C",
+    "passed": true,
+    "tests": {
+      "notifications": 23
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 26,
+    "tables": 38,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "notify-01c",
+    "baseBranch": "notify-01b",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "In-app notifications only; no external push or email delivery channels",
+    "No realtime WebSocket streaming or latency SLO acceptance claimed",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}
