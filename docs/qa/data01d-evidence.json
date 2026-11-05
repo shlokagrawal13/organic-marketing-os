@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "taskId": "DATA-01D",
+  "recordedAtUtc": "2026-11-05T13:35:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "auditQueryEndpoint": "GET /api/workspaces/:organizationId/operations/audit implemented with OWNER/ADMIN role authorization; non-privileged roles (EDITOR, CREATOR, ANALYST, CLIENT) rejected with 403; non-members rejected with 404",
+    "queryFiltering": "Supports filtering by action prefix, actorId, startDate, and endDate, with bounded cursor pagination (take <= 100)",
+    "auditExportEndpoint": "GET /api/workspaces/:organizationId/operations/audit-export streams NDJSON manifest, auditLog entries, and complete footer",
+    "tamperEvidentChecksum": "Terminal complete record computes SHA-256 over all preceding lines including newlines for immutable compliance verification",
+    "auditTrail": "Emits immutable audit.exported event in AuditLog recording actorId, execution timestamp, count, filters, and SHA-256 digest",
+    "tests": "15 unit tests in tests/data-governance.test.ts and comprehensive HTTP integration test in tests/integration/data-export.test.ts verifying query filtering, cursor pagination, 403 authorization rejections, NDJSON export, SHA-256 verification, and audit event creation"
+  },
+  "local": {
+    "taskId": "DATA-01D",
+    "passed": true,
+    "tests": {
+      "dataGovernance": 15,
+      "dataExportIntegration": 8
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "migrations": 25,
+    "tables": 37,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "data-01d",
+    "baseBranch": "data-01c",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "Audit log export is scoped strictly to tenant-owned records; system logs and other tenants are isolated",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}
