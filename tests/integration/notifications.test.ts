@@ -420,3 +420,76 @@ test("render cancel terminal event creates durable notification and preserves au
   assert.equal(cancelAgain.status, 409);
 });
 
+test("GET /summary returns totalUnread and category counts with tenant isolation", async () => {
+  await resetFixtureRateBudget();
+  const orgA = await db.organization.create({ data: { name: "Summary Org A" } });
+  const orgB = await db.organization.create({ data: { name: "Summary Org B" } });
+  orgs.push(orgA.id, orgB.id);
+
+  const ownerA = await actor(orgA.id, "OWNER");
+  const ownerB = await actor(orgB.id, "OWNER");
+  users.push(ownerA.id, ownerB.id);
+
+  // Org A: 1 unread RENDER
+  await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "RENDER_SUCCEEDED",
+      category: "RENDER",
+      title: "Render complete",
+      body: "Ready",
+      eventKey: `render:${randomUUID()}:SUCCEEDED`,
+    },
+  });
+
+  // Org A: 1 unread BILLING
+  await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "PAYMENT_FAILED",
+      category: "BILLING",
+      title: "Payment failed",
+      body: "Card declined",
+      eventKey: `billing:payment_failed:${randomUUID()}`,
+    },
+  });
+
+  // Org A: 1 read BILLING (readAt populated)
+  await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "CREDITS_LOW",
+      category: "BILLING",
+      title: "Credits low",
+      body: "Balance low",
+      eventKey: `billing:credits_low:${randomUUID()}`,
+      readAt: new Date(),
+      readBy: ownerA.id,
+    },
+  });
+
+  // Org B: 1 unread RENDER
+  await db.notification.create({
+    data: {
+      organizationId: orgB.id,
+      type: "RENDER_SUCCEEDED",
+      category: "RENDER",
+      title: "Render complete",
+      body: "Ready",
+      eventKey: `render:${randomUUID()}:SUCCEEDED`,
+    },
+  });
+
+  // Owner A fetches summary
+  const summaryRes = await ownerA.call(`/workspaces/${orgA.id}/notifications/summary`);
+  assert.equal(summaryRes.status, 200);
+  assert.equal(summaryRes.body.organizationId, orgA.id);
+  assert.equal(summaryRes.body.totalUnread, 2);
+  assert.equal(summaryRes.body.byCategory.RENDER, 1);
+  assert.equal(summaryRes.body.byCategory.BILLING, 1);
+
+  // Owner B cannot access Org A summary
+  const crossTenantRes = await ownerB.call(`/workspaces/${orgA.id}/notifications/summary`);
+  assert.equal(crossTenantRes.status, 404);
+});
+

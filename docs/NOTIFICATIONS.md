@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B & NOTIFY-01C)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C & NOTIFY-01D)
 
 ## Overview & Scope
 NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
@@ -7,8 +7,10 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **AI Generation Events (NOTIFY-01B)**: Asynchronous media generation failures (`AI_GENERATION_FAILED`) recorded in `media-generation-runtime.ts` (`category: "AI"`).
 - **Billing & Approval Events (NOTIFY-01C)**: Low credit balance alerts (`CREDITS_LOW`, `category: "BILLING"`) and policy review triggers (`APPROVAL_REQUIRED`, `category: "APPROVAL"`).
 - **Notification Center Actions (NOTIFY-01C)**: Mark-as-unread toggle (`POST|PATCH :id/unread`) allowing users/admins to reset read receipts, preserving unread badge counts per MASTER_SPEC §83.
+- **Billing & Content Lifecycle Events (NOTIFY-01D)**: Payment failures (`PAYMENT_FAILED`, `category: "BILLING"`), subscription modifications/cancellations (`SUBSCRIPTION_UPDATED`, `SUBSCRIPTION_CANCELED`, `category: "BILLING"`), and content readiness triggers (`CONTENT_READY`, `category: "CONTENT"`).
+- **Category Summary Metrics (NOTIFY-01D)**: Aggregated category summary endpoint (`GET /workspaces/:organizationId/notifications/summary`) providing `totalUnread` badge counts and category-level unread breakdowns with role-based scoping and strict tenant isolation.
 
-It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL`), bounded pagination, and single/batch read/unread actions.
+It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
 In accordance with bounded scope:
 - No synthetic or mock notification generation.
@@ -196,6 +198,25 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
 - Toggles a notification back to unread status (`readAt = null`, `readBy = null`).
 - Accurately increments `unreadCount` badge in subsequent queries.
 - Idempotent: subsequent calls on an already-unread notification safely return 200 OK.
+
+### 6. Notification Category Summary (NOTIFY-01D)
+`GET /workspaces/:organizationId/notifications/summary`
+
+- Computes aggregated unread counts partitioned by category for the workspace.
+- Honors role-based scoping: elevated roles (`OWNER`, `ADMIN`) receive total unread counts across all workspace notifications; non-elevated roles (`EDITOR`, `CREATOR`, `ANALYST`) receive counts for unassigned notifications plus their own assigned notifications.
+- Strictly tenant-isolated: requests across tenant boundaries are rejected with HTTP 404.
+- Response structure:
+```json
+{
+  "organizationId": "org-uuid",
+  "totalUnread": 5,
+  "byCategory": {
+    "RENDER": 2,
+    "BILLING": 1,
+    "CONTENT": 2
+  }
+}
+```
 
 ---
 

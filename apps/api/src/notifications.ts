@@ -91,6 +91,40 @@ export class NotificationsController {
     };
   }
 
+  @Get("summary")
+  async summary(@Req() req: AuthedRequest) {
+    const isElevated = ["OWNER", "ADMIN"].includes(req.role);
+    const userScope: Prisma.NotificationWhereInput = isElevated
+      ? {}
+      : { OR: [{ userId: req.userId }, { userId: null }] };
+
+    const whereUnread: Prisma.NotificationWhereInput = {
+      organizationId: req.organizationId,
+      readAt: null,
+      ...userScope,
+    };
+
+    const [totalUnread, grouped] = await Promise.all([
+      this.db.notification.count({ where: whereUnread }),
+      this.db.notification.groupBy({
+        by: ["category"],
+        where: whereUnread,
+        _count: { id: true },
+      }),
+    ]);
+
+    const byCategory: Record<string, number> = {};
+    for (const g of grouped) {
+      byCategory[g.category] = g._count.id;
+    }
+
+    return {
+      organizationId: req.organizationId,
+      totalUnread,
+      byCategory,
+    };
+  }
+
   @Get(":id")
   async get(@Req() req: AuthedRequest, @Param("id") id: string) {
     return this.owned(req.organizationId, id, req);
