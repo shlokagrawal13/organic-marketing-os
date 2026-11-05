@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01D",
+  "recordedAtUtc": "2026-11-05T20:25:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "summaryEndpoint": "GET /workspaces/:organizationId/notifications/summary aggregates totalUnread count and category breakdown (byCategory) with strict tenant isolation and role-based scoping (elevated roles see all workspace unread, members see unassigned and own assigned unread)",
+    "paymentFailedNotifications": "createPaymentFailedNotification generates idempotent PAYMENT_FAILED notifications with category BILLING, eventKey billing:payment_failed:<invoiceId>, linking to /workspaces/:orgId/billing",
+    "subscriptionEventNotifications": "createSubscriptionEventNotification generates idempotent SUBSCRIPTION_UPDATED and SUBSCRIPTION_CANCELED notifications with category BILLING, eventKey billing:subscription:<subscriptionId>:<eventType>, linking to /workspaces/:orgId/billing",
+    "contentReadyNotifications": "createContentReadyNotification generates idempotent CONTENT_READY notifications with category CONTENT, eventKey content:<contentId>:ready, linking to /workspaces/:orgId/content/:contentId",
+    "tests": "27 unit tests in tests/notifications.test.ts and integration test suite; all unit tests pass locally with 0 failures"
+  },
+  "local": {
+    "taskId": "NOTIFY-01D",
+    "passed": true,
+    "tests": {
+      "notifications": 27
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 26,
+    "tables": 38,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 26,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "notify-01d",
+    "baseBranch": "notify-01c",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "In-app notifications only; no external push or email delivery channels",
+    "No realtime WebSocket streaming or latency SLO acceptance claimed",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}
