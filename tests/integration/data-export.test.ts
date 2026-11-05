@@ -20,6 +20,7 @@ after(async () => {
     await db.publicationPolicyReview.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.publicationIntent.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.socialConnection.deleteMany({ where: { organizationId: { in: orgs } } });
+    await db.renderJob.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.contentItem.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.creditAccount.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.organization.deleteMany({ where: { id: { in: orgs } } });
@@ -327,5 +328,107 @@ test("member revocation: cross-tenant call returns 403/404", async () => {
     "DELETE",
   );
   assert.ok([403, 404].includes(res.status), `Expected 403/404, got ${res.status}`);
+});
+
+test("retention pruning: OWNER can preview candidates in dry-run mode and prune while preserving financial records", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Prune Org" } });
+  orgs.push(org.id);
+  const owner = await actor(org.id, "OWNER");
+  const editor = await actor(org.id, "EDITOR");
+  users.push(owner.id, editor.id);
+
+  // 1. Create an expired invitation (1 hour in the past)
+  const expiredInv = await db.invitation.create({
+    data: {
+      organizationId: org.id,
+      email: "expired-candidate@example.com",
+      role: "CREATOR",
+      tokenHash: "expired-candidate-token-hash-123",
+      expiresAt: new Date(Date.now() - 3600000),
+    },
+  });
+
+  // 2. Create an unexpired invitation (1 hour in the future)
+  const activeInv = await db.invitation.create({
+    data: {
+      organizationId: org.id,
+      email: "active-candidate@example.com",
+      role: "CREATOR",
+      tokenHash: "active-candidate-token-hash-456",
+      expiresAt: new Date(Date.now() + 3600000),
+    },
+  });
+
+  // 3. Create a CreditAccount and CreditEntry (financial records that must NEVER be pruned)
+  const creditAcct = await db.creditAccount.create({
+    data: {
+      organizationId: org.id,
+      balance: 500,
+    },
+  });
+  const creditEntry = await db.creditEntry.create({
+    data: {
+      organizationId: org.id,
+      accountId: creditAcct.id,
+      amount: 500,
+      balanceAfter: 500,
+      operationKey: "initial-grant-key",
+      requestHash: "initial-grant-hash",
+      reason: "Initial Grant",
+    },
+  });
+
+  // 4. Test non-privileged role (EDITOR) receives 403 Forbidden
+  const editorRes = await editor.call(
+    `/workspaces/${org.id}/operations/retention-prune`,
+    "POST",
+  );
+  assert.equal(editorRes.status, 403);
+
+  // 5. Test dry-run: preview candidates without deleting
+  const dryRes = await owner.call(
+    `/workspaces/${org.id}/operations/retention-prune?dryRun=true`,
+    "POST",
+  );
+  assert.equal(dryRes.status, 201);
+  const dryBody = await dryRes.json();
+  assert.equal(dryBody.dryRun, true);
+  assert.equal(dryBody.pruned, false);
+  assert.equal(dryBody.candidates.expiredInvitations, 1);
+
+  // Assert expired invitation still exists in DB after dry-run
+  const invStillExists = await db.invitation.findUnique({ where: { id: expiredInv.id } });
+  assert.ok(invStillExists);
+
+  // 6. Test real prune execution
+  const pruneRes = await owner.call(
+    `/workspaces/${org.id}/operations/retention-prune`,
+    "POST",
+  );
+  assert.equal(pruneRes.status, 201);
+  const pruneBody = await pruneRes.json();
+  assert.equal(pruneBody.dryRun, false);
+  assert.equal(pruneBody.pruned, true);
+  assert.equal(pruneBody.summary.expiredInvitations, 1);
+
+  // Assert expired invitation is deleted
+  const invDeleted = await db.invitation.findUnique({ where: { id: expiredInv.id } });
+  assert.equal(invDeleted, null);
+
+  // Assert active invitation is PRESERVED
+  const invActiveKept = await db.invitation.findUnique({ where: { id: activeInv.id } });
+  assert.ok(invActiveKept);
+
+  // Assert financial records are IMMUTABLE and PRESERVED
+  const creditEntryKept = await db.creditEntry.findUnique({ where: { id: creditEntry.id } });
+  assert.ok(creditEntryKept);
+
+  // Assert audit trail records retention.pruned event
+  const pruneAudit = await db.auditLog.findFirst({
+    where: { organizationId: org.id, action: "retention.pruned" },
+  });
+  assert.ok(pruneAudit);
+  assert.equal((pruneAudit.detail as any).expiredInvitations, 1);
 });
 

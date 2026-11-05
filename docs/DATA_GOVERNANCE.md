@@ -52,6 +52,22 @@ DATA-01B implements the social account disconnect endpoint (`DELETE /api/workspa
 - **Referential Integrity & Clean Removal**: If no child records (`PublicationAttempt`, `PublicationPolicyReview`, `PublicationSchedule`) reference the connection, the row is hard-deleted from the database. If references exist, it is retained in soft-disconnected status with scrubbed credentials to uphold historical publication auditability without violating `onDelete: Restrict` foreign key constraints.
 - **Audit Logging**: Appends an immutable `social_connection.disconnected` event to `AuditLog` recording actor, provider, external account identity, and whether the record was hard-deleted.
 
+### Tenant Data Retention & Expired Record Pruning — DATA-01C
+
+DATA-01C implements workspace retention pruning per `MASTER_SPEC §71 & §147` via `POST /api/workspaces/:organizationId/operations/retention-prune`:
+- **Role Authorization**: Accessible strictly to `OWNER` and `ADMIN` roles. Non-privileged roles (`EDITOR`, `CREATOR`, `ANALYST`, `CLIENT`) receive 403 Forbidden. Non-members receive 404 Not Found.
+- **Dry-Run Capability (`?dryRun=true`)**: Provides a non-destructive inspection mode returning candidate record counts across all prunable categories without mutating any database records.
+- **Pruning Scope & Conditions**:
+  - **Expired Invitations**: Workspace invitations where `expiresAt < now()`.
+  - **Invalidated / Canceled Publication Intents**: Publication intents with `status IN ['INVALIDATED', 'CANCELED']` that have zero active/historical child publication schedules and attempts.
+  - **Canceled Publication Schedules**: Publication schedules with `status = 'CANCELED'` that have zero associated publication attempts.
+  - **Stale Render Jobs**: Failed or canceled render jobs older than 24 hours (`status IN ['FAILED', 'CANCELED']` and `createdAt < now() - 24 hours`).
+- **Immutable Financial & Audit Protection**:
+  - Financial records (`CreditEntry`, `CreditReservation`, `BillingSubscription`, `BillingInvoice`) and compliance logs (`AuditLog`) are strictly protected from deletion or mutation.
+  - Core creative content (`Campaign`, `ContentItem`, `Asset`, `BrandProfile`, `BrandVersion`) is preserved unconditionally.
+- **Audit Logging**:
+  - In non-dry-run mode, appends an immutable `retention.pruned` event to `AuditLog` containing exact deleted counts (`expiredInvitations`, `invalidatedPublicationIntents`, `canceledPublicationSchedules`, `staleRenderJobs`), total pruned records, actor ID, and timestamp.
+
 Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 
 Credit entries reject SQL UPDATE/DELETE and financial foreign keys prevent deleting credited organizations. Corrections append entries. Retention/anonymization and legal erasure behavior are still unimplemented; do not remove this protection for an account-deletion shortcut.

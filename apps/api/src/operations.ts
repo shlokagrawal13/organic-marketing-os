@@ -1,8 +1,10 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   Param,
+  Query,
   Req,
   Res,
   UseGuards,
@@ -11,6 +13,7 @@ import {
   NotFoundException,
   ForbiddenException,
 } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { Response } from "express";
 import { mkdtemp, appendFile, rm, stat } from "node:fs/promises";
 import { createReadStream } from "node:fs";
@@ -468,6 +471,124 @@ export class OperationsController {
     });
 
     return { revokedUserId: targetUserId, organizationId: org };
+  }
+
+  /**
+   * DATA-01C: Tenant data retention and expired record pruning.
+   *
+   * Prunes expired invitations, invalidated publication intents, canceled schedules,
+   * and transient scratch records past retention window according to documented
+   * retention rules (MASTER_SPEC §71 & §147).
+   *
+   * Invariants:
+   *  - Caller must be OWNER or ADMIN (enforced by class @Roles + TenantGuard).
+   *  - Non-elevated roles (EDITOR, CREATOR, ANALYST, CLIENT) are rejected with 403.
+   *  - CreditEntry, CreditReservation, BillingSubscription, BillingInvoice, and
+   *    AuditLog records are IMMUTABLE and strictly preserved.
+   *  - Active content, approved assets, and active schedules/attempts are untouched.
+   *  - Dry-run preview supported via ?dryRun=true query parameter.
+   *  - Real executions append an immutable retention.pruned entry to AuditLog.
+   */
+  @Post("retention-prune")
+  async pruneRetention(
+    @Req() req: AuthedRequest,
+    @Query("dryRun") dryRunQuery?: string,
+  ) {
+    const org = req.organizationId;
+    const isDryRun = dryRunQuery === "true";
+    const now = new Date();
+
+    // 1. Expired Invitations (expiresAt < now)
+    const expiredInvitationsWhere: Prisma.InvitationWhereInput = {
+      organizationId: org,
+      expiresAt: { lt: now },
+    };
+
+    // 2. Invalidated or Canceled Publication Intents without active child schedules or attempts
+    const invalidatedIntentsWhere: Prisma.PublicationIntentWhereInput = {
+      organizationId: org,
+      status: { in: ["INVALIDATED", "CANCELED"] },
+      schedule: null,
+      attempt: null,
+    };
+
+    // 3. Canceled Publication Schedules without active attempt references
+    const canceledSchedulesWhere: Prisma.PublicationScheduleWhereInput = {
+      organizationId: org,
+      status: "CANCELED",
+      attemptId: null,
+    };
+
+    // 4. Failed/Canceled Render Jobs older than 24h
+    const renderCutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const staleRendersWhere: Prisma.RenderJobWhereInput = {
+      organizationId: org,
+      status: { in: ["FAILED", "CANCELED"] },
+      createdAt: { lt: renderCutoff },
+    };
+
+    // Compute candidate counts
+    const [invitationCount, intentCount, scheduleCount, renderCount] = await Promise.all([
+      this.db.invitation.count({ where: expiredInvitationsWhere }),
+      this.db.publicationIntent.count({ where: invalidatedIntentsWhere }),
+      this.db.publicationSchedule.count({ where: canceledSchedulesWhere }),
+      this.db.renderJob.count({ where: staleRendersWhere }),
+    ]);
+
+    const candidates = {
+      expiredInvitations: invitationCount,
+      invalidatedIntents: intentCount,
+      canceledSchedules: scheduleCount,
+      staleRenders: renderCount,
+      total: invitationCount + intentCount + scheduleCount + renderCount,
+    };
+
+    if (isDryRun) {
+      return {
+        dryRun: true,
+        pruned: false,
+        organizationId: org,
+        candidates,
+      };
+    }
+
+    // Execute atomic pruning transaction in dependency-safe order
+    const pruned = await this.db.$transaction(async (tx) => {
+      const delSchedules = await tx.publicationSchedule.deleteMany({ where: canceledSchedulesWhere });
+      const delIntents = await tx.publicationIntent.deleteMany({ where: invalidatedIntentsWhere });
+      const delRenders = await tx.renderJob.deleteMany({ where: staleRendersWhere });
+      const delInvitations = await tx.invitation.deleteMany({ where: expiredInvitationsWhere });
+
+      const details = {
+        expiredInvitations: delInvitations.count,
+        invalidatedIntents: delIntents.count,
+        canceledSchedules: delSchedules.count,
+        staleRenders: delRenders.count,
+        total: delInvitations.count + delIntents.count + delSchedules.count + delRenders.count,
+      };
+
+      await tx.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "retention.pruned",
+          entityId: org,
+          detail: {
+            ...details,
+            prunedBy: req.userId,
+          },
+        },
+      });
+
+      return details;
+    });
+
+    return {
+      dryRun: false,
+      pruned: true,
+      organizationId: org,
+      summary: pruned,
+    };
   }
 }
 @Module({ imports: [AssetsModule], controllers: [OperationsController] })
