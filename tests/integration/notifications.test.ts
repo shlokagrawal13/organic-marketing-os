@@ -493,3 +493,50 @@ test("GET /summary returns totalUnread and category counts with tenant isolation
   assert.equal(crossTenantRes.status, 404);
 });
 
+test("GET/PUT /preferences: manages notification muting preferences with tenant and user isolation", async () => {
+  await resetFixtureRateBudget();
+  const orgA = await db.organization.create({ data: { name: "Preferences Org A" } });
+  const orgB = await db.organization.create({ data: { name: "Preferences Org B" } });
+  orgs.push(orgA.id, orgB.id);
+
+  const ownerA = await actor(orgA.id, "OWNER");
+  const clientA = await actor(orgA.id, "CLIENT");
+  const ownerB = await actor(orgB.id, "OWNER");
+  users.push(ownerA.id, clientA.id, ownerB.id);
+
+  // 1. Initial preferences are empty
+  const getRes = await ownerA.call(`/workspaces/${orgA.id}/notifications/preferences`);
+  assert.equal(getRes.status, 200);
+  assert.deepEqual(getRes.body.mutedCategories, []);
+
+  // 2. Client role is rejected with 403 Forbidden
+  const clientRes = await clientA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PUT",
+    { mutedCategories: ["BILLING"] },
+  );
+  assert.equal(clientRes.status, 403);
+
+  // 3. Cross-tenant user is rejected with 404 Not Found
+  const crossTenantRes = await ownerB.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PUT",
+    { mutedCategories: ["BILLING"] },
+  );
+  assert.equal(crossTenantRes.status, 404);
+
+  // 4. Owner updates preferences
+  const updateRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PUT",
+    { mutedCategories: ["BILLING", "AI"] },
+  );
+  assert.equal(updateRes.status, 200);
+  assert.deepEqual(updateRes.body.mutedCategories, ["BILLING", "AI"]);
+
+  // 5. GET returns updated preferences
+  const refetched = await ownerA.call(`/workspaces/${orgA.id}/notifications/preferences`);
+  assert.equal(refetched.status, 200);
+  assert.deepEqual(refetched.body.mutedCategories, ["BILLING", "AI"]);
+});
+

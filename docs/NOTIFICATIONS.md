@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C & NOTIFY-01D)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D & NOTIFY-01E)
 
 ## Overview & Scope
 NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
@@ -9,6 +9,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Notification Center Actions (NOTIFY-01C)**: Mark-as-unread toggle (`POST|PATCH :id/unread`) allowing users/admins to reset read receipts, preserving unread badge counts per MASTER_SPEC §83.
 - **Billing & Content Lifecycle Events (NOTIFY-01D)**: Payment failures (`PAYMENT_FAILED`, `category: "BILLING"`), subscription modifications/cancellations (`SUBSCRIPTION_UPDATED`, `SUBSCRIPTION_CANCELED`, `category: "BILLING"`), and content readiness triggers (`CONTENT_READY`, `category: "CONTENT"`).
 - **Category Summary Metrics (NOTIFY-01D)**: Aggregated category summary endpoint (`GET /workspaces/:organizationId/notifications/summary`) providing `totalUnread` badge counts and category-level unread breakdowns with role-based scoping and strict tenant isolation.
+- **Notification Preferences & Category Muting (NOTIFY-01E)**: Per-user notification category muting and preferences management (`GET|PUT|PATCH /workspaces/:organizationId/notifications/preferences`), automatically filtering muted categories from inbox feeds and unread badge summaries unless explicitly requested (`includeMuted=true` or explicit `category` query parameter).
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
@@ -215,6 +216,33 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
     "BILLING": 1,
     "CONTENT": 2
   }
+}
+```
+
+### 7. Notification Preferences & Category Muting (NOTIFY-01E)
+`GET /workspaces/:organizationId/notifications/preferences`
+`PUT /workspaces/:organizationId/notifications/preferences`
+`PATCH /workspaces/:organizationId/notifications/preferences`
+
+- **Per-User Configuration**: Allows workspace users to view and update their notification category preferences (e.g., mute specific categories like `RENDER` or `PUBLISH`).
+- **Audit-Backed Persistence**: Preference changes are persisted in immutable `AuditLog` events (`action: "notifications.preferences.updated"`), ensuring zero schema drift and full auditability without requiring speculative migration scripts.
+- **Feed & Summary Filtering**: By default, notifications in muted categories are automatically filtered out from `GET /notifications` list feeds and `GET /notifications/summary` unread calculations.
+- **Opt-in Visibility**:
+  - Setting `?includeMuted=true` includes muted category notifications and counts in the response.
+  - Specifying an explicit `?category=XYZ` query parameter bypasses muting filters for that targeted category query.
+- Request payload:
+```json
+{
+  "mutedCategories": ["RENDER", "AI"]
+}
+```
+- Response structure:
+```json
+{
+  "organizationId": "org-uuid",
+  "userId": "user-uuid",
+  "mutedCategories": ["RENDER", "AI"],
+  "updatedAt": "2026-11-06T03:50:00.000Z"
 }
 ```
 
