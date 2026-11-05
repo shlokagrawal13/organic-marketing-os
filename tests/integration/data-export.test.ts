@@ -381,7 +381,7 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
     "POST",
   );
   assert.equal(dryRes.status, 201);
-  const dryBody = await dryRes.json();
+  const dryBody = dryRes.body as any;
   assert.equal(dryBody.dryRun, true);
   assert.equal(dryBody.pruned, false);
   assert.equal(dryBody.candidates.expiredInvitations, 1);
@@ -396,7 +396,7 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
     "POST",
   );
   assert.equal(pruneRes.status, 201);
-  const pruneBody = await pruneRes.json();
+  const pruneBody = pruneRes.body as any;
   assert.equal(pruneBody.dryRun, false);
   assert.equal(pruneBody.pruned, true);
   assert.equal(pruneBody.summary.expiredInvitations, 1);
