@@ -83,6 +83,27 @@ DATA-01D implements structured tenant audit log querying and tamper-evident comp
   - **Tamper-Evident SHA-256**: Terminal complete record verifies SHA-256 hash over all preceding lines including newlines.
   - **Audit Logging**: Appends an immutable `audit.exported` event to `AuditLog` recording the actor, exported entry count, filters, and SHA-256 checksum.
 
+### Workspace Legal Hold & Data Freeze Management — DATA-01E
+
+DATA-01E implements enterprise legal discovery, dispute preservation, and regulatory data freeze controls per `MASTER_SPEC §56 & §97`:
+- **Role Authorization**: Restricted strictly to `OWNER` and `ADMIN` roles. Non-privileged roles (`EDITOR`, `CREATOR`, `ANALYST`, `CLIENT`) receive 403 Forbidden. Non-members receive 404 Not Found.
+- **Enable Legal Hold (`POST /api/workspaces/:organizationId/operations/legal-hold`)**:
+  - Places the workspace under an active data freeze.
+  - Accepts a mandatory `reason` (string, 3–500 chars) and optional `caseReference` (string, max 100 chars).
+  - Emits an immutable `data.legal_hold.enabled` event to `AuditLog` containing reason, case reference, timestamp, and actor identity.
+  - Duplicate enable requests when a hold is already active return 409 Conflict.
+- **Inspect Legal Hold (`GET /api/workspaces/:organizationId/operations/legal-hold`)**:
+  - Returns current hold status: `{ organizationId, active: boolean, hold: { id, reason, caseReference, enabledAt, enabledBy } | null }`.
+- **Release Legal Hold (`DELETE /api/workspaces/:organizationId/operations/legal-hold`)**:
+  - Lifts the data freeze on the workspace.
+  - Requires a mandatory `releaseReason` (string, 3–500 chars).
+  - Emits an immutable `data.legal_hold.released` event to `AuditLog`.
+  - Releasing when no hold is active returns 409 Conflict.
+- **Enforcement on Destructive Mutations**:
+  - **Retention Pruning**: `POST /api/workspaces/:organizationId/operations/retention-prune` is rejected with `HTTP 423 Locked`, returning active hold metadata to prevent routine record destruction during legal proceedings.
+  - **Member Data Revocation**: `DELETE /api/workspaces/:organizationId/operations/members/:userId` is rejected with `HTTP 423 Locked`, preserving user-linked evidence and sessions until the hold is formally released.
+  - Lifts cleanly once the legal hold is released by an authorized administrator.
+
 Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 
 Credit entries reject SQL UPDATE/DELETE and financial foreign keys prevent deleting credited organizations. Corrections append entries. Retention/anonymization and legal erasure behavior are still unimplemented; do not remove this protection for an account-deletion shortcut.

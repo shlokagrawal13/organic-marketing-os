@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "taskId": "DATA-01E",
+  "recordedAtUtc": "2026-11-05T21:25:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "legalHoldEndpoints": "POST, GET, and DELETE /api/workspaces/:organizationId/operations/legal-hold implemented with OWNER/ADMIN role authorization; non-privileged roles (EDITOR, CREATOR, ANALYST, CLIENT) rejected with 403; non-members rejected with 404",
+    "enableHold": "POST /operations/legal-hold accepts reason and optional caseReference, emits immutable data.legal_hold.enabled event to AuditLog; duplicate enables return 409 Conflict",
+    "releaseHold": "DELETE /operations/legal-hold accepts releaseReason, emits immutable data.legal_hold.released event to AuditLog; releasing when inactive returns 409 Conflict",
+    "lockedMutations": "Active legal hold locks retention pruning (POST /operations/retention-prune) and member data deletion (DELETE /operations/members/:userId) with HTTP 423 Locked",
+    "tests": "17 unit tests in tests/data-governance.test.ts and 10 integration tests in tests/integration/data-export.test.ts verifying enable, inspect, release, conflict handling, 403 authorization rejections, and HTTP 423 lock enforcement"
+  },
+  "local": {
+    "taskId": "DATA-01E",
+    "passed": true,
+    "tests": {
+      "dataGovernance": 17,
+      "dataExportIntegration": 10
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "migrations": 25,
+    "tables": 37,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 25,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "data-01e",
+    "baseBranch": "data-01d",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "Legal hold operates within the tenant boundary; system-wide infrastructure administration is not governed by tenant holds",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}

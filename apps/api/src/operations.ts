@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Delete,
+  Body,
   Param,
   Query,
   Req,
@@ -16,19 +17,29 @@ import {
 } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { Response } from "express";
+import { z } from "zod";
 import { mkdtemp, appendFile, rm, stat } from "node:fs/promises";
 import { createReadStream } from "node:fs";
 import { pipeline } from "node:stream/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { createHash } from "node:crypto";
-import { Db, Cache, TenantGuard, AuthedRequest, Roles } from "./common";
+import { Db, Cache, TenantGuard, AuthedRequest, Roles, parse } from "./common";
 import { AssetsModule, MediaStorage } from "./assets";
 import {
   providersFromEnv,
   RedisProviderHealthStore,
 } from "../../../packages/core/ai";
 import { evaluateYoutubeLiveReadiness } from "../../../packages/core/youtube-live-readiness";
+
+const legalHoldEnableSchema = z.object({
+  reason: z.string().min(3).max(500),
+  caseReference: z.string().max(100).optional(),
+});
+
+const legalHoldReleaseSchema = z.object({
+  releaseReason: z.string().min(3).max(500),
+});
 
 @Controller("workspaces/:organizationId/operations")
 @UseGuards(TenantGuard)
@@ -403,6 +414,36 @@ export class OperationsController {
   }
 
   /**
+   * Helper to retrieve active legal hold status for the workspace.
+   */
+  private async getLegalHoldStatus(org: string) {
+    const latest = await this.db.auditLog.findFirst({
+      where: {
+        organizationId: org,
+        action: { in: ["data.legal_hold.enabled", "data.legal_hold.released"] },
+      },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    });
+    if (latest && latest.action === "data.legal_hold.enabled") {
+      const detail = latest.detail as Record<string, unknown>;
+      return {
+        active: true,
+        hold: {
+          id: latest.id,
+          reason: (detail?.reason as string) || "Legal hold active",
+          caseReference: (detail?.caseReference as string) || null,
+          enabledAt: latest.createdAt,
+          enabledBy: latest.actorId,
+        },
+      };
+    }
+    return {
+      active: false,
+      hold: null,
+    };
+  }
+
+  /**
    * DATA-01A: Safe member-data revocation.
    *
    * Revokes a non-owner membership and active sessions without touching
@@ -415,6 +456,7 @@ export class OperationsController {
    *  - CreditEntry/CreditReservation rows are preserved (financial constraint).
    *  - AuditLog rows are preserved (immutable audit trail).
    *  - An audit event is written for the revocation.
+   *  - Blocked with HTTP 423 Locked when workspace is under active legal hold.
    */
   @Delete("members/:targetUserId")
   async revokeMember(
@@ -422,6 +464,19 @@ export class OperationsController {
     @Req() req: AuthedRequest,
   ) {
     const org = req.organizationId;
+
+    const holdStatus = await this.getLegalHoldStatus(org);
+    if (holdStatus.active) {
+      throw new HttpException(
+        {
+          statusCode: 423,
+          error: "Locked",
+          message: "Member data deletion is locked: workspace is under an active legal hold.",
+          legalHold: holdStatus.hold,
+        },
+        423,
+      );
+    }
 
     // Prevent OWNER self-revocation via this endpoint
     if (targetUserId === req.userId) {
@@ -492,6 +547,7 @@ export class OperationsController {
    *  - Active content, approved assets, and active schedules/attempts are untouched.
    *  - Dry-run preview supported via ?dryRun=true query parameter.
    *  - Real executions append an immutable retention.pruned entry to AuditLog.
+   *  - Blocked with HTTP 423 Locked when workspace is under active legal hold.
    */
   @Post("retention-prune")
   async pruneRetention(
@@ -499,6 +555,20 @@ export class OperationsController {
     @Query("dryRun") dryRunQuery?: string,
   ) {
     const org = req.organizationId;
+
+    const holdStatus = await this.getLegalHoldStatus(org);
+    if (holdStatus.active) {
+      throw new HttpException(
+        {
+          statusCode: 423,
+          error: "Locked",
+          message: "Retention pruning is locked: workspace is under an active legal hold.",
+          legalHold: holdStatus.hold,
+        },
+        423,
+      );
+    }
+
     const isDryRun = dryRunQuery === "true";
     return this.db.$transaction(async (tx) => {
       // Serialize preview and execution against workspace lifecycle changes so
@@ -611,6 +681,101 @@ export class OperationsController {
         summary: details,
       };
     });
+  }
+
+  /**
+   * DATA-01E: Workspace Legal Hold & Data Freeze Management
+   *
+   * Enables enterprise legal discovery, dispute preservation, and regulatory freeze.
+   * When legal hold is active:
+   *  - Retention pruning (retention-prune) is rejected with 423 Locked.
+   *  - Member data revocation (members/:userId) is rejected with 423 Locked.
+   *  - Full audit logging tracks who enabled and released the hold.
+   */
+  @Get("legal-hold")
+  async getLegalHold(@Req() req: AuthedRequest) {
+    const org = req.organizationId;
+    const status = await this.getLegalHoldStatus(org);
+    return {
+      organizationId: org,
+      active: status.active,
+      hold: status.hold,
+    };
+  }
+
+  @Post("legal-hold")
+  async enableLegalHold(@Req() req: AuthedRequest, @Body() body: unknown) {
+    const org = req.organizationId;
+    const current = await this.getLegalHoldStatus(org);
+    if (current.active) {
+      throw new ConflictException("Workspace is already under active legal hold.");
+    }
+    const input = parse(legalHoldEnableSchema, body ?? {});
+    const now = new Date();
+    const audit = await this.db.auditLog.create({
+      data: {
+        organizationId: org,
+        actorId: req.userId,
+        action: "data.legal_hold.enabled",
+        entityId: org,
+        detail: {
+          reason: input.reason,
+          caseReference: input.caseReference ?? null,
+          enabledAt: now.toISOString(),
+          enabledBy: req.userId,
+        },
+      },
+    });
+    return {
+      organizationId: org,
+      active: true,
+      hold: {
+        id: audit.id,
+        reason: input.reason,
+        caseReference: input.caseReference ?? null,
+        enabledAt: now,
+        enabledBy: req.userId,
+      },
+    };
+  }
+
+  @Delete("legal-hold")
+  async releaseLegalHold(
+    @Req() req: AuthedRequest,
+    @Body() body: unknown,
+    @Query("releaseReason") releaseReasonQuery?: string,
+  ) {
+    const org = req.organizationId;
+    const current = await this.getLegalHoldStatus(org);
+    if (!current.active) {
+      throw new ConflictException("Workspace does not have an active legal hold to release.");
+    }
+    const rawInput =
+      body && typeof body === "object" && Object.keys(body).length > 0
+        ? body
+        : { releaseReason: releaseReasonQuery };
+    const input = parse(legalHoldReleaseSchema, rawInput);
+    const now = new Date();
+    await this.db.auditLog.create({
+      data: {
+        organizationId: org,
+        actorId: req.userId,
+        action: "data.legal_hold.released",
+        entityId: org,
+        detail: {
+          releaseReason: input.releaseReason,
+          releasedAt: now.toISOString(),
+          releasedBy: req.userId,
+          priorHoldId: current.hold?.id,
+        },
+      },
+    });
+    return {
+      organizationId: org,
+      active: false,
+      releasedAt: now,
+      releasedBy: req.userId,
+    };
   }
 
   /**
