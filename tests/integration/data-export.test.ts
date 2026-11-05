@@ -548,3 +548,173 @@ test("audit export: OWNER can download compliance audit NDJSON with tamper-evide
   assert.equal((exportAudit.detail as any).sha256, expectedSha256);
 });
 
+test("legal hold: OWNER can enable, inspect, and release legal hold with role authorization and audit logging", async () => {
+  await resetFixtureRateBudget();
+  const orgA = await db.organization.create({ data: { name: "Legal Hold Org A" } });
+  const orgB = await db.organization.create({ data: { name: "Legal Hold Org B" } });
+  orgs.push(orgA.id, orgB.id);
+
+  const ownerA = await actor(orgA.id, "OWNER");
+  const editorA = await actor(orgA.id, "EDITOR");
+  const ownerB = await actor(orgB.id, "OWNER");
+  users.push(ownerA.id, editorA.id, ownerB.id);
+
+  // 1. Initial state is inactive
+  const initialRes = await ownerA.call(`/workspaces/${orgA.id}/operations/legal-hold`, "GET");
+  assert.equal(initialRes.status, 200);
+  assert.equal((initialRes.body as any).active, false);
+  assert.equal((initialRes.body as any).hold, null);
+
+  // 2. Non-privileged role (EDITOR) receives 403 Forbidden
+  const editorEnable = await editorA.call(
+    `/workspaces/${orgA.id}/operations/legal-hold`,
+    "POST",
+    { reason: "Unauthorized attempt" },
+  );
+  assert.equal(editorEnable.status, 403);
+
+  // 3. OWNER enables legal hold
+  const enableRes = await ownerA.call(
+    `/workspaces/${orgA.id}/operations/legal-hold`,
+    "POST",
+    { reason: "SEC compliance audit", caseReference: "SEC-2026-789" },
+  );
+  assert.equal(enableRes.status, 201);
+  const enableBody = enableRes.body as any;
+  assert.equal(enableBody.active, true);
+  assert.equal(enableBody.hold.reason, "SEC compliance audit");
+  assert.equal(enableBody.hold.caseReference, "SEC-2026-789");
+  assert.equal(enableBody.hold.enabledBy, ownerA.id);
+
+  // 4. Duplicate enable attempt returns 409 Conflict
+  const dupEnable = await ownerA.call(
+    `/workspaces/${orgA.id}/operations/legal-hold`,
+    "POST",
+    { reason: "Second duplicate attempt" },
+  );
+  assert.equal(dupEnable.status, 409);
+
+  // 5. GET returns active hold details
+  const getRes = await ownerA.call(`/workspaces/${orgA.id}/operations/legal-hold`, "GET");
+  assert.equal(getRes.status, 200);
+  const getBody = getRes.body as any;
+  assert.equal(getBody.active, true);
+  assert.equal(getBody.hold.caseReference, "SEC-2026-789");
+
+  // 6. Tenant isolation: Owner B cannot access Org A's legal hold (404)
+  const crossTenantGet = await ownerB.call(`/workspaces/${orgA.id}/operations/legal-hold`, "GET");
+  assert.equal(crossTenantGet.status, 404);
+
+  // 7. Non-privileged role cannot release legal hold (403)
+  const editorRelease = await editorA.call(
+    `/workspaces/${orgA.id}/operations/legal-hold`,
+    "DELETE",
+    { releaseReason: "Unauthorized release" },
+  );
+  assert.equal(editorRelease.status, 403);
+
+  // 8. OWNER releases legal hold
+  const releaseRes = await ownerA.call(
+    `/workspaces/${orgA.id}/operations/legal-hold`,
+    "DELETE",
+    { releaseReason: "Audit completed with no findings" },
+  );
+  assert.equal(releaseRes.status, 200);
+  assert.equal((releaseRes.body as any).active, false);
+
+  // 9. Releasing when inactive returns 409 Conflict
+  const dupRelease = await ownerA.call(
+    `/workspaces/${orgA.id}/operations/legal-hold`,
+    "DELETE",
+    { releaseReason: "Redundant release" },
+  );
+  assert.equal(dupRelease.status, 409);
+
+  // 10. Audit log entries are recorded for both enable and release
+  const enableAudit = await db.auditLog.findFirst({
+    where: { organizationId: orgA.id, action: "data.legal_hold.enabled" },
+  });
+  assert.ok(enableAudit);
+  assert.equal((enableAudit.detail as any).reason, "SEC compliance audit");
+
+  const releaseAudit = await db.auditLog.findFirst({
+    where: { organizationId: orgA.id, action: "data.legal_hold.released" },
+  });
+  assert.ok(releaseAudit);
+  assert.equal((releaseAudit.detail as any).releaseReason, "Audit completed with no findings");
+});
+
+test("legal hold: active legal hold locks retention pruning and member data revocation with HTTP 423 Locked", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Legal Hold Lock Org" } });
+  orgs.push(org.id);
+
+  const owner = await actor(org.id, "OWNER");
+  const member = await actor(org.id, "EDITOR");
+  users.push(owner.id, member.id);
+
+  // Create an expired invitation candidate for pruning
+  await db.invitation.create({
+    data: {
+      organizationId: org.id,
+      email: "prune-target@example.com",
+      role: "CREATOR",
+      tokenHash: "prune-target-hash-123",
+      expiresAt: new Date(Date.now() - 3600000),
+    },
+  });
+
+  // Enable legal hold
+  const holdRes = await owner.call(
+    `/workspaces/${org.id}/operations/legal-hold`,
+    "POST",
+    { reason: "Pending court order discovery", caseReference: "DISCOVERY-001" },
+  );
+  assert.equal(holdRes.status, 201);
+
+  // 1. Attempt retention pruning while legal hold is active -> HTTP 423 Locked
+  const pruneAttempt = await owner.call(
+    `/workspaces/${org.id}/operations/retention-prune`,
+    "POST",
+  );
+  assert.equal(pruneAttempt.status, 423);
+  assert.match(
+    (pruneAttempt.body as any)?.error?.message || (pruneAttempt.body as any)?.message,
+    /retention pruning is locked/i,
+  );
+
+  // 2. Attempt member data revocation while legal hold is active -> HTTP 423 Locked
+  const revokeAttempt = await owner.call(
+    `/workspaces/${org.id}/operations/members/${member.id}`,
+    "DELETE",
+  );
+  assert.equal(revokeAttempt.status, 423);
+  assert.match(
+    (revokeAttempt.body as any)?.error?.message || (revokeAttempt.body as any)?.message,
+    /member data deletion is locked/i,
+  );
+
+  // Verify membership was NOT deleted
+  const membership = await db.membership.findUnique({
+    where: { userId_organizationId: { userId: member.id, organizationId: org.id } },
+  });
+  assert.ok(membership);
+
+  // 3. Release legal hold
+  const releaseRes = await owner.call(
+    `/workspaces/${org.id}/operations/legal-hold`,
+    "DELETE",
+    { releaseReason: "Court order discovery complete" },
+  );
+  assert.equal(releaseRes.status, 200);
+
+  // 4. Now retention pruning succeeds
+  const pruneAfterRelease = await owner.call(
+    `/workspaces/${org.id}/operations/retention-prune`,
+    "POST",
+  );
+  assert.equal(pruneAfterRelease.status, 201);
+  assert.equal((pruneAfterRelease.body as any).pruned, true);
+});
+
+

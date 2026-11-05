@@ -417,5 +417,108 @@ test("audit export checksum matches SHA-256 over manifest and all preceding reco
   assert.equal(completeRecord.data.count, 2);
 });
 
+test("legal hold evaluation determines active state and detail from audit log chronological events", () => {
+  const evaluateLegalHold = (logs: Array<{ action: string; detail: any; createdAt: Date; actorId: string }>) => {
+    const holdEvents = logs
+      .filter((l) => ["data.legal_hold.enabled", "data.legal_hold.released"].includes(l.action))
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+    if (!holdEvents.length) return { active: false, hold: null };
+    const latest = holdEvents[0];
+    if (latest.action === "data.legal_hold.enabled") {
+      return {
+        active: true,
+        hold: {
+          reason: latest.detail?.reason,
+          caseReference: latest.detail?.caseReference ?? null,
+          enabledAt: latest.createdAt,
+          enabledBy: latest.actorId,
+        },
+      };
+    }
+    return { active: false, hold: null };
+  };
+
+  // Case 1: Empty audit logs
+  assert.equal(evaluateLegalHold([]).active, false);
+
+  // Case 2: Only non-legal-hold logs
+  const nonHoldLogs = [
+    { action: "team.invited", detail: {}, createdAt: new Date("2026-11-01T10:00:00Z"), actorId: "u1" },
+  ];
+  assert.equal(evaluateLegalHold(nonHoldLogs).active, false);
+
+  // Case 3: Enabled legal hold
+  const enabledLogs = [
+    ...nonHoldLogs,
+    {
+      action: "data.legal_hold.enabled",
+      detail: { reason: "Litigation hold", caseReference: "CIVIL-2026-001" },
+      createdAt: new Date("2026-11-02T10:00:00Z"),
+      actorId: "admin-1",
+    },
+  ];
+  const enabledState = evaluateLegalHold(enabledLogs);
+  assert.equal(enabledState.active, true);
+  assert.equal(enabledState.hold?.reason, "Litigation hold");
+  assert.equal(enabledState.hold?.caseReference, "CIVIL-2026-001");
+  assert.equal(enabledState.hold?.enabledBy, "admin-1");
+
+  // Case 4: Released legal hold
+  const releasedLogs = [
+    ...enabledLogs,
+    {
+      action: "data.legal_hold.released",
+      detail: { releaseReason: "Case settled" },
+      createdAt: new Date("2026-11-03T10:00:00Z"),
+      actorId: "admin-1",
+    },
+  ];
+  const releasedState = evaluateLegalHold(releasedLogs);
+  assert.equal(releasedState.active, false);
+  assert.equal(releasedState.hold, null);
+
+  // Case 5: Re-enabled legal hold after release
+  const reenabledLogs = [
+    ...releasedLogs,
+    {
+      action: "data.legal_hold.enabled",
+      detail: { reason: "Subsequent appeal filed", caseReference: "APPEAL-2026-002" },
+      createdAt: new Date("2026-11-04T10:00:00Z"),
+      actorId: "admin-2",
+    },
+  ];
+  const reenabledState = evaluateLegalHold(reenabledLogs);
+  assert.equal(reenabledState.active, true);
+  assert.equal(reenabledState.hold?.reason, "Subsequent appeal filed");
+  assert.equal(reenabledState.hold?.caseReference, "APPEAL-2026-002");
+  assert.equal(reenabledState.hold?.enabledBy, "admin-2");
+});
+
+test("legal hold policy locks destructive mutations with HTTP 423 Locked", () => {
+  const checkMutationAllowed = (isLegalHoldActive: boolean, operation: string) => {
+    if (isLegalHoldActive) {
+      return {
+        allowed: false,
+        statusCode: 423,
+        error: "Locked",
+        message: `${operation} is locked: workspace is under an active legal hold.`,
+      };
+    }
+    return { allowed: true, statusCode: 200 };
+  };
+
+  // Retention prune
+  assert.equal(checkMutationAllowed(true, "Retention pruning").statusCode, 423);
+  assert.equal(checkMutationAllowed(true, "Retention pruning").allowed, false);
+  assert.equal(checkMutationAllowed(false, "Retention pruning").allowed, true);
+
+  // Member revocation
+  assert.equal(checkMutationAllowed(true, "Member data deletion").statusCode, 423);
+  assert.equal(checkMutationAllowed(true, "Member data deletion").allowed, false);
+  assert.equal(checkMutationAllowed(false, "Member data deletion").allowed, true);
+});
+
+
 
 
