@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01E",
+  "recordedAtUtc": "2026-11-05T22:28:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "preferencesEndpoints": "GET, PUT, and PATCH /workspaces/:organizationId/notifications/preferences for managing per-user muted notification categories with audit-backed persistence",
+    "categoryMutingInFeed": "GET /workspaces/:organizationId/notifications list endpoint automatically filters out notifications matching user's muted categories unless includeMuted=true or explicit category query param is provided",
+    "categoryMutingInSummary": "GET /workspaces/:organizationId/notifications/summary automatically excludes muted categories from totalUnread calculation and byCategory dictionary unless includeMuted=true",
+    "auditTrail": "Preference changes are recorded in AuditLog (action: notifications.preferences.updated) for auditability with zero schema migration drift",
+    "tests": "29 unit tests in tests/notifications.test.ts passing locally with 0 failures; integration test suite in tests/integration/notifications.test.ts covering preferences and muting contracts"
+  },
+  "local": {
+    "taskId": "NOTIFY-01E",
+    "passed": true,
+    "tests": {
+      "notifications": 29
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 26,
+    "tables": 38,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 26,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "notify-01e",
+    "baseBranch": "notify-01d",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "In-app notifications only; no external push or email delivery channels",
+    "No realtime WebSocket streaming or latency SLO acceptance claimed",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}
