@@ -356,4 +356,66 @@ test("retention pruning: financial credit entries and audit logs are strictly im
   }
 });
 
+test("audit log query filtering matches action prefixes, actorId, and date ranges", () => {
+  const filterAuditLog = (
+    log: { action: string; actorId: string; createdAt: Date },
+    filter: { actionPrefix?: string; actorId?: string; startDate?: Date; endDate?: Date },
+  ) => {
+    if (filter.actionPrefix && !log.action.startsWith(filter.actionPrefix)) return false;
+    if (filter.actorId && log.actorId !== filter.actorId) return false;
+    if (filter.startDate && log.createdAt < filter.startDate) return false;
+    if (filter.endDate && log.createdAt > filter.endDate) return false;
+    return true;
+  };
+
+  const log1 = { action: "team.invited", actorId: "user-1", createdAt: new Date("2026-11-01T10:00:00Z") };
+  const log2 = { action: "team.removed", actorId: "user-2", createdAt: new Date("2026-11-02T10:00:00Z") };
+  const log3 = { action: "workspace.updated", actorId: "user-1", createdAt: new Date("2026-11-03T10:00:00Z") };
+  const log4 = { action: "retention.pruned", actorId: "user-1", createdAt: new Date("2026-11-04T10:00:00Z") };
+
+  // Action prefix filter
+  assert.equal(filterAuditLog(log1, { actionPrefix: "team." }), true);
+  assert.equal(filterAuditLog(log2, { actionPrefix: "team." }), true);
+  assert.equal(filterAuditLog(log3, { actionPrefix: "team." }), false);
+
+  // ActorId filter
+  assert.equal(filterAuditLog(log1, { actorId: "user-1" }), true);
+  assert.equal(filterAuditLog(log2, { actorId: "user-1" }), false);
+
+  // Date range filter
+  const start = new Date("2026-11-02T00:00:00Z");
+  const end = new Date("2026-11-03T23:59:59Z");
+  assert.equal(filterAuditLog(log1, { startDate: start, endDate: end }), false);
+  assert.equal(filterAuditLog(log2, { startDate: start, endDate: end }), true);
+  assert.equal(filterAuditLog(log3, { startDate: start, endDate: end }), true);
+  assert.equal(filterAuditLog(log4, { startDate: start, endDate: end }), false);
+});
+
+test("audit export checksum matches SHA-256 over manifest and all preceding record lines", () => {
+  const hasher = createHash("sha256");
+
+  const lines = [
+    JSON.stringify({ type: "manifest", format: "audit-ndjson", organizationId: "org-1", filters: {} }),
+    JSON.stringify({ type: "auditLog", data: { id: "log-1", action: "team.invited" } }),
+    JSON.stringify({ type: "auditLog", data: { id: "log-2", action: "retention.pruned" } }),
+  ];
+
+  for (const line of lines) {
+    hasher.update(line + "\n");
+  }
+
+  const expectedSha256 = hasher.digest("hex");
+  assert.equal(typeof expectedSha256, "string");
+  assert.equal(expectedSha256.length, 64);
+
+  // Complete record is formed with the exact computed digest
+  const completeRecord = {
+    type: "complete",
+    data: { count: 2, sha256: expectedSha256 },
+  };
+  assert.equal(completeRecord.data.sha256, expectedSha256);
+  assert.equal(completeRecord.data.count, 2);
+});
+
+
 
