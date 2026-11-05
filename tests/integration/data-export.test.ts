@@ -14,7 +14,6 @@ after(async () => {
     await db.invitation.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.membership.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.creditReservation.deleteMany({ where: { organizationId: { in: orgs } } });
-    await db.creditEntry.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.publicationAttempt.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.publicationSchedule.deleteMany({ where: { organizationId: { in: orgs } } });
     await db.publicationPolicyReview.deleteMany({ where: { organizationId: { in: orgs } } });
@@ -360,22 +359,12 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
     },
   });
 
-  // 3. Create a CreditAccount and CreditEntry (financial records that must NEVER be pruned)
+  // 3. Create a CreditAccount (financial record that must NEVER be pruned)
   const creditAcct = await db.creditAccount.create({
     data: {
       organizationId: org.id,
-      balance: 500,
-    },
-  });
-  const creditEntry = await db.creditEntry.create({
-    data: {
-      organizationId: org.id,
-      accountId: creditAcct.id,
-      amount: 500,
-      balanceAfter: 500,
-      operationKey: "initial-grant-key",
-      requestHash: "initial-grant-hash",
-      reason: "Initial Grant",
+      available: 500,
+      reserved: 0,
     },
   });
 
@@ -421,8 +410,11 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
   assert.ok(invActiveKept);
 
   // Assert financial records are IMMUTABLE and PRESERVED
-  const creditEntryKept = await db.creditEntry.findUnique({ where: { id: creditEntry.id } });
-  assert.ok(creditEntryKept);
+  const creditAcctKept = await db.creditAccount.findUnique({
+    where: { organizationId: org.id },
+  });
+  assert.ok(creditAcctKept);
+  assert.equal(creditAcctKept.available, 500);
 
   // Assert audit trail records retention.pruned event
   const pruneAudit = await db.auditLog.findFirst({

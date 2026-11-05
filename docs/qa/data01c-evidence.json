@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "taskId": "DATA-01C",
-  "recordedAtUtc": "2026-11-05T12:20:00.000Z",
+  "recordedAtUtc": "2026-11-05T12:38:00.000Z",
   "status": "local_verified",
   "behavior": {
     "retentionPruneEndpoint": "POST /api/workspaces/:organizationId/operations/retention-prune implemented with OWNER/ADMIN role authorization; non-privileged roles (EDITOR, CREATOR, ANALYST, CLIENT) rejected with 403; non-members rejected with 404",
     "dryRunMode": "Supports ?dryRun=true query parameter returning candidate counts for expiredInvitations, invalidatedPublicationIntents, canceledPublicationSchedules, and staleRenderJobs without mutating records",
     "pruneTargets": "Prunes expired invitations (expiresAt < now), orphaned invalidated/canceled publication intents with 0 child schedules/attempts, canceled publication schedules with 0 attempts, and terminal failed/canceled render jobs older than 24 hours",
-    "immutableProtection": "Strictly preserves financial records (CreditEntry, CreditReservation, BillingSubscription, BillingInvoice), audit trails (AuditLog), active content items, campaigns, and creative assets",
+    "immutableProtection": "Strictly preserves financial records (CreditEntry, CreditReservation, CreditAccount, BillingSubscription, BillingInvoice), audit trails (AuditLog), active content items, campaigns, and creative assets",
     "auditTrail": "Emits immutable retention.pruned event in AuditLog recording actorId, execution timestamp, and exact counts per pruned entity type",
     "tests": "13 unit tests in tests/data-governance.test.ts and comprehensive HTTP integration test in tests/integration/data-export.test.ts verifying dry-run previews, role authorization, execution deletion counts, and immutable financial preservation"
   },
