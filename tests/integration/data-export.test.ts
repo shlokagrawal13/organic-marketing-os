@@ -3,7 +3,7 @@ import { test, after } from "node:test";
 import assert from "node:assert/strict";
 import { db, actor, base } from "../support/http";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 
 const orgs: string[] = [];
 const users: string[] = [];
@@ -39,6 +39,20 @@ async function fetchExport(
   const res = await fetch(`${base}/workspaces/${orgId}/operations/export`, {
     headers,
   });
+  const rawBody = await res.text();
+  return { status: res.status, rawBody };
+}
+
+/** Fetch the audit NDJSON export as raw text. */
+async function fetchAuditExport(
+  orgId: string,
+  headers: Record<string, string>,
+  query = "",
+): Promise<{ status: number; rawBody: string }> {
+  const res = await fetch(
+    `${base}/workspaces/${orgId}/operations/audit-export${query}`,
+    { headers },
+  );
   const rawBody = await res.text();
   return { status: res.status, rawBody };
 }
@@ -478,5 +492,115 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
   });
   assert.ok(pruneAudit);
   assert.equal((pruneAudit.detail as any).expiredInvitations, 1);
+});
+
+test("audit querying: OWNER can filter audit logs with pagination and role enforcement", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Audit Query Org" } });
+  orgs.push(org.id);
+  const owner = await actor(org.id, "OWNER");
+  const editor = await actor(org.id, "EDITOR");
+  users.push(owner.id, editor.id);
+
+  // Seed multiple audit entries
+  await db.auditLog.createMany({
+    data: [
+      { organizationId: org.id, actorId: owner.id, action: "team.invited", detail: { role: "ADMIN" } },
+      { organizationId: org.id, actorId: owner.id, action: "team.removed", detail: { target: "user-x" } },
+      { organizationId: org.id, actorId: owner.id, action: "workspace.updated", detail: { revision: 1 } },
+      { organizationId: org.id, actorId: editor.id, action: "content.created", detail: { title: "Draft 1" } },
+    ],
+  });
+
+  // 1. Non-privileged role (EDITOR) is rejected with 403 Forbidden
+  const forbiddenRes = await editor.call(
+    `/workspaces/${org.id}/operations/audit`,
+    "GET",
+  );
+  assert.equal(forbiddenRes.status, 403);
+
+  // 2. OWNER can query all audit logs
+  const allRes = await owner.call(
+    `/workspaces/${org.id}/operations/audit`,
+    "GET",
+  );
+  assert.equal(allRes.status, 200);
+  const allBody = allRes.body as any;
+  assert.equal(allBody.organizationId, org.id);
+  assert.ok(allBody.totalCount >= 4);
+
+  // 3. OWNER can filter by action prefix
+  const teamRes = await owner.call(
+    `/workspaces/${org.id}/operations/audit?action=team.`,
+    "GET",
+  );
+  assert.equal(teamRes.status, 200);
+  const teamBody = teamRes.body as any;
+  assert.equal(teamBody.items.length, 2);
+  for (const item of teamBody.items) {
+    assert.ok(item.action.startsWith("team."));
+  }
+
+  // 4. Bounded pagination with cursor
+  const pageRes = await owner.call(
+    `/workspaces/${org.id}/operations/audit?take=2`,
+    "GET",
+  );
+  assert.equal(pageRes.status, 200);
+  const pageBody = pageRes.body as any;
+  assert.equal(pageBody.items.length, 2);
+  assert.ok(pageBody.nextCursor !== null);
+});
+
+test("audit export: OWNER can download compliance audit NDJSON with tamper-evident checksum", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Audit Export Org" } });
+  orgs.push(org.id);
+  const owner = await actor(org.id, "OWNER");
+  const editor = await actor(org.id, "EDITOR");
+  users.push(owner.id, editor.id);
+
+  // Seed sample audit events
+  await db.auditLog.createMany({
+    data: [
+      { organizationId: org.id, actorId: owner.id, action: "team.invited", detail: { target: "user-1" } },
+      { organizationId: org.id, actorId: owner.id, action: "workspace.updated", detail: { settingsRevision: 2 } },
+    ],
+  });
+
+  // 1. Non-privileged role is rejected with 403
+  const forbiddenRes = await fetchAuditExport(org.id, editor.headers);
+  assert.equal(forbiddenRes.status, 403);
+
+  // 2. OWNER downloads audit export
+  const { status, rawBody } = await fetchAuditExport(org.id, owner.headers);
+  assert.equal(status, 200);
+
+  const lines = rawBody.trim().split("\n");
+  assert.ok(lines.length >= 3, "Export should have manifest, audit records, and complete record");
+
+  const manifest = JSON.parse(lines[0]);
+  assert.equal(manifest.type, "manifest");
+  assert.equal(manifest.format, "audit-ndjson");
+  assert.equal(manifest.organizationId, org.id);
+
+  // Verify SHA-256 integrity over all preceding lines
+  const hash = createHash("sha256");
+  for (let i = 0; i < lines.length - 1; i++) {
+    hash.update(lines[i] + "\n");
+  }
+  const expectedSha256 = hash.digest("hex");
+
+  const complete = JSON.parse(lines[lines.length - 1]);
+  assert.equal(complete.type, "complete");
+  assert.equal(complete.data.sha256, expectedSha256);
+  assert.equal(complete.data.count, lines.length - 2);
+
+  // 3. Verify audit.exported record is logged in database
+  const exportAudit = await db.auditLog.findFirst({
+    where: { organizationId: org.id, action: "audit.exported" },
+  });
+  assert.ok(exportAudit);
+  assert.equal((exportAudit.detail as any).sha256, expectedSha256);
 });
 

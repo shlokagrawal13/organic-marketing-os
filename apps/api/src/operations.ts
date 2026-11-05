@@ -612,6 +612,191 @@ export class OperationsController {
       };
     });
   }
+
+  /**
+   * DATA-01D: Tenant Audit Log Querying & Filtering
+   *
+   * Query parameters:
+   *  - action: string (optional, matches exact action or prefix)
+   *  - actorId: string (optional UUID)
+   *  - startDate: string (optional ISO string)
+   *  - endDate: string (optional ISO string)
+   *  - cursor: string (optional cursor id)
+   *  - take: number (optional, default 50, bounded to max 100)
+   */
+  @Get("audit")
+  async getAuditLogs(
+    @Req() req: AuthedRequest,
+    @Query("action") action?: string,
+    @Query("actorId") actorId?: string,
+    @Query("startDate") startDate?: string,
+    @Query("endDate") endDate?: string,
+    @Query("cursor") cursor?: string,
+    @Query("take") take?: string,
+  ) {
+    const org = req.organizationId;
+    const limit = Math.min(100, Math.max(1, Number(take) || 50));
+
+    const where: Prisma.AuditLogWhereInput = {
+      organizationId: org,
+      ...(action ? { action: { startsWith: action } } : {}),
+      ...(actorId ? { actorId } : {}),
+      ...(startDate || endDate
+        ? {
+            createdAt: {
+              ...(startDate ? { gte: new Date(startDate) } : {}),
+              ...(endDate ? { lte: new Date(endDate) } : {}),
+            },
+          }
+        : {}),
+    };
+
+    const [totalCount, rows] = await Promise.all([
+      this.db.auditLog.count({ where }),
+      this.db.auditLog.findMany({
+        where,
+        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+        take: limit + 1,
+        ...(cursor
+          ? {
+              cursor: { id: cursor },
+              skip: 1,
+            }
+          : {}),
+      }),
+    ]);
+
+    const hasMore = rows.length > limit;
+    const items = hasMore ? rows.slice(0, limit) : rows;
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    return {
+      organizationId: org,
+      totalCount,
+      items,
+      nextCursor,
+    };
+  }
+
+  /**
+   * DATA-01D: Compliance Audit Trail NDJSON Export with Tamper-Evident SHA-256
+   *
+   * Streams tenant audit log entries in NDJSON format with:
+   *  - manifest header
+   *  - filtered audit log records
+   *  - complete footer with record count and SHA-256 over all preceding lines
+   */
+  @Get("audit-export")
+  async exportAuditLogs(
+    @Req() req: AuthedRequest,
+    @Res() res: Response,
+    @Query("action") action?: string,
+    @Query("actorId") actorId?: string,
+    @Query("startDate") startDate?: string,
+    @Query("endDate") endDate?: string,
+  ) {
+    const org = req.organizationId;
+    const dir = await mkdtemp(join(tmpdir(), "audit-export-"));
+    const path = join(dir, "audit-export.ndjson");
+    let count = 0;
+    const hash = createHash("sha256");
+
+    const closed = () => {
+      res.destroy();
+    };
+    res.on("close", closed);
+
+    try {
+      const filters = {
+        ...(action ? { action } : {}),
+        ...(actorId ? { actorId } : {}),
+        ...(startDate ? { startDate } : {}),
+        ...(endDate ? { endDate } : {}),
+      };
+
+      const writeLine = async (obj: unknown) => {
+        const line = JSON.stringify(obj) + "\n";
+        hash.update(line);
+        await appendFile(path, line);
+      };
+
+      // 1. Manifest
+      await writeLine({
+        type: "manifest",
+        format: "audit-ndjson",
+        organizationId: org,
+        exportedAt: new Date().toISOString(),
+        filters,
+      });
+
+      // 2. Fetch and write audit rows
+      const where: Prisma.AuditLogWhereInput = {
+        organizationId: org,
+        ...(action ? { action: { startsWith: action } } : {}),
+        ...(actorId ? { actorId } : {}),
+        ...(startDate || endDate
+          ? {
+              createdAt: {
+                ...(startDate ? { gte: new Date(startDate) } : {}),
+                ...(endDate ? { lte: new Date(endDate) } : {}),
+              },
+            }
+          : {}),
+      };
+
+      let cursor: string | undefined;
+      while (true) {
+        const rows = await this.db.auditLog.findMany({
+          where,
+          orderBy: [{ createdAt: "asc" }, { id: "asc" }],
+          take: 100,
+          ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
+        });
+        if (!rows.length) break;
+        for (const row of rows) {
+          await writeLine({ type: "auditLog", data: row });
+          count++;
+        }
+        cursor = rows[rows.length - 1].id;
+      }
+
+      // 3. Complete record with SHA-256 over all preceding lines
+      const sha256 = hash.digest("hex");
+      await appendFile(
+        path,
+        JSON.stringify({
+          type: "complete",
+          data: { count, sha256 },
+        }) + "\n",
+      );
+
+      // 4. Record audit event for the export operation
+      await this.db.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "audit.exported",
+          detail: { count, sha256, filters },
+        },
+      });
+
+      const size = (await stat(path)).size;
+      res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="audit-${org.slice(0, 8)}.ndjson"`,
+      );
+      res.setHeader("Cache-Control", "private, no-store");
+      res.setHeader("Content-Length", size);
+      await pipeline(createReadStream(path), res);
+    } catch (error) {
+      if (res.headersSent) res.destroy();
+      else throw error;
+    } finally {
+      res.removeListener("close", closed);
+      await rm(dir, { recursive: true, force: true });
+    }
+  }
 }
 @Module({ imports: [AssetsModule], controllers: [OperationsController] })
 export class OperationsModule {}

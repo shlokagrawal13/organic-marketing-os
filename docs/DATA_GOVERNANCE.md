@@ -70,6 +70,19 @@ DATA-01C implements workspace retention pruning per `MASTER_SPEC §71 & §147` v
   - In non-dry-run mode, appends an immutable `retention.pruned` event to `AuditLog` containing exact deleted counts (`expiredInvitations`, `invalidatedPublicationIntents`, `canceledPublicationSchedules`, `staleRenderJobs`), total pruned records, actor ID, and timestamp.
 - Candidate counts and deletes run under the workspace row lock in one transaction, so a dry-run or execution cannot report a candidate set that was changed by another retention call midway through the operation.
 
+### Tenant Audit Log Querying & Tamper-Evident Compliance Export — DATA-01D
+
+DATA-01D implements structured tenant audit log querying and tamper-evident compliance export per `MASTER_SPEC §58, §71, & §84`:
+- **Filtered Querying (`GET /api/workspaces/:organizationId/operations/audit`)**:
+  - **Role Authorization**: Restricted strictly to `OWNER` and `ADMIN` roles. Non-privileged roles (`EDITOR`, `CREATOR`, `ANALYST`, `CLIENT`) receive 403 Forbidden. Non-members receive 404 Not Found.
+  - **Multi-Attribute Filters**: Supports filtering by `action` prefix (e.g. `team.`, `workspace.`, `retention.`, `social_connection.`), `actorId`, `startDate`, and `endDate`.
+  - **Deterministic Cursor-Based Pagination**: Employs `cursor` ID and bounded `take` (default 50, maximum 100), returning `{ items, nextCursor, totalCount }`.
+- **Compliance Audit Export (`GET /api/workspaces/:organizationId/operations/audit-export`)**:
+  - **Role Authorization**: Accessible only to `OWNER` and `ADMIN` roles.
+  - **NDJSON Streaming**: Delivers a manifest line (`type: "manifest"`), followed by serialized audit entries (`type: "auditLog"`), concluded by an immutable checksum footer (`type: "complete"`).
+  - **Tamper-Evident SHA-256**: Terminal complete record verifies SHA-256 hash over all preceding lines including newlines.
+  - **Audit Logging**: Appends an immutable `audit.exported` event to `AuditLog` recording the actor, exported entry count, filters, and SHA-256 checksum.
+
 Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 
 Credit entries reject SQL UPDATE/DELETE and financial foreign keys prevent deleting credited organizations. Corrections append entries. Retention/anonymization and legal erasure behavior are still unimplemented; do not remove this protection for an account-deletion shortcut.
