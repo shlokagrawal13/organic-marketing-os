@@ -773,14 +773,14 @@ test("legal hold: active legal hold locks retention pruning and member data revo
   assert.equal((pruneAfterRelease.body as any).pruned, true);
 });
 
-test("DATA-01F: asset reconciliation and workspace safe erasure contracts", async (t) => {
-  const { app, db, harness } = await setupIntegrationTestApp();
-  t.after(async () => {
-    await app.close();
-    await harness.cleanup();
-  });
+test("DATA-01F: asset reconciliation and workspace safe erasure contracts", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Asset Reconcile & Erasure Org" } });
+  orgs.push(org.id);
 
-  const { org, owner, member } = await createTestWorkspace(db);
+  const owner = await actor(org.id, "OWNER");
+  const member = await actor(org.id, "EDITOR");
+  users.push(owner.id, member.id);
 
   // Seed an unattached asset
   const orphanAsset = await db.asset.create({
