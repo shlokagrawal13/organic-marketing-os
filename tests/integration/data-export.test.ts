@@ -717,4 +717,108 @@ test("legal hold: active legal hold locks retention pruning and member data revo
   assert.equal((pruneAfterRelease.body as any).pruned, true);
 });
 
+test("DATA-01F: asset reconciliation and workspace safe erasure contracts", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Asset Reconcile & Erasure Org" } });
+  orgs.push(org.id);
+
+  const owner = await actor(org.id, "OWNER");
+  const member = await actor(org.id, "EDITOR");
+  users.push(owner.id, member.id);
+
+  // Seed an unattached asset
+  const orphanAsset = await db.asset.create({
+    data: {
+      organizationId: org.id,
+      name: "orphan-sample.png",
+      kind: "IMAGE",
+      mimeType: "image/png",
+      bytes: 12345,
+      sha256: "sha256-sample-orphan-asset-12345",
+      objectKey: `assets/${org.id}/orphan-sample.png`,
+      createdBy: owner.id,
+    },
+  });
+
+  // 1. Dry run asset reconciliation
+  const dryRunRes = await owner.call(
+    `/workspaces/${org.id}/operations/reconcile-assets?dryRun=true`,
+    "POST",
+  );
+  assert.equal(dryRunRes.status, 201);
+  assert.equal((dryRunRes.body as any).dryRun, true);
+  assert.ok((dryRunRes.body as any).totalCandidates >= 1);
+
+  // Asset should still exist after dry-run
+  const assetStillExists = await db.asset.findUnique({ where: { id: orphanAsset.id } });
+  assert.ok(assetStillExists);
+
+  // 2. Real asset reconciliation
+  const realReconcileRes = await owner.call(
+    `/workspaces/${org.id}/operations/reconcile-assets`,
+    "POST",
+  );
+  assert.equal(realReconcileRes.status, 201);
+  assert.equal((realReconcileRes.body as any).reconciled, true);
+  assert.ok((realReconcileRes.body as any).prunedCount >= 1);
+
+  // 3. Workspace erasure authorization: non-owner role rejected with HTTP 403
+  const memberErasure = await member.call(
+    `/workspaces/${org.id}/operations/erasure`,
+    "POST",
+    { confirmText: "ERASE_WORKSPACE_DATA", reason: "Attempted by member" },
+  );
+  assert.equal(memberErasure.status, 403);
+
+  // 4. Invalid confirmText rejected with HTTP 400
+  const invalidConfirm = await owner.call(
+    `/workspaces/${org.id}/operations/erasure`,
+    "POST",
+    { confirmText: "INVALID_CONFIRMATION", reason: "Wrong confirm string" },
+  );
+  assert.equal(invalidConfirm.status, 400);
+
+  // 5. Legal hold lock prevents erasure
+  await owner.call(
+    `/workspaces/${org.id}/operations/legal-hold`,
+    "POST",
+    { reason: "Audit in progress", caseReference: "LEGAL-001" },
+  );
+
+  const lockedErasure = await owner.call(
+    `/workspaces/${org.id}/operations/erasure`,
+    "POST",
+    { confirmText: "ERASE_WORKSPACE_DATA", reason: "Attempt under legal hold" },
+  );
+  assert.equal(lockedErasure.status, 423);
+  assert.match(
+    (lockedErasure.body as any)?.error?.message || (lockedErasure.body as any)?.message,
+    /workspace erasure is prohibited/i,
+  );
+
+  // Release legal hold
+  await owner.call(
+    `/workspaces/${org.id}/operations/legal-hold`,
+    "DELETE",
+    { releaseReason: "Audit completed" },
+  );
+
+  // 6. Successful erasure by OWNER
+  const erasureRes = await owner.call(
+    `/workspaces/${org.id}/operations/erasure`,
+    "POST",
+    { confirmText: "ERASE_WORKSPACE_DATA", reason: "GDPR right to be forgotten request" },
+  );
+  assert.equal(erasureRes.status, 201);
+  assert.equal((erasureRes.body as any).status, "erased");
+
+  // Verify Organization is anonymized and memberships revoked
+  const erasedOrg = await db.organization.findUnique({ where: { id: org.id } });
+  assert.equal(erasedOrg?.name, "[ERASED WORKSPACE]");
+
+  const membershipsCount = await db.membership.count({ where: { organizationId: org.id } });
+  assert.equal(membershipsCount, 0);
+});
+
+
 

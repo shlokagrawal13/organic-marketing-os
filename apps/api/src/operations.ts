@@ -41,6 +41,11 @@ const legalHoldReleaseSchema = z.object({
   releaseReason: z.string().min(3).max(500),
 });
 
+const workspaceErasureSchema = z.object({
+  confirmText: z.literal("ERASE_WORKSPACE_DATA"),
+  reason: z.string().min(5).max(500),
+});
+
 @Controller("workspaces/:organizationId/operations")
 @UseGuards(TenantGuard)
 @Roles("OWNER", "ADMIN")
@@ -940,6 +945,227 @@ export class OperationsController {
       res.removeListener("close", closed);
       await rm(dir, { recursive: true, force: true });
     }
+  }
+
+  /**
+   * DATA-01F: Orphan asset and transient cache reconciliation
+   *
+   * Reconciles unreferenced or archived assets:
+   *  - Identifies assets where archivedAt is not null OR have zero renderInputs and zero generations
+   *  - Supports ?dryRun=true preview
+   *  - Enforces Legal Hold lock (HTTP 423 Locked)
+   *  - Appends data.assets.reconciled audit event
+   */
+  @Post("reconcile-assets")
+  async reconcileAssets(
+    @Req() req: AuthedRequest,
+    @Query("dryRun") dryRunQuery?: string,
+  ) {
+    const org = req.organizationId;
+    const holdStatus = await this.getLegalHoldStatus(org);
+    if (holdStatus.active) {
+      throw new HttpException(
+        {
+          statusCode: 423,
+          error: "Locked",
+          message: "Asset reconciliation is locked: workspace is under an active legal hold.",
+          legalHold: holdStatus.hold,
+        },
+        423,
+      );
+    }
+
+    const isDryRun = dryRunQuery === "true";
+    const candidateWhere: Prisma.AssetWhereInput = {
+      organizationId: org,
+      OR: [
+        { archivedAt: { not: null } },
+        {
+          AND: [
+            { renderInputs: { none: {} } },
+            { generations: { none: {} } },
+          ],
+        },
+      ],
+    };
+
+    const count = await this.db.asset.count({ where: candidateWhere });
+    const candidates = await this.db.asset.findMany({
+      where: candidateWhere,
+      select: { id: true, name: true, bytes: true, mimeType: true, archivedAt: true },
+      take: 100,
+    });
+    const totalBytes = candidates.reduce((sum, a) => sum + a.bytes, 0);
+
+    if (isDryRun) {
+      return {
+        dryRun: true,
+        reconciled: false,
+        organizationId: org,
+        totalCandidates: count,
+        estimatedBytes: totalBytes,
+        candidates,
+      };
+    }
+
+    const deleteResult = await this.db.asset.deleteMany({
+      where: candidateWhere,
+    });
+
+    await this.db.auditLog.create({
+      data: {
+        organizationId: org,
+        actorId: req.userId,
+        action: "data.assets.reconciled",
+        entityId: org,
+        detail: {
+          prunedCount: deleteResult.count,
+          estimatedBytes: totalBytes,
+          reconciledBy: req.userId,
+        },
+      },
+    });
+
+    return {
+      dryRun: false,
+      reconciled: true,
+      organizationId: org,
+      prunedCount: deleteResult.count,
+      freedBytes: totalBytes,
+    };
+  }
+
+  /**
+   * DATA-01F: Workspace Account Anonymization & Safe Erasure (GDPR Right to Be Forgotten)
+   *
+   * Invariants per MASTER_SPEC §145, §147 and DATA_GOVERNANCE §41:
+   *  - Caller must be OWNER.
+   *  - Blocked with HTTP 423 Locked when workspace is under active legal hold.
+   *  - Blocked with HTTP 409 Conflict if video render or publishing jobs are actively in-flight.
+   *  - Strict Financial Protection: CreditEntry, CreditReservation, BillingSubscription, and
+   *    BillingInvoice records are immutable and NEVER deleted.
+   *  - Workspace metadata, BrandBrain, and child content/assets are purged or scrambled.
+   *  - All user memberships for the tenant are revoked.
+   *  - Appends final audit event: data.workspace.erased.
+   */
+  @Post("erasure")
+  async eraseWorkspace(
+    @Req() req: AuthedRequest,
+    @Body() body: unknown,
+  ) {
+    if (req.role !== "OWNER") {
+      throw new ForbiddenException("Only workspace OWNER can request workspace erasure.");
+    }
+
+    const org = req.organizationId;
+    const holdStatus = await this.getLegalHoldStatus(org);
+    if (holdStatus.active) {
+      throw new HttpException(
+        {
+          statusCode: 423,
+          error: "Locked",
+          message: "Workspace erasure is prohibited: workspace is under an active legal hold.",
+          legalHold: holdStatus.hold,
+        },
+        423,
+      );
+    }
+
+    const input = parse(workspaceErasureSchema, body ?? {});
+
+    // Check for in-flight render or publication jobs
+    const activeRenders = await this.db.renderJob.count({
+      where: {
+        organizationId: org,
+        status: { in: ["QUEUED", "RUNNING"] },
+      },
+    });
+    const activePubs = await this.db.publicationAttempt.count({
+      where: {
+        organizationId: org,
+        status: { in: ["RESERVED", "SUBMITTING"] },
+      },
+    });
+    if (activeRenders > 0 || activePubs > 0) {
+      throw new ConflictException(
+        "Cannot erase workspace while render or publishing jobs are actively in-flight. Wait for them to complete or cancel them.",
+      );
+    }
+
+    const now = new Date();
+    await this.db.$transaction(async (tx) => {
+      // 1. Purge content and reviews
+      await tx.contentComment.deleteMany({ where: { content: { organizationId: org } } });
+      await tx.contentClaimReview.deleteMany({ where: { content: { organizationId: org } } });
+      await tx.contentVersion.deleteMany({ where: { content: { organizationId: org } } });
+      await tx.contentItem.deleteMany({ where: { organizationId: org } });
+      await tx.campaign.deleteMany({ where: { organizationId: org } });
+
+      // 2. Purge publications
+      await tx.publicationAttempt.deleteMany({ where: { organizationId: org } });
+      await tx.publicationSchedule.deleteMany({ where: { organizationId: org } });
+      await tx.publicationIntent.deleteMany({ where: { organizationId: org } });
+      await tx.publicationPolicyReview.deleteMany({ where: { organizationId: org } });
+      await tx.socialConnection.deleteMany({ where: { organizationId: org } });
+
+      // 3. Purge renders and assets
+      await tx.renderInput.deleteMany({ where: { render: { organizationId: org } } });
+      await tx.renderJob.deleteMany({ where: { organizationId: org } });
+      await tx.mediaGeneration.deleteMany({ where: { organizationId: org } });
+      await tx.asset.deleteMany({ where: { organizationId: org } });
+
+      // 4. Purge AI jobs & agent steps
+      await tx.aIAgentStep.deleteMany({ where: { run: { organizationId: org } } });
+      await tx.aIAgentRun.deleteMany({ where: { organizationId: org } });
+      await tx.aIUsage.deleteMany({ where: { organizationId: org } });
+      await tx.aIJob.deleteMany({ where: { organizationId: org } });
+
+      // 5. Purge invitations & Brand versions
+      await tx.invitation.deleteMany({ where: { organizationId: org } });
+      await tx.brandVersion.deleteMany({ where: { organizationId: org } });
+
+      // 6. Scramble BrandBrain
+      await tx.brandBrain.updateMany({
+        where: { organizationId: org },
+        data: {
+          profile: { status: "erased", erasedAt: now.toISOString() },
+          creativeDna: { status: "erased", erasedAt: now.toISOString() },
+        },
+      });
+
+      // 7. Anonymize Organization profile (Financial FKs prevent deleting organization row itself)
+      await tx.organization.update({
+        where: { id: org },
+        data: {
+          name: "[ERASED WORKSPACE]",
+        },
+      });
+
+      // 8. Revoke memberships
+      await tx.membership.deleteMany({ where: { organizationId: org } });
+
+      // 9. Record immutable audit record of erasure
+      await tx.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "data.workspace.erased",
+          entityId: org,
+          detail: {
+            reason: input.reason,
+            erasedBy: req.userId,
+            erasedAt: now.toISOString(),
+          },
+        },
+      });
+    });
+
+    return {
+      acknowledged: true,
+      organizationId: org,
+      status: "erased",
+      erasedAt: now,
+    };
   }
 }
 @Module({ imports: [AssetsModule], controllers: [OperationsController] })
