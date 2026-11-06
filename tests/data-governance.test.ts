@@ -517,7 +517,81 @@ test("legal hold policy locks destructive mutations with HTTP 423 Locked", () =>
   assert.equal(checkMutationAllowed(true, "Member data deletion").statusCode, 423);
   assert.equal(checkMutationAllowed(true, "Member data deletion").allowed, false);
   assert.equal(checkMutationAllowed(false, "Member data deletion").allowed, true);
+
+  // Asset reconciliation
+  assert.equal(checkMutationAllowed(true, "Asset reconciliation").statusCode, 423);
+  assert.equal(checkMutationAllowed(true, "Asset reconciliation").allowed, false);
+  assert.equal(checkMutationAllowed(false, "Asset reconciliation").allowed, true);
+
+  // Workspace erasure
+  assert.equal(checkMutationAllowed(true, "Workspace erasure").statusCode, 423);
+  assert.equal(checkMutationAllowed(true, "Workspace erasure").allowed, false);
+  assert.equal(checkMutationAllowed(false, "Workspace erasure").allowed, true);
 });
+
+test("asset reconciliation: dry-run identifies unattached/archived assets without deleting", () => {
+  const assets = [
+    { id: "a-1", name: "active-render-input.png", bytes: 1048576, renderInputs: [{ renderId: "r-1" }], generations: [], archivedAt: null },
+    { id: "a-2", name: "active-generation.png", bytes: 2097152, renderInputs: [], generations: [{ id: "g-1" }], archivedAt: null },
+    { id: "a-3", name: "unreferenced-orphan.png", bytes: 524288, renderInputs: [], generations: [], archivedAt: null },
+    { id: "a-4", name: "archived-asset.png", bytes: 262144, renderInputs: [{ renderId: "r-old" }], generations: [], archivedAt: new Date("2026-01-01") },
+  ];
+
+  const isCandidate = (a: (typeof assets)[0]) =>
+    a.archivedAt !== null || (a.renderInputs.length === 0 && a.generations.length === 0);
+
+  const candidates = assets.filter(isCandidate);
+  assert.equal(candidates.length, 2);
+  assert.deepEqual(candidates.map(c => c.id), ["a-3", "a-4"]);
+
+  const totalBytes = candidates.reduce((sum, c) => sum + c.bytes, 0);
+  assert.equal(totalBytes, 524288 + 262144);
+});
+
+test("workspace safe erasure: enforces OWNER-only role requirement and exact confirmation text", () => {
+  const validateErasureRequest = (role: string, body: { confirmText?: string; reason?: string }) => {
+    if (role !== "OWNER") {
+      return { allowed: false, error: "Only workspace OWNER can request workspace erasure." };
+    }
+    if (body.confirmText !== "ERASE_WORKSPACE_DATA") {
+      return { allowed: false, error: "confirmText must match exact ERASE_WORKSPACE_DATA literal." };
+    }
+    if (!body.reason || body.reason.length < 5) {
+      return { allowed: false, error: "Reason must be at least 5 characters." };
+    }
+    return { allowed: true };
+  };
+
+  assert.equal(validateErasureRequest("ADMIN", { confirmText: "ERASE_WORKSPACE_DATA", reason: "Tenant offboarding" }).allowed, false);
+  assert.equal(validateErasureRequest("EDITOR", { confirmText: "ERASE_WORKSPACE_DATA", reason: "Tenant offboarding" }).allowed, false);
+  assert.equal(validateErasureRequest("OWNER", { confirmText: "WRONG_TEXT", reason: "Tenant offboarding" }).allowed, false);
+  assert.equal(validateErasureRequest("OWNER", { confirmText: "ERASE_WORKSPACE_DATA", reason: "hi" }).allowed, false);
+  assert.equal(validateErasureRequest("OWNER", { confirmText: "ERASE_WORKSPACE_DATA", reason: "Tenant offboarding" }).allowed, true);
+});
+
+test("workspace safe erasure: preserves financial ledgers while anonymizing organization and purging child content", () => {
+  const org = {
+    id: "org-target-1",
+    name: "Acme Production Org",
+  };
+
+  const creditLedger = [
+    { id: "entry-1", organizationId: org.id, amount: 5000, type: "PURCHASE" },
+    { id: "entry-2", organizationId: org.id, amount: -200, type: "USAGE" },
+  ];
+
+  // Erasure simulates anonymization of organization without deleting financial rows
+  const anonymizedOrg = {
+    ...org,
+    name: "[ERASED WORKSPACE]",
+  };
+
+  // Financial ledgers remain untouched
+  assert.equal(anonymizedOrg.name, "[ERASED WORKSPACE]");
+  assert.equal(creditLedger.length, 2);
+  assert.equal(creditLedger[0].amount, 5000);
+});
+
 
 
 

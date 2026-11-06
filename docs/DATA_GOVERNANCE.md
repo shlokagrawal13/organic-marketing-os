@@ -100,7 +100,26 @@ DATA-01E implements enterprise legal discovery, dispute preservation, and regula
 - **Enforcement on Destructive Mutations**:
   - **Retention Pruning**: `POST /api/workspaces/:organizationId/operations/retention-prune` is rejected with `HTTP 423 Locked`, returning active hold metadata to prevent routine record destruction during legal proceedings.
   - **Member Data Revocation**: `DELETE /api/workspaces/:organizationId/operations/members/:userId` is rejected with `HTTP 423 Locked`, preserving user-linked evidence and sessions until the hold is formally released.
+  - **Asset Reconciliation**: `POST /api/workspaces/:organizationId/operations/reconcile-assets` is rejected with `HTTP 423 Locked`.
+  - **Workspace Erasure**: `POST /api/workspaces/:organizationId/operations/erasure` is rejected with `HTTP 423 Locked`.
   - Lifts cleanly once the legal hold is released by an authorized administrator.
+
+## Asset Reconciliation & Orphan Pruning (DATA-01F)
+- `POST /api/workspaces/:organizationId/operations/reconcile-assets`:
+  - Detects unattached/archived assets (assets where `archivedAt` is set or that possess zero render inputs and zero media generations).
+  - Supports dry-run inspection via `?dryRun=true`, reporting candidate asset count, estimated bytes, and asset metadata without deleting.
+  - In non-dry-run mode, purges candidate asset records, frees storage allowances, and appends an immutable `data.assets.reconciled` audit entry.
+  - Rejects with `HTTP 423 Locked` if the workspace is under an active legal hold.
+
+## Workspace Account Anonymization & Safe Erasure (DATA-01F)
+- `POST /api/workspaces/:organizationId/operations/erasure`:
+  - Enforces OWNER-only role authorization and strict confirmation phrase (`confirmText: "ERASE_WORKSPACE_DATA"`).
+  - In-flight safety check: Rejects with `HTTP 409 Conflict` if active video render or publishing jobs are running.
+  - Legal hold lock: Rejects with `HTTP 423 Locked` if legal hold is active.
+  - **Financial Record Invariance**: Respects PostgreSQL foreign keys and ledger immutability (`CreditEntry`, `CreditReservation`, `BillingSubscription`, `BillingInvoice` remain strictly protected and unmodified).
+  - Purges child content, campaigns, comments, reviews, renders, assets, agent runs/steps, invitations, and social connections.
+  - Scrambles BrandBrain profile/DNA and anonymizes Organization name to `[ERASED WORKSPACE]`.
+  - Revokes all tenant memberships and appends an immutable `data.workspace.erased` audit record.
 
 Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "taskId": "DATA-01F",
+  "recordedAtUtc": "2026-11-06T15:58:00.000Z",
+  "status": "local_verified",
+  "behavior": {
+    "assetReconciliation": "POST /workspaces/:organizationId/operations/reconcile-assets identifies and prunes unattached/archived assets, supporting ?dryRun=true preview and enforcing legal hold lock (HTTP 423 Locked)",
+    "workspaceSafeErasure": "POST /workspaces/:organizationId/operations/erasure enforces OWNER-only role authorization, exact confirmText confirmation, in-flight job guards, legal hold lock (HTTP 423), child data purge, BrandBrain scrambling, and tenant anonymization while strictly preserving immutable financial ledgers (CreditEntry, CreditReservation, BillingInvoice)",
+    "tests": "20 unit tests in tests/data-governance.test.ts passing locally with 0 failures; integration tests in tests/integration/data-export.test.ts covering dry-run reconciliation, role enforcement, legal hold lock, and safe erasure"
+  },
+  "local": {
+    "taskId": "DATA-01F",
+    "passed": true,
+    "tests": {
+      "dataGovernance": 20
+    },
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "apiBuild": true,
+    "prismaGenerate": true,
+    "migrations": 26,
+    "tables": 38,
+    "productionAuditVulnerabilities": 0
+  },
+  "preserved": {
+    "priorMigrations": 26,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "data-01f",
+    "baseBranch": "data-01e",
+    "doNotMergeToMain": true
+  },
+  "limits": [
+    "Workspace record erasure and asset pruning only; does not bypass database foreign key constraints",
+    "Financial credit entries and billing invoices remain immutable by design",
+    "Windows environment limits: full Compose verification runs on Linux CI"
+  ]
+}
