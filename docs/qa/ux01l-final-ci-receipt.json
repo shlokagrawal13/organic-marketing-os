@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "taskId": "UX-01L",
+  "recordedAt": "2026-11-10",
+  "source": {
+    "repository": "https://github.com/shlokagrawal13/organic-marketing-os",
+    "branch": "main",
+    "commit": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
+    "tree": "686f80175ab39ea04571efc8c937133f3d3b5aa6",
+    "subject": "Restore keyboard focus in publication search details",
+    "localAndOriginMainAtReceipt": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
+    "workingTreeCleanAtReceipt": true,
+    "handoffCheck": "697 included source/context/evidence files; no included-file drift"
+  },
+  "workflow": {
+    "runId": 41921508171,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171",
+    "conclusion": "success",
+    "exactPublishedCommitVerified": true,
+    "allThreeJobsAndEveryRequiredStepPassed": true,
+    "jobs": [
+      {
+        "id": 126894896177,
+        "name": "Native application verification",
+        "conclusion": "success",
+        "steps": 22,
+        "allStepsSuccess": true
+      },
+      {
+        "id": 126894896687,
+        "name": "Native populated upgrade and migration recovery",
+        "conclusion": "success",
+        "steps": 11,
+        "allStepsSuccess": true
+      },
+      {
+        "id": 126894896731,
+        "name": "Disposable Compose and native restore",
+        "conclusion": "success",
+        "steps": 8,
+        "allStepsSuccess": true
+      }
+    ]
+  },
+  "verifiedResults": {
+    "unit": { "passed": 379, "failed": 0, "embeddedUnitReceiptChecked": true },
+    "http": { "passed": 50, "failed": 0, "jobLogChecked": true },
+    "browser": { "passed": 67, "failed": 0, "jobLogChecked": true },
+    "recovery": { "passed": 5, "failed": 0, "jobLogChecked": true },
+    "appliedMigrationSqlFiles": 25,
+    "composePhases": 24,
+    "allComposePhasesPassed": true,
+    "composeEmbeddedCheckCount": 140,
+    "readability": { "passed": true, "embeddedSamples": 36, "embeddedExports": 18, "negativeControlPassed": true },
+    "fullAuditVulnerabilities": 0,
+    "productionAuditVulnerabilities": 0
+  },
+  "sourcePackage": {
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-ux01l-source.zip",
+    "bytes": 16375471,
+    "sha256": "2e1e32a6e24e17c2a981e0086d5a1167d6a86539444f09265327ba166bcfc87e",
+    "members": 698,
+    "allMemberCrcChecksPassed": true,
+    "createdBeforeOwnCi": true,
+    "pairedExternalReceiptClosesPackagedOwnCiPendingStatus": true
+  },
+  "githubArtifacts": [
+    {
+      "name": "compose-evidence",
+      "id": 13369180019,
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-ux01l-compose-ci.zip",
+      "bytes": 16870,
+      "sha256": "74dee63930de05bfefe97200524e1413683c4956f6b3b927f35257620e661fcb",
+      "githubUploadDigestMatched": true,
+      "allMemberCrcChecksPassed": true,
+      "members": 1,
+      "embeddedReport": "compose-evidence.json",
+      "embeddedReportPassed": true
+    },
+    {
+      "name": "browser-evidence",
+      "id": 13368491671,
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-ux01l-browser-ci.zip",
+      "bytes": 15182533,
+      "sha256": "e89e1de63685b91a7e23946838678a68489bc0c03967a1953e8eeb7eaaebfb39",
+      "githubUploadDigestMatched": true,
+      "allMemberCrcChecksPassed": true,
+      "members": 163,
+      "embeddedReports": [".local/unit-receipts.json", ".local/readability/run-XUkkco/report.json"],
+      "embeddedReportsPassed": true
+    },
+    {
+      "name": "native-upgrade-evidence",
+      "id": 13367212102,
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-ux01l-native-upgrade-ci.zip",
+      "bytes": 924,
+      "sha256": "0c1fd25829442b1b8e8c44146c0163de26970ca426b6ab4b3f84915da34484c9",
+      "githubUploadDigestMatched": true,
+      "allMemberCrcChecksPassed": true,
+      "members": 1,
+      "embeddedReport": "native-upgrade-evidence.json",
+      "embeddedReportPassed": true
+    },
+    {
+      "name": "postgres-pitr-evidence",
+      "id": 13366688400,
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-ux01l-postgres-pitr-ci.zip",
+      "bytes": 2962,
+      "sha256": "3622c681d3a3e51d6bc864a1cdd8596a9c31488da5f2faff04cc23ae1ab03635",
+      "githubUploadDigestMatched": true,
+      "allMemberCrcChecksPassed": true,
+      "members": 1,
+      "embeddedReport": "postgres-pitr-evidence.json",
+      "embeddedReportPassed": true
+    }
+  ],
+  "limits": [
+    "CI verifies owned fixtures and does not deploy",
+    "Production durability, live providers, deployed restore and full-master acceptance remain open",
+    "This bounded focus increment does not establish a full accessibility audit",
+    "NOTIFY-01A and DATA-01A remain separate backend branches and require their own integration review and exact-main verification"
+  ]
+}

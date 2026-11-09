@@ -15,7 +15,7 @@ export function applicationMigrations(root) {
     }));
   assert.equal(
     migrations.length,
-    25,
+    26,
     "Review physical fixture when migrations change",
   );
   return migrations.map((m) => ({

@@ -53,7 +53,7 @@ const root = resolve(import.meta.dirname, ".."),
   beforeHashes = protectedHashes();
 assert.equal(
   migrations.length,
-  25,
+  26,
   "Review predecessor boundaries when adding application migrations.",
 );
 mkdirSync(privateRoot, { recursive: true, mode: 0o700 });
@@ -370,7 +370,7 @@ try {
       ]),
     );
   let preserved = {};
-  for (const count of [4, 7, 23, 24, 25]) {
+  for (const count of [4, 7, 23, 24, 25, 26]) {
     copyMigrations(upgrade, count);
     await prisma("upgrade", ["deploy"]);
     await verifyHistory("fixture_upgrade", count);
@@ -418,18 +418,18 @@ try {
       rowValuesPreserved: true,
       prismaChecksumsVerified: true,
     });
-    console.log(`NATIVE UPGRADE CHECK: predecessor ${count}/25 preserved`);
+    console.log(`NATIVE UPGRADE CHECK: predecessor ${count}/26 preserved`);
   }
   assert.equal(preserved.AIJob[0].brandContext, null);
   assert.equal(preserved.AIJob[0].status, "QUEUED");
   assert.equal(preserved.ResearchRecord[0].insight, null);
   await immutable("fixture_upgrade");
-  const baselineHistory = await verifyHistory("fixture_upgrade", 25);
+  const baselineHistory = await verifyHistory("fixture_upgrade", 26);
   for (const atomic of [false, true]) {
     const kind = atomic ? "fault-atomic" : "fault-default",
       caseRoot = packageFor(kind),
       name = `209901010001_fixture_${atomic ? "atomic" : "default"}`;
-    copyMigrations(caseRoot, 25);
+    copyMigrations(caseRoot, 26);
     await owned();
     await docker([
       "exec",
@@ -507,7 +507,7 @@ ${atomic ? "COMMIT;\n" : ""}`;
       }
       const failedHistory = await history("fixture_fault"),
         failedRow = failedHistory.find((r) => r.migration_name === name);
-      assert.equal(failedHistory.length, 26);
+      assert.equal(failedHistory.length, 27);
       assert.ok(
         failedRow && !failedRow.finished_at && !failedRow.rolled_back_at,
       );
@@ -535,7 +535,7 @@ ${atomic ? "COMMIT;\n" : ""}`;
       await prisma(kind, ["deploy"]);
       const recovered = await history("fixture_fault"),
         attempts = recovered.filter((r) => r.migration_name === name);
-      assert.equal(recovered.length, 27);
+      assert.equal(recovered.length, 28);
       assert.equal(attempts.length, 2);
       assert.ok(
         attempts.some(

@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01l-20261104",
-  "savedAtUtc": "2026-11-04T21:58:05.048Z",
-  "currentMilestone": "UX-01L publication search detail keyboard focus",
+  "checkpointRevision": "ux01l-20261104+integration-20261110",
+  "savedAtUtc": "2026-11-10T00:00:00.000Z",
+  "currentMilestone": "NOTIFY-01A and DATA-01A integration on verified UX-01L main",
   "activeTaskId": "UX-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "UX-01",
-  "nextAction": "Publish UX-01L after its owned-fixture focus regression passes; inspect all three CI jobs and every required step on the exact final commit, verify artifacts, pair external final receipt with the fresh portable source ZIP. K is closed by its imported receipt.",
+  "nextAction": "Review and integrate NOTIFY-01A and DATA-01A onto verified UX-01L main, fix authorization and compatibility gaps, run owned-fixture verification and all required exact-final-commit CI jobs. Keep later Antigravity branches separate until reviewed.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -23789,5 +23789,18 @@
       "populatedUserServicesUntouched": true,
       "liveProvidersUsed": false
     }
+  },
+  "notify01a": {
+    "taskId": "NOTIFY-01A",
+    "branch": "notify-01a",
+    "sourceHead": "73ff67bc8cb3600f31ec4c5c2fb09b14dbbe0800",
+    "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/1",
+    "branchEvidence": "docs/qa/notify01a-evidence.json",
+    "branchCiPassed": true,
+    "integratedMainCiPending": true,
+    "migration": "202611030001_in_app_notifications",
+    "migrationCount": 26,
+    "tableCount": 38,
+    "limits": "In-app delivery only; no external delivery or realtime/SLO claim"
   }
 }
