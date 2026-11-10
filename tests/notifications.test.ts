@@ -1129,6 +1129,20 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal((rows[0].data as any).threshold, 20);
   });
 
+  test("credit ledger crossing from the exact threshold emits a low-balance notification", async () => {
+    const org = await prisma.organization.create({ data: { name: "Credits Boundary Org" } });
+    const actorId = randomUUID();
+    await prisma.$transaction(async (tx) => {
+      await grantCredits(tx, org.id, 20, randomUUID(), "Synthetic boundary grant", actorId);
+      await reserveCredits(tx, org.id, `boundary:${randomUUID()}`, 3, actorId);
+    });
+    const rows = await prisma.notification.findMany({
+      where: { organizationId: org.id, type: "CREDITS_LOW" },
+    });
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].eventKey, `credits:low:${org.id}:20:17`);
+  });
+
   test("createApprovalRequiredNotification: creates APPROVAL/APPROVAL_REQUIRED notification with review metadata", async () => {
     const org = await prisma.organization.create({ data: { name: "Approval Required Org" } });
     const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });

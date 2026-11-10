@@ -23,6 +23,17 @@ export function creditsLowEventKey(
   return `credits:low:${organizationId}:${threshold}:${balance}`;
 }
 
+export function crossesCreditsLowThreshold(
+  before: number,
+  after: number,
+  threshold: number,
+) {
+  return (
+    (before > threshold && after <= threshold) ||
+    (before === threshold && after < threshold)
+  );
+}
+
 export async function writeCreditsLowNotification(
   client: NotificationClient,
   params: {
@@ -167,7 +178,7 @@ async function append(tx: Tx, input: Entry) {
     },
   });
   const threshold = creditsLowThreshold();
-  if (a.available > threshold && availableAfter <= threshold)
+  if (crossesCreditsLowThreshold(a.available, availableAfter, threshold))
     await writeCreditsLowNotification(tx, {
       organizationId: input.organizationId,
       balance: availableAfter,

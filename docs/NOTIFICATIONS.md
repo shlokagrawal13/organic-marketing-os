@@ -110,7 +110,7 @@ Notifications are emitted strictly upon reaching terminal render status:
    - Body: `Media generation failed: {error}`
 
 6. **Credit ledger crossing (NOTIFY-01C)**:
-   `packages/core/credits.ts` writes a workspace-wide `CREDITS_LOW` row in the same transaction as a reservation, settlement or grant when the available balance moves from above `CREDITS_LOW_THRESHOLD` to at or below it. The default threshold is 20; the event key includes the workspace, threshold and resulting balance.
+   `packages/core/credits.ts` writes a workspace-wide `CREDITS_LOW` row in the same transaction as a reservation, settlement or grant when the available balance moves from above `CREDITS_LOW_THRESHOLD` to at or below it, or from exactly the threshold to below it. The default threshold is 20; the event key includes the workspace, threshold and resulting balance.
 
 7. **YouTube policy review completion (NOTIFY-01C)**:
    `publications.ts` writes an `APPROVAL_REQUIRED` row in the same transaction as the first immutable policy review. The notification is broadcast to the workspace because only owner/admin roles may schedule the reviewed publication.
