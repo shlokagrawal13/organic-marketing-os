@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "taskId": "INTEGRATION-01B",
+  "recordedAtUtc": "2026-11-10T12:00:00Z",
+  "status": "merged_exact_source_ci_pending",
+  "base": {
+    "commit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
+    "runId": 42805024713,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42805024713"
+  },
+  "sources": [
+    {
+      "taskId": "NOTIFY-01B",
+      "branch": "notify-01b",
+      "head": "6db62d6495590b6768ba69c599bf51e86942a1dd",
+      "implementationCommit": "b0d7722",
+      "branchEvidence": "docs/qa/notify01b-evidence.json"
+    },
+    {
+      "taskId": "DATA-01B",
+      "branch": "data-01b",
+      "head": "ff8525462ad697100dc541153612654578b492ba",
+      "implementationCommit": "f7b294d",
+      "branchEvidence": "docs/qa/data01b-evidence.json"
+    }
+  ],
+  "review": {
+    "notification": "Publishing CONFIRMED/REJECTED and failed AI generation now use tenant-bound, idempotent PUBLISH/AI notifications while preserving render events, role scope and atomic acknowledgements.",
+    "socialConnection": "OWNER/ADMIN-only disconnect locks the tenant, cancels scheduled work, blocks reserved attempts, marks submitting attempts UNKNOWN, scrubs credentials, hard-deletes unreferenced connections and appends an immutable audit event.",
+    "branchWhitespace": "DATA-01B had trailing blank-line violations in its evidence and test files; the merge resolution removed only those blank lines.",
+    "protectedScope": "No migration, master specification, real user service, private environment or existing recovery assertion was changed."
+  },
+  "localChecks": {
+    "notificationFocusedUnitPassed": 20,
+    "dataGovernanceFocusedUnitPassed": 11,
+    "apiBuild": true,
+    "webBuild": true,
+    "diffCheck": true,
+    "localHttpPassed": null,
+    "localHttpGap": "The social-oauth integration harness requires scripts/verify-local.mjs and refuses direct execution; Windows media/fontconfig prerequisites and an occupied Redis port prevent safe local HTTP acceptance."
+  },
+  "publication": {
+    "localMergeCommit": "058cf271e8673403efbf029788278f5249df9c77",
+    "localMergeTree": "13e97946677ac5965bb6aa23a55509262ebc0cc",
+    "exactCiRequired": true,
+    "priorRunCannotSubstitute": true,
+    "sourceZip": {
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-notify-data01b-source.zip",
+      "note": "Portable source package is generated outside the repository after the final exact CI run; its digest is recorded in the external receipt."
+    }
+  },
+  "limits": [
+    "Exact CI for 058cf27 must pass all three jobs and every required step before this increment is accepted.",
+    "No live provider, deployed restore, production durability or full-master acceptance is claimed.",
+    "The continuity run's browser artifact bytes and embedded report remain uninspected."
+  ]
+}
