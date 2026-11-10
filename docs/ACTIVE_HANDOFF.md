@@ -1,4 +1,12 @@
-# Active handoff - UX-01L
+# Active handoff - NOTIFY-01A / DATA-01A integration
+
+UX-01L is closed on exact `main` commit `dafdb93a562c5bf53d9dfaa159340754775a6e07` and [run 41921508171](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171): all three jobs and every required step passed (379 unit, 50 HTTP, 67 browser, 5 recovery, 25 migrations, 24 Compose phases, zero audits). Four artifact bytes/digests/CRCs and embedded reports were checked; [imported receipt](qa/ux01l-final-ci-receipt.json) closes its packaged pending status.
+
+Current integration merges Antigravity's PR #1 `notify-01a` head `73ff67b` and PR #2 `data-01a` head `f22119d` into current main ancestry without editing their worktrees. NOTIFY adds migration 26 and terminal render notifications. DATA extends secret-stripped NDJSON export and member revocation. Review found DATA's new endpoint could remove an OWNER despite the existing team rule; the integrated implementation forbids OWNER removal and uses a role-conditioned mutation, with a new HTTP regression. Focused 21 notification and 9 data unit checks, 26 PGlite migrations and API build passed. The selected Windows HTTP fixture cannot be accepted locally: FFmpeg/fontconfig failed, then an existing Redis occupied port 6379. The harness now refuses occupied fixed ports before starting any fixture. All HTTP/browser/recovery/Compose and audit gates must pass on the NEW exact integrated commit; branch or UX-01L CI cannot substitute. See [integration evidence](qa/integration01a-evidence.json).
+
+Later NOTIFY-01B–E and DATA-01B–F remain on Antigravity-owned branches; review and integrate them separately. Preserve all prior assertions, master specification, real environment/user services and media/volumes. Recovery fixtures ended at P; production/live-provider/deployed/full-master acceptance remains open. CI does not deploy.
+
+## Historical UX-01L handoff
 
 Verified predecessor: UX-01K exact commit `44cdc0193c88f296e73bc97ffa869642985b7f78`, [run 41826622865](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865). All three jobs and every required step passed: 379 unit, 50 HTTP, 67 browser, 5 recovery, 25 migrations, 44 readability samples, zero dependency-audit vulnerabilities and all 24 Compose phases. Four artifact ZIP byte digests, CRCs and embedded reports were verified. [Imported receipt](qa/ux01k-final-ci-receipt.json) closes K's packaged own-CI pending status. First K run 41824933052 remains a historical failed assertion, not acceptance.
 

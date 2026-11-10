@@ -87,8 +87,6 @@ process.env.AI_CONTENT_CREDITS = "3";
 process.env.AI_SCENE_CREDITS = "1";
 delete process.env.SMTP_USER;
 delete process.env.SMTP_PASSWORD;
-mkdirSync(".local", { recursive: true });
-writeFileSync(".local/mailbox.ndjson", "");
 const smtp = new SMTPServer({
   disabledCommands: ["AUTH", "STARTTLS"],
   authOptional: true,
@@ -151,7 +149,7 @@ if (httpSpec && !/^[a-z-]+\.test\.ts$/.test(httpSpec))
   throw new Error("Select an HTTP test filename such as publications.test.ts.");
 if (
   skipMediaFixtures &&
-  (!(["data-export.test.ts", "notifications.test.ts"].includes(httpSpec)) ||
+  (!["data-export.test.ts", "notifications.test.ts"].includes(httpSpec) ||
     !process.argv.includes("--skip-ui") ||
     !process.argv.includes("--skip-recovery"))
 )
@@ -165,7 +163,15 @@ if (native && process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   );
 // This harness uses fixed loopback ports. Never let a test attach to an
 // existing Redis, API, web, mail or object-storage service after a bind fails.
-for (const port of [1025, 3000, 4000, 4569, 4998, 4999, ...(!native ? [5433, 6379] : [])]) {
+for (const port of [
+  1025,
+  3000,
+  4000,
+  4569,
+  4998,
+  4999,
+  ...(!native ? [5433, 6379] : []),
+]) {
   for (const host of ["127.0.0.1", "::1"]) {
     const probe = createServer();
     try {
@@ -183,6 +189,8 @@ for (const port of [1025, 3000, 4000, 4569, 4998, 4999, ...(!native ? [5433, 637
     await new Promise((resolve) => probe.close(resolve));
   }
 }
+mkdirSync(".local", { recursive: true });
+writeFileSync(".local/mailbox.ndjson", "");
 const db = native ? null : await PGlite.create();
 const server = db
   ? new PGLiteSocketServer({
@@ -532,7 +540,11 @@ try {
   }
   process.env.MEDIA_IMAGE_EDIT_ESTIMATE_USD = "0.2";
   process.env.MEDIA_IMAGE_EDIT_CREDITS = "3";
-  await run("node", ["node_modules/prisma/build/index.js", "migrate", "deploy"]);
+  await run("node", [
+    "node_modules/prisma/build/index.js",
+    "migrate",
+    "deploy",
+  ]);
   start("node", ["dist/apps/api/src/main.js"], "api");
   process.env.TEST_AI_WORKER_PID = String(
     start("node", ["dist/apps/api/src/worker.js"], "worker").pid,

@@ -1,3 +1,9 @@
+<!-- INTEGRATION01A_CURRENT_START -->
+## Current integration - 2026-11-10
+
+UX-01L exact commit dafdb93/run41921508171 passed all three jobs/every required step; four artifact bytes, digests, CRCs and reports verified. Imported docs/qa/ux01l-final-ci-receipt.json closes L's older pending status. Current main ancestry merges Antigravity NOTIFY-01A and DATA-01A branch histories; integrated OWNER revocation guard fixes an authorization gap. Focused 21 notification and 9 data unit checks, API build and 26 disposable migrations pass. Windows selected HTTP fixture is not acceptance because FFmpeg/fontconfig failed and existing Redis occupies 6379; the verifier now fails closed on occupied ports. A NEW exact integrated commit needs all three jobs/every required step, artifact inspection and fresh source ZIP. Later NOTIFY/DATA branches are separate. See docs/ACTIVE_HANDOFF.md and docs/qa/integration01a-evidence.json. CI does not deploy; live/deployed/full-master gates remain open.
+<!-- INTEGRATION01A_CURRENT_END -->
+
 <!-- UX01K_CI_FOLLOWUP_START -->
 First K commit 34330e1/run41824933052 passed native upgrade but core unit stopped at one stale tenant-parameter count (378 pass/1 fail); later core checks were skipped, so it is not acceptance. The research SQL adds a fifth tenant-bound branch. Follow-up retains the injection/tenant-marker assertion and expects five parameters; focused3 unit pass. Application runtime, dependencies, 6 HTTP/6 browser local checks and 25 migrations are unchanged. A NEW exact final commit must pass all three jobs/every required step. See docs/qa/ux01k-ci-attempt1.json.
 <!-- UX01K_CI_FOLLOWUP_END -->

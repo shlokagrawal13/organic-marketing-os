@@ -3,9 +3,9 @@
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
   "checkpointRevision": "ux01l-20261104+integration-20261110",
-  "savedAtUtc": "2026-11-10T00:00:00.000Z",
+  "savedAtUtc": "2026-11-10T08:37:24.468Z",
   "currentMilestone": "NOTIFY-01A and DATA-01A integration on verified UX-01L main",
-  "activeTaskId": "UX-01",
+  "activeTaskId": "NOTIFY-01",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -74,8 +74,8 @@
     "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
-  "nextTaskId": "UX-01",
-  "nextAction": "Review and integrate NOTIFY-01A and DATA-01A onto verified UX-01L main, fix authorization and compatibility gaps, run owned-fixture verification and all required exact-final-commit CI jobs. Keep later Antigravity branches separate until reviewed.",
+  "nextTaskId": "NOTIFY-01",
+  "nextAction": "Verify combined NOTIFY-01A/DATA-01A main integration on one exact published commit: all three jobs and every required step, including owner-revocation HTTP regression and 26-migration/24-phase recovery. Review later Antigravity branches separately.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,23 +84,41 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
+    "AGENTS.md",
     "CHECKPOINT_MANIFEST.json",
     "PROJECT_CHECKPOINT.json",
     "PROJECT_STATUS.md",
     "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
     "START_HERE.md",
-    "apps/web/app/publication-search-detail.tsx",
-    "apps/web/app/workspace-search.tsx",
+    "apps/api/src/main.ts",
+    "apps/api/src/notifications.ts",
+    "apps/api/src/operations.ts",
+    "apps/api/src/render-worker.ts",
+    "apps/api/src/renders.ts",
     "docs/ACTIVE_HANDOFF.md",
     "docs/CHANGELOG.md",
+    "docs/DATA_GOVERNANCE.md",
+    "docs/NOTIFICATIONS.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/WORKSPACE_SEARCH_FOCUS.md",
-    "docs/qa/ux01k-final-ci-receipt.json",
-    "docs/qa/ux01l-evidence.json",
-    "tests/ui/workspace-search.spec.ts"
+    "docs/qa/data01a-evidence.json",
+    "docs/qa/integration01a-evidence.json",
+    "docs/qa/notify01a-evidence.json",
+    "docs/qa/ux01l-final-ci-receipt.json",
+    "prisma/migrations/202611030001_in_app_notifications/migration.sql",
+    "prisma/schema.prisma",
+    "scripts/application-pitr-fixture.mjs",
+    "scripts/verify-local.mjs",
+    "scripts/verify-native-upgrade.mjs",
+    "tests/application-snapshot.test.ts",
+    "tests/data-governance.test.ts",
+    "tests/integration/data-export.test.ts",
+    "tests/integration/notifications.test.ts",
+    "tests/notifications.test.ts",
+    "tests/render-worker-startup.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -7908,22 +7926,22 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "ready_for_local_work",
+      "state": "partial",
       "title": "Notifications, realtime status and telemetry"
     },
     {
       "id": "DATA-01",
-      "state": "ready_for_local_work",
+      "state": "partial",
       "title": "Retention, deletion, complete account/media export"
     },
     {
       "id": "UX-01",
-      "state": "local_verified_own_exact_commit_ci_pending",
+      "state": "partial",
       "title": "Remaining collaboration and product UX",
-      "status": "local_verified_own_exact_commit_ci_pending",
-      "completedIncrement": "J exact CI closed; K research search local checks pass.",
-      "nextAction": "Publish UX-01K follow-up after preserving five-tenant-branch security assertion; verify all three jobs/every required step on its new exact final commit and pair external receipt/source ZIP. First K run failed core unit test and is not acceptance.",
-      "currentEvidence": "docs/qa/ux01k-evidence.json"
+      "status": "partial",
+      "completedIncrement": "UX-01L exact commit dafdb93/run41921508171 passed all three jobs and every required step; four artifact bytes and embedded reports verified.",
+      "nextAction": "Continue wider search, accessibility and collaboration UX after backend integration gates.",
+      "currentEvidence": "docs/qa/ux01l-final-ci-receipt.json"
     },
     {
       "id": "POLICY-01",
@@ -8020,12 +8038,12 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/ux01k-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/integration01a-evidence.json",
   "latestStatus": {
-    "taskId": "UX-01K",
-    "status": "local_verified_own_exact_commit_ci_pending",
-    "nextAction": "Publish UX-01K follow-up after preserving five-tenant-branch security assertion; verify all three jobs/every required step on its new exact final commit and pair external receipt/source ZIP. First K run failed core unit test and is not acceptance.",
-    "ciAttempt1": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41824933052"
+    "taskId": "INTEGRATION-01A",
+    "status": "local_focused_verified_exact_integrated_ci_pending",
+    "nextAction": "Publish combined NOTIFY-01A/DATA-01A integration and verify all three jobs and every required step on its exact commit.",
+    "evidence": "docs/qa/integration01a-evidence.json"
   },
   "activeTask": {
     "id": "UX-01K",
@@ -8754,6 +8772,14 @@
       "completedAt": "2026-11-04T21:57:44.176Z"
     },
     "evidence": "docs/qa/ux01l-evidence.json",
+    "finalVerifiedPublication": {
+      "commit": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
+      "runId": 41921508171,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "receipt": "docs/qa/ux01l-final-ci-receipt.json"
+    },
     "preserved": {
       "priorMigrations": 25,
       "composePhases": 24,
@@ -23712,7 +23738,7 @@
   },
   "ux01l": {
     "taskId": "UX-01L",
-    "status": "local_verified_own_exact_commit_ci_pending",
+    "status": "published_ci_verified",
     "priorVerifiedPublication": {
       "taskId": "UX-01K",
       "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",

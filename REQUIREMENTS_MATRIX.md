@@ -1,3 +1,7 @@
+<!-- INTEGRATION01A_CURRENT_START -->
+NOTIFY-01A/DATA-01A integration is pending exact-main CI. The notification migration/API and expanded NDJSON export are merged into current main ancestry. A review found the DATA branch could revoke an OWNER; integrated code now denies OWNER deletion and adds a transaction-time role predicate plus HTTP regression. UX-01L is closed by [exact CI receipt](docs/qa/ux01l-final-ci-receipt.json). No production alert delivery, legal erasure, complete accessibility, deployed/live-provider or full-master acceptance is claimed. See [integration evidence](docs/qa/integration01a-evidence.json).
+<!-- INTEGRATION01A_CURRENT_END -->
+
 <!-- UX01L_CURRENT_START -->
 UX-01L: keyboard focus enters the read-only publication preparation detail heading and returns to its exact search result trigger. The existing production-browser case retains frozen/current content and no-mutation assertions. This is a bounded UX/accessibility improvement; wider A11Y-01 and UX-01, live/deployed and full-master acceptance remain open. UX-01K is closed on exact commit `44cdc01` / run 41826622865 with all three jobs, required steps and four artifact bytes verified; see `docs/qa/ux01k-final-ci-receipt.json`. L needs its own exact-commit CI.
 <!-- UX01L_CURRENT_END -->

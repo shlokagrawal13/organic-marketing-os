@@ -1,3 +1,11 @@
+<!-- INTEGRATION01A_CURRENT_START -->
+## Current: NOTIFY-01A / DATA-01A integration - 2026-11-10
+
+UX-01L final `dafdb93`/[run 41921508171](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171) passed all three jobs and every required step; four artifact ZIP bytes/digests/CRCs/reports verified. Its [imported receipt](docs/qa/ux01l-final-ci-receipt.json) closes L's packaged pending status.
+
+Antigravity's NOTIFY-01A and DATA-01A branch histories have been merged into current main ancestry. The integrated source adds the 26th migration and terminal render notifications, expands secret-stripped NDJSON export, and guards member revocation against OWNER removal. Focused 21 notification and 9 data unit checks, API build and 26 disposable PGlite migrations passed. A Windows FFmpeg/fontconfig failure and occupied Redis 6379 prevent safe selected local HTTP acceptance; the verifier now refuses occupied fixture ports before startup. The new exact integrated commit still needs all three CI jobs/every required step and artifact review. Later Antigravity branches remain separate. See [active handoff](docs/ACTIVE_HANDOFF.md) and [integration evidence](docs/qa/integration01a-evidence.json). Production/live-provider/deployed/full-master acceptance remains open; CI does not deploy.
+<!-- INTEGRATION01A_CURRENT_END -->
+
 <!-- UX01L_CURRENT_START -->
 ## Current: UX-01L - 2026-11-04
 

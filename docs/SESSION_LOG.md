@@ -1,3 +1,9 @@
+## NOTIFY-01A / DATA-01A integrated-main review - 2026-11-10
+
+Imported UX-01L final exact-source receipt: commit `dafdb93`, run `41921508171`, all three jobs/required steps and four artifact bytes/digests/CRCs/reports verified. Fetched remote branch heads and preserved NOTIFY-01A (`73ff67b`) and DATA-01A (`f22119d`) ancestry through merge commits. Later Antigravity branches/worktrees remain separate.
+
+Reviewed member revocation against the existing owner rule. Fixed the DATA-01A endpoint so ADMIN cannot remove OWNER; transaction-time role-conditioned deletion also denies concurrent promotion. Added HTTP regression for unchanged owner membership, session and audit on denial. Focused 21 notification and 9 data unit checks, API build and 26 disposable PGlite migrations pass. Selected Windows HTTP acceptance remains open: FFmpeg/fontconfig exited `3221225477`, then an existing Redis occupied port `6379`. The local harness now refuses occupied ports before startup. See [integration evidence](qa/integration01a-evidence.json). Exact integrated CI must cover full gates; production/live/deployed/full-master acceptance remains open.
+
 ## UX-01L focus and UX-01K CI closure - 2026-11-04
 
 Imported the external K final receipt for exact `44cdc01` / run 41826622865. All three jobs, every required step and four artifact ZIP bytes/digests/CRCs/embedded reports passed; first K red run remains historical. L restores keyboard focus when opening and returning from read-only publication preparation details in workspace search. The query, filters, results and no-mutation behavior remain. Local owned-fixture verification and own exact-source CI are tracked separately. Antigravity's NOTIFY/DATA worktrees are untouched; their branch CI does not establish merged-main acceptance.

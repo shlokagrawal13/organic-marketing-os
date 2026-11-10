@@ -1,3 +1,9 @@
+<!-- INTEGRATION01A_CURRENT_START -->
+## Current: NOTIFY-01A / DATA-01A integration - 2026-11-10
+
+UX-01L is closed on exact `main` commit `dafdb93` and [run 41921508171](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171), with all three jobs/required steps and four artifact bytes verified; [receipt](docs/qa/ux01l-final-ci-receipt.json) imported. Codex is integrating Antigravity's PR #1 and PR #2 onto verified main with a new OWNER-revocation guard. Read [active handoff](docs/ACTIVE_HANDOFF.md) and [integration evidence](docs/qa/integration01a-evidence.json). A new exact integrated-main CI, artifact inspection and portable source ZIP are required. Later NOTIFY/DATA branches remain separate; production/live/deployed/full-master gates remain open. CI does not deploy.
+<!-- INTEGRATION01A_CURRENT_END -->
+
 <!-- UX01L_CURRENT_START -->
 ## Current: UX-01L - 2026-11-04
 

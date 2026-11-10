@@ -1,3 +1,10 @@
+## NOTIFY-01A / DATA-01A integrated-main review - 2026-11-10
+
+- Merged durable in-app terminal-render notifications and their 26th migration with expanded secret-stripped workspace NDJSON export and member revocation.
+- Guarded OWNER memberships against deletion by the new revocation endpoint, including concurrent promotion, and added an HTTP denial regression.
+- Added fail-closed occupied-port preflight to the local fixture runner and portable Node CLI invocation. Full CI assertions remain required on the exact new integration commit.
+- Imported the exact UX-01L final receipt; later Antigravity branches remain separate until reviewed.
+
 ## UX-01L keyboard focus and UX-01K CI closure - 2026-11-04
 
 - Imported UX-01K exact final commit/run receipt after all three CI jobs, required steps and four artifact bytes passed.

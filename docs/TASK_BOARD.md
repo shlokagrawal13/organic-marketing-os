@@ -1,3 +1,9 @@
+<!-- INTEGRATION01A_CURRENT_START -->
+## Current main integration: NOTIFY-01A and DATA-01A - 2026-11-10
+
+UX-01L passed all three jobs and every required step on exact commit `dafdb93` / [run 41921508171](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171); [final receipt](qa/ux01l-final-ci-receipt.json) closes its package-time CI status. NOTIFY-01A and DATA-01A are merged into local main ancestry. Review found and fixed an OWNER-removal authorization bypass in DATA-01A, with an HTTP regression. Focused local unit checks and 26 disposable PGlite migrations passed; local HTTP acceptance is blocked by occupied fixture ports and Windows media prerequisites. This integrated source needs its own exact-commit three-job CI, all required steps and artifact inspection. Later Antigravity NOTIFY/DATA branches remain independent pending review; UX, live/deployed and full-master work remain open. See [integration evidence](qa/integration01a-evidence.json).
+<!-- INTEGRATION01A_CURRENT_END -->
+
 <!-- UX01L_CURRENT_START -->
 ## Current UX lane: UX-01L - 2026-11-04
 

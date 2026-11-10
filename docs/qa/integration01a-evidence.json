@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "taskId": "INTEGRATION-01A",
+  "recordedAtUtc": "2026-11-10T08:37:24.468Z",
+  "status": "local_focused_verified_exact_integrated_ci_pending",
+  "predecessor": {
+    "taskId": "UX-01L",
+    "commit": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
+    "runId": 41921508171,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+    "importedReceipt": "docs/qa/ux01l-final-ci-receipt.json"
+  },
+  "sources": [
+    {
+      "taskId": "NOTIFY-01A",
+      "branch": "notify-01a",
+      "head": "73ff67bc8cb3600f31ec4c5c2fb09b14dbbe0800",
+      "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/1",
+      "branchEvidence": "docs/qa/notify01a-evidence.json"
+    },
+    {
+      "taskId": "DATA-01A",
+      "branch": "data-01a",
+      "head": "f22119d67a0068399c37ce239d8791558699c6b0",
+      "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/2",
+      "branchEvidence": "docs/qa/data01a-evidence.json"
+    }
+  ],
+  "reviewAndChange": {
+    "notification": "Terminal render notifications, tenant-scoped APIs and 26th migration merge into UX-01L main ancestry; predecessor migration/physical assertions are retained and advanced to 26/38.",
+    "dataExport": "Previously omitted publication, billing, claim-review and social metadata are included with branch credential/idempotency redactions.",
+    "ownerRevocationFinding": "DATA-01A endpoint authorized ADMIN to delete an OWNER membership, bypassing the existing team endpoint's owner-removal prohibition.",
+    "ownerRevocationFix": "Transactional role check and role-conditioned deleteMany prevent OWNER removal, including concurrent promotion; 403 is returned and no session or audit mutation occurs.",
+    "fixtureIsolation": "Windows selected HTTP harness uses Node CLI entrypoints and a narrowly guarded media-fixture skip only for data-export/notifications HTTP specs. It refuses occupied loopback ports before starting fixture services; full CI media/UI/recovery behavior is unchanged."
+  },
+  "localChecks": {
+    "prismaGenerated": true,
+    "apiBuild": true,
+    "webBuild": true,
+    "fullAuditVulnerabilities": 0,
+    "productionAuditVulnerabilities": 0,
+    "notificationFocusedUnitPassed": 21,
+    "dataGovernanceFocusedUnitPassed": 9,
+    "pgliteMigrationsApplied": 26,
+    "selectedHttpPassed": null,
+    "selectedHttpGap": "Local Windows FFmpeg drawtext/fontconfig exited 3221225477. After a strictly selected media-fixture skip, existing Redis occupied loopback port 6379; safe preflight now denies fixture startup with EACCES. No selected HTTP acceptance is claimed.",
+    "occupiedPortNegativeControl": true,
+    "realEnvPresent": false
+  },
+  "publication": {
+    "required": "New exact final integrated main commit must pass all three jobs and every required step, including native HTTP, browser, recovery, 26 migrations and all 24 Compose phases; inspect artifacts and pair an external final receipt with a fresh source ZIP.",
+    "ciDoesNotDeploy": true
+  },
+  "limits": [
+    "Later NOTIFY and DATA branches remain separate and unaccepted on integrated main",
+    "No live provider, deployed restore, production durability or full-master acceptance claimed"
+  ]
+}
