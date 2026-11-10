@@ -1213,7 +1213,7 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 <!-- POLICY01D_NATIVE_CLOSURE_END -->
 ## NOTIFY-01B / DATA-01B reviewed integration - 2026-11-10
 
-- Reviewed Antigravity branches `notify-01b` and `data-01b` against integrated main and merged them locally at `058cf27` without rewriting either branch history.
+- Reviewed Antigravity branches `notify-01b` and `data-01b` against integrated main and merged them at `058cf27` without rewriting either branch history; docs were published at `f1ba479`.
 - NOTIFY-01B adds idempotent publishing outcome and failed-AI notifications with category filters; DATA-01B adds tenant-scoped social-connection disconnect, credential scrubbing, active-work cascade and immutable audit coverage.
-- Focused checks pass: 20 notification tests, 11 data-governance tests, API build, web production build and whitespace validation. The new exact three-job CI is pending; no predecessor run substitutes for it.
+- Focused checks pass: 20 notification tests, 11 data-governance tests, API build, web production build and whitespace validation. Exact run `42810027002` passed all three jobs and all 41 required steps; artifact names, sizes and digests were recorded, with browser bytes/report remaining uninspected because downloads were proxy403-blocked.
 - Local HTTP remains unaccepted because the safe harness requires isolated services and Windows lacks the required media/fontconfig setup while Redis port 6379 is occupied.

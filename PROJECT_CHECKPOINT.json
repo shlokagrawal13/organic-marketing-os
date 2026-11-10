@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "integration01b-20261110-merge-ci-pending",
-  "savedAtUtc": "2026-11-10T12:00:00Z",
-  "currentMilestone": "NOTIFY-01A and DATA-01A integration verified on 607b8fb/run42784451013; NOTIFY-01B and DATA-01B reviewed and merged locally at 058cf27 with focused checks/builds passing; exact CI pending",
+  "checkpointRevision": "integration01b-20261110-exact-ci-verified",
+  "savedAtUtc": "2026-11-10T12:20:47Z",
+  "currentMilestone": "NOTIFY-01A and DATA-01A integration verified on 607b8fb/run42784451013; NOTIFY-01B and DATA-01B reviewed, merged at 058cf27, published at f1ba479 and exact CI verified on run42810027002",
   "activeTaskId": "NOTIFY-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -6813,7 +6813,7 @@
     "id": 1389748509,
     "sourceTree": "13e97946677ac5965bb6aa23a55509262ebc0cc",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Local reviewed NOTIFY-01B/DATA-01B merge; own exact-source CI pending.",
+    "commitMeaning": "Published NOTIFY-01B/DATA-01B integration docs and exact-source CI verified on run42810027002.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "a432d67113cec8e70df5334c57391214f92547d1",
     "uploadGate": {
@@ -7936,15 +7936,15 @@
       "id": "NOTIFY-01",
       "state": "partial",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01A integrated on main 607b8fb; all three exact-source CI jobs/41 steps passed. Later notification UX/realtime/alerts remain.",
-      "nextAction": "Review and integrate NOTIFY-01B independently; preserve branch history."
+      "completedIncrement": "NOTIFY-01A and NOTIFY-01B integrated on main; exact run 42810027002 passed all three jobs/41 steps. Later notification UX/realtime/alerts remain.",
+      "nextAction": "Review the separate NOTIFY-01C and later branches after preserving the verified B integration."
     },
     {
       "id": "DATA-01",
       "state": "partial",
       "title": "Retention, deletion, complete account/media export",
-      "completedIncrement": "DATA-01A integrated on main 607b8fb; all three exact-source CI jobs/41 steps passed.",
-      "nextAction": "Review DATA-01B independently; complete retention, erasure and media lifecycle scope."
+      "completedIncrement": "DATA-01A and DATA-01B integrated on main; exact run 42810027002 passed all three jobs/41 steps.",
+      "nextAction": "Review the separate DATA-01C and later branches; complete retention, erasure and media lifecycle scope."
     },
     {
       "id": "UX-01",
@@ -8013,7 +8013,7 @@
     "Integrated NOTIFY-01A and DATA-01A on main with the owner-removal guard and HTTP regression.",
     "Verified application commit 607b8fb on run 42784451013 and checkpoint continuity commit 5e8b537 on run 42805024713; all three jobs and 41 required steps passed.",
     "Reviewed NOTIFY-01B and DATA-01B against integrated main and merged locally at 058cf27; focused notification 20/20 and data-governance 11/11 checks plus API/web builds passed.",
-    "Removed only DATA-01B trailing blank-line violations during conflict resolution; fresh exact-source CI and source package remain pending. Browser artifact upload succeeded but its bytes/report remain uninspected."
+    "Removed only DATA-01B trailing blank-line violations during conflict resolution; published f1ba479 and verified all three exact-run jobs/41 steps on run42810027002. Artifact names, sizes and digests were recorded; browser bytes/report remain uninspected because downloads were proxy403-blocked."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8051,17 +8051,17 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/integration01a-final-ci-receipt.json",
+  "checkpointVerificationEvidence": "docs/qa/integration01b-evidence.json",
   "latestStatus": {
     "taskId": "INTEGRATION-01B-DATA-01B",
-    "status": "local_reviewed_merge_exact_ci_pending",
-    "commit": "058cf271e8673403efbf029788278f5249df9c77",
-    "tree": "13e97946677ac5965bb6aa23a55509262ebc0cc",
-    "runId": null,
-    "url": null,
-    "allThreeJobsAndRequiredStepsPassed": false,
+    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
+    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
+    "tree": "1b598c94b555a403b4db0293098331252937828c",
+    "runId": 42810027002,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42810027002",
+    "allThreeJobsAndRequiredStepsPassed": true,
     "requiredSteps": 41,
-    "artifactGap": "Fresh exact-source CI has not run yet; continuity predecessor browser artifact remains uninspected.",
+    "artifactGap": "All four exact-run artifact names, sizes and digests were verified; browser artifact bytes/report remain uninspected because downloads were proxy403-blocked.",
     "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
     "baseRunId": 42805024713,
     "receipt": "docs/qa/integration01b-evidence.json"
@@ -8069,7 +8069,7 @@
   "activeTask": {
     "id": "NOTIFY-01B-DATA-01B",
     "title": "Notifications, realtime status and telemetry",
-    "status": "reviewed_local_merge_exact_ci_pending"
+    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8083,7 +8083,7 @@
   },
   "pendingPublication": {
     "taskId": "INTEGRATION-01B-DATA-01B",
-    "status": "merged_local_exact_ci_pending",
+    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
     "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
     "historicalPaths": [
       "CHECKPOINT_MANIFEST.json",
@@ -8104,9 +8104,9 @@
       "docs/qa/ux01l-evidence.json",
       "tests/ui/workspace-search.spec.ts"
     ],
-    "required": "Push the reviewed local merge and obtain a fresh exact three-job CI result; no predecessor run substitutes.",
-    "commit": "058cf271e8673403efbf029788278f5249df9c77",
-    "runId": null,
+    "required": "Completed: published f1ba479 and verified a fresh exact three-job CI result; no predecessor run substituted.",
+    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
+    "runId": 42810027002,
     "receipt": "docs/qa/integration01b-evidence.json",
     "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-notify-data01b-source.zip"
   },
@@ -8728,11 +8728,11 @@
   },
   "currentVerification": {
     "taskId": "INTEGRATION-01B-DATA-01B",
-    "status": "local_reviewed_merge_exact_ci_pending",
-    "commit": "058cf271e8673403efbf029788278f5249df9c77",
-    "tree": "13e97946677ac5965bb6aa23a55509262ebc0cc",
-    "runId": null,
-    "allThreeJobsAndRequiredStepsPassed": false,
+    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
+    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
+    "tree": "1b598c94b555a403b4db0293098331252937828c",
+    "runId": 42810027002,
+    "allThreeJobsAndRequiredStepsPassed": true,
     "requiredSteps": 41,
     "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
     "baseRunId": 42805024713,

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "INTEGRATION-01B",
-  "recordedAtUtc": "2026-11-10T12:00:00Z",
-  "status": "merged_exact_source_ci_pending",
+  "recordedAtUtc": "2026-11-10T12:20:47Z",
+  "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
   "base": {
     "commit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
     "runId": 42805024713,
@@ -44,16 +44,81 @@
   "publication": {
     "localMergeCommit": "058cf271e8673403efbf029788278f5249df9c77",
     "localMergeTree": "13e97946677ac5965bb6aa23a55509262ebc0cc",
+    "publishedCommit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
+    "publishedTree": "1b598c94b555a403b4db0293098331252937828c",
     "exactCiRequired": true,
     "priorRunCannotSubstitute": true,
+    "exactCi": {
+      "runId": 42810027002,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42810027002",
+      "status": "completed",
+      "conclusion": "success",
+      "requiredSteps": 41,
+      "successfulSteps": 41,
+      "jobs": [
+        {
+          "id": 129808828053,
+          "name": "Native populated upgrade and migration recovery",
+          "conclusion": "success",
+          "startedAtUtc": "2026-11-10T11:45:19Z",
+          "completedAtUtc": "2026-11-10T11:46:38Z"
+        },
+        {
+          "id": 129808827979,
+          "name": "Disposable Compose and native restore",
+          "conclusion": "success",
+          "startedAtUtc": "2026-11-10T11:45:19Z",
+          "completedAtUtc": "2026-11-10T11:55:28Z"
+        },
+        {
+          "id": 129808827615,
+          "name": "Native application verification",
+          "conclusion": "success",
+          "startedAtUtc": "2026-11-10T11:45:19Z",
+          "completedAtUtc": "2026-11-10T12:18:49Z"
+        }
+      ],
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "warnings": [
+        "GitHub is forcing Node.js 20-targeting actions onto Node.js 24.",
+        "ubuntu-latest is scheduled to migrate to Ubuntu 26.",
+        "actions/setup-java@v4 is deprecated and should move to v5 in a separate maintenance change."
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "sizeBytes": 15191592,
+        "digest": "sha256:89f05458d1ac7d44bb680d0d58b4525a8f82a319e3b032f5a76b85952ec37079",
+        "bytesInspected": false
+      },
+      {
+        "name": "compose-evidence",
+        "sizeBytes": 16942,
+        "digest": "sha256:cfc8c464edf0a03766f03b5aeeadb48c9c1604aa871e84004d656dc397e75f42",
+        "bytesInspected": false
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "sizeBytes": 3018,
+        "digest": "sha256:29f9a4f768bf47cd9a705de772c46d8791c0becc291f9785e3a0c527d6c1ca0a",
+        "bytesInspected": false
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "sizeBytes": 934,
+        "digest": "sha256:cad7a0f8d51bcca2e2b516b746902e2145820b38d1403b4cf602f9ac63b43102",
+        "bytesInspected": false
+      }
+    ],
     "sourceZip": {
       "path": "C:/Users/shlok/Desktop/organic-marketing-os-notify-data01b-source.zip",
-      "note": "Portable source package is generated outside the repository after the final exact CI run; its digest is recorded in the external receipt."
+      "note": "Portable source package is generated outside the repository; its digest is recorded in the external receipt."
     }
   },
   "limits": [
-    "Exact CI for 058cf27 must pass all three jobs and every required step before this increment is accepted.",
+    "All three jobs and all 41 required steps passed on the exact published commit f1ba479.",
     "No live provider, deployed restore, production durability or full-master acceptance is claimed.",
-    "The continuity run's browser artifact bytes and embedded report remain uninspected."
+    "GitHub artifact bytes and embedded reports remain uninspected because prior downloads were proxy403-blocked; names, sizes and digests were verified in the run UI/API."
   ]
 }
