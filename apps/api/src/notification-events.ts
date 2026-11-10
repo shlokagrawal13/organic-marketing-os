@@ -232,3 +232,144 @@ export async function createApprovalRequiredNotification(
     update: {},
   });
 }
+
+export async function createPaymentFailedNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    invoiceId: string;
+    actorId?: string | null;
+    amount?: number | null;
+    currency?: string | null;
+    error?: string | null;
+  },
+) {
+  const eventKey = `billing:payment_failed:${params.invoiceId}`;
+  const title = "Payment failed";
+  const amountStr =
+    params.amount != null
+      ? ` (${(params.amount / 100).toFixed(2)} ${params.currency?.toUpperCase() ?? "USD"})`
+      : "";
+  const reason = params.error ? `: ${params.error}` : ".";
+  const body = `Invoice payment${amountStr} failed${reason} Please update your payment method to maintain uninterrupted service.`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: "PAYMENT_FAILED",
+      category: "BILLING",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/billing`,
+      entityType: "BILLING_INVOICE",
+      entityId: params.invoiceId,
+      eventKey,
+      data: {
+        invoiceId: params.invoiceId,
+        ...(params.amount != null ? { amount: params.amount } : {}),
+        ...(params.currency ? { currency: params.currency } : {}),
+        ...(params.error ? { error: params.error } : {}),
+      },
+    },
+    update: {},
+  });
+}
+
+export async function createSubscriptionEventNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    subscriptionId: string;
+    actorId?: string | null;
+    eventType: "UPDATED" | "CANCELED";
+    planName?: string | null;
+    cancelAtPeriodEnd?: boolean;
+  },
+) {
+  const isCanceled = params.eventType === "CANCELED";
+  const eventKey = `billing:subscription:${params.subscriptionId}:${params.eventType.toLowerCase()}`;
+  const title = isCanceled ? "Subscription canceled" : "Subscription updated";
+  const planStr = params.planName ? ` to "${params.planName}"` : "";
+  const body = isCanceled
+    ? `Workspace subscription was canceled${params.cancelAtPeriodEnd ? " and will terminate at the end of the current billing cycle." : "."}`
+    : `Workspace subscription was updated${planStr}.`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: isCanceled ? "SUBSCRIPTION_CANCELED" : "SUBSCRIPTION_UPDATED",
+      category: "BILLING",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/billing`,
+      entityType: "BILLING_SUBSCRIPTION",
+      entityId: params.subscriptionId,
+      eventKey,
+      data: {
+        subscriptionId: params.subscriptionId,
+        eventType: params.eventType,
+        ...(params.planName ? { planName: params.planName } : {}),
+        ...(params.cancelAtPeriodEnd != null ? { cancelAtPeriodEnd: params.cancelAtPeriodEnd } : {}),
+      },
+    },
+    update: {},
+  });
+}
+
+export async function createContentReadyNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    contentId: string;
+    contentRevision: number;
+    contentTitle: string;
+    actorId?: string | null;
+    campaignId?: string | null;
+  },
+) {
+  const eventKey = `content:${params.contentId}:revision:${params.contentRevision}:ready`;
+  const title = "Content ready";
+  const body = `Content draft "${params.contentTitle}" is ready for review and scheduling.`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: "CONTENT_READY",
+      category: "CONTENT",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/content/${params.contentId}`,
+      entityType: "CONTENT_ITEM",
+      entityId: params.contentId,
+      eventKey,
+      data: {
+        contentId: params.contentId,
+        contentRevision: params.contentRevision,
+        contentTitle: params.contentTitle,
+        ...(params.campaignId ? { campaignId: params.campaignId } : {}),
+      },
+    },
+    update: {},
+  });
+}

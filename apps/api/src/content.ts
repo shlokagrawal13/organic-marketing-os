@@ -35,6 +35,7 @@ import {
   requireCurrentClaimReview,
   validateClaimReviewSubmission,
 } from "./claim-reviews";
+import { createContentReadyNotification } from "./notification-events";
 const change = z.object({ revision: z.number().int().positive() }).strict();
 @Controller("workspaces/:organizationId/content")
 @UseGuards(TenantGuard)
@@ -406,6 +407,19 @@ export class ContentController {
           },
           data: { approvedAt: null, approvedBy: null },
         });
+      if (to === "REVIEW") {
+        const ready = await tx.contentItem.findUniqueOrThrow({
+          where: { id },
+          select: { title: true, revision: true, campaignId: true },
+        });
+        await createContentReadyNotification(tx, {
+          organizationId: req.organizationId,
+          contentId: id,
+          contentRevision: ready.revision,
+          contentTitle: ready.title,
+          campaignId: ready.campaignId,
+        });
+      }
       await tx.auditLog.create({
         data: {
           organizationId: req.organizationId,

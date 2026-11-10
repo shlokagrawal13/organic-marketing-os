@@ -1,7 +1,7 @@
 import "../support/isolated";
 import { test, after } from "node:test";
 import assert from "node:assert/strict";
-import { db, actor } from "../support/http";
+import { db, actor, draft } from "../support/http";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { randomUUID } from "node:crypto";
 import type { PrismaClient } from "@prisma/client";
@@ -420,3 +420,131 @@ test("render cancel terminal event creates durable notification and preserves au
   assert.equal(cancelAgain.status, 409);
 });
 
+test("GET /summary returns totalUnread and category counts with tenant isolation", async () => {
+  await resetFixtureRateBudget();
+  const orgA = await db.organization.create({ data: { name: "Summary Org A" } });
+  const orgB = await db.organization.create({ data: { name: "Summary Org B" } });
+  orgs.push(orgA.id, orgB.id);
+
+  const ownerA = await actor(orgA.id, "OWNER");
+  const ownerB = await actor(orgB.id, "OWNER");
+  users.push(ownerA.id, ownerB.id);
+
+  // Org A: 1 unread RENDER
+  await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "RENDER_SUCCEEDED",
+      category: "RENDER",
+      title: "Render complete",
+      body: "Ready",
+      eventKey: `render:${randomUUID()}:SUCCEEDED`,
+    },
+  });
+
+  // Org A: 1 unread BILLING
+  await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "PAYMENT_FAILED",
+      category: "BILLING",
+      title: "Payment failed",
+      body: "Card declined",
+      eventKey: `billing:payment_failed:${randomUUID()}`,
+    },
+  });
+
+  // Org A: 1 read BILLING (readAt populated)
+  await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "CREDITS_LOW",
+      category: "BILLING",
+      title: "Credits low",
+      body: "Balance low",
+      eventKey: `billing:credits_low:${randomUUID()}`,
+      readAt: new Date(),
+      readBy: ownerA.id,
+    },
+  });
+
+  // Org B: 1 unread RENDER
+  await db.notification.create({
+    data: {
+      organizationId: orgB.id,
+      type: "RENDER_SUCCEEDED",
+      category: "RENDER",
+      title: "Render complete",
+      body: "Ready",
+      eventKey: `render:${randomUUID()}:SUCCEEDED`,
+    },
+  });
+
+  // Owner A fetches summary
+  const summaryRes = await ownerA.call(`/workspaces/${orgA.id}/notifications/summary`);
+  assert.equal(summaryRes.status, 200);
+  assert.equal(summaryRes.body.organizationId, orgA.id);
+  assert.equal(summaryRes.body.totalUnread, 2);
+  assert.equal(summaryRes.body.byCategory.RENDER, 1);
+  assert.equal(summaryRes.body.byCategory.BILLING, 1);
+
+  // Owner B cannot access Org A summary
+  const crossTenantRes = await ownerB.call(`/workspaces/${orgA.id}/notifications/summary`);
+  assert.equal(crossTenantRes.status, 404);
+});
+
+test("content review emits a tenant-bound notification for each content revision", async () => {
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({ data: { name: "Content lifecycle notifications" } });
+  orgs.push(org.id);
+  const owner = await actor(org.id, "OWNER");
+  users.push(owner.id);
+  const root = `/workspaces/${org.id}`;
+
+  const created = await owner.call(root + "/content", "POST", {
+    ...draft,
+    title: "Lifecycle draft",
+  });
+  assert.equal(created.status, 201, JSON.stringify(created.body));
+  const contentId = created.body.id as string;
+
+  const firstReview = await owner.call(
+    `${root}/content/${contentId}/review`,
+    "POST",
+    { revision: 1 },
+  );
+  assert.equal(firstReview.status, 201, JSON.stringify(firstReview.body));
+  const first = await db.notification.findMany({
+    where: { organizationId: org.id, entityId: contentId },
+    orderBy: { createdAt: "asc" },
+  });
+  assert.equal(first.length, 1);
+  assert.equal(first[0].userId, null);
+  assert.equal(first[0].eventKey, `content:${contentId}:revision:1:ready`);
+  assert.equal((first[0].data as any).contentRevision, 1);
+
+  const edited = await owner.call(`${root}/content/${contentId}`, "PUT", {
+    ...draft,
+    title: "Lifecycle draft v2",
+    revision: 1,
+  });
+  assert.equal(edited.status, 200, JSON.stringify(edited.body));
+  const secondReview = await owner.call(
+    `${root}/content/${contentId}/review`,
+    "POST",
+    { revision: 2 },
+  );
+  assert.equal(secondReview.status, 201, JSON.stringify(secondReview.body));
+
+  const revisions = await db.notification.findMany({
+    where: { organizationId: org.id, entityId: contentId },
+    orderBy: { eventKey: "asc" },
+  });
+  assert.deepEqual(
+    revisions.map((row) => row.eventKey),
+    [
+      `content:${contentId}:revision:1:ready`,
+      `content:${contentId}:revision:2:ready`,
+    ].sort(),
+  );
+});

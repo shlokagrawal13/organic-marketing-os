@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B & NOTIFY-01C)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C & NOTIFY-01D)
 
 ## Overview & Scope
 NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
@@ -8,7 +8,10 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Billing & Approval Events (NOTIFY-01C)**: Low credit balance alerts (`CREDITS_LOW`, `category: "BILLING"`) are emitted atomically when the immutable ledger crosses the configured threshold; policy review triggers (`APPROVAL_REQUIRED`, `category: "APPROVAL"`) are emitted when a YouTube policy review is completed and owner/admin scheduling approval is still required.
 - **Notification Center Actions (NOTIFY-01C)**: Mark-as-unread toggle (`POST|PATCH :id/unread`) allowing users/admins to reset read receipts, preserving unread badge counts per MASTER_SPEC §83.
 
-It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL`), bounded pagination, and single/batch read/unread actions.
+- **Billing & Content Lifecycle Events (NOTIFY-01D)**: Verified billing webhooks emit payment-failure and subscription-change notifications, while content transitions into review emit revision-bound content-ready notifications.
+- **Category Summary Metrics (NOTIFY-01D)**: `GET /workspaces/:organizationId/notifications/summary` returns tenant- and role-scoped unread totals by category.
+
+It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
 In accordance with bounded scope:
 - No synthetic or mock notification generation is used by the application. Unit tests may call event creators directly to verify their idempotent contracts.
@@ -117,6 +120,12 @@ Notifications are emitted strictly upon reaching terminal render status:
 
 ---
 
+8. **Billing lifecycle webhooks (NOTIFY-01D)**:
+   Verified `subscription.upserted` and `subscription.canceled` events emit `SUBSCRIPTION_UPDATED` or `SUBSCRIPTION_CANCELED` inside the same transaction that applies the billing state. `invoice.payment_failed` is tenant-bound by the signed event payload and emits `PAYMENT_FAILED` without granting or rewriting credits. Replays use the event key and remain idempotent.
+
+9. **Content review transition (NOTIFY-01D)**:
+   A successful `DRAFT → REVIEW` transition emits a workspace-wide `CONTENT_READY` notification in the same transaction as the content state and audit row. The event key includes the immutable content revision (`content:<id>:revision:<revision>:ready`), so later revisions create distinct notifications while retries do not duplicate a revision.
+
 ## Authorization & Role Matrix
 
 The API controller is mounted at `/workspaces/:organizationId/notifications` and guarded by `TenantGuard`:
@@ -202,6 +211,13 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
 - Toggles a notification back to unread status (`readAt = null`, `readBy = null`).
 - Accurately increments `unreadCount` badge in subsequent queries.
 - Idempotent: subsequent calls on an already-unread notification safely return 200 OK.
+
+### 6. Unread Category Summary (NOTIFY-01D)
+`GET /workspaces/:organizationId/notifications/summary`
+
+- Returns `totalUnread` and `byCategory` for the current workspace.
+- `OWNER` and `ADMIN` roles see all unread workspace notifications; other allowed roles see workspace broadcasts and notifications assigned to their user.
+- Tenant membership is enforced by the existing guard and cross-workspace requests return 404.
 
 ---
 

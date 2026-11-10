@@ -52,6 +52,28 @@ export const billingEventSchema = z.discriminatedUnion("type", [
   z
     .object({
       id: externalId,
+      type: z.literal("invoice.payment_failed"),
+      created: z.number().int().positive(),
+      data: z
+        .object({
+          organizationId: z.string().uuid(),
+          externalInvoiceId: externalId,
+          externalSubscriptionId: externalId.optional(),
+          currency: z
+            .string()
+            .trim()
+            .regex(/^[a-z]{3}$/i)
+            .transform((value) => value.toLowerCase())
+            .optional(),
+          amountDue: z.number().int().min(0).max(100_000_000).optional(),
+          error: z.string().trim().min(1).max(500).optional(),
+        })
+        .strict(),
+    })
+    .strict(),
+  z
+    .object({
+      id: externalId,
       type: z.literal("invoice.paid"),
       created: z.number().int().positive(),
       data: z
@@ -287,6 +309,31 @@ export function mapStripeBillingEvent(
       },
     };
   }
+  if (event.type === "invoice.payment_failed") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const detail = invoice.parent?.subscription_details;
+    const organizationId = organizationMetadata(detail?.metadata);
+    if (!organizationId) return null;
+    const subscriptionId = stripeId(detail?.subscription || null);
+    const paymentFailure = invoice as Stripe.Invoice & {
+      last_finalization_error?: { message?: string | null } | null;
+    };
+    return {
+      id: event.id,
+      type: "invoice.payment_failed",
+      created: event.created,
+      data: {
+        organizationId,
+        externalInvoiceId: invoice.id,
+        ...(subscriptionId ? { externalSubscriptionId: subscriptionId } : {}),
+        currency: invoice.currency || undefined,
+        amountDue: invoice.amount_due,
+        ...(paymentFailure.last_finalization_error?.message
+          ? { error: paymentFailure.last_finalization_error.message }
+          : {}),
+      },
+    };
+  }
   return null;
 }
 
@@ -460,6 +507,9 @@ export async function processBillingEvent(tx: Tx, eventRecordId: string) {
       },
     });
     return finish(tx, record.id, subscription.organizationId, true);
+  }
+  if (event.type === "invoice.payment_failed") {
+    return finish(tx, record.id, event.data.organizationId, true);
   }
   if (event.type === "invoice.paid") {
     const subscription = await tx.billingSubscription.findUnique({

@@ -178,6 +178,19 @@ test(
     assert.equal(accepted.body.applied, true);
     assert.deepEqual(await webhook(subscription), accepted);
     assert.equal(
+      await db.notification.count({
+        where: {
+          organizationId: org.id,
+          eventKey: `billing:subscription:${(
+            await db.billingSubscription.findUniqueOrThrow({
+              where: { organizationId: org.id },
+            })
+          ).id}:updated`,
+        },
+      }),
+      1,
+    );
+    assert.equal(
       (
         await webhook({
           ...subscription,
@@ -200,6 +213,18 @@ test(
       data: { externalSubscriptionId: "sub_test_1" },
     });
     assert.equal(canceled.status, 201, JSON.stringify(canceled.body));
+    const canceledSubscription = await db.billingSubscription.findUniqueOrThrow({
+      where: { organizationId: org.id },
+    });
+    assert.equal(
+      await db.notification.count({
+        where: {
+          organizationId: org.id,
+          eventKey: `billing:subscription:${canceledSubscription.id}:canceled`,
+        },
+      }),
+      1,
+    );
     const oldUpdate = await webhook({
       ...subscription,
       id: "evt_subscription_old_update",
@@ -239,6 +264,42 @@ test(
     };
     assert.equal((await webhook(invoice)).status, 201);
     assert.equal((await webhook(invoice)).status, 201);
+    const paymentFailed = await webhook({
+      id: "evt_invoice_payment_failed_1",
+      type: "invoice.payment_failed",
+      created: baseCreated + 45,
+      data: {
+        organizationId: org.id,
+        externalInvoiceId: "inv_test_failed_1",
+        externalSubscriptionId: "sub_test_1",
+        currency: "usd",
+        amountDue: 1900,
+        error: "Card declined",
+      },
+    });
+    assert.equal(paymentFailed.status, 201, JSON.stringify(paymentFailed.body));
+    assert.equal((await webhook({
+      id: "evt_invoice_payment_failed_1",
+      type: "invoice.payment_failed",
+      created: baseCreated + 45,
+      data: {
+        organizationId: org.id,
+        externalInvoiceId: "inv_test_failed_1",
+        externalSubscriptionId: "sub_test_1",
+        currency: "usd",
+        amountDue: 1900,
+        error: "Card declined",
+      },
+    })).status, 201);
+    assert.equal(
+      await db.notification.count({
+        where: {
+          organizationId: org.id,
+          eventKey: "billing:payment_failed:inv_test_failed_1",
+        },
+      }),
+      1,
+    );
     assert.equal(
       await db.creditEntry.count({
         where: { organizationId: org.id, kind: "GRANT" },

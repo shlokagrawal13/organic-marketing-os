@@ -10,6 +10,9 @@ import {
   createAiNotification,
   createCreditsLowNotification,
   createApprovalRequiredNotification,
+  createPaymentFailedNotification,
+  createSubscriptionEventNotification,
+  createContentReadyNotification,
   NotificationsController,
   NOTIFICATION_ROLES,
 } from "../dist/apps/api/src/notifications";
@@ -1201,5 +1204,195 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     const repeat = await controller.markUnreadPatch(user, n.id);
     assert.equal(repeat.readAt, null);
     assert.equal(repeat.readBy, null);
+  });
+
+  test("createPaymentFailedNotification: creates idempotent BILLING/PAYMENT_FAILED notification", async () => {
+    const org = await prisma.organization.create({ data: { name: "Payment Failed Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const invoiceId = randomUUID();
+
+    const n = await createPaymentFailedNotification(prisma, {
+      organizationId: org.id,
+      invoiceId,
+      actorId: user.userId,
+      amount: 4900,
+      currency: "usd",
+      error: "Card declined by issuing bank",
+    });
+
+    assert.equal(n.type, "PAYMENT_FAILED");
+    assert.equal(n.category, "BILLING");
+    assert.equal(n.title, "Payment failed");
+    assert.equal(n.link, `/workspaces/${org.id}/billing`);
+    assert.equal(n.eventKey, `billing:payment_failed:${invoiceId}`);
+    assert.equal((n.data as any).invoiceId, invoiceId);
+    assert.equal((n.data as any).amount, 4900);
+    assert.equal((n.data as any).currency, "usd");
+    assert.equal((n.data as any).error, "Card declined by issuing bank");
+
+    // Idempotency: re-running does not fail and returns existing record
+    const dup = await createPaymentFailedNotification(prisma, {
+      organizationId: org.id,
+      invoiceId,
+      actorId: user.userId,
+      amount: 4900,
+    });
+    assert.equal(dup.id, n.id);
+
+    const count = await prisma.notification.count({
+      where: { organizationId: org.id, eventKey: `billing:payment_failed:${invoiceId}` },
+    });
+    assert.equal(count, 1);
+  });
+
+  test("createSubscriptionEventNotification: creates idempotent subscription update and cancellation notifications", async () => {
+    const org = await prisma.organization.create({ data: { name: "Sub Event Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const subscriptionId = randomUUID();
+
+    // Updated event
+    const updated = await createSubscriptionEventNotification(prisma, {
+      organizationId: org.id,
+      subscriptionId,
+      actorId: user.userId,
+      eventType: "UPDATED",
+      planName: "Enterprise Tier",
+    });
+    assert.equal(updated.type, "SUBSCRIPTION_UPDATED");
+    assert.equal(updated.category, "BILLING");
+    assert.equal(updated.title, "Subscription updated");
+    assert.equal(updated.eventKey, `billing:subscription:${subscriptionId}:updated`);
+    assert.equal((updated.data as any).planName, "Enterprise Tier");
+
+    // Canceled event
+    const canceled = await createSubscriptionEventNotification(prisma, {
+      organizationId: org.id,
+      subscriptionId,
+      actorId: user.userId,
+      eventType: "CANCELED",
+      cancelAtPeriodEnd: true,
+    });
+    assert.equal(canceled.type, "SUBSCRIPTION_CANCELED");
+    assert.equal(canceled.category, "BILLING");
+    assert.equal(canceled.title, "Subscription canceled");
+    assert.equal(canceled.eventKey, `billing:subscription:${subscriptionId}:canceled`);
+    assert.equal((canceled.data as any).cancelAtPeriodEnd, true);
+  });
+
+  test("createContentReadyNotification: creates idempotent CONTENT/CONTENT_READY notification", async () => {
+    const org = await prisma.organization.create({ data: { name: "Content Ready Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const contentId = randomUUID();
+    const contentRevision = 3;
+    const campaignId = randomUUID();
+
+    const n = await createContentReadyNotification(prisma, {
+      organizationId: org.id,
+      contentId,
+      contentRevision,
+      contentTitle: "Spring Launch Promo",
+      actorId: user.userId,
+      campaignId,
+    });
+
+    assert.equal(n.type, "CONTENT_READY");
+    assert.equal(n.category, "CONTENT");
+    assert.equal(n.title, "Content ready");
+    assert.equal(n.link, `/workspaces/${org.id}/content/${contentId}`);
+    assert.equal(n.eventKey, `content:${contentId}:revision:${contentRevision}:ready`);
+    assert.equal((n.data as any).contentTitle, "Spring Launch Promo");
+    assert.equal((n.data as any).contentRevision, contentRevision);
+    assert.equal((n.data as any).campaignId, campaignId);
+
+    // Idempotent duplicate check
+    const dup = await createContentReadyNotification(prisma, {
+      organizationId: org.id,
+      contentId,
+      contentRevision,
+      contentTitle: "Spring Launch Promo",
+    });
+    assert.equal(dup.id, n.id);
+  });
+
+  test("controller.summary: returns totalUnread and byCategory counts with tenant isolation and role scoping", async () => {
+    const orgA = await prisma.organization.create({ data: { name: "Summary Org A" } });
+    const orgB = await prisma.organization.create({ data: { name: "Summary Org B" } });
+    const ownerA = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "OWNER" });
+    const member1A = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "MEMBER" });
+    const member2A = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "MEMBER" });
+
+    // Org A notifications:
+    // 1. RENDER unread (workspace-wide: userId null)
+    await createRenderNotification(prisma, {
+      organizationId: orgA.id,
+      renderId: randomUUID(),
+      status: "SUCCEEDED",
+    });
+    // 2. RENDER unread (workspace-wide: userId null)
+    await createRenderNotification(prisma, {
+      organizationId: orgA.id,
+      renderId: randomUUID(),
+      status: "FAILED",
+    });
+    // 3. BILLING unread (workspace-wide)
+    await createPaymentFailedNotification(prisma, {
+      organizationId: orgA.id,
+      invoiceId: randomUUID(),
+      amount: 1200,
+    });
+    // 4. BILLING read (should not count in unread summary)
+    const readBilling = await createPaymentFailedNotification(prisma, {
+      organizationId: orgA.id,
+      invoiceId: randomUUID(),
+      amount: 3400,
+    });
+    await controller.markReadPost(ownerA, readBilling.id);
+
+    // 5. CONTENT unread assigned specifically to member1A
+    await createContentReadyNotification(prisma, {
+      organizationId: orgA.id,
+      contentId: randomUUID(),
+      contentRevision: 1,
+      contentTitle: "Member 1 Piece",
+      actorId: member1A.userId,
+    });
+
+    // 6. CONTENT unread assigned specifically to member2A
+    await createContentReadyNotification(prisma, {
+      organizationId: orgA.id,
+      contentId: randomUUID(),
+      contentRevision: 1,
+      contentTitle: "Member 2 Piece",
+      actorId: member2A.userId,
+    });
+
+    // Org B notification (tenant isolation check)
+    await createPaymentFailedNotification(prisma, {
+      organizationId: orgB.id,
+      invoiceId: randomUUID(),
+      amount: 9900,
+    });
+
+    // Owner in Org A: sees all unread across workspace
+    // RENDER: 2, BILLING: 1, CONTENT: 2 -> totalUnread = 5
+    const ownerSummary = await controller.summary(ownerA);
+    assert.equal(ownerSummary.organizationId, orgA.id);
+    assert.equal(ownerSummary.totalUnread, 5);
+    assert.deepEqual(ownerSummary.byCategory, {
+      RENDER: 2,
+      BILLING: 1,
+      CONTENT: 2,
+    });
+
+    // Member 1 in Org A: sees workspace-wide (userId: null) + their own (userId: member1A.userId)
+    // RENDER: 2, BILLING: 1, CONTENT: 1 -> totalUnread = 4
+    const memberSummary = await controller.summary(member1A);
+    assert.equal(memberSummary.organizationId, orgA.id);
+    assert.equal(memberSummary.totalUnread, 4);
+    assert.deepEqual(memberSummary.byCategory, {
+      RENDER: 2,
+      BILLING: 1,
+      CONTENT: 1,
+    });
   });
 });

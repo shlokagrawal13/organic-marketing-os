@@ -42,6 +42,10 @@ import {
   verifyBillingSignature,
   verifyAndMapStripeBillingEvent,
 } from "../../../packages/core/billing";
+import {
+  createPaymentFailedNotification,
+  createSubscriptionEventNotification,
+} from "./notification-events";
 
 function stripeHostedUrl(value: string | null, hostname: string) {
   if (!value) throw new CreditError(502, "Stripe did not return a hosted URL.");
@@ -413,9 +417,48 @@ class BillingWebhookController {
       }
     }
     try {
-      const result = await this.db.$transaction((tx) =>
-        processBillingEvent(tx, event!.id),
-      );
+      const input = billingEventSchema.parse(event!.payload);
+      const result = await this.db.$transaction(async (tx) => {
+        const processed = await processBillingEvent(tx, event!.id);
+        if (processed.applied) {
+          if (input.type === "subscription.upserted") {
+            const subscription = await tx.billingSubscription.findUnique({
+              where: { organizationId: input.data.organizationId },
+              include: { plan: true },
+            });
+            if (subscription)
+              await createSubscriptionEventNotification(tx, {
+                organizationId: input.data.organizationId,
+                subscriptionId: subscription.id,
+                eventType: "UPDATED",
+                planName: subscription.plan.name,
+                cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+              });
+          } else if (input.type === "subscription.canceled") {
+            const subscription = await tx.billingSubscription.findUnique({
+              where: { externalSubscriptionId: input.data.externalSubscriptionId },
+              include: { plan: true },
+            });
+            if (subscription)
+              await createSubscriptionEventNotification(tx, {
+                organizationId: subscription.organizationId,
+                subscriptionId: subscription.id,
+                eventType: "CANCELED",
+                planName: subscription.plan.name,
+                cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+              });
+          } else if (input.type === "invoice.payment_failed") {
+            await createPaymentFailedNotification(tx, {
+              organizationId: input.data.organizationId,
+              invoiceId: input.data.externalInvoiceId,
+              amount: input.data.amountDue,
+              currency: input.data.currency,
+              error: input.data.error,
+            });
+          }
+        }
+        return processed;
+      });
       return {
         received: true,
         id: result.externalId,
