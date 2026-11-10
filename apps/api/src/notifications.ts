@@ -21,72 +21,9 @@ import {
   idSchema,
   parse,
 } from "./common";
+import { NOTIFICATION_ROLES } from "./notification-events";
 
-export const NOTIFICATION_ROLES: Role[] = [
-  "OWNER",
-  "ADMIN",
-  "EDITOR",
-  "CREATOR",
-  "ANALYST",
-];
-
-export async function createRenderNotification(
-  client: PrismaClient | Prisma.TransactionClient,
-  params: {
-    organizationId: string;
-    renderId: string;
-    actorId?: string | null;
-    status: "SUCCEEDED" | "FAILED" | "CANCELED";
-    contentTitle?: string | null;
-    error?: string | null;
-  },
-) {
-  const eventKey = `render:${params.renderId}:${params.status}`;
-  const isSuccess = params.status === "SUCCEEDED";
-  const isCanceled = params.status === "CANCELED";
-  const title = isSuccess
-    ? "Render complete"
-    : isCanceled
-      ? "Render canceled"
-      : "Render failed";
-  const contentSnippet = params.contentTitle
-    ? ` for "${params.contentTitle}"`
-    : "";
-  const body = isSuccess
-    ? `Video render${contentSnippet} is ready for review.`
-    : isCanceled
-      ? `Video render${contentSnippet} was canceled.`
-      : params.error
-        ? `Video render${contentSnippet} failed: ${params.error}`
-        : `Video render${contentSnippet} failed.`;
-
-  return client.notification.upsert({
-    where: {
-      organizationId_eventKey: {
-        organizationId: params.organizationId,
-        eventKey,
-      },
-    },
-    create: {
-      organizationId: params.organizationId,
-      userId: params.actorId ?? undefined,
-      type: `RENDER_${params.status}`,
-      category: "RENDER",
-      title,
-      body,
-      link: `/workspaces/${params.organizationId}/renders/${params.renderId}`,
-      entityType: "RENDER_JOB",
-      entityId: params.renderId,
-      eventKey,
-      data: {
-        renderId: params.renderId,
-        status: params.status,
-        ...(params.error ? { error: params.error } : {}),
-      },
-    },
-    update: {},
-  });
-}
+export * from "./notification-events";
 
 const listQuerySchema = z.object({
   skip: z.coerce.number().int().min(0).default(0),
@@ -170,7 +107,10 @@ export class NotificationsController {
   }
 
   @Post("read-all")
-  async readAll(@Req() req: AuthedRequest) {
+  async readAll(
+    @Req() req: AuthedRequest,
+    @Query("category") category?: string,
+  ) {
     const isElevated = ["OWNER", "ADMIN"].includes(req.role);
     const userScope: Prisma.NotificationWhereInput = isElevated
       ? {}
@@ -179,6 +119,7 @@ export class NotificationsController {
     const where: Prisma.NotificationWhereInput = {
       organizationId: req.organizationId,
       readAt: null,
+      ...(category ? { category } : {}),
       ...userScope,
     };
 

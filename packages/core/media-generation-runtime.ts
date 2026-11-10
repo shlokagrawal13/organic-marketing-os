@@ -124,6 +124,40 @@ async function finish(
         },
       },
     });
+    if (state === "FAILED") {
+      const eventKey = `ai:${job.id}:failed`;
+      await tx.notification.upsert({
+        where: {
+          organizationId_eventKey: {
+            organizationId: job.organizationId,
+            eventKey,
+          },
+        },
+        create: {
+          organizationId: job.organizationId,
+          userId: job.actorId,
+          type: "AI_GENERATION_FAILED",
+          category: "AI",
+          title: "AI generation failed",
+          body: error
+            ? `Media generation failed: ${error.slice(0, 200)}`
+            : "Media generation failed.",
+          link: `/workspaces/${job.organizationId}/media`,
+          entityType: "MEDIA_GENERATION",
+          entityId: job.id,
+          eventKey,
+          data: {
+            jobId: job.id,
+            status: "FAILED",
+            ...(typeof (job.request as any)?.preset === "string"
+              ? { preset: (job.request as any).preset }
+              : {}),
+            ...(error ? { error: error.slice(0, 500) } : {}),
+          },
+        },
+        update: {},
+      });
+    }
   });
 }
 export async function retainPrivateMediaOutputForReview(
