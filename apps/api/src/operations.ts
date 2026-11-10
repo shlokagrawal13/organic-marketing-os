@@ -11,6 +11,7 @@ import {
   UseGuards,
   Module,
   HttpException,
+  BadRequestException,
   NotFoundException,
   ForbiddenException,
   ConflictException,
@@ -45,6 +46,30 @@ const workspaceErasureSchema = z.object({
   confirmText: z.literal("ERASE_WORKSPACE_DATA"),
   reason: z.string().min(5).max(500),
 });
+
+type AuditReader = Db | Prisma.TransactionClient;
+
+function parseAuditDateRange(startDate?: string, endDate?: string) {
+  const parseDate = (value: string | undefined, label: string) => {
+    if (value === undefined) return undefined;
+    const parsed = z.string().datetime({ offset: true }).safeParse(value);
+    if (!parsed.success) {
+      throw new BadRequestException(`Invalid ${label}; expected an ISO-8601 date.`);
+    }
+    const date = new Date(value);
+    if (!Number.isFinite(date.getTime())) {
+      throw new BadRequestException(`Invalid ${label}; expected an ISO-8601 date.`);
+    }
+    return date;
+  };
+
+  const startAt = parseDate(startDate, "startDate");
+  const endAt = parseDate(endDate, "endDate");
+  if (startAt && endAt && startAt > endAt) {
+    throw new BadRequestException("startDate must be before or equal to endDate.");
+  }
+  return { startAt, endAt };
+}
 
 @Controller("workspaces/:organizationId/operations")
 @UseGuards(TenantGuard)
@@ -421,8 +446,8 @@ export class OperationsController {
   /**
    * Helper to retrieve active legal hold status for the workspace.
    */
-  private async getLegalHoldStatus(org: string) {
-    const latest = await this.db.auditLog.findFirst({
+  private async getLegalHoldStatus(db: AuditReader, org: string) {
+    const latest = await db.auditLog.findFirst({
       where: {
         organizationId: org,
         action: { in: ["data.legal_hold.enabled", "data.legal_hold.released"] },
@@ -470,7 +495,7 @@ export class OperationsController {
   ) {
     const org = req.organizationId;
 
-    const holdStatus = await this.getLegalHoldStatus(org);
+    const holdStatus = await this.getLegalHoldStatus(this.db, org);
     if (holdStatus.active) {
       throw new HttpException(
         {
@@ -491,6 +516,19 @@ export class OperationsController {
     }
 
     await this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const lockedHoldStatus = await this.getLegalHoldStatus(tx, org);
+      if (lockedHoldStatus.active) {
+        throw new HttpException(
+          {
+            statusCode: 423,
+            error: "Locked",
+            message: "Member data deletion is locked: workspace is under an active legal hold.",
+            legalHold: lockedHoldStatus.hold,
+          },
+          423,
+        );
+      }
       const membership = await tx.membership.findUnique({
         where: {
           userId_organizationId: { userId: targetUserId, organizationId: org },
@@ -561,7 +599,7 @@ export class OperationsController {
   ) {
     const org = req.organizationId;
 
-    const holdStatus = await this.getLegalHoldStatus(org);
+    const holdStatus = await this.getLegalHoldStatus(this.db, org);
     if (holdStatus.active) {
       throw new HttpException(
         {
@@ -579,6 +617,18 @@ export class OperationsController {
       // Serialize preview and execution against workspace lifecycle changes so
       // the reported candidates are the same rows the execution can remove.
       await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const lockedHoldStatus = await this.getLegalHoldStatus(tx, org);
+      if (lockedHoldStatus.active) {
+        throw new HttpException(
+          {
+            statusCode: 423,
+            error: "Locked",
+            message: "Retention pruning is locked: workspace is under an active legal hold.",
+            legalHold: lockedHoldStatus.hold,
+          },
+          423,
+        );
+      }
       const now = new Date();
 
       // 1. Expired Invitations (expiresAt < now)
@@ -700,7 +750,7 @@ export class OperationsController {
   @Get("legal-hold")
   async getLegalHold(@Req() req: AuthedRequest) {
     const org = req.organizationId;
-    const status = await this.getLegalHoldStatus(org);
+    const status = await this.getLegalHoldStatus(this.db, org);
     return {
       organizationId: org,
       active: status.active,
@@ -711,37 +761,40 @@ export class OperationsController {
   @Post("legal-hold")
   async enableLegalHold(@Req() req: AuthedRequest, @Body() body: unknown) {
     const org = req.organizationId;
-    const current = await this.getLegalHoldStatus(org);
-    if (current.active) {
-      throw new ConflictException("Workspace is already under active legal hold.");
-    }
     const input = parse(legalHoldEnableSchema, body ?? {});
     const now = new Date();
-    const audit = await this.db.auditLog.create({
-      data: {
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const current = await this.getLegalHoldStatus(tx, org);
+      if (current.active) {
+        throw new ConflictException("Workspace is already under active legal hold.");
+      }
+      const audit = await tx.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "data.legal_hold.enabled",
+          entityId: org,
+          detail: {
+            reason: input.reason,
+            caseReference: input.caseReference ?? null,
+            enabledAt: now.toISOString(),
+            enabledBy: req.userId,
+          },
+        },
+      });
+      return {
         organizationId: org,
-        actorId: req.userId,
-        action: "data.legal_hold.enabled",
-        entityId: org,
-        detail: {
+        active: true,
+        hold: {
+          id: audit.id,
           reason: input.reason,
           caseReference: input.caseReference ?? null,
-          enabledAt: now.toISOString(),
+          enabledAt: now,
           enabledBy: req.userId,
         },
-      },
+      };
     });
-    return {
-      organizationId: org,
-      active: true,
-      hold: {
-        id: audit.id,
-        reason: input.reason,
-        caseReference: input.caseReference ?? null,
-        enabledAt: now,
-        enabledBy: req.userId,
-      },
-    };
   }
 
   @Delete("legal-hold")
@@ -751,36 +804,39 @@ export class OperationsController {
     @Query("releaseReason") releaseReasonQuery?: string,
   ) {
     const org = req.organizationId;
-    const current = await this.getLegalHoldStatus(org);
-    if (!current.active) {
-      throw new ConflictException("Workspace does not have an active legal hold to release.");
-    }
     const rawInput =
       body && typeof body === "object" && Object.keys(body).length > 0
         ? body
         : { releaseReason: releaseReasonQuery };
     const input = parse(legalHoldReleaseSchema, rawInput);
     const now = new Date();
-    await this.db.auditLog.create({
-      data: {
-        organizationId: org,
-        actorId: req.userId,
-        action: "data.legal_hold.released",
-        entityId: org,
-        detail: {
-          releaseReason: input.releaseReason,
-          releasedAt: now.toISOString(),
-          releasedBy: req.userId,
-          priorHoldId: current.hold?.id,
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const current = await this.getLegalHoldStatus(tx, org);
+      if (!current.active) {
+        throw new ConflictException("Workspace does not have an active legal hold to release.");
+      }
+      await tx.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "data.legal_hold.released",
+          entityId: org,
+          detail: {
+            releaseReason: input.releaseReason,
+            releasedAt: now.toISOString(),
+            releasedBy: req.userId,
+            priorHoldId: current.hold?.id,
+          },
         },
-      },
+      });
+      return {
+        organizationId: org,
+        active: false,
+        releasedAt: now,
+        releasedBy: req.userId,
+      };
     });
-    return {
-      organizationId: org,
-      active: false,
-      releasedAt: now,
-      releasedBy: req.userId,
-    };
   }
 
   /**
@@ -806,6 +862,7 @@ export class OperationsController {
   ) {
     const org = req.organizationId;
     const limit = Math.min(100, Math.max(1, Number(take) || 50));
+    const { startAt, endAt } = parseAuditDateRange(startDate, endDate);
 
     const where: Prisma.AuditLogWhereInput = {
       organizationId: org,
@@ -814,8 +871,8 @@ export class OperationsController {
       ...(startDate || endDate
         ? {
             createdAt: {
-              ...(startDate ? { gte: new Date(startDate) } : {}),
-              ...(endDate ? { lte: new Date(endDate) } : {}),
+              ...(startAt ? { gte: startAt } : {}),
+              ...(endAt ? { lte: endAt } : {}),
             },
           }
         : {}),
@@ -866,15 +923,17 @@ export class OperationsController {
     @Query("endDate") endDate?: string,
   ) {
     const org = req.organizationId;
+    const { startAt, endAt } = parseAuditDateRange(startDate, endDate);
     const dir = await mkdtemp(join(tmpdir(), "audit-export-"));
     const path = join(dir, "audit-export.ndjson");
     let count = 0;
     const hash = createHash("sha256");
 
+    let clientClosed = false;
     const closed = () => {
-      res.destroy();
+      clientClosed = true;
     };
-    res.on("close", closed);
+    res.once("close", closed);
 
     try {
       const filters = {
@@ -885,6 +944,7 @@ export class OperationsController {
       };
 
       const writeLine = async (obj: unknown) => {
+        if (clientClosed) throw new Error("Audit export canceled by client.");
         const line = JSON.stringify(obj) + "\n";
         hash.update(line);
         await appendFile(path, line);
@@ -907,8 +967,8 @@ export class OperationsController {
         ...(startDate || endDate
           ? {
               createdAt: {
-                ...(startDate ? { gte: new Date(startDate) } : {}),
-                ...(endDate ? { lte: new Date(endDate) } : {}),
+                ...(startAt ? { gte: startAt } : {}),
+                ...(endAt ? { lte: endAt } : {}),
               },
             }
           : {}),
@@ -983,20 +1043,22 @@ export class OperationsController {
     @Query("dryRun") dryRunQuery?: string,
   ) {
     const org = req.organizationId;
-    const holdStatus = await this.getLegalHoldStatus(org);
-    if (holdStatus.active) {
-      throw new HttpException(
-        {
-          statusCode: 423,
-          error: "Locked",
-          message: "Asset reconciliation is locked: workspace is under an active legal hold.",
-          legalHold: holdStatus.hold,
-        },
-        423,
-      );
-    }
-
     const isDryRun = dryRunQuery === "true";
+    return this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const holdStatus = await this.getLegalHoldStatus(tx, org);
+      if (holdStatus.active) {
+        throw new HttpException(
+          {
+            statusCode: 423,
+            error: "Locked",
+            message: "Asset reconciliation is locked: workspace is under an active legal hold.",
+            legalHold: holdStatus.hold,
+          },
+          423,
+        );
+      }
+
     const candidateWhere: Prisma.AssetWhereInput = {
       organizationId: org,
       OR: [
@@ -1010,13 +1072,16 @@ export class OperationsController {
       ],
     };
 
-    const count = await this.db.asset.count({ where: candidateWhere });
-    const candidates = await this.db.asset.findMany({
-      where: candidateWhere,
-      select: { id: true, name: true, bytes: true, mimeType: true, archivedAt: true },
-      take: 100,
-    });
-    const totalBytes = candidates.reduce((sum, a) => sum + a.bytes, 0);
+    const [count, bytesAggregate, candidates] = await Promise.all([
+      tx.asset.count({ where: candidateWhere }),
+      tx.asset.aggregate({ where: candidateWhere, _sum: { bytes: true } }),
+      tx.asset.findMany({
+        where: candidateWhere,
+        select: { id: true, name: true, bytes: true, mimeType: true, archivedAt: true },
+        take: 100,
+      }),
+    ]);
+    const totalBytes = bytesAggregate._sum.bytes ?? 0;
 
     if (isDryRun) {
       return {
@@ -1029,11 +1094,11 @@ export class OperationsController {
       };
     }
 
-    const deleteResult = await this.db.asset.deleteMany({
+    const deleteResult = await tx.asset.deleteMany({
       where: candidateWhere,
     });
 
-    await this.db.auditLog.create({
+    await tx.auditLog.create({
       data: {
         organizationId: org,
         actorId: req.userId,
@@ -1054,6 +1119,7 @@ export class OperationsController {
       prunedCount: deleteResult.count,
       freedBytes: totalBytes,
     };
+    });
   }
 
   /**
@@ -1079,42 +1145,46 @@ export class OperationsController {
     }
 
     const org = req.organizationId;
-    const holdStatus = await this.getLegalHoldStatus(org);
-    if (holdStatus.active) {
-      throw new HttpException(
-        {
-          statusCode: 423,
-          error: "Locked",
-          message: "Workspace erasure is prohibited: workspace is under an active legal hold.",
-          legalHold: holdStatus.hold,
-        },
-        423,
-      );
-    }
-
     const input = parse(workspaceErasureSchema, body ?? {});
-
-    // Check for in-flight render or publication jobs
-    const activeRenders = await this.db.renderJob.count({
-      where: {
-        organizationId: org,
-        status: { in: ["QUEUED", "RUNNING"] },
-      },
-    });
-    const activePubs = await this.db.publicationAttempt.count({
-      where: {
-        organizationId: org,
-        status: { in: ["RESERVED", "SUBMITTING"] },
-      },
-    });
-    if (activeRenders > 0 || activePubs > 0) {
-      throw new ConflictException(
-        "Cannot erase workspace while render or publishing jobs are actively in-flight. Wait for them to complete or cancel them.",
-      );
-    }
 
     const now = new Date();
     await this.db.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const holdStatus = await this.getLegalHoldStatus(tx, org);
+      if (holdStatus.active) {
+        throw new HttpException(
+          {
+            statusCode: 423,
+            error: "Locked",
+            message: "Workspace erasure is prohibited: workspace is under an active legal hold.",
+            legalHold: holdStatus.hold,
+          },
+          423,
+        );
+      }
+
+      // Check for in-flight render or publication jobs while the workspace row
+      // is locked so a writer cannot start after the preflight and before purge.
+      const [activeRenders, activePubs] = await Promise.all([
+        tx.renderJob.count({
+          where: {
+            organizationId: org,
+            status: { in: ["QUEUED", "RUNNING"] },
+          },
+        }),
+        tx.publicationAttempt.count({
+          where: {
+            organizationId: org,
+            status: { in: ["RESERVED", "SUBMITTING"] },
+          },
+        }),
+      ]);
+      if (activeRenders > 0 || activePubs > 0) {
+        throw new ConflictException(
+          "Cannot erase workspace while render or publishing jobs are actively in-flight. Wait for them to complete or cancel them.",
+        );
+      }
+
       // 1. Purge content and reviews
       await tx.contentComment.deleteMany({ where: { content: { organizationId: org } } });
       await tx.contentClaimReview.deleteMany({ where: { content: { organizationId: org } } });

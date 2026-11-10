@@ -550,6 +550,24 @@ test("audit querying: OWNER can filter audit logs with pagination and role enfor
   const pageBody = pageRes.body as any;
   assert.equal(pageBody.items.length, 2);
   assert.ok(pageBody.nextCursor !== null);
+
+  // Invalid and reversed date ranges fail closed with a client error instead
+  // of reaching Prisma with an Invalid Date value.
+  const invalidStart = await owner.call(
+    `/workspaces/${org.id}/operations/audit?startDate=not-a-date`,
+    "GET",
+  );
+  assert.equal(invalidStart.status, 400);
+  const invalidEnd = await owner.call(
+    `/workspaces/${org.id}/operations/audit?endDate=not-a-date`,
+    "GET",
+  );
+  assert.equal(invalidEnd.status, 400);
+  const reversed = await owner.call(
+    `/workspaces/${org.id}/operations/audit?startDate=2026-02-01T00:00:00.000Z&endDate=2026-01-01T00:00:00.000Z`,
+    "GET",
+  );
+  assert.equal(reversed.status, 400);
 });
 
 test("audit export: OWNER can download compliance audit NDJSON with tamper-evident checksum", async () => {
@@ -571,6 +589,13 @@ test("audit export: OWNER can download compliance audit NDJSON with tamper-evide
   // 1. Non-privileged role is rejected with 403
   const forbiddenRes = await fetchAuditExport(org.id, editor.headers);
   assert.equal(forbiddenRes.status, 403);
+
+  const invalidDateRes = await fetchAuditExport(
+    org.id,
+    owner.headers,
+    "?startDate=not-a-date",
+  );
+  assert.equal(invalidDateRes.status, 400);
 
   // 2. OWNER downloads audit export
   const { status, rawBody } = await fetchAuditExport(org.id, owner.headers);
@@ -795,6 +820,19 @@ test("DATA-01F: asset reconciliation and workspace safe erasure contracts", asyn
       createdBy: owner.id,
     },
   });
+  const bulkAssetBytes = 101 * 100;
+  await db.asset.createMany({
+    data: Array.from({ length: 101 }, (_, index) => ({
+      organizationId: org.id,
+      name: `orphan-bulk-${index}.png`,
+      kind: "IMAGE" as const,
+      mimeType: "image/png",
+      bytes: 100,
+      sha256: `sha256-bulk-orphan-${index}-${randomUUID()}`,
+      objectKey: `assets/${org.id}/orphan-bulk-${index}.png`,
+      createdBy: owner.id,
+    })),
+  });
 
   // 1. Dry run asset reconciliation
   const dryRunRes = await owner.call(
@@ -803,7 +841,8 @@ test("DATA-01F: asset reconciliation and workspace safe erasure contracts", asyn
   );
   assert.equal(dryRunRes.status, 201);
   assert.equal((dryRunRes.body as any).dryRun, true);
-  assert.ok((dryRunRes.body as any).totalCandidates >= 1);
+  assert.equal((dryRunRes.body as any).totalCandidates, 102);
+  assert.equal((dryRunRes.body as any).estimatedBytes, 12345 + bulkAssetBytes);
 
   // Asset should still exist after dry-run
   const assetStillExists = await db.asset.findUnique({ where: { id: orphanAsset.id } });
@@ -816,7 +855,8 @@ test("DATA-01F: asset reconciliation and workspace safe erasure contracts", asyn
   );
   assert.equal(realReconcileRes.status, 201);
   assert.equal((realReconcileRes.body as any).reconciled, true);
-  assert.ok((realReconcileRes.body as any).prunedCount >= 1);
+  assert.equal((realReconcileRes.body as any).prunedCount, 102);
+  assert.equal((realReconcileRes.body as any).freedBytes, 12345 + bulkAssetBytes);
 
   // 3. Workspace erasure authorization: non-owner role rejected with HTTP 403
   const memberErasure = await member.call(
