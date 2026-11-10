@@ -1,0 +1,98 @@
+{
+    "schemaVersion":  1,
+    "taskId":  "INTEGRATION-01A",
+    "repository":  "shlokagrawal13/organic-marketing-os",
+    "commit":  "607b8fbedbced2beb72278aefed9a6b93eadd23c",
+    "tree":  "5aa60f460a7711b86e8954ae11fdadd621a80086",
+    "runId":  42784451013,
+    "runUrl":  "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42784451013",
+    "status":  "success",
+    "allThreeJobsPassed":  true,
+    "allRequiredStepsPassed":  true,
+    "requiredStepCount":  41,
+    "jobs":  [
+                 {
+                     "conclusion":  "success",
+                     "name":  "Disposable Compose and native restore",
+                     "id":  129722080160,
+                     "steps":  8
+                 },
+                 {
+                     "conclusion":  "success",
+                     "name":  "Native application verification",
+                     "id":  129722080370,
+                     "steps":  22
+                 },
+                 {
+                     "conclusion":  "success",
+                     "name":  "Native populated upgrade and migration recovery",
+                     "id":  129722080421,
+                     "steps":  11
+                 }
+             ],
+    "artifacts":  [
+                      {
+                          "id":  13747961591,
+                          "embeddedPassed":  true,
+                          "entry":  "native-upgrade-evidence.json",
+                          "crc32":  "130e16eb",
+                          "name":  "native-upgrade-evidence",
+                          "entryBytes":  2652,
+                          "bytes":  934,
+                          "sha256":  "5b5548b254608bfca6d810f9706da6c11ee6653671470396715ec098fe1ab27b"
+                      },
+                      {
+                          "id":  13747966532,
+                          "entryBytes":  7595,
+                          "appliedMigrations":  26,
+                          "embeddedPassed":  true,
+                          "name":  "postgres-pitr-evidence",
+                          "bytes":  3017,
+                          "crc32":  "9e718abb",
+                          "sha256":  "68f816998aba31f39318d0e859cad710eb9598ff21097c2f0ed9f75bd6fe8048",
+                          "entry":  "postgres-pitr-evidence.json"
+                      },
+                      {
+                          "id":  13749472215,
+                          "entryBytes":  137484,
+                          "embeddedPassed":  true,
+                          "name":  "compose-evidence",
+                          "verifiedPhases":  24,
+                          "bytes":  16953,
+                          "crc32":  "2e78f88b",
+                          "sha256":  "e2eaa66f3182db6205fbb9e9d229527c0642fa765f6eada371d663e18f2db2bb",
+                          "entry":  "compose-evidence.json"
+                      },
+                      {
+                          "id":  13748289862,
+                          "name":  "browser-evidence",
+                          "bytes":  15214810,
+                          "sha256":  null,
+                          "note":  "Artifact listed by GitHub API; this session did not expose the GitHub artifact-download connector, so bytes/digest/content are not claimed verified.",
+                          "embeddedReportInspected":  false
+                      }
+                  ],
+    "sourceZip":  {
+                      "portable":  true,
+                      "path":  "C:/Users/shlok/Desktop/organic-marketing-os-integration01a-source.zip",
+                      "sha256":  "7a4224713dae786dbbe4a54c851187cff4f78020048a05321afe2d121f1b899f",
+                      "bytes":  16410546
+                  },
+    "localEvidence":  {
+                          "focusedNotificationTests":  21,
+                          "selectedHttpTests":  null,
+                          "apiBuild":  true,
+                          "localHttpGap":  "Windows FFmpeg/fontconfig failure and occupied existing Redis port; verifier safely refuses occupied service.",
+                          "webBuild":  true,
+                          "productionAuditVulnerabilities":  0,
+                          "pgliteMigrations":  26,
+                          "fullAuditVulnerabilities":  0,
+                          "focusedDataGovernanceTests":  9
+                      },
+    "limitations":  [
+                        "CI fixture verification does not deploy.",
+                        "No live provider, production, deployed restore or full-master acceptance claimed.",
+                        "Browser artifact bytes and embedded report were not inspected.",
+                        "Core test counts are not asserted here because core log/artifact byte inspection was unavailable in this session."
+                    ]
+}

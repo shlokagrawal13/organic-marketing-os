@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "INTEGRATION-01A",
-  "recordedAtUtc": "2026-11-10T08:37:24.468Z",
-  "status": "local_focused_verified_exact_integrated_ci_pending",
+  "recordedAtUtc": "2026-11-10T09:04:00Z",
+  "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
   "predecessor": {
     "taskId": "UX-01L",
     "commit": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
@@ -49,11 +49,30 @@
     "realEnvPresent": false
   },
   "publication": {
-    "required": "New exact final integrated main commit must pass all three jobs and every required step, including native HTTP, browser, recovery, 26 migrations and all 24 Compose phases; inspect artifacts and pair an external final receipt with a fresh source ZIP.",
-    "ciDoesNotDeploy": true
+    "commit": "607b8fbedbced2beb72278aefed9a6b93eadd23c",
+    "tree": "5aa60f460a7711b86e8954ae11fdadd621a80086",
+    "runId": 42784451013,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42784451013",
+    "conclusion": "success",
+    "allThreeJobsPassed": true,
+    "allRequiredStepsPassed": true,
+    "requiredStepCount": 41,
+    "successfulSteps": 41,
+    "failedSteps": 0,
+    "nativeUpgradeArtifactVerified": true,
+    "composeArtifactVerified": true,
+    "browserArtifactListedButBytesUnavailable": true,
+    "externalReceipt": "docs/qa/integration01a-final-ci-receipt.json",
+    "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-integration01a-source.zip",
+    "required": "Exact published commit 607b8fb passed all three jobs and all 41 required steps. Native-upgrade/PITR/Compose artifacts were downloaded and verified. Browser artifact was listed but bytes/content were unavailable in this session; see external receipt."
   },
   "limits": [
-    "Later NOTIFY and DATA branches remain separate and unaccepted on integrated main",
-    "No live provider, deployed restore, production durability or full-master acceptance claimed"
-  ]
+    "Later NOTIFY-01B–E and DATA-01B–F branches remain separate and require review/integration.",
+    "No live provider, deployed restore, production durability or full-master acceptance claimed.",
+    "Browser evidence artifact bytes and embedded report were not inspected despite successful upload step."
+  ],
+  "portableClosureSourceZip": {
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-integration01a-final-source.zip",
+    "note": "Regenerated after importing external final CI receipt; package manifest check passed."
+  }
 }

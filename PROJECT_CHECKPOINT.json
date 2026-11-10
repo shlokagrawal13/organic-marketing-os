@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "ux01l-20261104+integration-20261110",
-  "savedAtUtc": "2026-11-10T08:37:24.468Z",
-  "currentMilestone": "NOTIFY-01A and DATA-01A integration on verified UX-01L main",
+  "checkpointRevision": "integration01a-20261110-verified",
+  "savedAtUtc": "2026-11-10T09:39:01.410Z",
+  "currentMilestone": "NOTIFY-01A and DATA-01A integration verified on exact main commit 607b8fb/run42784451013",
   "activeTaskId": "NOTIFY-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Verify combined NOTIFY-01A/DATA-01A main integration on one exact published commit: all three jobs and every required step, including owner-revocation HTTP regression and 26-migration/24-phase recovery. Review later Antigravity branches separately.",
+  "nextAction": "Review NOTIFY-01B and DATA-01B independently against integrated main. Preserve Antigravity branch histories; run focused checks and all three required CI jobs on any new integrated final commit. Browser artifact for 607b8fb was uploaded but its bytes remain uninspected.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -106,6 +106,7 @@
     "docs/TASK_BOARD.md",
     "docs/qa/data01a-evidence.json",
     "docs/qa/integration01a-evidence.json",
+    "docs/qa/integration01a-final-ci-receipt.json",
     "docs/qa/notify01a-evidence.json",
     "docs/qa/ux01l-final-ci-receipt.json",
     "prisma/migrations/202611030001_in_app_notifications/migration.sql",
@@ -7927,20 +7928,24 @@
     {
       "id": "NOTIFY-01",
       "state": "partial",
-      "title": "Notifications, realtime status and telemetry"
+      "title": "Notifications, realtime status and telemetry",
+      "completedIncrement": "NOTIFY-01A integrated on main 607b8fb; all three exact-source CI jobs/41 steps passed. Later notification UX/realtime/alerts remain.",
+      "nextAction": "Review and integrate NOTIFY-01B independently; preserve branch history."
     },
     {
       "id": "DATA-01",
       "state": "partial",
-      "title": "Retention, deletion, complete account/media export"
+      "title": "Retention, deletion, complete account/media export",
+      "completedIncrement": "DATA-01A integrated on main 607b8fb; all three exact-source CI jobs/41 steps passed.",
+      "nextAction": "Review DATA-01B independently; complete retention, erasure and media lifecycle scope."
     },
     {
       "id": "UX-01",
       "state": "partial",
       "title": "Remaining collaboration and product UX",
       "status": "partial",
-      "completedIncrement": "UX-01L exact commit dafdb93/run41921508171 passed all three jobs and every required step; four artifact bytes and embedded reports verified.",
-      "nextAction": "Continue wider search, accessibility and collaboration UX after backend integration gates.",
+      "completedIncrement": "UX-01L exact commit dafdb93/run41921508171 passed all three CI jobs; receipt imported.",
+      "nextAction": "Continue remaining search, accessibility and collaboration UX after backend branch review.",
       "currentEvidence": "docs/qa/ux01l-final-ci-receipt.json"
     },
     {
@@ -8038,12 +8043,16 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/integration01a-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/integration01a-final-ci-receipt.json",
   "latestStatus": {
     "taskId": "INTEGRATION-01A",
-    "status": "local_focused_verified_exact_integrated_ci_pending",
-    "nextAction": "Publish combined NOTIFY-01A/DATA-01A integration and verify all three jobs and every required step on its exact commit.",
-    "evidence": "docs/qa/integration01a-evidence.json"
+    "status": "published_exact_commit_all_three_jobs_verified",
+    "commit": "607b8fbedbced2beb72278aefed9a6b93eadd23c",
+    "runId": 42784451013,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42784451013",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "artifactGap": "Browser artifact listed and upload step passed, but its bytes/report were not available for inspection."
   },
   "activeTask": {
     "id": "UX-01K",
@@ -23823,11 +23832,15 @@
     "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/1",
     "branchEvidence": "docs/qa/notify01a-evidence.json",
     "branchCiPassed": true,
-    "integratedMainCiPending": true,
+    "integratedMainCiPending": false,
     "migration": "202611030001_in_app_notifications",
     "migrationCount": 26,
     "tableCount": 38,
-    "limits": "In-app delivery only; no external delivery or realtime/SLO claim"
+    "limits": "In-app delivery only; no external delivery or realtime/SLO claim",
+    "integratedMainCommit": "607b8fbedbced2beb72278aefed9a6b93eadd23c",
+    "integratedMainRunId": 42784451013,
+    "integratedMainCiPassed": true,
+    "integratedMainReceipt": "docs/qa/integration01a-final-ci-receipt.json"
   },
   "data01a": {
     "taskId": "DATA-01A",
@@ -23836,8 +23849,12 @@
     "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/2",
     "branchEvidence": "docs/qa/data01a-evidence.json",
     "branchCiPassed": true,
-    "integratedMainCiPending": true,
+    "integratedMainCiPending": false,
     "reviewFinding": "Member revocation in branch bypasses existing OWNER-removal prohibition; integrated guard and regression required",
-    "limits": "NDJSON metadata export excludes binary media; full legal erasure remains separate"
+    "limits": "NDJSON metadata export excludes binary media; full legal erasure remains separate",
+    "integratedMainCommit": "607b8fbedbced2beb72278aefed9a6b93eadd23c",
+    "integratedMainRunId": 42784451013,
+    "integratedMainCiPassed": true,
+    "integratedMainReceipt": "docs/qa/integration01a-final-ci-receipt.json"
   }
 }
