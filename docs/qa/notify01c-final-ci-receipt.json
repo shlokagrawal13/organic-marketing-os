@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01C-DATA-01C",
+  "recordedAtUtc": "2026-11-10T19:01:21.716Z",
+  "sourceCommit": "e4f74b45fe936296f171a86cde9469be5da39d91",
+  "sourceTree": "010a8059c2d6fe327528887a5e9a8fc222506317",
+  "workflow": "Core and recovery verification",
+  "runId": 42875217657,
+  "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657",
+  "status": "completed",
+  "conclusion": "success",
+  "allThreeJobsAndEveryRequiredStepPassed": true,
+  "jobs": [
+    {
+      "id": 130036590500,
+      "name": "Native application verification",
+      "conclusion": "success",
+      "requiredStepsPassed": true
+    },
+    {
+      "id": 130036591034,
+      "name": "Disposable Compose and native restore",
+      "conclusion": "success",
+      "requiredStepsPassed": true
+    },
+    {
+      "id": 130036591215,
+      "name": "Native populated upgrade and migration recovery",
+      "conclusion": "success",
+      "requiredStepsPassed": true
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "browser-evidence",
+      "id": 13792403530,
+      "sizeBytes": 15222833,
+      "digest": "sha256:909ebd8aad02fb19bc444f6165a698458555639c210e24f35ee6027494a17cf0",
+      "bytesInspected": false
+    },
+    {
+      "name": "compose-evidence",
+      "id": 13792861747,
+      "sizeBytes": 16958,
+      "digest": "sha256:dd6f0ab261cf34336df818cae9e89809f67054938802886cd6e894c9867b6547",
+      "bytesInspected": false
+    },
+    {
+      "name": "native-upgrade-evidence",
+      "id": 13791561994,
+      "sizeBytes": 933,
+      "digest": "sha256:cfc0c9bc6f370653aca67da6c036422bed6e80f67813b325147828efea29dece",
+      "bytesInspected": false
+    },
+    {
+      "name": "postgres-pitr-evidence",
+      "id": 13791951362,
+      "sizeBytes": 3017,
+      "digest": "sha256:a9ca0dc213e690bbb2b234988d84fb05d4178aac88103ab37a582ad316f6333e",
+      "bytesInspected": false
+    }
+  ],
+  "artifactByteInspectionGap": "Artifact names, sizes and digests were verified. ZIP bytes/reports were not downloaded because the normal artifact route returned proxy 403/401; no bypass was used.",
+  "focusedLocal": {
+    "notificationSuitePassed": 25,
+    "dataGovernanceSuitePassed": 13,
+    "combinedNotificationDataTestsPassed": 38,
+    "thresholdBoundaryRegressionPassed": true,
+    "apiBuild": true,
+    "webBuild": true,
+    "combinedBuild": true
+  },
+  "sourceZip": {
+    "filename": "organic-marketing-os-v0.9.2-notify01c-20261111.zip",
+    "sha256": null,
+    "bytes": null,
+    "note": "Final external receipt records the digest and byte count after the ZIP is generated; keeping these fields null avoids a self-referential archive hash.",
+    "scope": "Portable source checkpoint; runtime data, credentials and Redis RDB backups excluded."
+  },
+  "limits": [
+    "Artifact ZIP bytes/reports were not downloaded because the normal route returned proxy403/401; names, sizes and digests were verified.",
+    "Windows full-suite/render prerequisites and occupied Redis remain environment limits; no user service or real credential was touched.",
+    "CI verifies fixtures and does not deploy; live/deployed/provider/remote durability/full-master acceptance remains open."
+  ]
+}

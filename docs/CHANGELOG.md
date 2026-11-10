@@ -1,3 +1,7 @@
+## NOTIFY-01C / DATA-01C exact-source CI closure - 2026-11-11
+
+NOTIFY-01C and DATA-01C are closed on exact main commit `e4f74b45fe936296f171a86cde9469be5da39d91` / [run 42875217657](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657). All three jobs and every required step passed. The final code follow-up fixes the exact CREDITS_LOW boundary from 20 to 17, preserves atomic ledger semantics, and adds a regression test. The notification center, policy-review alert, locked retention pruning and private-output guard remain intact. Artifact names/sizes/digests are recorded in [the receipt](qa/notify01c-final-ci-receipt.json), while artifact ZIP bytes/reports remain uninspected because the normal download route was proxy403/401-blocked. Next: review separate Antigravity notify-01D/data-01D branches against integrated main; live/deployed/provider/remote-durability/full-master acceptance remains open.
+
 ## NOTIFY-01A / DATA-01A integrated-main review - 2026-11-10
 
 - Merged durable in-app terminal-render notifications and their 26th migration with expanded secret-stripped workspace NDJSON export and member revocation.

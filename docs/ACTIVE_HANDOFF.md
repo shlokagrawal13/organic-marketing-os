@@ -1,13 +1,13 @@
-# Active handoff - NOTIFY-01C / DATA-01C local integration
+# Active handoff - NOTIFY-01D / DATA-01D review
 
-## Current: NOTIFY-01C / DATA-01C - 2026-11-10
+<!-- NOTIFY01C_DATA01C_CURRENT_START -->
+## Current: NOTIFY-01C / DATA-01C exact-source closure - 2026-11-11
 
-The reviewed NOTIFY-01C and DATA-01C increments are integrated locally on `main` after the verified NOTIFY-01B / DATA-01B publication. NOTIFY-01C now has a workspace notification center in the web top bar, unread/read and read-all actions, guarded polling, and an owned browser regression. Low-credit alerts are emitted atomically when the immutable credit ledger crosses the configured `CREDITS_LOW_THRESHOLD` (default 20), and approval-required alerts are emitted from the YouTube policy-review mutation. DATA-01C retention preview and execution run under a workspace row lock and retain any failed/canceled render row that still references private output, thumbnail, or captions bytes.
+NOTIFY-01C and DATA-01C are closed on exact source commit `e4f74b45fe936296f171a86cde9469be5da39d91`. GitHub Actions [run 42875217657](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657) completed successfully with all three jobs and every required step: native application verification, disposable Compose/native restore, and native populated upgrade/migration recovery. Four evidence artifacts were uploaded; names, sizes and SHA-256 digests were recorded in the final receipt.
 
-The implementation changes are locally build-verified: Prisma generation, API build, web build and combined build pass; 37 focused notification/data-governance unit tests pass. The focused retention HTTP regression now covers scratch-row deletion and private-output preservation. The full local suite remains environment-limited on this Windows machine by missing FFmpeg/librsvg/font prerequisites, and the isolated HTTP/browser harness refuses to start while an existing Redis listener occupies port 6379; no populated user service or real environment was touched. The new notification browser spec therefore awaits Linux CI execution.
+The implementation includes the guarded tenant notification center, unread/read/read-all actions, atomic low-credit and policy-review alerts, locked retention pruning, and private-output preservation. A final boundary regression fixed the exact-threshold case (20 credits to 17 now emits one deduplicated alert) without changing ledger immutability or transaction boundaries. Focused notification/data tests and API build passed locally; Windows full-suite/render prerequisites and occupied Redis limitations remain recorded rather than treated as acceptance.
 
-Next action: run `python scripts/package_handoff.py --check`, commit and push this exact source, inspect and fix all three jobs and every required step on the new published commit, then package the verified source ZIP and final CI receipt outside the repository. Preserve Antigravity's separate NOTIFY/DATA later branches; do not claim live providers, deployed behavior, external notification delivery, remote durability, or full-master acceptance. See [NOTIFY-01C evidence](qa/notify01c-evidence.json) and [DATA-01C evidence](qa/data01c-evidence.json).
-
+The source receipt is [docs/qa/notify01c-final-ci-receipt.json](qa/notify01c-final-ci-receipt.json). The portable source package is `organic-marketing-os-v0.9.2-notify01c-20261111.zip` outside the repository. Review the separate Antigravity `notify-01d`/`data-01d` branches against this integrated main before selecting the next bounded slice. Live/deployed/provider, remote durability and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- NOTIFY01C_DATA01C_CURRENT_END -->
 
 # Historical handoff - NOTIFY-01B / DATA-01B integration

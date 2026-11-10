@@ -25,7 +25,7 @@ SKIP_DIRS = {
     ".cache", ".npm-cache", ".pytest_cache",
 }
 RUNTIME_ROOTS = {"uploads", "backups", "data", "storage", "media_data", ".data"}
-PRIVATE_SUFFIXES = {".zip", ".log", ".tsbuildinfo", ".pyc", ".pem", ".key",
+PRIVATE_SUFFIXES = {".zip", ".log", ".rdb", ".tsbuildinfo", ".pyc", ".pem", ".key",
                     ".p12", ".pfx", ".sqlite", ".sqlite3", ".db", ".dump", ".bak"}
 REQUIRED = {
     "START_HERE.md", "AGENTS.md", "RESUME_PROMPT.txt", "PROJECT_CHECKPOINT.json",

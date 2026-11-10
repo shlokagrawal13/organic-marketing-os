@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
   "taskId": "DATA-01C",
-  "recordedAtUtc": "2026-11-10T00:00:00Z",
-  "status": "locally_integrated_ci_pending",
+  "recordedAtUtc": "2026-11-10T19:01:21.716Z",
+  "status": "exact_source_ci_verified",
   "base": {
-    "integratedMain": "f8d4f6e",
+    "integratedMain": "e4f74b45fe936296f171a86cde9469be5da39d91",
     "reviewedBranch": "data-01c",
     "reviewedBranchHead": "8dee378bc1c080704a5f3a03e742e52858ab08d8",
     "branchHistoryPreserved": true
@@ -21,12 +21,79 @@
     "apiBuild": true,
     "webBuild": true,
     "combinedBuild": true,
-    "focusedNotificationAndDataGovernanceTests": { "passed": 37, "failed": 0 },
-    "retentionHttpRegression": { "added": true, "executedLocally": false, "reason": "isolated harness refuses occupied Redis on 127.0.0.1:6379" },
+    "focusedNotificationAndDataGovernanceTests": {
+      "passed": 37,
+      "failed": 0
+    },
+    "retentionHttpRegression": {
+      "added": true,
+      "executedLocally": false,
+      "reason": "isolated harness refuses occupied Redis on 127.0.0.1:6379"
+    },
     "fixtureCleanup": "no owned HTTP fixture started; no user service was contacted",
     "realEnvironmentUnchanged": true,
     "liveProvidersUsed": false,
-    "exactCi": { "pending": true, "required": "all three jobs and every required step on the exact published commit" }
+    "exactCi": {
+      "pending": false,
+      "required": "all three jobs and every required step on the exact published commit",
+      "runId": 42875217657,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657",
+      "sourceCommit": "e4f74b45fe936296f171a86cde9469be5da39d91",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndEveryRequiredStepPassed": true,
+      "jobs": [
+        {
+          "id": 130036590500,
+          "name": "Native application verification",
+          "conclusion": "success",
+          "requiredStepsPassed": true
+        },
+        {
+          "id": 130036591034,
+          "name": "Disposable Compose and native restore",
+          "conclusion": "success",
+          "requiredStepsPassed": true
+        },
+        {
+          "id": 130036591215,
+          "name": "Native populated upgrade and migration recovery",
+          "conclusion": "success",
+          "requiredStepsPassed": true
+        }
+      ],
+      "artifacts": [
+        {
+          "name": "browser-evidence",
+          "id": 13792403530,
+          "sizeBytes": 15222833,
+          "digest": "sha256:909ebd8aad02fb19bc444f6165a698458555639c210e24f35ee6027494a17cf0",
+          "bytesInspected": false
+        },
+        {
+          "name": "compose-evidence",
+          "id": 13792861747,
+          "sizeBytes": 16958,
+          "digest": "sha256:dd6f0ab261cf34336df818cae9e89809f67054938802886cd6e894c9867b6547",
+          "bytesInspected": false
+        },
+        {
+          "name": "native-upgrade-evidence",
+          "id": 13791561994,
+          "sizeBytes": 933,
+          "digest": "sha256:cfc0c9bc6f370653aca67da6c036422bed6e80f67813b325147828efea29dece",
+          "bytesInspected": false
+        },
+        {
+          "name": "postgres-pitr-evidence",
+          "id": 13791951362,
+          "sizeBytes": 3017,
+          "digest": "sha256:a9ca0dc213e690bbb2b234988d84fb05d4178aac88103ab37a582ad316f6333e",
+          "bytesInspected": false
+        }
+      ],
+      "artifactByteInspectionGap": "Artifact names, sizes and digests were verified. ZIP bytes/reports were not downloaded because the normal artifact route returned proxy 403/401; no bypass was used."
+    }
   },
   "changedPaths": [
     "apps/api/src/operations.ts",
@@ -43,11 +110,11 @@
   },
   "publication": {
     "branch": "main",
-    "commit": "pending",
-    "runId": null,
-    "receipt": null,
-    "sourceZip": null,
-    "status": "local_changes_pending_publication"
+    "commit": "e4f74b45fe936296f171a86cde9469be5da39d91",
+    "runId": 42875217657,
+    "receipt": "docs/qa/notify01c-final-ci-receipt.json",
+    "sourceZip": "organic-marketing-os-v0.9.2-notify01c-20261111.zip",
+    "status": "exact_source_ci_verified"
   },
   "limits": [
     "The prune endpoint does not implement legal erasure or remote object-store deletion; reconciliation remains separate.",

@@ -1,5 +1,5 @@
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->
-NOTIFY-01C and DATA-01C are locally integrated: the notification center, atomic credit/policy-review triggers, locked tenant retention pruning and private-output safeguards are covered by focused builds/tests. Exact-source three-job CI and the source package remain pending; Windows environment limits and open live/deployed/full-master requirements are recorded in [the active handoff](ACTIVE_HANDOFF.md) and [evidence](qa/notify01c-evidence.json).
+NOTIFY-01C and DATA-01C are exact-source CI verified on main commit `e4f74b45fe936296f171a86cde9469be5da39d91` / [run 42875217657](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657); all three jobs and every required step passed. The exact-threshold credit alert boundary and private-output retention guard are covered by tests. The next bounded work is review of separate `notify-01d`/`data-01d` branches. Broader external delivery/realtime/SLO, legal erasure/object reconciliation, live/deployed and full-master requirements remain open. See [active handoff](ACTIVE_HANDOFF.md) and the [final receipt](qa/notify01c-final-ci-receipt.json).
 <!-- NOTIFY01C_DATA01C_CURRENT_END -->
 
 <!-- INTEGRATION01A_CURRENT_START -->

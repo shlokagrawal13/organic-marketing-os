@@ -1,8 +1,9 @@
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->
-## Current: NOTIFY-01C / DATA-01C local integration - 2026-11-10
+## Current: NOTIFY-01C / DATA-01C exact-source closure - 2026-11-11
 
-Continue from the current `main` worktree. NOTIFY-01C adds a guarded notification center UI plus atomic low-credit and policy-review approval triggers. DATA-01C keeps retention preview/pruning under a workspace lock and refuses to delete render rows that still bind private output, thumbnail or captions objects. Prisma generation, API/web/combined builds and 37 focused notification/data-governance tests pass. Exact-source three-job CI is still required; the Windows local suite is limited by missing FFmpeg/librsvg/font prerequisites and an occupied Redis port, while the isolated harness refuses unsafe reuse. Package only after the exact published commit is green, and keep live/deployed/provider/full-master acceptance open.
-Read [active handoff](docs/ACTIVE_HANDOFF.md), [NOTIFY-01C evidence](docs/qa/notify01c-evidence.json), [DATA-01C evidence](docs/qa/data01c-evidence.json) and [checkpoint](PROJECT_CHECKPOINT.json) before changing scope.
+NOTIFY-01C and DATA-01C are closed on exact source commit `e4f74b45fe936296f171a86cde9469be5da39d91`; [run 42875217657](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657) passed all three jobs and every required step. The notification center, atomic low-credit and policy-review alerts, locked retention pruning and private-output safeguards are verified. The exact-threshold regression (20 → 17) is covered by the focused notification suite. Artifact names, sizes and digests are recorded in [the final receipt](docs/qa/notify01c-final-ci-receipt.json); artifact ZIP bytes/report remain uninspected because the normal download route was proxy403/401-blocked.
+
+The next bounded work is review of the separate Antigravity `notify-01d` and `data-01d` branches against this integrated main. Preserve all later branch history and user changes. Live/deployed/provider, remote durability and full-master acceptance remain open; CI does not deploy.
 <!-- NOTIFY01C_DATA01C_CURRENT_END -->
 
 <!-- INTEGRATION01A_CURRENT_START -->

@@ -1,3 +1,9 @@
+## NOTIFY-01C / DATA-01C exact CI closure - 2026-11-11
+
+- Fixed the exact credit-threshold boundary (20 → 17) so the atomic low-credit notification is emitted and deduplicated as specified; added a regression test and aligned billing/notification wording.
+- Exact main commit `e4f74b45fe936296f171a86cde9469be5da39d91` passed [Actions run 42875217657](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657) with all three jobs and every required step. Artifact names, sizes and digests are recorded; ZIP bytes/reports remain uninspected due proxy403/401 downloads.
+- C evidence/receipt and checkpoint are reconciled. The next bounded work is review of separate Antigravity `notify-01d`/`data-01d` branches.
+
 ## NOTIFY-01A / DATA-01A integrated-main review - 2026-11-10
 
 Imported UX-01L final exact-source receipt: commit `dafdb93`, run `41921508171`, all three jobs/required steps and four artifact bytes/digests/CRCs/reports verified. Fetched remote branch heads and preserved NOTIFY-01A (`73ff67b`) and DATA-01A (`f22119d`) ancestry through merge commits. Later Antigravity branches/worktrees remain separate.
