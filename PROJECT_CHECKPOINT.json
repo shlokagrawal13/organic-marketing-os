@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01c-data01c-20261111-exact-ci-verified",
-  "savedAtUtc": "2026-11-10T19:01:21.716Z",
-  "currentMilestone": "NOTIFY-01C notification center/atomic triggers and DATA-01C locked retention pruning are exact-source CI verified on e4f74b4; continuity package records are reconciled",
-  "activeTaskId": "NOTIFY-01",
+  "checkpointRevision": "data01f-integration-20261111-exact-ci-pending",
+  "savedAtUtc": "2026-11-11T00:00:00.000Z",
+  "currentMilestone": "DATA-01D through DATA-01F are reviewed against main in integration/data-01f at 2d9c8a1; exact publication/three-job CI is pending",
+  "activeTaskId": "DATA-01",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -74,8 +74,8 @@
     "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
-  "nextTaskId": "NOTIFY-01",
-  "nextAction": "Review the separate notify-01d and data-01d branch heads against this integrated main, preserve their history, select the next bounded increment, and require its own exact three-job CI. Keep live/deployed/provider/remote-durability/full-master gates open.",
+  "nextTaskId": "DATA-01",
+  "nextAction": "Publish DATA-01D through DATA-01F from integration/data-01f without touching Antigravity worktrees, inspect all three jobs on the exact final commit, then review NOTIFY-01D lifecycle wiring. Keep live/deployed/provider/remote-durability/full-master gates open.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -7933,12 +7933,12 @@
     },
     {
       "id": "DATA-01",
-      "state": "partial",
+      "state": "integration_pending_exact_ci",
       "title": "Retention, deletion, complete account/media export",
-      "completedIncrement": "DATA-01A/B integrated and DATA-01C adds locked tenant retention pruning with private-output preservation; retention regression added.",
-      "nextAction": "Review the next bounded branch increment against integrated main; broader parent requirements remain open.",
-      "currentEvidence": "docs/qa/data01c-evidence.json",
-      "status": "partial_parent_after_c_exact_ci"
+      "completedIncrement": "DATA-01A/B/C are integrated and DATA-01D/E/F are reviewed in integration/data-01f at code commit 2d9c8a1 with strict audit validation, legal-hold locking, reconciliation and safe-erasure hardening.",
+      "nextAction": "Publish the reviewed DATA-01D/F source and inspect all three jobs on its exact final commit; broader parent requirements remain open.",
+      "currentEvidence": "docs/qa/data01f-evidence.json",
+      "status": "integration_pending_exact_ci"
     },
     {
       "id": "UX-01",
@@ -8087,9 +8087,9 @@
     "local": "Focused notification/data checks and builds pass; Windows full-suite limits remain recorded."
   },
   "activeTask": {
-    "id": "NOTIFY-01",
-    "title": "Notifications, realtime status and telemetry",
-    "status": "parent_requirements_open_next_review_notify01d_data01d"
+    "id": "DATA-01",
+    "title": "Retention, deletion, complete account/media export",
+    "status": "integration_pending_exact_ci"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8102,49 +8102,32 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "NOTIFY-01C-DATA-01C",
-    "status": "exact_source_ci_verified_continuity_records_pending_own_ci",
-    "baseCommit": "f8d4f6e",
+    "taskId": "DATA-01D-F",
+    "status": "integration_reviewed_exact_source_ci_pending",
+    "baseCommit": "d19edbe4ac2ac4b83aa67595c7d28bdb60cc6e4f",
     "changedPaths": [
-      ".env.example",
-      "apps/api/src/notification-events.ts",
       "apps/api/src/operations.ts",
-      "apps/api/src/publications.ts",
-      "apps/web/app/globals.css",
-      "apps/web/app/notifications-panel.tsx",
-      "apps/web/app/workspace.tsx",
       "docs/ACTIVE_HANDOFF.md",
-      "docs/BILLING.md",
       "docs/CHANGELOG.md",
       "docs/DATA_GOVERNANCE.md",
-      "docs/NOTIFICATIONS.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
-      "docs/qa/data01c-evidence.json",
-      "docs/qa/notify01c-evidence.json",
-      "packages/core/credits.ts",
+      "docs/qa/data01f-evidence.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "REQUIREMENTS_MATRIX.md",
-      "RESUME_PROMPT.txt",
       "START_HERE.md",
-      "tests/data-governance.test.ts",
-      "tests/integration/claim-policy.test.ts",
-      "tests/integration/credits.test.ts",
       "tests/integration/data-export.test.ts",
-      "tests/notifications.test.ts",
-      "tests/ui/notifications.spec.ts",
-      "docs/qa/notify01c-final-ci-receipt.json",
-      "scripts/package_handoff.py",
-      ".gitignore"
+      "docs/qa/data01d-evidence.json",
+      "docs/qa/data01e-evidence.json"
     ],
-    "required": "Continuity records are reconciled; push the documentation/package continuation and inspect its exact three-job CI before selecting the next bounded increment.",
-    "commit": "e4f74b45fe936296f171a86cde9469be5da39d91",
-    "runId": 42875217657,
-    "receipt": "docs/qa/notify01c-final-ci-receipt.json",
-    "sourceZip": "organic-marketing-os-v0.9.2-notify01c-20261111.zip"
+    "required": "Publish DATA-01D/F after review and inspect all three jobs/every required step on the exact final commit before selecting NOTIFY-01D.",
+    "commit": "2d9c8a1",
+    "runId": null,
+    "receipt": "docs/qa/data01f-evidence.json",
+    "sourceZip": null
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",

@@ -1,4 +1,14 @@
-# Active handoff - NOTIFY-01D / DATA-01D review
+# Active handoff - DATA-01F integration / NOTIFY-01D review
+
+<!-- DATA01F_INTEGRATION_CURRENT_START -->
+## Current: DATA-01D through DATA-01F integration - 2026-11-11
+
+DATA-01D, DATA-01E and DATA-01F have been reviewed against integrated main in the separate `integration/data-01f` worktree. Code commit `2d9c8a1` adds strict ISO-8601 audit-range validation, cancellation-safe audit export cleanup, workspace-row locking and legal-hold rechecks for destructive mutations, and exact byte aggregation for reconciliation beyond the 100-row preview. The existing 26 migrations, tenant boundaries and immutable financial records remain intact.
+
+Local API build, web production build, Prisma generation and all 20 focused data-governance unit tests pass. The 16-case DATA HTTP suite is retained but could not start locally because the owned verifier correctly refused an existing `127.0.0.1:3000`; the existing service was left untouched. Full Windows unit output remains non-acceptance because 124 render/font cases need FFmpeg/librsvg and configured fonts; CI installs those prerequisites. The implementation is not accepted until it is merged/published and its own exact three-job CI passes every required step.
+
+The Antigravity `notify-01d`, `notify-01e`, `data-01d` and `data-01f` worktrees remain untouched. NOTIFY-01D still has a lifecycle wiring gap: its new payment/subscription/content-ready creators have no production callsites, and the content-ready key needs revision binding. Review that branch separately after DATA closure. Live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- DATA01F_INTEGRATION_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->
 ## Current: NOTIFY-01C / DATA-01C exact-source closure - 2026-11-11

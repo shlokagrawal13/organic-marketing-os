@@ -1148,3 +1148,11 @@ Its own Actions run `39020625965` (#79), job `117361538915`, attempt 1 succeeded
 
 POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to the maintained official YouTube source-manifest fingerprint `3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf`. It fails closed on missing or mismatched version, fingerprint or review time. It does not fetch or hash remote page bodies, prove that every platform rule is complete, perform a live Google upload, prove deployed behavior, verify native PostgreSQL plus private-media restore, or complete master acceptance. POLICY-01 remains Partial. GitHub's Node-action/setup-java/Ubuntu migration notices and Redis/DEP0169 advisories were non-failing maintenance warnings; every workflow step passed. This 16-path closure payload is locally verified and unpublished pending separate approval; implementation is unchanged. See `docs/qa/policy01d-platform-policy-provenance-evidence.json`, `docs/qa/policy01d-platform-policy-provenance-native-ci-evidence.json` and `docs/qa/policy01d-platform-policy-provenance-native-unit-receipts.json`.
 <!-- POLICY01D_NATIVE_CLOSURE_END -->
+<!-- DATA01F_INTEGRATION_CURRENT_START -->
+## Current: DATA-01D through DATA-01F integration - 2026-11-11
+
+The separate `integration/data-01f` worktree contains code commit `2d9c8a1` based on current main `d19edbe`. It closes audit date validation, disconnect-safe compliance export cleanup, legal-hold/destructive-operation races and reconciliation byte undercounting. API/web builds, Prisma generation and 20 focused DATA unit tests pass. The owned HTTP harness refuses occupied port 3000 before startup, so no existing service was used. Merge and exact three-job CI on the new published commit are still required.
+
+Preserve the uncommitted `apps/web/next-env.d.ts` change and all Antigravity worktrees. NOTIFY-01D remains a separate review because its new lifecycle notification creators are not wired to production callsites. Live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
+<!-- DATA01F_INTEGRATION_CURRENT_END -->
+

@@ -1227,3 +1227,11 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 - Emitted low-credit notifications atomically at the configured immutable-ledger threshold crossing and approval-required notifications from the policy-review mutation.
 - Serialized tenant retention preview/pruning under a workspace lock and preserved failed/canceled render rows that still reference private output bytes.
 - Added focused notification, credit, policy-review, retention and browser regressions; exact-source CI and external packaging remain pending.
+## 0.9.2 — DATA-01D/F integration hardening (2026-11-11)
+
+- Validate audit `startDate`/`endDate` as ISO-8601 values and reject reversed ranges before Prisma receives them.
+- Make compliance export cancellation-safe and preserve temporary-file cleanup on every path.
+- Serialize legal-hold enable/release and destructive retention, member-revocation, reconciliation and erasure operations on the workspace row with an in-transaction hold recheck.
+- Aggregate reconciliation bytes across every candidate while keeping the first 100 rows as a bounded preview.
+- Add HTTP regressions for malformed date ranges and 102-candidate byte accounting.
+

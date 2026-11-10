@@ -1,23 +1,31 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "taskId": "DATA-01F",
-  "recordedAtUtc": "2026-11-06T15:58:00.000Z",
-  "status": "local_verified",
+  "recordedAtUtc": "2026-11-11T00:00:00.000Z",
+  "status": "integration_pending_exact_ci",
   "behavior": {
-    "assetReconciliation": "POST /workspaces/:organizationId/operations/reconcile-assets identifies and prunes unattached/archived assets, supporting ?dryRun=true preview and enforcing legal hold lock (HTTP 423 Locked)",
-    "workspaceSafeErasure": "POST /workspaces/:organizationId/operations/erasure enforces OWNER-only role authorization, exact confirmText confirmation, in-flight job guards, legal hold lock (HTTP 423), child data purge, BrandBrain scrambling, and tenant anonymization while strictly preserving immutable financial ledgers (CreditEntry, CreditReservation, BillingInvoice)",
-    "tests": "20 unit tests in tests/data-governance.test.ts passing locally with 0 failures; integration tests in tests/integration/data-export.test.ts covering dry-run reconciliation, role enforcement, legal hold lock, and safe erasure"
+    "assetReconciliation": "POST /workspaces/:organizationId/operations/reconcile-assets identifies and prunes unattached/archived assets, supports ?dryRun=true, reports the exact byte sum across all candidates, and rechecks legal hold state under a workspace row lock.",
+    "workspaceSafeErasure": "POST /workspaces/:organizationId/operations/erasure enforces OWNER-only authorization, exact confirmation, legal-hold protection and in-flight render/publication guards inside one locked transaction while preserving immutable financial ledgers.",
+    "auditSafety": "Audit query and export reject invalid or reversed ISO-8601 ranges with HTTP 400; export cancellation stops further temporary writes and still cleans its private file.",
+    "tests": "20 focused data-governance unit tests pass. The DATA HTTP suite contains 16 cases, including invalid-date and >100-candidate byte-accounting regressions; local HTTP execution is blocked by the owned fixture refusing occupied port 3000."
   },
   "local": {
     "taskId": "DATA-01F",
-    "passed": true,
-    "tests": {
-      "dataGovernance": 20
+    "focusedUnitPassed": 20,
+    "focusedUnitFailed": 0,
+    "dataHttpPassed": null,
+    "dataHttpBlocked": "Owned fixture refused occupied 127.0.0.1:3000 before startup; existing services were not contacted or stopped.",
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "prismaGenerate": true,
+    "fullUnit": {
+      "passed": 300,
+      "failed": 124,
+      "accepted": false,
+      "reason": "Windows render/font prerequisites (FFmpeg librsvg and configured fonts) are unavailable; failures are unrelated to DATA code."
     },
     "fixtureCleanup": true,
     "realEnvironmentUnchanged": true,
-    "apiBuild": true,
-    "prismaGenerate": true,
     "migrations": 26,
     "tables": 38,
     "productionAuditVulnerabilities": 0
@@ -31,13 +39,16 @@
     "ux01ProtectedFilesUntouched": true
   },
   "publication": {
-    "branch": "data-01f",
-    "baseBranch": "data-01e",
-    "doNotMergeToMain": true
+    "integrationBranch": "integration/data-01f",
+    "codeCommit": "2d9c8a1",
+    "baseCommit": "d19edbe4ac2ac4b83aa67595c7d28bdb60cc6e4f",
+    "mainMerge": "pending",
+    "exactCi": "pending",
+    "sourceZip": "pending"
   },
   "limits": [
-    "Workspace record erasure and asset pruning only; does not bypass database foreign key constraints",
-    "Financial credit entries and billing invoices remain immutable by design",
-    "Windows environment limits: full Compose verification runs on Linux CI"
+    "This fixture work does not establish remote backup durability, production RPO/RTO, atomic cross-store PITR, live providers, deployed behavior, or full-master acceptance.",
+    "Financial credit entries, reservations, subscriptions and invoices remain immutable by design.",
+    "The Antigravity notify-01d/notify-01e and data branches remain untouched; NOTIFY-01D lifecycle callsites still require a separate review."
   ]
 }

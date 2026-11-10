@@ -76,12 +76,14 @@ DATA-01D implements structured tenant audit log querying and tamper-evident comp
 - **Filtered Querying (`GET /api/workspaces/:organizationId/operations/audit`)**:
   - **Role Authorization**: Restricted strictly to `OWNER` and `ADMIN` roles. Non-privileged roles (`EDITOR`, `CREATOR`, `ANALYST`, `CLIENT`) receive 403 Forbidden. Non-members receive 404 Not Found.
   - **Multi-Attribute Filters**: Supports filtering by `action` prefix (e.g. `team.`, `workspace.`, `retention.`, `social_connection.`), `actorId`, `startDate`, and `endDate`.
+  - **Date Validation**: Invalid ISO-8601 dates and reversed ranges return `HTTP 400` before any Prisma query is issued.
   - **Deterministic Cursor-Based Pagination**: Employs `cursor` ID and bounded `take` (default 50, maximum 100), returning `{ items, nextCursor, totalCount }`.
 - **Compliance Audit Export (`GET /api/workspaces/:organizationId/operations/audit-export`)**:
   - **Role Authorization**: Accessible only to `OWNER` and `ADMIN` roles.
   - **NDJSON Streaming**: Delivers a manifest line (`type: "manifest"`), followed by serialized audit entries (`type: "auditLog"`), concluded by an immutable checksum footer (`type: "complete"`).
   - **Tamper-Evident SHA-256**: Terminal complete record verifies SHA-256 hash over all preceding lines including newlines.
   - **Audit Logging**: Appends an immutable `audit.exported` event to `AuditLog` recording the actor, exported entry count, filters, and SHA-256 checksum.
+  - **Disconnect Safety**: Client-close handling aborts further temporary-file writes without destroying a normally completing response; temporary files are removed in all paths.
 
 ### Workspace Legal Hold & Data Freeze Management — DATA-01E
 
@@ -104,14 +106,16 @@ DATA-01E implements enterprise legal discovery, dispute preservation, and regula
   - **Member Data Revocation**: `DELETE /api/workspaces/:organizationId/operations/members/:userId` is rejected with `HTTP 423 Locked`, preserving user-linked evidence and sessions until the hold is formally released.
   - **Asset Reconciliation**: `POST /api/workspaces/:organizationId/operations/reconcile-assets` is rejected with `HTTP 423 Locked`.
   - **Workspace Erasure**: `POST /api/workspaces/:organizationId/operations/erasure` is rejected with `HTTP 423 Locked`.
+  - Hold state is rechecked while the workspace row is locked inside each destructive transaction, so a concurrent enable/release cannot race a purge or prune.
   - Lifts cleanly once the legal hold is released by an authorized administrator.
 
 ## Asset Reconciliation & Orphan Pruning (DATA-01F)
 - `POST /api/workspaces/:organizationId/operations/reconcile-assets`:
   - Detects unattached/archived assets (assets where `archivedAt` is set or that possess zero render inputs and zero media generations).
   - Supports dry-run inspection via `?dryRun=true`, reporting candidate asset count, estimated bytes, and asset metadata without deleting.
-  - In non-dry-run mode, purges candidate asset records, frees storage allowances, and appends an immutable `data.assets.reconciled` audit entry.
+  - In non-dry-run mode, purges candidate asset records, reports the exact byte sum for all candidates (not only the first 100 preview rows), and appends an immutable `data.assets.reconciled` audit entry.
   - Rejects with `HTTP 423 Locked` if the workspace is under an active legal hold.
+  - Candidate selection, byte aggregation, deletion and audit logging run under the workspace row lock in one transaction.
 
 ## Workspace Account Anonymization & Safe Erasure (DATA-01F)
 - `POST /api/workspaces/:organizationId/operations/erasure`:
@@ -123,6 +127,6 @@ DATA-01E implements enterprise legal discovery, dispute preservation, and regula
   - Scrambles BrandBrain profile/DNA and anonymizes Organization name to `[ERASED WORKSPACE]`.
   - Revokes all tenant memberships and appends an immutable `data.workspace.erased` audit record.
 
-Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
+Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic retention scheduling, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 
-Credit entries reject SQL UPDATE/DELETE and financial foreign keys prevent deleting credited organizations. Corrections append entries. Retention/anonymization and legal erasure behavior are still unimplemented; do not remove this protection for an account-deletion shortcut.
+Credit entries reject SQL UPDATE/DELETE and financial foreign keys prevent deleting credited organizations. Corrections append entries. DATA-01F anonymizes the organization and purges eligible child records while preserving immutable financial rows; it does not delete the organization row or bypass these protections.

@@ -256,3 +256,7 @@ See docs/APPLICATION_PHYSICAL_RECOVERY.md and docs/qa/recovery01f-evidence.json 
 # Requirements matrix
 
 Authoritative mapping: [docs/REQUIREMENTS_MATRIX.md](docs/REQUIREMENTS_MATRIX.md).
+<!-- DATA01F_INTEGRATION_CURRENT_START -->
+DATA-01D through DATA-01F are reviewed in isolated worktree `integration/data-01f` at code commit `2d9c8a1` based on main `d19edbe`; publication and exact three-job CI remain pending. The increment validates audit date ranges, protects export cancellation cleanup, serializes legal-hold/destructive mutations and reports exact reconciliation bytes. Focused DATA unit tests and API/web builds pass; local HTTP is blocked by the owned harness refusing occupied port 3000. Antigravity notification worktrees remain separate and NOTIFY-01D lifecycle callsites still need review. Live/deployed/provider, remote durability/RPO-RTO and full-master gates remain open.
+<!-- DATA01F_INTEGRATION_CURRENT_END -->
+
