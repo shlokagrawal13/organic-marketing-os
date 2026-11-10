@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "integration01b-20261110-exact-ci-verified",
-  "savedAtUtc": "2026-11-10T12:20:47Z",
-  "currentMilestone": "NOTIFY-01A and DATA-01A integration verified on 607b8fb/run42784451013; NOTIFY-01B and DATA-01B reviewed, merged at 058cf27, published at f1ba479 and exact CI verified on run42810027002",
-  "activeTaskId": "NOTIFY-01",
+  "checkpointRevision": "notify01c-data01c-20261110-local-verified",
+  "savedAtUtc": "2026-11-10T15:39:49.431Z",
+  "currentMilestone": "NOTIFY-01C notification center and atomic triggers plus DATA-01C locked retention pruning are locally verified; exact-source CI pending",
+  "activeTaskId": "NOTIFY-01C",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -74,8 +74,8 @@
     "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
-  "nextTaskId": "NOTIFY-01",
-  "nextAction": "Push local merge 058cf27 normally, inspect and fix all three exact-source CI jobs and every required step, then record the fresh run and portable source package before reviewing NOTIFY-01C/DATA-01C. Preserve Antigravity branch histories and all prior assertions.",
+  "nextTaskId": "NOTIFY-01C",
+  "nextAction": "Run package_handoff check, commit and push the reviewed source, inspect and fix all three exact-source CI jobs and every required step, then package the final source ZIP and receipt outside the repository. Preserve later Antigravity branches.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -84,22 +84,15 @@
     "Use a NEW repository for this project. The existing shlokagrawal13/OrganicMarketing is a different project and must not be reused (explicit correction 2026-09-27 IST)."
   ],
   "localChangedPaths": [
-    "AGENTS.md",
-    "CHECKPOINT_MANIFEST.json",
-    "PROJECT_CHECKPOINT.json",
-    "PROJECT_STATUS.md",
-    "REQUIREMENTS_MATRIX.md",
-    "RESUME_PROMPT.txt",
-    "START_HERE.md",
-    "apps/api/src/main.ts",
+    ".env.example",
     "apps/api/src/notification-events.ts",
-    "apps/api/src/notifications.ts",
     "apps/api/src/operations.ts",
-    "apps/api/src/publication-attempts.ts",
-    "apps/api/src/render-worker.ts",
-    "apps/api/src/renders.ts",
-    "apps/api/src/social-connections.ts",
+    "apps/api/src/publications.ts",
+    "apps/web/app/globals.css",
+    "apps/web/app/notifications-panel.tsx",
+    "apps/web/app/workspace.tsx",
     "docs/ACTIVE_HANDOFF.md",
+    "docs/BILLING.md",
     "docs/CHANGELOG.md",
     "docs/DATA_GOVERNANCE.md",
     "docs/NOTIFICATIONS.md",
@@ -107,26 +100,20 @@
     "docs/REQUIREMENTS_MATRIX.md",
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
-    "docs/qa/data01a-evidence.json",
-    "docs/qa/data01b-evidence.json",
-    "docs/qa/integration01a-evidence.json",
-    "docs/qa/integration01a-final-ci-receipt.json",
-    "docs/qa/integration01b-evidence.json",
-    "docs/qa/notify01a-evidence.json",
-    "docs/qa/notify01b-evidence.json",
-    "docs/qa/ux01l-final-ci-receipt.json",
-    "prisma/migrations/202611030001_in_app_notifications/migration.sql",
-    "prisma/schema.prisma",
-    "packages/core/media-generation-runtime.ts",
-    "scripts/application-pitr-fixture.mjs",
-    "scripts/verify-local.mjs",
-    "scripts/verify-native-upgrade.mjs",
-    "tests/application-snapshot.test.ts",
+    "docs/qa/data01c-evidence.json",
+    "docs/qa/notify01c-evidence.json",
+    "packages/core/credits.ts",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
     "tests/data-governance.test.ts",
+    "tests/integration/claim-policy.test.ts",
+    "tests/integration/credits.test.ts",
     "tests/integration/data-export.test.ts",
-    "tests/integration/notifications.test.ts",
     "tests/notifications.test.ts",
-    "tests/render-worker-startup.test.ts"
+    "tests/ui/notifications.spec.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -7934,17 +7921,19 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "partial",
+      "state": "locally_verified_ci_pending",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01A and NOTIFY-01B integrated on main; exact run 42810027002 passed all three jobs/41 steps. Later notification UX/realtime/alerts remain.",
-      "nextAction": "Review the separate NOTIFY-01C and later branches after preserving the verified B integration."
+      "completedIncrement": "NOTIFY-01A/B integrated and NOTIFY-01C adds notification center UI, atomic low-credit threshold crossing and policy-review approval-required triggers; 37 focused tests pass.",
+      "nextAction": "Run exact three-job CI on the new published source, then review later notification branches separately.",
+      "currentEvidence": "docs/qa/notify01c-evidence.json"
     },
     {
       "id": "DATA-01",
-      "state": "partial",
+      "state": "locally_verified_ci_pending",
       "title": "Retention, deletion, complete account/media export",
-      "completedIncrement": "DATA-01A and DATA-01B integrated on main; exact run 42810027002 passed all three jobs/41 steps.",
-      "nextAction": "Review the separate DATA-01C and later branches; complete retention, erasure and media lifecycle scope."
+      "completedIncrement": "DATA-01A/B integrated and DATA-01C adds locked tenant retention pruning with private-output preservation; retention regression added.",
+      "nextAction": "Run exact three-job CI on the new published source, then review later data branches separately.",
+      "currentEvidence": "docs/qa/data01c-evidence.json"
     },
     {
       "id": "UX-01",
@@ -8007,9 +7996,29 @@
       "id": "MEDIA-LIVE-01",
       "state": "needs_external_credentials",
       "title": "Authorized live generated-media quality and billing acceptance"
+    },
+    {
+      "id": "NOTIFY-01C",
+      "state": "locally_verified_ci_pending",
+      "title": "Notification center and atomic notification triggers",
+      "completedIncrement": "Implementation and focused local checks pass; exact-source all-three-job CI is pending.",
+      "currentEvidence": "docs/qa/notify01c-evidence.json",
+      "nextAction": "Publish exact source and inspect/fix all three CI jobs and required steps."
+    },
+    {
+      "id": "DATA-01C",
+      "state": "locally_verified_ci_pending",
+      "title": "Locked retention pruning and private-output preservation",
+      "completedIncrement": "Implementation and focused local checks pass; exact-source all-three-job CI is pending.",
+      "currentEvidence": "docs/qa/data01c-evidence.json",
+      "nextAction": "Publish exact source and inspect/fix all three CI jobs and required steps."
     }
   ],
   "lastChanges": [
+    "Reviewed notify-01c and data-01c against integrated main and preserved both branch histories.",
+    "Added notification center UI, atomic credit-threshold and policy-review approval triggers, and focused regressions.",
+    "Hardened retention pruning with an organization row lock and private-output-key preservation; added retention integration assertions.",
+    "Prisma generation, API/web/combined builds and 37 focused tests pass; Windows full-suite and isolated HTTP/browser limits are recorded.",
     "Integrated NOTIFY-01A and DATA-01A on main with the owner-removal guard and HTTP regression.",
     "Verified application commit 607b8fb on run 42784451013 and checkpoint continuity commit 5e8b537 on run 42805024713; all three jobs and 41 required steps passed.",
     "Reviewed NOTIFY-01B and DATA-01B against integrated main and merged locally at 058cf27; focused notification 20/20 and data-governance 11/11 checks plus API/web builds passed.",
@@ -8053,23 +8062,21 @@
   },
   "checkpointVerificationEvidence": "docs/qa/integration01b-evidence.json",
   "latestStatus": {
-    "taskId": "INTEGRATION-01B-DATA-01B",
-    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
-    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
-    "tree": "1b598c94b555a403b4db0293098331252937828c",
-    "runId": 42810027002,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42810027002",
-    "allThreeJobsAndRequiredStepsPassed": true,
-    "requiredSteps": 41,
-    "artifactGap": "All four exact-run artifact names, sizes and digests were verified; browser artifact bytes/report remain uninspected because downloads were proxy403-blocked.",
-    "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
-    "baseRunId": 42805024713,
-    "receipt": "docs/qa/integration01b-evidence.json"
+    "taskId": "NOTIFY-01C-DATA-01C",
+    "status": "locally_integrated_ci_pending",
+    "commit": "pending",
+    "runId": null,
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "evidence": [
+      "docs/qa/notify01c-evidence.json",
+      "docs/qa/data01c-evidence.json"
+    ],
+    "local": "37 focused tests and builds pass; full suite/harness environment limits recorded"
   },
   "activeTask": {
-    "id": "NOTIFY-01B-DATA-01B",
-    "title": "Notifications, realtime status and telemetry",
-    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap"
+    "id": "NOTIFY-01C-DATA-01C",
+    "title": "Notification center, atomic notification triggers and safe tenant retention pruning",
+    "status": "locally_integrated_ci_pending"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8082,33 +8089,46 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "INTEGRATION-01B-DATA-01B",
-    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
-    "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
-    "historicalPaths": [
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "REQUIREMENTS_MATRIX.md",
-      "START_HERE.md",
-      "apps/web/app/publication-search-detail.tsx",
-      "apps/web/app/workspace-search.tsx",
+    "taskId": "NOTIFY-01C-DATA-01C",
+    "status": "local_changes_pending_publication",
+    "baseCommit": "f8d4f6e",
+    "changedPaths": [
+      ".env.example",
+      "apps/api/src/notification-events.ts",
+      "apps/api/src/operations.ts",
+      "apps/api/src/publications.ts",
+      "apps/web/app/globals.css",
+      "apps/web/app/notifications-panel.tsx",
+      "apps/web/app/workspace.tsx",
       "docs/ACTIVE_HANDOFF.md",
+      "docs/BILLING.md",
       "docs/CHANGELOG.md",
+      "docs/DATA_GOVERNANCE.md",
+      "docs/NOTIFICATIONS.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
-      "docs/WORKSPACE_SEARCH_FOCUS.md",
-      "docs/qa/ux01k-final-ci-receipt.json",
-      "docs/qa/ux01l-evidence.json",
-      "tests/ui/workspace-search.spec.ts"
+      "docs/qa/data01c-evidence.json",
+      "docs/qa/notify01c-evidence.json",
+      "packages/core/credits.ts",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "REQUIREMENTS_MATRIX.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
+      "tests/data-governance.test.ts",
+      "tests/integration/claim-policy.test.ts",
+      "tests/integration/credits.test.ts",
+      "tests/integration/data-export.test.ts",
+      "tests/notifications.test.ts",
+      "tests/ui/notifications.spec.ts"
     ],
-    "required": "Completed: published f1ba479 and verified a fresh exact three-job CI result; no predecessor run substituted.",
-    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
-    "runId": 42810027002,
-    "receipt": "docs/qa/integration01b-evidence.json",
-    "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-notify-data01b-source.zip"
+    "required": "Commit and push the exact reviewed source, inspect all three CI jobs and every required step, then package the source ZIP and final receipt outside the repository.",
+    "commit": null,
+    "runId": null,
+    "receipt": null,
+    "sourceZip": null
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8727,101 +8747,42 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "INTEGRATION-01B-DATA-01B",
-    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
-    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
-    "tree": "1b598c94b555a403b4db0293098331252937828c",
-    "runId": 42810027002,
-    "allThreeJobsAndRequiredStepsPassed": true,
-    "requiredSteps": 41,
-    "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
-    "baseRunId": 42805024713,
-    "continuityReceipt": "docs/qa/integration01b-evidence.json",
-    "historicalUx01lVerification": {
-      "status": "published_ci_verified",
-      "receipt": "docs/qa/ux01l-final-ci-receipt.json"
-    },
-    "priorVerifiedPublication": {
-      "taskId": "UX-01K",
-      "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
-      "tree": "a3556caa9eef41effc77259646609f9abf8c055a",
-      "runId": 41826622865,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
-      "status": "completed",
-      "conclusion": "success",
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "results": {
-        "unit": 379,
-        "http": 50,
-        "browser": 67,
-        "recovery": 5,
-        "migrations": 25,
-        "readabilitySamples": 44,
-        "composePhases": 24,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "sourceJobId": 126562871997,
-        "observedPassCounts": [
-          379,
-          50,
-          5
-        ],
-        "auditLogLines": [
-          "2026-11-04T12:08:30.6502944Z found 0 vulnerabilities",
-          "2026-11-04T12:15:54.2206301Z found 0 vulnerabilities",
-          "2026-11-04T12:15:54.6157443Z found 0 vulnerabilities"
-        ],
-        "researchLines": [
-          "2026-11-04T12:22:54.8461278Z   ✓  62 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (952ms)",
-          "2026-11-04T12:22:55.4272589Z   ✓  63 tests/ui/workspace-search.spec.ts:180:5 › delayed publication detail cannot reappear after returning to results or switching workspace (572ms)",
-          "2026-11-04T12:22:57.0129999Z   ✓  64 tests/ui/workspace-search.spec.ts:266:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.6s)",
-          "2026-11-04T12:22:57.5793048Z   ✓  65 tests/ui/workspace-search.spec.ts:344:5 › search ignores delayed responses after workspace switch and recovers from request errors (558ms)",
-          "2026-11-04T12:22:58.3810965Z   ✓  66 tests/ui/workspace-search.spec.ts:423:5 › delayed searched content cannot replace a newer unsaved draft (794ms)",
-          "2026-11-04T12:22:58.9718767Z   ✓  67 tests/ui/workspace-search.spec.ts:479:5 › research search opens an exact older record without writing and respects workspace changes (545ms)"
-        ],
-        "coreJobLogBytes": 201306,
-        "coreJobLogSha256": "0c27c249c8746d8f167a0b852f47607da88b4e5b4ecfe79a6451469eb4a0dfa5",
-        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
-        "protectedPriorMasterMigrationHashesUnchanged": 26
-      },
-      "receipt": "docs/qa/ux01k-final-ci-receipt.json"
-    },
+    "taskId": "NOTIFY-01C-DATA-01C",
+    "status": "locally_integrated_ci_pending",
+    "baseCommit": "f8d4f6e",
     "local": {
-      "taskId": "UX-01L",
-      "passed": true,
-      "startedAt": "2026-11-04T17:48:16.590Z",
-      "fixture": "ca68da575d43a831",
-      "http": 6,
-      "browser": 6,
-      "fixtureCleanup": true,
-      "realEnvironmentUnchanged": true,
-      "completedAt": "2026-11-04T17:55:17.978Z"
+      "prismaGenerate": true,
+      "apiBuild": true,
+      "webBuild": true,
+      "combinedBuild": true,
+      "focusedTestsPassed": 37,
+      "focusedTestsFailed": 0,
+      "fullSuiteAttempted": true,
+      "fullSuitePassedBeforeEnvironmentFailures": 292,
+      "fullSuiteTotal": 416,
+      "fullSuiteEnvironmentFailures": 124,
+      "httpBrowserHarness": "blocked_by_occupied_redis_6379_and_direct_execution_guard",
+      "fixtureCleanup": "no_owned_http_browser_fixture_started",
+      "realEnvironmentUnchanged": true
     },
-    "keyboard": {
-      "taskId": "UX-01L",
-      "passed": true,
-      "startedAt": "2026-11-04T21:52:43.493Z",
-      "fixture": "65b54f0f73543616",
-      "http": 6,
-      "browser": 1,
-      "fixtureCleanup": true,
-      "realEnvironmentUnchanged": true,
-      "completedAt": "2026-11-04T21:57:44.176Z"
+    "behavior": [
+      "Notification center shows tenant-bound unread notifications and supports read/unread/read-all actions.",
+      "Credit ledger emits one workspace-wide low-balance alert on threshold crossing inside the transaction.",
+      "YouTube policy-review mutation emits one workspace-wide approval-required alert.",
+      "Retention pruning locks the organization and preserves render rows with any private media key."
+    ],
+    "exactCi": {
+      "required": true,
+      "allThreeJobsAndEveryRequiredStepPassed": false,
+      "status": "pending_publication"
     },
-    "evidence": "docs/qa/ux01l-evidence.json",
-    "finalVerifiedPublication": {
-      "commit": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
-      "runId": 41921508171,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171",
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
-      "receipt": "docs/qa/ux01l-final-ci-receipt.json"
-    },
+    "evidence": [
+      "docs/qa/notify01c-evidence.json",
+      "docs/qa/data01c-evidence.json"
+    ],
     "preserved": {
-      "priorMigrations": 25,
-      "composePhases": 24,
+      "priorMigrations": 26,
       "masterSpecification": true,
-      "realEnvironmentUnchanged": true,
       "populatedUserServicesUntouched": true,
       "liveProvidersUsed": false
     }
@@ -23884,5 +23845,105 @@
     "integratedMainRunId": 42784451013,
     "integratedMainCiPassed": true,
     "integratedMainReceipt": "docs/qa/integration01a-final-ci-receipt.json"
+  },
+  "priorCurrentVerificationBeforeNotify01C": {
+    "taskId": "INTEGRATION-01B-DATA-01B",
+    "status": "published_exact_commit_ci_verified_with_browser_artifact_inspection_gap",
+    "commit": "f1ba479d212a94a0390dc4e3c596cd419fee42d6",
+    "tree": "1b598c94b555a403b4db0293098331252937828c",
+    "runId": 42810027002,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "baseCommit": "5e8b537108db04a87c745862bd8455d030a1dc2d",
+    "baseRunId": 42805024713,
+    "continuityReceipt": "docs/qa/integration01b-evidence.json",
+    "historicalUx01lVerification": {
+      "status": "published_ci_verified",
+      "receipt": "docs/qa/ux01l-final-ci-receipt.json"
+    },
+    "priorVerifiedPublication": {
+      "taskId": "UX-01K",
+      "commit": "44cdc0193c88f296e73bc97ffa869642985b7f78",
+      "tree": "a3556caa9eef41effc77259646609f9abf8c055a",
+      "runId": 41826622865,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41826622865",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "results": {
+        "unit": 379,
+        "http": 50,
+        "browser": 67,
+        "recovery": 5,
+        "migrations": 25,
+        "readabilitySamples": 44,
+        "composePhases": 24,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "sourceJobId": 126562871997,
+        "observedPassCounts": [
+          379,
+          50,
+          5
+        ],
+        "auditLogLines": [
+          "2026-11-04T12:08:30.6502944Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.2206301Z found 0 vulnerabilities",
+          "2026-11-04T12:15:54.6157443Z found 0 vulnerabilities"
+        ],
+        "researchLines": [
+          "2026-11-04T12:22:54.8461278Z   ✓  62 tests/ui/workspace-search.spec.ts:102:5 › publication search opens the exact frozen preparation without publishing and links to current content (952ms)",
+          "2026-11-04T12:22:55.4272589Z   ✓  63 tests/ui/workspace-search.spec.ts:180:5 › delayed publication detail cannot reappear after returning to results or switching workspace (572ms)",
+          "2026-11-04T12:22:57.0129999Z   ✓  64 tests/ui/workspace-search.spec.ts:266:5 › workspace search opens saved content, campaigns and assets and preserves unsaved-change confirmation (1.6s)",
+          "2026-11-04T12:22:57.5793048Z   ✓  65 tests/ui/workspace-search.spec.ts:344:5 › search ignores delayed responses after workspace switch and recovers from request errors (558ms)",
+          "2026-11-04T12:22:58.3810965Z   ✓  66 tests/ui/workspace-search.spec.ts:423:5 › delayed searched content cannot replace a newer unsaved draft (794ms)",
+          "2026-11-04T12:22:58.9718767Z   ✓  67 tests/ui/workspace-search.spec.ts:479:5 › research search opens an exact older record without writing and respects workspace changes (545ms)"
+        ],
+        "coreJobLogBytes": 201306,
+        "coreJobLogSha256": "0c27c249c8746d8f167a0b852f47607da88b4e5b4ecfe79a6451469eb4a0dfa5",
+        "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+        "protectedPriorMasterMigrationHashesUnchanged": 26
+      },
+      "receipt": "docs/qa/ux01k-final-ci-receipt.json"
+    },
+    "local": {
+      "taskId": "UX-01L",
+      "passed": true,
+      "startedAt": "2026-11-04T17:48:16.590Z",
+      "fixture": "ca68da575d43a831",
+      "http": 6,
+      "browser": 6,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-04T17:55:17.978Z"
+    },
+    "keyboard": {
+      "taskId": "UX-01L",
+      "passed": true,
+      "startedAt": "2026-11-04T21:52:43.493Z",
+      "fixture": "65b54f0f73543616",
+      "http": 6,
+      "browser": 1,
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "completedAt": "2026-11-04T21:57:44.176Z"
+    },
+    "evidence": "docs/qa/ux01l-evidence.json",
+    "finalVerifiedPublication": {
+      "commit": "dafdb93a562c5bf53d9dfaa159340754775a6e07",
+      "runId": 41921508171,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "fourArtifactBytesDigestsCrcAndEmbeddedReportsVerified": true,
+      "receipt": "docs/qa/ux01l-final-ci-receipt.json"
+    },
+    "preserved": {
+      "priorMigrations": 25,
+      "composePhases": 24,
+      "masterSpecification": true,
+      "realEnvironmentUnchanged": true,
+      "populatedUserServicesUntouched": true,
+      "liveProvidersUsed": false
+    }
   }
 }

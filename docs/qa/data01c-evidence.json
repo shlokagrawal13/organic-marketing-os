@@ -1,45 +1,57 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "taskId": "DATA-01C",
-  "recordedAtUtc": "2026-11-05T12:38:00.000Z",
-  "status": "local_verified",
+  "recordedAtUtc": "2026-11-10T00:00:00Z",
+  "status": "locally_integrated_ci_pending",
+  "base": {
+    "integratedMain": "f8d4f6e",
+    "reviewedBranch": "data-01c",
+    "reviewedBranchHead": "8dee378bc1c080704a5f3a03e742e52858ab08d8",
+    "branchHistoryPreserved": true
+  },
   "behavior": {
-    "retentionPruneEndpoint": "POST /api/workspaces/:organizationId/operations/retention-prune implemented with OWNER/ADMIN role authorization; non-privileged roles (EDITOR, CREATOR, ANALYST, CLIENT) rejected with 403; non-members rejected with 404",
-    "dryRunMode": "Supports ?dryRun=true query parameter returning candidate counts for expiredInvitations, invalidatedPublicationIntents, canceledPublicationSchedules, and staleRenderJobs without mutating records",
-    "pruneTargets": "Prunes expired invitations (expiresAt < now), orphaned invalidated/canceled publication intents with 0 child schedules/attempts, canceled publication schedules with 0 attempts, and terminal failed/canceled render jobs older than 24 hours",
-    "immutableProtection": "Strictly preserves financial records (CreditEntry, CreditReservation, CreditAccount, BillingSubscription, BillingInvoice), audit trails (AuditLog), active content items, campaigns, and creative assets",
-    "auditTrail": "Emits immutable retention.pruned event in AuditLog recording actorId, execution timestamp, and exact counts per pruned entity type",
-    "tests": "13 unit tests in tests/data-governance.test.ts and comprehensive HTTP integration test in tests/integration/data-export.test.ts verifying dry-run previews, role authorization, execution deletion counts, and immutable financial preservation"
+    "retentionPruneEndpoint": "POST /workspaces/:organizationId/operations/retention-prune remains OWNER/ADMIN only with tenant guard and dry-run support.",
+    "transactionLock": "Candidate counts and deletes run in one transaction after SELECT Organization FOR UPDATE, so preview/execution are serialized against workspace lifecycle changes.",
+    "privateMediaSafety": "Only FAILED/CANCELED render rows older than 24 hours with outputKey, thumbnailKey and captionsKey all null are eligible; rows referencing private bytes remain for object-store reconciliation.",
+    "immutableProtection": "Credit accounts/entries/reservations, billing records, audit history, active content and active publication work remain outside the prune set.",
+    "focusedTests": "37 focused notification/data-governance unit tests pass after a fresh API build; retention integration regression covers scratch deletion and private-output preservation."
   },
   "local": {
-    "taskId": "DATA-01C",
-    "passed": true,
-    "tests": {
-      "dataGovernance": 13,
-      "dataExportIntegration": 6
-    },
-    "fixtureCleanup": true,
-    "realEnvironmentUnchanged": true,
+    "prismaGenerate": true,
     "apiBuild": true,
-    "migrations": 25,
-    "tables": 37,
-    "productionAuditVulnerabilities": 0
+    "webBuild": true,
+    "combinedBuild": true,
+    "focusedNotificationAndDataGovernanceTests": { "passed": 37, "failed": 0 },
+    "retentionHttpRegression": { "added": true, "executedLocally": false, "reason": "isolated harness refuses occupied Redis on 127.0.0.1:6379" },
+    "fixtureCleanup": "no owned HTTP fixture started; no user service was contacted",
+    "realEnvironmentUnchanged": true,
+    "liveProvidersUsed": false,
+    "exactCi": { "pending": true, "required": "all three jobs and every required step on the exact published commit" }
   },
+  "changedPaths": [
+    "apps/api/src/operations.ts",
+    "tests/integration/data-export.test.ts",
+    "docs/DATA_GOVERNANCE.md"
+  ],
   "preserved": {
-    "priorMigrations": 25,
+    "priorMigrations": 26,
     "masterSpecification": true,
     "realEnvironmentUnchanged": true,
     "populatedUserServicesUntouched": true,
-    "liveProvidersUsed": false,
-    "ux01ProtectedFilesUntouched": true
+    "financialAndAuditHistoryUntouched": true,
+    "objectStoreReconciliationSeparate": true
   },
   "publication": {
-    "branch": "data-01c",
-    "baseBranch": "data-01b",
-    "doNotMergeToMain": true
+    "branch": "main",
+    "commit": "pending",
+    "runId": null,
+    "receipt": null,
+    "sourceZip": null,
+    "status": "local_changes_pending_publication"
   },
   "limits": [
-    "Pruning is scoped strictly to tenant-level expired/canceled ephemeral records; financial and ledger records reject modification or deletion",
-    "Windows environment limits: full Compose verification runs on Linux CI"
+    "The prune endpoint does not implement legal erasure or remote object-store deletion; reconciliation remains separate.",
+    "Windows local full-suite failures are missing FFmpeg/librsvg/font/Python prerequisites; Linux CI is authoritative for those gates.",
+    "No live provider, deployed, remote durability or full-master acceptance is claimed."
   ]
 }

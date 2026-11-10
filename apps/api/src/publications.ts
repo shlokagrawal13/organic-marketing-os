@@ -53,6 +53,7 @@ import {
   scheduleView,
   scheduledDispatchEnabled,
 } from "./publication-scheduler";
+import { createApprovalRequiredNotification } from "./notification-events";
 
 const prepareInput = z
   .object({
@@ -290,6 +291,16 @@ export class PublicationIntentsController {
           reviewedAt: now,
           expiresAt: new Date(now.getTime() + youtubePolicyReviewLifetimeMs),
         },
+      });
+      await createApprovalRequiredNotification(tx, {
+        organizationId: req.organizationId,
+        reviewId: review.id,
+        contentId: intent.contentId,
+        contentTitle:
+          typeof (intent.snapshot as any)?.title === "string"
+            ? (intent.snapshot as any).title
+            : null,
+        platform: intent.platform,
       });
       await tx.auditLog.create({
         data: {

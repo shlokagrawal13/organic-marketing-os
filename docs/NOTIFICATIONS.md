@@ -5,13 +5,13 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Render Events (NOTIFY-01A)**: `SUCCEEDED`, `FAILED`, `CANCELED` from video render worker and cancellation flows (`category: "RENDER"`).
 - **Publishing Events (NOTIFY-01B)**: Terminal publication attempt outcomes `CONFIRMED` (`PUBLISH_SUCCEEDED`) and `REJECTED` (`PUBLISH_FAILED`) recorded in `recordPublicationOutcome` (`category: "PUBLISH"`).
 - **AI Generation Events (NOTIFY-01B)**: Asynchronous media generation failures (`AI_GENERATION_FAILED`) recorded in `media-generation-runtime.ts` (`category: "AI"`).
-- **Billing & Approval Events (NOTIFY-01C)**: Low credit balance alerts (`CREDITS_LOW`, `category: "BILLING"`) and policy review triggers (`APPROVAL_REQUIRED`, `category: "APPROVAL"`).
+- **Billing & Approval Events (NOTIFY-01C)**: Low credit balance alerts (`CREDITS_LOW`, `category: "BILLING"`) are emitted atomically when the immutable ledger crosses the configured threshold; policy review triggers (`APPROVAL_REQUIRED`, `category: "APPROVAL"`) are emitted when a YouTube policy review is completed and owner/admin scheduling approval is still required.
 - **Notification Center Actions (NOTIFY-01C)**: Mark-as-unread toggle (`POST|PATCH :id/unread`) allowing users/admins to reset read receipts, preserving unread badge counts per MASTER_SPEC §83.
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL`), bounded pagination, and single/batch read/unread actions.
 
 In accordance with bounded scope:
-- No synthetic or mock notification generation.
+- No synthetic or mock notification generation is used by the application. Unit tests may call event creators directly to verify their idempotent contracts.
 - No external delivery channels (email, SMS, or mobile push).
 - No realtime WebSocket or SLO guarantees claimed.
 - `AuditLog` remains append-only and immutable; notifications are stored in a dedicated mutable read-receipt model (`Notification`).
@@ -108,6 +108,12 @@ Notifications are emitted strictly upon reaching terminal render status:
    - Event Key: `ai:${job.id}:failed`
    - Title: `AI generation failed`
    - Body: `Media generation failed: {error}`
+
+6. **Credit ledger crossing (NOTIFY-01C)**:
+   `packages/core/credits.ts` writes a workspace-wide `CREDITS_LOW` row in the same transaction as a reservation, settlement or grant when the available balance moves from above `CREDITS_LOW_THRESHOLD` to at or below it. The default threshold is 20; the event key includes the workspace, threshold and resulting balance.
+
+7. **YouTube policy review completion (NOTIFY-01C)**:
+   `publications.ts` writes an `APPROVAL_REQUIRED` row in the same transaction as the first immutable policy review. The notification is broadcast to the workspace because only owner/admin roles may schedule the reviewed publication.
 
 ---
 

@@ -62,12 +62,13 @@ DATA-01C implements workspace retention pruning per `MASTER_SPEC §71 & §147` v
   - **Expired Invitations**: Workspace invitations where `expiresAt < now()`.
   - **Invalidated / Canceled Publication Intents**: Publication intents with `status IN ['INVALIDATED', 'CANCELED']` that have zero active/historical child publication schedules and attempts.
   - **Canceled Publication Schedules**: Publication schedules with `status = 'CANCELED'` that have zero associated publication attempts.
-  - **Stale Render Jobs**: Failed or canceled render jobs older than 24 hours (`status IN ['FAILED', 'CANCELED']` and `createdAt < now() - 24 hours`).
+  - **Stale Render Jobs**: Failed or canceled scratch render rows older than 24 hours (`status IN ['FAILED', 'CANCELED']` and `createdAt < now() - 24 hours`) only when `outputKey`, `thumbnailKey` and `captionsKey` are all null. Rows that reference private media stay in place until an object-store reconciliation job can delete database rows and bytes together.
 - **Immutable Financial & Audit Protection**:
   - Financial records (`CreditEntry`, `CreditReservation`, `BillingSubscription`, `BillingInvoice`) and compliance logs (`AuditLog`) are strictly protected from deletion or mutation.
   - Core creative content (`Campaign`, `ContentItem`, `Asset`, `BrandProfile`, `BrandVersion`) is preserved unconditionally.
 - **Audit Logging**:
   - In non-dry-run mode, appends an immutable `retention.pruned` event to `AuditLog` containing exact deleted counts (`expiredInvitations`, `invalidatedPublicationIntents`, `canceledPublicationSchedules`, `staleRenderJobs`), total pruned records, actor ID, and timestamp.
+- Candidate counts and deletes run under the workspace row lock in one transaction, so a dry-run or execution cannot report a candidate set that was changed by another retention call midway through the operation.
 
 Temporary processing files and incomplete final outputs are cleaned up when possible. Automatic expiration, output/cache/orphan collection, account/organization erasure, complete cross-store deletion and integration revocation remain unimplemented. Back up native PostgreSQL and media storage consistently. A fresh-database PGlite restore and the bounded native PostgreSQL/private-media fixture restore passed (NATIVE-01A main060a7d1/run39177109393). RECOVERY-01A adds local native backend-interruption/rollback/retry proof and requires its own full Compose CI; see POSTGRES_RESTORE_INTERRUPTION.md. Production/PITR and broader recovery remain open. Technical features do not establish regulatory compliance.
 

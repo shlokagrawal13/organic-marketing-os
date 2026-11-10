@@ -1,44 +1,66 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "taskId": "NOTIFY-01C",
-  "recordedAtUtc": "2026-11-04T22:20:00.000Z",
-  "status": "local_verified",
+  "recordedAtUtc": "2026-11-10T00:00:00Z",
+  "status": "locally_integrated_ci_pending",
+  "base": {
+    "integratedMain": "f8d4f6e",
+    "reviewedBranch": "notify-01c",
+    "reviewedBranchHead": "1490f397a0bba31832a82fbab7a68c79f825a2a6",
+    "branchHistoryPreserved": true
+  },
   "behavior": {
-    "markUnread": "POST and PATCH /workspaces/:organizationId/notifications/:id/unread toggle read notifications back to unread status (readAt: null, readBy: null), accurately updating unread badge counts; idempotent on already unread notifications",
-    "creditsLowNotifications": "createCreditsLowNotification generates idempotent CREDITS_LOW notifications with category BILLING, eventKey credits:low:<orgId>:<balance>, linking to /workspaces/:orgId/billing",
-    "approvalRequiredNotifications": "createApprovalRequiredNotification generates idempotent APPROVAL_REQUIRED notifications with category APPROVAL, eventKey approval:required:<reviewId>, linking to /workspaces/:orgId/reviews/:reviewId",
-    "tests": "23 unit tests in tests/notifications.test.ts covering terminal render triggers, publication confirmed/rejected outcomes, AI generation failures, credits low alerts, approval required triggers, unread toggle actions, category filtering, category read-all, duplicate deduplication, tenant isolation, concurrent first-acknowledgement preservation, and atomic failure transactions; all pass locally"
+    "notificationCenter": "Workspace top-bar panel lists tenant-bound notifications, shows unread count, supports read/unread and read-all actions, polls with abort/generation guards and renders loading/error/empty states.",
+    "creditsLowNotifications": "The immutable credit ledger emits one workspace-wide CREDITS_LOW notification when available credits cross from above CREDITS_LOW_THRESHOLD to at/below it; default threshold is 20 and the event key includes organization, threshold and balance for idempotency.",
+    "approvalRequiredNotifications": "The YouTube policy-review mutation emits one workspace-wide APPROVAL_REQUIRED notification after the review row is created, preserving the transaction boundary and review identity.",
+    "focusedTests": "37 focused notification/data-governance unit tests pass after a fresh API build; credit and policy-review integration assertions were added.",
+    "browserRegression": "tests/ui/notifications.spec.ts covers unread badge, panel rendering and read/unread toggle in an owned fixture; local harness execution is pending because the Windows fixture preflight refuses occupied Redis."
   },
   "local": {
-    "taskId": "NOTIFY-01C",
-    "passed": true,
-    "tests": {
-      "notifications": 23
-    },
-    "fixtureCleanup": true,
-    "realEnvironmentUnchanged": true,
-    "apiBuild": true,
     "prismaGenerate": true,
-    "migrations": 26,
-    "tables": 38,
-    "productionAuditVulnerabilities": 0
+    "apiBuild": true,
+    "webBuild": true,
+    "combinedBuild": true,
+    "focusedNotificationAndDataGovernanceTests": { "passed": 37, "failed": 0 },
+    "fullSuite": { "attempted": true, "passedBeforeEnvironmentFailures": 292, "total": 416, "failed": 124, "claim": "not_accepted_environment_limited" },
+    "fixtureCleanup": "no owned HTTP/browser fixture started; no user service was contacted",
+    "realEnvironmentUnchanged": true,
+    "liveProvidersUsed": false,
+    "exactCi": { "pending": true, "required": "all three jobs and every required step on the exact published commit" }
   },
+  "changedPaths": [
+    "apps/api/src/notification-events.ts",
+    "apps/api/src/publications.ts",
+    "apps/web/app/notifications-panel.tsx",
+    "apps/web/app/workspace.tsx",
+    "apps/web/app/globals.css",
+    "packages/core/credits.ts",
+    "tests/notifications.test.ts",
+    "tests/integration/credits.test.ts",
+    "tests/integration/claim-policy.test.ts",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATIONS.md",
+    "docs/BILLING.md"
+  ],
   "preserved": {
-    "priorMigrations": 25,
+    "priorMigrations": 26,
     "masterSpecification": true,
     "realEnvironmentUnchanged": true,
     "populatedUserServicesUntouched": true,
-    "liveProvidersUsed": false,
-    "ux01ProtectedFilesUntouched": true
+    "externalDelivery": false,
+    "realtimeOrSlo": false
   },
   "publication": {
-    "branch": "notify-01c",
-    "baseBranch": "notify-01b",
-    "doNotMergeToMain": true
+    "branch": "main",
+    "commit": "pending",
+    "runId": null,
+    "receipt": null,
+    "sourceZip": null,
+    "status": "local_changes_pending_publication"
   },
   "limits": [
-    "In-app notifications only; no external push or email delivery channels",
-    "No realtime WebSocket streaming or latency SLO acceptance claimed",
-    "Windows environment limits: full Compose verification runs on Linux CI"
+    "Windows local full-suite failures are missing FFmpeg/librsvg/font/Python prerequisites; Linux CI is authoritative for those gates.",
+    "The isolated harness fails closed while an existing Redis listener occupies 127.0.0.1:6379.",
+    "No external push/email delivery, realtime SLO, live provider, deployed or full-master acceptance is claimed."
   ]
 }

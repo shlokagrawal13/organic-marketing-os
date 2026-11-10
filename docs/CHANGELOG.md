@@ -1217,3 +1217,9 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 - NOTIFY-01B adds idempotent publishing outcome and failed-AI notifications with category filters; DATA-01B adds tenant-scoped social-connection disconnect, credential scrubbing, active-work cascade and immutable audit coverage.
 - Focused checks pass: 20 notification tests, 11 data-governance tests, API build, web production build and whitespace validation. Exact run `42810027002` passed all three jobs and all 41 required steps; artifact names, sizes and digests were recorded, with browser bytes/report remaining uninspected because downloads were proxy403-blocked.
 - Local HTTP remains unaccepted because the safe harness requires isolated services and Windows lacks the required media/fontconfig setup while Redis port 6379 is occupied.
+## NOTIFY-01C / DATA-01C - 2026-11-10
+
+- Added the workspace notification center with guarded unread polling, read/unread toggles and read-all acknowledgement.
+- Emitted low-credit notifications atomically at the configured immutable-ledger threshold crossing and approval-required notifications from the policy-review mutation.
+- Serialized tenant retention preview/pruning under a workspace lock and preserved failed/canceled render rows that still reference private output bytes.
+- Added focused notification, credit, policy-review, retention and browser regressions; exact-source CI and external packaging remain pending.

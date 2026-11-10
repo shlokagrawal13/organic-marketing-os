@@ -49,6 +49,7 @@ import WorkspaceSearch, { type SearchResult } from "./workspace-search";
 import { useRevisionPersistence } from "./use-revision-persistence";
 import BrandSaveStatus from "./brand-save-status";
 import WorkspaceSettings from "./workspace-settings";
+import NotificationsPanel from "./notifications-panel";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -648,6 +649,7 @@ export default function Workspace({
           </div>
           <div className="topbar-right">
             <span className="timezone">{org.timezone}</span>
+            <NotificationsPanel base={base} disabled={navigationBusy} />
             <button
               className="icon-button"
               onClick={theme}

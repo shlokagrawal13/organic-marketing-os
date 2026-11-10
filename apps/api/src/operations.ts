@@ -500,75 +500,95 @@ export class OperationsController {
   ) {
     const org = req.organizationId;
     const isDryRun = dryRunQuery === "true";
-    const now = new Date();
+    return this.db.$transaction(async (tx) => {
+      // Serialize preview and execution against workspace lifecycle changes so
+      // the reported candidates are the same rows the execution can remove.
+      await tx.$queryRaw`SELECT id FROM "Organization" WHERE id=${org} FOR UPDATE`;
+      const now = new Date();
 
-    // 1. Expired Invitations (expiresAt < now)
-    const expiredInvitationsWhere: Prisma.InvitationWhereInput = {
-      organizationId: org,
-      expiresAt: { lt: now },
-    };
-
-    // 2. Invalidated or Canceled Publication Intents without active child schedules or attempts
-    const invalidatedIntentsWhere: Prisma.PublicationIntentWhereInput = {
-      organizationId: org,
-      status: { in: ["INVALIDATED", "CANCELED"] },
-      schedule: null,
-      attempt: null,
-    };
-
-    // 3. Canceled Publication Schedules without active attempt references
-    const canceledSchedulesWhere: Prisma.PublicationScheduleWhereInput = {
-      organizationId: org,
-      status: "CANCELED",
-      attemptId: null,
-    };
-
-    // 4. Failed/Canceled Render Jobs older than 24h
-    const renderCutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    const staleRendersWhere: Prisma.RenderJobWhereInput = {
-      organizationId: org,
-      status: { in: ["FAILED", "CANCELED"] },
-      createdAt: { lt: renderCutoff },
-    };
-
-    // Compute candidate counts
-    const [invitationCount, intentCount, scheduleCount, renderCount] = await Promise.all([
-      this.db.invitation.count({ where: expiredInvitationsWhere }),
-      this.db.publicationIntent.count({ where: invalidatedIntentsWhere }),
-      this.db.publicationSchedule.count({ where: canceledSchedulesWhere }),
-      this.db.renderJob.count({ where: staleRendersWhere }),
-    ]);
-
-    const candidates = {
-      expiredInvitations: invitationCount,
-      invalidatedIntents: intentCount,
-      canceledSchedules: scheduleCount,
-      staleRenders: renderCount,
-      total: invitationCount + intentCount + scheduleCount + renderCount,
-    };
-
-    if (isDryRun) {
-      return {
-        dryRun: true,
-        pruned: false,
+      // 1. Expired Invitations (expiresAt < now)
+      const expiredInvitationsWhere: Prisma.InvitationWhereInput = {
         organizationId: org,
-        candidates,
+        expiresAt: { lt: now },
       };
-    }
 
-    // Execute atomic pruning transaction in dependency-safe order
-    const pruned = await this.db.$transaction(async (tx) => {
-      const delSchedules = await tx.publicationSchedule.deleteMany({ where: canceledSchedulesWhere });
-      const delIntents = await tx.publicationIntent.deleteMany({ where: invalidatedIntentsWhere });
-      const delRenders = await tx.renderJob.deleteMany({ where: staleRendersWhere });
-      const delInvitations = await tx.invitation.deleteMany({ where: expiredInvitationsWhere });
+      // 2. Invalidated or Canceled Publication Intents without active child schedules or attempts
+      const invalidatedIntentsWhere: Prisma.PublicationIntentWhereInput = {
+        organizationId: org,
+        status: { in: ["INVALIDATED", "CANCELED"] },
+        schedule: null,
+        attempt: null,
+      };
+
+      // 3. Canceled Publication Schedules without active attempt references
+      const canceledSchedulesWhere: Prisma.PublicationScheduleWhereInput = {
+        organizationId: org,
+        status: "CANCELED",
+        attemptId: null,
+      };
+
+      // 4. Failed/Canceled render rows with no private output to retain.
+      // A DB row may reference MP4/JPEG/SRT objects; deleting that row here
+      // would orphan private bytes. Output cleanup needs a separate object-store
+      // reconciliation job, so this bounded prune only removes scratch failures.
+      const renderCutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      const staleRendersWhere: Prisma.RenderJobWhereInput = {
+        organizationId: org,
+        status: { in: ["FAILED", "CANCELED"] },
+        createdAt: { lt: renderCutoff },
+        outputKey: null,
+        thumbnailKey: null,
+        captionsKey: null,
+      };
+
+      const [invitationCount, intentCount, scheduleCount, renderCount] =
+        await Promise.all([
+          tx.invitation.count({ where: expiredInvitationsWhere }),
+          tx.publicationIntent.count({ where: invalidatedIntentsWhere }),
+          tx.publicationSchedule.count({ where: canceledSchedulesWhere }),
+          tx.renderJob.count({ where: staleRendersWhere }),
+        ]);
+
+      const candidates = {
+        expiredInvitations: invitationCount,
+        invalidatedIntents: intentCount,
+        canceledSchedules: scheduleCount,
+        staleRenders: renderCount,
+        total: invitationCount + intentCount + scheduleCount + renderCount,
+      };
+
+      if (isDryRun)
+        return {
+          dryRun: true as const,
+          pruned: false as const,
+          organizationId: org,
+          candidates,
+        };
+
+      // Execute atomic pruning in dependency-safe order.
+      const delSchedules = await tx.publicationSchedule.deleteMany({
+        where: canceledSchedulesWhere,
+      });
+      const delIntents = await tx.publicationIntent.deleteMany({
+        where: invalidatedIntentsWhere,
+      });
+      const delRenders = await tx.renderJob.deleteMany({
+        where: staleRendersWhere,
+      });
+      const delInvitations = await tx.invitation.deleteMany({
+        where: expiredInvitationsWhere,
+      });
 
       const details = {
         expiredInvitations: delInvitations.count,
         invalidatedIntents: delIntents.count,
         canceledSchedules: delSchedules.count,
         staleRenders: delRenders.count,
-        total: delInvitations.count + delIntents.count + delSchedules.count + delRenders.count,
+        total:
+          delInvitations.count +
+          delIntents.count +
+          delSchedules.count +
+          delRenders.count,
       };
 
       await tx.auditLog.create({
@@ -584,15 +604,13 @@ export class OperationsController {
         },
       });
 
-      return details;
+      return {
+        dryRun: false as const,
+        pruned: true as const,
+        organizationId: org,
+        summary: details,
+      };
     });
-
-    return {
-      dryRun: false,
-      pruned: true,
-      organizationId: org,
-      summary: pruned,
-    };
   }
 }
 @Module({ imports: [AssetsModule], controllers: [OperationsController] })

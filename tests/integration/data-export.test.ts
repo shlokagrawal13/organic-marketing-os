@@ -368,6 +368,53 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
     },
   });
 
+  // Render rows with private outputs are retained so pruning cannot orphan
+  // objects in the private media store. A scratch failure with no output is
+  // eligible after the 24-hour retention window.
+  const renderContent = await db.contentItem.create({
+    data: {
+      organizationId: org.id,
+      title: "Retention render content",
+      platform: "YOUTUBE",
+      format: "VIDEO",
+      createdBy: owner.id,
+      revision: 1,
+      scenes: [],
+    },
+  });
+  const staleRenderAt = new Date(Date.now() - 48 * 60 * 60 * 1000);
+  const scratchRender = await db.renderJob.create({
+    data: {
+      organizationId: org.id,
+      contentId: renderContent.id,
+      contentRevision: 1,
+      actorId: owner.id,
+      requestKey: `retention-scratch-${randomUUID()}`,
+      requestHash: randomUUID(),
+      snapshot: { scenes: [] },
+      options: {},
+      totalScenes: 0,
+      status: "FAILED",
+      createdAt: staleRenderAt,
+    },
+  });
+  const retainedRender = await db.renderJob.create({
+    data: {
+      organizationId: org.id,
+      contentId: renderContent.id,
+      contentRevision: 1,
+      actorId: owner.id,
+      requestKey: `retention-retained-${randomUUID()}`,
+      requestHash: randomUUID(),
+      snapshot: { scenes: [] },
+      options: {},
+      totalScenes: 0,
+      status: "FAILED",
+      createdAt: staleRenderAt,
+      outputKey: `${org.id}/renders/retained.mp4`,
+    },
+  });
+
   // 4. Test non-privileged role (EDITOR) receives 403 Forbidden
   const editorRes = await editor.call(
     `/workspaces/${org.id}/operations/retention-prune`,
@@ -385,6 +432,7 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
   assert.equal(dryBody.dryRun, true);
   assert.equal(dryBody.pruned, false);
   assert.equal(dryBody.candidates.expiredInvitations, 1);
+  assert.equal(dryBody.candidates.staleRenders, 1);
 
   // Assert expired invitation still exists in DB after dry-run
   const invStillExists = await db.invitation.findUnique({ where: { id: expiredInv.id } });
@@ -400,6 +448,7 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
   assert.equal(pruneBody.dryRun, false);
   assert.equal(pruneBody.pruned, true);
   assert.equal(pruneBody.summary.expiredInvitations, 1);
+  assert.equal(pruneBody.summary.staleRenders, 1);
 
   // Assert expired invitation is deleted
   const invDeleted = await db.invitation.findUnique({ where: { id: expiredInv.id } });
@@ -408,6 +457,13 @@ test("retention pruning: OWNER can preview candidates in dry-run mode and prune 
   // Assert active invitation is PRESERVED
   const invActiveKept = await db.invitation.findUnique({ where: { id: activeInv.id } });
   assert.ok(invActiveKept);
+
+  // Scratch failure is removed, but the row binding retained private bytes is
+  // preserved for a separate object-store reconciliation process.
+  const scratchAfterPrune = await db.renderJob.findUnique({ where: { id: scratchRender.id } });
+  const retainedAfterPrune = await db.renderJob.findUnique({ where: { id: retainedRender.id } });
+  assert.equal(scratchAfterPrune, null);
+  assert.equal(retainedAfterPrune?.outputKey, `${org.id}/renders/retained.mp4`);
 
   // Assert financial records are IMMUTABLE and PRESERVED
   const creditAcctKept = await db.creditAccount.findUnique({

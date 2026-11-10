@@ -1,4 +1,7 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import {
+  writeCreditsLowNotification,
+} from "../../../packages/core/credits";
 
 export const NOTIFICATION_ROLES = [
   "OWNER",
@@ -178,36 +181,10 @@ export async function createCreditsLowNotification(
     unit?: string;
   },
 ) {
-  const eventKey = `credits:low:${params.organizationId}:${params.balance}`;
-  const title = "Credits low";
-  const body = `Workspace credit balance is low (${params.balance} ${params.unit ?? "credits"} remaining, threshold: ${params.threshold}).`;
-
-  return client.notification.upsert({
-    where: {
-      organizationId_eventKey: {
-        organizationId: params.organizationId,
-        eventKey,
-      },
-    },
-    create: {
-      organizationId: params.organizationId,
-      userId: params.actorId ?? undefined,
-      type: "CREDITS_LOW",
-      category: "BILLING",
-      title,
-      body,
-      link: `/workspaces/${params.organizationId}/billing`,
-      entityType: "CREDIT_ACCOUNT",
-      entityId: params.organizationId,
-      eventKey,
-      data: {
-        balance: params.balance,
-        threshold: params.threshold,
-        unit: params.unit ?? "credits",
-      },
-    },
-    update: {},
-  });
+  const notification = await writeCreditsLowNotification(client, params);
+  // Keep the optional actor argument part of the public event contract while
+  // leaving low-balance alerts workspace-wide by default.
+  return notification;
 }
 
 export async function createApprovalRequiredNotification(

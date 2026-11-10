@@ -152,6 +152,12 @@ test(
     let summary = (await call(owner, root + "/credits")).body;
     assert.equal(summary.available, 17);
     assert.equal(summary.reserved, 3);
+    const lowCreditNotice = await db.notification.findFirst({
+      where: { organizationId: org.id, type: "CREDITS_LOW" },
+    });
+    assert.ok(lowCreditNotice, "crossing the configured threshold emits a notification");
+    assert.equal(lowCreditNotice.userId, null);
+    assert.equal(lowCreditNotice.eventKey, `credits:low:${org.id}:20:17`);
     const replay = await call(owner, root + "/ai/jobs", "POST", request);
     assert.equal(replay.body.id, pending.body.id);
     assert.equal(

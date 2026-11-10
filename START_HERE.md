@@ -1,3 +1,10 @@
+<!-- NOTIFY01C_DATA01C_CURRENT_START -->
+## Current: NOTIFY-01C / DATA-01C local integration - 2026-11-10
+
+Continue from the current `main` worktree. NOTIFY-01C adds a guarded notification center UI plus atomic low-credit and policy-review approval triggers. DATA-01C keeps retention preview/pruning under a workspace lock and refuses to delete render rows that still bind private output, thumbnail or captions objects. Prisma generation, API/web/combined builds and 37 focused notification/data-governance tests pass. Exact-source three-job CI is still required; the Windows local suite is limited by missing FFmpeg/librsvg/font prerequisites and an occupied Redis port, while the isolated harness refuses unsafe reuse. Package only after the exact published commit is green, and keep live/deployed/provider/full-master acceptance open.
+Read [active handoff](docs/ACTIVE_HANDOFF.md), [NOTIFY-01C evidence](docs/qa/notify01c-evidence.json), [DATA-01C evidence](docs/qa/data01c-evidence.json) and [checkpoint](PROJECT_CHECKPOINT.json) before changing scope.
+<!-- NOTIFY01C_DATA01C_CURRENT_END -->
+
 <!-- INTEGRATION01A_CURRENT_START -->
 ## Current: NOTIFY-01B / DATA-01B integration - 2026-11-10
 

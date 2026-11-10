@@ -1,4 +1,16 @@
-# Active handoff - NOTIFY-01B / DATA-01B integration
+# Active handoff - NOTIFY-01C / DATA-01C local integration
+
+## Current: NOTIFY-01C / DATA-01C - 2026-11-10
+
+The reviewed NOTIFY-01C and DATA-01C increments are integrated locally on `main` after the verified NOTIFY-01B / DATA-01B publication. NOTIFY-01C now has a workspace notification center in the web top bar, unread/read and read-all actions, guarded polling, and an owned browser regression. Low-credit alerts are emitted atomically when the immutable credit ledger crosses the configured `CREDITS_LOW_THRESHOLD` (default 20), and approval-required alerts are emitted from the YouTube policy-review mutation. DATA-01C retention preview and execution run under a workspace row lock and retain any failed/canceled render row that still references private output, thumbnail, or captions bytes.
+
+The implementation changes are locally build-verified: Prisma generation, API build, web build and combined build pass; 37 focused notification/data-governance unit tests pass. The focused retention HTTP regression now covers scratch-row deletion and private-output preservation. The full local suite remains environment-limited on this Windows machine by missing FFmpeg/librsvg/font prerequisites, and the isolated HTTP/browser harness refuses to start while an existing Redis listener occupies port 6379; no populated user service or real environment was touched. The new notification browser spec therefore awaits Linux CI execution.
+
+Next action: run `python scripts/package_handoff.py --check`, commit and push this exact source, inspect and fix all three jobs and every required step on the new published commit, then package the verified source ZIP and final CI receipt outside the repository. Preserve Antigravity's separate NOTIFY/DATA later branches; do not claim live providers, deployed behavior, external notification delivery, remote durability, or full-master acceptance. See [NOTIFY-01C evidence](qa/notify01c-evidence.json) and [DATA-01C evidence](qa/data01c-evidence.json).
+
+<!-- NOTIFY01C_DATA01C_CURRENT_END -->
+
+# Historical handoff - NOTIFY-01B / DATA-01B integration
 
 UX-01L is closed on exact `main` commit `dafdb93a562c5bf53d9dfaa159340754775a6e07` and [run 41921508171](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/41921508171): all three jobs and every required step passed (379 unit, 50 HTTP, 67 browser, 5 recovery, 25 migrations, 24 Compose phases, zero audits). Four artifact bytes/digests/CRCs and embedded reports were checked; [imported receipt](qa/ux01l-final-ci-receipt.json) closes its packaged pending status.
 

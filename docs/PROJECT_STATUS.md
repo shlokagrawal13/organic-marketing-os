@@ -1,3 +1,10 @@
+<!-- NOTIFY01C_DATA01C_CURRENT_START -->
+## Current: NOTIFY-01C / DATA-01C local integration - 2026-11-10
+
+NOTIFY-01C and DATA-01C are integrated locally on the current `main` worktree. The notification center UI supports unread/read/read-all actions with guarded polling; low-credit alerts come from an atomic credit-ledger threshold crossing and approval-required alerts come from the policy-review mutation. Retention preview/pruning is serialized by a workspace lock and preserves failed/canceled render rows that still reference private media keys. Prisma generation, API/web/combined builds and 37 focused notification/data-governance tests pass. The new browser regression and complete HTTP suite require exact-source Linux CI because this Windows environment lacks FFmpeg/librsvg/font prerequisites and has an occupied Redis listener; no user services or real credentials were touched. Exact three-job CI, packaging and the external receipt are pending. Live/deployed/provider/full-master gates remain open.
+See [active handoff](docs/ACTIVE_HANDOFF.md), [NOTIFY-01C evidence](docs/qa/notify01c-evidence.json) and [DATA-01C evidence](docs/qa/data01c-evidence.json).
+<!-- NOTIFY01C_DATA01C_CURRENT_END -->
+
 <!-- INTEGRATION01A_CURRENT_START -->
 ## Current: NOTIFY-01B / DATA-01B integration - 2026-11-10
 

@@ -13,6 +13,7 @@ import {
   NotificationsController,
   NOTIFICATION_ROLES,
 } from "../dist/apps/api/src/notifications";
+import { grantCredits, reserveCredits } from "../dist/packages/core/credits";
 import { recordPublicationOutcome } from "../dist/apps/api/src/publication-attempts";
 import { applicationMigrations } from "../scripts/application-pitr-fixture.mjs";
 import { fileURLToPath } from "node:url";
@@ -1103,12 +1104,29 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(n.category, "BILLING");
     assert.equal(n.title, "Credits low");
     assert.equal(n.link, `/workspaces/${org.id}/billing`);
+    assert.equal(n.eventKey, `credits:low:${org.id}:20:5`);
     assert.equal((n.data as any).balance, 5);
     assert.equal((n.data as any).threshold, 20);
 
     const list = await controller.list(user, { category: "BILLING" });
     assert.equal(list.total, 1);
     assert.equal(list.items[0].type, "CREDITS_LOW");
+  });
+
+  test("credit ledger crossing emits one workspace-wide low-balance notification atomically", async () => {
+    const org = await prisma.organization.create({ data: { name: "Credits Trigger Org" } });
+    const actorId = randomUUID();
+    await prisma.$transaction(async (tx) => {
+      await grantCredits(tx, org.id, 25, randomUUID(), "Synthetic threshold grant", actorId);
+      await reserveCredits(tx, org.id, `threshold:${randomUUID()}`, 10, actorId);
+    });
+    const rows = await prisma.notification.findMany({
+      where: { organizationId: org.id, type: "CREDITS_LOW" },
+    });
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].userId, null);
+    assert.equal(rows[0].eventKey, `credits:low:${org.id}:20:15`);
+    assert.equal((rows[0].data as any).threshold, 20);
   });
 
   test("createApprovalRequiredNotification: creates APPROVAL/APPROVAL_REQUIRED notification with review metadata", async () => {

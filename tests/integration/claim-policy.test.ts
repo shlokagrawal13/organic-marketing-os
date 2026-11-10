@@ -154,25 +154,33 @@ test("claim evidence is rechecked at scheduling, reservation, due claim, and sub
       requestKey: randomUUID(),
     });
     assert.equal(prepared.status, 201);
+    const policyReviewResponse = await owner.call(
+      root + `/publication-intents/${prepared.body.id}/youtube-policy-review`,
+      "POST",
+      {
+        connectionId: connection.id,
+        privacyStatus: "private",
+        selfDeclaredMadeForKids: false,
+        containsSyntheticMedia: true,
+        metadataReviewed: true,
+        audienceReviewed: true,
+        syntheticMediaReviewed: true,
+        rightsAndPlatformRulesReviewed: true,
+      },
+    );
+    assert.equal(policyReviewResponse.status, 201);
+    const approvalNotification = await db.notification.findFirst({
+      where: {
+        organizationId: organization.id,
+        type: "APPROVAL_REQUIRED",
+        entityId: policyReviewResponse.body.id,
+      },
+    });
+    assert.ok(approvalNotification);
+    assert.equal(approvalNotification.userId, null);
     assert.equal(
-      (
-        await owner.call(
-          root +
-            `/publication-intents/${prepared.body.id}/youtube-policy-review`,
-          "POST",
-          {
-            connectionId: connection.id,
-            privacyStatus: "private",
-            selfDeclaredMadeForKids: false,
-            containsSyntheticMedia: true,
-            metadataReviewed: true,
-            audienceReviewed: true,
-            syntheticMediaReviewed: true,
-            rightsAndPlatformRulesReviewed: true,
-          },
-        )
-      ).status,
-      201,
+      approvalNotification.eventKey,
+      `approval:required:${policyReviewResponse.body.id}`,
     );
     const review = await db.contentClaimReview.findFirstOrThrow({
       where: { contentId },

@@ -1,9 +1,70 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { createHash } from "node:crypto";
 import { stableJson } from "./requests";
 import { AITask } from "./ai";
 
 type Tx = Prisma.TransactionClient;
+type NotificationClient = PrismaClient | Prisma.TransactionClient;
+export const DEFAULT_CREDITS_LOW_THRESHOLD = 20;
+
+export function creditsLowThreshold() {
+  const raw = process.env.CREDITS_LOW_THRESHOLD;
+  const value = raw === undefined || raw === "" ? DEFAULT_CREDITS_LOW_THRESHOLD : Number(raw);
+  if (!Number.isSafeInteger(value) || value < 0 || value > 1_000_000_000)
+    throw new Error("CREDITS_LOW_THRESHOLD must be a whole number between 0 and 1000000000.");
+  return value;
+}
+
+export function creditsLowEventKey(
+  organizationId: string,
+  balance: number,
+  threshold: number,
+) {
+  return `credits:low:${organizationId}:${threshold}:${balance}`;
+}
+
+export async function writeCreditsLowNotification(
+  client: NotificationClient,
+  params: {
+    organizationId: string;
+    actorId?: string | null;
+    balance: number;
+    threshold: number;
+    unit?: string;
+  },
+) {
+  const eventKey = creditsLowEventKey(
+    params.organizationId,
+    params.balance,
+    params.threshold,
+  );
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: "CREDITS_LOW",
+      category: "BILLING",
+      title: "Credits low",
+      body: `Workspace credit balance is low (${params.balance} ${params.unit ?? "credits"} remaining, threshold: ${params.threshold}).`,
+      link: `/workspaces/${params.organizationId}/billing`,
+      entityType: "CREDIT_ACCOUNT",
+      entityId: params.organizationId,
+      eventKey,
+      data: {
+        balance: params.balance,
+        threshold: params.threshold,
+        unit: params.unit ?? "credits",
+      },
+    },
+    update: {},
+  });
+}
 export class CreditError extends Error {
   constructor(
     public readonly status: number,
@@ -28,6 +89,7 @@ export function creditPolicy() {
       return [task, amount];
     }),
   ) as Record<AITask, number>;
+  creditsLowThreshold();
   return { mode, prices };
 }
 
@@ -104,6 +166,13 @@ async function append(tx: Tx, input: Entry) {
       revision: { increment: 1 },
     },
   });
+  const threshold = creditsLowThreshold();
+  if (a.available > threshold && availableAfter <= threshold)
+    await writeCreditsLowNotification(tx, {
+      organizationId: input.organizationId,
+      balance: availableAfter,
+      threshold,
+    });
   return entry;
 }
 export async function grantCredits(

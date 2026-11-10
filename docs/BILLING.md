@@ -8,6 +8,8 @@ The app has a real product-credit ledger, AI reservation lifecycle, database-bac
 
 `AI_STRATEGY_CREDITS`, `AI_CONTENT_CREDITS` and `AI_SCENE_CREDITS` default to 5, 3 and 1 whole credits. Each must be 1–10000. The UI shows the quote before generation. The API requires `maxCredits` at least the current price; a missing/stale allowance returns 409 without starting work. Exact request-key replays return the original job and do not reserve again.
 
+When the immutable ledger crosses from above to at-or-below `CREDITS_LOW_THRESHOLD`, the same database transaction creates one tenant-scoped `CREDITS_LOW` in-app notification. The default threshold is 20 credits; set `CREDITS_LOW_THRESHOLD=0` to alert only at a zero balance. The alert is workspace-wide, deduplicated by workspace, threshold and resulting balance, and does not send email or push delivery.
+
 One successful saved AI result consumes its stored quote, including configured fallback attempts. Credits are product units, not dollars or a cap on the provider account's bill. The existing daily-job and pending-job quotas still apply. Uploaded-media rendering is not charged product credits in this increment.
 
 ## Accounting and failure behavior
