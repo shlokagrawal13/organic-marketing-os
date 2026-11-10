@@ -231,7 +231,7 @@ export default function NotificationsPanel({
                           : "Mark notification as unread"
                       }
                       disabled={busyId !== null}
-                      onClick={() => void setRead(notification, !unread)}
+                      onClick={() => void setRead(notification, unread)}
                     >
                       {unread ? <Check size={15} /> : <Bell size={15} />}
                     </button>
