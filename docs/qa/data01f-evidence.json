@@ -1,13 +1,12 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "taskId": "DATA-01F",
-  "recordedAtUtc": "2026-11-11T00:00:00.000Z",
-  "status": "integration_pending_exact_ci",
+  "recordedAtUtc": "2026-11-10T22:39:47Z",
+  "status": "published_exact_commit_ci_verified",
   "behavior": {
     "assetReconciliation": "POST /workspaces/:organizationId/operations/reconcile-assets identifies and prunes unattached/archived assets, supports ?dryRun=true, reports the exact byte sum across all candidates, and rechecks legal hold state under a workspace row lock.",
     "workspaceSafeErasure": "POST /workspaces/:organizationId/operations/erasure enforces OWNER-only authorization, exact confirmation, legal-hold protection and in-flight render/publication guards inside one locked transaction while preserving immutable financial ledgers.",
-    "auditSafety": "Audit query and export reject invalid or reversed ISO-8601 ranges with HTTP 400; export cancellation stops further temporary writes and still cleans its private file.",
-    "tests": "20 focused data-governance unit tests pass. The DATA HTTP suite contains 16 cases, including invalid-date and >100-candidate byte-accounting regressions; local HTTP execution is blocked by the owned fixture refusing occupied port 3000."
+    "auditSafety": "Audit query and export reject invalid or reversed ISO-8601 ranges with HTTP 400; export cancellation stops further temporary writes and still cleans its private file."
   },
   "local": {
     "taskId": "DATA-01F",
@@ -30,25 +29,128 @@
     "tables": 38,
     "productionAuditVulnerabilities": 0
   },
+  "ci": {
+    "runId": 42913840765,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765",
+    "sourceCommit": "84e123d8bc99cfaeca1d14238f33bc4048dc9248",
+    "status": "completed",
+    "conclusion": "success",
+    "requiredSteps": 41,
+    "successfulSteps": 41,
+    "jobs": [
+      {
+        "id": 130171040148,
+        "name": "Native populated upgrade and migration recovery",
+        "conclusion": "success",
+        "startedAtUtc": "2026-11-10T22:21:45Z",
+        "completedAtUtc": "2026-11-10T22:22:58Z"
+      },
+      {
+        "id": 130171039842,
+        "name": "Disposable Compose and native restore",
+        "conclusion": "success",
+        "startedAtUtc": "2026-11-10T22:21:45Z",
+        "completedAtUtc": "2026-11-10T22:32:54Z"
+      },
+      {
+        "id": 130171040170,
+        "name": "Native application verification",
+        "conclusion": "success",
+        "startedAtUtc": "2026-11-10T22:21:45Z",
+        "completedAtUtc": "2026-11-10T22:39:47Z"
+      }
+    ],
+    "results": {
+      "unit": 424,
+      "http": 74,
+      "browser": 68,
+      "recovery": 5,
+      "migrations": 26,
+      "readabilitySamples": 44,
+      "composePhases": 24,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "unitReceiptSummary": {
+        "tests": 424,
+        "passed": 424,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "readabilityReceiptSummary": {
+        "samples": 36,
+        "busySamples": 8,
+        "negativeControlPassed": true
+      },
+      "physicalApplicationSchemaRecovery": true,
+      "physicalApplicationTablesCompared": 38,
+      "artifactBytesAndDigestsVerified": true
+    },
+    "artifacts": [
+      {
+        "id": 13810720026,
+        "name": "browser-evidence",
+        "sizeBytes": 15230844,
+        "digest": "sha256:b9f554874fa06f36724f38af8d378dd9411f1e3a74922648f6274927f156dcdd",
+        "downloadedBytesSha256": "b9f554874fa06f36724f38af8d378dd9411f1e3a74922648f6274927f156dcdd",
+        "bytesInspected": true,
+        "embeddedReportsInspected": true
+      },
+      {
+        "id": 13808961415,
+        "name": "postgres-pitr-evidence",
+        "sizeBytes": 3016,
+        "digest": "sha256:ca1e5c1bb7586f992398cce250ab58de142e731bdc9674777b30bffb84261474",
+        "downloadedBytesSha256": "ca1e5c1bb7586f992398cce250ab58de142e731bdc9674777b30bffb84261474",
+        "bytesInspected": true,
+        "embeddedReportsInspected": true
+      },
+      {
+        "id": 13808822500,
+        "name": "compose-evidence",
+        "sizeBytes": 16926,
+        "digest": "sha256:0fd9968ef295b9e56eedfd02b1f45f66ad805b06f7e272dcfc625077aeb8721a",
+        "downloadedBytesSha256": "0fd9968ef295b9e56eedfd02b1f45f66ad805b06f7e272dcfc625077aeb8721a",
+        "bytesInspected": true,
+        "embeddedReportsInspected": true
+      },
+      {
+        "id": 13807528893,
+        "name": "native-upgrade-evidence",
+        "sizeBytes": 934,
+        "digest": "sha256:a1d9844f532c56e19bb888c1ad9886527d8231428fbd6355f6800c8dca9abeb6",
+        "downloadedBytesSha256": "a1d9844f532c56e19bb888c1ad9886527d8231428fbd6355f6800c8dca9abeb6",
+        "bytesInspected": true,
+        "embeddedReportsInspected": true
+      }
+    ]
+  },
   "preserved": {
     "priorMigrations": 26,
     "masterSpecification": true,
     "realEnvironmentUnchanged": true,
     "populatedUserServicesUntouched": true,
     "liveProvidersUsed": false,
-    "ux01ProtectedFilesUntouched": true
+    "ux01ProtectedFilesUntouched": true,
+    "antigravityWorktreesUntouched": true
   },
   "publication": {
     "integrationBranch": "integration/data-01f",
-    "codeCommit": "2d9c8a1",
-    "baseCommit": "d19edbe4ac2ac4b83aa67595c7d28bdb60cc6e4f",
-    "mainMerge": "pending",
-    "exactCi": "pending",
-    "sourceZip": "pending"
+    "implementationCommit": "2d9c8a1",
+    "publishedCommit": "84e123d8bc99cfaeca1d14238f33bc4048dc9248",
+    "mainMerge": "completed",
+    "exactCi": "verified",
+    "sourceZip": "external final receipt after continuity documentation commit"
+  },
+  "next": {
+    "taskId": "NOTIFY-01D",
+    "action": "Review Antigravity NOTIFY-01D production lifecycle callsites and revision-bound content-ready idempotency against integrated main before accepting any change."
   },
   "limits": [
     "This fixture work does not establish remote backup durability, production RPO/RTO, atomic cross-store PITR, live providers, deployed behavior, or full-master acceptance.",
     "Financial credit entries, reservations, subscriptions and invoices remain immutable by design.",
+    "Local DATA HTTP was not accepted because the owned verifier fail-closed on occupied port 3000; exact CI HTTP, browser and recovery suites passed.",
     "The Antigravity notify-01d/notify-01e and data branches remain untouched; NOTIFY-01D lifecycle callsites still require a separate review."
   ]
 }

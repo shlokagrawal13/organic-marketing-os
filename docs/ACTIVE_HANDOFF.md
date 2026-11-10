@@ -1,13 +1,13 @@
 # Active handoff - DATA-01F integration / NOTIFY-01D review
 
 <!-- DATA01F_INTEGRATION_CURRENT_START -->
-## Current: DATA-01D through DATA-01F integration - 2026-11-11
+## Current: DATA-01D through DATA-01F exact CI closure - 2026-11-11
 
-DATA-01D, DATA-01E and DATA-01F have been reviewed against integrated main in the separate `integration/data-01f` worktree. Code commit `2d9c8a1` adds strict ISO-8601 audit-range validation, cancellation-safe audit export cleanup, workspace-row locking and legal-hold rechecks for destructive mutations, and exact byte aggregation for reconciliation beyond the 100-row preview. The existing 26 migrations, tenant boundaries and immutable financial records remain intact.
+DATA-01D, DATA-01E and DATA-01F were reviewed in the separate integration worktree and are now published on exact main commit 84e123d8bc99cfaeca1d14238f33bc4048dc9248. [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765) passed all three jobs and all 41 required steps: 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and all 24 Compose phases. Four evidence artifacts were downloaded; each API digest matched its downloaded ZIP SHA-256 and embedded reports were inspected.
 
-Local API build, web production build, Prisma generation and all 20 focused data-governance unit tests pass. The 16-case DATA HTTP suite is retained but could not start locally because the owned verifier correctly refused an existing `127.0.0.1:3000`; the existing service was left untouched. Full Windows unit output remains non-acceptance because 124 render/font cases need FFmpeg/librsvg and configured fonts; CI installs those prerequisites. The implementation is not accepted until it is merged/published and its own exact three-job CI passes every required step.
+The accepted increment adds strict ISO-8601 audit-range validation, cancellation-safe export cleanup, workspace-row locking with legal-hold/in-flight rechecks and exact byte aggregation beyond the 100-row preview. Local API/web/Prisma builds and 20 focused data-governance tests pass. Local DATA HTTP is explicitly unaccepted because the owned verifier refused occupied port 3000 before startup; existing services stayed untouched. See [DATA-01F evidence](qa/data01f-evidence.json).
 
-The Antigravity `notify-01d`, `notify-01e`, `data-01d` and `data-01f` worktrees remain untouched. NOTIFY-01D still has a lifecycle wiring gap: its new payment/subscription/content-ready creators have no production callsites, and the content-ready key needs revision binding. Review that branch separately after DATA closure. Live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+Next task is review of Antigravity's separate NOTIFY-01D lifecycle wiring against this integrated main. The NOTIFY-01D branch still lacks verified production callsites for its new billing/content-ready notification creators and its content-ready idempotency key needs revision binding. All Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- DATA01F_INTEGRATION_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->

@@ -1,3 +1,13 @@
+<!-- DATA01F_CURRENT_START -->
+## Current: DATA-01D through DATA-01F exact CI closure - 2026-11-11
+
+DATA-01D, DATA-01E and DATA-01F are integrated on exact main commit 84e123d8bc99cfaeca1d14238f33bc4048dc9248. [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765) passed all three jobs and all 41 required steps. The verified result is 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. All four evidence artifacts were downloaded, their API digests matched the downloaded ZIP SHA-256 bytes, and their embedded reports were inspected.
+
+The DATA hardening covers strict audit date validation, disconnect-safe export cleanup, transaction-time workspace locking/legal-hold rechecks, exact all-candidate reconciliation bytes and safe OWNER-only erasure while preserving immutable financial records. Local API/web/Prisma builds and 20 focused governance tests pass; local DATA HTTP remains recorded as blocked by the owned verifier's occupied-port fail-closed guard. See [DATA-01F evidence](qa/data01f-evidence.json) and [active handoff](ACTIVE_HANDOFF.md).
+
+DATA-01 is now a verified partial parent increment. Next is review of Antigravity's separate NOTIFY-01D lifecycle branch against this integrated main. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- DATA01F_CURRENT_END -->
+
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->
 NOTIFY-01C and DATA-01C are exact-source CI verified on main commit `e4f74b45fe936296f171a86cde9469be5da39d91` / [run 42875217657](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657); all three jobs and every required step passed. The exact-threshold credit alert boundary and private-output retention guard are covered by tests. The next bounded work is review of separate `notify-01d`/`data-01d` branches. Broader external delivery/realtime/SLO, legal erasure/object reconciliation, live/deployed and full-master requirements remain open. See [active handoff](ACTIVE_HANDOFF.md) and the [final receipt](qa/notify01c-final-ci-receipt.json).
 <!-- NOTIFY01C_DATA01C_CURRENT_END -->

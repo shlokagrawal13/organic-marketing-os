@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "data01f-integration-20261111-exact-ci-pending",
-  "savedAtUtc": "2026-11-11T00:00:00.000Z",
-  "currentMilestone": "DATA-01D through DATA-01F are reviewed against main in integration/data-01f at 2d9c8a1; exact publication/three-job CI is pending",
-  "activeTaskId": "DATA-01",
+  "checkpointRevision": "data01f-ci-verified-20261111",
+  "savedAtUtc": "2026-11-10T22:48:32.615Z",
+  "currentMilestone": "DATA-01D through DATA-01F are integrated on main 84e123d; exact CI run 42913840765 passed all three jobs and every required step; NOTIFY-01D is next for lifecycle review.",
+  "activeTaskId": "NOTIFY-01",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -74,8 +74,8 @@
     "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
-  "nextTaskId": "DATA-01",
-  "nextAction": "Publish DATA-01D through DATA-01F from integration/data-01f without touching Antigravity worktrees, inspect all three jobs on the exact final commit, then review NOTIFY-01D lifecycle wiring. Keep live/deployed/provider/remote-durability/full-master gates open.",
+  "nextTaskId": "NOTIFY-01",
+  "nextAction": "Review Antigravity NOTIFY-01D against integrated main and wire only verified production lifecycle callsites; preserve separate worktrees and run exact CI after any accepted change.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -7924,21 +7924,21 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "partial",
+      "state": "review_pending",
       "title": "Notifications, realtime status and telemetry",
       "completedIncrement": "NOTIFY-01A/B integrated and NOTIFY-01C adds notification center UI, atomic low-credit threshold crossing and policy-review approval-required triggers; 37 focused tests pass.",
-      "nextAction": "Review the next bounded branch increment against integrated main; broader parent requirements remain open.",
-      "currentEvidence": "docs/qa/notify01c-evidence.json",
-      "status": "partial_parent_after_c_exact_ci"
+      "nextAction": "Review Antigravity NOTIFY-01D lifecycle wiring against integrated main before accepting or changing it.",
+      "currentEvidence": "docs/qa/notify01d-evidence.json",
+      "status": "review_pending_next_bounded_increment"
     },
     {
       "id": "DATA-01",
-      "state": "integration_pending_exact_ci",
+      "state": "partial_parent_after_f_exact_ci",
       "title": "Retention, deletion, complete account/media export",
-      "completedIncrement": "DATA-01A/B/C are integrated and DATA-01D/E/F are reviewed in integration/data-01f at code commit 2d9c8a1 with strict audit validation, legal-hold locking, reconciliation and safe-erasure hardening.",
-      "nextAction": "Publish the reviewed DATA-01D/F source and inspect all three jobs on its exact final commit; broader parent requirements remain open.",
+      "completedIncrement": "DATA-01A/B/C are integrated; DATA-01D/E/F are integrated on exact main 84e123d with all three CI jobs and every required step passing: 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
+      "nextAction": "Review NOTIFY-01D next; production scheduling/automatic retention, remote durability/RPO-RTO, live/deployed and full-master acceptance remain open.",
       "currentEvidence": "docs/qa/data01f-evidence.json",
-      "status": "integration_pending_exact_ci"
+      "status": "partial_parent_after_f_exact_ci"
     },
     {
       "id": "UX-01",
@@ -8087,9 +8087,9 @@
     "local": "Focused notification/data checks and builds pass; Windows full-suite limits remain recorded."
   },
   "activeTask": {
-    "id": "DATA-01",
-    "title": "Retention, deletion, complete account/media export",
-    "status": "integration_pending_exact_ci"
+    "id": "NOTIFY-01D",
+    "title": "Notification lifecycle wiring and billing/content event coverage",
+    "status": "review_pending"
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8102,31 +8102,20 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "DATA-01D-F",
-    "status": "integration_reviewed_exact_source_ci_pending",
-    "baseCommit": "d19edbe4ac2ac4b83aa67595c7d28bdb60cc6e4f",
+    "taskId": "NOTIFY-01D",
+    "status": "review_pending_against_integrated_main",
+    "baseCommit": "84e123d8bc99cfaeca1d14238f33bc4048dc9248",
     "changedPaths": [
-      "apps/api/src/operations.ts",
-      "docs/ACTIVE_HANDOFF.md",
-      "docs/CHANGELOG.md",
-      "docs/DATA_GOVERNANCE.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/qa/data01f-evidence.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "REQUIREMENTS_MATRIX.md",
-      "START_HERE.md",
-      "tests/integration/data-export.test.ts",
-      "docs/qa/data01d-evidence.json",
-      "docs/qa/data01e-evidence.json"
+      "apps/api/src/notification-events.ts",
+      "apps/api/src/notifications.ts",
+      "tests/notifications.test.ts",
+      "tests/integration/notifications.test.ts",
+      "docs/NOTIFICATIONS.md"
     ],
-    "required": "Publish DATA-01D/F after review and inspect all three jobs/every required step on the exact final commit before selecting NOTIFY-01D.",
-    "commit": "2d9c8a1",
+    "required": "Review separate Antigravity NOTIFY-01D source for production callsites and revision-bound idempotency before any merge; then run focused checks and exact three-job CI on the accepted final commit.",
+    "commit": null,
     "runId": null,
-    "receipt": "docs/qa/data01f-evidence.json",
+    "receipt": "docs/qa/notify01d-evidence.json",
     "sourceZip": null
   },
   "priorPendingPublication": {

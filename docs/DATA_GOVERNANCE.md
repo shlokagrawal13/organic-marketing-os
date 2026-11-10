@@ -1,3 +1,7 @@
+## DATA-01D/F exact CI closure - 2026-11-11
+
+The integrated DATA-01D through DATA-01F source is exact-CI verified on main 84e123d8bc99cfaeca1d14238f33bc4048dc9248 / [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765): 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The four evidence ZIPs were downloaded and their digests matched. Strict audit validation, disconnect-safe export cleanup, row-locked legal-hold checks, exact reconciliation bytes and safe erasure are documented below. Production retention scheduling, remote durability/RPO-RTO, live/deployed/provider and full-master gates remain open.
+
 ## Cross-store fixture manifests — RECOVERY-01C
 
 Saved native dumps, object bodies/internal keys, reference manifests, session/private state and provider prompt counters stay in ignored private fixture directories. CI uploads only sanitized phase/boolean/count/hash evidence. Generated data never populates runtime business analytics. All user services/volumes/.env and 24 existing migrations are preserved. Quiesced synthetic recovery does not establish production retention/encryption/PITR/provider reconciliation. See [CROSS_STORE_BACKUP_QUEUE_RECOVERY.md](CROSS_STORE_BACKUP_QUEUE_RECOVERY.md).
