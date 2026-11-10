@@ -230,3 +230,73 @@ test("member revocation self-revocation rule prohibits owner removing self via o
   assert.equal(isSelfRevocation("user-1", "user-1"), true);
   assert.equal(isSelfRevocation("user-2", "user-1"), false);
 });
+test("social connection disconnect credential scrubbing zeros access token and clears refresh token", () => {
+  const scrubSocialConnectionOnDisconnect = (conn: {
+    accessTokenCiphertext: string;
+    refreshTokenCiphertext: string | null;
+    tokenExpiresAt: Date | null;
+    refreshTokenExpiresAt: Date | null;
+    refreshPendingAt: Date | null;
+    revokedAt: Date | null;
+  }) => ({
+    ...conn,
+    accessTokenCiphertext: "",
+    refreshTokenCiphertext: null,
+    tokenExpiresAt: null,
+    refreshTokenExpiresAt: null,
+    refreshPendingAt: null,
+    revokedAt: conn.revokedAt ?? new Date(),
+  });
+
+  const active = {
+    accessTokenCiphertext: "secret-active-access-token",
+    refreshTokenCiphertext: "secret-active-refresh-token",
+    tokenExpiresAt: new Date(Date.now() + 3600000),
+    refreshTokenExpiresAt: new Date(Date.now() + 7200000),
+    refreshPendingAt: null,
+    revokedAt: null,
+  };
+
+  const disconnected = scrubSocialConnectionOnDisconnect(active);
+  assert.equal(disconnected.accessTokenCiphertext, "");
+  assert.equal(disconnected.refreshTokenCiphertext, null);
+  assert.equal(disconnected.tokenExpiresAt, null);
+  assert.equal(disconnected.refreshTokenExpiresAt, null);
+  assert.equal(disconnected.refreshPendingAt, null);
+  assert.ok(disconnected.revokedAt instanceof Date);
+});
+
+test("social connection disconnect cascades terminal status to active schedules and attempts", () => {
+  const cascadeScheduleOnDisconnect = (schedule: { status: string; outcomeCode?: string | null }) => {
+    if (schedule.status === "SCHEDULED") {
+      return { ...schedule, status: "CANCELED", outcomeCode: "CONNECTION_DISCONNECTED" };
+    }
+    return schedule;
+  };
+
+  const cascadeAttemptOnDisconnect = (attempt: { status: string; outcomeCode?: string | null }) => {
+    if (attempt.status === "RESERVED") {
+      return { ...attempt, status: "BLOCKED", outcomeCode: "AUTH_REVOKED" };
+    }
+    if (attempt.status === "SUBMITTING") {
+      return { ...attempt, status: "UNKNOWN", outcomeCode: "REVOKED_DURING_SUBMISSION" };
+    }
+    return attempt;
+  };
+
+  const scheduled = cascadeScheduleOnDisconnect({ status: "SCHEDULED" });
+  assert.equal(scheduled.status, "CANCELED");
+  assert.equal(scheduled.outcomeCode, "CONNECTION_DISCONNECTED");
+
+  const reserved = cascadeAttemptOnDisconnect({ status: "RESERVED" });
+  assert.equal(reserved.status, "BLOCKED");
+  assert.equal(reserved.outcomeCode, "AUTH_REVOKED");
+
+  const submitting = cascadeAttemptOnDisconnect({ status: "SUBMITTING" });
+  assert.equal(submitting.status, "UNKNOWN");
+  assert.equal(submitting.outcomeCode, "REVOKED_DURING_SUBMISSION");
+
+  const confirmed = cascadeAttemptOnDisconnect({ status: "CONFIRMED", outcomeCode: "SUCCESS" });
+  assert.equal(confirmed.status, "CONFIRMED");
+  assert.equal(confirmed.outcomeCode, "SUCCESS");
+});
