@@ -167,3 +167,91 @@ export async function createAiNotification(
     update: {},
   });
 }
+
+export async function createCreditsLowNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    actorId?: string | null;
+    balance: number;
+    threshold: number;
+    unit?: string;
+  },
+) {
+  const eventKey = `credits:low:${params.organizationId}:${params.balance}`;
+  const title = "Credits low";
+  const body = `Workspace credit balance is low (${params.balance} ${params.unit ?? "credits"} remaining, threshold: ${params.threshold}).`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: "CREDITS_LOW",
+      category: "BILLING",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/billing`,
+      entityType: "CREDIT_ACCOUNT",
+      entityId: params.organizationId,
+      eventKey,
+      data: {
+        balance: params.balance,
+        threshold: params.threshold,
+        unit: params.unit ?? "credits",
+      },
+    },
+    update: {},
+  });
+}
+
+export async function createApprovalRequiredNotification(
+  client: PrismaClient | Prisma.TransactionClient,
+  params: {
+    organizationId: string;
+    reviewId: string;
+    actorId?: string | null;
+    contentId?: string | null;
+    contentTitle?: string | null;
+    platform?: string | null;
+    policyName?: string | null;
+  },
+) {
+  const eventKey = `approval:required:${params.reviewId}`;
+  const title = "Approval required";
+  const target = params.contentTitle ? ` for "${params.contentTitle}"` : "";
+  const body = `Publication review${target} requires approval before scheduling.`;
+
+  return client.notification.upsert({
+    where: {
+      organizationId_eventKey: {
+        organizationId: params.organizationId,
+        eventKey,
+      },
+    },
+    create: {
+      organizationId: params.organizationId,
+      userId: params.actorId ?? undefined,
+      type: "APPROVAL_REQUIRED",
+      category: "APPROVAL",
+      title,
+      body,
+      link: `/workspaces/${params.organizationId}/reviews/${params.reviewId}`,
+      entityType: "PUBLICATION_POLICY_REVIEW",
+      entityId: params.reviewId,
+      eventKey,
+      data: {
+        reviewId: params.reviewId,
+        ...(params.contentId ? { contentId: params.contentId } : {}),
+        ...(params.platform ? { platform: params.platform } : {}),
+        ...(params.policyName ? { policyName: params.policyName } : {}),
+      },
+    },
+    update: {},
+  });
+}
