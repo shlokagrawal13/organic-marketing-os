@@ -23802,5 +23802,16 @@
     "migrationCount": 26,
     "tableCount": 38,
     "limits": "In-app delivery only; no external delivery or realtime/SLO claim"
+  },
+  "data01a": {
+    "taskId": "DATA-01A",
+    "branch": "data-01a",
+    "sourceHead": "f22119d67a0068399c37ce239d8791558699c6b0",
+    "pr": "https://github.com/shlokagrawal13/organic-marketing-os/pull/2",
+    "branchEvidence": "docs/qa/data01a-evidence.json",
+    "branchCiPassed": true,
+    "integratedMainCiPending": true,
+    "reviewFinding": "Member revocation in branch bypasses existing OWNER-removal prohibition; integrated guard and regression required",
+    "limits": "NDJSON metadata export excludes binary media; full legal erasure remains separate"
   }
 }

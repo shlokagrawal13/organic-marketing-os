@@ -144,15 +144,45 @@ const uiSpec = process.argv
 const httpSpec = process.argv
   .find((arg) => arg.startsWith("--http-spec="))
   ?.slice(12);
+const skipMediaFixtures = process.argv.includes("--skip-media-fixtures");
 if (uiSpec && !/^[a-z-]+\.spec\.ts$/.test(uiSpec))
   throw new Error("Select a test filename such as generated-media.spec.ts.");
 if (httpSpec && !/^[a-z-]+\.test\.ts$/.test(httpSpec))
   throw new Error("Select an HTTP test filename such as publications.test.ts.");
+if (
+  skipMediaFixtures &&
+  (!(["data-export.test.ts", "notifications.test.ts"].includes(httpSpec)) ||
+    !process.argv.includes("--skip-ui") ||
+    !process.argv.includes("--skip-recovery"))
+)
+  throw new Error(
+    "Skipping media fixtures is limited to data-export/notifications HTTP specs with UI and recovery skipped.",
+  );
 process.env.MOS_TEST_DATABASE = native ? "native" : "pglite";
 if (native && process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
     "Native tests require isolated DATABASE_URL/REDIS_URL services and MOS_ALLOW_NATIVE_TESTS=isolated-test-services.",
   );
+// This harness uses fixed loopback ports. Never let a test attach to an
+// existing Redis, API, web, mail or object-storage service after a bind fails.
+for (const port of [1025, 3000, 4000, 4569, 4998, 4999, ...(!native ? [5433, 6379] : [])]) {
+  for (const host of ["127.0.0.1", "::1"]) {
+    const probe = createServer();
+    try {
+      await new Promise((resolve, reject) => {
+        probe.once("error", reject);
+        probe.listen(port, host, resolve);
+      });
+    } catch (error) {
+      if (probe.listening) await new Promise((resolve) => probe.close(resolve));
+      if (host === "::1" && error?.code === "EADDRNOTAVAIL") continue;
+      throw new Error(
+        `Owned fixture requires free ${host}:${port}; refusing to contact an existing service (${error.code || error.message}).`,
+      );
+    }
+    await new Promise((resolve) => probe.close(resolve));
+  }
+}
 const db = native ? null : await PGlite.create();
 const server = db
   ? new PGLiteSocketServer({
@@ -166,7 +196,9 @@ const fixtureCalls = {};
 const fixtureResearchInputs = new Map();
 const fixtureServer = createServer(async (req, res) => {
   if (req.url?.startsWith("/research-input?")) {
-    const prompt = new URL(req.url, "http://127.0.0.1:4999").searchParams.get("prompt");
+    const prompt = new URL(req.url, "http://127.0.0.1:4999").searchParams.get(
+      "prompt",
+    );
     const captured = fixtureResearchInputs.get(prompt);
     res.writeHead(captured ? 200 : 404, { "Content-Type": "application/json" });
     res.end(JSON.stringify(captured || {}));
@@ -224,14 +256,55 @@ const fixtureServer = createServer(async (req, res) => {
   const supplied = JSON.parse(parsed.messages?.[1]?.content || "{}");
   const input = supplied.input || {};
   const source = supplied.brand?.research?.evidence?.[0];
-  strategy.recommendations = source ? [{ id: "synthetic-recommendation", recommendation: "Test an educational post based on the supplied observation",
-    basis: "RESEARCH", sourceRefs: [{ sourceId: source.id, revision: source.revision, quote: source.summary }], assumption: "Synthetic fixture; relevance requires human review" }]
-    : [{ id: "synthetic-assumption", recommendation: "Test an educational post with the proposed audience", basis: "ASSUMPTION", sourceRefs: [], assumption: "No usable research supplied; validate this synthetic hypothesis" }];
-  if (input.prompt?.startsWith("REF_UNKNOWN:")) strategy.recommendations[0] = { ...strategy.recommendations[0], basis: "RESEARCH", sourceRefs: [{ sourceId: "00000000-0000-4000-8000-000000000001", revision: 1, quote: "Unknown synthetic source excerpt" }] };
-  if (input.prompt?.startsWith("REF_QUOTE:")) strategy.recommendations[0].sourceRefs[0].quote = "This synthetic quotation was never supplied";
+  strategy.recommendations = source
+    ? [
+        {
+          id: "synthetic-recommendation",
+          recommendation:
+            "Test an educational post based on the supplied observation",
+          basis: "RESEARCH",
+          sourceRefs: [
+            {
+              sourceId: source.id,
+              revision: source.revision,
+              quote: source.summary,
+            },
+          ],
+          assumption: "Synthetic fixture; relevance requires human review",
+        },
+      ]
+    : [
+        {
+          id: "synthetic-assumption",
+          recommendation: "Test an educational post with the proposed audience",
+          basis: "ASSUMPTION",
+          sourceRefs: [],
+          assumption:
+            "No usable research supplied; validate this synthetic hypothesis",
+        },
+      ];
+  if (input.prompt?.startsWith("REF_UNKNOWN:"))
+    strategy.recommendations[0] = {
+      ...strategy.recommendations[0],
+      basis: "RESEARCH",
+      sourceRefs: [
+        {
+          sourceId: "00000000-0000-4000-8000-000000000001",
+          revision: 1,
+          quote: "Unknown synthetic source excerpt",
+        },
+      ],
+    };
+  if (input.prompt?.startsWith("REF_QUOTE:"))
+    strategy.recommendations[0].sourceRefs[0].quote =
+      "This synthetic quotation was never supplied";
   if (input.prompt?.startsWith("REF_MISSING:")) delete strategy.recommendations;
-  fixtureResearchInputs.set(input.prompt || "unknown", { research: supplied.brand?.research ?? null, system: parsed.messages?.[0]?.content });
-  if (fixtureResearchInputs.size > 100) fixtureResearchInputs.delete(fixtureResearchInputs.keys().next().value);
+  fixtureResearchInputs.set(input.prompt || "unknown", {
+    research: supplied.brand?.research ?? null,
+    system: parsed.messages?.[0]?.content,
+  });
+  if (fixtureResearchInputs.size > 100)
+    fixtureResearchInputs.delete(fixtureResearchInputs.keys().next().value);
   fixtureCalls[input.prompt || "unknown"] =
     (fixtureCalls[input.prompt || "unknown"] || 0) + 1;
   if (input.prompt?.startsWith("HOLD:")) {
@@ -279,102 +352,8 @@ try {
     }
   }
   storage = await startTestStorage();
-  mkdirSync(".local/media-fixtures", { recursive: true });
-  await run(process.env.FFMPEG_PATH || "ffmpeg", [
-    "-hide_banner",
-    "-loglevel",
-    "error",
-    "-y",
-    "-nostdin",
-    "-f",
-    "lavfi",
-    "-i",
-    "color=c=0x194b37:s=640x640:d=1",
-    "-vf",
-    "drawbox=x=55:y=70:w=530:h=500:color=0xc7f06b:t=8,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='ORGANIC STUDIO':fontcolor=white:fontsize=38:x=(w-tw)/2:y=270,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='QA MEDIA FIXTURE':fontcolor=white:fontsize=22:x=(w-tw)/2:y=335",
-    "-frames:v",
-    "1",
-    "-threads",
-    "1",
-    ".local/media-fixtures/product.png",
-  ]);
-  await run(process.env.FFMPEG_PATH || "ffmpeg", [
-    "-hide_banner",
-    "-loglevel",
-    "error",
-    "-y",
-    "-f",
-    "lavfi",
-    "-i",
-    "sine=frequency=440:sample_rate=48000:duration=2",
-    "-ac",
-    "2",
-    ".local/media-fixtures/tone.wav",
-  ]);
-  await run(process.env.FFMPEG_PATH || "ffmpeg", [
-    "-hide_banner",
-    "-loglevel",
-    "error",
-    "-y",
-    "-nostdin",
-    "-f",
-    "lavfi",
-    "-i",
-    "anullsrc=r=48000:cl=stereo",
-    "-t",
-    "60",
-    "-c:a",
-    "pcm_s16le",
-    ".local/media-fixtures/large-audio.wav",
-  ]);
-  await run(process.env.FFMPEG_PATH || "ffmpeg", [
-    "-hide_banner",
-    "-loglevel",
-    "error",
-    "-y",
-    "-nostdin",
-    "-f",
-    "lavfi",
-    "-i",
-    "testsrc2=size=320x240:rate=30:duration=2",
-    "-c:v",
-    "libx264",
-    "-threads",
-    "1",
-    "-pix_fmt",
-    "yuv420p",
-    ".local/media-fixtures/clip.mp4",
-  ]);
-  // Solid-color edge markers distinguish letterboxing from centered cropping
-  // in decoded output without relying on screenshots or filter-string mocks.
-  for (const [name, size, boxes, video] of [
-    [
-      "motion-square.png",
-      "800x800",
-      "drawbox=x=200:y=200:w=400:h=400:color=red:t=fill",
-      false,
-    ],
-    ["framing-thin-wide.png", "8192x2", "null", false],
-    ["framing-thin-tall.png", "2x8192", "null", false],
-    [
-      "framing-wide.png",
-      "800x400",
-      "drawbox=x=0:y=0:w=200:h=400:color=red:t=fill,drawbox=x=600:y=0:w=200:h=400:color=blue:t=fill",
-      false,
-    ],
-    [
-      "framing-wide.mp4",
-      "800x400",
-      "drawbox=x=0:y=0:w=200:h=400:color=red:t=fill,drawbox=x=600:y=0:w=200:h=400:color=blue:t=fill",
-      true,
-    ],
-    [
-      "framing-tall.png",
-      "400x800",
-      "drawbox=x=0:y=0:w=400:h=200:color=red:t=fill,drawbox=x=0:y=600:w=400:h=200:color=blue:t=fill",
-      false,
-    ],
-  ]) {
+  if (!skipMediaFixtures) {
+    mkdirSync(".local/media-fixtures", { recursive: true });
     await run(process.env.FFMPEG_PATH || "ffmpeg", [
       "-hide_banner",
       "-loglevel",
@@ -384,33 +363,129 @@ try {
       "-f",
       "lavfi",
       "-i",
-      `color=c=0x00ff00:s=${size}:r=30:d=1`,
+      "color=c=0x194b37:s=640x640:d=1",
       "-vf",
-      boxes,
+      "drawbox=x=55:y=70:w=530:h=500:color=0xc7f06b:t=8,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='ORGANIC STUDIO':fontcolor=white:fontsize=38:x=(w-tw)/2:y=270,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='QA MEDIA FIXTURE':fontcolor=white:fontsize=22:x=(w-tw)/2:y=335",
+      "-frames:v",
+      "1",
       "-threads",
       "1",
-      ...(video
-        ? ["-c:v", "libx264", "-pix_fmt", "yuv420p"]
-        : ["-frames:v", "1"]),
-      `.local/media-fixtures/${name}`,
+      ".local/media-fixtures/product.png",
     ]);
+    await run(process.env.FFMPEG_PATH || "ffmpeg", [
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=440:sample_rate=48000:duration=2",
+      "-ac",
+      "2",
+      ".local/media-fixtures/tone.wav",
+    ]);
+    await run(process.env.FFMPEG_PATH || "ffmpeg", [
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-nostdin",
+      "-f",
+      "lavfi",
+      "-i",
+      "anullsrc=r=48000:cl=stereo",
+      "-t",
+      "60",
+      "-c:a",
+      "pcm_s16le",
+      ".local/media-fixtures/large-audio.wav",
+    ]);
+    await run(process.env.FFMPEG_PATH || "ffmpeg", [
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-nostdin",
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x240:rate=30:duration=2",
+      "-c:v",
+      "libx264",
+      "-threads",
+      "1",
+      "-pix_fmt",
+      "yuv420p",
+      ".local/media-fixtures/clip.mp4",
+    ]);
+    // Solid-color edge markers distinguish letterboxing from centered cropping
+    // in decoded output without relying on screenshots or filter-string mocks.
+    for (const [name, size, boxes, video] of [
+      [
+        "motion-square.png",
+        "800x800",
+        "drawbox=x=200:y=200:w=400:h=400:color=red:t=fill",
+        false,
+      ],
+      ["framing-thin-wide.png", "8192x2", "null", false],
+      ["framing-thin-tall.png", "2x8192", "null", false],
+      [
+        "framing-wide.png",
+        "800x400",
+        "drawbox=x=0:y=0:w=200:h=400:color=red:t=fill,drawbox=x=600:y=0:w=200:h=400:color=blue:t=fill",
+        false,
+      ],
+      [
+        "framing-wide.mp4",
+        "800x400",
+        "drawbox=x=0:y=0:w=200:h=400:color=red:t=fill,drawbox=x=600:y=0:w=200:h=400:color=blue:t=fill",
+        true,
+      ],
+      [
+        "framing-tall.png",
+        "400x800",
+        "drawbox=x=0:y=0:w=400:h=200:color=red:t=fill,drawbox=x=0:y=600:w=400:h=200:color=blue:t=fill",
+        false,
+      ],
+    ]) {
+      await run(process.env.FFMPEG_PATH || "ffmpeg", [
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+        "-nostdin",
+        "-f",
+        "lavfi",
+        "-i",
+        `color=c=0x00ff00:s=${size}:r=30:d=1`,
+        "-vf",
+        boxes,
+        "-threads",
+        "1",
+        ...(video
+          ? ["-c:v", "libx264", "-pix_fmt", "yuv420p"]
+          : ["-frames:v", "1"]),
+        `.local/media-fixtures/${name}`,
+      ]);
+    }
+    // Check fixture integrity before testing uploads; a broken fixture is not
+    // evidence of an application upload failure.
+    const { probeMedia, validateProbe } =
+      await import("../dist/packages/core/media.js");
+    for (const [name, kind] of [
+      ["product.png", "IMAGE"],
+      ["tone.wav", "AUDIO"],
+      ["large-audio.wav", "AUDIO"],
+      ["clip.mp4", "VIDEO"],
+      ["framing-wide.png", "IMAGE"],
+      ["framing-wide.mp4", "VIDEO"],
+      ["framing-tall.png", "IMAGE"],
+      ["framing-thin-wide.png", "IMAGE"],
+      ["framing-thin-tall.png", "IMAGE"],
+    ])
+      validateProbe(await probeMedia(`.local/media-fixtures/${name}`), kind);
   }
-  // Check fixture integrity before testing uploads; a broken fixture is not
-  // evidence of an application upload failure.
-  const { probeMedia, validateProbe } =
-    await import("../dist/packages/core/media.js");
-  for (const [name, kind] of [
-    ["product.png", "IMAGE"],
-    ["tone.wav", "AUDIO"],
-    ["large-audio.wav", "AUDIO"],
-    ["clip.mp4", "VIDEO"],
-    ["framing-wide.png", "IMAGE"],
-    ["framing-wide.mp4", "VIDEO"],
-    ["framing-tall.png", "IMAGE"],
-    ["framing-thin-wide.png", "IMAGE"],
-    ["framing-thin-tall.png", "IMAGE"],
-  ])
-    validateProbe(await probeMedia(`.local/media-fixtures/${name}`), kind);
   if (server) await server.start();
   if (!native)
     process.env.DATABASE_URL =
@@ -457,7 +532,7 @@ try {
   }
   process.env.MEDIA_IMAGE_EDIT_ESTIMATE_USD = "0.2";
   process.env.MEDIA_IMAGE_EDIT_CREDITS = "3";
-  await run("node_modules/.bin/prisma", ["migrate", "deploy"]);
+  await run("node", ["node_modules/prisma/build/index.js", "migrate", "deploy"]);
   start("node", ["dist/apps/api/src/main.js"], "api");
   process.env.TEST_AI_WORKER_PID = String(
     start("node", ["dist/apps/api/src/worker.js"], "worker").pid,
@@ -523,11 +598,19 @@ try {
       try {
         let cursor = "0";
         do {
-          const [next, keys] = await redis.scan(cursor, "MATCH", "rate:api:*", "COUNT", 100);
+          const [next, keys] = await redis.scan(
+            cursor,
+            "MATCH",
+            "rate:api:*",
+            "COUNT",
+            100,
+          );
           cursor = next;
           if (keys.length) await redis.del(...keys);
         } while (cursor !== "0");
-      } finally { redis.disconnect(); }
+      } finally {
+        redis.disconnect();
+      }
     }
     const { readFileSync, writeFileSync, chmodSync } = await import("node:fs");
     const { brotliDecompressSync } = await import("node:zlib");
@@ -539,7 +622,8 @@ try {
     );
     chmodSync(".local/chromium", 0o755);
     process.env.CHROMIUM_EXECUTABLE_PATH = process.cwd() + "/.local/chromium";
-    await run("node_modules/.bin/playwright", [
+    await run("node", [
+      "node_modules/playwright/cli.js",
       "test",
       ...(uiSpec ? [`tests/ui/${uiSpec}`] : []),
     ]);

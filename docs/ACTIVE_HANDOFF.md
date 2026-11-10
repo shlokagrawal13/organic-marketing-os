@@ -14,3 +14,9 @@ Method: focused local checks then full exact-commit CI and artifact review. Pres
 
 The NOTIFY-01A backend branch `notify-01a` (PR #1) adds the `Notification` table (migration `202611030001_in_app_notifications`, 26 migrations and 38 tables) and tenant-bound list/get/read APIs. Its branch CI is recorded in [notification evidence](qa/notify01a-evidence.json); integrated-main acceptance still requires a new exact-commit run. The merge carries the 26-migration assertions in the application snapshot and recovery scripts. No external delivery or realtime/SLO claim. Later NOTIFY branches remain separate and must be reviewed against integrated main.
 <!-- NOTIFY01A_NOTE_END -->
+
+<!-- DATA01A_NOTE_START -->
+## DATA-01A integration note - 2026-11-10
+
+DATA-01A branch `data-01a` (PR #2) expands the NDJSON workspace export to publication, billing, claim-review and social-connection records with credential stripping. It adds member revocation with session invalidation and immutable financial/audit history preservation. Review found that the branch endpoint could remove an OWNER, unlike the existing team endpoint; integration adds an owner guard and regression. Branch evidence is in [DATA-01A evidence](qa/data01a-evidence.json); integrated-main CI remains a separate gate. Later DATA branches remain separate until reviewed.
+<!-- DATA01A_NOTE_END -->

@@ -1,11 +1,16 @@
 import {
   Controller,
   Get,
+  Delete,
+  Param,
   Req,
   Res,
   UseGuards,
   Module,
   HttpException,
+  NotFoundException,
+  ForbiddenException,
+  ConflictException,
 } from "@nestjs/common";
 import { Response } from "express";
 import { mkdtemp, appendFile, rm, stat } from "node:fs/promises";
@@ -280,6 +285,69 @@ export class OperationsController {
             ["creditReservation", tx.creditReservation, own],
             ["activity", tx.auditLog, own],
             ["invitation", tx.invitation, own, ({ tokenHash, ...row }) => row],
+            // DATA-01A: previously missing tables — added to complete export
+            [
+              "socialConnection",
+              tx.socialConnection,
+              own,
+              // strip encrypted credential ciphertexts; export metadata only
+              ({
+                accessTokenCiphertext,
+                refreshTokenCiphertext,
+                ...row
+              }: {
+                accessTokenCiphertext: string;
+                refreshTokenCiphertext: string | null;
+                [k: string]: unknown;
+              }) => row,
+            ],
+            ["contentClaimReview", tx.contentClaimReview, own],
+            [
+              "publicationIntent",
+              tx.publicationIntent,
+              own,
+              ({
+                requestHash,
+                requestKey,
+                ...row
+              }: {
+                requestHash?: string;
+                requestKey?: string;
+                [k: string]: unknown;
+              }) => row,
+            ],
+            [
+              "publicationSchedule",
+              tx.publicationSchedule,
+              own,
+              ({
+                requestKey,
+                ...row
+              }: {
+                requestKey?: string;
+                [k: string]: unknown;
+              }) => row,
+            ],
+            [
+              "publicationAttempt",
+              tx.publicationAttempt,
+              own,
+              ({
+                uploadSessionCiphertext,
+                requestHash,
+                requestKey,
+                ...row
+              }: {
+                uploadSessionCiphertext?: string | null;
+                requestHash?: string;
+                requestKey?: string;
+                [k: string]: unknown;
+              }) => row,
+            ],
+            ["publicationPolicyReview", tx.publicationPolicyReview, own],
+            ["billingSubscription", tx.billingSubscription, own],
+            ["billingEvent", tx.billingEvent, own],
+            ["billingInvoice", tx.billingInvoice, own],
           ];
           for (const [type, model, where, safe] of tables) {
             let cursor: string | undefined;
@@ -329,6 +397,81 @@ export class OperationsController {
       res.removeListener("close", closed);
       await rm(dir, { recursive: true, force: true });
     }
+  }
+
+  /**
+   * DATA-01A: Safe member-data revocation.
+   *
+   * Revokes a non-owner membership and active sessions without touching
+   * organization-owned social connections, financial records or audit logs.
+   *
+   * Rules:
+   *  - Caller must be OWNER or ADMIN (enforced by @Roles + TenantGuard).
+   *  - No caller can revoke an OWNER through this endpoint.
+   *  - No caller can self-revoke through this endpoint.
+   *  - CreditEntry/CreditReservation rows are preserved (financial constraint).
+   *  - AuditLog rows are preserved (immutable audit trail).
+   *  - An audit event is written for the revocation.
+   */
+  @Delete("members/:targetUserId")
+  async revokeMember(
+    @Param("targetUserId") targetUserId: string,
+    @Req() req: AuthedRequest,
+  ) {
+    const org = req.organizationId;
+
+    // Prevent OWNER self-revocation via this endpoint
+    if (targetUserId === req.userId) {
+      throw new ForbiddenException(
+        "Use the workspace-leave flow to remove yourself.",
+      );
+    }
+
+    await this.db.$transaction(async (tx) => {
+      const membership = await tx.membership.findUnique({
+        where: {
+          userId_organizationId: { userId: targetUserId, organizationId: org },
+        },
+      });
+      if (!membership)
+        throw new NotFoundException("Member not found in this workspace.");
+      if (membership.role === "OWNER")
+        throw new ForbiddenException("Owner membership cannot be revoked.");
+
+      // Keep the role predicate on the mutation so a concurrent promotion to
+      // OWNER cannot be deleted after the preflight read.
+      const removed = await tx.membership.deleteMany({
+        where: {
+          organizationId: org,
+          userId: targetUserId,
+          role: { not: "OWNER" },
+        },
+      });
+      if (removed.count !== 1)
+        throw new ConflictException("Member role changed; retry revocation.");
+
+      // Revoke all active sessions for this user.
+      await tx.session.deleteMany({
+        where: { userId: targetUserId },
+      });
+
+      // Social connections are organization-scoped and stay intact.
+      // Record the revocation without modifying immutable financial history.
+      await tx.auditLog.create({
+        data: {
+          organizationId: org,
+          actorId: req.userId,
+          action: "member.revoked",
+          entityId: targetUserId,
+          detail: {
+            role: membership.role,
+            revokedBy: req.userId,
+          },
+        },
+      });
+    });
+
+    return { revokedUserId: targetUserId, organizationId: org };
   }
 }
 @Module({ imports: [AssetsModule], controllers: [OperationsController] })
