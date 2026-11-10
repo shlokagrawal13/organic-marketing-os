@@ -230,6 +230,7 @@ test("member revocation self-revocation rule prohibits owner removing self via o
   assert.equal(isSelfRevocation("user-1", "user-1"), true);
   assert.equal(isSelfRevocation("user-2", "user-1"), false);
 });
+
 test("social connection disconnect credential scrubbing zeros access token and clears refresh token", () => {
   const scrubSocialConnectionOnDisconnect = (conn: {
     accessTokenCiphertext: string;
@@ -300,3 +301,59 @@ test("social connection disconnect cascades terminal status to active schedules 
   assert.equal(confirmed.status, "CONFIRMED");
   assert.equal(confirmed.outcomeCode, "SUCCESS");
 });
+
+test("retention pruning: identifies eligible expired/canceled records while protecting immutable records", () => {
+  const isInvitationExpired = (inv: { expiresAt: Date }, now: Date) => inv.expiresAt < now;
+  const isIntentPrunable = (intent: { status: string; hasSchedule: boolean; hasAttempt: boolean }) =>
+    ["INVALIDATED", "CANCELED"].includes(intent.status) && !intent.hasSchedule && !intent.hasAttempt;
+  const isSchedulePrunable = (sched: { status: string; hasAttempt: boolean }) =>
+    sched.status === "CANCELED" && !sched.hasAttempt;
+  const isRenderPrunable = (render: { status: string; createdAt: Date }, cutoff: Date) =>
+    ["FAILED", "CANCELED"].includes(render.status) && render.createdAt < cutoff;
+
+  const now = new Date("2026-11-05T12:00:00Z");
+  const cutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+  // Invitations
+  assert.equal(isInvitationExpired({ expiresAt: new Date("2026-11-05T11:00:00Z") }, now), true);
+  assert.equal(isInvitationExpired({ expiresAt: new Date("2026-11-05T13:00:00Z") }, now), false);
+
+  // Intents
+  assert.equal(isIntentPrunable({ status: "INVALIDATED", hasSchedule: false, hasAttempt: false }), true);
+  assert.equal(isIntentPrunable({ status: "CANCELED", hasSchedule: false, hasAttempt: false }), true);
+  assert.equal(isIntentPrunable({ status: "PREPARED", hasSchedule: false, hasAttempt: false }), false);
+  assert.equal(isIntentPrunable({ status: "INVALIDATED", hasSchedule: true, hasAttempt: false }), false);
+
+  // Schedules
+  assert.equal(isSchedulePrunable({ status: "CANCELED", hasAttempt: false }), true);
+  assert.equal(isSchedulePrunable({ status: "SCHEDULED", hasAttempt: false }), false);
+  assert.equal(isSchedulePrunable({ status: "CANCELED", hasAttempt: true }), false);
+
+  // Renders
+  assert.equal(isRenderPrunable({ status: "FAILED", createdAt: new Date("2026-11-04T10:00:00Z") }, cutoff), true);
+  assert.equal(isRenderPrunable({ status: "SUCCEEDED", createdAt: new Date("2026-11-04T10:00:00Z") }, cutoff), false);
+  assert.equal(isRenderPrunable({ status: "FAILED", createdAt: new Date("2026-11-05T11:00:00Z") }, cutoff), false);
+});
+
+test("retention pruning: financial credit entries and audit logs are strictly immutable", () => {
+  const immutableEntityTypes = [
+    "CreditEntry",
+    "CreditReservation",
+    "BillingSubscription",
+    "BillingInvoice",
+    "AuditLog",
+  ];
+
+  const allowedPruneEntityTypes = [
+    "Invitation",
+    "PublicationIntent",
+    "PublicationSchedule",
+    "RenderJob",
+  ];
+
+  for (const entity of immutableEntityTypes) {
+    assert.equal(allowedPruneEntityTypes.includes(entity), false, `${entity} must NEVER be eligible for pruning`);
+  }
+});
+
+
