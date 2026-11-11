@@ -1,7 +1,17 @@
-# Active handoff - NOTIFY-01E preferences and category muting integration
+<!-- NOTIFY01F_CURRENT_START -->
+## Current: NOTIFY-01F notification preference controls UI - 2026-11-12
+
+NOTIFY-01F adds an accessible notification-preferences panel to the existing notification center. It exposes native checkbox controls for Render, Publish, AI, Billing, Approval and Content categories, reads and writes the existing tenant/user-bound preferences endpoints, and keeps changes local until the user selects **Save preferences**. Back, Cancel and close discard unsaved choices; a successful save refreshes the feed and unread badge so muted categories disappear from the default view. The close-discard regression protects against reopening stale local choices.
+
+The UI increment adds no schema or migration, external email/push/realtime transport, provider call or delivery SLO claim. Existing polling, read/unread/read-all, category filtering, generation guards, role/tenant checks and E's replacement preference API remain unchanged. Local API/web production builds, 31/31 focused notification unit tests and diff checks pass. Local browser execution remains unclaimed because the owned verifier fails closed when Redis 127.0.0.1:6379 is occupied; real services, volumes, credentials, Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched.
+
+The exact published source commit **a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333** was checked by [run 43101560348](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43101560348). Native populated upgrade/PITR passed with 26 migration files, and Compose passed all 24 phases with its evidence artifact uploaded. Core did not pass: ubuntu-latest resolved to ubuntu-26.04, whose libharfbuzz0b is 12.3.2 while the frozen shaping oracle requires 8.3.0; the unit reporter recorded 415 passes and 15 version-guard failures, so later core steps were skipped. This is not acceptance. The workflow now pins only the core job to ubuntu-24.04, and a new exact three-job run on the changed source is required before packaging. Production/live-provider, external notification delivery/realtime/SLO, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI does not deploy.
+<!-- NOTIFY01F_CURRENT_END -->
+
+# Active handoff - NOTIFY-01F notification preference controls UI integration
 
 <!-- NOTIFY01E_CURRENT_START -->
-## Current: NOTIFY-01E notification preferences and category muting - 2026-11-12
+## Historical: NOTIFY-01E notification preferences and category muting - 2026-11-12
 
 NOTIFY-01E is closed on exact published source commit 121c63c135fb03ea6e24c8b24bb41b31d765edf2; [GitHub Actions run 43073695509](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509) passed all three jobs and all 41 required steps. The verified result is 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. The native upgrade report preserved 26/26 migrations; the populated PostgreSQL PITR report compared 38 tables with 11 populated tables and 19 rows; the Compose report bound in-flight claims, a WAL target, four historical objects and one admitted callback while denying ten admission controls.
 

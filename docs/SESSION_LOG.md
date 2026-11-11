@@ -1,3 +1,8 @@
+## 2026-11-12 - NOTIFY-01F notification preference controls UI
+
+Implemented the next bounded notification increment on top of NOTIFY-01E. The existing notification popover now opens an accessible category-preferences panel with native checkboxes and descriptions. GET reads the tenant/user-bound preferences, PUT saves only after explicit confirmation, and Back/Cancel/close discard local edits. Successful saves refresh the feed and unread badge. Added the close-discard browser regression; API/web builds, 31/31 focused notification tests and diff checks pass. Local browser is not claimed because the owned verifier refuses occupied Redis 6379.
+
+Exact published-main run 43101560348 passed native upgrade/PITR and all 24 Compose phases but failed 415/15 core unit cases because ubuntu-latest moved to HarfBuzz 12.3.2; the frozen oracle requires 8.3.0. The core job is pinned to ubuntu-24.04 and a new exact three-job run is required. The prior upload-time failure 43093129039 remains historical.
 ## NOTIFY-01E exact CI closure - 2026-11-12
 
 Integrated NOTIFY-01E notification preferences and category muting on exact commit 121c63c135fb03ea6e24c8b24bb41b31d765edf2. [GitHub Actions run 43073695509](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509) passed all three jobs and required steps: 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The native logs were inspected for 26/26 migration preservation, populated application-schema PITR (38 tables, 11 populated tables, 19 rows), and in-flight/WAL Compose recovery checks. Artifact metadata and the proxy download limitation are recorded in [notify01e evidence](qa/notify01e-evidence.json).

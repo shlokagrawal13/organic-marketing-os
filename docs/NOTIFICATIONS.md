@@ -13,7 +13,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Billing & Content Lifecycle Events (NOTIFY-01D)**: Verified billing webhooks emit payment-failure and subscription-change notifications, while content transitions into review emit revision-bound content-ready notifications.
 - **Category Summary Metrics (NOTIFY-01D)**: `GET /workspaces/:organizationId/notifications/summary` returns tenant- and role-scoped unread totals by category.
 - **Notification Preferences & Category Muting (NOTIFY-01E)**: Per-user notification category muting and preferences management (`GET|PUT|PATCH /workspaces/:organizationId/notifications/preferences`) automatically filters muted categories from inbox feeds and unread badge summaries unless explicitly requested (`includeMuted=true` or an explicit `category` query parameter).
-- **Notification Preference Controls (NOTIFY-01F)**: The workspace notification center exposes an accessible preferences panel backed by the NOTIFY-01E endpoints. Users can inspect and select muted categories, save explicitly, cancel local changes, and immediately see the feed and unread badge refresh with the saved filter.
+- **Notification Preference Controls (NOTIFY-01F)**: The workspace notification center exposes an accessible preferences panel backed by the NOTIFY-01E endpoints. Users can inspect and select muted categories, save explicitly, and immediately see the feed and unread badge refresh with the saved filter. Back, Cancel and close discard unsaved choices; the browser regression prevents stale local preferences from reappearing after reopening.
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
@@ -22,6 +22,10 @@ In accordance with bounded scope:
 - No external delivery channels (email, SMS, or mobile push).
 - No realtime WebSocket or SLO guarantees claimed.
 - `AuditLog` remains append-only and immutable; notifications are stored in a dedicated mutable read-receipt model (`Notification`).
+
+### NOTIFY-01F Preference Controls
+
+The settings icon in the notification popover opens a tenant/user-scoped preferences view. Each category uses a native checkbox with a short description. Opening the view reads the current server values; toggles are local draft state only. **Save preferences** sends the complete selected category set through the existing tenant/user-bound update endpoint. A successful response returns to the feed and refreshes both the list and unread summary. **Back**, **Cancel**, and the close button discard the local draft without a request, preserving the explicit-save contract and avoiding an accidental preference write during navigation.
 
 ---
 

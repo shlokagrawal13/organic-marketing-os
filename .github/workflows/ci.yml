@@ -70,7 +70,10 @@ jobs:
 
   core:
     name: Native application verification
-    runs-on: ubuntu-latest
+    # The independent shaping oracle and pinned CJK evidence use Noble's
+    # HarfBuzz 8.3.0. Keep this job on the matching runner while latest moves
+    # between Ubuntu releases.
+    runs-on: ubuntu-24.04
     timeout-minutes: 40
 
     services:

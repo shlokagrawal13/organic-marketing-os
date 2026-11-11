@@ -1,3 +1,9 @@
+## NOTIFY-01F notification preference controls UI - 2026-11-12
+
+Added an accessible category-preference panel to the existing notification center. Category changes stay local until explicit Save; Back, Cancel and close discard unsaved choices, and a successful save refreshes the feed and unread badge. Added a browser regression for close-discard behavior. No schema, migration, external transport or provider behavior changed. Local API/web builds, 31 focused notification tests and diff checks pass.
+
+Exact published-main run [43101560348](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43101560348) passed native upgrade/PITR and all 24 Compose phases, but core unit verification failed 415/15 because ubuntu-latest moved to HarfBuzz 12.3.2 while the frozen oracle requires 8.3.0. The core job is now pinned to ubuntu-24.04; a new exact three-job CI run is required. Local browser remains blocked by occupied Redis 6379.
+
 ## NOTIFY-01E notification preferences and category muting - 2026-11-12
 
 Added tenant/user-scoped GET/PUT/PATCH notification preferences backed by immutable audit-log entries, with default muted-category filtering for notification feeds and unread summaries plus explicit include/category overrides. Added CLIENT/cross-tenant and PATCH replacement regressions; no migration or external delivery behavior changed.

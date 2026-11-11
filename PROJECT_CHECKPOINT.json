@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01e-package-verified-20261112",
-  "savedAtUtc": "2026-11-11T19:17:06.338Z",
-  "currentMilestone": "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed GitHub Actions run 43073695509; all three jobs and all 41 required steps passed with 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audit vulnerabilities and 24 Compose phases. The notification preference/muting increment is CI verified; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.",
-  "activeTaskId": "NOTIFY-01E",
-  "workInProgress": false,
+  "checkpointRevision": "notify01f-run230-runner-drift-20261112",
+  "savedAtUtc": "2026-11-11T21:32:15.135Z",
+  "currentMilestone": "NOTIFY-01F notification preference controls UI is locally verified on source a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333. Exact published-main run 43101560348 passed native upgrade/PITR and all 24 Compose phases but core failed 415/15 unit cases because ubuntu-latest resolved to Ubuntu 26.04 with HarfBuzz 12.3.2 instead of the frozen 8.3.0 oracle. Core is now pinned to ubuntu-24.04; a new exact three-job run, final publication, portable source package and receipt remain pending. Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open.",
+  "activeTaskId": "NOTIFY-01F",
+  "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Review the next bounded NOTIFY-01 increment against integrated main after preserving the exact NOTIFY-01E CI run, final publication run and portable source receipt; keep the occupied-Redis local limitation and all external acceptance gates recorded.",
+  "nextAction": "Publish the core ubuntu-24.04 runner pin and reconciled continuity records, then inspect a new exact three-job run on the changed source before packaging.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -6789,9 +6789,9 @@
   },
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
-    "branch": "main",
-    "commit": "058cf271e8673403efbf029788278f5249df9c77",
-    "status": "INTEGRATION01B_DATA01B_MERGED_EXACT_CI_PENDING",
+    "branch": "integration/notify-01f",
+    "commit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+    "status": "NOTIFY01F_RUN230_CORE_RUNNER_DRIFT",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6806,7 +6806,7 @@
     "id": 1389748509,
     "sourceTree": "13e97946677ac5965bb6aa23a55509262ebc0cc",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "Published NOTIFY-01B/DATA-01B integration docs and exact-source CI verified on run42810027002.",
+    "commitMeaning": "NOTIFY-01F preference controls UI is locally verified; exact published-main run 43101560348 passed native upgrade/PITR and 24 Compose phases but failed core because ubuntu-latest moved to HarfBuzz 12.3.2. Core is pinned to ubuntu-24.04 and a new exact CI run is required.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "a432d67113cec8e70df5334c57391214f92547d1",
     "uploadGate": {
@@ -7930,9 +7930,9 @@
       "state": "ci_verified_integrated",
       "title": "Notifications, realtime status and telemetry",
       "completedIncrement": "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed run 43073695509; all three jobs and 41 required steps passed with 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
-      "nextAction": "Review the next bounded NOTIFY-01 increment against this integrated main; broader realtime, external delivery, production/live/provider and full-master acceptance remain open.",
-      "currentEvidence": "docs/qa/notify01e-evidence.json",
-      "status": "ci_verified_integrated"
+      "nextAction": "Publish the core runner pin and reconciled NOTIFY-01F continuity records, then pass a new exact three-job run before reviewing the next bounded increment.",
+      "currentEvidence": "docs/qa/notify01f-evidence.json",
+      "status": "ci_pending_runner_pin"
     },
     {
       "id": "DATA-01",
@@ -8040,6 +8040,15 @@
       "currentEvidence": "docs/qa/notify01c-final-ci-receipt.json",
       "nextAction": "Closed for this bounded increment; broader parent task requirements remain open.",
       "status": "exact_source_ci_verified"
+    },
+    {
+      "id": "NOTIFY-01F",
+      "state": "exact_source_ci_pending_runner_pin",
+      "title": "Notification preference controls UI",
+      "completedIncrement": "Accessible category preference panel, explicit save/cancel/back/close discard and feed/unread refresh are implemented in source a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333.",
+      "currentEvidence": "docs/qa/notify01f-evidence.json",
+      "nextAction": "Publish the core ubuntu-24.04 runner pin and reconciled continuity records, then pass a new exact three-job run before packaging.",
+      "status": "exact_source_ci_pending_runner_pin"
     }
   ],
   "lastChanges": [
@@ -8064,7 +8073,15 @@
     "Added 29 focused notification unit checks plus billing/content lifecycle integration coverage.",
     "Preserved Antigravity worktrees and apps/web/next-env.d.ts uncommitted drift.",
     "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed run 43073695509 with 431 unit / 77 HTTP / 68 browser / 5 recovery / 26 migrations / 44 readability / zero audits / 24 Compose phases.",
-    "Added tenant/user-scoped notification preferences, immutable preference audit entries, muted feed/summary defaults and explicit include/category overrides; corrected the first run PATCH assertion without changing replacement semantics."
+    "Added tenant/user-scoped notification preferences, immutable preference audit entries, muted feed/summary defaults and explicit include/category overrides; corrected the first run PATCH assertion without changing replacement semantics.",
+    "NOTIFY-01F local source a963177 adds accessible category preferences with explicit save/cancel and close-discard behavior; API/web builds, 31 focused notification tests and diff checks pass. Exact source run 43095568149 is queued; prior upload-time failure 43093129039 is historical.",
+    {
+      "date": "2026-11-12",
+      "taskId": "NOTIFY-01F",
+      "commit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+      "runId": 43101560348,
+      "summary": "Exact published-main CI passed native upgrade/PITR and 24 Compose phases but exposed Ubuntu 26.04 HarfBuzz 12.3.2 against the frozen 8.3.0 shaping oracle (415 pass/15 fail). Pinned only the core job to ubuntu-24.04 and recorded the new exact-CI requirement."
+    }
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8102,41 +8119,48 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/notify01e-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/notify01f-evidence.json",
   "latestStatus": {
-    "taskId": "NOTIFY-01E",
-    "status": "final_exact_ci_and_package_verified",
-    "commit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
-    "runId": 43073695509,
-    "allThreeJobsAndRequiredStepsPassed": true,
+    "taskId": "NOTIFY-01F",
+    "status": "local_verified_runner_pin_after_exact_ci_failure",
+    "commit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+    "runId": 43101560348,
+    "allThreeJobsAndRequiredStepsPassed": false,
     "evidence": [
-      "docs/qa/notify01e-evidence.json"
+      "docs/qa/notify01f-evidence.json"
     ],
-    "local": "Prisma generation, API/web builds and 31 focused notification tests pass; full Windows unit is environment-limited at 305/430 and owned HTTP is fail-closed on occupied Redis 6379.",
+    "local": "API/web production builds, 31 focused notification tests and diff checks pass; local browser is fail-closed because Redis 127.0.0.1:6379 is occupied; real services, credentials, volumes and Antigravity worktrees remain untouched.",
     "sourcePackage": {
-      "status": "created_final_published_commit",
-      "location": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01e-final.zip",
-      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01e-final-ci-receipt.json",
-      "scope": "Portable source and saved project context; runtime data, private backups and credentials excluded.",
-      "finalPublishedCommit": "5075cf9f32cb75bf46713ac66082a150a5bec86d",
-      "finalPublishedRunId": 43082196673
+      "status": "pending_new_exact_ci",
+      "location": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01f-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01f-final-ci-receipt.json",
+      "scope": "Portable source and saved project context; runtime data, private backups and credentials excluded."
     }
   },
   "activeTask": {
-    "id": "NOTIFY-01E",
-    "title": "Notification preferences and category muting",
-    "status": "final_exact_ci_and_package_verified",
-    "implementationCommit": "3b71eab",
-    "publishedCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
-    "finalPublicationCommit": "5075cf9f32cb75bf46713ac66082a150a5bec86d",
-    "finalPublicationRunId": 43082196673,
-    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
-    "exactRunId": 43073695509,
+    "id": "NOTIFY-01F",
+    "title": "Notification preference controls UI",
+    "status": "local_verified_runner_pin_after_exact_ci_failure",
+    "implementationCommit": "c8300c98f952c6c3a86fb821b861b38b6e306f77",
+    "publishedCommit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+    "baseCommit": "3af83e760bc61974056ecbe3ebb98dc23acb8af4",
+    "exactRunId": 43101560348,
     "focusedTestsPassed": 31,
     "focusedTestsFailed": 0,
     "apiBuild": true,
     "webBuild": true,
-    "httpHarness": "blocked_fail_closed_occupied_6379"
+    "httpHarness": "blocked_fail_closed_occupied_6379",
+    "changedPaths": [
+      "apps/web/app/globals.css",
+      "apps/web/app/notifications-panel.tsx",
+      "docs/NOTIFICATIONS.md",
+      "docs/qa/notify01f-evidence.json",
+      "tests/ui/notifications.spec.ts",
+      ".github/workflows/ci.yml"
+    ],
+    "exactRunConclusion": "failure",
+    "failedStep": "Run unit tests",
+    "runnerDrift": "ubuntu-latest resolved to ubuntu-26.04 with HarfBuzz 12.3.2; core is pinned to ubuntu-24.04."
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8149,23 +8173,23 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "NOTIFY-01E",
-    "status": "final_exact_ci_and_package_verified",
-    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
+    "taskId": "NOTIFY-01F",
+    "status": "local_verified_runner_pin_after_exact_ci_failure",
+    "baseCommit": "3af83e760bc61974056ecbe3ebb98dc23acb8af4",
     "changedPaths": [
-      "apps/api/src/notifications.ts",
+      "apps/web/app/globals.css",
+      "apps/web/app/notifications-panel.tsx",
       "docs/NOTIFICATIONS.md",
-      "docs/qa/notify01e-evidence.json",
-      "tests/notifications.test.ts",
-      "tests/integration/notifications.test.ts"
+      "docs/qa/notify01f-evidence.json",
+      "tests/ui/notifications.spec.ts",
+      ".github/workflows/ci.yml"
     ],
-    "implementationCommit": "3b71eab",
-    "commit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
-    "runId": 43073695509,
-    "finalPublishedCommit": "5075cf9f32cb75bf46713ac66082a150a5bec86d",
-    "finalPublishedRunId": 43082196673,
-    "receipt": "docs/qa/notify01e-evidence.json",
-    "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01e-final.zip"
+    "implementationCommit": "c8300c98f952c6c3a86fb821b861b38b6e306f77",
+    "commit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+    "runId": 43101560348,
+    "receipt": "docs/qa/notify01f-evidence.json",
+    "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01f-final.zip",
+    "nextAction": "Publish the workflow pin and continuity docs, then pass a new exact three-job run before packaging."
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8784,88 +8808,37 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "NOTIFY-01E",
-    "status": "published_exact_source_ci_verified",
-    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
+    "taskId": "NOTIFY-01F",
+    "status": "local_verified_runner_pin_after_exact_ci_failure",
+    "baseCommit": "3af83e760bc61974056ecbe3ebb98dc23acb8af4",
     "local": {
-      "prismaGenerate": true,
       "apiBuild": true,
       "webBuild": true,
       "focusedNotificationTests": 31,
       "focusedTestsFailed": 0,
+      "diffCheck": true,
       "fullSuiteAccepted": false,
       "fullSuiteEnvironmentLimited": true,
-      "fullSuitePassedBeforeEnvironmentFailures": 305,
-      "fullSuiteTotal": 430,
-      "fullSuiteEnvironmentFailures": 125,
-      "httpBrowserHarness": "Windows local HTTP blocked by occupied Redis 6379; exact CI executed isolated services",
+      "httpBrowserHarness": "Windows local HTTP/browser blocked by occupied Redis 6379; exact CI is required.",
       "fixtureCleanup": true,
-      "realEnvironmentUnchanged": true
+      "realEnvironmentUnchanged": true,
+      "runnerPinPrepared": true
     },
     "exactCi": {
-      "runId": 43073695509,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509",
-      "sourceCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
-      "conclusion": "success",
-      "allThreeJobsAndEveryRequiredStepPassed": true,
-      "results": {
-        "unit": 431,
-        "http": 77,
-        "browser": 68,
-        "recovery": 5,
-        "migrations": 26,
-        "readabilityStandard": 36,
-        "readabilityBusy": 8,
-        "readabilityNegativeControl": true,
-        "productionAuditVulnerabilities": 0,
-        "fullAuditVulnerabilities": 0,
-        "composePhases": 24,
-        "populatedUpgradeMigrations": 26,
-        "populatedUpgradeLegacyTables": 8,
-        "pitrTablesCompared": 38,
-        "pitrPopulatedTables": 11,
-        "pitrRowsCompared": 19,
-        "pitrApplicationSchemaPhysicalRestore": true,
-        "pitrLaterChangesExcluded": true,
-        "composeInFlightClaimsAndWalRecovery": true,
-        "composeHistoricalObjects": 4,
-        "composeAdmissionControlsDenied": 10,
-        "composeAdmissionCallbacks": 1
-      },
-      "artifacts": [
-        {
-          "name": "browser-evidence",
-          "id": 13882532300,
-          "size": "14.5 MB",
-          "digest": "sha256:24e928ec3556769739011d333a4ba6a2ab058dab60d8d6a39cc8aa5871551724",
-          "bytesInspected": false,
-          "downloadStatus": "Download was not completed through the configured proxy; bytes and report remain uninspected."
-        },
-        {
-          "name": "compose-evidence",
-          "id": 13882766384,
-          "size": "16.6 KB",
-          "digest": "sha256:2fd46cce9344dac7acdf1c0b91c4387e272062557a4ad024d7ce52853517501b",
-          "bytesInspected": false,
-          "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
-        },
-        {
-          "name": "native-upgrade-evidence",
-          "id": 13879102123,
-          "size": "932 Bytes",
-          "digest": "sha256:866ea49db5e8131c938162ce810f2f54df73105b4e7d57f830af970a365acaa9",
-          "bytesInspected": false,
-          "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
-        },
-        {
-          "name": "postgres-pitr-evidence",
-          "id": 13878938890,
-          "size": "2.95 KB",
-          "digest": "sha256:072e8fa5936ea8d87455d138f2d59b6aa2d6474142be21d65fb1bc4ceba0e4de",
-          "bytesInspected": false,
-          "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
-        }
-      ]
+      "runId": 43101560348,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43101560348",
+      "sourceCommit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+      "status": "failure",
+      "conclusion": "failure",
+      "allThreeJobsAndEveryRequiredStepPassed": false,
+      "failedStep": "Run unit tests",
+      "unitPassed": 415,
+      "unitFailed": 15,
+      "nativeUpgrade": true,
+      "postgresPitr": true,
+      "composePhases": 24,
+      "runner": "ubuntu-26.04 / HarfBuzz 12.3.2",
+      "nextRequired": "New exact CI after core ubuntu-24.04 pin."
     }
   },
   "social01PolicyReview": {

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01F",
-  "recordedAtUtc": "2026-11-12T20:05:00Z",
-  "status": "local_verified_pending_exact_ci",
+  "recordedAtUtc": "2026-11-11T21:32:15.135Z",
+  "status": "local_verified_runner_pin_after_exact_ci_failure",
   "implementationCommit": "c8300c98f952c6c3a86fb821b861b38b6e306f77",
   "baseCommit": "3af83e760bc61974056ecbe3ebb98dc23acb8af4",
   "title": "Notification preference controls",
@@ -18,26 +18,110 @@
     "apps/web/app/notifications-panel.tsx",
     "docs/NOTIFICATIONS.md",
     "docs/qa/notify01f-evidence.json",
-    "tests/ui/notifications.spec.ts"
+    "tests/ui/notifications.spec.ts",
+    ".github/workflows/ci.yml"
   ],
   "localVerification": {
     "apiBuild": true,
     "webProductionBuild": true,
     "notificationUnit": "31/31",
     "formatAndDiffChecks": true,
-    "browserRegressionAdded": "1 preference-save and muted-feed refresh flow",
+    "browserRegressionAdded": "preference-save/muted-feed refresh flow plus close-discard regression",
     "browserRegressionLocal": "Not claimed locally; the browser fixture requires the owned application services and the verifier fails closed when Redis 127.0.0.1:6379 is already occupied.",
     "realEnvironmentUnchanged": true,
     "userUncommittedChangePreserved": "apps/web/next-env.d.ts",
     "antigravityWorktreesUntouched": true
   },
   "exactCi": {
-    "runId": 43093129039,
-    "runUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43093129039",
-    "sourceCommit": "c8300c98f952c6c3a86fb821b861b38b6e306f77",
-    "status": "in_progress",
-    "countedAsAcceptance": false
+    "runId": 43101560348,
+    "runUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43101560348",
+    "sourceCommit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+    "status": "failure",
+    "conclusion": "failure",
+    "countedAsAcceptance": false,
+    "allThreeJobsAndEveryRequiredStepPassed": false,
+    "jobs": [
+      {
+        "name": "Native application verification",
+        "status": "failure",
+        "failedStep": "Run unit tests",
+        "unitPassed": 415,
+        "unitFailed": 15,
+        "laterStepsSkipped": true,
+        "reason": "Ubuntu 26.04 exposed HarfBuzz 12.3.2; frozen controls require 8.3.0."
+      },
+      {
+        "name": "Native populated upgrade and migration recovery",
+        "status": "success",
+        "migrationFiles": 26,
+        "postgresPitr": true
+      },
+      {
+        "name": "Disposable Compose and native restore",
+        "status": "success",
+        "composePhases": 24,
+        "artifactUploaded": true
+      }
+    ],
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "id": 13891893181,
+        "sizeBytes": 946866,
+        "digest": "sha256:8b8eb21f61ca19b2502a921f5c9cbe6e91d79a999d00b354e4010c5f2abc6ec9"
+      },
+      {
+        "name": "compose-evidence",
+        "id": 13893326048,
+        "sizeBytes": 16938,
+        "digest": "sha256:709be660357e91b036e415d6e9524ff86ae266175389c4e2c3d3372bffb4a1a4"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "id": 13892895784,
+        "sizeBytes": 932,
+        "digest": "sha256:6341d2fb030a64b8235fc41d0e135e01e100c46ce5dcfd233b25324ad799d483"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "id": 13891892040,
+        "sizeBytes": 3019,
+        "digest": "sha256:08ac79d9e1a1be6a2601104014e3b025050a442575b02654fcce4f22eda704cc"
+      }
+    ],
+    "runnerDrift": {
+      "requestedLabel": "ubuntu-latest",
+      "resolvedImage": "ubuntu-26.04",
+      "installedHarfBuzz": "12.3.2-2",
+      "requiredHarfBuzz": "8.3.0",
+      "fix": "Pin only core job to ubuntu-24.04."
+    },
+    "nextRequired": "Publish the runner pin and reconciled continuity records, then pass all three jobs/every required step on the new exact source commit."
   },
+  "historicalAttempts": [
+    {
+      "runId": 43093129039,
+      "sourceCommit": "c8300c98f952c6c3a86fb821b861b38b6e306f77",
+      "status": "failure",
+      "reason": "Native upgrade, Compose and native application assertions passed, but actions/upload-artifact@v4 could not create browser-evidence after five retries because the service returned an HTML response instead of JSON. No application assertion failed; this run predates the close-discard regression commit and is not acceptance.",
+      "jobId": 130775043754,
+      "failedStep": "Upload browser evidence"
+    },
+    {
+      "runId": 43095568149,
+      "sourceCommit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+      "status": "queued_superseded",
+      "reason": "Queued integration-branch attempt with no jobs; not acceptance."
+    },
+    {
+      "runId": 43101560348,
+      "sourceCommit": "a9631779d0cd95f4a6c5d6a76f8eacd5aca9e333",
+      "status": "failure",
+      "reason": "Exact published-main run: native upgrade/PITR and 24 Compose phases passed, but core unit verification recorded 415 pass and 15 HarfBuzz 12.3.2-versus-8.3.0 version-guard failures; later core checks were skipped.",
+      "jobId": 130794049128,
+      "failedStep": "Run unit tests"
+    }
+  ],
   "limits": [
     "This increment adds notification preference UI only; it claims no external email, push, realtime transport or SLO.",
     "No schema or migration changes were introduced.",
