@@ -591,10 +591,10 @@ test("GET/PUT /preferences: manages notification muting preferences with tenant 
   const patchRes = await ownerA.call(
     `/workspaces/${orgA.id}/notifications/preferences`,
     "PATCH",
-    { mutedCategories: ["AI"] },
+    { mutedCategories: ["BILLING"] },
   );
   assert.equal(patchRes.status, 200);
-  assert.deepEqual(patchRes.body.mutedCategories, ["AI"]);
+  assert.deepEqual(patchRes.body.mutedCategories, ["BILLING"]);
 
   const muted = await db.notification.create({
     data: {
@@ -642,5 +642,5 @@ test("GET/PUT /preferences: manages notification muting preferences with tenant 
     `/workspaces/${orgA.id}/notifications/preferences`,
   );
   assert.equal(refetched.status, 200);
-  assert.deepEqual(refetched.body.mutedCategories, ["AI"]);
+  assert.deepEqual(refetched.body.mutedCategories, ["BILLING"]);
 });
