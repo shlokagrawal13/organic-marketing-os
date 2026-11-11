@@ -336,7 +336,10 @@ export default function NotificationsPanel({
                 className="icon-button"
                 type="button"
                 aria-label="Close notifications"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  if (preferencesOpen) closePreferences();
+                  setOpen(false);
+                }}
               >
                 <X size={17} />
               </button>
