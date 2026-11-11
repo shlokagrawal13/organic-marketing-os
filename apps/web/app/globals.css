@@ -1298,6 +1298,71 @@ progress::-webkit-progress-value {
   font-size: 0.78rem;
   line-height: 1.4;
 }
+.notification-success {
+  margin: 0.6rem 1rem 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+.notification-preferences {
+  padding: 0.75rem 1rem 1rem;
+}
+.notification-preferences-copy {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+.notification-preference-list {
+  display: grid;
+  gap: 0.2rem;
+}
+.notification-preference-row {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.65rem 0.45rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.notification-preference-row:hover {
+  background: var(--surface-alt);
+}
+.notification-preference-row input[type="checkbox"] {
+  width: 17px;
+  min-width: 17px;
+  height: 17px;
+  margin-top: 0.15rem;
+  accent-color: var(--accent);
+}
+.notification-preference-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.notification-preference-copy strong {
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+.notification-preference-copy small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+.notification-preferences-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+.notification-preferences-actions .button {
+  min-height: 38px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.78rem;
+}
 .spin {
   animation: notification-spin 0.9s linear infinite;
 }

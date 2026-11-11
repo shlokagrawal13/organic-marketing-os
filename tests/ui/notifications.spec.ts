@@ -68,4 +68,23 @@ test("notification center loads tenant updates and toggles unread state", async 
     "aria-label",
     "Notifications (1 unread)",
   );
+
+  await page.getByRole("button", { name: "Notification preferences" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Notification preferences" }),
+  ).toBeVisible();
+  const renderUpdates = page.getByRole("checkbox", {
+    name: "Render updates",
+  });
+  await expect(renderUpdates).not.toBeChecked();
+  await renderUpdates.check();
+  await page.getByRole("button", { name: "Save preferences" }).click();
+  await expect(page.getByRole("status")).toHaveText(
+    "Notification preferences saved.",
+  );
+  await page.getByRole("button", { name: "Back to notifications" }).click();
+  await expect(
+    page.getByText("The campaign video is ready for review."),
+  ).not.toBeVisible();
+  await expect(trigger).toHaveAttribute("aria-label", "Notifications");
 });
