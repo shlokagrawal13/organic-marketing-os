@@ -4,6 +4,8 @@ Integrated NOTIFY-01E notification preferences and category muting on exact comm
 
 The first exact attempt 43070242889 failed one stale PATCH expectation while migration and Compose jobs passed; the corrected test commit 121c63c matches the full-list replacement API contract. Local Prisma/API/web builds, 31 focused notification tests and zero audits passed. Full Windows unit execution remained environment-limited at 305/430 and local HTTP remained fail-closed because Redis 6379 was occupied. Existing services, media, migrations, Antigravity worktrees and the user uncommitted apps/web/next-env.d.ts change were preserved.
 
+The final portable source ZIP and external receipt are recorded in [the NOTIFY-01E evidence](qa/notify01e-evidence.json) under the desktop project-files folder; package_handoff excludes runtime data, private backups and credentials.
+
 ## NOTIFY-01D exact CI closure - 2026-11-11
 
 The accepted NOTIFY-01D source commit `e6fbd33ce79b590bd34462f5306585d39a542214` passed [GitHub Actions run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) with all three jobs and all 41 required steps. The exact result was 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full audit vulnerabilities and all 24 Compose phases. Native populated upgrade, PostgreSQL PITR and Compose reports passed; artifact metadata and the proxy download gap are recorded in [the QA evidence](qa/notify01d-evidence.json).
