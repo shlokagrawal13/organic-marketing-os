@@ -1,14 +1,14 @@
-# Active handoff - NOTIFY-01D lifecycle integration
+# Active handoff - NOTIFY-01E preferences and category muting integration
 
-<!-- NOTIFY01D_CURRENT_START -->
-## Current: NOTIFY-01D lifecycle wiring - 2026-11-11
+<!-- NOTIFY01E_CURRENT_START -->
+## Current: NOTIFY-01E notification preferences and category muting - 2026-11-12
 
-The accepted NOTIFY-01D source is exact commit `e6fbd33ce79b590bd34462f5306585d39a542214`; [GitHub Actions run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. It records 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero audit vulnerabilities and all 24 Compose phases. The native populated upgrade report passed 26 migration checks; the PostgreSQL PITR report compared 38 tables and 19 rows; the Compose report passed all 24 phases. Artifact metadata and the download gap are recorded in [notify01d evidence](qa/notify01d-evidence.json).
+NOTIFY-01E is closed on exact published source commit 121c63c135fb03ea6e24c8b24bb41b31d765edf2; [GitHub Actions run 43073695509](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509) passed all three jobs and all 41 required steps. The verified result is 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. The native upgrade report preserved 26/26 migrations; the populated PostgreSQL PITR report compared 38 tables with 11 populated tables and 19 rows; the Compose report bound in-flight claims, a WAL target, four historical objects and one admitted callback while denying ten admission controls.
 
-The implementation wires signed billing subscription/payment-failure notifications into the billing transaction, revision-bound content-ready notifications into DRAFT to REVIEW, and a tenant/role-scoped unread category summary. Local Prisma/API/web builds and 29 focused notification tests pass. The owned HTTP verifier refused occupied Redis port 6379 before startup; no existing user service was contacted or stopped.
+The increment adds tenant- and user-bound GET/PUT/PATCH notification preferences, immutable audit-log preference updates, default muted-category filtering for the notification feed and unread summary, and explicit include/category overrides. No migration or external delivery claim is added. The first exact attempt 43070242889 correctly exposed a contradictory PATCH expectation; commit 121c63c fixed the test to match replacement semantics before the accepted run. Local Prisma generation, API/web builds, 31 focused notification tests and zero audits pass. The Windows full unit attempt remains environment-limited at 305/430, and the owned HTTP verifier remains fail-closed because Redis port 6379 is occupied.
 
-The bounded NOTIFY-01D increment is closed. Preserve Antigravity worktrees and the user's apps/web/next-env.d.ts change. Next action is the next bounded NOTIFY-01 increment; production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
-<!-- NOTIFY01D_CURRENT_END -->
+See [NOTIFY-01E evidence](docs/qa/notify01e-evidence.json) and the external receipt/source package in the desktop project-files folder. Preserve the user uncommitted next-env.d.ts change and Antigravity worktrees. The next action is the next bounded NOTIFY-01 increment; production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
+<!-- NOTIFY01E_CURRENT_END -->
 
 <!-- DATA01F_INTEGRATION_CURRENT_START -->
 ## Current: DATA-01D through DATA-01F exact CI closure - 2026-11-11
@@ -36,7 +36,7 @@ UX-01L is closed on exact `main` commit `dafdb93a562c5bf53d9dfaa159340754775a6e0
 
 Current integration merges Antigravity's PR #1 `notify-01a` head `73ff67b` and PR #2 `data-01a` head `f22119d` into main without editing their worktrees. NOTIFY-01B (`notify-01b`, head `6db62d6`) adds publishing and AI failure notifications; DATA-01B (`data-01b`, head `ff85254`) adds tenant-scoped social-connection disconnect, credential scrubbing and schedule/attempt cascade. Both were reviewed against integrated main, with three data branch trailing-blank-line violations removed during the merge resolution. The implementation merge is `058cf27`; docs were published at `f1ba479`. Focused notification 20/20 and data-governance 11/11 checks plus API/web builds pass. Exact [run 42810027002](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42810027002) passed all three jobs and all 41 steps. Artifact names, sizes and digests were recorded; browser artifact bytes/report remain uninspected because downloads were proxy403-blocked. The prior continuity checkpoint `5e8b537` passed [run 42805024713](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42805024713). See [current evidence](qa/integration01b-evidence.json) and [prior receipt](qa/integration01a-final-ci-receipt.json). Local HTTP could not run safely because FFmpeg/fontconfig failed and an existing Redis occupied port 6379; the harness refuses occupied ports before fixture startup. See [integration evidence](qa/integration01a-evidence.json).
 
-Later NOTIFY-01C–E and DATA-01C–F remain on Antigravity-owned branches; review them only after the `058cf27` exact CI closes. Preserve all prior assertions, master specification, real environment/user services and media/volumes. Recovery fixtures ended at P; production/live-provider/deployed/full-master acceptance remains open. CI does not deploy.
+At the time of this historical handoff, later NOTIFY-01C–E and DATA-01C–F were still on Antigravity-owned branches; they are now reconciled in the current sections above. Preserve all prior assertions, master specification, real environment/user services and media/volumes. Recovery fixtures ended at P; production/live-provider/deployed/full-master acceptance remains open. CI does not deploy.
 
 ## Historical UX-01L handoff
 

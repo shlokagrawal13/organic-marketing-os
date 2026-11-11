@@ -1,3 +1,9 @@
+## NOTIFY-01E exact CI closure - 2026-11-12
+
+Integrated NOTIFY-01E notification preferences and category muting on exact commit 121c63c135fb03ea6e24c8b24bb41b31d765edf2. [GitHub Actions run 43073695509](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509) passed all three jobs and required steps: 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The native logs were inspected for 26/26 migration preservation, populated application-schema PITR (38 tables, 11 populated tables, 19 rows), and in-flight/WAL Compose recovery checks. Artifact metadata and the proxy download limitation are recorded in [notify01e evidence](qa/notify01e-evidence.json).
+
+The first exact attempt 43070242889 failed one stale PATCH expectation while migration and Compose jobs passed; the corrected test commit 121c63c matches the full-list replacement API contract. Local Prisma/API/web builds, 31 focused notification tests and zero audits passed. Full Windows unit execution remained environment-limited at 305/430 and local HTTP remained fail-closed because Redis 6379 was occupied. Existing services, media, migrations, Antigravity worktrees and the user uncommitted apps/web/next-env.d.ts change were preserved.
+
 ## NOTIFY-01D exact CI closure - 2026-11-11
 
 The accepted NOTIFY-01D source commit `e6fbd33ce79b590bd34462f5306585d39a542214` passed [GitHub Actions run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) with all three jobs and all 41 required steps. The exact result was 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full audit vulnerabilities and all 24 Compose phases. Native populated upgrade, PostgreSQL PITR and Compose reports passed; artifact metadata and the proxy download gap are recorded in [the QA evidence](qa/notify01d-evidence.json).

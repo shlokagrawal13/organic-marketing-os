@@ -1,12 +1,12 @@
-<!-- NOTIFY01D_CURRENT_START -->
-## Current: NOTIFY-01D lifecycle wiring - 2026-11-11
+<!-- NOTIFY01E_CURRENT_START -->
+## Current: NOTIFY-01E notification preferences and category muting - 2026-11-12
 
-NOTIFY-01D is integrated on exact source commit `e6fbd33ce79b590bd34462f5306585d39a542214`; [GitHub Actions run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The verified result is 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. Native upgrade, populated PostgreSQL PITR and Compose reports passed. Artifact names, sizes and API digests are recorded in [the evidence](docs/qa/notify01d-evidence.json); the browser ZIP download timed out through the configured proxy, so its bytes/report remain uninspected.
+NOTIFY-01E is closed on exact published source commit 121c63c135fb03ea6e24c8b24bb41b31d765edf2; [GitHub Actions run 43073695509](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509) passed all three jobs and all 41 required steps. The verified result is 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. The native upgrade report preserved 26/26 migrations; the populated PostgreSQL PITR report compared 38 tables with 11 populated tables and 19 rows; the Compose report bound in-flight claims, a WAL target, four historical objects and one admitted callback while denying ten admission controls.
 
-The implementation wires signed billing subscription/payment-failure notifications into the billing transaction, emits revision-bound content-ready notifications on DRAFT to REVIEW, and exposes a tenant/role-scoped unread category summary. Local Prisma/API/web builds and 29 focused notification tests pass; the owned HTTP verifier remains fail-closed on occupied Redis port 6379. The external source package and final receipt are in the desktop project-files folder.
+The increment adds tenant- and user-bound GET/PUT/PATCH notification preferences, immutable audit-log preference updates, default muted-category filtering for the notification feed and unread summary, and explicit include/category overrides. No migration or external delivery claim is added. The first exact attempt 43070242889 correctly exposed a contradictory PATCH expectation; commit 121c63c fixed the test to match replacement semantics before the accepted run. Local Prisma generation, API/web builds, 31 focused notification tests and zero audits pass. The Windows full unit attempt remains environment-limited at 305/430, and the owned HTTP verifier remains fail-closed because Redis port 6379 is occupied.
 
-NOTIFY-01D is closed for this bounded increment. Preserve Antigravity worktrees and the user's uncommitted [next-env.d.ts](apps/web/next-env.d.ts) change while starting the next bounded NOTIFY-01 task. Production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
-<!-- NOTIFY01D_CURRENT_END -->
+See [NOTIFY-01E evidence](docs/qa/notify01e-evidence.json) and the external receipt/source package in the desktop project-files folder. Preserve the user uncommitted next-env.d.ts change and Antigravity worktrees. The next action is the next bounded NOTIFY-01 increment; production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
+<!-- NOTIFY01E_CURRENT_END -->
 
 <!-- DATA01F_CURRENT_START -->
 ## Current: DATA-01D through DATA-01F exact CI closure - 2026-11-11
@@ -15,7 +15,7 @@ DATA-01D, DATA-01E and DATA-01F are integrated on exact main commit fe3c090e3ce7
 
 The DATA hardening covers strict audit date validation, disconnect-safe export cleanup, transaction-time workspace locking/legal-hold rechecks, exact all-candidate reconciliation bytes and safe OWNER-only erasure while preserving immutable financial records. Local API/web/Prisma builds and 20 focused governance tests pass; local DATA HTTP remains recorded as blocked by the owned verifier's occupied-port fail-closed guard. See [DATA-01F evidence](docs/qa/data01f-evidence.json) and [active handoff](docs/ACTIVE_HANDOFF.md).
 
-DATA-01 is now a verified partial parent increment. NOTIFY-01D exact CI is closed; the next bounded NOTIFY-01 increment follows. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+DATA-01 is now a verified partial parent increment. NOTIFY-01E exact CI is closed; the next bounded NOTIFY-01 increment follows. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- DATA01F_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->

@@ -1,3 +1,9 @@
+## NOTIFY-01E notification preferences and category muting - 2026-11-12
+
+Added tenant/user-scoped GET/PUT/PATCH notification preferences backed by immutable audit-log entries, with default muted-category filtering for notification feeds and unread summaries plus explicit include/category overrides. Added CLIENT/cross-tenant and PATCH replacement regressions; no migration or external delivery behavior changed.
+
+Exact main commit 121c63c135fb03ea6e24c8b24bb41b31d765edf2 / [run 43073695509](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509) passed all three jobs and all 41 required steps: 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The first attempt 43070242889 exposed a contradictory PATCH assertion and is recorded as historical; the corrected commit is the accepted source.
+
 ## NOTIFY-01D exact CI closure - 2026-11-11
 
 Published exact source commit `e6fbd33ce79b590bd34462f5306585d39a542214`; [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps: 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. Billing subscription/payment-failure and revision-bound content-ready notifications plus the tenant/role-scoped unread summary are verified. Artifact metadata and the browser ZIP proxy-timeout gap are recorded in [notify01d evidence](qa/notify01d-evidence.json). The bounded increment is closed; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.

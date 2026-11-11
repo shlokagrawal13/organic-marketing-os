@@ -1,20 +1,19 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01E",
-  "recordedAtUtc": "2026-11-11T17:31:20.344Z",
-  "status": "local_verified_pending_exact_ci",
-  "source": {
-    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
-    "reviewedBranch": "origin/notify-01e",
-    "reviewedHead": "34f4ac8e0d380da302efb21a20b0957d6d891b37",
-    "note": "The branch head was reconciled against current main; D revision/event-id contracts were preserved and E tests were corrected before integration."
-  },
+  "recordedAtUtc": "2026-11-11T18:39:21.631Z",
+  "status": "published_exact_commit_ci_verified",
+  "implementationCommit": "3b71eab",
+  "publishedCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
+  "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
+  "reviewedBranch": "origin/notify-01e",
+  "reviewedHead": "34f4ac8e0d380da302efb21a20b0957d6d891b37",
   "behavior": {
-    "preferencesEndpoints": "GET, PUT, and PATCH /workspaces/:organizationId/notifications/preferences manage per-user muted categories with tenant and role guards.",
+    "preferencesEndpoints": "GET, PUT and PATCH /workspaces/:organizationId/notifications/preferences manage authenticated-user muted categories with tenant and role guards.",
     "categoryMutingInFeed": "GET /workspaces/:organizationId/notifications excludes muted categories by default; includeMuted=true or an explicit category query exposes them.",
     "categoryMutingInSummary": "GET /workspaces/:organizationId/notifications/summary excludes muted categories from unread totals by default and includes them with includeMuted=true.",
     "auditTrail": "Each update appends AuditLog action notifications.preferences.updated; no schema or migration change is introduced.",
-    "isolation": "HTTP tests cover CLIENT denial, cross-tenant 404, PATCH, muted list/summary and explicit category override."
+    "isolation": "HTTP coverage denies CLIENT, rejects cross-tenant access, exercises PATCH replacement, muted feed/summary filtering and explicit category override."
   },
   "local": {
     "prismaGenerate": true,
@@ -27,7 +26,8 @@
       "passed": false,
       "passedCases": 305,
       "failedCases": 125,
-      "reason": "Windows worktree lacks configured render fonts/librsvg prerequisites; notification-focused cases pass."
+      "totalCases": 430,
+      "reason": "Windows worktree lacks configured render fonts/librsvg/FFmpeg prerequisites; notification-focused cases pass."
     },
     "productionAuditVulnerabilities": 0,
     "fullAuditVulnerabilities": 0,
@@ -38,23 +38,125 @@
     "realEnvironmentUnchanged": true,
     "antigravityWorktreesUntouched": true
   },
+  "failedAttempt": {
+    "runId": 43070242889,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43070242889",
+    "sourceCommit": "3b71eab",
+    "conclusion": "failure",
+    "migrationAndComposeJobsPassed": true,
+    "nativeFailure": "The first exact run exposed a contradictory PATCH assertion: production PATCH replaces the full muted-category list, while the test expected the previously muted BILLING category to remain muted.",
+    "correction": "Commit 121c63c aligns the test payload and final refetch expectation with replacement semantics; focused notification unit tests remain green.",
+    "countedAsAcceptance": false
+  },
+  "exactCi": {
+    "runId": 43073695509,
+    "runUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509",
+    "sourceCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
+    "conclusion": "success",
+    "requiredRunSteps": 41,
+    "successfulRunSteps": 41,
+    "allThreeJobsAndEveryRequiredStepPassed": true,
+    "jobs": [
+      {
+        "name": "Native application verification",
+        "id": 130707912644,
+        "steps": 22,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509/job/130707912644"
+      },
+      {
+        "name": "Disposable Compose and native restore",
+        "id": 130707912006,
+        "steps": 8,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509/job/130707912006"
+      },
+      {
+        "name": "Native populated upgrade and migration recovery",
+        "id": 130707912590,
+        "steps": 11,
+        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509/job/130707912590"
+      }
+    ],
+    "verification": {
+      "unit": 431,
+      "http": 77,
+      "browser": 68,
+      "recovery": 5,
+      "migrations": 26,
+      "readabilityStandard": 36,
+      "readabilityBusy": 8,
+      "readabilityNegativeControl": true,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 24,
+      "populatedUpgradeMigrations": 26,
+      "populatedUpgradeLegacyTables": 8,
+      "pitrTablesCompared": 38,
+      "pitrPopulatedTables": 11,
+      "pitrRowsCompared": 19,
+      "pitrApplicationSchemaPhysicalRestore": true,
+      "pitrLaterChangesExcluded": true,
+      "composeInFlightClaimsAndWalRecovery": true,
+      "composeHistoricalObjects": 4,
+      "composeAdmissionControlsDenied": 10,
+      "composeAdmissionCallbacks": 1
+    },
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "id": 13882532300,
+        "size": "14.5 MB",
+        "digest": "sha256:24e928ec3556769739011d333a4ba6a2ab058dab60d8d6a39cc8aa5871551724",
+        "bytesInspected": false,
+        "downloadStatus": "Download was not completed through the configured proxy; bytes and report remain uninspected."
+      },
+      {
+        "name": "compose-evidence",
+        "id": 13882766384,
+        "size": "16.6 KB",
+        "digest": "sha256:2fd46cce9344dac7acdf1c0b91c4387e272062557a4ad024d7ce52853517501b",
+        "bytesInspected": false,
+        "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "id": 13879102123,
+        "size": "932 Bytes",
+        "digest": "sha256:866ea49db5e8131c938162ce810f2f54df73105b4e7d57f830af970a365acaa9",
+        "bytesInspected": false,
+        "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "id": 13878938890,
+        "size": "2.95 KB",
+        "digest": "sha256:072e8fa5936ea8d87455d138f2d59b6aa2d6474142be21d65fb1bc4ceba0e4de",
+        "bytesInspected": false,
+        "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
+      }
+    ],
+    "artifactDigestComparisonGap": "Artifact names, rounded sizes and API digests were verified. The browser ZIP download/report was not completed through the configured proxy; smaller ZIP routes were also not completed. Passing job-log reports were inspected; no policy or proxy bypass was used."
+  },
+  "changedPaths": [
+    "apps/api/src/notifications.ts",
+    "docs/NOTIFICATIONS.md",
+    "docs/qa/notify01e-evidence.json",
+    "tests/notifications.test.ts",
+    "tests/integration/notifications.test.ts"
+  ],
   "preserved": {
     "priorMigrations": 26,
     "masterSpecification": true,
-    "realEnvironmentUnchanged": true,
     "populatedUserServicesUntouched": true,
     "liveProvidersUsed": false,
-    "ux01ProtectedFilesUntouched": true
+    "userUncommittedChange": "apps/web/next-env.d.ts"
   },
-  "publication": {
-    "branch": "notify-01e",
-    "baseBranch": "main",
-    "exactCommitCi": "pending",
-    "sourcePackage": "pending"
+  "sourcePackage": {
+    "status": "to_be_created_after_final_docs_commit",
+    "location": "C:/Users/shlok/Desktop/organic-marketing-os-project-files"
   },
   "limits": [
-    "In-app preferences only; no external push/email delivery, realtime stream or SLO claim.",
-    "Local HTTP/integration execution was not forced against the occupied Redis service; exact CI must provide the isolated native services.",
+    "This increment adds in-app category muting only; it claims no external push/email delivery, realtime stream or SLO.",
+    "Local HTTP/integration execution was not forced against occupied Redis; existing user services stayed untouched.",
     "CI verifies owned fixtures and does not deploy.",
     "Production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open."
   ]

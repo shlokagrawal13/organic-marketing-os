@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01d-ci-verified-20261111",
-  "savedAtUtc": "2026-11-11T14:05:48.569Z",
-  "currentMilestone": "NOTIFY-01D exact source e6fbd33ce79b590bd34462f5306585d39a542214 passed GitHub Actions run 43030351133; all three jobs and all 41 required steps passed with 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audit vulnerabilities and 24 Compose phases. The bounded lifecycle increment is CI verified; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.",
-  "activeTaskId": "NOTIFY-01",
+  "checkpointRevision": "notify01e-ci-verified-20261112",
+  "savedAtUtc": "2026-11-11T18:39:21.749Z",
+  "currentMilestone": "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed GitHub Actions run 43073695509; all three jobs and all 41 required steps passed with 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audit vulnerabilities and 24 Compose phases. The notification preference/muting increment is CI verified; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.",
+  "activeTaskId": "NOTIFY-01E",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Proceed to the next bounded NOTIFY-01 increment after recording the exact NOTIFY-01D CI receipt; preserve the occupied-Redis local limitation and all external acceptance gates.",
+  "nextAction": "Proceed to the next bounded NOTIFY-01 increment after recording the exact NOTIFY-01E CI receipt; preserve the occupied-Redis local limitation and all external acceptance gates.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -116,7 +116,10 @@
     "tests/ui/notifications.spec.ts",
     "docs/qa/notify01c-final-ci-receipt.json",
     "scripts/package_handoff.py",
-    ".gitignore"
+    ".gitignore",
+    "apps/api/src/notifications.ts",
+    "docs/qa/notify01e-evidence.json",
+    "tests/integration/notifications.test.ts"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -7926,9 +7929,9 @@
       "id": "NOTIFY-01",
       "state": "ci_verified_integrated",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01D exact source e6fbd33ce79b590bd34462f5306585d39a542214 passed run 43030351133; all three jobs and 41 required steps passed with 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
-      "nextAction": "Start the next bounded NOTIFY-01 increment only after preserving this receipt; broader realtime, external delivery, production/live/provider and full-master acceptance remain open.",
-      "currentEvidence": "docs/qa/notify01d-evidence.json",
+      "completedIncrement": "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed run 43073695509; all three jobs and 41 required steps passed with 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
+      "nextAction": "Review the next bounded NOTIFY-01 increment against this integrated main; broader realtime, external delivery, production/live/provider and full-master acceptance remain open.",
+      "currentEvidence": "docs/qa/notify01e-evidence.json",
       "status": "ci_verified_integrated"
     },
     {
@@ -7936,7 +7939,7 @@
       "state": "partial_parent_after_f_exact_ci",
       "title": "Retention, deletion, complete account/media export",
       "completedIncrement": "DATA-01A/B/C are integrated; DATA-01D/E/F are exact-CI verified on fe3c090/run42919208576 with all three jobs and every required step passing: 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
-      "nextAction": "Continue NOTIFY-01D exact CI; production scheduling/automatic retention, remote durability/RPO-RTO, live/deployed and full-master acceptance remain open.",
+      "nextAction": "Continue the next bounded NOTIFY-01 increment; production scheduling/automatic retention, remote durability/RPO-RTO, live/deployed and full-master acceptance remain open.",
       "currentEvidence": "docs/qa/data01f-evidence.json",
       "status": "partial_parent_after_f_exact_ci"
     },
@@ -8012,6 +8015,24 @@
       "status": "exact_source_ci_verified"
     },
     {
+      "id": "NOTIFY-01D",
+      "state": "ci_verified_integrated",
+      "title": "Billing/content lifecycle notifications and unread category summary",
+      "completedIncrement": "NOTIFY-01D exact source e6fbd33ce79b590bd34462f5306585d39a542214 passed run 43030351133; all three jobs and 41 required steps passed.",
+      "currentEvidence": "docs/qa/notify01d-evidence.json",
+      "nextAction": "Closed for this bounded increment; broader parent task requirements remain open.",
+      "status": "exact_source_ci_verified"
+    },
+    {
+      "id": "NOTIFY-01E",
+      "state": "ci_verified_integrated",
+      "title": "Notification preferences and category muting",
+      "completedIncrement": "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed run 43073695509; all three jobs and 41 required steps passed with 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
+      "currentEvidence": "docs/qa/notify01e-evidence.json",
+      "nextAction": "Closed for this bounded increment; review the next bounded NOTIFY-01 increment against integrated main.",
+      "status": "exact_source_ci_verified"
+    },
+    {
       "id": "DATA-01C",
       "state": "ci_verified_integrated",
       "title": "Locked retention pruning and private-output preservation",
@@ -8041,7 +8062,9 @@
     "Wired NOTIFY-01D billing subscription/payment-failure notifications into signed webhook transactions.",
     "Wired revision-bound content-ready notification into DRAFT to REVIEW transaction and added unread category summary endpoint.",
     "Added 29 focused notification unit checks plus billing/content lifecycle integration coverage.",
-    "Preserved Antigravity worktrees and apps/web/next-env.d.ts uncommitted drift."
+    "Preserved Antigravity worktrees and apps/web/next-env.d.ts uncommitted drift.",
+    "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed run 43073695509 with 431 unit / 77 HTTP / 68 browser / 5 recovery / 26 migrations / 44 readability / zero audits / 24 Compose phases.",
+    "Added tenant/user-scoped notification preferences, immutable preference audit entries, muted feed/summary defaults and explicit include/category overrides; corrected the first run PATCH assertion without changing replacement semantics."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8079,34 +8102,31 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/integration01b-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/notify01e-evidence.json",
   "latestStatus": {
-    "taskId": "NOTIFY-01D",
+    "taskId": "NOTIFY-01E",
     "status": "ci_verified_integrated",
-    "commit": "e6fbd33ce79b590bd34462f5306585d39a542214",
-    "runId": 43030351133,
+    "commit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
+    "runId": 43073695509,
     "allThreeJobsAndRequiredStepsPassed": true,
     "evidence": [
-      "docs/qa/notify01d-evidence.json"
+      "docs/qa/notify01e-evidence.json"
     ],
-    "local": "API/web/Prisma builds and 29 focused notification tests pass; owned HTTP verifier failed closed on occupied Redis 6379.",
+    "local": "Prisma generation, API/web builds and 31 focused notification tests pass; full Windows unit is environment-limited at 305/430 and owned HTTP is fail-closed on occupied Redis 6379.",
     "sourcePackage": {
-      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/packages/organic-marketing-os-v0.9.2-notify01d-final-6758985-20261111.zip",
-      "bytes": 16483881,
-      "sha256": "7319701d445bfc31a80ec35dcfb518abf95379bc5440985844d42dae8deebcd0",
-      "builtFromCleanDetachedWorktree": true,
-      "excludesUncommitted": "apps/web/next-env.d.ts"
+      "status": "to_be_created_after_final_docs_commit",
+      "location": "C:/Users/shlok/Desktop/organic-marketing-os-project-files"
     }
   },
   "activeTask": {
-    "id": "NOTIFY-01D",
-    "title": "Notification lifecycle wiring and billing/content event coverage",
+    "id": "NOTIFY-01E",
+    "title": "Notification preferences and category muting",
     "status": "ci_verified_integrated",
-    "implementationCommit": "9d7cfba",
-    "publishedCommit": "e6fbd33ce79b590bd34462f5306585d39a542214",
-    "baseCommit": "fe3c090e3ce759f9f233501e312aadd43a232706",
-    "exactRunId": 43030351133,
-    "focusedTestsPassed": 29,
+    "implementationCommit": "3b71eab",
+    "publishedCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
+    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
+    "exactRunId": 43073695509,
+    "focusedTestsPassed": 31,
     "focusedTestsFailed": 0,
     "apiBuild": true,
     "webBuild": true,
@@ -8123,25 +8143,21 @@
     "evidence": "docs/qa/policy01b-evidence-source-evidence.json"
   },
   "pendingPublication": {
-    "taskId": "NOTIFY-01D",
+    "taskId": "NOTIFY-01E",
     "status": "published_exact_commit_ci_verified",
-    "baseCommit": "fe3c090e3ce759f9f233501e312aadd43a232706",
+    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
     "changedPaths": [
-      "apps/api/src/content.ts",
-      "apps/api/src/credits.ts",
-      "apps/api/src/notification-events.ts",
       "apps/api/src/notifications.ts",
-      "packages/core/billing.ts",
-      "tests/integration/billing.test.ts",
-      "tests/integration/notifications.test.ts",
+      "docs/NOTIFICATIONS.md",
+      "docs/qa/notify01e-evidence.json",
       "tests/notifications.test.ts",
-      "docs/NOTIFICATIONS.md"
+      "tests/integration/notifications.test.ts"
     ],
-    "required": "Exact source commit passed all three CI jobs and every required step; artifact metadata and job-log reports are recorded, with proxy download limits preserved.",
-    "commit": "e6fbd33ce79b590bd34462f5306585d39a542214",
-    "runId": 43030351133,
-    "receipt": "docs/qa/notify01d-evidence.json",
-    "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/packages/organic-marketing-os-v0.9.2-notify01d-final-6758985-20261111.zip"
+    "implementationCommit": "3b71eab",
+    "commit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
+    "runId": 43073695509,
+    "receipt": "docs/qa/notify01e-evidence.json",
+    "sourceZip": "to_be_created_after_final_docs_commit"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8760,105 +8776,88 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "NOTIFY-01C-DATA-01C",
+    "taskId": "NOTIFY-01E",
     "status": "published_exact_source_ci_verified",
-    "baseCommit": "e4f74b45fe936296f171a86cde9469be5da39d91",
+    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
     "local": {
       "prismaGenerate": true,
       "apiBuild": true,
       "webBuild": true,
-      "combinedBuild": true,
-      "focusedTestsPassed": 37,
-      "focusedRegressionTestsPassed": 25,
+      "focusedNotificationTests": 31,
       "focusedTestsFailed": 0,
-      "thresholdBoundaryRegressionPassed": true,
-      "fullSuiteAttempted": true,
       "fullSuiteAccepted": false,
       "fullSuiteEnvironmentLimited": true,
-      "httpBrowserHarness": "Linux CI executed; Windows local harness remained guarded by missing render prerequisites/occupied Redis",
-      "fixtureCleanup": "no owned HTTP/browser fixture started; no user service contacted",
-      "realEnvironmentUnchanged": true,
-      "fullSuitePassedBeforeEnvironmentFailures": 292,
-      "fullSuiteTotal": 416,
-      "fullSuiteEnvironmentFailures": 124,
-      "fixtureCleanupConfirmed": true
+      "fullSuitePassedBeforeEnvironmentFailures": 305,
+      "fullSuiteTotal": 430,
+      "fullSuiteEnvironmentFailures": 125,
+      "httpBrowserHarness": "Windows local HTTP blocked by occupied Redis 6379; exact CI executed isolated services",
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true
     },
-    "behavior": [
-      "Notification center shows tenant-bound unread notifications and supports read/unread/read-all actions.",
-      "Credit ledger emits one workspace-wide low-balance alert on threshold crossing inside the transaction, including exact-threshold-to-below.",
-      "YouTube policy-review mutation emits one workspace-wide approval-required alert.",
-      "Retention pruning locks the organization and preserves render rows with any private media key."
-    ],
     "exactCi": {
-      "runId": 42875217657,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42875217657",
-      "sourceCommit": "e4f74b45fe936296f171a86cde9469be5da39d91",
-      "status": "completed",
+      "runId": 43073695509,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43073695509",
+      "sourceCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
       "conclusion": "success",
       "allThreeJobsAndEveryRequiredStepPassed": true,
-      "jobs": [
-        {
-          "id": 130036590500,
-          "name": "Native application verification",
-          "conclusion": "success",
-          "requiredStepsPassed": true
-        },
-        {
-          "id": 130036591034,
-          "name": "Disposable Compose and native restore",
-          "conclusion": "success",
-          "requiredStepsPassed": true
-        },
-        {
-          "id": 130036591215,
-          "name": "Native populated upgrade and migration recovery",
-          "conclusion": "success",
-          "requiredStepsPassed": true
-        }
-      ],
+      "results": {
+        "unit": 431,
+        "http": 77,
+        "browser": 68,
+        "recovery": 5,
+        "migrations": 26,
+        "readabilityStandard": 36,
+        "readabilityBusy": 8,
+        "readabilityNegativeControl": true,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24,
+        "populatedUpgradeMigrations": 26,
+        "populatedUpgradeLegacyTables": 8,
+        "pitrTablesCompared": 38,
+        "pitrPopulatedTables": 11,
+        "pitrRowsCompared": 19,
+        "pitrApplicationSchemaPhysicalRestore": true,
+        "pitrLaterChangesExcluded": true,
+        "composeInFlightClaimsAndWalRecovery": true,
+        "composeHistoricalObjects": 4,
+        "composeAdmissionControlsDenied": 10,
+        "composeAdmissionCallbacks": 1
+      },
       "artifacts": [
         {
           "name": "browser-evidence",
-          "id": 13792403530,
-          "sizeBytes": 15222833,
-          "digest": "sha256:909ebd8aad02fb19bc444f6165a698458555639c210e24f35ee6027494a17cf0",
-          "bytesInspected": false
+          "id": 13882532300,
+          "size": "14.5 MB",
+          "digest": "sha256:24e928ec3556769739011d333a4ba6a2ab058dab60d8d6a39cc8aa5871551724",
+          "bytesInspected": false,
+          "downloadStatus": "Download was not completed through the configured proxy; bytes and report remain uninspected."
         },
         {
           "name": "compose-evidence",
-          "id": 13792861747,
-          "sizeBytes": 16958,
-          "digest": "sha256:dd6f0ab261cf34336df818cae9e89809f67054938802886cd6e894c9867b6547",
-          "bytesInspected": false
+          "id": 13882766384,
+          "size": "16.6 KB",
+          "digest": "sha256:2fd46cce9344dac7acdf1c0b91c4387e272062557a4ad024d7ce52853517501b",
+          "bytesInspected": false,
+          "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
         },
         {
           "name": "native-upgrade-evidence",
-          "id": 13791561994,
-          "sizeBytes": 933,
-          "digest": "sha256:cfc0c9bc6f370653aca67da6c036422bed6e80f67813b325147828efea29dece",
-          "bytesInspected": false
+          "id": 13879102123,
+          "size": "932 Bytes",
+          "digest": "sha256:866ea49db5e8131c938162ce810f2f54df73105b4e7d57f830af970a365acaa9",
+          "bytesInspected": false,
+          "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
         },
         {
           "name": "postgres-pitr-evidence",
-          "id": 13791951362,
-          "sizeBytes": 3017,
-          "digest": "sha256:a9ca0dc213e690bbb2b234988d84fb05d4178aac88103ab37a582ad316f6333e",
-          "bytesInspected": false
+          "id": 13878938890,
+          "size": "2.95 KB",
+          "digest": "sha256:072e8fa5936ea8d87455d138f2d59b6aa2d6474142be21d65fb1bc4ceba0e4de",
+          "bytesInspected": false,
+          "downloadStatus": "ZIP route was not completed; passing report was inspected in the exact job log."
         }
-      ],
-      "artifactByteInspectionGap": "Artifact names, sizes and digests were verified. ZIP bytes/reports were not downloaded because the normal artifact route returned proxy 403/401; no bypass was used.",
-      "required": true
-    },
-    "evidence": [
-      "docs/qa/notify01c-evidence.json",
-      "docs/qa/data01c-evidence.json",
-      "docs/qa/notify01c-final-ci-receipt.json"
-    ],
-    "preserved": {
-      "priorMigrations": 26,
-      "masterSpecification": true,
-      "populatedUserServicesUntouched": true,
-      "liveProvidersUsed": false
+      ]
     }
   },
   "social01PolicyReview": {
