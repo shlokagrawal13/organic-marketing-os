@@ -87,4 +87,12 @@ test("notification center loads tenant updates and toggles unread state", async 
     page.getByText("The campaign video is ready for review."),
   ).not.toBeVisible();
   await expect(trigger).toHaveAttribute("aria-label", "Notifications");
+
+  await page.getByRole("button", { name: "Notification preferences" }).click();
+  await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
+  await page.getByRole("checkbox", { name: "Render updates" }).uncheck();
+  await page.getByRole("button", { name: "Close notifications" }).click();
+  await trigger.click();
+  await page.getByRole("button", { name: "Notification preferences" }).click();
+  await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
 });

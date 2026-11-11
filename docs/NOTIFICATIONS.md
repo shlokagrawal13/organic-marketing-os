@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D & NOTIFY-01E)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D, NOTIFY-01E & NOTIFY-01F)
 
 > NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
 
@@ -13,6 +13,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Billing & Content Lifecycle Events (NOTIFY-01D)**: Verified billing webhooks emit payment-failure and subscription-change notifications, while content transitions into review emit revision-bound content-ready notifications.
 - **Category Summary Metrics (NOTIFY-01D)**: `GET /workspaces/:organizationId/notifications/summary` returns tenant- and role-scoped unread totals by category.
 - **Notification Preferences & Category Muting (NOTIFY-01E)**: Per-user notification category muting and preferences management (`GET|PUT|PATCH /workspaces/:organizationId/notifications/preferences`) automatically filters muted categories from inbox feeds and unread badge summaries unless explicitly requested (`includeMuted=true` or an explicit `category` query parameter).
+- **Notification Preference Controls (NOTIFY-01F)**: The workspace notification center exposes an accessible preferences panel backed by the NOTIFY-01E endpoints. Users can inspect and select muted categories, save explicitly, cancel local changes, and immediately see the feed and unread badge refresh with the saved filter.
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
@@ -231,6 +232,18 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
 - Each update appends an immutable `AuditLog` event with action `notifications.preferences.updated`; no schema or migration change is needed.
 - The list and unread summary endpoints omit muted categories by default. `includeMuted=true` includes them, while an explicit `category` query reads that category directly.
 - The request body is `{ "mutedCategories": ["RENDER", "AI"] }`; at most 20 category strings are accepted.
+
+### 8. Notification Preference Controls (NOTIFY-01F)
+
+The notification bell opens a preferences control that:
+
+- Loads the current user's tenant-bound muted categories only when opened.
+- Presents the six supported categories with plain-language descriptions and native checkbox controls.
+- Keeps edits local until the user explicitly chooses **Save preferences**.
+- Provides **Cancel** and a back action that discard unsaved changes.
+- Refreshes the notification list and unread badge after a successful save, so muted categories disappear from the default feed immediately.
+
+This is a UI increment over the existing preference API. It does not add external email/push delivery, realtime transport or a new migration.
 
 ---
 ## Concurrency & Retry Guarantees
