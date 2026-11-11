@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01e-ci-verified-20261112",
-  "savedAtUtc": "2026-11-11T18:39:21.749Z",
+  "checkpointRevision": "notify01e-package-verified-20261112",
+  "savedAtUtc": "2026-11-11T19:17:06.338Z",
   "currentMilestone": "NOTIFY-01E exact source 121c63c135fb03ea6e24c8b24bb41b31d765edf2 passed GitHub Actions run 43073695509; all three jobs and all 41 required steps passed with 431 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audit vulnerabilities and 24 Compose phases. The notification preference/muting increment is CI verified; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.",
   "activeTaskId": "NOTIFY-01E",
-  "workInProgress": true,
+  "workInProgress": false,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
     "status": "Exact source and 15-path native-CI closure published; exact remote trees and both native CI artifacts independently verified.",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Proceed to the next bounded NOTIFY-01 increment after recording the exact NOTIFY-01E CI receipt; preserve the occupied-Redis local limitation and all external acceptance gates.",
+  "nextAction": "Review the next bounded NOTIFY-01 increment against integrated main after preserving the exact NOTIFY-01E CI run, final publication run and portable source receipt; keep the occupied-Redis local limitation and all external acceptance gates recorded.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -8105,7 +8105,7 @@
   "checkpointVerificationEvidence": "docs/qa/notify01e-evidence.json",
   "latestStatus": {
     "taskId": "NOTIFY-01E",
-    "status": "ci_verified_integrated",
+    "status": "final_exact_ci_and_package_verified",
     "commit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
     "runId": 43073695509,
     "allThreeJobsAndRequiredStepsPassed": true,
@@ -8114,18 +8114,22 @@
     ],
     "local": "Prisma generation, API/web builds and 31 focused notification tests pass; full Windows unit is environment-limited at 305/430 and owned HTTP is fail-closed on occupied Redis 6379.",
     "sourcePackage": {
-      "status": "created_after_final_docs_commit",
+      "status": "created_final_published_commit",
       "location": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01e-final.zip",
       "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01e-final-ci-receipt.json",
-      "scope": "Portable source and saved project context; runtime data, private backups and credentials excluded."
+      "scope": "Portable source and saved project context; runtime data, private backups and credentials excluded.",
+      "finalPublishedCommit": "5075cf9f32cb75bf46713ac66082a150a5bec86d",
+      "finalPublishedRunId": 43082196673
     }
   },
   "activeTask": {
     "id": "NOTIFY-01E",
     "title": "Notification preferences and category muting",
-    "status": "ci_verified_integrated",
+    "status": "final_exact_ci_and_package_verified",
     "implementationCommit": "3b71eab",
     "publishedCommit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
+    "finalPublicationCommit": "5075cf9f32cb75bf46713ac66082a150a5bec86d",
+    "finalPublicationRunId": 43082196673,
     "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
     "exactRunId": 43073695509,
     "focusedTestsPassed": 31,
@@ -8146,7 +8150,7 @@
   },
   "pendingPublication": {
     "taskId": "NOTIFY-01E",
-    "status": "published_exact_commit_ci_verified",
+    "status": "final_exact_ci_and_package_verified",
     "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
     "changedPaths": [
       "apps/api/src/notifications.ts",
@@ -8158,6 +8162,8 @@
     "implementationCommit": "3b71eab",
     "commit": "121c63c135fb03ea6e24c8b24bb41b31d765edf2",
     "runId": 43073695509,
+    "finalPublishedCommit": "5075cf9f32cb75bf46713ac66082a150a5bec86d",
+    "finalPublishedRunId": 43082196673,
     "receipt": "docs/qa/notify01e-evidence.json",
     "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01e-final.zip"
   },
