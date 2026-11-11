@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01E",
+  "recordedAtUtc": "2026-11-11T17:31:20.344Z",
+  "status": "local_verified_pending_exact_ci",
+  "source": {
+    "baseCommit": "0e7b816f5411310bba0d732a8bae7b2329beaaa9",
+    "reviewedBranch": "origin/notify-01e",
+    "reviewedHead": "34f4ac8e0d380da302efb21a20b0957d6d891b37",
+    "note": "The branch head was reconciled against current main; D revision/event-id contracts were preserved and E tests were corrected before integration."
+  },
+  "behavior": {
+    "preferencesEndpoints": "GET, PUT, and PATCH /workspaces/:organizationId/notifications/preferences manage per-user muted categories with tenant and role guards.",
+    "categoryMutingInFeed": "GET /workspaces/:organizationId/notifications excludes muted categories by default; includeMuted=true or an explicit category query exposes them.",
+    "categoryMutingInSummary": "GET /workspaces/:organizationId/notifications/summary excludes muted categories from unread totals by default and includes them with includeMuted=true.",
+    "auditTrail": "Each update appends AuditLog action notifications.preferences.updated; no schema or migration change is introduced.",
+    "isolation": "HTTP tests cover CLIENT denial, cross-tenant 404, PATCH, muted list/summary and explicit category override."
+  },
+  "local": {
+    "prismaGenerate": true,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "focusedNotificationUnitPassed": 31,
+    "focusedNotificationUnitFailed": 0,
+    "fullUnit": {
+      "attempted": true,
+      "passed": false,
+      "passedCases": 305,
+      "failedCases": 125,
+      "reason": "Windows worktree lacks configured render fonts/librsvg prerequisites; notification-focused cases pass."
+    },
+    "productionAuditVulnerabilities": 0,
+    "fullAuditVulnerabilities": 0,
+    "integrationHarness": "blocked_fail_closed",
+    "integrationHarnessReason": "Owned verifier cannot safely start its isolated Redis because 127.0.0.1:6379 is occupied; no existing service was stopped or contacted.",
+    "directIntegrationInvocation": "Refused by tests/support/isolated.ts; integration tests must run through scripts/verify-local.mjs.",
+    "fixtureCleanup": true,
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true
+  },
+  "preserved": {
+    "priorMigrations": 26,
+    "masterSpecification": true,
+    "realEnvironmentUnchanged": true,
+    "populatedUserServicesUntouched": true,
+    "liveProvidersUsed": false,
+    "ux01ProtectedFilesUntouched": true
+  },
+  "publication": {
+    "branch": "notify-01e",
+    "baseBranch": "main",
+    "exactCommitCi": "pending",
+    "sourcePackage": "pending"
+  },
+  "limits": [
+    "In-app preferences only; no external push/email delivery, realtime stream or SLO claim.",
+    "Local HTTP/integration execution was not forced against the occupied Redis service; exact CI must provide the isolated native services.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open."
+  ]
+}

@@ -548,3 +548,99 @@ test("content review emits a tenant-bound notification for each content revision
     ].sort(),
   );
 });
+
+test("GET/PUT /preferences: manages notification muting preferences with tenant and user isolation", async () => {
+  await resetFixtureRateBudget();
+  const orgA = await db.organization.create({ data: { name: "Preferences Org A" } });
+  const orgB = await db.organization.create({ data: { name: "Preferences Org B" } });
+  orgs.push(orgA.id, orgB.id);
+
+  const ownerA = await actor(orgA.id, "OWNER");
+  const clientA = await actor(orgA.id, "CLIENT");
+  const ownerB = await actor(orgB.id, "OWNER");
+  users.push(ownerA.id, clientA.id, ownerB.id);
+
+  const getRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+  );
+  assert.equal(getRes.status, 200);
+  assert.deepEqual(getRes.body.mutedCategories, []);
+
+  const clientRes = await clientA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PUT",
+    { mutedCategories: ["BILLING"] },
+  );
+  assert.equal(clientRes.status, 403);
+
+  const crossTenantRes = await ownerB.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PUT",
+    { mutedCategories: ["BILLING"] },
+  );
+  assert.equal(crossTenantRes.status, 404);
+
+  const updateRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PUT",
+    { mutedCategories: ["BILLING", "AI"] },
+  );
+  assert.equal(updateRes.status, 200);
+  assert.deepEqual(updateRes.body.mutedCategories, ["BILLING", "AI"]);
+
+  const patchRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+    "PATCH",
+    { mutedCategories: ["AI"] },
+  );
+  assert.equal(patchRes.status, 200);
+  assert.deepEqual(patchRes.body.mutedCategories, ["AI"]);
+
+  const muted = await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "PAYMENT_FAILED",
+      category: "BILLING",
+      title: "Payment failed",
+      body: "Card declined",
+      eventKey: `billing:payment_failed:${randomUUID()}`,
+    },
+  });
+  const visible = await db.notification.create({
+    data: {
+      organizationId: orgA.id,
+      type: "RENDER_SUCCEEDED",
+      category: "RENDER",
+      title: "Render complete",
+      body: "Ready",
+      eventKey: `render:${randomUUID()}:SUCCEEDED`,
+    },
+  });
+  const listRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications`,
+  );
+  assert.equal(listRes.status, 200);
+  assert.deepEqual(listRes.body.items.map((item: any) => item.id), [visible.id]);
+  const summaryRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/summary`,
+  );
+  assert.equal(summaryRes.status, 200);
+  assert.deepEqual(summaryRes.body.byCategory, { RENDER: 1 });
+  const fullSummaryRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/summary?includeMuted=true`,
+  );
+  assert.equal(fullSummaryRes.status, 200);
+  assert.equal(fullSummaryRes.body.byCategory.BILLING, 1);
+  assert.equal(fullSummaryRes.body.byCategory.RENDER, 1);
+  const explicitRes = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications?category=BILLING`,
+  );
+  assert.equal(explicitRes.status, 200);
+  assert.deepEqual(explicitRes.body.items.map((item: any) => item.id), [muted.id]);
+
+  const refetched = await ownerA.call(
+    `/workspaces/${orgA.id}/notifications/preferences`,
+  );
+  assert.equal(refetched.status, 200);
+  assert.deepEqual(refetched.body.mutedCategories, ["AI"]);
+});

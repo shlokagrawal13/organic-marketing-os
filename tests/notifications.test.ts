@@ -1407,4 +1407,82 @@ describe("Notifications - Controller & Application Service Contracts", () => {
       CONTENT: 1,
     });
   });
+  test("controller.preferences: get and update notification preferences with audit trail", async () => {
+    const org = await prisma.organization.create({ data: { name: "Preferences Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+
+    const initial = await controller.getPreferences(user);
+    assert.equal(initial.organizationId, org.id);
+    assert.equal(initial.userId, user.userId);
+    assert.deepEqual(initial.mutedCategories, []);
+    assert.equal(initial.updatedAt, null);
+
+    const updated = await controller.updatePreferencesPut(user, {
+      mutedCategories: ["AI", "RENDER"],
+    });
+    assert.equal(updated.organizationId, org.id);
+    assert.equal(updated.userId, user.userId);
+    assert.deepEqual(updated.mutedCategories, ["AI", "RENDER"]);
+    assert.ok(updated.updatedAt instanceof Date);
+
+    const fetched = await controller.getPreferences(user);
+    assert.deepEqual(fetched.mutedCategories, ["AI", "RENDER"]);
+
+    const audit = await prisma.auditLog.findFirst({
+      where: {
+        organizationId: org.id,
+        actorId: user.userId,
+        action: "notifications.preferences.updated",
+      },
+    });
+    assert.ok(audit);
+    assert.deepEqual((audit.detail as any).mutedCategories, ["AI", "RENDER"]);
+  });
+
+  test("controller.list and summary omit muted categories unless explicitly included", async () => {
+    const org = await prisma.organization.create({ data: { name: "Muting Filter Org" } });
+    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+
+    await createRenderNotification(prisma, {
+      organizationId: org.id,
+      renderId: randomUUID(),
+      status: "SUCCEEDED",
+    });
+    await createAiNotification(prisma, {
+      organizationId: org.id,
+      jobId: randomUUID(),
+      error: "GPU OOM",
+    });
+    await createContentReadyNotification(prisma, {
+      organizationId: org.id,
+      contentId: randomUUID(),
+      contentRevision: 1,
+      contentTitle: "Blog Post",
+    });
+
+    await controller.updatePreferencesPatch(user, { mutedCategories: ["AI"] });
+
+    const defaultList = await controller.list(user, {});
+    assert.equal(defaultList.total, 2);
+    assert.deepEqual(
+      defaultList.items.map((item: any) => item.category).sort(),
+      ["CONTENT", "RENDER"],
+    );
+
+    const explicitList = await controller.list(user, { category: "AI" });
+    assert.equal(explicitList.total, 1);
+    assert.equal(explicitList.items[0].category, "AI");
+
+    const allList = await controller.list(user, { includeMuted: "true" });
+    assert.equal(allList.total, 3);
+
+    const summary = await controller.summary(user);
+    assert.equal(summary.totalUnread, 2);
+    assert.deepEqual(summary.byCategory, { CONTENT: 1, RENDER: 1 });
+    assert.deepEqual(summary.mutedCategories, ["AI"]);
+
+    const fullSummary = await controller.summary(user, "true");
+    assert.equal(fullSummary.totalUnread, 3);
+    assert.equal(fullSummary.byCategory.AI, 1);
+  });
 });

@@ -2,7 +2,9 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Patch,
+  Body,
   Param,
   Query,
   Req,
@@ -31,6 +33,11 @@ const listQuerySchema = z.object({
   unreadOnly: z.enum(["true", "false"]).optional(),
   category: z.string().max(50).optional(),
   mine: z.enum(["true", "false"]).optional(),
+  includeMuted: z.enum(["true", "false"]).optional(),
+});
+
+const notificationPreferencesSchema = z.object({
+  mutedCategories: z.array(z.string().max(50)).max(20),
 });
 
 @Controller("workspaces/:organizationId/notifications")
@@ -47,10 +54,35 @@ export class NotificationsController {
       throw new NotFoundException("Notification not found.");
     }
     const isElevated = ["OWNER", "ADMIN"].includes(req.role);
-    if (!isElevated && notification.userId && notification.userId !== req.userId) {
+    if (
+      !isElevated &&
+      notification.userId &&
+      notification.userId !== req.userId
+    ) {
       throw new ForbiddenException("You cannot access this notification.");
     }
     return notification;
+  }
+
+  private async getUserMutedCategories(
+    org: string,
+    userId: string,
+  ): Promise<string[]> {
+    const latest = await this.db.auditLog.findFirst({
+      where: {
+        organizationId: org,
+        actorId: userId,
+        action: "notifications.preferences.updated",
+      },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    });
+    if (latest && latest.detail && typeof latest.detail === "object") {
+      const muted = (latest.detail as any).mutedCategories;
+      if (Array.isArray(muted)) {
+        return muted;
+      }
+    }
+    return [];
   }
 
   @Get()
@@ -64,10 +96,23 @@ export class NotificationsController {
         : {}
       : { OR: [{ userId: req.userId }, { userId: null }] };
 
+    let categoryFilter: Prisma.NotificationWhereInput = {};
+    if (q.category) {
+      categoryFilter = { category: q.category };
+    } else if (q.includeMuted !== "true") {
+      const muted = await this.getUserMutedCategories(
+        req.organizationId,
+        req.userId,
+      );
+      if (muted.length > 0) {
+        categoryFilter = { category: { notIn: muted } };
+      }
+    }
+
     const where: Prisma.NotificationWhereInput = {
       organizationId: req.organizationId,
       ...(q.unreadOnly === "true" ? { readAt: null } : {}),
-      ...(q.category ? { category: q.category } : {}),
+      ...categoryFilter,
       ...userScope,
     };
 
@@ -92,15 +137,28 @@ export class NotificationsController {
   }
 
   @Get("summary")
-  async summary(@Req() req: AuthedRequest) {
+  async summary(
+    @Req() req: AuthedRequest,
+    @Query("includeMuted") includeMutedQuery?: string,
+  ) {
     const isElevated = ["OWNER", "ADMIN"].includes(req.role);
     const userScope: Prisma.NotificationWhereInput = isElevated
       ? {}
       : { OR: [{ userId: req.userId }, { userId: null }] };
 
+    const mutedCategories = await this.getUserMutedCategories(
+      req.organizationId,
+      req.userId,
+    );
+    let categoryFilter: Prisma.NotificationWhereInput = {};
+    if (includeMutedQuery !== "true" && mutedCategories.length > 0) {
+      categoryFilter = { category: { notIn: mutedCategories } };
+    }
+
     const whereUnread: Prisma.NotificationWhereInput = {
       organizationId: req.organizationId,
       readAt: null,
+      ...categoryFilter,
       ...userScope,
     };
 
@@ -122,6 +180,65 @@ export class NotificationsController {
       organizationId: req.organizationId,
       totalUnread,
       byCategory,
+      mutedCategories,
+    };
+  }
+
+  @Get("preferences")
+  async getPreferences(@Req() req: AuthedRequest) {
+    const latest = await this.db.auditLog.findFirst({
+      where: {
+        organizationId: req.organizationId,
+        actorId: req.userId,
+        action: "notifications.preferences.updated",
+      },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    });
+    const mutedCategories =
+      latest && Array.isArray((latest.detail as any)?.mutedCategories)
+        ? (latest.detail as any).mutedCategories
+        : [];
+    return {
+      organizationId: req.organizationId,
+      userId: req.userId,
+      mutedCategories,
+      updatedAt: latest?.createdAt ?? null,
+    };
+  }
+
+  @Put("preferences")
+  async updatePreferencesPut(@Req() req: AuthedRequest, @Body() body: unknown) {
+    return this.savePreferences(req, body);
+  }
+
+  @Patch("preferences")
+  async updatePreferencesPatch(
+    @Req() req: AuthedRequest,
+    @Body() body: unknown,
+  ) {
+    return this.savePreferences(req, body);
+  }
+
+  private async savePreferences(req: AuthedRequest, body: unknown) {
+    const input = parse(notificationPreferencesSchema, body ?? {});
+    const now = new Date();
+    await this.db.auditLog.create({
+      data: {
+        organizationId: req.organizationId,
+        actorId: req.userId,
+        action: "notifications.preferences.updated",
+        entityId: req.userId,
+        detail: {
+          mutedCategories: input.mutedCategories,
+          updatedAt: now.toISOString(),
+        },
+      },
+    });
+    return {
+      organizationId: req.organizationId,
+      userId: req.userId,
+      mutedCategories: input.mutedCategories,
+      updatedAt: now,
     };
   }
 
@@ -221,4 +338,3 @@ export class NotificationsController {
   controllers: [NotificationsController],
 })
 export class NotificationsModule {}
-

@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C & NOTIFY-01D)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D & NOTIFY-01E)
 
 > NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
 
@@ -12,6 +12,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 
 - **Billing & Content Lifecycle Events (NOTIFY-01D)**: Verified billing webhooks emit payment-failure and subscription-change notifications, while content transitions into review emit revision-bound content-ready notifications.
 - **Category Summary Metrics (NOTIFY-01D)**: `GET /workspaces/:organizationId/notifications/summary` returns tenant- and role-scoped unread totals by category.
+- **Notification Preferences & Category Muting (NOTIFY-01E)**: Per-user notification category muting and preferences management (`GET|PUT|PATCH /workspaces/:organizationId/notifications/preferences`) automatically filters muted categories from inbox feeds and unread badge summaries unless explicitly requested (`includeMuted=true` or an explicit `category` query parameter).
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
@@ -221,8 +222,17 @@ The API controller is mounted at `/workspaces/:organizationId/notifications` and
 - `OWNER` and `ADMIN` roles see all unread workspace notifications; other allowed roles see workspace broadcasts and notifications assigned to their user.
 - Tenant membership is enforced by the existing guard and cross-workspace requests return 404.
 
----
+### 7. Notification Preferences & Category Muting (NOTIFY-01E)
+`GET /workspaces/:organizationId/notifications/preferences`
+`PUT /workspaces/:organizationId/notifications/preferences`
+`PATCH /workspaces/:organizationId/notifications/preferences`
 
+- Preference updates are per-user and tenant-bound; the existing role guard denies CLIENT and non-members.
+- Each update appends an immutable `AuditLog` event with action `notifications.preferences.updated`; no schema or migration change is needed.
+- The list and unread summary endpoints omit muted categories by default. `includeMuted=true` includes them, while an explicit `category` query reads that category directly.
+- The request body is `{ "mutedCategories": ["RENDER", "AI"] }`; at most 20 category strings are accepted.
+
+---
 ## Concurrency & Retry Guarantees
 - **Deduplication**: Replays of the same terminal event with the same `(organizationId, eventKey)` are ignored via atomic `upsert`, preventing duplicate notifications.
 - **Retries**: A retry job generates a distinct `renderId`, correctly yielding a new notification while preserving the terminal failure record of the previous attempt.
