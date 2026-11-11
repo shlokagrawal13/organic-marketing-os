@@ -1,3 +1,7 @@
+## NOTIFY-01D lifecycle wiring - 2026-11-11
+
+Added transaction-bound subscription update/cancellation and payment-failure notifications from signed billing events, revision-bound workspace content-ready notifications on DRAFT to REVIEW, and tenant/role-scoped unread category summary metrics. Added focused idempotency, billing webhook and content lifecycle coverage. Exact three-job CI for the accepted merge remains pending.
+
 ## DATA-01D through DATA-01F exact CI closure - 2026-11-11
 
 Published exact main commit 84e123d8bc99cfaeca1d14238f33bc4048dc9248; [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765) passed all three jobs and 41 required steps. Verification recorded 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. Evidence ZIP bytes and SHA-256 digests were inspected. DATA audit validation, legal-hold locking, exact reconciliation and safe-erasure races are closed for this increment; broader production retention, remote durability and live/deployed/full-master gates remain open.

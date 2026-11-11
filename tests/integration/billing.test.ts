@@ -185,7 +185,7 @@ test(
             await db.billingSubscription.findUniqueOrThrow({
               where: { organizationId: org.id },
             })
-          ).id}:updated`,
+          ).id}:updated:${subscription.id}`,
         },
       }),
       1,
@@ -220,7 +220,7 @@ test(
       await db.notification.count({
         where: {
           organizationId: org.id,
-          eventKey: `billing:subscription:${canceledSubscription.id}:canceled`,
+          eventKey: `billing:subscription:${canceledSubscription.id}:canceled:evt_subscription_canceled`,
         },
       }),
       1,

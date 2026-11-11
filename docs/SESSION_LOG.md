@@ -1453,3 +1453,11 @@ Prisma generation, API/web/combined builds and 37 focused notification/data-gove
 - Local owned HTTP verifier stopped before fixture startup because `127.0.0.1:3000` is occupied; no existing service was contacted or stopped. Full Windows unit output remains blocked by missing FFmpeg/librsvg and configured fonts.
 - Code commit: `2d9c8a1`; exact three-job CI and final source package remain pending before main integration closure. NOTIFY-01D remains a separate review with missing production notification callsites.
 
+## NOTIFY-01D local integration - 2026-11-11
+
+- Reviewed Antigravity's NOTIFY-01D source against integrated main and preserved its separate worktree; stale branch deletions were not merged.
+- Wired verified billing subscription/payment-failure notifications into the signed webhook transaction, added revision-bound content-ready notifications on DRAFT to REVIEW, and added the tenant/role-scoped unread category summary.
+- API build, web production build, Prisma generation and 29 focused notification unit tests pass. The owned HTTP verifier correctly refused occupied port 3000 before fixture startup; no existing service was contacted.
+- DATA-01F exact continuity is fe3c090 / run 42919208576 with 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability, zero audits and 24 Compose phases. Artifact ZIP/report inspection and digest comparison gap are recorded.
+- Next: publish continuity, merge only the isolated NOTIFY-01D changes, and verify all three jobs on the exact final commit.
+

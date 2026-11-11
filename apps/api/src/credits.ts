@@ -430,6 +430,7 @@ class BillingWebhookController {
               await createSubscriptionEventNotification(tx, {
                 organizationId: input.data.organizationId,
                 subscriptionId: subscription.id,
+                eventId: input.id,
                 eventType: "UPDATED",
                 planName: subscription.plan.name,
                 cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
@@ -443,6 +444,7 @@ class BillingWebhookController {
               await createSubscriptionEventNotification(tx, {
                 organizationId: subscription.organizationId,
                 subscriptionId: subscription.id,
+                eventId: input.id,
                 eventType: "CANCELED",
                 planName: subscription.plan.name,
                 cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,

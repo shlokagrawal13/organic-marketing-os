@@ -1254,6 +1254,7 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     const updated = await createSubscriptionEventNotification(prisma, {
       organizationId: org.id,
       subscriptionId,
+      eventId: "evt_subscription_updated",
       actorId: user.userId,
       eventType: "UPDATED",
       planName: "Enterprise Tier",
@@ -1261,13 +1262,24 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(updated.type, "SUBSCRIPTION_UPDATED");
     assert.equal(updated.category, "BILLING");
     assert.equal(updated.title, "Subscription updated");
-    assert.equal(updated.eventKey, `billing:subscription:${subscriptionId}:updated`);
+    assert.equal(updated.eventKey, `billing:subscription:${subscriptionId}:updated:evt_subscription_updated`);
     assert.equal((updated.data as any).planName, "Enterprise Tier");
+
+    const laterUpdated = await createSubscriptionEventNotification(prisma, {
+      organizationId: org.id,
+      subscriptionId,
+      eventId: "evt_subscription_updated_later",
+      actorId: user.userId,
+      eventType: "UPDATED",
+      planName: "Growth Tier",
+    });
+    assert.notEqual(laterUpdated.id, updated.id);
 
     // Canceled event
     const canceled = await createSubscriptionEventNotification(prisma, {
       organizationId: org.id,
       subscriptionId,
+      eventId: "evt_subscription_canceled",
       actorId: user.userId,
       eventType: "CANCELED",
       cancelAtPeriodEnd: true,
@@ -1275,7 +1287,7 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(canceled.type, "SUBSCRIPTION_CANCELED");
     assert.equal(canceled.category, "BILLING");
     assert.equal(canceled.title, "Subscription canceled");
-    assert.equal(canceled.eventKey, `billing:subscription:${subscriptionId}:canceled`);
+    assert.equal(canceled.eventKey, `billing:subscription:${subscriptionId}:canceled:evt_subscription_canceled`);
     assert.equal((canceled.data as any).cancelAtPeriodEnd, true);
   });
 

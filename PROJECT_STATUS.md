@@ -1,11 +1,19 @@
+<!-- NOTIFY01D_CURRENT_START -->
+## Current: NOTIFY-01D lifecycle wiring - 2026-11-11
+
+NOTIFY-01D local implementation commit 9d7cfba is ready for exact publication. It wires signed billing subscription/payment-failure notifications into the billing transaction, emits revision-bound content-ready notifications on DRAFT to REVIEW, and exposes a tenant/role-scoped unread category summary. API/web/Prisma builds and 29 focused notification tests pass; local HTTP is fail-closed on occupied port 6379.
+
+DATA exact CI remains verified on fe3c090 / run 42919208576 with 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The artifact digest/download comparison gap is recorded. Next is the NOTIFY-01D merge and its own exact three-job CI.
+<!-- NOTIFY01D_CURRENT_END -->
+
 <!-- DATA01F_CURRENT_START -->
 ## Current: DATA-01D through DATA-01F exact CI closure - 2026-11-11
 
-DATA-01D, DATA-01E and DATA-01F are integrated on exact main commit 84e123d8bc99cfaeca1d14238f33bc4048dc9248. [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765) passed all three jobs and all 41 required steps. The verified result is 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. All four evidence artifacts were downloaded, their API digests matched the downloaded ZIP SHA-256 bytes, and their embedded reports were inspected.
+DATA-01D, DATA-01E and DATA-01F are integrated on exact main commit fe3c090e3ce759f9f233501e312aadd43a232706. [GitHub Actions run 42919208576](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42919208576) passed all three jobs and all 41 required steps. The verified result is 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. All four evidence artifacts were downloaded, downloaded ZIP bytes and embedded reports were inspected; the API digest versus downloaded ZIP SHA-256 comparison gap is recorded.
 
 The DATA hardening covers strict audit date validation, disconnect-safe export cleanup, transaction-time workspace locking/legal-hold rechecks, exact all-candidate reconciliation bytes and safe OWNER-only erasure while preserving immutable financial records. Local API/web/Prisma builds and 20 focused governance tests pass; local DATA HTTP remains recorded as blocked by the owned verifier's occupied-port fail-closed guard. See [DATA-01F evidence](docs/qa/data01f-evidence.json) and [active handoff](docs/ACTIVE_HANDOFF.md).
 
-DATA-01 is now a verified partial parent increment. Next is review of Antigravity's separate NOTIFY-01D lifecycle branch against this integrated main. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+DATA-01 is now a verified partial parent increment. Next is publish and exact-CI verify the accepted NOTIFY-01D lifecycle implementation. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- DATA01F_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->

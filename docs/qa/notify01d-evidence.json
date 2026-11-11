@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01D",
+  "status": "implementation_local_verified_exact_ci_pending",
+  "recordedAtUtc": "2026-11-10T23:30:07.2239046Z",
+  "implementationCommit": "9d7cfba",
+  "baseCommit": "fe3c090e3ce759f9f233501e312aadd43a232706",
+  "behavior": {
+    "billingSubscription": "Verified subscription.upserted and subscription.canceled webhook processing emits transaction-bound subscription notifications keyed by provider event ID.",
+    "billingFailure": "Verified invoice.payment_failed signed billing payload is tenant-bound, records no credits and emits one idempotent PAYMENT_FAILED notification.",
+    "contentReady": "DRAFT to REVIEW emits a workspace-wide CONTENT_READY notification in the same transaction, with content revision in the event key and data.",
+    "summary": "Tenant and role-scoped unread category summary endpoint returns totalUnread and byCategory."
+  },
+  "local": {
+    "prismaGenerate": true,
+    "apiBuild": true,
+    "webProductionBuild": true,
+    "focusedNotificationUnitPassed": 29,
+    "focusedNotificationUnitFailed": 0,
+    "contentLifecycleIntegrationTestAdded": true,
+    "billingLifecycleIntegrationTestAdded": true,
+    "httpVerifier": "blocked_fail_closed",
+    "httpVerifierReason": "Owned verifier refused occupied 127.0.0.1:6379 before startup; existing services were not contacted or stopped.",
+    "fullSuiteAccepted": false,
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "integrationSuitesDirectInvocation": "Refused by tests/support/isolated.ts; integration tests must run through scripts/verify-local.mjs."
+  },
+  "changedPaths": [
+    "apps/api/src/content.ts",
+    "apps/api/src/credits.ts",
+    "apps/api/src/notification-events.ts",
+    "apps/api/src/notifications.ts",
+    "packages/core/billing.ts",
+    "tests/integration/billing.test.ts",
+    "tests/integration/notifications.test.ts",
+    "tests/notifications.test.ts",
+    "docs/NOTIFICATIONS.md"
+  ],
+  "next": {
+    "taskId": "NOTIFY-01D",
+    "action": "Update continuity records and evidence, merge to main, push exact commit and inspect all three CI jobs/artifacts."
+  },
+  "limits": [
+    "No external billing provider or deployment was called; Stripe mapping is fixture-tested only.",
+    "Exact three-job CI for the accepted merge commit is required; no prior run substitutes.",
+    "Production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open."
+  ]
+}

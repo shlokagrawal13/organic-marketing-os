@@ -121,7 +121,7 @@ Notifications are emitted strictly upon reaching terminal render status:
 ---
 
 8. **Billing lifecycle webhooks (NOTIFY-01D)**:
-   Verified `subscription.upserted` and `subscription.canceled` events emit `SUBSCRIPTION_UPDATED` or `SUBSCRIPTION_CANCELED` inside the same transaction that applies the billing state. `invoice.payment_failed` is tenant-bound by the signed event payload and emits `PAYMENT_FAILED` without granting or rewriting credits. Replays use the event key and remain idempotent.
+   Verified `subscription.upserted` and `subscription.canceled` events emit `SUBSCRIPTION_UPDATED` or `SUBSCRIPTION_CANCELED` inside the same transaction that applies the billing state. Subscription event keys include the signed provider event ID so later changes are not collapsed. `invoice.payment_failed` is tenant-bound by the signed event payload and emits `PAYMENT_FAILED` without granting or rewriting credits. Replays use the event key and remain idempotent.
 
 9. **Content review transition (NOTIFY-01D)**:
    A successful `DRAFT → REVIEW` transition emits a workspace-wide `CONTENT_READY` notification in the same transaction as the content state and audit row. The event key includes the immutable content revision (`content:<id>:revision:<revision>:ready`), so later revisions create distinct notifications while retries do not duplicate a revision.

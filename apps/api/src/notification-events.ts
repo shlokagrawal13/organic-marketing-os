@@ -287,6 +287,7 @@ export async function createSubscriptionEventNotification(
   params: {
     organizationId: string;
     subscriptionId: string;
+    eventId: string;
     actorId?: string | null;
     eventType: "UPDATED" | "CANCELED";
     planName?: string | null;
@@ -294,7 +295,7 @@ export async function createSubscriptionEventNotification(
   },
 ) {
   const isCanceled = params.eventType === "CANCELED";
-  const eventKey = `billing:subscription:${params.subscriptionId}:${params.eventType.toLowerCase()}`;
+  const eventKey = `billing:subscription:${params.subscriptionId}:${params.eventType.toLowerCase()}:${params.eventId}`;
   const title = isCanceled ? "Subscription canceled" : "Subscription updated";
   const planStr = params.planName ? ` to "${params.planName}"` : "";
   const body = isCanceled

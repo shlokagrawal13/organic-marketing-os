@@ -1,13 +1,23 @@
-# Active handoff - DATA-01F integration / NOTIFY-01D review
+# Active handoff - NOTIFY-01D lifecycle integration
+
+<!-- NOTIFY01D_CURRENT_START -->
+## Current: NOTIFY-01D lifecycle wiring - 2026-11-11
+
+The isolated NOTIFY-01D implementation commit 9d7cfba is based on exact DATA continuity commit fe3c090. Signed billing subscription and payment-failure webhooks now create transaction-bound, event-keyed notifications; DRAFT to REVIEW creates a workspace-wide content-ready notification with the immutable content revision in its key; and the unread category summary is tenant- and role-scoped. API/web builds, Prisma generation and 29 focused notification tests pass. The owned HTTP verifier refused occupied port 6379 before startup and existing services were left untouched.
+
+DATA-01D through DATA-01F are exact-CI verified on fe3c090 / run 42919208576 with 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. Artifact ZIPs and embedded reports were inspected; the API digest versus downloaded ZIP SHA-256 comparison gap is recorded in qa/data01f-evidence.json and the external receipt.
+
+Next action: publish this continuity state, merge only the isolated NOTIFY-01D changes, push the accepted exact commit and inspect all three CI jobs and artifacts. Preserve Antigravity worktrees and the user's apps/web/next-env.d.ts change. Production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
+<!-- NOTIFY01D_CURRENT_END -->
 
 <!-- DATA01F_INTEGRATION_CURRENT_START -->
 ## Current: DATA-01D through DATA-01F exact CI closure - 2026-11-11
 
-DATA-01D, DATA-01E and DATA-01F were reviewed in the separate integration worktree and are now published on exact main commit 84e123d8bc99cfaeca1d14238f33bc4048dc9248. [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765) passed all three jobs and all 41 required steps: 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and all 24 Compose phases. Four evidence artifacts were downloaded; each API digest matched its downloaded ZIP SHA-256 and embedded reports were inspected.
+DATA-01D, DATA-01E and DATA-01F were reviewed in the separate integration worktree and are now published on exact main commit fe3c090e3ce759f9f233501e312aadd43a232706. [GitHub Actions run 42919208576](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42919208576) passed all three jobs and all 41 required steps: 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and all 24 Compose phases. Four evidence artifacts were downloaded; downloaded ZIP bytes and embedded reports were inspected; the API digest versus downloaded ZIP SHA-256 comparison gap is recorded.
 
 The accepted increment adds strict ISO-8601 audit-range validation, cancellation-safe export cleanup, workspace-row locking with legal-hold/in-flight rechecks and exact byte aggregation beyond the 100-row preview. Local API/web/Prisma builds and 20 focused data-governance tests pass. Local DATA HTTP is explicitly unaccepted because the owned verifier refused occupied port 3000 before startup; existing services stayed untouched. See [DATA-01F evidence](qa/data01f-evidence.json).
 
-Next task is review of Antigravity's separate NOTIFY-01D lifecycle wiring against this integrated main. The NOTIFY-01D branch still lacks verified production callsites for its new billing/content-ready notification creators and its content-ready idempotency key needs revision binding. All Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+NOTIFY-01D lifecycle wiring has been reviewed in the isolated worktree; publication and exact CI remain pending. The isolated NOTIFY-01D lifecycle wiring now has verified billing/content callsites and revision-bound content-ready idempotency; publication and exact CI remain pending. All Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- DATA01F_INTEGRATION_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->
