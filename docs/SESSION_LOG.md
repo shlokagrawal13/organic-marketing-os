@@ -1,3 +1,9 @@
+## NOTIFY-01D exact CI closure - 2026-11-11
+
+The accepted NOTIFY-01D source commit `e6fbd33ce79b590bd34462f5306585d39a542214` passed [GitHub Actions run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) with all three jobs and all 41 required steps. The exact result was 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero production/full audit vulnerabilities and all 24 Compose phases. Native populated upgrade, PostgreSQL PITR and Compose reports passed; artifact metadata and the proxy download gap are recorded in [the QA evidence](qa/notify01d-evidence.json).
+
+The billing/content lifecycle notification wiring and unread summary are now closed for this bounded increment. Local Prisma/API/web builds and 29 focused notification tests pass; local HTTP remains fail-closed on occupied Redis 6379. The portable source package and external final receipt are outside the repository. Antigravity worktrees and the uncommitted apps/web/next-env.d.ts change remain preserved. Production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
+
 ## DATA-01F exact CI closure - 2026-11-11
 
 The integrated DATA-01D through DATA-01F source is exact-CI verified on main 84e123d8bc99cfaeca1d14238f33bc4048dc9248 / [GitHub Actions run 42913840765](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/42913840765): 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The four evidence ZIPs were downloaded and their digests matched. Strict audit validation, disconnect-safe export cleanup, row-locked legal-hold checks, exact reconciliation bytes and safe erasure are documented below. Production retention scheduling, remote durability/RPO-RTO, live/deployed/provider and full-master gates remain open.

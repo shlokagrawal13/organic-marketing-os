@@ -1,9 +1,9 @@
 <!-- NOTIFY01D_CURRENT_START -->
 ## Current: NOTIFY-01D lifecycle wiring - 2026-11-11
 
-NOTIFY-01D local implementation commit 9d7cfba is ready for exact publication. It wires signed billing subscription/payment-failure notifications into the billing transaction, emits revision-bound content-ready notifications on DRAFT to REVIEW, and exposes a tenant/role-scoped unread category summary. API/web/Prisma builds and 29 focused notification tests pass; local HTTP is fail-closed on occupied port 6379.
+NOTIFY-01D is integrated on exact source commit `e6fbd33ce79b590bd34462f5306585d39a542214`; [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps: 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audit vulnerabilities and 24 Compose phases. The billing/content lifecycle notifications and tenant/role-scoped summary are covered by local builds and 29 focused tests. Artifact download limitations are recorded in [the QA evidence](docs/qa/notify01d-evidence.json); the browser ZIP timed out through the configured proxy.
 
-DATA exact CI remains verified on fe3c090 / run 42919208576 with 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The artifact digest/download comparison gap is recorded. Next is the NOTIFY-01D merge and its own exact three-job CI.
+The bounded NOTIFY-01D increment is CI verified. Next is the next bounded NOTIFY-01 increment; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
 <!-- NOTIFY01D_CURRENT_END -->
 
 <!-- DATA01F_CURRENT_START -->
@@ -13,7 +13,7 @@ DATA-01D, DATA-01E and DATA-01F are integrated on exact main commit fe3c090e3ce7
 
 The DATA hardening covers strict audit date validation, disconnect-safe export cleanup, transaction-time workspace locking/legal-hold rechecks, exact all-candidate reconciliation bytes and safe OWNER-only erasure while preserving immutable financial records. Local API/web/Prisma builds and 20 focused governance tests pass; local DATA HTTP remains recorded as blocked by the owned verifier's occupied-port fail-closed guard. See [DATA-01F evidence](docs/qa/data01f-evidence.json) and [active handoff](docs/ACTIVE_HANDOFF.md).
 
-DATA-01 is now a verified partial parent increment. Next is publish and exact-CI verify the accepted NOTIFY-01D lifecycle implementation. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+DATA-01 is now a verified partial parent increment. NOTIFY-01D exact CI is closed; the next bounded NOTIFY-01 increment follows. Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- DATA01F_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->
@@ -1338,6 +1338,6 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 
 DATA governance is integrated in a separate review worktree at code commit `2d9c8a1` (based on main `d19edbe`), pending publication and its own exact three-job CI. The increment adds strict audit date/range validation, cancellation-safe audit export cleanup, row-locked legal-hold/destructive operations and exact all-candidate reconciliation bytes. API/web builds, Prisma generation and 20 focused DATA unit tests pass; the owned HTTP harness correctly refused the occupied local port 3000 and did not attach to existing services.
 
-Antigravity branches/worktrees remain untouched. NOTIFY-01D is still blocked for review by missing production lifecycle callsites and a revision-unbound content-ready key. Live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
+Antigravity branches/worktrees remain untouched. NOTIFY-01D is exact-source CI verified; broader notification delivery/realtime work remains open. Live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
 <!-- DATA01F_INTEGRATION_CURRENT_END -->
 

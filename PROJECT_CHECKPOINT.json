@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01d-local-verified-20261111",
-  "savedAtUtc": "2026-11-11T00:20:00Z",
-  "currentMilestone": "NOTIFY-01D lifecycle wiring is implemented in isolated commit 9d7cfba on DATA exact-CI base fe3c090; local builds and 29 focused notification tests pass; exact main CI is pending after continuity publication.",
+  "checkpointRevision": "notify01d-ci-verified-20261111",
+  "savedAtUtc": "2026-11-11T14:05:48.569Z",
+  "currentMilestone": "NOTIFY-01D exact source e6fbd33ce79b590bd34462f5306585d39a542214 passed GitHub Actions run 43030351133; all three jobs and all 41 required steps passed with 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audit vulnerabilities and 24 Compose phases. The bounded lifecycle increment is CI verified; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.",
   "activeTaskId": "NOTIFY-01",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Publish continuity records with the accepted NOTIFY-01D implementation, merge without stale branch deletions, then run and inspect all three CI jobs on the exact final commit.",
+  "nextAction": "Proceed to the next bounded NOTIFY-01 increment after recording the exact NOTIFY-01D CI receipt; preserve the occupied-Redis local limitation and all external acceptance gates.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -7924,12 +7924,12 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "local_verified_ci_pending",
+      "state": "ci_verified_integrated",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01A/B/C are exact-CI integrated; NOTIFY-01D wires billing/content lifecycle notifications and a tenant/role-scoped unread summary with 29 focused tests passing locally.",
-      "nextAction": "Publish the accepted NOTIFY-01D merge, run all three exact CI jobs and inspect the final artifacts.",
+      "completedIncrement": "NOTIFY-01D exact source e6fbd33ce79b590bd34462f5306585d39a542214 passed run 43030351133; all three jobs and 41 required steps passed with 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases.",
+      "nextAction": "Start the next bounded NOTIFY-01 increment only after preserving this receipt; broader realtime, external delivery, production/live/provider and full-master acceptance remain open.",
       "currentEvidence": "docs/qa/notify01d-evidence.json",
-      "status": "local_verified_ci_pending"
+      "status": "ci_verified_integrated"
     },
     {
       "id": "DATA-01",
@@ -8082,21 +8082,30 @@
   "checkpointVerificationEvidence": "docs/qa/integration01b-evidence.json",
   "latestStatus": {
     "taskId": "NOTIFY-01D",
-    "status": "local_verified_ci_pending",
-    "commit": "9d7cfba",
-    "runId": null,
-    "allThreeJobsAndRequiredStepsPassed": false,
+    "status": "ci_verified_integrated",
+    "commit": "e6fbd33ce79b590bd34462f5306585d39a542214",
+    "runId": 43030351133,
+    "allThreeJobsAndRequiredStepsPassed": true,
     "evidence": [
       "docs/qa/notify01d-evidence.json"
     ],
-    "local": "API/web/Prisma builds and 29 focused notification tests pass; owned HTTP verifier failed closed on occupied Redis 6379."
+    "local": "API/web/Prisma builds and 29 focused notification tests pass; owned HTTP verifier failed closed on occupied Redis 6379.",
+    "sourcePackage": {
+      "path": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-project-files\\packages\\organic-marketing-os-v0.9.2-notify01d-e6fbd33-20261111.zip",
+      "bytes": 16480380,
+      "sha256": "bff7c19b6c9f4e2865010d1026d467a6558aa1f4a5a2dbcc2dfc014f183c1e05",
+      "builtFromCleanDetachedWorktree": true,
+      "excludesUncommitted": "apps/web/next-env.d.ts"
+    }
   },
   "activeTask": {
     "id": "NOTIFY-01D",
     "title": "Notification lifecycle wiring and billing/content event coverage",
-    "status": "local_verified_ci_pending",
+    "status": "ci_verified_integrated",
     "implementationCommit": "9d7cfba",
+    "publishedCommit": "e6fbd33ce79b590bd34462f5306585d39a542214",
     "baseCommit": "fe3c090e3ce759f9f233501e312aadd43a232706",
+    "exactRunId": 43030351133,
     "focusedTestsPassed": 29,
     "focusedTestsFailed": 0,
     "apiBuild": true,
@@ -8115,7 +8124,7 @@
   },
   "pendingPublication": {
     "taskId": "NOTIFY-01D",
-    "status": "accepted_local_ci_pending",
+    "status": "published_exact_commit_ci_verified",
     "baseCommit": "fe3c090e3ce759f9f233501e312aadd43a232706",
     "changedPaths": [
       "apps/api/src/content.ts",
@@ -8128,11 +8137,11 @@
       "tests/notifications.test.ts",
       "docs/NOTIFICATIONS.md"
     ],
-    "required": "Run all three CI jobs and every required step on the exact published accepted commit; inspect artifacts and record any digest/download gap.",
-    "commit": "9d7cfba",
-    "runId": null,
+    "required": "Exact source commit passed all three CI jobs and every required step; artifact metadata and job-log reports are recorded, with proxy download limits preserved.",
+    "commit": "e6fbd33ce79b590bd34462f5306585d39a542214",
+    "runId": 43030351133,
     "receipt": "docs/qa/notify01d-evidence.json",
-    "sourceZip": null
+    "sourceZip": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-project-files\\packages\\organic-marketing-os-v0.9.2-notify01d-e6fbd33-20261111.zip"
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -24013,7 +24022,9 @@
   },
   "notify01dCurrentVerification": {
     "taskId": "NOTIFY-01D",
-    "status": "local_verified_exact_data_base_ci_pending",
+    "status": "published_exact_commit_ci_verified",
+    "implementationCommit": "9d7cfba",
+    "sourceCommit": "e6fbd33ce79b590bd34462f5306585d39a542214",
     "baseCommit": "fe3c090e3ce759f9f233501e312aadd43a232706",
     "local": {
       "prismaGenerate": true,
@@ -24022,7 +24033,97 @@
       "focusedTestsPassed": 29,
       "focusedTestsFailed": 0,
       "httpHarness": "Owned verifier refused occupied 127.0.0.1:6379 before startup; no existing service contacted.",
-      "realEnvironmentUnchanged": true
+      "realEnvironmentUnchanged": true,
+      "antigravityWorktreesUntouched": true
+    },
+    "exactCi": {
+      "runId": 43030351133,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133",
+      "sourceCommit": "e6fbd33ce79b590bd34462f5306585d39a542214",
+      "status": "completed",
+      "conclusion": "success",
+      "allThreeJobsAndEveryRequiredStepPassed": true,
+      "requiredSteps": 41,
+      "jobs": [
+        {
+          "name": "Native application verification",
+          "id": 130555480363,
+          "steps": 22,
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133/job/130555480363"
+        },
+        {
+          "name": "Native populated upgrade and migration recovery",
+          "id": 130555479851,
+          "steps": 11,
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133/job/130555479851"
+        },
+        {
+          "name": "Disposable Compose and native restore",
+          "id": 130555480486,
+          "steps": 8,
+          "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133/job/130555480486"
+        }
+      ],
+      "verification": {
+        "unit": 428,
+        "http": 76,
+        "browser": 68,
+        "recovery": 5,
+        "migrations": 26,
+        "readabilityStandard": 36,
+        "readabilityBusy": 8,
+        "readabilityNegativeControl": true,
+        "productionAuditVulnerabilities": 0,
+        "fullAuditVulnerabilities": 0,
+        "composePhases": 24,
+        "nativeUpgradeMigrations": 26,
+        "nativeUpgradeCases": 2,
+        "nativeUpgradeChecks": 11,
+        "pitrTablesCompared": 38,
+        "pitrRowsCompared": 19,
+        "pitrChecks": 23,
+        "composeChecksTrue": 138,
+        "composeChecksTotal": 140,
+        "composeNonBooleanExpected": [
+          "objectsRestored=6",
+          "syntheticUncertainProviderCallsAfterRestore=0"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "browser-evidence",
+          "id": 13862111484,
+          "sizeBytes": 15207695,
+          "digest": "sha256:28f1b9c4d1f331e312ece477131a4386a5256b0d684d39d62362c90fa63ae54f",
+          "bytesInspected": false,
+          "downloadStatus": "curl download timed out at 11649024 of 15207695 bytes through the configured proxy; ZIP/report not inspected"
+        },
+        {
+          "name": "postgres-pitr-evidence",
+          "id": 13860787234,
+          "sizeBytes": 3017,
+          "digest": "sha256:2ffd652ade2dbe3f62c8e1ce600575e1a203651b6b806eaf514033a7c896937c",
+          "bytesInspected": false,
+          "downloadStatus": "artifact ZIP route was not completed; passing report was inspected in the exact job log"
+        },
+        {
+          "name": "compose-evidence",
+          "id": 13860349728,
+          "sizeBytes": 16948,
+          "digest": "sha256:0e5bbcf0f3ed1884a115f1ac2949aacbe3e61d143837ad5e16ba322cab5ae158",
+          "bytesInspected": false,
+          "downloadStatus": "artifact ZIP route was not completed; passing report was inspected in the exact job log"
+        },
+        {
+          "name": "native-upgrade-evidence",
+          "id": 13861157588,
+          "sizeBytes": 932,
+          "digest": "sha256:ad35fe738bd999e469785401cc0786109a728a1c0bb300c919e5fa593d09c3e1",
+          "bytesInspected": false,
+          "downloadStatus": "artifact ZIP route was not completed; passing report was inspected in the exact job log"
+        }
+      ],
+      "artifactByteInspectionGap": "The browser ZIP download timed out through the configured proxy at 11649024 of 15207695 bytes; the three smaller ZIP routes were not completed. Passing artifact report payloads and exact job logs were inspected where available. No proxy or policy bypass was used."
     },
     "behavior": [
       "Billing subscription upsert/cancel notifications are emitted in the webhook transaction and keyed by provider event ID.",
@@ -24033,6 +24134,13 @@
     "evidence": [
       "docs/qa/notify01d-evidence.json",
       "docs/qa/data01f-evidence.json"
-    ]
+    ],
+    "sourcePackage": {
+      "path": "C:\\Users\\shlok\\Desktop\\organic-marketing-os-project-files\\packages\\organic-marketing-os-v0.9.2-notify01d-e6fbd33-20261111.zip",
+      "bytes": 16480380,
+      "sha256": "bff7c19b6c9f4e2865010d1026d467a6558aa1f4a5a2dbcc2dfc014f183c1e05",
+      "builtFromCleanDetachedWorktree": true,
+      "excludesUncommitted": "apps/web/next-env.d.ts"
+    }
   }
 }

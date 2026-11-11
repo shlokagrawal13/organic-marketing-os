@@ -1,5 +1,7 @@
 # In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C & NOTIFY-01D)
 
+> NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
+
 ## Overview & Scope
 NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
 - **Render Events (NOTIFY-01A)**: `SUCCEEDED`, `FAILED`, `CANCELED` from video render worker and cancellation flows (`category: "RENDER"`).

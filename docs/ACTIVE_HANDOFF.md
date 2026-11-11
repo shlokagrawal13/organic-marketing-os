@@ -3,11 +3,11 @@
 <!-- NOTIFY01D_CURRENT_START -->
 ## Current: NOTIFY-01D lifecycle wiring - 2026-11-11
 
-The isolated NOTIFY-01D implementation commit 9d7cfba is based on exact DATA continuity commit fe3c090. Signed billing subscription and payment-failure webhooks now create transaction-bound, event-keyed notifications; DRAFT to REVIEW creates a workspace-wide content-ready notification with the immutable content revision in its key; and the unread category summary is tenant- and role-scoped. API/web builds, Prisma generation and 29 focused notification tests pass. The owned HTTP verifier refused occupied port 6379 before startup and existing services were left untouched.
+The accepted NOTIFY-01D source is exact commit `e6fbd33ce79b590bd34462f5306585d39a542214`; [GitHub Actions run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. It records 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples (36 standard plus 8 busy), zero audit vulnerabilities and all 24 Compose phases. The native populated upgrade report passed 26 migration checks; the PostgreSQL PITR report compared 38 tables and 19 rows; the Compose report passed all 24 phases. Artifact metadata and the download gap are recorded in [notify01d evidence](qa/notify01d-evidence.json).
 
-DATA-01D through DATA-01F are exact-CI verified on fe3c090 / run 42919208576 with 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. Artifact ZIPs and embedded reports were inspected; the API digest versus downloaded ZIP SHA-256 comparison gap is recorded in qa/data01f-evidence.json and the external receipt.
+The implementation wires signed billing subscription/payment-failure notifications into the billing transaction, revision-bound content-ready notifications into DRAFT to REVIEW, and a tenant/role-scoped unread category summary. Local Prisma/API/web builds and 29 focused notification tests pass. The owned HTTP verifier refused occupied Redis port 6379 before startup; no existing user service was contacted or stopped.
 
-Next action: publish this continuity state, merge only the isolated NOTIFY-01D changes, push the accepted exact commit and inspect all three CI jobs and artifacts. Preserve Antigravity worktrees and the user's apps/web/next-env.d.ts change. Production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
+The bounded NOTIFY-01D increment is closed. Preserve Antigravity worktrees and the user's apps/web/next-env.d.ts change. Next action is the next bounded NOTIFY-01 increment; production live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open; CI does not deploy.
 <!-- NOTIFY01D_CURRENT_END -->
 
 <!-- DATA01F_INTEGRATION_CURRENT_START -->
@@ -17,7 +17,7 @@ DATA-01D, DATA-01E and DATA-01F were reviewed in the separate integration worktr
 
 The accepted increment adds strict ISO-8601 audit-range validation, cancellation-safe export cleanup, workspace-row locking with legal-hold/in-flight rechecks and exact byte aggregation beyond the 100-row preview. Local API/web/Prisma builds and 20 focused data-governance tests pass. Local DATA HTTP is explicitly unaccepted because the owned verifier refused occupied port 3000 before startup; existing services stayed untouched. See [DATA-01F evidence](qa/data01f-evidence.json).
 
-NOTIFY-01D lifecycle wiring has been reviewed in the isolated worktree; publication and exact CI remain pending. The isolated NOTIFY-01D lifecycle wiring now has verified billing/content callsites and revision-bound content-ready idempotency; publication and exact CI remain pending. All Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+NOTIFY-01D lifecycle wiring is exact-source CI verified on e6fbd33ce79b590bd34462f5306585d39a542214 / run 43030351133. All Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched. Remote durability/RPO-RTO, live/deployed/provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- DATA01F_INTEGRATION_CURRENT_END -->
 
 <!-- NOTIFY01C_DATA01C_CURRENT_START -->

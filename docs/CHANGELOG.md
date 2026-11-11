@@ -1,3 +1,7 @@
+## NOTIFY-01D exact CI closure - 2026-11-11
+
+Published exact source commit `e6fbd33ce79b590bd34462f5306585d39a542214`; [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps: 428 unit, 76 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. Billing subscription/payment-failure and revision-bound content-ready notifications plus the tenant/role-scoped unread summary are verified. Artifact metadata and the browser ZIP proxy-timeout gap are recorded in [notify01d evidence](qa/notify01d-evidence.json). The bounded increment is closed; production/live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
+
 ## NOTIFY-01D lifecycle wiring - 2026-11-11
 
 Added transaction-bound subscription update/cancellation and payment-failure notifications from signed billing events, revision-bound workspace content-ready notifications on DRAFT to REVIEW, and tenant/role-scoped unread category summary metrics. Added focused idempotency, billing webhook and content lifecycle coverage. Exact three-job CI for the accepted merge remains pending.
