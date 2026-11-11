@@ -1,8 +1,8 @@
-## 2026-11-12 - NOTIFY-01F exact CI closure and package preparation
+## 2026-11-12 - NOTIFY-01F package and final publication preparation
 
 NOTIFY-01F adds an accessible category-preferences panel with native checkboxes, explicit Save, and Back/Cancel/close discard semantics. Successful saves refresh the notification feed and unread badge; the close-discard browser regression protects against stale local choices. Local API/web builds, 31/31 focused notification tests and diff checks pass. Local browser remains unclaimed because the owned verifier refuses occupied Redis 6379.
 
-Exact published-main commit e56e9731b934ec315d54b3765263c2cfe6e7663d passed [GitHub Actions run 43104310634](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43104310634) with all three jobs and every required step: 430 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The core job is pinned to ubuntu-24.04 for the frozen HarfBuzz 8.3.0 oracle; the previous #230 runner drift is historical. Artifact names/sizes/digests are recorded, while ZIP bytes/reports remain uninspected due proxy403. Next: create the portable source ZIP and external receipt, then publish the final continuity records and inspect a fresh exact three-job run on that final docs commit.
+Exact published docs/continuity commit 10d68efbc265e512d624cd59972abefb0a2490b7 passed [GitHub Actions run 43109067299](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43109067299) with all three jobs and every required step: 430 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The core job is pinned to ubuntu-24.04 for the frozen HarfBuzz 8.3.0 oracle; the previous #230 runner drift is historical. Artifact names/sizes/digests are recorded, while ZIP bytes/reports remain uninspected due proxy403. The portable source package is generated from this reconciled tree and its external receipt records the final hash; the package-inclusive source publication is the next exact CI check.
 
 ## NOTIFY-01E exact CI closure - 2026-11-12
 
