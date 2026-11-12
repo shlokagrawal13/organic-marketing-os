@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "NOTIFY-01G",
   "recordedAtUtc": "2026-11-12T00:00:00.000Z",
-  "status": "local_verified_own_exact_ci_pending",
+  "status": "exact_source_ci_verified_package_receipt_paired",
   "baseCommit": "004aa8d95d5cb4bac071e031537e4addf906797a",
   "title": "Bounded notification live updates",
   "behavior": {
@@ -13,6 +13,13 @@
     "preserved": "Existing notification producers, read/unread actions, category muting, explicit preference saves, migrations and tenant/revision/security checks remain unchanged."
   },
   "changedPaths": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
     "apps/api/src/notifications.ts",
     "apps/web/app/globals.css",
     "apps/web/app/notifications-panel.tsx",
@@ -24,11 +31,6 @@
     "docs/SESSION_LOG.md",
     "docs/TASK_BOARD.md",
     "docs/qa/notify01g-evidence.json",
-    "PROJECT_CHECKPOINT.json",
-    "PROJECT_STATUS.md",
-    "REQUIREMENTS_MATRIX.md",
-    "RESUME_PROMPT.txt",
-    "START_HERE.md",
     "tests/integration/notifications.test.ts",
     "tests/notifications.test.ts",
     "tests/ui/notifications.spec.ts"
@@ -47,8 +49,74 @@
     "credentialsPrinted": false
   },
   "exactCi": {
-    "status": "pending_on_own_published_commit",
-    "requires": "All three jobs and every required step on the exact published NOTIFY-01G commit, followed by a fresh portable source ZIP and external receipt.",
+    "status": "verified_on_exact_published_commit",
+    "sourceCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+    "sourceTree": "377001a622db1e3561d610d1d629564ca3b0da5e",
+    "runId": 43129027400,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43129027400",
+    "attempt": 1,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "jobs": [
+      {
+        "name": "Native populated upgrade/migration recovery",
+        "jobId": 130888276385,
+        "requiredSteps": 11,
+        "conclusion": "success"
+      },
+      {
+        "name": "Native application verification",
+        "jobId": 130888276612,
+        "requiredSteps": 22,
+        "conclusion": "success"
+      },
+      {
+        "name": "Disposable Compose/native restore",
+        "jobId": 130888276621,
+        "requiredSteps": 8,
+        "conclusion": "success"
+      }
+    ],
+    "results": {
+      "unit": 431,
+      "http": 78,
+      "browser": 68,
+      "recovery": 5,
+      "migrations": 26,
+      "readabilitySamples": 44,
+      "busyReadabilitySamples": 8,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 24
+    },
+    "artifactMetadata": [
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 13904716206,
+        "bytes": 933,
+        "digest": "sha256:d59f9dc54f24f7b3612eb80139fbb867b3ff6a6a1ea4d80fa8937968a24e1043"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 13904319134,
+        "bytes": 16973,
+        "digest": "sha256:5e6c9f46db8878189b3822535593c08b67c750e0bb594bee39c67f4877756a96"
+      },
+      {
+        "name": "browser-evidence",
+        "artifactId": 13904249022,
+        "bytes": 15221388,
+        "digest": "sha256:b5b5ea3c8fe82574ad017f7324d00bf0e5988274513da32fcb3d646da2786239"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 13904181709,
+        "bytes": 3016,
+        "digest": "sha256:0ae01dad511982f29be30445ba6b2da1035719cc793af76040231f3a951193a2"
+      }
+    ],
+    "artifactByteInspection": "blocked_proxy403",
+    "logsAndUploadDigestsVerified": true,
+    "firstRunNotSubstitute": true,
     "previousFRunNotSubstitute": true
   },
   "limits": [
@@ -56,5 +124,14 @@
     "No schema or migration changed.",
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
-  ]
+  ],
+  "implementationCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+  "implementationTree": "377001a622db1e3561d610d1d629564ca3b0da5e",
+  "package": {
+    "status": "prepared_from_exact_source_tree_and_paired_with_external_receipt",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01g-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01g-final-ci-receipt.json",
+    "generatedBy": "python scripts/package_handoff.py",
+    "runtimeDataCredentialsExcluded": true
+  }
 }

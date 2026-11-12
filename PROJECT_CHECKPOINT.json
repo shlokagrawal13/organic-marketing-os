@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01g-local-verified-own-exact-ci-pending-20261112",
+  "checkpointRevision": "notify01g-exact-ci-verified-package-receipt-paired-20261112",
   "savedAtUtc": "2026-11-12T00:00:00.000Z",
-  "currentMilestone": "NOTIFY-01G bounded notification live updates is locally verified on the integrated F source. The tenant/role-guarded SSE snapshot stream, two-second change check, 60-second connection bound and browser polling fallback are implemented; API/web production builds and 32/32 focused notification unit tests pass. The owned HTTP verifier stopped before fixture startup because Mailpit occupied 127.0.0.1:1025. A fresh exact three-job publication CI run and source package/receipt are required.",
+  "currentMilestone": "NOTIFY-01G bounded notification live updates is exact-source CI verified on a7c6e1c216678c36ba4ce225a4cb606dee321a49 / run 43129027400. The tenant/role-guarded SSE snapshot stream, two-second change check, 60-second connection bound and browser polling fallback passed the full three-job fixture pipeline; the package and external receipt are paired in the handoff.",
   "activeTaskId": "NOTIFY-01G",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Publish the NOTIFY-01G source and inspect its exact three-job run and every required step; then generate the fresh portable package and external receipt.",
+  "nextAction": "NOTIFY-01G is closed for this bounded increment. Review the remaining external-delivery, durability, deployed/live-provider and full-master gates before selecting the next product increment.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -6792,8 +6792,8 @@
   "repository": {
     "remote": "https://github.com/shlokagrawal13/organic-marketing-os.git",
     "branch": "main",
-    "commit": "004aa8d95d5cb4bac071e031537e4addf906797a",
-    "status": "NOTIFY01G_LOCAL_VERIFIED_OWN_EXACT_CI_PENDING",
+    "commit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+    "status": "NOTIFY01G_EXACT_SOURCE_CI_VERIFIED",
     "excludedTarget": "https://github.com/shlokagrawal13/OrganicMarketing.git",
     "abandonedPreparation": {
       "localCommit": "3eb01d9d1588a5460e212014760873cffcb04863",
@@ -6806,9 +6806,9 @@
     },
     "visibility": "public",
     "id": 1389748509,
-    "sourceTree": "2e6d7dc6aa84714b8f699001d62e80efb654f6ed",
+    "sourceTree": "377001a622db1e3561d610d1d629564ca3b0da5e",
     "independentRootCommit": "40e552455688260db0c878b162535e41bb39bfb6",
-    "commitMeaning": "NOTIFY-01F final continuity commit 004aa8d passed run 43112150245; NOTIFY-01G is locally verified on the working tree and awaits its own published exact CI and package/receipt.",
+    "commitMeaning": "NOTIFY-01G exact implementation commit a7c6e1c216678c36ba4ce225a4cb606dee321a49 passed run 43129027400; the continuity records and portable package are paired with this verified source.",
     "latestHeadCommand": "git rev-parse origin/main or GitHub branch main; latest 0.9.2 source commit is recorded explicitly here.",
     "lastLocalCheckpointCommit": "a432d67113cec8e70df5334c57391214f92547d1",
     "uploadGate": {
@@ -7835,7 +7835,7 @@
       },
       "receipt": "docs/qa/ux01j-final-ci-receipt.json"
     },
-    "latestApplicationSourceCommit": "607b8fbedbced2beb72278aefed9a6b93eadd23c",
+    "latestApplicationSourceCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
     "localBranch": "main"
   },
   "credentialsIncluded": false,
@@ -7929,12 +7929,12 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "local_verified_own_exact_ci_pending",
+      "state": "ci_verified_integrated",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01E and NOTIFY-01F are exact-source CI verified. NOTIFY-01F final continuity is 004aa8d/run43112150245 with 430 unit, 77 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability, zero audits and 24 Compose phases. NOTIFY-01G adds a bounded tenant/role-guarded SSE snapshot stream with existing polling fallback.",
-      "nextAction": "Publish NOTIFY-01G and inspect its exact three-job run and every required step, then create the fresh external package/receipt.",
+      "completedIncrement": "NOTIFY-01A/B/C/D/E/F/G are exact-source CI verified. NOTIFY-01G is a7c6e1c216678c36ba4ce225a4cb606dee321a49/run43129027400 with 431 unit, 78 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability, zero audits and 24 Compose phases; package and receipt are paired.",
+      "nextAction": "Closed for this bounded increment; choose the next product increment only after reviewing the open external-delivery, durability, deployment and full-master gates.",
       "currentEvidence": "docs/qa/notify01g-evidence.json",
-      "status": "local_verified_own_exact_ci_pending"
+      "status": "ci_verified_integrated"
     },
     {
       "id": "DATA-01",
@@ -8054,12 +8054,12 @@
     },
     {
       "id": "NOTIFY-01G",
-      "state": "local_verified_own_exact_ci_pending",
+      "state": "ci_verified_integrated",
       "title": "Bounded notification live updates",
-      "completedIncrement": "Tenant/role-guarded SSE snapshot stream, two-second change check, 60-second connection bound, snapshot-only payload and browser polling fallback are implemented. API/web production builds and 32/32 focused notification unit tests pass; local HTTP is blocked by occupied Mailpit port 1025.",
+      "completedIncrement": "Tenant/role-guarded SSE snapshot stream, two-second change check, 60-second connection bound, snapshot-only payload and browser polling fallback are exact-source verified on a7c6e1c216678c36ba4ce225a4cb606dee321a49/run43129027400; package and external receipt are paired.",
       "currentEvidence": "docs/qa/notify01g-evidence.json",
-      "nextAction": "Publish the exact source, inspect all three CI jobs/every required step, then create the fresh external package/receipt.",
-      "status": "local_verified_own_exact_ci_pending"
+      "nextAction": "Closed for this bounded increment; the next bounded product task must be selected explicitly.",
+      "status": "exact_source_ci_verified"
     }
   ],
   "lastChanges": [
@@ -8112,9 +8112,9 @@
     {
       "date": "2026-11-12",
       "taskId": "NOTIFY-01G",
-      "commit": "working-tree-on-004aa8d95d5cb4bac071e031537e4addf906797a",
-      "runId": null,
-      "summary": "Added bounded tenant/role-guarded SSE notification snapshots with a two-second change check, 60-second connection bound, snapshot-only payload and polling fallback; API/web builds and 32 focused notification tests pass, while local HTTP is blocked by occupied Mailpit port 1025."
+      "commit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+      "runId": 43129027400,
+      "summary": "Bounded tenant/role-guarded SSE snapshot stream with two-second change checks, 60-second bound, snapshot-only cursor/count payloads, polling fallback and /api rewrite routing; exact three-job CI passed and package/receipt paired."
     }
   ],
   "nextAgentProtocol": [
@@ -8156,53 +8156,77 @@
   "checkpointVerificationEvidence": "docs/qa/notify01g-evidence.json",
   "latestStatus": {
     "taskId": "NOTIFY-01G",
-    "status": "local_verified_own_exact_ci_pending",
-    "commit": "004aa8d95d5cb4bac071e031537e4addf906797a",
-    "runId": null,
-    "allThreeJobsAndRequiredStepsPassed": false,
+    "status": "exact_source_ci_verified",
+    "commit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+    "runId": 43129027400,
+    "allThreeJobsAndRequiredStepsPassed": true,
     "evidence": [
       "docs/qa/notify01g-evidence.json"
     ],
-    "local": "F final exact CI and package are closed. G API/web production builds, 32 focused notification tests and diff checks pass; local HTTP/SSE is fail-closed because Mailpit 127.0.0.1:1025 is occupied; real services, credentials, volumes and Antigravity worktrees remain untouched.",
+    "local": "API/web production builds and 32/32 focused notification tests pass; owned Windows HTTP stopped fail-closed at occupied Mailpit 127.0.0.1:1025; real services, credentials, volumes and Antigravity worktrees were untouched.",
     "sourcePackage": {
-      "status": "not_generated_until_own_exact_ci",
-      "location": null,
-      "externalReceipt": null,
+      "status": "prepared_from_exact_source_tree_and_paired_with_external_receipt",
+      "location": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01g-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01g-final-ci-receipt.json",
       "scope": "Portable source and saved project context; runtime data, private backups and credentials excluded."
     }
   },
   "activeTask": {
     "id": "NOTIFY-01G",
     "title": "Bounded notification live updates",
-    "status": "local_verified_own_exact_ci_pending",
-    "implementationCommit": "working-tree-on-004aa8d95d5cb4bac071e031537e4addf906797a",
-    "publishedCommit": null,
+    "status": "exact_source_ci_verified",
+    "implementationCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+    "publishedCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
     "baseCommit": "004aa8d95d5cb4bac071e031537e4addf906797a",
-    "exactRunId": null,
+    "exactRunId": 43129027400,
     "focusedTestsPassed": 32,
     "focusedTestsFailed": 0,
     "apiBuild": true,
     "webBuild": true,
     "httpHarness": "blocked_fail_closed_occupied_1025_mailpit",
     "changedPaths": [
+      "AGENTS.md",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "REQUIREMENTS_MATRIX.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
       "apps/api/src/notifications.ts",
       "apps/web/app/globals.css",
       "apps/web/app/notifications-panel.tsx",
+      "docs/ACTIVE_HANDOFF.md",
+      "docs/CHANGELOG.md",
       "docs/NOTIFICATIONS.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
+      "docs/qa/notify01g-evidence.json",
       "tests/integration/notifications.test.ts",
       "tests/notifications.test.ts",
-      "tests/ui/notifications.spec.ts",
-      "docs/qa/notify01g-evidence.json"
+      "tests/ui/notifications.spec.ts"
     ],
-    "exactRunConclusion": "pending",
-    "exactResults": null,
-    "runner": "pending own CI; core must remain ubuntu-24.04 / HarfBuzz 8.3.0",
-    "package": {
-      "path": null,
-      "externalReceipt": null,
-      "generated": false
+    "exactRunConclusion": "success",
+    "exactResults": {
+      "unit": 431,
+      "http": 78,
+      "browser": 68,
+      "recovery": 5,
+      "migrations": 26,
+      "readabilitySamples": 44,
+      "busyReadabilitySamples": 8,
+      "productionAuditVulnerabilities": 0,
+      "fullAuditVulnerabilities": 0,
+      "composePhases": 24
     },
-    "historicalRunnerDrift": "F run 43101560348 resolved ubuntu-latest to Ubuntu 26.04 / HarfBuzz 12.3.2 and failed 15 frozen-oracle unit guards; F was later closed by 004aa8d/run43112150245."
+    "runner": "ubuntu-24.04 core shaping pin retained",
+    "package": {
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01g-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01g-final-ci-receipt.json",
+      "generated": true
+    },
+    "historicalRunnerDrift": "F runner drift was resolved by the later exact F continuity run; G uses the pinned core runner."
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8216,24 +8240,37 @@
   },
   "pendingPublication": {
     "taskId": "NOTIFY-01G",
-    "status": "local_verified_own_exact_ci_pending",
+    "status": "ci_verified_integrated",
     "baseCommit": "004aa8d95d5cb4bac071e031537e4addf906797a",
     "changedPaths": [
+      "AGENTS.md",
+      "CHECKPOINT_MANIFEST.json",
+      "PROJECT_CHECKPOINT.json",
+      "PROJECT_STATUS.md",
+      "REQUIREMENTS_MATRIX.md",
+      "RESUME_PROMPT.txt",
+      "START_HERE.md",
       "apps/api/src/notifications.ts",
       "apps/web/app/globals.css",
       "apps/web/app/notifications-panel.tsx",
+      "docs/ACTIVE_HANDOFF.md",
+      "docs/CHANGELOG.md",
       "docs/NOTIFICATIONS.md",
+      "docs/PROJECT_STATUS.md",
+      "docs/REQUIREMENTS_MATRIX.md",
+      "docs/SESSION_LOG.md",
+      "docs/TASK_BOARD.md",
       "docs/qa/notify01g-evidence.json",
       "tests/integration/notifications.test.ts",
       "tests/notifications.test.ts",
       "tests/ui/notifications.spec.ts"
     ],
-    "implementationCommit": "working-tree-on-004aa8d95d5cb4bac071e031537e4addf906797a",
-    "commit": null,
-    "runId": null,
+    "implementationCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+    "commit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+    "runId": 43129027400,
     "receipt": "docs/qa/notify01g-evidence.json",
-    "sourceZip": null,
-    "nextAction": "Publish NOTIFY-01G and inspect all three jobs/every required step; then generate the fresh portable package and external receipt."
+    "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01g-final.zip",
+    "nextAction": "Closed for this bounded increment; external receipt and package are paired at the recorded path."
   },
   "priorPendingPublication": {
     "slice": "EDITOR-01U CI fix",
@@ -8853,7 +8890,7 @@
   },
   "currentVerification": {
     "taskId": "NOTIFY-01G",
-    "status": "local_verified_own_exact_ci_pending",
+    "status": "exact_source_ci_verified",
     "baseCommit": "004aa8d95d5cb4bac071e031537e4addf906797a",
     "local": {
       "apiBuild": true,
@@ -8863,18 +8900,19 @@
       "diffCheck": true,
       "fullSuiteAccepted": false,
       "fullSuiteEnvironmentLimited": true,
-      "httpBrowserHarness": "Windows local HTTP/SSE blocked before fixture startup by occupied Mailpit 127.0.0.1:1025; exact CI is required.",
+      "httpBrowserHarness": "Windows local HTTP/SSE blocked before fixture startup by occupied Mailpit 127.0.0.1:1025; exact CI passed.",
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "runnerPinVerified": true
     },
     "exactCi": {
-      "status": "pending_on_own_published_commit",
-      "sourceCommit": null,
-      "runId": null,
-      "url": null,
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "nextRequired": "Publish NOTIFY-01G, inspect all three jobs and every required step, then create the fresh package/receipt."
+      "status": "verified_on_exact_published_commit",
+      "sourceCommit": "a7c6e1c216678c36ba4ce225a4cb606dee321a49",
+      "sourceTree": "377001a622db1e3561d610d1d629564ca3b0da5e",
+      "runId": 43129027400,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43129027400",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "nextRequired": "No further CI is required for the G implementation; review remaining external/deployed/full-master gates before selecting the next task."
     }
   },
   "social01PolicyReview": {

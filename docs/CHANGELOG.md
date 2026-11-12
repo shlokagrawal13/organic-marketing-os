@@ -1266,5 +1266,4 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 - Added a tenant/role-guarded SSE notification snapshot stream with a two-second change check, snapshot-only cursor/count payloads and a 60-second connection bound.
 - Updated the notification panel to refetch existing guarded list data on stream changes, retain 60-second polling fallback and expose live/connecting/fallback status.
 - Added pure cursor and tenant-bound SSE integration coverage. No schema, migration, provider call, external delivery or delivery-SLO claim changed.
-- Local API/web production builds and 32 focused notification unit tests pass; the owned local HTTP verifier stopped before startup because Mailpit already occupied 127.0.0.1:1025. Exact three-job CI and fresh source package remain required.
-
+- Exact implementation commit `a7c6e1c216678c36ba4ce225a4cb606dee321a49` / run `43129027400` passed all three CI jobs/every required step: 431 unit, 78 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The package and external receipt are paired in the saved handoff; artifact-byte downloads remain proxy403-blocked.
