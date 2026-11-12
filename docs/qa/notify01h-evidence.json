@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01H",
-  "recordedAtUtc": "2026-11-12T21:08:54.717Z",
-  "status": "implementation_ci_verified_continuity_ci_pending",
+  "recordedAtUtc": "2026-11-12T21:32:18.252Z",
+  "status": "exact_ci_verified_source_package_receipt_paired",
   "baseCommit": "4fd556cbb93b6e22ddbe89d42c8933aca666378d",
   "title": "Bounded notification live-stream reconnect",
   "behavior": {
@@ -49,7 +49,7 @@
     "credentialsPrinted": false
   },
   "exactCi": {
-    "status": "implementation_commit_verified_continuity_commit_pending",
+    "status": "verified_on_final_continuity_commit",
     "sourceCommit": "8cbfc4169032a48d9e5c342b2a948787684025b0",
     "runId": 43303938997,
     "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43303938997",
@@ -105,7 +105,38 @@
     "artifactReportsInspected": false,
     "resultCounts": "Not independently available from the unauthenticated public job summary; no counts are inferred.",
     "firstRunNotSubstitute": true,
-    "previousGRunNotSubstitute": true
+    "previousGRunNotSubstitute": true,
+    "finalContinuityCommit": "b9178ce19bfca66ff0f0a42f56875e34d0a4d8df",
+    "finalContinuityRunId": 43307569387,
+    "finalContinuityUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43307569387",
+    "finalContinuityAllThreeJobsAndRequiredStepsPassed": true,
+    "statusNote": "The implementation and continuity commits each passed exact CI. Final artifact bytes/reports remain uninspected because the artifact API returned 401 and logs returned 403.",
+    "finalContinuityArtifactMetadata": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 13986091580,
+        "bytes": 15228356,
+        "digest": "sha256:496db77318875756f35bc3e7917938fd41a59b5f28c102dd4989a2b0e59ba408"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 13984649156,
+        "bytes": 16933,
+        "digest": "sha256:57aae0b54499294b30dce2fd5225975a1838a17cbe1e5a1d6f3c42725054a22f"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 13984053102,
+        "bytes": 936,
+        "digest": "sha256:8a67789521cb438050875e757efec6638d2563b61f923a2bd313a0294c73a3fc"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 13984721614,
+        "bytes": 3016,
+        "digest": "sha256:776b76ade1dfed441a1ef59ff049664fa20c16f8a344b74e9cad325f42a53b8e"
+      }
+    ]
   },
   "limits": [
     "This is an in-app reconnect increment only; it does not add email, SMS, mobile push, durable replay, cross-process fan-out or a realtime delivery SLO.",
@@ -115,7 +146,9 @@
   ],
   "implementationCommit": "8cbfc4169032a48d9e5c342b2a948787684025b0",
   "package": {
-    "status": "pending_after_continuity_exact_ci",
+    "status": "paired_with_exact_ci",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01h-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01h-final-ci-receipt.json",
     "runtimeDataCredentialsExcluded": true
   },
   "implementationTree": "845ea731224e114c3487f1b851b92fb0997c86c6"
