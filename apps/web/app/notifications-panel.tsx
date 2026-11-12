@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { api } from "./api-client";
+import { notificationStreamRetryDelay } from "./notifications-stream";
 
 type Notification = {
   id: string;
@@ -90,11 +91,13 @@ export default function NotificationsPanel({
   const [preferencesError, setPreferencesError] = useState("");
   const [preferencesNotice, setPreferencesNotice] = useState("");
   const [streamState, setStreamState] = useState<
-    "connecting" | "live" | "fallback"
+    "connecting" | "live" | "reconnecting" | "fallback"
   >(disabled ? "fallback" : "connecting");
   const generation = useRef(0);
   const preferencesGeneration = useRef(0);
   const streamRef = useRef<EventSource | null>(null);
+  const streamRetryRef = useRef<number | null>(null);
+  const streamAttemptRef = useRef(0);
 
   const preferencesDirty =
     mutedCategories.join("\u0000") !== savedMutedCategories.join("\u0000");
@@ -135,15 +138,35 @@ export default function NotificationsPanel({
     setPreferencesError("");
     setPreferencesNotice("");
     setStreamState(disabled ? "fallback" : "connecting");
+    streamAttemptRef.current = 0;
     void load(controller.signal);
     const timer = window.setInterval(() => void load(), 60000);
-    if (!disabled && typeof window.EventSource === "function") {
+    let disposed = false;
+    const clearRetry = () => {
+      if (streamRetryRef.current !== null) {
+        window.clearTimeout(streamRetryRef.current);
+        streamRetryRef.current = null;
+      }
+    };
+    const closeStream = () => {
+      streamRef.current?.close();
+      streamRef.current = null;
+    };
+    const connectStream = () => {
+      if (disposed || disabled || typeof window.EventSource !== "function") {
+        setStreamState("fallback");
+        return;
+      }
+      setStreamState(streamAttemptRef.current ? "reconnecting" : "connecting");
       const source = new window.EventSource(
         `/api${base}/notifications/stream`,
         { withCredentials: true },
       );
       streamRef.current = source;
-      source.onopen = () => setStreamState("live");
+      source.onopen = () => {
+        streamAttemptRef.current = 0;
+        setStreamState("live");
+      };
       source.addEventListener("notification", (event) => {
         try {
           JSON.parse((event as MessageEvent).data);
@@ -153,17 +176,27 @@ export default function NotificationsPanel({
         }
       });
       source.onerror = () => {
-        setStreamState("fallback");
         source.close();
+        if (streamRef.current === source) streamRef.current = null;
+        if (disposed) return;
+        const attempt = streamAttemptRef.current++;
+        setStreamState("reconnecting");
+        clearRetry();
+        streamRetryRef.current = window.setTimeout(
+          connectStream,
+          notificationStreamRetryDelay(attempt),
+        );
       };
-    }
+    };
+    connectStream();
     return () => {
+      disposed = true;
       controller.abort();
       generation.current++;
       preferencesGeneration.current++;
       window.clearInterval(timer);
-      streamRef.current?.close();
-      streamRef.current = null;
+      clearRetry();
+      closeStream();
     };
   }, [base, disabled, load]);
 
@@ -327,7 +360,9 @@ export default function NotificationsPanel({
                     ? "Live updates"
                     : streamState === "connecting"
                       ? "Connecting..."
-                      : "Auto-refresh enabled"}
+                      : streamState === "reconnecting"
+                        ? "Reconnecting..."
+                        : "Auto-refresh enabled"}
                 </span>
               )}
             </div>

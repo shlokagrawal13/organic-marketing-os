@@ -1,3 +1,13 @@
+<!-- NOTIFY01H_CURRENT_START -->
+## Current: NOTIFY-01H bounded live-stream reconnect - 2026-11-13
+
+NOTIFY-01H adds controlled reconnect behavior to the optional tenant/role-guarded notification SSE stream. A transient EventSource failure closes only the failed connection, exposes a clear **Reconnecting...** state, and retries with bounded delays of 1s, 2.5s, 5s, 10s and a capped 30s. The existing 60-second list polling fallback remains active, and navigation/unmount clears pending timers and closes the stream.
+
+The increment is client-side only: no schema, migration, provider call, external delivery, durable replay, cross-process fan-out or delivery-SLO claim is added. Existing cursor/count-only snapshots, tenant/role checks, category muting, explicit preference saves, read/unread actions and the 60-second server stream bound remain unchanged. API/web production builds, 33 focused notification unit tests, formatting and diff checks pass. The owned Windows UI verifier was run through verify-local and failed closed before fixture startup because 127.0.0.1:6379 is occupied; no existing service was contacted.
+
+Exact three-job CI on this new source is still required. Preserve real services, credentials, volumes, Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change. See [NOTIFY-01H evidence](docs/qa/notify01h-evidence.json) and [stream reconnect design](docs/NOTIFICATION_STREAM_RECONNECT.md). External delivery, durable/cross-process realtime, remote durability/RPO-RTO, deployed/live-provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- NOTIFY01H_CURRENT_END -->
+
 <!-- NOTIFY01F_CURRENT_START -->
 ## Current: NOTIFY-01F notification preference controls UI - 2026-11-12
 

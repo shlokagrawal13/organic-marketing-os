@@ -265,3 +265,9 @@ This is a UI increment over the existing preference API. It does not add externa
 - **Deduplication**: Replays of the same terminal event with the same `(organizationId, eventKey)` are ignored via atomic `upsert`, preventing duplicate notifications.
 - **Retries**: A retry job generates a distinct `renderId`, correctly yielding a new notification while preserving the terminal failure record of the previous attempt.
 - **Concurrent Acknowledgment**: Concurrent read requests atomically set `readAt` and preserve the first acknowledgement timestamp without regression.
+
+## NOTIFY-01H bounded live-stream reconnect
+
+The browser notification panel keeps its existing EventSource stream optional and bounded. When a connection fails, the failed source is closed and the panel reports **Reconnecting...** while scheduling a retry at 1 second, 2.5 seconds, 5 seconds, 10 seconds, then a capped 30 seconds. The timer is cleared and the source is closed during navigation or unmount. The existing 60-second list polling remains active throughout, so a temporary stream outage cannot stop notification refresh.
+
+This increment does not add durable stream replay, Last-Event-ID, cross-process fan-out, external email/SMS/mobile push, a provider call, a schema/migration or a delivery SLO. It preserves the tenant/role-guarded snapshot contract, cursor/count-only payload, category muting and all existing read/unread and preference behavior. See [the focused evidence](qa/notify01h-evidence.json) and [the implementation design](NOTIFICATION_STREAM_RECONNECT.md).

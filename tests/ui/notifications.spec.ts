@@ -99,3 +99,46 @@ test("notification center loads tenant updates and toggles unread state", async 
   await page.getByRole("button", { name: "Notification preferences" }).click();
   await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
 });
+
+test("notification center reconnects the optional live stream after a transient failure", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({
+    data: { name: "Notification stream reconnect workspace" },
+  });
+  organizations.push(org.id);
+  const user = await actor(org.id, "OWNER");
+  users.push(user.id);
+  let attempts = 0;
+  await page.route(
+    /\/api\/workspaces\/[^/]+\/notifications\/stream/,
+    async (route) => {
+      attempts += 1;
+      if (attempts === 1) {
+        await route.abort("failed");
+        return;
+      }
+      await route.continue();
+    },
+  );
+  await page.context().addCookies([
+    {
+      name: "mos_session",
+      value: user.headers.cookie.split("=")[1],
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  ]);
+
+  await page.goto("/");
+  await page.getByRole("button", { name: /Notifications/ }).click();
+  await expect.poll(() => attempts, { timeout: 15000 }).toBeGreaterThan(1);
+  await expect(page.locator(".notification-stream-status")).toHaveText(
+    "Live updates",
+    { timeout: 15000 },
+  );
+});

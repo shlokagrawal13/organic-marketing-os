@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01H",
+  "recordedAtUtc": "2026-11-13T00:00:00.000Z",
+  "status": "local_implementation_verified_ci_pending",
+  "baseCommit": "4fd556cbb93b6e22ddbe89d42c8933aca666378d",
+  "title": "Bounded notification live-stream reconnect",
+  "behavior": {
+    "boundedBackoff": "Transient EventSource failures close the failed connection and retry at 1000, 2500, 5000, 10000 and capped 30000 milliseconds.",
+    "visibleState": "The panel distinguishes connecting, live, reconnecting and polling fallback states.",
+    "pollingPreserved": "The existing 60-second guarded list polling continues during reconnect attempts and remains the fallback when EventSource is unavailable.",
+    "cleanup": "Navigation and unmount abort list requests, clear pending retry timers and close the current EventSource.",
+    "preserved": "Tenant/role guards, snapshot-only cursor/count payloads, server 60-second bound, category muting, preferences, read/unread actions, migrations and providers remain unchanged."
+  },
+  "changedPaths": [
+    "AGENTS.md",
+    "CHECKPOINT_MANIFEST.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "apps/web/app/notifications-panel.tsx",
+    "apps/web/app/notifications-stream.ts",
+    "docs/ACTIVE_HANDOFF.md",
+    "docs/CHANGELOG.md",
+    "docs/NOTIFICATION_STREAM_RECONNECT.md",
+    "docs/NOTIFICATIONS.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/qa/notify01h-evidence.json",
+    "tests/notifications.test.ts",
+    "tests/ui/notifications.spec.ts"
+  ],
+  "localVerification": {
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "33/33",
+    "prettier": true,
+    "diffCheck": true,
+    "uiReconnectRegressionAdded": true,
+    "httpBrowserHarness": "Not claimed locally; verify-local failed closed before fixture startup because 127.0.0.1:6379 was occupied.",
+    "realEnvironmentUnchanged": true,
+    "userUncommittedChangePreserved": "apps/web/next-env.d.ts",
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "exactCi": {
+    "status": "pending_on_exact_final_commit",
+    "previousGRunNotSubstitute": true,
+    "required": "All three jobs and every required step on the exact published H source."
+  },
+  "limits": [
+    "This is an in-app reconnect increment only; it does not add email, SMS, mobile push, durable replay, cross-process fan-out or a realtime delivery SLO.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ],
+  "implementationCommit": "working_tree",
+  "package": {
+    "status": "pending_after_exact_ci",
+    "runtimeDataCredentialsExcluded": true
+  }
+}

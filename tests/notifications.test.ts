@@ -21,6 +21,10 @@ import { grantCredits, reserveCredits } from "../dist/packages/core/credits";
 import { recordPublicationOutcome } from "../dist/apps/api/src/publication-attempts";
 import { applicationMigrations } from "../scripts/application-pitr-fixture.mjs";
 import { fileURLToPath } from "node:url";
+import {
+  NOTIFICATION_STREAM_RETRY_DELAYS_MS,
+  notificationStreamRetryDelay,
+} from "../apps/web/app/notifications-stream";
 
 describe("Notifications - Unit & Idempotent Event Contracts", () => {
   let db: PGlite;
@@ -45,6 +49,19 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
       "2026-11-12T00:00:00.000Z:notification-a",
     );
     assert.equal(notificationStreamCursor(null), null);
+  });
+
+  test("notification stream retries use bounded backoff without a reconnect storm", () => {
+    assert.deepEqual(
+      [0, 1, 2, 3, 4, 5, 99].map(notificationStreamRetryDelay),
+      [
+        ...NOTIFICATION_STREAM_RETRY_DELAYS_MS,
+        NOTIFICATION_STREAM_RETRY_DELAYS_MS.at(-1),
+        NOTIFICATION_STREAM_RETRY_DELAYS_MS.at(-1),
+      ],
+    );
+    assert.equal(notificationStreamRetryDelay(Number.NaN), 1000);
+    assert.equal(notificationStreamRetryDelay(-2), 1000);
   });
 
   test("creates durable, tenant-bound notification on successful render terminal event", async () => {

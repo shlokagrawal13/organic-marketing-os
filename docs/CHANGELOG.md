@@ -1,3 +1,7 @@
+## NOTIFY-01H bounded live-stream reconnect - 2026-11-13
+
+Added bounded client reconnect for the optional notification SSE stream. EventSource failures now close the failed connection, show a reconnecting status, retry with capped backoff (1s/2.5s/5s/10s/30s), and continue using the existing 60-second polling fallback. Cleanup clears retry timers and closes the stream on navigation/unmount. Added a pure backoff contract test and a browser regression for a transient stream failure. No schema, migration, provider, external delivery or delivery-SLO behavior changed. Local API/web production builds and 33 focused notification unit tests pass; the owned UI verifier remains blocked by the occupied Redis 6379 guard.
+
 ## NOTIFY-01F notification preference controls UI - 2026-11-12
 
 Added an accessible category-preference panel to the existing notification center. Category changes stay local until explicit Save; Back, Cancel and close discard unsaved choices, and a successful save refreshes the feed and unread badge. Added a browser regression for close-discard behavior. No schema, migration, external transport or provider behavior changed. Local API/web builds, 31 focused notification tests and diff checks pass.
