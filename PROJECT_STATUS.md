@@ -5,7 +5,7 @@ NOTIFY-01F adds an accessible notification-preferences panel to the existing not
 
 The UI increment adds no schema or migration, external email/push/realtime transport, provider call or delivery SLO claim. Existing polling, read/unread/read-all, category filtering, generation guards, role/tenant checks and E's replacement preference API remain unchanged. Local API/web production builds, 31/31 focused notification unit tests and diff checks pass. Local browser execution remains unclaimed because the owned verifier fails closed when Redis 127.0.0.1:6379 is occupied; real services, volumes, credentials, Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change remain untouched.
 
-The exact published docs/continuity source commit **10d68efbc265e512d624cd59972abefb0a2490b7** was verified by [run 43109067299](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43109067299); all three jobs and every required step passed. Results are 430 unit, 77 HTTP, 68 browser, 5 recovery, 26 migration files, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. The implementation source and runner pin are carried from e56e9731b934ec315d54b3765263c2cfe6e7663d, with core on ubuntu-24.04/HarfBuzz 8.3.0. Artifact names, sizes and API digests are recorded, while artifact ZIP bytes and embedded reports remain uninspected because the download route is proxy403-blocked. The portable source package is generated from this reconciled source and the external final receipt records its hash. Production/live-provider, external notification delivery/realtime/SLO, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI does not deploy.
+The exact final F commit **004aa8d95d5cb4bac071e031537e4addf906797a** was verified by [run 43112150245](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43112150245); all three jobs and every required step passed. Results are 430 unit, 77 HTTP, 68 browser, 5 recovery, 26 migration files, 44 readability samples (36 standard plus 8 busy), zero production/full dependency-audit vulnerabilities and all 24 Compose phases. The implementation source and runner pin are carried from e56e9731b934ec315d54b3765263c2cfe6e7663d, with core on ubuntu-24.04/HarfBuzz 8.3.0. Artifact names, sizes and API digests are recorded, while artifact ZIP bytes and embedded reports remain uninspected because the download route is proxy403-blocked. The portable source package and final external receipt close F's package status. Production/live-provider, external notification delivery/realtime/SLO, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI does not deploy.
 <!-- NOTIFY01F_CURRENT_END -->
 
 <!-- NOTIFY01E_CURRENT_START -->
@@ -1352,4 +1352,12 @@ DATA governance is integrated in a separate review worktree at code commit `2d9c
 
 Antigravity branches/worktrees remain untouched. NOTIFY-01D is exact-source CI verified; broader notification delivery/realtime work remains open. Live/deployed/provider, remote durability/RPO-RTO and full-master acceptance remain open.
 <!-- DATA01F_INTEGRATION_CURRENT_END -->
+
+<!-- NOTIFY01G_CURRENT_START -->
+## Current: NOTIFY-01G bounded notification live updates - 2026-11-12
+
+NOTIFY-01G adds an optional tenant- and role-guarded SSE stream for notification snapshots. It emits only a change cursor plus total/unread counts, polls the existing scope every two seconds and closes after 60 seconds. The notification panel refetches its existing guarded list on a change, keeps the 60-second polling fallback and displays live/connecting/fallback status.
+
+No schema or migration, email/push/provider call or delivery SLO is added. API/web production builds and 32/32 focused notification unit tests pass. The new tenant-bound SSE integration test is recorded, while the local owned verifier is blocked before fixture startup by occupied 127.0.0.1:1025 (Mailpit); user services and the uncommitted apps/web/next-env.d.ts remain untouched. Exact three-job CI, fresh package and external receipt are still required; CI does not deploy and external delivery, realtime SLO, remote durability/RPO-RTO, deployed/live-provider and full-master acceptance remain open.
+<!-- NOTIFY01G_CURRENT_END -->
 

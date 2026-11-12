@@ -276,3 +276,8 @@ Current native/live verification limits are evidence gaps, not permanent bans. R
 ## Authorized verification and publication workflow
 
 On 2026-10-18 the user explicitly requested the previous complete workflow: implement, verify, push code to GitHub and inspect the CI/CD pipeline on the published commit. This is standing authorization for routine project commits/pushes and CI verification; do not stop at local-only changes or repeatedly ask for push approval. Preserve unrelated work, check the exact changed scope, never force-push over intervening commits, and inspect/fix CI failures before claiming completion. The existing pipeline is verification-only; do not claim a deployment or live-provider acceptance from a green CI run. Keep publication/CI receipts and continuity records aligned with exact source commits.
+<!-- NOTIFY01G_CURRENT_START -->
+## Current: NOTIFY-01G bounded notification live updates - 2026-11-12
+
+The current bounded increment adds a tenant/role-guarded SSE snapshot stream, a two-second change check, a 60-second connection bound and browser polling fallback. The payload contains only a change cursor and total/unread counts; no schema/migration, provider call, external delivery or SLO claim is added. API/web builds and 32/32 focused notification unit tests pass. Local HTTP/SSE is blocked before fixture startup by occupied Mailpit port 1025. Exact all-three-job CI and a fresh package/receipt remain required. Preserve real services, credentials, volumes, Antigravity worktrees and apps/web/next-env.d.ts; CI does not deploy.
+<!-- NOTIFY01G_CURRENT_END -->

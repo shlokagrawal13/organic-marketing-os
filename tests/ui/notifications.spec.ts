@@ -55,6 +55,9 @@ test("notification center loads tenant updates and toggles unread state", async 
   await expect(
     page.getByRole("heading", { name: "Notifications", exact: true }),
   ).toBeVisible();
+  await expect(page.locator(".notification-stream-status")).toHaveText(
+    "Live updates",
+  );
   await expect(
     page.getByText("The campaign video is ready for review."),
   ).toBeVisible();
@@ -79,7 +82,7 @@ test("notification center loads tenant updates and toggles unread state", async 
   await expect(renderUpdates).not.toBeChecked();
   await renderUpdates.check();
   await page.getByRole("button", { name: "Save preferences" }).click();
-  await expect(page.getByRole("status")).toHaveText(
+  await expect(page.locator(".notification-success")).toHaveText(
     "Notification preferences saved.",
   );
   await page.getByRole("button", { name: "Back to notifications" }).click();

@@ -89,8 +89,12 @@ export default function NotificationsPanel({
   const [preferencesBusy, setPreferencesBusy] = useState(false);
   const [preferencesError, setPreferencesError] = useState("");
   const [preferencesNotice, setPreferencesNotice] = useState("");
+  const [streamState, setStreamState] = useState<
+    "connecting" | "live" | "fallback"
+  >(disabled ? "fallback" : "connecting");
   const generation = useRef(0);
   const preferencesGeneration = useRef(0);
+  const streamRef = useRef<EventSource | null>(null);
 
   const preferencesDirty =
     mutedCategories.join("\u0000") !== savedMutedCategories.join("\u0000");
@@ -130,15 +134,38 @@ export default function NotificationsPanel({
     setSavedMutedCategories([]);
     setPreferencesError("");
     setPreferencesNotice("");
+    setStreamState(disabled ? "fallback" : "connecting");
     void load(controller.signal);
     const timer = window.setInterval(() => void load(), 60000);
+    if (!disabled && typeof window.EventSource === "function") {
+      const source = new window.EventSource(
+        `${base}/notifications/stream`,
+        { withCredentials: true },
+      );
+      streamRef.current = source;
+      source.onopen = () => setStreamState("live");
+      source.addEventListener("notification", (event) => {
+        try {
+          JSON.parse((event as MessageEvent).data);
+          void load();
+        } catch {
+          setStreamState("fallback");
+        }
+      });
+      source.onerror = () => {
+        setStreamState("fallback");
+        source.close();
+      };
+    }
     return () => {
       controller.abort();
       generation.current++;
       preferencesGeneration.current++;
       window.clearInterval(timer);
+      streamRef.current?.close();
+      streamRef.current = null;
     };
-  }, [load]);
+  }, [base, disabled, load]);
 
   const loadPreferences = useCallback(
     async (signal?: AbortSignal) => {
@@ -294,6 +321,15 @@ export default function NotificationsPanel({
             <div>
               <span className="eyebrow muted">WORKSPACE UPDATES</span>
               <h2>{preferencesOpen ? "Notification preferences" : "Notifications"}</h2>
+              {!preferencesOpen && (
+                <span className="notification-stream-status" role="status">
+                  {streamState === "live"
+                    ? "Live updates"
+                    : streamState === "connecting"
+                      ? "Connecting..."
+                      : "Auto-refresh enabled"}
+                </span>
+              )}
             </div>
             <div className="notification-popover-actions">
               {preferencesOpen ? (

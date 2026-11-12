@@ -1261,3 +1261,10 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 - Aggregate reconciliation bytes across every candidate while keeping the first 100 rows as a bounded preview.
 - Add HTTP regressions for malformed date ranges and 102-candidate byte accounting.
 
+## NOTIFY-01G bounded notification live updates - 2026-11-12
+
+- Added a tenant/role-guarded SSE notification snapshot stream with a two-second change check, snapshot-only cursor/count payloads and a 60-second connection bound.
+- Updated the notification panel to refetch existing guarded list data on stream changes, retain 60-second polling fallback and expose live/connecting/fallback status.
+- Added pure cursor and tenant-bound SSE integration coverage. No schema, migration, provider call, external delivery or delivery-SLO claim changed.
+- Local API/web production builds and 32 focused notification unit tests pass; the owned local HTTP verifier stopped before startup because Mailpit already occupied 127.0.0.1:1025. Exact three-job CI and fresh source package remain required.
+

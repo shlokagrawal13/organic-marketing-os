@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01G",
+  "recordedAtUtc": "2026-11-12T00:00:00.000Z",
+  "status": "local_verified_own_exact_ci_pending",
+  "baseCommit": "004aa8d95d5cb4bac071e031537e4addf906797a",
+  "title": "Bounded notification live updates",
+  "behavior": {
+    "tenantRoleGuard": "The SSE endpoint is mounted under the existing tenant guard and notification role matrix. Elevated roles receive the workspace scope; other allowed roles receive their own and broadcast notifications.",
+    "snapshotOnly": "Each notification event contains only a latest-record cursor, total count and unread count. The stream never sends notification bodies, links, private object keys or record payloads.",
+    "boundedConnection": "The server checks the existing muted/user/broadcast scope every two seconds and closes a stream after 60 seconds.",
+    "browserFallback": "The browser refetches the existing guarded notification list after a changed snapshot and retains the existing 60-second polling fallback when EventSource is unavailable or fails.",
+    "preserved": "Existing notification producers, read/unread actions, category muting, explicit preference saves, migrations and tenant/revision/security checks remain unchanged."
+  },
+  "changedPaths": [
+    "apps/api/src/notifications.ts",
+    "apps/web/app/globals.css",
+    "apps/web/app/notifications-panel.tsx",
+    "docs/ACTIVE_HANDOFF.md",
+    "docs/CHANGELOG.md",
+    "docs/NOTIFICATIONS.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/REQUIREMENTS_MATRIX.md",
+    "docs/SESSION_LOG.md",
+    "docs/TASK_BOARD.md",
+    "docs/qa/notify01g-evidence.json",
+    "PROJECT_CHECKPOINT.json",
+    "PROJECT_STATUS.md",
+    "REQUIREMENTS_MATRIX.md",
+    "RESUME_PROMPT.txt",
+    "START_HERE.md",
+    "tests/integration/notifications.test.ts",
+    "tests/notifications.test.ts",
+    "tests/ui/notifications.spec.ts"
+  ],
+  "localVerification": {
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "32/32",
+    "diffCheck": true,
+    "sseIntegrationCoverage": "Added tenant-bound initial/change snapshot and cross-tenant denial assertions.",
+    "httpBrowserHarness": "Not claimed locally; the owned verifier stopped before fixture startup because 127.0.0.1:1025 (Mailpit) was already occupied and the harness fails closed.",
+    "realEnvironmentUnchanged": true,
+    "userUncommittedChangePreserved": "apps/web/next-env.d.ts",
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "exactCi": {
+    "status": "pending_on_own_published_commit",
+    "requires": "All three jobs and every required step on the exact published NOTIFY-01G commit, followed by a fresh portable source ZIP and external receipt.",
+    "previousFRunNotSubstitute": true
+  },
+  "limits": [
+    "This increment is an in-app SSE transport only; it does not add email, SMS, mobile push, cross-process fan-out, durable replay or a delivery SLO.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ]
+}

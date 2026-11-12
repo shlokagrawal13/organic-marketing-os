@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D, NOTIFY-01E & NOTIFY-01F)
+# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D, NOTIFY-01E, NOTIFY-01F & NOTIFY-01G)
 
 > NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
 
@@ -14,6 +14,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Category Summary Metrics (NOTIFY-01D)**: `GET /workspaces/:organizationId/notifications/summary` returns tenant- and role-scoped unread totals by category.
 - **Notification Preferences & Category Muting (NOTIFY-01E)**: Per-user notification category muting and preferences management (`GET|PUT|PATCH /workspaces/:organizationId/notifications/preferences`) automatically filters muted categories from inbox feeds and unread badge summaries unless explicitly requested (`includeMuted=true` or an explicit `category` query parameter).
 - **Notification Preference Controls (NOTIFY-01F)**: The workspace notification center exposes an accessible preferences panel backed by the NOTIFY-01E endpoints. Users can inspect and select muted categories, save explicitly, and immediately see the feed and unread badge refresh with the saved filter. Back, Cancel and close discard unsaved choices; the browser regression prevents stale local preferences from reappearing after reopening.
+- **Bounded Notification Live Updates (NOTIFY-01G)**: The notification center may open a tenant- and role-guarded SSE stream. The stream emits only a change cursor plus total/unread counts, checks the existing notification scope every two seconds, closes after 60 seconds and lets the browser refetch the existing guarded list. A 60-second polling fallback remains in place.
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
@@ -248,6 +249,16 @@ The notification bell opens a preferences control that:
 - Refreshes the notification list and unread badge after a successful save, so muted categories disappear from the default feed immediately.
 
 This is a UI increment over the existing preference API. It does not add external email/push delivery, realtime transport or a new migration.
+
+### 9. Bounded Notification Live Updates (NOTIFY-01G)
+
+`GET /workspaces/:organizationId/notifications/stream`
+
+- The endpoint is guarded by the existing tenant membership and notification role checks. `OWNER` and `ADMIN` receive the workspace scope; other allowed roles receive their own and broadcast notifications.
+- The response uses `text/event-stream` and emits `event: notification` only when the scoped latest-record cursor, total count or unread count changes. The `data` object is `{ "cursor": "<createdAt>:<id>", "total": 1, "unreadCount": 1 }`; it contains no notification body, link, private object key or other record payload.
+- The server checks the existing notification scope every two seconds and bounds a connection to 60 seconds. Database errors produce a bounded retry hint and complete the stream; the browser changes to fallback status and continues the existing polling path.
+- The browser opens the stream only for the enabled notification panel, refetches the existing list on a change event and closes the source during navigation or unmount. This is a bounded in-app transport increment; it does not claim external delivery, durable stream replay, cross-process fan-out or a delivery SLO.
+- No schema, migration or notification event producer changed for this increment.
 
 ---
 ## Concurrency & Retry Guarantees

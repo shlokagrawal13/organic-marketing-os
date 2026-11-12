@@ -1129,3 +1129,9 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 DATA-01D through DATA-01F are reviewed in isolated worktree `integration/data-01f` at code commit `2d9c8a1` based on main `d19edbe`; publication and exact three-job CI remain pending. The increment validates audit date ranges, protects export cancellation cleanup, serializes legal-hold/destructive mutations and reports exact reconciliation bytes. Focused DATA unit tests and API/web builds pass; local HTTP is blocked by the owned harness refusing occupied port 3000. Antigravity notification worktrees remain separate; NOTIFY-01D is exact-source CI verified on run 43030351133. Live/deployed/provider, remote durability/RPO-RTO and full-master gates remain open.
 <!-- DATA01F_INTEGRATION_CURRENT_END -->
 
+<!-- NOTIFY01G_CURRENT_START -->
+## Current: NOTIFY-01G bounded notification live updates - 2026-11-12
+
+The notification center now has an optional tenant/role-guarded SSE snapshot stream. The payload is limited to a change cursor and total/unread counts; the server checks the existing scope every two seconds and bounds each connection to 60 seconds. The browser refetches the existing list and preserves polling fallback. No schema/migration or external delivery/provider behavior changes. Local builds and 32/32 focused notification tests pass; local HTTP/SSE is blocked before fixture startup by occupied Mailpit port 1025. A fresh exact-source three-job CI run and package/receipt are required.
+<!-- NOTIFY01G_CURRENT_END -->
+

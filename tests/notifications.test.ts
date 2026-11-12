@@ -15,6 +15,7 @@ import {
   createContentReadyNotification,
   NotificationsController,
   NOTIFICATION_ROLES,
+  notificationStreamCursor,
 } from "../dist/apps/api/src/notifications";
 import { grantCredits, reserveCredits } from "../dist/packages/core/credits";
 import { recordPublicationOutcome } from "../dist/apps/api/src/publication-attempts";
@@ -35,6 +36,15 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
 
   after(async () => {
     await db.close();
+  });
+
+  test("notification stream cursor is stable and tenant-record specific", () => {
+    const createdAt = new Date("2026-11-12T00:00:00.000Z");
+    assert.equal(
+      notificationStreamCursor({ id: "notification-a", createdAt }),
+      "2026-11-12T00:00:00.000Z:notification-a",
+    );
+    assert.equal(notificationStreamCursor(null), null);
   });
 
   test("creates durable, tenant-bound notification on successful render terminal event", async () => {

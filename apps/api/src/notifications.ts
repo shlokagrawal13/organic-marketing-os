@@ -8,6 +8,8 @@ import {
   Param,
   Query,
   Req,
+  Sse,
+  MessageEvent,
   UseGuards,
   Module,
   NotFoundException,
@@ -15,6 +17,14 @@ import {
 } from "@nestjs/common";
 import { Prisma, PrismaClient, Role } from "@prisma/client";
 import { z } from "zod";
+import { Observable, defer, of, timer } from "rxjs";
+import {
+  catchError,
+  distinctUntilChanged,
+  map,
+  switchMap,
+  takeUntil,
+} from "rxjs/operators";
 import {
   Db,
   TenantGuard,
@@ -40,11 +50,61 @@ const notificationPreferencesSchema = z.object({
   mutedCategories: z.array(z.string().max(50)).max(20),
 });
 
+const NOTIFICATION_STREAM_POLL_MS = 2000;
+const NOTIFICATION_STREAM_MAX_MS = 60000;
+
+export type NotificationStreamSnapshot = {
+  cursor: string | null;
+  total: number;
+  unreadCount: number;
+};
+
+export function notificationStreamCursor(
+  latest: { id: string; createdAt: Date } | null,
+) {
+  return latest ? `${latest.createdAt.toISOString()}:${latest.id}` : null;
+}
+
 @Controller("workspaces/:organizationId/notifications")
 @UseGuards(TenantGuard)
 @Roles(...NOTIFICATION_ROLES)
 export class NotificationsController {
   constructor(private db: Db) {}
+
+  private userScope(req: AuthedRequest): Prisma.NotificationWhereInput {
+    const isElevated = ["OWNER", "ADMIN"].includes(req.role);
+    return isElevated
+      ? {}
+      : { OR: [{ userId: req.userId }, { userId: null }] };
+  }
+
+  private async streamSnapshot(
+    req: AuthedRequest,
+  ): Promise<NotificationStreamSnapshot> {
+    const muted = await this.getUserMutedCategories(
+      req.organizationId,
+      req.userId,
+    );
+    const where: Prisma.NotificationWhereInput = {
+      organizationId: req.organizationId,
+      ...this.userScope(req),
+      ...(muted.length > 0 ? { category: { notIn: muted } } : {}),
+    };
+    const [latest, total, unreadCount] = await Promise.all([
+      this.db.notification.findFirst({
+        where,
+        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+        select: { id: true, createdAt: true },
+      }),
+      this.db.notification.count({ where }),
+      this.db.notification.count({ where: { ...where, readAt: null } }),
+    ]);
+    return {
+      cursor: notificationStreamCursor(latest),
+      total,
+      unreadCount,
+    };
+  }
 
   private async owned(org: string, id: string, req: AuthedRequest) {
     const notification = await this.db.notification.findFirst({
@@ -134,6 +194,27 @@ export class NotificationsController {
       skip: q.skip,
       take: q.take,
     };
+  }
+
+  @Sse("stream")
+  stream(@Req() req: AuthedRequest): Observable<MessageEvent> {
+    return timer(0, NOTIFICATION_STREAM_POLL_MS).pipe(
+      switchMap(() => defer(() => this.streamSnapshot(req))),
+      distinctUntilChanged(
+        (left, right) =>
+          left.cursor === right.cursor &&
+          left.total === right.total &&
+          left.unreadCount === right.unreadCount,
+      ),
+      map((data) => ({ type: "notification", data })),
+      takeUntil(timer(NOTIFICATION_STREAM_MAX_MS)),
+      catchError(() =>
+        of({
+          type: "notification-error",
+          data: { retryAfterMs: NOTIFICATION_STREAM_POLL_MS },
+        }),
+      ),
+    );
   }
 
   @Get("summary")

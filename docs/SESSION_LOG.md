@@ -1481,3 +1481,9 @@ Prisma generation, API/web/combined builds and 37 focused notification/data-gove
 - DATA-01F exact continuity is fe3c090 / run 42919208576 with 424 unit, 74 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability, zero audits and 24 Compose phases. Artifact ZIP/report inspection and digest comparison gap are recorded.
 - Next: publish continuity, merge only the isolated NOTIFY-01D changes, and verify all three jobs on the exact final commit.
 
+## 2026-11-12 - NOTIFY-01G bounded notification live updates
+
+Implemented the next bounded notification increment from the integrated NOTIFY-01F baseline. The NestJS controller exposes a tenant/role-guarded SSE snapshot stream that checks the existing muted/user/broadcast scope every two seconds, emits only a cursor plus total/unread counts when changed and closes after 60 seconds. The web panel refetches its existing list on notification events and keeps the existing 60-second polling fallback. No schema or migration, provider call, external delivery or delivery-SLO claim was added.
+
+API/web production builds and 32/32 focused notification unit tests passed. A tenant-bound SSE HTTP regression was added, but the Windows owned verifier failed closed before fixture startup because 127.0.0.1:1025 was occupied by Mailpit; no user service, volume, credential or Antigravity worktree was touched. Exact all-three-job CI and a fresh external package/receipt are still required.
+

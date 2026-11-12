@@ -1,7 +1,7 @@
 import "../support/isolated";
 import { test, after } from "node:test";
 import assert from "node:assert/strict";
-import { db, actor, draft } from "../support/http";
+import { base, db, actor, draft } from "../support/http";
 import { resetFixtureRateBudget } from "../support/fixture-rate-budget";
 import { randomUUID } from "node:crypto";
 import type { PrismaClient } from "@prisma/client";
@@ -72,6 +72,35 @@ async function createRenderNotification(
 const orgs: string[] = [];
 const users: string[] = [];
 
+async function readSseFrame(
+  reader: ReadableStreamDefaultReader<Uint8Array>,
+  timeoutMs = 7000,
+) {
+  const decoder = new TextDecoder();
+  let text = "";
+  const deadline = Date.now() + timeoutMs;
+  while (!text.includes("\n\n")) {
+    const remaining = Math.max(1, deadline - Date.now());
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const result = await Promise.race([
+        reader.read(),
+        new Promise<never>((_, reject) => {
+          timeout = setTimeout(
+            () => reject(new Error("Timed out waiting for SSE frame.")),
+            remaining,
+          );
+        }),
+      ]);
+      if (result.done) throw new Error("SSE stream ended before a frame arrived.");
+      text += decoder.decode(result.value, { stream: true });
+    } finally {
+      if (timeout) clearTimeout(timeout);
+    }
+  }
+  return text.slice(0, text.indexOf("\n\n") + 2);
+}
+
 after(async () => {
   if (orgs.length) {
     await db.notification.deleteMany({ where: { organizationId: { in: orgs } } });
@@ -127,6 +156,47 @@ test("tenant isolation: notifications are strictly isolated between workspaces",
   // Outsider without membership cannot access Org A notifications
   assert.equal((await outsider.call(pathA)).status, 404);
   assert.equal((await outsider.call(`${pathA}/${notifA.id}`)).status, 404);
+});
+
+test("notification stream is tenant-bound and emits a changed unread snapshot", async () => {
+  await resetFixtureRateBudget();
+  const orgA = await db.organization.create({ data: { name: "Stream Tenant A" } });
+  const orgB = await db.organization.create({ data: { name: "Stream Tenant B" } });
+  orgs.push(orgA.id, orgB.id);
+  const ownerA = await actor(orgA.id, "OWNER");
+  const ownerB = await actor(orgB.id, "OWNER");
+  users.push(ownerA.id, ownerB.id);
+
+  const controller = new AbortController();
+  const response = await fetch(
+    `${base}/workspaces/${orgA.id}/notifications/stream`,
+    { headers: ownerA.headers, signal: controller.signal },
+  );
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") || "", /text\/event-stream/);
+  const reader = response.body?.getReader();
+  if (!reader) throw new Error("SSE response did not expose a readable body.");
+  const initial = await readSseFrame(reader);
+  assert.match(initial, /event: notification/);
+  assert.match(initial, /"unreadCount":0/);
+
+  await createRenderNotification(db, {
+    organizationId: orgA.id,
+    renderId: randomUUID(),
+    actorId: ownerA.id,
+    status: "SUCCEEDED",
+  });
+  const changed = await readSseFrame(reader);
+  assert.match(changed, /"unreadCount":1/);
+  controller.abort();
+
+  const crossController = new AbortController();
+  const cross = await fetch(
+    `${base}/workspaces/${orgA.id}/notifications/stream`,
+    { headers: ownerB.headers, signal: crossController.signal },
+  );
+  assert.equal(cross.status, 404);
+  crossController.abort();
 });
 
 test("roles: CLIENT role is forbidden; authorized team roles can list notifications", async () => {
