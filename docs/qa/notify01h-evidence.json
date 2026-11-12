@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01H",
-  "recordedAtUtc": "2026-11-13T00:00:00.000Z",
-  "status": "local_implementation_verified_ci_pending",
+  "recordedAtUtc": "2026-11-12T21:08:54.717Z",
+  "status": "implementation_ci_verified_continuity_ci_pending",
   "baseCommit": "4fd556cbb93b6e22ddbe89d42c8933aca666378d",
   "title": "Bounded notification live-stream reconnect",
   "behavior": {
@@ -49,9 +49,63 @@
     "credentialsPrinted": false
   },
   "exactCi": {
-    "status": "pending_on_exact_final_commit",
-    "previousGRunNotSubstitute": true,
-    "required": "All three jobs and every required step on the exact published H source."
+    "status": "implementation_commit_verified_continuity_commit_pending",
+    "sourceCommit": "8cbfc4169032a48d9e5c342b2a948787684025b0",
+    "runId": 43303938997,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43303938997",
+    "attempt": 1,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "jobs": [
+      {
+        "name": "Native populated upgrade and migration recovery",
+        "jobId": 131482105709,
+        "requiredSteps": 11,
+        "conclusion": "success"
+      },
+      {
+        "name": "Disposable Compose and native restore",
+        "jobId": 131482105217,
+        "requiredSteps": 8,
+        "conclusion": "success"
+      },
+      {
+        "name": "Native application verification",
+        "jobId": 131482105748,
+        "requiredSteps": 22,
+        "conclusion": "success"
+      }
+    ],
+    "artifactMetadata": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 13982489955,
+        "bytes": 15229282,
+        "digest": "sha256:cf6b2aa48ded5559d8a727b8471f11e5d2a8c58139e83203c6a554a89ff8f4b5"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 13983013251,
+        "bytes": 16938,
+        "digest": "sha256:d015fa99bc9876150a19794a83e3082b1cbfda26fc8cb55db0042e4a54fc84ee"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 13981978593,
+        "bytes": 935,
+        "digest": "sha256:b746ffe23de33c91cab76f0418e01a307326dd39bdbd3d46801317c75ca34028"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 13981714737,
+        "bytes": 3019,
+        "digest": "sha256:8676312b4b649da995c2bd4d10a5dfa19f86724b3cb3a6a292536204045b4908"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403",
+    "artifactReportsInspected": false,
+    "resultCounts": "Not independently available from the unauthenticated public job summary; no counts are inferred.",
+    "firstRunNotSubstitute": true,
+    "previousGRunNotSubstitute": true
   },
   "limits": [
     "This is an in-app reconnect increment only; it does not add email, SMS, mobile push, durable replay, cross-process fan-out or a realtime delivery SLO.",
@@ -59,9 +113,10 @@
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
   ],
-  "implementationCommit": "working_tree",
+  "implementationCommit": "8cbfc4169032a48d9e5c342b2a948787684025b0",
   "package": {
-    "status": "pending_after_exact_ci",
+    "status": "pending_after_continuity_exact_ci",
     "runtimeDataCredentialsExcluded": true
-  }
+  },
+  "implementationTree": "845ea731224e114c3487f1b851b92fb0997c86c6"
 }
