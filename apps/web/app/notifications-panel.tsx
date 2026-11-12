@@ -139,7 +139,7 @@ export default function NotificationsPanel({
     const timer = window.setInterval(() => void load(), 60000);
     if (!disabled && typeof window.EventSource === "function") {
       const source = new window.EventSource(
-        `${base}/notifications/stream`,
+        `/api${base}/notifications/stream`,
         { withCredentials: true },
       );
       streamRef.current = source;
