@@ -90,9 +90,14 @@ test("notification center loads tenant updates and toggles unread state", async 
   await expect(page.getByText("Publication 1", { exact: true })).toBeVisible();
   await categoryFilter.selectOption("ALL");
 
-  await page.getByRole("button", { name: "Mark notification as read" }).click();
+  const renderNotification = page
+    .getByRole("article")
+    .filter({ hasText: "Render complete" });
+  await renderNotification
+    .getByRole("button", { name: "Mark notification as read" })
+    .click();
   await expect(trigger).toHaveAttribute("aria-label", "Notifications");
-  await page
+  await renderNotification
     .getByRole("button", { name: "Mark notification as unread" })
     .click();
   await expect(trigger).toHaveAttribute(
