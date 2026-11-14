@@ -113,6 +113,7 @@ export default function NotificationsPanel({
   const streamRetryRef = useRef<number | null>(null);
   const streamAttemptRef = useRef(0);
   const categoryFilterRef = useRef<NotificationCategoryFilter>("ALL");
+  const loadingMoreRef = useRef(false);
 
   const preferencesDirty =
     mutedCategories.join("\u0000") !== savedMutedCategories.join("\u0000");
@@ -158,7 +159,10 @@ export default function NotificationsPanel({
           setError((cause as Error).message);
       } finally {
         if (generationId === generation.current) setLoading(false);
-        if (generationId === generation.current) setLoadingMore(false);
+        if (options.append) {
+          loadingMoreRef.current = false;
+          setLoadingMore(false);
+        }
       }
     },
     [base],
@@ -166,6 +170,7 @@ export default function NotificationsPanel({
 
   const loadMore = useCallback(() => {
     if (loading || loadingMore || !hasMore) return;
+    loadingMoreRef.current = true;
     setLoadingMore(true);
     void load(undefined, {
       category: categoryFilterRef.current,
@@ -190,7 +195,9 @@ export default function NotificationsPanel({
     setStreamState(disabled ? "fallback" : "connecting");
     streamAttemptRef.current = 0;
     void load(controller.signal, { category: "ALL" });
-    const timer = window.setInterval(() => void load(), 60000);
+    const timer = window.setInterval(() => {
+      if (!loadingMoreRef.current) void load();
+    }, 60000);
     let disposed = false;
     const clearRetry = () => {
       if (streamRetryRef.current !== null) {
@@ -220,7 +227,8 @@ export default function NotificationsPanel({
       source.addEventListener("notification", (event) => {
         try {
           JSON.parse((event as MessageEvent).data);
-          void load(undefined, { category: categoryFilterRef.current });
+          if (!loadingMoreRef.current)
+            void load(undefined, { category: categoryFilterRef.current });
         } catch {
           setStreamState("fallback");
         }
@@ -243,6 +251,7 @@ export default function NotificationsPanel({
       disposed = true;
       controller.abort();
       generation.current++;
+      loadingMoreRef.current = false;
       preferencesGeneration.current++;
       window.clearInterval(timer);
       clearRetry();
