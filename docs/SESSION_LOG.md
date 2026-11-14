@@ -1,7 +1,7 @@
 <!-- NOTIFY01J_CURRENT_START -->
-## NOTIFY-01J local implementation - 2026-11-15
+## NOTIFY-01J implementation CI - 2026-11-15
 
-Implemented category filtering and bounded pagination in the notification center using the existing tenant-bound list and summary endpoints. Added a 21-record browser regression for category selection, second-page loading and return to All. Prisma generation, API/web production builds, 34/34 focused notification tests, Prettier and `git diff --check` pass. The owned UI verifier failed closed before fixture startup because Redis 127.0.0.1:6379 was occupied. Exact-source three-job CI and the paired final package/receipt remain pending.
+The bounded notification feed filter/pagination implementation is on commit 66d8782f5b8c0a6df21384a4a611597bdaf6e2f5. Exact [GitHub Actions run 43636741527](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43636741527) passed all three jobs and all 41 required steps: native populated upgrade/migration recovery, disposable Compose/native restore and native application verification. Local Prisma/API/web builds, 34/34 focused unit tests, formatting and diff checks passed. The owned UI verifier remains fail-closed on occupied Redis 6379; an isolated alternate-port verifier passed the 3/3 notification browser cases. Runs 43631043149, 43632716544 and 43634689853 failed the same core browser step before the scoped read-toggle selector fix; they are retained as non-acceptance attempts. Artifact metadata is recorded; artifact bytes/reports remain uninspected because API/log routes returned proxy/auth 401/403. Continuity docs/checkpoint, package and external receipt are the next closure step.
 <!-- NOTIFY01J_CURRENT_END -->
 
 <!-- NOTIFY01I_CURRENT_START -->

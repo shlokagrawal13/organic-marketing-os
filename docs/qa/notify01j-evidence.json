@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01J",
-  "recordedAtUtc": "2026-11-14T19:08:33.503070Z",
-  "status": "local_ready_exact_ci_pending",
+  "recordedAtUtc": "2026-11-15T00:00:00Z",
+  "status": "implementation_ci_verified_continuity_pending",
   "baseCommit": "7b5ebfb102bc15d6e4c35876f7145848485b667f",
   "title": "Bounded notification feed filtering and pagination",
   "behavior": {
@@ -31,16 +31,19 @@
     "realEnvironmentUnchanged": true,
     "antigravityWorktreesUntouched": true,
     "liveProvidersUsed": false,
-    "credentialsPrinted": false
+    "credentialsPrinted": false,
+    "focusedBrowserRegression": "isolated alternate-port verifier passed 3/3 notification browser cases after scoping the read/unread toggle to the Render article; existing 127.0.0.1:6379 service was not contacted."
   },
   "exactCi": {
-    "status": "pending_exact_three_job_ci_on_final_published_commit",
+    "status": "continuity_docs_commit_pending",
     "sourceCommit": null,
     "runId": null,
     "url": null,
     "allThreeJobsAndRequiredStepsPassed": false,
-    "artifactByteInspection": "not_applicable_until_exact_ci",
-    "firstRunNotSubstitute": true
+    "artifactByteInspection": "not_applicable_until_continuity_ci",
+    "firstRunNotSubstitute": true,
+    "implementationCiSourceCommit": "66d8782f5b8c0a6df21384a4a611597bdaf6e2f5",
+    "implementationCiRunId": 43636741527
   },
   "limits": [
     "This increment changes only the in-app notification feed presentation and its regression coverage.",
@@ -48,12 +51,89 @@
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
   ],
-  "implementationCommit": "pending-publication",
-  "implementationTree": null,
+  "implementationCommit": "66d8782f5b8c0a6df21384a4a611597bdaf6e2f5",
+  "implementationTree": "ab555bc5ecc4fc70921707a184e3ae34f5193075",
   "package": {
-    "status": "pending_exact_ci_and_final_source_package",
+    "status": "pending_continuity_ci_and_final_source_package",
     "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
     "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
-    "runtimeDataCredentialsExcluded": true
-  }
+    "runtimeDataCredentialsExcluded": true,
+    "sourceCommit": null,
+    "sha256": null,
+    "bytes": null,
+    "sourceFiles": null,
+    "zipMembers": null
+  },
+  "implementationCi": {
+    "sourceCommit": "66d8782f5b8c0a6df21384a4a611597bdaf6e2f5",
+    "runId": 43636741527,
+    "runNumber": 252,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43636741527",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {
+        "jobId": 132575097382,
+        "requiredSteps": 11,
+        "status": "success"
+      },
+      "composeRestore": {
+        "jobId": 132575097311,
+        "requiredSteps": 8,
+        "status": "success"
+      },
+      "nativeApplication": {
+        "jobId": 132575097553,
+        "requiredSteps": 22,
+        "status": "success"
+      }
+    },
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 14131006995,
+        "size": "14.5 MB",
+        "digest": "sha256:c22b7ef51a66749a562b4931a491e5874bbfbb39ab2961aba325f0d3efe94757"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 14131435646,
+        "size": "16.5 KB",
+        "digest": "sha256:3e1e75be37685276d36c33a15f8fe728234fa5baafb4b4e32b8f21e5b6950f2e"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 14130397238,
+        "size": "932 Bytes",
+        "digest": "sha256:604668a60a3c0d0e04608cfbceccbc16aaff543a3eaed7e25408f62ef3caa161"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 14129864627,
+        "size": "2.95 KB",
+        "digest": "sha256:51ff0911dcde027f5ab0fb28574196d4aaaf4fabc124a7fadff88154076d353"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
+  "failedAttempts": [
+    {
+      "runId": 43631043149,
+      "commit": "df553887",
+      "status": "failure",
+      "reason": "Core native application verification failed in the notification browser regression; ordering was not yet deterministic."
+    },
+    {
+      "runId": 43632716544,
+      "commit": "b91676c",
+      "status": "failure",
+      "reason": "Core native application verification timed out in the same browser step; deterministic fixture timestamps were present but the read-toggle selector remained ambiguous."
+    },
+    {
+      "runId": 43634689853,
+      "commit": "ead7e02",
+      "status": "failure",
+      "reason": "Core native application verification timed out in the same browser step; the pagination refresh race guard alone did not fix the ambiguous selector."
+    }
+  ]
 }
