@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01J",
+  "recordedAtUtc": "2026-11-14T19:08:33.503070Z",
+  "status": "local_ready_exact_ci_pending",
+  "baseCommit": "7b5ebfb102bc15d6e4c35876f7145848485b667f",
+  "title": "Bounded notification feed filtering and pagination",
+  "behavior": {
+    "categoryFilter": "The existing tenant-bound notification list supports All, RENDER, PUBLISH, AI, BILLING, APPROVAL and CONTENT selections; explicit category overrides retain the documented muted-category behavior.",
+    "boundedPagination": "The panel requests take=20 with skip offsets and appends Load more pages in the server createdAt-desc order.",
+    "unreadSummary": "The overall unread badge and read-all visibility come from the existing tenant- and role-scoped /notifications/summary endpoint, independently of the selected page.",
+    "refreshSafety": "Filter changes, SSE notifications, 60-second polling, preference saves and refreshes use generation guards and preserve the current category.",
+    "preserved": "Tenant/role scope, category muting defaults, read/unread actions, deep-link acknowledgment and existing migrations/providers remain unchanged."
+  },
+  "changedPaths": [
+    "apps/web/app/globals.css",
+    "apps/web/app/notifications-panel.tsx",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_FEED_FILTERING.md",
+    "docs/qa/notify01j-evidence.json"
+  ],
+  "localVerification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "34/34",
+    "notificationFeedBrowserRegressionAdded": true,
+    "prettier": true,
+    "diffCheck": true,
+    "uiHarness": "verify-local --ui-only --ui-spec=notifications.spec.ts failed closed before fixture startup because 127.0.0.1:6379 was occupied; no existing service was contacted.",
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "exactCi": {
+    "status": "pending_exact_three_job_ci_on_final_published_commit",
+    "sourceCommit": null,
+    "runId": null,
+    "url": null,
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "artifactByteInspection": "not_applicable_until_exact_ci",
+    "firstRunNotSubstitute": true
+  },
+  "limits": [
+    "This increment changes only the in-app notification feed presentation and its regression coverage.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ],
+  "implementationCommit": "pending-publication",
+  "implementationTree": null,
+  "package": {
+    "status": "pending_exact_ci_and_final_source_package",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
+    "runtimeDataCredentialsExcluded": true
+  }
+}

@@ -1217,10 +1217,34 @@ progress::-webkit-progress-value {
   margin: 0.45rem 1rem 0.25rem;
   padding: 0.35rem 0;
 }
+.notification-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin: 0.5rem 1rem 0.25rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.notification-filter {
+  min-width: 0;
+  max-width: 75%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
 .notification-list {
   max-height: 470px;
   overflow-y: auto;
   padding: 0.25rem 0.5rem 0.6rem;
+}
+.notification-load-more {
+  display: block;
+  margin: 0.1rem auto 0.7rem;
+  padding: 0.35rem 0.5rem;
 }
 .notification-row {
   display: flex;

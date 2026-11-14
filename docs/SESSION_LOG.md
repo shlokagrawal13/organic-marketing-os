@@ -1,3 +1,9 @@
+<!-- NOTIFY01J_CURRENT_START -->
+## NOTIFY-01J local implementation - 2026-11-15
+
+Implemented category filtering and bounded pagination in the notification center using the existing tenant-bound list and summary endpoints. Added a 21-record browser regression for category selection, second-page loading and return to All. Prisma generation, API/web production builds, 34/34 focused notification tests, Prettier and `git diff --check` pass. The owned UI verifier failed closed before fixture startup because Redis 127.0.0.1:6379 was occupied. Exact-source three-job CI and the paired final package/receipt remain pending.
+<!-- NOTIFY01J_CURRENT_END -->
+
 <!-- NOTIFY01I_CURRENT_START -->
 ## NOTIFY-01I exact-source closure - 2026-11-14
 

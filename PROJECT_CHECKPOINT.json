@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01i-continuity-exact-ci-verified-package-paired-20261114",
-  "savedAtUtc": "2026-11-14T18:19:23.265605Z",
-  "currentMilestone": "NOTIFY-01I implementation 1c00b201a7be10687a1f39897eb4d74f0155fa15 and continuity d0116c0472129b4ec97f379f9b0371243a493972 are exact-source CI verified: run 43622753095 passed all three jobs/every required step; current package and external receipt are paired.",
-  "activeTaskId": "NOTIFY-01I",
+  "checkpointRevision": "notify01j-local-implementation-exact-ci-pending-20261115",
+  "savedAtUtc": "2026-11-14T19:09:29.735219Z",
+  "currentMilestone": "NOTIFY-01J local implementation is ready: tenant-bound category filtering and bounded 20-item pagination are covered by focused regression and local builds; exact three-job CI and paired package/receipt remain pending.",
+  "activeTaskId": "NOTIFY-01J",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -74,8 +74,8 @@
     "publicCommit": "da352cb78355ca98a985288d82ca84995018b382",
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
-  "nextTaskId": "NOTIFY-01",
-  "nextAction": "Closed for this bounded increment; review the next separately scoped NOTIFY-01 increment against integrated main. Preserve all open live/deployed/full-master limits.",
+  "nextTaskId": "NOTIFY-01J",
+  "nextAction": "Publish the reviewed NOTIFY-01J source, inspect all three CI jobs and every required step on the exact commit, then generate the paired portable source package and external receipt.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -108,6 +108,7 @@
     "docs/DATA_GOVERNANCE.md",
     "docs/NOTIFICATIONS.md",
     "docs/NOTIFICATION_DEEP_LINKS.md",
+    "docs/NOTIFICATION_FEED_FILTERING.md",
     "docs/NOTIFICATION_STREAM_RECONNECT.md",
     "docs/PROJECT_STATUS.md",
     "docs/REQUIREMENTS_MATRIX.md",
@@ -120,6 +121,7 @@
     "docs/qa/notify01g-evidence.json",
     "docs/qa/notify01h-evidence.json",
     "docs/qa/notify01i-evidence.json",
+    "docs/qa/notify01j-evidence.json",
     "packages/core/credits.ts",
     "scripts/package_handoff.py",
     "tests/data-governance.test.ts",
@@ -7936,13 +7938,13 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "ci_verified_integrated",
+      "state": "local_ready_exact_ci_pending",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01A/B/C/D/E/F/G are exact-source CI verified. NOTIFY-01G is a7c6e1c216678c36ba4ce225a4cb606dee321a49/run43129027400 with 431 unit, 78 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability, zero audits and 24 Compose phases; package and receipt are paired.",
-      "nextAction": "Closed for this bounded H increment; proceed to the next separately scoped NOTIFY-01 increment.",
-      "currentEvidence": "docs/qa/notify01g-evidence.json",
-      "status": "ci_verified_integrated",
-      "currentBlocker": "Parent external delivery, durability, deployment and full-master gates remain open."
+      "completedIncrement": "NOTIFY-01A through NOTIFY-01I are exact-source CI verified. NOTIFY-01J adds tenant-bound category filtering and 20-item feed pagination with summary-based unread counts; its final exact three-job CI and package are pending.",
+      "nextAction": "Run exact three-job CI on the final NOTIFY-01J publication, then pair its source package and receipt.",
+      "currentEvidence": "docs/qa/notify01j-evidence.json",
+      "status": "local_ready_exact_ci_pending",
+      "currentBlocker": "Exact-source CI/package closure for NOTIFY-01J; parent external delivery, durability, deployment and full-master gates remain open."
     },
     {
       "id": "DATA-01",
@@ -8088,6 +8090,16 @@
       "nextAction": "Closed; proceed to the next separately scoped NOTIFY-01 increment.",
       "currentEvidence": "docs/qa/notify01i-evidence.json",
       "status": "ci_verified_integrated"
+    },
+    {
+      "id": "NOTIFY-01J",
+      "state": "local_ready_exact_ci_pending",
+      "title": "Bounded notification feed filtering and pagination",
+      "completedIncrement": "Local implementation adds All/category filtering, bounded 20-item pages, Load more and summary-based unread counts while preserving tenant/role/muting/read/SSE/deep-link behavior.",
+      "currentBlocker": "Exact three-job CI on the final published commit and paired source package/receipt remain pending.",
+      "nextAction": "Publish the reviewed source, inspect all three CI jobs and required steps, then generate the final package and receipt.",
+      "currentEvidence": "docs/qa/notify01j-evidence.json",
+      "status": "local_ready_exact_ci_pending"
     }
   ],
   "lastChanges": [
@@ -8166,6 +8178,14 @@
       "commit": "d0116c0472129b4ec97f379f9b0371243a493972",
       "runId": 43622753095,
       "summary": "Continuity commit d0116c0472129b4ec97f379f9b0371243a493972 passed all three exact CI jobs and all 41 required steps; current package/receipt are paired, with artifact bytes/reports uninspected due proxy/auth 401/403."
+    },
+    "Started NOTIFY-01J: added tenant-bound category filtering, 20-item notification pages, Load more pagination and summary-based unread counts; local UI remains blocked by occupied Redis 6379.",
+    {
+      "date": "2026-11-15",
+      "taskId": "NOTIFY-01J",
+      "commit": "pending-publication",
+      "runId": null,
+      "summary": "Local implementation, focused tests/builds and continuity records are ready; exact three-job CI and final source package/receipt remain pending."
     }
   ],
   "nextAgentProtocol": [
@@ -8204,38 +8224,38 @@
     "prisma/migrations/202610180002_research_insight/migration.sql": "d2a34db75ff259354558fb777a55801ca37ebfd8221c67ce65b5be59501c0b57",
     "prisma/migrations/202610310001_workspace_settings_revision/migration.sql": "138149c9a946a6580db74b53f0c04ee131fd2de6dade526cd2d31c0ae8ee36ae"
   },
-  "checkpointVerificationEvidence": "docs/qa/notify01i-evidence.json",
+  "checkpointVerificationEvidence": "docs/qa/notify01j-evidence.json",
   "latestStatus": {
-    "taskId": "NOTIFY-01I",
-    "status": "ci_verified_integrated",
-    "commit": "d0116c0472129b4ec97f379f9b0371243a493972",
-    "runId": 43622753095,
-    "allThreeJobsAndRequiredStepsPassed": true,
+    "taskId": "NOTIFY-01J",
+    "status": "local_ready_exact_ci_pending",
+    "commit": "pending-publication",
+    "runId": null,
+    "allThreeJobsAndRequiredStepsPassed": false,
     "evidence": [
-      "docs/qa/notify01i-evidence.json"
+      "docs/qa/notify01j-evidence.json"
     ],
     "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; no existing service was contacted.",
     "exactCi": {
-      "status": "exact_continuity_commit_all_three_jobs_success",
-      "sourceCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
-      "runId": 43622753095,
-      "artifactBytes": "metadata_and_digests_recorded_bytes_reports_uninspected_due_proxy_auth_401_403"
+      "status": "pending_exact_three_job_ci_on_final_published_commit",
+      "sourceCommit": null,
+      "runId": null,
+      "artifactByteInspection": "not_applicable_until_exact_ci"
     },
     "sourcePackage": {
-      "status": "paired_with_exact_ci",
-      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
-      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
+      "status": "pending_exact_ci_and_final_source_package",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
+      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
       "scope": "Portable source/context package only; runtime data, private backups and credentials excluded."
     }
   },
   "activeTask": {
-    "id": "NOTIFY-01I",
-    "title": "Tenant-safe notification deep links",
-    "status": "ci_verified_integrated",
-    "implementationCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
-    "publishedCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
-    "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
-    "exactRunId": 43622753095,
+    "id": "NOTIFY-01J",
+    "title": "Bounded notification feed filtering and pagination",
+    "status": "local_ready_exact_ci_pending",
+    "implementationCommit": "pending-publication",
+    "publishedCommit": null,
+    "baseCommit": "7b5ebfb102bc15d6e4c35876f7145848485b667f",
+    "exactRunId": null,
     "focusedTestsPassed": 34,
     "focusedTestsFailed": 0,
     "apiBuild": true,
@@ -8248,38 +8268,33 @@
       "PROJECT_STATUS.md",
       "REQUIREMENTS_MATRIX.md",
       "START_HERE.md",
-      "apps/web/app/notification-links.ts",
+      "apps/web/app/globals.css",
       "apps/web/app/notifications-panel.tsx",
       "docs/ACTIVE_HANDOFF.md",
       "docs/CHANGELOG.md",
       "docs/NOTIFICATIONS.md",
-      "docs/NOTIFICATION_DEEP_LINKS.md",
+      "docs/NOTIFICATION_FEED_FILTERING.md",
       "docs/PROJECT_STATUS.md",
       "docs/REQUIREMENTS_MATRIX.md",
       "docs/SESSION_LOG.md",
       "docs/TASK_BOARD.md",
-      "docs/qa/notify01i-evidence.json",
-      "tests/notifications.test.ts",
+      "docs/qa/notify01j-evidence.json",
       "tests/ui/notifications.spec.ts"
     ],
-    "exactRunConclusion": "success",
+    "exactRunConclusion": "pending",
     "exactResults": {
-      "status": "exact_continuity_commit_all_three_jobs_success",
-      "priorHRunNotSubstitute": true,
-      "artifactByteInspection": "metadata_and_digests_recorded_bytes_reports_uninspected_due_proxy_auth_401_403",
-      "jobStepCounts": {
-        "nativeApplication": 22,
-        "composeRestore": 8,
-        "nativeUpgrade": 11
-      }
+      "status": "pending_exact_three_job_ci_on_final_published_commit",
+      "priorIciNotSubstitute": true,
+      "artifactByteInspection": "not_applicable_until_exact_ci",
+      "jobStepCounts": null
     },
     "package": {
-      "status": "paired_with_exact_ci",
-      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
-      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
+      "status": "pending_exact_ci_and_final_source_package",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
+      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
       "runtimeDataCredentialsExcluded": true
     },
-    "nextAction": "Closed for this bounded increment; review the next separately scoped NOTIFY-01 increment against integrated main. Preserve all open live/deployed/full-master limits."
+    "nextAction": "Publish the reviewed source, inspect all three CI jobs and every required step on the exact commit, then generate the paired package and receipt."
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8942,37 +8957,35 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "NOTIFY-01I",
-    "status": "ci_verified_integrated",
-    "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
+    "taskId": "NOTIFY-01J",
+    "status": "local_ready_exact_ci_pending",
+    "baseCommit": "7b5ebfb102bc15d6e4c35876f7145848485b667f",
     "local": {
+      "prismaGenerate": true,
       "apiBuild": true,
       "webBuild": true,
       "focusedNotificationTests": 34,
       "focusedTestsFailed": 0,
+      "notificationFeedBrowserRegressionAdded": true,
       "prettier": true,
       "diffCheck": true,
-      "deepLinkResolverRegression": true,
       "httpBrowserHarness": "blocked_fail_closed_occupied_6379",
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "antigravityWorktreesUntouched": true,
-      "runnerPinVerified": true
+      "liveProvidersUsed": false,
+      "credentialsPrinted": false
     },
     "exactCi": {
-      "status": "success",
-      "sourceCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "jobStepCounts": {
-        "nativeApplication": 22,
-        "composeRestore": 8,
-        "nativeUpgrade": 11
-      },
-      "artifactByteInspection": "metadata_and_digests_recorded_bytes_reports_uninspected_due_proxy_auth_401_403",
-      "priorImplementationRun": 43588517881
+      "status": "pending_exact_three_job_ci_on_final_published_commit",
+      "sourceCommit": null,
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "jobStepCounts": null,
+      "artifactByteInspection": "not_applicable_until_exact_ci",
+      "priorImplementationRun": 43622753095
     },
-    "publishedCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
-    "exactRunId": 43622753095
+    "publishedCommit": null,
+    "exactRunId": null
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",

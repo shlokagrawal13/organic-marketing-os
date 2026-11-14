@@ -1,7 +1,9 @@
-# In-App Notifications (NOTIFY-01A through NOTIFY-01I)
+# In-App Notifications (NOTIFY-01A through NOTIFY-01J)
 
 > NOTIFY-01I exact-source closure: implementation commit `1c00b201a7be10687a1f39897eb4d74f0155fa15` / [run 43588517881](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43588517881) passed, followed by continuity commit `d0116c0472129b4ec97f379f9b0371243a493972` / [run 43622753095](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43622753095) with all three jobs and all 41 required steps. The current package and external receipt record the continuity source hash and final artifact metadata; artifact bytes/reports remain uninspected because authenticated downloads were blocked.
 > NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
+
+> NOTIFY-01J local implementation: category filtering and bounded 20-item pagination use the existing tenant-bound list and summary APIs. Focused local checks pass; exact three-job CI and the paired final package/receipt are pending. See [feed filtering design](NOTIFICATION_FEED_FILTERING.md) and [QA evidence](qa/notify01j-evidence.json).
 
 ## Overview & Scope
 NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven by real terminal system events:
@@ -17,6 +19,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Notification Preference Controls (NOTIFY-01F)**: The workspace notification center exposes an accessible preferences panel backed by the NOTIFY-01E endpoints. Users can inspect and select muted categories, save explicitly, and immediately see the feed and unread badge refresh with the saved filter. Back, Cancel and close discard unsaved choices; the browser regression prevents stale local preferences from reappearing after reopening.
 - **Bounded Notification Live Updates (NOTIFY-01G)**: The notification center may open a tenant- and role-guarded SSE stream. The stream emits only a change cursor plus total/unread counts, checks the existing notification scope every two seconds, closes after 60 seconds and lets the browser refetch the existing guarded list. A 60-second polling fallback remains in place.
 - **Tenant-safe notification deep links (NOTIFY-01I)**: Clicking an unread notification acknowledges it, closes the popover and resolves only a same-workspace relative link into the existing content, render, media, publication/calendar or billing view. Content and render identifiers are preserved; render jobs are re-read through the tenant-scoped API. Cross-workspace, external, malformed and unknown paths fail closed.
+- **Notification Feed Filtering & Pagination (NOTIFY-01J)**: The notification center exposes an All/category selector and bounded 20-item pages using the existing tenant-bound list API; Load more appends pages while the unread badge stays summary-based.
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 

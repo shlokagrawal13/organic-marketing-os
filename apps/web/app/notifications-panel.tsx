@@ -25,6 +25,13 @@ type Notification = {
   createdAt: string;
 };
 
+type NotificationCategory =
+  "RENDER" | "PUBLISH" | "AI" | "BILLING" | "APPROVAL" | "CONTENT";
+
+type NotificationCategoryFilter = "ALL" | NotificationCategory;
+
+const NOTIFICATION_PAGE_SIZE = 20;
+
 const NOTIFICATION_CATEGORIES = [
   {
     value: "RENDER",
@@ -82,6 +89,10 @@ export default function NotificationsPanel({
   const [items, setItems] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [categoryFilter, setCategoryFilter] =
+    useState<NotificationCategoryFilter>("ALL");
+  const [hasMore, setHasMore] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [preferencesOpen, setPreferencesOpen] = useState(false);
@@ -101,23 +112,45 @@ export default function NotificationsPanel({
   const streamRef = useRef<EventSource | null>(null);
   const streamRetryRef = useRef<number | null>(null);
   const streamAttemptRef = useRef(0);
+  const categoryFilterRef = useRef<NotificationCategoryFilter>("ALL");
 
   const preferencesDirty =
     mutedCategories.join("\u0000") !== savedMutedCategories.join("\u0000");
 
   const load = useCallback(
-    async (signal?: AbortSignal) => {
+    async (
+      signal?: AbortSignal,
+      options: {
+        category?: NotificationCategoryFilter;
+        skip?: number;
+        append?: boolean;
+      } = {},
+    ) => {
       const generationId = ++generation.current;
+      const category = options.category ?? categoryFilterRef.current;
+      const skip = options.skip ?? 0;
+      const query = new URLSearchParams({
+        take: String(NOTIFICATION_PAGE_SIZE),
+        skip: String(skip),
+      });
+      if (category !== "ALL") query.set("category", category);
       try {
-        const result = await api(
-          `${base}/notifications?take=20`,
-          "GET",
-          undefined,
-          signal,
-        );
+        const [result, summary] = await Promise.all([
+          api(
+            `${base}/notifications?${query.toString()}`,
+            "GET",
+            undefined,
+            signal,
+          ),
+          api(`${base}/notifications/summary`, "GET", undefined, signal),
+        ]);
         if (generationId !== generation.current) return;
-        setItems(result.items || []);
-        setUnreadCount(result.unreadCount || 0);
+        const nextItems = Array.isArray(result.items) ? result.items : [];
+        setItems((current) =>
+          options.append ? [...current, ...nextItems] : nextItems,
+        );
+        setUnreadCount(summary.totalUnread || 0);
+        setHasMore(skip + nextItems.length < (result.total || 0));
         setError("");
       } catch (cause) {
         if ((cause as Error).name === "AbortError") return;
@@ -125,16 +158,30 @@ export default function NotificationsPanel({
           setError((cause as Error).message);
       } finally {
         if (generationId === generation.current) setLoading(false);
+        if (generationId === generation.current) setLoadingMore(false);
       }
     },
     [base],
   );
+
+  const loadMore = useCallback(() => {
+    if (loading || loadingMore || !hasMore) return;
+    setLoadingMore(true);
+    void load(undefined, {
+      category: categoryFilterRef.current,
+      skip: items.length,
+      append: true,
+    });
+  }, [hasMore, items.length, load, loading, loadingMore]);
 
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
     setItems([]);
     setUnreadCount(0);
+    setCategoryFilter("ALL");
+    categoryFilterRef.current = "ALL";
+    setHasMore(false);
     setPreferencesOpen(false);
     setMutedCategories([]);
     setSavedMutedCategories([]);
@@ -142,7 +189,7 @@ export default function NotificationsPanel({
     setPreferencesNotice("");
     setStreamState(disabled ? "fallback" : "connecting");
     streamAttemptRef.current = 0;
-    void load(controller.signal);
+    void load(controller.signal, { category: "ALL" });
     const timer = window.setInterval(() => void load(), 60000);
     let disposed = false;
     const clearRetry = () => {
@@ -173,7 +220,7 @@ export default function NotificationsPanel({
       source.addEventListener("notification", (event) => {
         try {
           JSON.parse((event as MessageEvent).data);
-          void load();
+          void load(undefined, { category: categoryFilterRef.current });
         } catch {
           setStreamState("fallback");
         }
@@ -202,6 +249,15 @@ export default function NotificationsPanel({
       closeStream();
     };
   }, [base, disabled, load]);
+
+  function changeCategoryFilter(next: NotificationCategoryFilter) {
+    categoryFilterRef.current = next;
+    setCategoryFilter(next);
+    setItems([]);
+    setHasMore(false);
+    setLoading(true);
+    void load(undefined, { category: next });
+  }
 
   const loadPreferences = useCallback(
     async (signal?: AbortSignal) => {
@@ -263,19 +319,21 @@ export default function NotificationsPanel({
     setPreferencesBusy(true);
     setPreferencesError("");
     setPreferencesNotice("");
-    const next = NOTIFICATION_CATEGORIES.map((category) => category.value).filter(
-      (category) => mutedCategories.includes(category),
-    );
+    const next = NOTIFICATION_CATEGORIES.map(
+      (category) => category.value,
+    ).filter((category) => mutedCategories.includes(category));
     try {
       const result = await api(`${base}/notifications/preferences`, "PUT", {
         mutedCategories: next,
       });
-      const saved = Array.isArray(result.mutedCategories) ? result.mutedCategories : next;
+      const saved = Array.isArray(result.mutedCategories)
+        ? result.mutedCategories
+        : next;
       setMutedCategories(saved);
       setSavedMutedCategories(saved);
       setPreferencesNotice("Notification preferences saved.");
       setLoading(true);
-      await load();
+      await load(undefined, { category: categoryFilterRef.current });
     } catch (cause) {
       setPreferencesError((cause as Error).message);
     } finally {
@@ -311,10 +369,8 @@ export default function NotificationsPanel({
     setError("");
     try {
       await api(`${base}/notifications/read-all`, "POST");
-      setItems((current) =>
-        current.map((item) => ({ ...item, readAt: new Date().toISOString() })),
-      );
-      setUnreadCount(0);
+      setLoading(true);
+      await load(undefined, { category: categoryFilterRef.current });
     } catch (cause) {
       setError((cause as Error).message);
     } finally {
@@ -363,7 +419,9 @@ export default function NotificationsPanel({
           <div className="notification-popover-head">
             <div>
               <span className="eyebrow muted">WORKSPACE UPDATES</span>
-              <h2>{preferencesOpen ? "Notification preferences" : "Notifications"}</h2>
+              <h2>
+                {preferencesOpen ? "Notification preferences" : "Notifications"}
+              </h2>
               {!preferencesOpen && (
                 <span className="notification-stream-status" role="status">
                   {streamState === "live"
@@ -444,7 +502,8 @@ export default function NotificationsPanel({
               )}
               {preferencesLoading ? (
                 <div className="notification-empty">
-                  <LoaderCircle className="spin" size={18} /> Loading preferences…
+                  <LoaderCircle className="spin" size={18} /> Loading
+                  preferences…
                 </div>
               ) : (
                 <div className="notification-preference-list">
@@ -490,67 +549,100 @@ export default function NotificationsPanel({
             </div>
           ) : (
             <>
-          {error && (
-            <p className="notification-error" role="alert">
-              {error}
-            </p>
-          )}
-          {unreadCount > 0 && (
-            <button
-              className="text-button notification-read-all"
-              type="button"
-              disabled={busyId !== null}
-              onClick={() => void readAll()}
-            >
-              <Check size={15} /> Mark all as read
-            </button>
-          )}
-          <div className="notification-list" aria-live="polite">
-            {loading ? (
-              <div className="notification-empty">
-                <LoaderCircle className="spin" size={18} /> Loading updates…
+              {error && (
+                <p className="notification-error" role="alert">
+                  {error}
+                </p>
+              )}
+              {unreadCount > 0 && (
+                <button
+                  className="text-button notification-read-all"
+                  type="button"
+                  disabled={busyId !== null}
+                  onClick={() => void readAll()}
+                >
+                  <Check size={15} /> Mark all as read
+                </button>
+              )}
+              <div className="notification-filter-row">
+                <label htmlFor="notification-category-filter">Show</label>
+                <select
+                  id="notification-category-filter"
+                  className="notification-filter"
+                  value={categoryFilter}
+                  disabled={loading || loadingMore || busyId !== null}
+                  onChange={(event) =>
+                    changeCategoryFilter(
+                      event.target.value as NotificationCategoryFilter,
+                    )
+                  }
+                >
+                  <option value="ALL">All categories</option>
+                  {NOTIFICATION_CATEGORIES.map((category) => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
               </div>
-            ) : items.length === 0 ? (
-              <div className="notification-empty">You’re all caught up.</div>
-            ) : (
-              items.map((notification) => {
-                const unread = !notification.readAt;
-                return (
-                  <article
-                    className={`notification-row ${unread ? "unread" : ""}`}
-                    key={notification.id}
-                  >
-                    <button
-                      className="notification-content"
-                      type="button"
-                      onClick={() => void openNotification(notification)}
-                      aria-label={`${notification.title}${unread ? ", unread" : ""}${notification.link ? ", open notification" : ""}`}
-                    >
-                      <span className="notification-category">
-                        {notification.category}
-                      </span>
-                      <strong>{notification.title}</strong>
-                      <span>{notification.body}</span>
-                      <small>{relativeTime(notification.createdAt)}</small>
-                    </button>
-                    <button
-                      className="notification-toggle"
-                      type="button"
-                      aria-label={
-                        unread
-                          ? "Mark notification as read"
-                          : "Mark notification as unread"
-                      }
-                      disabled={busyId !== null}
-                      onClick={() => void setRead(notification, unread)}
-                    >
-                      {unread ? <Check size={15} /> : <Bell size={15} />}
-                    </button>
-                  </article>
-                );
-              })
-            )}
-          </div>
+              <div className="notification-list" aria-live="polite">
+                {loading ? (
+                  <div className="notification-empty">
+                    <LoaderCircle className="spin" size={18} /> Loading updates…
+                  </div>
+                ) : items.length === 0 ? (
+                  <div className="notification-empty">
+                    You’re all caught up.
+                  </div>
+                ) : (
+                  items.map((notification) => {
+                    const unread = !notification.readAt;
+                    return (
+                      <article
+                        className={`notification-row ${unread ? "unread" : ""}`}
+                        key={notification.id}
+                      >
+                        <button
+                          className="notification-content"
+                          type="button"
+                          onClick={() => void openNotification(notification)}
+                          aria-label={`${notification.title}${unread ? ", unread" : ""}${notification.link ? ", open notification" : ""}`}
+                        >
+                          <span className="notification-category">
+                            {notification.category}
+                          </span>
+                          <strong>{notification.title}</strong>
+                          <span>{notification.body}</span>
+                          <small>{relativeTime(notification.createdAt)}</small>
+                        </button>
+                        <button
+                          className="notification-toggle"
+                          type="button"
+                          aria-label={
+                            unread
+                              ? "Mark notification as read"
+                              : "Mark notification as unread"
+                          }
+                          disabled={busyId !== null}
+                          onClick={() => void setRead(notification, unread)}
+                        >
+                          {unread ? <Check size={15} /> : <Bell size={15} />}
+                        </button>
+                      </article>
+                    );
+                  })
+                )}
+              </div>
+              {hasMore && !loading && (
+                <button
+                  className="text-button notification-load-more"
+                  type="button"
+                  disabled={loadingMore || busyId !== null}
+                  onClick={loadMore}
+                >
+                  {loadingMore ? "Loading more…" : "Load more"}
+                </button>
+              )}
             </>
           )}
         </section>

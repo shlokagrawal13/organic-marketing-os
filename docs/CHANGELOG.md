@@ -1,3 +1,9 @@
+## NOTIFY-01J bounded notification feed filtering and pagination - 2026-11-15
+
+The notification center now filters the existing tenant-scoped feed by category and appends bounded 20-item pages with **Load more**. The unread badge remains summary-based, and existing muting, read/unread, SSE/polling, deep links and tenant/role guards remain unchanged. Local Prisma/API/web builds, 34/34 focused notification tests, formatting and diff checks pass; the owned UI verifier fails closed before fixture startup on occupied Redis 6379. Exact three-job CI, final package and external receipt are pending.
+
+See [feed filtering design](NOTIFICATION_FEED_FILTERING.md) and [QA evidence](qa/notify01j-evidence.json).
+
 ## NOTIFY-01I tenant-safe notification deep links - 2026-11-14
 
 Activated tenant-safe notification navigation for persisted notification links. Unread clicks acknowledge first, close the popover and open same-workspace content, render, media, publication/calendar, billing or policy-review destinations; unsafe paths fail closed and render targets are re-read through the tenant-scoped API. Added 34/34 focused notification unit coverage and a browser regression for the media deep link.

@@ -23,6 +23,19 @@ test("notification center loads tenant updates and toggles unread state", async 
   organizations.push(org.id);
   const user = await actor(org.id, "OWNER");
   users.push(user.id);
+  for (let index = 1; index <= 21; index += 1) {
+    await db.notification.create({
+      data: {
+        organizationId: org.id,
+        type: "PUBLISH_SUCCEEDED",
+        category: "PUBLISH",
+        title: `Publication ${index}`,
+        body: "A publication notification for pagination coverage.",
+        eventKey: `publish:${randomUUID()}:confirmed`,
+        readAt: new Date(),
+      },
+    });
+  }
   await db.notification.create({
     data: {
       organizationId: org.id,
@@ -62,6 +75,20 @@ test("notification center loads tenant updates and toggles unread state", async 
     page.getByText("The campaign video is ready for review."),
   ).toBeVisible();
 
+  const categoryFilter = page.getByLabel("Show", { exact: true });
+  await categoryFilter.selectOption("RENDER");
+  await expect(
+    page.getByText("The campaign video is ready for review."),
+  ).toBeVisible();
+  await categoryFilter.selectOption("PUBLISH");
+  await expect(page.getByText("Publication 21", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Load more", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Load more", exact: true }).click();
+  await expect(page.getByText("Publication 1", { exact: true })).toBeVisible();
+  await categoryFilter.selectOption("ALL");
+
   await page.getByRole("button", { name: "Mark notification as read" }).click();
   await expect(trigger).toHaveAttribute("aria-label", "Notifications");
   await page
@@ -92,12 +119,16 @@ test("notification center loads tenant updates and toggles unread state", async 
   await expect(trigger).toHaveAttribute("aria-label", "Notifications");
 
   await page.getByRole("button", { name: "Notification preferences" }).click();
-  await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "Render updates" }),
+  ).toBeChecked();
   await page.getByRole("checkbox", { name: "Render updates" }).uncheck();
   await page.getByRole("button", { name: "Close notifications" }).click();
   await trigger.click();
   await page.getByRole("button", { name: "Notification preferences" }).click();
-  await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "Render updates" }),
+  ).toBeChecked();
 });
 
 test("notification center reconnects the optional live stream after a transient failure", async ({
@@ -179,5 +210,7 @@ test("notification deep links open the current workspace view", async ({
   await page.goto("/");
   await page.getByRole("button", { name: /Notifications/ }).click();
   await page.getByRole("button", { name: /Open the media library/ }).click();
-  await expect(page.getByRole("heading", { name: "Asset library" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Asset library" }),
+  ).toBeVisible();
 });
