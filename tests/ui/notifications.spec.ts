@@ -33,6 +33,7 @@ test("notification center loads tenant updates and toggles unread state", async 
         body: "A publication notification for pagination coverage.",
         eventKey: `publish:${randomUUID()}:confirmed`,
         readAt: new Date(),
+        createdAt: new Date(Date.now() - (21 - index) * 1000),
       },
     });
   }
