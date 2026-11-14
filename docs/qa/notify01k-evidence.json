@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01K",
+  "recordedAtUtc": "2026-11-15T00:00:00Z",
+  "status": "local_ready_exact_ci_pending",
+  "baseCommit": "f3769ccc17f9995a8b395f4d0fe69d67683694d6",
+  "title": "Keyboard-safe notification center focus and dismissal",
+  "behavior": {
+    "dialogSemantics": "The open notification popover has an explicit dialog relationship, visible heading label and modal semantics.",
+    "focusOnOpen": "Opening the bell moves focus to the notification dialog close control so keyboard users have a deterministic starting point.",
+    "escapeDismissal": "Escape closes the open notification view, discards an uncommitted preference view through the existing close path, and restores focus to the bell.",
+    "focusOnClose": "The close control restores focus to the bell without changing read state or navigating outside the active workspace.",
+    "preserved": "Tenant/role scope, filtering, pagination, unread summary, read/unread actions, preference saves, SSE reconnect and tenant-safe deep links remain unchanged."
+  },
+  "changedPaths": [
+    "apps/web/app/notifications-panel.tsx",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_ACCESSIBILITY.md",
+    "docs/qa/notify01k-evidence.json"
+  ],
+  "localVerification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "34/34",
+    "notificationAccessibilityBrowserRegressionAdded": true,
+    "prettier": true,
+    "diffCheck": true,
+    "uiHarness": "verify-local --ui-only --ui-spec=notifications.spec.ts remains to be run; it is expected to fail closed before fixture startup if 127.0.0.1:6379 is occupied.",
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "exactCi": {
+    "status": "pending",
+    "sourceCommit": null,
+    "runId": null,
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "requiredSteps": 41,
+    "artifactByteInspection": "not_applicable_before_exact_ci"
+  },
+  "limits": [
+    "This increment changes only notification dialog accessibility and browser regression coverage.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ],
+  "implementationCommit": null,
+  "implementationTree": null,
+  "package": {
+    "status": "pending",
+    "path": null,
+    "externalReceipt": null,
+    "runtimeDataCredentialsExcluded": true
+  }
+}

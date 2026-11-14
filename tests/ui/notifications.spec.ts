@@ -69,6 +69,16 @@ test("notification center loads tenant updates and toggles unread state", async 
   await expect(
     page.getByRole("heading", { name: "Notifications", exact: true }),
   ).toBeVisible();
+  const closeButton = page.getByRole("button", {
+    name: "Close notifications",
+  });
+  await expect(closeButton).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("heading", { name: "Notifications", exact: true }),
+  ).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+  await trigger.click();
   await expect(page.locator(".notification-stream-status")).toHaveText(
     "Live updates",
   );

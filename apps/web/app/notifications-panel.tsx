@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
   ArrowLeft,
   Bell,
@@ -114,6 +114,10 @@ export default function NotificationsPanel({
   const streamAttemptRef = useRef(0);
   const categoryFilterRef = useRef<NotificationCategoryFilter>("ALL");
   const loadingMoreRef = useRef(false);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const dialogId = useId();
+  const dialogTitleId = useId();
 
   const preferencesDirty =
     mutedCategories.join("\u0000") !== savedMutedCategories.join("\u0000");
@@ -259,6 +263,20 @@ export default function NotificationsPanel({
     };
   }, [base, disabled, load]);
 
+  useEffect(() => {
+    if (!open) return;
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setPreferencesOpen(false);
+      setOpen(false);
+      window.requestAnimationFrame(() => triggerRef.current?.focus());
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   function changeCategoryFilter(next: NotificationCategoryFilter) {
     categoryFilterRef.current = next;
     setCategoryFilter(next);
@@ -397,6 +415,7 @@ export default function NotificationsPanel({
   return (
     <div className="notification-center">
       <button
+        ref={triggerRef}
         className="icon-button notification-trigger"
         type="button"
         aria-label={
@@ -405,6 +424,7 @@ export default function NotificationsPanel({
             : "Notifications"
         }
         aria-expanded={open}
+        aria-controls={open ? dialogId : undefined}
         aria-haspopup="dialog"
         disabled={disabled}
         onClick={() => setOpen((value) => !value)}
@@ -421,14 +441,17 @@ export default function NotificationsPanel({
       </button>
       {open && (
         <section
+          id={dialogId}
           className="notification-popover"
           role="dialog"
           aria-label="Notifications"
+          aria-labelledby={dialogTitleId}
+          aria-modal="true"
         >
           <div className="notification-popover-head">
             <div>
               <span className="eyebrow muted">WORKSPACE UPDATES</span>
-              <h2>
+              <h2 id={dialogTitleId}>
                 {preferencesOpen ? "Notification preferences" : "Notifications"}
               </h2>
               {!preferencesOpen && (
@@ -481,12 +504,16 @@ export default function NotificationsPanel({
                 <RotateCcw size={16} />
               </button>
               <button
+                ref={closeButtonRef}
                 className="icon-button"
                 type="button"
                 aria-label="Close notifications"
                 onClick={() => {
                   if (preferencesOpen) closePreferences();
                   setOpen(false);
+                  window.requestAnimationFrame(() =>
+                    triggerRef.current?.focus(),
+                  );
                 }}
               >
                 <X size={17} />
