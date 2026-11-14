@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01i-exact-ci-verified-package-paired-20261114",
-  "savedAtUtc": "2026-11-14T11:30:00.000Z",
-  "currentMilestone": "NOTIFY-01I is exact-source CI verified: tenant-safe notification deep links, read-before-open behavior and render target selection passed all three jobs on run 43588517881; the portable package and external receipt are paired.",
+  "checkpointRevision": "notify01i-continuity-exact-ci-verified-package-paired-20261114",
+  "savedAtUtc": "2026-11-14T18:19:23.265605Z",
+  "currentMilestone": "NOTIFY-01I implementation 1c00b201a7be10687a1f39897eb4d74f0155fa15 and continuity d0116c0472129b4ec97f379f9b0371243a493972 are exact-source CI verified: run 43622753095 passed all three jobs/every required step; current package and external receipt are paired.",
   "activeTaskId": "NOTIFY-01I",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -8163,9 +8163,9 @@
     {
       "date": "2026-11-14",
       "taskId": "NOTIFY-01I",
-      "commit": "pending_publication",
-      "runId": null,
-      "summary": "Local Prisma/API/web builds, 34 focused notification tests, formatting and diff checks pass; own exact three-job CI and portable package/receipt remain pending."
+      "commit": "d0116c0472129b4ec97f379f9b0371243a493972",
+      "runId": 43622753095,
+      "summary": "Continuity commit d0116c0472129b4ec97f379f9b0371243a493972 passed all three exact CI jobs and all 41 required steps; current package/receipt are paired, with artifact bytes/reports uninspected due proxy/auth 401/403."
     }
   ],
   "nextAgentProtocol": [
@@ -8207,31 +8207,35 @@
   "checkpointVerificationEvidence": "docs/qa/notify01i-evidence.json",
   "latestStatus": {
     "taskId": "NOTIFY-01I",
-    "status": "local_ready_exact_ci_pending",
-    "commit": "pending_publication",
-    "runId": null,
-    "allThreeJobsAndRequiredStepsPassed": false,
+    "status": "ci_verified_integrated",
+    "commit": "d0116c0472129b4ec97f379f9b0371243a493972",
+    "runId": 43622753095,
+    "allThreeJobsAndRequiredStepsPassed": true,
     "evidence": [
       "docs/qa/notify01i-evidence.json"
     ],
     "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; no existing service was contacted.",
     "exactCi": {
-      "status": "pending_own_final_commit_ci",
-      "artifactBytes": "pending exact final run"
+      "status": "exact_continuity_commit_all_three_jobs_success",
+      "sourceCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
+      "runId": 43622753095,
+      "artifactBytes": "metadata_and_digests_recorded_bytes_reports_uninspected_due_proxy_auth_401_403"
     },
     "sourcePackage": {
-      "status": "pending_exact_ci",
+      "status": "paired_with_exact_ci",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
+      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
       "scope": "Portable source/context package only; runtime data, private backups and credentials excluded."
     }
   },
   "activeTask": {
     "id": "NOTIFY-01I",
     "title": "Tenant-safe notification deep links",
-    "status": "local_ready_exact_ci_pending",
-    "implementationCommit": "pending_publication",
-    "publishedCommit": null,
+    "status": "ci_verified_integrated",
+    "implementationCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
+    "publishedCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
     "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
-    "exactRunId": null,
+    "exactRunId": 43622753095,
     "focusedTestsPassed": 34,
     "focusedTestsFailed": 0,
     "apiBuild": true,
@@ -8239,6 +8243,7 @@
     "httpHarness": "blocked_fail_closed_occupied_6379",
     "changedPaths": [
       "AGENTS.md",
+      "CHECKPOINT_MANIFEST.json",
       "PROJECT_CHECKPOINT.json",
       "PROJECT_STATUS.md",
       "REQUIREMENTS_MATRIX.md",
@@ -8257,17 +8262,24 @@
       "tests/notifications.test.ts",
       "tests/ui/notifications.spec.ts"
     ],
-    "exactRunConclusion": "pending",
+    "exactRunConclusion": "success",
     "exactResults": {
-      "status": "pending_own_final_commit_ci",
+      "status": "exact_continuity_commit_all_three_jobs_success",
       "priorHRunNotSubstitute": true,
-      "artifactByteInspection": "pending exact final run"
+      "artifactByteInspection": "metadata_and_digests_recorded_bytes_reports_uninspected_due_proxy_auth_401_403",
+      "jobStepCounts": {
+        "nativeApplication": 22,
+        "composeRestore": 8,
+        "nativeUpgrade": 11
+      }
     },
     "package": {
-      "status": "pending_exact_ci",
+      "status": "paired_with_exact_ci",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
+      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
       "runtimeDataCredentialsExcluded": true
     },
-    "nextAction": "Publish NOTIFY-01I, inspect/fix all three exact CI jobs and required steps, then create the paired portable source package and final receipt."
+    "nextAction": "Closed for this bounded increment; review the next separately scoped NOTIFY-01 increment against integrated main. Preserve all open live/deployed/full-master limits."
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8931,7 +8943,7 @@
   },
   "currentVerification": {
     "taskId": "NOTIFY-01I",
-    "status": "local_ready_exact_ci_pending",
+    "status": "ci_verified_integrated",
     "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
     "local": {
       "apiBuild": true,
@@ -8948,10 +8960,19 @@
       "runnerPinVerified": true
     },
     "exactCi": {
-      "status": "pending_own_final_commit_ci",
-      "priorHRunNotSubstitute": true,
-      "artifactByteInspection": "pending exact final run"
-    }
+      "status": "success",
+      "sourceCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "jobStepCounts": {
+        "nativeApplication": 22,
+        "composeRestore": 8,
+        "nativeUpgrade": 11
+      },
+      "artifactByteInspection": "metadata_and_digests_recorded_bytes_reports_uninspected_due_proxy_auth_401_403",
+      "priorImplementationRun": 43588517881
+    },
+    "publishedCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
+    "exactRunId": 43622753095
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",

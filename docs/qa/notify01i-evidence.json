@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01I",
-  "recordedAtUtc": "2026-11-14T00:00:00.000Z",
-  "status": "exact_ci_verified_source_package_receipt_paired",
+  "recordedAtUtc": "2026-11-14T18:12:52.642801Z",
+  "status": "exact_continuity_ci_verified_source_package_receipt_paired",
   "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
   "title": "Tenant-safe notification deep links",
   "behavior": {
@@ -39,6 +39,94 @@
     "credentialsPrinted": false
   },
   "exactCi": {
+    "status": "verified_on_final_continuity_commit",
+    "sourceCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
+    "runId": 43622753095,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43622753095",
+    "attempt": 1,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "jobs": [
+      {
+        "name": "Native populated upgrade and migration recovery",
+        "jobId": 132531847423,
+        "requiredSteps": 11,
+        "conclusion": "success"
+      },
+      {
+        "name": "Disposable Compose and native restore",
+        "jobId": 132531847247,
+        "requiredSteps": 8,
+        "conclusion": "success"
+      },
+      {
+        "name": "Native application verification",
+        "jobId": 132531847153,
+        "requiredSteps": 22,
+        "conclusion": "success"
+      }
+    ],
+    "artifactMetadata": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 14125875748,
+        "displaySize": "14.5 MB",
+        "digest": "sha256:94731535db1ba4a7175e84066ea838eb6001a9bf22eb567987ae4296bb09f353"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 14125176988,
+        "displaySize": "16.6 KB",
+        "digest": "sha256:f3086423ac1cf8bba54bba9ebe48b6b072f874e8cb70226569c9dc2fbeaec7a4"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 14125270428,
+        "displaySize": "935 Bytes",
+        "digest": "sha256:e9ef6ffdae0853820c94c3512c8de6047c576e4bd84bf32c1f1d21ca7960f7cc"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 14125305143,
+        "displaySize": "2.95 KB",
+        "digest": "sha256:5833920f977de8547d9e8d161a62f92635fb7782a978312774a5838f89cef6da"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403",
+    "artifactReportsInspected": false,
+    "firstRunNotSubstitute": true,
+    "historicalImplementationRun": 43588517881,
+    "failedAttempt": {
+      "commit": "b45bf63c5623abd541107da84980b21dbd157828",
+      "runId": 43586157964,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43586157964",
+      "passedJobs": [
+        "Native populated upgrade and migration recovery",
+        "Disposable Compose and native restore"
+      ],
+      "failedJob": "Native application verification",
+      "failedStep": "Verify native application flows",
+      "reason": "The browser regression fixture used /assets while notification event links use /media; the resolver correctly rejected the unsupported path and the assertion timed out."
+    }
+  },
+  "limits": [
+    "This increment activates in-app navigation only; it adds no email/SMS/mobile push, durable replay, cross-process fan-out or realtime delivery SLO.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ],
+  "implementationCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
+  "package": {
+    "status": "paired_with_exact_ci",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
+    "runtimeDataCredentialsExcluded": true,
+    "bytes": 16540555,
+    "sha256": "2b6c0f6cd6c74c26fb9bc6391dcd41da3047e989b6b433ac4669eec0204e2b46",
+    "sourceFiles": 731,
+    "zipMembers": 732
+  },
+  "implementationTree": "0e295a87b10e127f6c6b844cee47362c37877b10",
+  "implementationCi": {
     "status": "verified_on_final_implementation_commit",
     "sourceCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
     "runId": 43588517881,
@@ -107,18 +195,6 @@
       "reason": "The browser regression fixture used /assets while notification event links use /media; the resolver correctly rejected the unsupported path and the assertion timed out."
     }
   },
-  "limits": [
-    "This increment activates in-app navigation only; it adds no email/SMS/mobile push, durable replay, cross-process fan-out or realtime delivery SLO.",
-    "No schema or migration changed.",
-    "CI verifies owned fixtures and does not deploy.",
-    "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
-  ],
-  "implementationCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
-  "package": {
-    "status": "paired_with_exact_ci",
-    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
-    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
-    "runtimeDataCredentialsExcluded": true
-  },
-  "implementationTree": "0e295a87b10e127f6c6b844cee47362c37877b10"
+  "continuityCommit": "d0116c0472129b4ec97f379f9b0371243a493972",
+  "continuityTree": "8dab658e99f740284a2fcf18dab3e599432c2dbe"
 }
