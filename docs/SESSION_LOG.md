@@ -1,10 +1,14 @@
 <!-- NOTIFY01I_CURRENT_START -->
+
 ## NOTIFY-01I local implementation - 2026-11-14
 
-Started the next bounded notification increment after H. The center now acknowledges and closes before opening a same-workspace destination resolved by `notification-links.ts`; content and render identifiers are preserved, render jobs are re-read through the tenant-scoped API, billing respects the admin-only credits view, and unsafe or cross-tenant paths fail closed. Added focused resolver coverage and an asset-library browser regression. Prisma generation, API/web production builds, 34 notification tests, Prettier and diff checks pass. The owned UI verifier refuses to start while Redis 6379 is occupied. Exact three-job CI and the portable source package remain required for this increment.
+Started the next bounded notification increment after H. The center now acknowledges and closes before opening a same-workspace destination resolved by `notification-links.ts`; content and render identifiers are preserved, render jobs are re-read through the tenant-scoped API, billing respects the admin-only credits view, and unsafe or cross-tenant paths fail closed. Added focused resolver coverage and a media-to-asset-library browser regression. Prisma generation, API/web production builds, 34 notification tests, Prettier and diff checks pass. The owned UI verifier refuses to start while Redis 6379 is occupied. Exact three-job CI and the portable source package remain required for this increment.
+
+The first exact publication `b45bf63` / [run 43586157964](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43586157964) passed the native-upgrade and Compose jobs but failed the native application-flow step because the new browser fixture used `/assets` while persisted notification events use `/media`; the resolver correctly failed closed. The fixture is aligned to `/media` before the next exact publication. The failed run remains historical and is not acceptance.
 <!-- NOTIFY01I_CURRENT_END -->
 
 <!-- NOTIFY01H_CURRENT_START -->
+
 ## Current: NOTIFY-01H bounded live-stream reconnect - 2026-11-13
 
 NOTIFY-01H adds controlled reconnect behavior to the optional tenant/role-guarded notification SSE stream. A transient EventSource failure closes only the failed connection, exposes a clear **Reconnecting...** state, and retries with bounded delays of 1s, 2.5s, 5s, 10s and a capped 30s. The existing 60-second list polling fallback remains active, and navigation/unmount clears pending timers and closes the stream.
@@ -95,24 +99,28 @@ UX-01F adds tenant-bound, server-side workspace settings revisions and safe conf
 Implementation: Prisma migration25, atomic NestJS revision check/audit and browser conflict/export/reload path. New native HTTP and browser regressions; prior assertions retained. See [revision design](WORKSPACE_SETTINGS_REVISION.md) and [QA evidence](qa/ux01f-evidence.json). Own exact-source CI and external receipt remain pending at packaging time.
 
 <!-- UX01E_CURRENT_START -->
+
 ## Current: UX-01E - 2026-10-30
 
 Read docs/ACTIVE_HANDOFF.md for concise active context. UX-01D final a432d67/run40656660621 passed ALL THREE jobs/every required step; imported docs/qa/ux01d-final-ci-receipt.json closes D's older pending notices. E protects workspace settings drafts, navigation/reload/sign-out, explicit save acknowledgement and uncertain-response recovery; see docs/WORKSPACE_SETTINGS_DRAFTS.md and docs/qa/ux01e-evidence.json. Local10 HTTP/29 browser checks pass. Settings remain manually saved; server revision/concurrency support is still open. E needs ALL THREE jobs/every required step on its own exact final commit and paired external receipt/source ZIP. Older sections are historical. Recovery fixtures closed at P; no Q/R. Production/live/deployed/full-master gates remain open; CI does not deploy.
 <!-- UX01E_CURRENT_END -->
 
 <!-- UX01D_CURRENT_START -->
+
 ## Current: UX-01D - 2026-10-28
 
 Read docs/ACTIVE_HANDOFF.md for concise active context. UX-01C final0549b2d/run40572018125 passed ALL THREE jobs/every required step; imported docs/qa/ux01c-final-ci-receipt.json closes C's older pending notices. D adds Brand Brain/Creative DNA autosave, shared revision persistence, local export/confirmed reload and knowledge navigation/read/history guards; see docs/KNOWLEDGE_AUTOSAVE.md and docs/qa/ux01d-evidence.json. Local focused checks pass; D needs ALL THREE jobs/every required step on its own exact final commit, paired external receipt/source ZIP. Older sections are historical. Recovery fixtures closed at P; no Q/R. Production/live/deployed/full-master gates remain open. CI does not deploy.
 <!-- UX01D_CURRENT_END -->
 
 <!-- UX01C_CURRENT_START -->
+
 ## Current: UX-01C — 2026-10-28
 
 Read [active handoff](ACTIVE_HANDOFF.md) for concise current context and acceptance. UX-01B final81287c3/run40518599731 passed all three jobs/every required step; docs/qa/ux01b-final-ci-receipt.json closes its older pending notices. C adds draft/scene autosave and conflict recovery; see docs/DRAFT_AUTOSAVE.md and docs/qa/ux01c-evidence.json. Local focused checks pass; C requires ALL THREE jobs/every required step on its own exact final commit, paired external receipt/source ZIP. Older entries are historical. Recovery fixtures closed at P; no Q/R. Production/live/deployed/full-master gates remain open; CI does not deploy.
 <!-- UX01C_CURRENT_END -->
 
 <!-- UX01B_CORE_BUDGET_START -->
+
 ## UX-01B core CI time budget - 2026-10-27
 
 Fixture-budget follow-up aa8c4eb7a09142c65a0cd2f9ae0f3581fcd7f74c/run40512689694 passed native upgrade, all24 Compose phases, core build,379 unit,44 readability and zero audits. Core media installation spent14min27s downloading116MB at134kB/s. The application flow was cancelled at about25 minutes, matching the configured job cap, before complete HTTP/browser/recovery acceptance. A same-source single-core retry reached GitHub startup_failure with zero jobs and an unexpected-error annotation. Later retry APIs reject the empty current attempt/old job. These are not final acceptance; see docs/qa/ux01b-ci-attempt2.json. Both earlier B attempts and their gaps remain recorded.
@@ -123,6 +131,7 @@ Planned recovery fixtures remain closed at P; no Q/R. Production durability/RPO-
 <!-- UX01B_CORE_BUDGET_END -->
 
 <!-- UX01B_CI_FOLLOWUP_START -->
+
 ## UX-01B isolated HTTP rate-budget follow-up - 2026-10-27
 
 First B publication 4d37eaa9d6c86f53704b46ed39d02b39867ced04/run40447671309 passed native upgrade/physical recovery, all24 Compose phases, core build,379 unit,44 readability samples and zero audits. Core HTTP passed40/43; the last three search scenarios hit the shared fixture loopback budget with429. Browser/recovery phases did not execute. This is not final acceptance. See docs/qa/ux01b-ci-attempt1.json.
@@ -131,6 +140,7 @@ The follow-up uses the existing isolation-guarded resetFixtureRateBudget before 
 <!-- UX01B_CI_FOLLOWUP_END -->
 
 <!-- UX01B_CURRENT_START -->
+
 ## UX-01B publication-preparation search - 2026-10-27
 
 UX-01A final c2e12212085d0b276e9315eb1ca83e1d1f2402b2/run40444776576 passed ALL THREE jobs and every required step: 378 unit,41 HTTP,31 browser,5 recovery,24 migrations,44 readability samples,zero audits and all24 Compose phases. Four artifact ZIP byte/digest/CRC and embedded reports were verified. The imported docs/qa/ux01a-final-ci-receipt.json closes A's packaged own-CI pending status; earlier pending notices below are historical. Planned recovery fixtures remain closed at P; no Q/R.
@@ -143,6 +153,7 @@ Remaining: other search domains, large-tenant performance, autosave/conflict/nes
 <!-- UX01B_CURRENT_END -->
 
 <!-- UX01A_CURRENT_START -->
+
 ## UX-01A workspace search - 2026-10-27
 
 RECOVERY-01P final 2bacb67629706b472b370e0ae5481984a5240ef3/run40249061054 passed ALL THREE jobs and every required step: 376 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability samples, zero audits and all24 Compose phases. All four artifact ZIP bytes/digests/CRCs were verified. [P final receipt](qa/recovery01p-final-ci-receipt.json) closes P's packaged own-CI pending status; older recovery notices below are historical. Planned local/CI recovery-fixture work is closed; no Q/R is planned. Production durability/retention/RPO-RTO and deployed real-provider restore remain open separately.
@@ -155,6 +166,7 @@ Global search beyond these three domains, autosave/conflict handling, nested wor
 <!-- UX01A_CURRENT_END -->
 
 <!-- RECOVERY01P_CURRENT_START -->
+
 ## RECOVERY-01P live claims at a named WAL target - 2026-10-26
 
 O final 6e0da77aef2f9c5baa55773ce81f83ab07e122ba/run40224355433 passed ALL THREE jobs and required steps: 372 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability, zero audits and 23 Compose phases. All four artifact ZIP bytes/digests/CRCs were verified. Read docs/qa/recovery01o-final-ci-receipt.json; this closes O's earlier own-CI pending notice.
@@ -167,6 +179,7 @@ P is the last planned local/CI recovery-fixture increment. After its own exact-s
 <!-- RECOVERY01P_CURRENT_END -->
 
 <!-- RECOVERY01O_CURRENT_START -->
+
 ## RECOVERY-01O retained WAL and private-object recovery set — 2026-10-26
 
 N final 89bc28ada95c5dee61e8d2d30c65f1bbff03b5cc/run40124492777 passed ALL THREE jobs and required steps: 369 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability, zero audits and 22 Compose phases. All four artifact ZIP bytes/digests/CRCs were verified. Read docs/qa/recovery01n-final-ci-receipt.json; this closes N's earlier own-CI pending notice.
@@ -179,6 +192,7 @@ The retained copies share one disposable tmpfs container; this is not remote dur
 <!-- RECOVERY01O_CURRENT_END -->
 
 <!-- RECOVERY01N_CURRENT_START -->
+
 ## RECOVERY-01N online physical point with live claims — 2026-10-24
 
 M final c7d66099a74a97b085f77a58bcfe14e99f29503e/run39993615176 passed ALL THREE jobs and required steps: 364 unit, 38 HTTP, 28 browser, 5 recovery, 24 migrations, 44 readability, zero audits and 21 Compose phases. All four artifact ZIP digests/CRCs were checked. Read docs/qa/recovery01m-final-ci-receipt.json; this closes M's historical own-CI pending notice.
@@ -189,12 +203,14 @@ Local75 focused unit tests (four new) and18 selected Windows Compose phases pass
 
 This second point is after claims in a restored fixture; it does not place them at the earlier named WAL target or establish atomic production cross-store PITR. Redis is rebuilt empty and provider acceptance is synthetic. Production backup/retention/RPO-RTO, real-provider reconciliation, populated publication, live/deployed/full-master acceptance remain open. Next after own CI: RECOVERY-01O WAL-target/cross-store retention and operational recovery prerequisites. 21 broad task tracks remain open. CI verifies fixtures and does not deploy.
 <!-- RECOVERY01N_AUDIT_FOLLOWUP_START -->
+
 First published N commit 0bcaeda20c3740c57840efb544ba25a3bed66ee6/run40091700143 passed native recovery, all22 Compose phases, core build,368 unit and44 readability samples, but failed the required production dependency audit (five advisories); full audit and HTTP/browser steps were skipped. It is not final acceptance. The follow-up pins patched Zod4.6.7 and Nodemailer10.2.1, updates transitive body-parser2.4.0, Multer2.5.0 and smtp-server3.21.1, and uses Zod4 prefault to preserve omitted render-option defaults. Local locked install/Fontkit, Prisma/API/web build,75 recovery-focused plus2 render-option tests, and zero production/full audits pass. Application and lockfile changed; all24 migrations/master hashes and CI workflow remain unchanged. A new exact final commit needs all three jobs and every required step. See docs/qa/recovery01n-ci-attempt1.json and docs/qa/recovery01n-evidence.json.
 <!-- RECOVERY01N_AUDIT_FOLLOWUP_END -->
 
 <!-- RECOVERY01N_CURRENT_END -->
 
 <!-- RECOVERY01M_CURRENT_START -->
+
 ## RECOVERY-01M actual worker interruption after physical restore — 2026-10-23
 
 L final 0aa3f994791565b0b508ccc216b12faa3e0bca8b/run39974681959 passed ALL THREE jobs and required steps:343 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,20 Compose phases. All four artifact-byte digests/CRCs were verified. Read docs/qa/recovery01l-final-ci-receipt.json. This closes L own-CI pending notices below; older entries remain historical.
@@ -207,6 +223,7 @@ The physical target contains queued work; actual claims/kills/provider acceptanc
 <!-- RECOVERY01M_CURRENT_END -->
 
 <!-- RECOVERY01L_CURRENT_START -->
+
 ## RECOVERY-01L physical media faults and stale claims — 2026-10-23
 
 K final 1cf75fbd0429f7976296b926875b8d533ea8d675/run39837076273 passed ALL THREE jobs and every required step:325 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero full/production audit vulnerabilities,19 Compose phases. All four artifact-byte digests/CRCs were verified. Read docs/qa/recovery01k-final-ci-receipt.json. This closes K own-CI pending notices below; the earlier red5e90488/run39832920032 remains a historical dependency-audit failure.
@@ -219,6 +236,7 @@ Stale claims are synthetic frozen rows, not a real process-kill test or diagnosi
 <!-- RECOVERY01L_CURRENT_END -->
 
 <!-- RECOVERY01K_CURRENT_START -->
+
 ## RECOVERY-01K populated physical media recovery — 2026-10-23
 
 J final b27947509465ba2f5283932239b73e85e683fe1b/run39786556233 passed ALL THREE jobs and required steps:315 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,18 Compose phases. All four artifact-byte digests/CRCs were verified. Read docs/qa/recovery01j-final-ci-receipt.json. This closes J own-CI pending notices below; older entries are historical.
@@ -232,6 +250,7 @@ Initial K 5e90488fc9ac0319cd421f64c4061a506fa18799/run39832920032 passed native 
 <!-- RECOVERY01K_CURRENT_END -->
 
 <!-- RECOVERY01J_CURRENT_START -->
+
 ## RECOVERY-01J physical application recovery — 2026-10-22
 
 I final b1386511451e4482d580ae6825590d6b3c0cc306/run39773094289 passed ALL THREE jobs and required steps:307 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,17 Compose phases. All four artifact-byte digests/CRCs were verified. Final receipt: docs/qa/recovery01i-final-ci-receipt.json. This closes I own-CI pending notices below; older entries are historical.
@@ -244,6 +263,7 @@ J exercises one synthetic Asset/queued AI job and one enumerated post-target pro
 <!-- RECOVERY01J_CURRENT_END -->
 
 <!-- RECOVERY01I_CURRENT_START -->
+
 ## RECOVERY-01I pre-target physical/object binding — 2026-10-22
 
 H final 8f636d4f4dd3f99bda50d991631a530e052cfa6c/run39704487708 passed ALL THREE jobs and required steps:300 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability,zero audits,16 Compose phases. Final receipt: docs/qa/recovery01h-final-ci-receipt.json. It closes prior H own-CI pending notices below; earlier notices are historical.
@@ -256,6 +276,7 @@ The physical probe binds one synthetic Asset; it does not start the application 
 <!-- RECOVERY01I_CURRENT_END -->
 
 <!-- RECOVERY01H_CURRENT_START -->
+
 ## RECOVERY-01H verified implementation and final continuity — 2026-10-22
 
 H implementation f33276cbe55d6363e3f44abea1278b81d247881e/run39702680294 passed ALL THREE jobs and every required step:300 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability and zero production/full audit vulnerabilities. All16 Compose phases passed, binding6 restored application references to6 historical versions; fresh-Redis/immutable-credit/restart/no-replay assertions remain. All four artifact ZIP digests/CRCs, decoded job receipts and300 unique unit receipts were inspected. See docs/qa/recovery01h-native-ci-evidence.json. Local31 focused tests and separate cached-image Windows16-phase runtime verification passed, with fixture cleanup and .env unchanged. No local rebuild is claimed.
@@ -266,6 +287,7 @@ H is bounded logical-restore reference/manifest verification; historical copies 
 <!-- RECOVERY01H_CURRENT_END -->
 
 <!-- RECOVERY01G_CURRENT_START -->
+
 ## RECOVERY-01G verified implementation and evidence closure — 2026-10-22
 
 G implementation f6ac3ecb59bcc26ae03bc402636a197a1367b1b8 passed ALL THREE jobs and required steps in Actions run39695812351:295 unit,38 HTTP,28 browser,5 recovery,24 migrations,44 readability samples and zero production/full audit vulnerabilities. The full Compose fixture passed15 phases, retaining every old phase and verifying historical versions, native missing-version rejection, denied anonymous access, exact provider receipt/one submission, owned version cleanup and original source preservation. Current artifacts downloaded through the normal route and ZIP digests/CRC were inspected. Receipt: docs/qa/recovery01g-native-ci-evidence.json. F40b936f/run39289873313 remains separate historical acceptance.
@@ -596,6 +618,7 @@ Verified the incoming 387-file checkpoint with no drift; preserved all 17 existi
 Read the supplied older EDITOR-01I conversation, current instructions/checkpoints, full master specification, relevant policy code and saved CI evidence. Verified current public/local HEAD `0eeaff642108ff781cf2a7f481c916b116ff0889` and 211 unique POLICY-01D native receipts; no source delta follows the native-verified application commit. Corrected stale top-level B/C/D publication and next-action pointers, preserving prior values as history. Recorded the next bounded POLICY-01 audit, synchronized continuity entry points and prepared a fresh source checkpoint. No new application tests, public push, live provider call or runtime-data mutation is claimed. Exact paths/checks are in [RESUME_CONTEXT.md](RESUME_CONTEXT.md).
 
 <!-- POLICY01C_NATIVE_CLOSURE_START -->
+
 ## POLICY-01C dispatch-time evidence freshness publication and native CI — 2026-10-16 UTC
 
 The approved 20-path source/config/docs/evidence payload is public on `main` at `da352cb78355ca98a985288d82ca84995018b382` (parent `d223c5b27b2a3996150e5b430bda6ab82e600a8b`, tree `71563c7c27216d0ffc3ef32233998821881b157f`). Remote verification showed exactly the approved 20 paths, zero deletions or extras, and a tree byte-for-byte identical to the frozen locally verified source.
@@ -608,6 +631,7 @@ This guard validates operator-declared review age and policy/revision/fingerprin
 <!-- POLICY01C_NATIVE_CLOSURE_END -->
 
 <!-- POLICY01B_NATIVE_CLOSURE_START -->
+
 ## POLICY-01B evidence source and freshness gate publication and native CI — 2026-10-16 UTC
 
 The approved recovered 23-path payload is public on `main` at `590a9b22e853638c0b4beae0d3bb98554a8ec5cf` (parent `d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938`, tree `15af5dfff1bf0b7ea5e1a1874918b25d9875f7ca`). Remote compare showed exactly 23 approved paths, no deletion or extra path, and the remote tree matches the frozen recovered source.
@@ -618,6 +642,7 @@ This gate validates source-reference syntax and operator-declared review age; it
 <!-- POLICY01B_NATIVE_CLOSURE_END -->
 
 <!-- POLICY01A_NATIVE_CLOSURE_START -->
+
 ## POLICY-01A bounded claim evidence gate publication and native CI — 2026-10-14 UTC
 
 The approved 25 paths are public on `main` at `45ff3f37f3b79995e7ea7f63135ff1d485792d08` with exact tree `e0451bc13b8b976c27e42cd7592cdaf2514374bc`; no extra path or deletion was published. Native Actions run `38647602608`, job `116138233284`, attempt 1 succeeded: 207/207 unit, 15/15 HTTP, 9/9 browser, 5/5 recovery, API/web builds, bounded readability, 21 native PostgreSQL migrations, native Redis, populated upgrade and both zero-vulnerability audits passed with zero failed/skipped/cancelled/todo.
@@ -625,8 +650,8 @@ The approved 25 paths are public on `main` at `45ff3f37f3b79995e7ea7f63135ff1d48
 Artifact `11933492847` is 6,194,977 bytes with digest `sha256:4ba67e5320992c8febdd71248602e3482c257dfa3cc0feb7f485c8847b59ead6`; all 124 entries passed CRC, 207 unit receipts are unique, 36/36 readability samples and blank negative control passed. A transient Redis image rate limit retried successfully, and the GitHub action Node deprecation warning was non-blocking. The bounded detector remains human-review support and does not prove truth, source quality or legal/platform compliance. No live provider action, deployed acceptance, native private-media restore or full master acceptance occurred; POLICY-01 remains Partial. This closure record is local pending separate publication approval. See `docs/qa/policy01-claim-native-ci-evidence.json`.
 <!-- POLICY01A_NATIVE_CLOSURE_END -->
 
-
 <!-- SOCIAL01_CAPTURE_NATIVE_CLOSURE_START -->
+
 ## SOCIAL-01 reconstructed capture runner publication and native CI — 2026-10-14 UTC
 
 The freshly reconstructed runner is public at `73416a696c1d577c9d51bbb5c15d58c01169b539` (parent `fa00ecdc6a82a0d1d214e093c885693a36d1b2f7`, tree `07577386ce2f9f88c10045d54aebed240dcb7321`). Remote compare contains exactly the approved 11 paths and the complete public tree matches the locally verified source; the 361-file public manifest check passed. The missing original scratch-only commit `5825465` was not claimed as recovered, and its runner results were not reused. Fresh reconstruction passed clean install/Fontkit, Prisma generation, API build, strict runner/test typecheck and 4/4 focused tests before publication.
@@ -680,16 +705,13 @@ Rebuilt after transient workspace reset from exact public base 102a9e3f6700837a5
 
 The approved 25-file scope is public at `448be2647718ed689fd56b7f6f0829e250044f55` (parent `3ee9ed7`, exact tree `169d0448e087497d2693bcbf5705d8bf1f9a7672`). Its own native Actions run `38148069398` / job `114495510162` succeeded: 199/199 unique unit receipts with 25 summaries and zero failed/cancelled/skipped/todo, 14 HTTP, 8 browser, 5 recovery, 18 native migrations, API/web builds, populated upgrade, 36/36 bounded English plus 8/8 busy-background OCR and blank negative control, and both audits at zero vulnerabilities. Browser artifact `11706386220` SHA-256 matched metadata; ZIP CRC passed for 124 entries and all 44 OCR PNG hashes matched. No live Google upload or deployed operator policy receipt occurred. Scheduler, broader semantic/frequency checks and separately authorized live acceptance remain; SOCIAL-01 is Partial. This later closure record and sanitized receipts are local and unpublished. See `docs/qa/social01-policy-native-ci-evidence.json`. Older dated sections are historical.
 
-
 ## SOCIAL-01 policy maintenance and upload notice (local, unpublished) — 2026-10-11 UTC
 
 New uploads require the default-off live flag plus an exact policy-version operator receipt with a UTC review timestamp less than seven days old. Missing, stale, future and invalid receipts block both the API route and internal dispatcher before provider traffic. Existing UNKNOWN sessions can still receive a status-only check under the enabled flag and owner/admin role when maintenance is stale; the UI separates this from new publishing. The upload screen now shows YouTube's required certification notice with desktop/mobile Terms links, and the rights checkbox is required to save review. This is an operational safeguard, not a platform compliance certificate. Clean locked install and Fontkit patch, Prisma generate, API/web production builds, 2/2 focused unit test files, 1/1 isolated HTTP scenario with 18 disposable migrations and 1/1 production browser scenario passed. An unrelated broad recovery attempt failed because this recovered checkout lacks test fonts; those results are excluded. No live Google upload or new public push occurred. SOCIAL-01 remains Partial. See `docs/qa/social01-policy-maintenance-evidence.json`. Earlier dated sections are historical.
 
-
 ## SOCIAL-01 guarded dispatch publication and native CI — 2026-10-11 UTC
 
 The approved 26-file scope is public at `3ee9ed7069ce813fccb2bd30e7e8d2374ff9855d` (parent `d6e6ecf`, tree `c02f5775ae14b6083afff819cf7c93ae784f2087`). Its own native Actions run `38128508694` / job `114437792062` succeeded: 198/198 unique unit receipts with 24 summaries and zero failed/cancelled/skipped/todo, 14 HTTP, 8 browser, 5 recovery, 18 native migrations, builds, populated upgrade, 36/36 bounded English plus 8/8 busy-background OCR with blank negative control, and both dependency audits at zero vulnerabilities. Browser artifact `11698087790` SHA-256 matched GitHub metadata; ZIP CRC passed for 124 entries and all 44 OCR PNG hashes matched. No live Google grant/upload or real account processing check occurred. The deployment posting flag defaults off; scheduler, current policy maintenance and separately authorized live acceptance remain. SOCIAL-01 is Partial. This closure record and sanitized receipts are local and unpublished. See `docs/qa/social01-guarded-native-ci-evidence.json`. Older dated sections are historical.
-
 
 ## SOCIAL-01 guarded YouTube dispatch (local, unpublished) — 2026-10-11 UTC
 
@@ -698,7 +720,6 @@ Publication gate: the first GitHub blob upload for this new 26-file scope was re
 Reconstructed the lost transient WIP from exact public `d6e6ecf48183f7379e07b0d64cc3bb7f0bd62cc9`. A signed-in owner/admin may explicitly submit one reviewed, exact approved video only when `YOUTUBE_LIVE_DISPATCH_ENABLED=true`; the default is false and the disposable verifier forces false. The dispatcher stages private media, records SHA-256/size, commits SUBMITTING, saves an encrypted attempt-bound resumable session before one media PUT, and retains ambiguous outcomes as UNKNOWN. An UNKNOWN saved session has a status-only empty-PUT check. The UI keeps historical UNKNOWN status visible even after preparation invalidation; no scheduler or automatic retry is wired.
 
 On this reconstructed source: clean locked install/Fontkit patch, Prisma generate, API/web production builds, 4/4 protocol units, 3/3 isolated social-dispatch, existing attempt-ledger and preparation HTTP scenarios, each with 18 fresh disposable migrations, and 1/1 focused production browser flow with 18 migrations passed. The HTTP fixture tested roles/tenant, disabled route, single send, encrypted session, duplicate rejection, ambiguous outcome, 308 progress and receipt-only reconciliation. The browser fixture covered default-off review and historical UNKNOWN visibility. A sandbox-denied local S3 bind stopped one intermediate rerun before tests; final isolated rerun passed. No live Google account/post, full suite, native CI or public push occurred for this local delta. Public main remains `d6e6ecf`; SOCIAL-01 remains Partial. See `docs/qa/social01-guarded-dispatch-evidence.json`. Older dated sections are historical.
-
 
 ## SOCIAL-01 YouTube connections and upload-review UI (local) — 2026-10-10 UTC
 
@@ -836,7 +857,6 @@ EDITOR-01W reconstructed from the verified V durable checkpoint after the prior 
 
 Bounded ZWJ/ZWNJ/ZWSP/WJ policy, complete joined font units, control-aware line breaking, cmap/cache provenance and guarded CJS/ESM shaping fixes are implemented. Sinhala uses corrected USE syllable/reph/pre-base reordering; the prior 675 Sinhala and 1203 Tibetan reference strings pass on each font set. All fifteen new per-script control reference cases, wrapping/rejection and four Fontkit guards pass in each 21-case focused run. API/web production build passed. Full dual-font units/exports, application HTTP/browser/recovery, fresh installs/upgrade/audits and visual review are pending; W remains work in progress and EDITOR-01 Partial. Every script opt-in stays independently disabled by default. Initial failed probes, test syntax/mock fixes, CJK rejection ordering and the Khmer dictionary cut-before-ZWSP failure are retained as failures, not acceptance evidence.
 
-
 ## EDITOR-01V publication and own native CI closure — 2026-10-07 (IST)
 
 EDITOR-01V's exact approved 48 files are published at 96e1af064e8c6e2673c33260b157201f5ddfa3bd, tree a7a3bee4048a80a23717a4269d00e057f7203083; all 254 public blob paths/modes/hashes match the immutable reviewed source. Own native Actions 37646367807 attempt 1 passed: 168 unit cases with complete terminal summary and unique case receipts, 7 HTTP, 7 production-browser and 5 recovery/configuration cases, API/web production builds, 12 migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Native CJK reference/export checks and prior fifteen-script regressions passed. Artifact ZIP digest, CRC and every retained PNG/receipt hash were verified. EDITOR-01 stays Partial.
@@ -865,7 +885,6 @@ All fifteen script opt-ins remain independently default-disabled. Shared registr
 
 This dated continuity closure is retained locally in the portable handoff; it was not added to the approved public payload. Original older dirty checkout and user runtime data remain preserved. Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define the current state.
 
-
 ## EDITOR-01U publication and CI-fix verification — 2026-10-07 (IST)
 
 EDITOR-01U's exact approved 43 files are published at ed82e963cfaa4033703c3f22ca992b60aab26ea3 (tree 8d0f8bcdae09e284a4650241c35036b4eeb74fc5); all 240 public paths/modes/blob hashes match immutable reviewed source. Own Actions 37604254705 attempt 1 failed 140/143 unit cases: two inherited-Thai-flag assertions and one older-Noto Myanmar mark offset. Audits/upgrade/native application flows were skipped and are not pass evidence. The CI follow-up is locally verified: complete 144/144 units on each of the newer and actual Ubuntu CI font sets (288 case receipts, 36 summaries), 7 HTTP, 7 production-browser, 5 recovery/config cases, API/web production builds, 12 fresh migrations, populated PGlite upgrade/archive restore and both zero-vulnerability npm audits. Four clean CJS/ESM exports independently matched 65560 HarfBuzz 8.3.0 layouts across both font sets and all fifteen registered scripts. Each font set also passed 90 new-script exports/270 timed frames, 115 curated/7406 unique covered new-script strings and 18 combined reference runs; twenty representative frames were visually reviewed. The corrected payload and its own native CI remain pending.
@@ -875,7 +894,6 @@ The runtime fix uses coverage-sensitive mark-to-base attachment and preserves co
 Own CI-fix local application harness: disposable serialized PGlite, Redis 7.2.11, S3Proxy 4.1.1, real FFmpeg and synthetic providers. Native PostgreSQL CI requires publishing the separately reviewed fix payload; no Docker/full Compose/MinIO, native cross-store restore, live providers, physical devices or master acceptance established. Recovery naturally expired a 119873ms Redis lock, retained the provider receipt/private output/completed queue job and made exactly one video submission.
 
 All fifteen per-script opt-ins still default to false. Indic/SEA joiners and word-break controls, CJK, broader font/device/readability, ASR/audio/custom effects/platform acceptance and live/master acceptance remain open; EDITOR-01 stays Partial. Original older dirty checkout and user runtime data are preserved. Publish the separately reviewed CI-fix payload and verify its own native run before continuing CJK/font/readability. Historical sections below describe earlier checkpoints; this section and PROJECT_CHECKPOINT.json define current state.
-
 
 ## EDITOR-01U Southeast Asian/Tibetan verification — 2026-10-07 (IST)
 
@@ -1049,13 +1067,11 @@ EDITOR-01M mixed Latin/Devanagari font runs and the approved 18-file payload are
 
 This publication closure is retained in the portable handoff. Historical pending sections below describe earlier checkpoints.
 
-
 ## EDITOR-01M mixed-script font runs — 2026-10-06
 
 EDITOR-01M mixed Latin/Devanagari titles and captions are locally verified. Configured fonts can cover separate script/grapheme runs in the same overlay; complete conjuncts and combining clusters remain in one font. Glyph outlines use normalized font units and a shared baseline/line height. The Devanagari runtime fingerprint is bumped to avoid earlier cached layouts. Passed 56 unit, 7 HTTP, 6 production-browser and 5 recovery/configuration cases, API/web builds and 12 fresh migrations. Public publication and M native CI remain pending.
 
 Scope: opt-in Latin + Devanagari + common punctuation/numbers. A grapheme that no single configured font covers fails before storage/cache work; Devanagari mixed with RTL/other scripts is rejected. Existing non-Devanagari rendering retains its path. No new dependency, schema/migration, live/paid provider or user runtime-data change. Other Indic/CJK, mixed bidirectional text, ASR, device QA and full production acceptance remain open.
-
 
 ## EDITOR-01L publication closure — 2026-10-06
 
@@ -1063,14 +1079,11 @@ EDITOR-01L and its approved 13-file dependency/evidence follow-up are published 
 
 This closure record is retained locally in the portable handoff; the approved public payload is the exact tree recorded above. Historical pending/failure sections below describe earlier checkpoints.
 
-
 Patched-install checks: archive SHA-512 matches lockfile; installed package reports 1.2.2; Prisma generation/API/web production builds and 54 unit cases pass. Invalid nonfinite/negative/excessive source-map section offsets reject promptly; valid mapping lookup works. Production and full npm audits report zero vulnerabilities. Full application suites are retained as dated pre-patch L evidence and were not rerun for this transitive parser patch. Initial npm update changed the lock/hidden metadata but left installed bytes at 1.2.1; explicitly installed the integrity-checked official archive before final build/tests.
-
 
 ## EDITOR-01L publication and dependency follow-up — 2026-10-06
 
 EDITOR-01L 24-file payload is published at 924eadc0f207ed85ac9bc387c85a49d62fb50675 (tree 7a98fac4edadd4713772825bc3ad0bacf6dd045e). Actions run 37439306560 passed build and 54 unit cases, then failed production audit for source-map-js 1.2.1 (GHSA-68fv-2mgg-jv7q); upgrade/native application checks were skipped. The follow-up changes only the lockfile entry to source-map-js 1.2.2; production/full audits report zero vulnerabilities. Follow-up publication/native CI pending exact authorization.
-
 
 ## EDITOR-01L Devanagari rendering — 2026-10-06
 
@@ -1079,7 +1092,6 @@ EDITOR-01K is published and CI-verified. EDITOR-01L adds opt-in Devanagari title
 No universal Indic/CJK, arbitrary mixed-font, physical-device or ASR acceptance is claimed. The Noto Devanagari test font does not cover English letters; mixed English/Hindi requires one configured font covering the entire overlay. No dependency/schema change, paid/live provider call or user runtime-data change. Full Compose/MinIO and native restore acceptance remain open.
 
 K publication: `9c3e67c41f60a0a7408cca522cd7292a645425d9`, matching tree `fc45a64336541df456737f34629faff1f42f6502`; Actions run `37356934913` completed successfully.
-
 
 ## 2026-10-05 (IST) - EDITOR-01J publication closure and EDITOR-01K audio QA
 
@@ -1465,10 +1477,12 @@ Continued from the published MEDIA-01D checkpoint after confirming public `main`
 Fresh checks passed: 31 unit tests, API TypeScript build, Next.js 16.3.8 production build and full `npm run verify`. The full harness applied all 12 migrations and passed 7 HTTP, 6 production-browser and 5 recovery/configuration scenarios. The browser scenario reordered two scenes, duplicated and removed a copy, saved the final order and completed real FFmpeg render/approval. No user data, paid provider or live service was used.
 
 Published EDITOR-01A to public `main` as application commit `97381d1f620eb5f30ec095522c7057c99ac8c1c6`, tree `dbf2bf8dca90b3b6612a72960d37b5d5b010702f`. The remote head and tree matched the locally verified source. Push-created Actions run `37126029720` completed successfully: build, 31 unit tests, both dependency audits, populated upgrade, native application flows, browser-evidence upload and cleanup all passed.
+
 ## 2026-10-17 — POLICY-01D local source-provenance gate
 
 Recovered exact public POLICY-01C base, inspected five official Google sources, and bound operator maintenance/readiness to their ordered fingerprint. Focused tests, isolated HTTP, builds and audits passed. Missing-font runs are excluded, not passes. No public write or live provider call occurred before approval.
 <!-- POLICY01D_NATIVE_CLOSURE_START -->
+
 ## POLICY-01D official YouTube source provenance publication and native CI — 2026-10-17 UTC
 
 The approved 23-path source/config/docs/evidence/checkpoint payload is public on `main` at `d1651879dee580eed48c108f84bd24a7f3d242e5` (parent `972ca69b79809c47db1f12597931a3e965c57f31`, tree `3d85ca8f6d2c9fbeba5747a62060f3fa88e144e8`). Remote compare showed exactly 23 approved paths with no deletion or extra path, and the public tree matches the frozen locally verified tree.
@@ -1477,14 +1491,17 @@ Its own Actions run `39020625965` (#79), job `117361538915`, attempt 1 succeeded
 
 POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to the maintained official YouTube source-manifest fingerprint `3959c5d7738b34e9e8c7b2bcf9193460dffc06f47f787782ae06a67575f8debf`. It fails closed on missing or mismatched version, fingerprint or review time. It does not fetch or hash remote page bodies, prove that every platform rule is complete, perform a live Google upload, prove deployed behavior, verify native PostgreSQL plus private-media restore, or complete master acceptance. POLICY-01 remains Partial. GitHub's Node-action/setup-java/Ubuntu migration notices and Redis/DEP0169 advisories were non-failing maintenance warnings; every workflow step passed. This 16-path closure payload is locally verified and unpublished pending separate approval; implementation is unchanged. See `docs/qa/policy01d-platform-policy-provenance-evidence.json`, `docs/qa/policy01d-platform-policy-provenance-native-ci-evidence.json` and `docs/qa/policy01d-platform-policy-provenance-native-unit-receipts.json`.
 <!-- POLICY01D_NATIVE_CLOSURE_END -->
+
 ## 2026-11-10 - NOTIFY-01B / DATA-01B review and local merge
 
 Reviewed `notify-01b` (`6db62d6`) and `data-01b` (`ff85254`) against the integrated `main` base `5e8b537`. NOTIFY-01B's publishing and AI failure notification paths passed 20 focused tests after rebuilding the API. DATA-01B's disconnect, credential scrubbing and publication cascade passed 11 focused data-governance tests and the API build; its branch's three trailing blank-line violations were removed during conflict resolution. The implementation merge is `058cf27` with tree `13e9794`, and docs were published at `f1ba479`. Exact run `42810027002` passed all three jobs and all 41 required steps. Artifact names, sizes and digests were recorded; browser bytes/report remain uninspected because downloads were proxy403-blocked. The Windows HTTP harness was not forced against existing services because its occupied-port guard and missing media prerequisites remain active.
+
 ## NOTIFY-01C / DATA-01C local integration - 2026-11-10
 
 Reviewed the separate C branches against the current integrated main and retained their histories. Integrated the notification center UI with guarded polling and read/unread/read-all actions, wired low-credit notifications to the atomic credit-ledger threshold crossing, and wired approval-required notifications to the policy-review mutation. Hardened retention pruning with a workspace row lock and a private-output-key predicate so object-bound render rows remain available for object-store reconciliation. Added focused credit, policy-review, notification-center and retention regressions plus updated billing, notification and data-governance documentation.
 
 Prisma generation, API/web/combined builds and 37 focused notification/data-governance unit tests pass. The full local suite is not claimed: 292 of 416 tests passed before 124 render/font/FFmpeg/librsvg/Python prerequisite failures on Windows. The isolated HTTP/browser harness was not run because direct browser execution is refused outside the harness and an existing Redis listener occupies port 6379. No user services, real environment, credentials, provider calls or runtime backups were touched. Exact three-job CI on the new published commit, source packaging and receipt remain pending.
+
 ## 2026-11-11 — DATA-01D/F integration review and correctness hardening
 
 - Reviewed Antigravity DATA-01D/E/F history against main `d19edbe` in isolated worktree `integration/data-01f`; original worktrees remain untouched.

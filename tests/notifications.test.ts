@@ -53,14 +53,11 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
   });
 
   test("notification stream retries use bounded backoff without a reconnect storm", () => {
-    assert.deepEqual(
-      [0, 1, 2, 3, 4, 5, 99].map(notificationStreamRetryDelay),
-      [
-        ...NOTIFICATION_STREAM_RETRY_DELAYS_MS,
-        NOTIFICATION_STREAM_RETRY_DELAYS_MS.at(-1),
-        NOTIFICATION_STREAM_RETRY_DELAYS_MS.at(-1),
-      ],
-    );
+    assert.deepEqual([0, 1, 2, 3, 4, 5, 99].map(notificationStreamRetryDelay), [
+      ...NOTIFICATION_STREAM_RETRY_DELAYS_MS,
+      NOTIFICATION_STREAM_RETRY_DELAYS_MS.at(-1),
+      NOTIFICATION_STREAM_RETRY_DELAYS_MS.at(-1),
+    ]);
     assert.equal(notificationStreamRetryDelay(Number.NaN), 1000);
     assert.equal(notificationStreamRetryDelay(-2), 1000);
   });
@@ -79,12 +76,21 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
       resolveNotificationLink(base, "/workspaces/org-a/billing"),
       { kind: "billing" },
     );
+    assert.deepEqual(resolveNotificationLink(base, "/workspaces/org-a/media"), {
+      kind: "media",
+    });
     assert.equal(
       resolveNotificationLink(base, "/workspaces/org-b/content/content-a"),
       null,
     );
-    assert.equal(resolveNotificationLink(base, "https://evil.example/path"), null);
-    assert.equal(resolveNotificationLink(base, "/workspaces/org-a/unknown"), null);
+    assert.equal(
+      resolveNotificationLink(base, "https://evil.example/path"),
+      null,
+    );
+    assert.equal(
+      resolveNotificationLink(base, "/workspaces/org-a/unknown"),
+      null,
+    );
   });
 
   test("creates durable, tenant-bound notification on successful render terminal event", async () => {
@@ -118,9 +124,10 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
     );
 
     const rows = (
-      await db.query('SELECT * FROM "Notification" WHERE "organizationId" = $1', [
-        orgId,
-      ])
+      await db.query(
+        'SELECT * FROM "Notification" WHERE "organizationId" = $1',
+        [orgId],
+      )
     ).rows as any[];
 
     assert.equal(rows.length, 1);
@@ -317,9 +324,10 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
 
     // Initial state is unread
     const initial = (
-      await db.query('SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1', [
-        notifId,
-      ])
+      await db.query(
+        'SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1',
+        [notifId],
+      )
     ).rows[0] as any;
     assert.equal(initial.readAt, null);
     assert.equal(initial.readBy, null);
@@ -332,9 +340,10 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
     );
 
     const firstAck = (
-      await db.query('SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1', [
-        notifId,
-      ])
+      await db.query(
+        'SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1',
+        [notifId],
+      )
     ).rows[0] as any;
     assert.equal(firstAck.readBy, readerA);
     assert.ok(firstAck.readAt);
@@ -347,9 +356,10 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
     );
 
     const afterAck = (
-      await db.query('SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1', [
-        notifId,
-      ])
+      await db.query(
+        'SELECT "readAt", "readBy" FROM "Notification" WHERE id = $1',
+        [notifId],
+      )
     ).rows[0] as any;
 
     assert.equal(afterAck.readBy, readerA);
@@ -449,7 +459,10 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(failedNotif.type, "RENDER_FAILED");
     assert.equal(failedNotif.title, "Render failed");
     assert.match(failedNotif.body, /GPU memory exceeded/);
-    assert.equal((failedNotif.data as any).error, "GPU memory exceeded during composite");
+    assert.equal(
+      (failedNotif.data as any).error,
+      "GPU memory exceeded during composite",
+    );
 
     // 3. Terminal CANCELED
     const canceledNotif = await createRenderNotification(prisma, {
@@ -481,7 +494,11 @@ describe("Notifications - Controller & Application Service Contracts", () => {
       });
     }
 
-    const req = fakeReq({ userId: actorId, organizationId: org.id, role: "OWNER" });
+    const req = fakeReq({
+      userId: actorId,
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     // Page 1: take 5, skip 0
     const page1 = await controller.list(req, { take: 5, skip: 0 });
@@ -511,13 +528,33 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("tenant isolation & role-based visibility in list and get", async () => {
-    const orgA = await prisma.organization.create({ data: { name: "Org Alpha" } });
-    const orgB = await prisma.organization.create({ data: { name: "Org Beta" } });
+    const orgA = await prisma.organization.create({
+      data: { name: "Org Alpha" },
+    });
+    const orgB = await prisma.organization.create({
+      data: { name: "Org Beta" },
+    });
 
-    const ownerA = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "OWNER" });
-    const editorA1 = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "EDITOR" });
-    const editorA2 = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "EDITOR" });
-    const ownerB = fakeReq({ userId: randomUUID(), organizationId: orgB.id, role: "OWNER" });
+    const ownerA = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgA.id,
+      role: "OWNER",
+    });
+    const editorA1 = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgA.id,
+      role: "EDITOR",
+    });
+    const editorA2 = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgA.id,
+      role: "EDITOR",
+    });
+    const ownerB = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgB.id,
+      role: "OWNER",
+    });
 
     // Notification in Org A assigned to editorA1
     const notifA1 = await createRenderNotification(prisma, {
@@ -588,8 +625,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.markReadPost and markReadPatch: idempotent acknowledgement", async () => {
-    const org = await prisma.organization.create({ data: { name: "Ack Test Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "CREATOR" });
+    const org = await prisma.organization.create({
+      data: { name: "Ack Test Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "CREATOR",
+    });
 
     const notif = await createRenderNotification(prisma, {
       organizationId: org.id,
@@ -616,9 +659,19 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.acknowledge: concurrent mark-read calls preserve first acknowledgement", async () => {
-    const org = await prisma.organization.create({ data: { name: "Concurrent Ack Org" } });
-    const userA = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
-    const userB = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "ADMIN" });
+    const org = await prisma.organization.create({
+      data: { name: "Concurrent Ack Org" },
+    });
+    const userA = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
+    const userB = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "ADMIN",
+    });
 
     const notif = await createRenderNotification(prisma, {
       organizationId: org.id,
@@ -643,14 +696,22 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.ok([userA.userId, userB.userId].includes(resA.readBy!));
 
     // Database state must match the preserved first winner
-    const inDb = await prisma.notification.findUniqueOrThrow({ where: { id: notif.id } });
+    const inDb = await prisma.notification.findUniqueOrThrow({
+      where: { id: notif.id },
+    });
     assert.equal(String(inDb.readAt), String(resA.readAt));
     assert.equal(inDb.readBy, resA.readBy);
   });
 
   test("render failure atomic transaction: eliminates partial-write risk between status update and notification", async () => {
-    const org = await prisma.organization.create({ data: { name: "Atomic Failure Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Atomic Failure Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const renderId = randomUUID();
 
     const content = await prisma.contentItem.create({
@@ -708,7 +769,9 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     });
 
     // Verify both renderJob is FAILED and notification exists
-    const jobAfter = await prisma.renderJob.findUniqueOrThrow({ where: { id: renderId } });
+    const jobAfter = await prisma.renderJob.findUniqueOrThrow({
+      where: { id: renderId },
+    });
     assert.equal(jobAfter.status, "FAILED");
     const notifAfter = await prisma.notification.findFirst({
       where: { organizationId: org.id, entityId: renderId },
@@ -735,22 +798,21 @@ describe("Notifications - Controller & Application Service Contracts", () => {
       },
     });
 
-    await assert.rejects(
-      async () => {
-        await prisma.$transaction(async (tx) => {
-          await tx.renderJob.updateMany({
-            where: { id: secondRenderId, status: "RUNNING" },
-            data: { status: "FAILED", error: "Simulated abort" },
-          });
-          // Deliberate error inside transaction to force rollback
-          throw new Error("Simulated downstream error during notification write");
+    await assert.rejects(async () => {
+      await prisma.$transaction(async (tx) => {
+        await tx.renderJob.updateMany({
+          where: { id: secondRenderId, status: "RUNNING" },
+          data: { status: "FAILED", error: "Simulated abort" },
         });
-      },
-      /Simulated downstream error/,
-    );
+        // Deliberate error inside transaction to force rollback
+        throw new Error("Simulated downstream error during notification write");
+      });
+    }, /Simulated downstream error/);
 
     // Verify renderJob was rolled back to RUNNING (no partial write)
-    const rolledBackJob = await prisma.renderJob.findUniqueOrThrow({ where: { id: secondRenderId } });
+    const rolledBackJob = await prisma.renderJob.findUniqueOrThrow({
+      where: { id: secondRenderId },
+    });
     assert.equal(rolledBackJob.status, "RUNNING");
     // Verify no notification was written
     const noNotif = await prisma.notification.findFirst({
@@ -760,9 +822,19 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.readAll: marks all unread in scope as read", async () => {
-    const org = await prisma.organization.create({ data: { name: "ReadAll Org" } });
-    const userA = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "EDITOR" });
-    const userB = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "EDITOR" });
+    const org = await prisma.organization.create({
+      data: { name: "ReadAll Org" },
+    });
+    const userA = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "EDITOR",
+    });
+    const userB = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "EDITOR",
+    });
 
     // 3 notifications for userA
     for (let i = 0; i < 3; i++) {
@@ -800,8 +872,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("audit log preservation: audit log entries remain intact alongside notification creation", async () => {
-    const org = await prisma.organization.create({ data: { name: "Audit Integrity Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "ADMIN" });
+    const org = await prisma.organization.create({
+      data: { name: "Audit Integrity Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "ADMIN",
+    });
     const renderId = randomUUID();
 
     // Simulate render cancellation transaction: audit log + notification
@@ -842,8 +920,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("worker abort on canceled render does not emit duplicate or conflicting FAILED notification", async () => {
-    const org = await prisma.organization.create({ data: { name: "Cancel Guard Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Cancel Guard Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const renderId = randomUUID();
 
     // 1. Controller cancels the job and emits CANCELED notification
@@ -857,7 +941,11 @@ describe("Notifications - Controller & Application Service Contracts", () => {
 
     // 2. Simulated worker abort: updateMany with status: "RUNNING" returns count = 0
     // Because the job is already canceled, failed.count is 0, so no FAILED notification is created
-    const ownership = { id: renderId, status: "RUNNING" as const, runToken: "stale-token" };
+    const ownership = {
+      id: renderId,
+      status: "RUNNING" as const,
+      runToken: "stale-token",
+    };
     const failed = await prisma.renderJob.updateMany({
       where: ownership,
       data: { status: "FAILED" },
@@ -883,7 +971,9 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("createPublishNotification: handles CONFIRMED and REJECTED outcomes with category PUBLISH and idempotency", async () => {
-    const org = await prisma.organization.create({ data: { name: "Publish Notification Org" } });
+    const org = await prisma.organization.create({
+      data: { name: "Publish Notification Org" },
+    });
     const actorId = randomUUID();
     const attemptId = randomUUID();
 
@@ -932,8 +1022,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("recordPublicationOutcome: atomically triggers publication notification on CONFIRMED and REJECTED", async () => {
-    const org = await prisma.organization.create({ data: { name: "Atomic Publish Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Atomic Publish Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const content = await prisma.contentItem.create({
       data: {
         organizationId: org.id,
@@ -1008,7 +1104,9 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("createAiNotification: handles FAILED media generation with category AI and idempotency", async () => {
-    const org = await prisma.organization.create({ data: { name: "AI Notification Org" } });
+    const org = await prisma.organization.create({
+      data: { name: "AI Notification Org" },
+    });
     const actorId = randomUUID();
     const jobId = randomUUID();
 
@@ -1037,8 +1135,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.list: filters by category PUBLISH, AI, and RENDER", async () => {
-    const org = await prisma.organization.create({ data: { name: "Category Filter Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Category Filter Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     // Create 1 RENDER, 2 PUBLISH, and 1 AI notification
     await createRenderNotification(prisma, {
@@ -1086,8 +1190,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.readAll: category-specific batch mark-read marks only target category", async () => {
-    const org = await prisma.organization.create({ data: { name: "Category ReadAll Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Category ReadAll Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     // 2 unread RENDER, 2 unread PUBLISH
     await createRenderNotification(prisma, {
@@ -1122,11 +1232,17 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(res.acknowledged, 2);
 
     // PUBLISH notifications are all read
-    const publishList = await controller.list(user, { category: "PUBLISH", unreadOnly: "true" });
+    const publishList = await controller.list(user, {
+      category: "PUBLISH",
+      unreadOnly: "true",
+    });
     assert.equal(publishList.unreadCount, 0);
 
     // RENDER notifications remain unread
-    const renderList = await controller.list(user, { category: "RENDER", unreadOnly: "true" });
+    const renderList = await controller.list(user, {
+      category: "RENDER",
+      unreadOnly: "true",
+    });
     assert.equal(renderList.unreadCount, 2);
   });
 
@@ -1142,8 +1258,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("createCreditsLowNotification: creates BILLING/CREDITS_LOW notification with balance and threshold", async () => {
-    const org = await prisma.organization.create({ data: { name: "Credits Low Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Credits Low Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     const n = await createCreditsLowNotification(prisma, {
       organizationId: org.id,
@@ -1167,11 +1289,26 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("credit ledger crossing emits one workspace-wide low-balance notification atomically", async () => {
-    const org = await prisma.organization.create({ data: { name: "Credits Trigger Org" } });
+    const org = await prisma.organization.create({
+      data: { name: "Credits Trigger Org" },
+    });
     const actorId = randomUUID();
     await prisma.$transaction(async (tx) => {
-      await grantCredits(tx, org.id, 25, randomUUID(), "Synthetic threshold grant", actorId);
-      await reserveCredits(tx, org.id, `threshold:${randomUUID()}`, 10, actorId);
+      await grantCredits(
+        tx,
+        org.id,
+        25,
+        randomUUID(),
+        "Synthetic threshold grant",
+        actorId,
+      );
+      await reserveCredits(
+        tx,
+        org.id,
+        `threshold:${randomUUID()}`,
+        10,
+        actorId,
+      );
     });
     const rows = await prisma.notification.findMany({
       where: { organizationId: org.id, type: "CREDITS_LOW" },
@@ -1183,10 +1320,19 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("credit ledger crossing from the exact threshold emits a low-balance notification", async () => {
-    const org = await prisma.organization.create({ data: { name: "Credits Boundary Org" } });
+    const org = await prisma.organization.create({
+      data: { name: "Credits Boundary Org" },
+    });
     const actorId = randomUUID();
     await prisma.$transaction(async (tx) => {
-      await grantCredits(tx, org.id, 20, randomUUID(), "Synthetic boundary grant", actorId);
+      await grantCredits(
+        tx,
+        org.id,
+        20,
+        randomUUID(),
+        "Synthetic boundary grant",
+        actorId,
+      );
       await reserveCredits(tx, org.id, `boundary:${randomUUID()}`, 3, actorId);
     });
     const rows = await prisma.notification.findMany({
@@ -1197,8 +1343,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("createApprovalRequiredNotification: creates APPROVAL/APPROVAL_REQUIRED notification with review metadata", async () => {
-    const org = await prisma.organization.create({ data: { name: "Approval Required Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Approval Required Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const reviewId = randomUUID();
 
     const n = await createApprovalRequiredNotification(prisma, {
@@ -1222,8 +1374,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.markUnread: toggles read notification back to unread and updates unread counts", async () => {
-    const org = await prisma.organization.create({ data: { name: "Unread Toggle Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Unread Toggle Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     const n = await createRenderNotification(prisma, {
       organizationId: org.id,
@@ -1257,8 +1415,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("createPaymentFailedNotification: creates idempotent BILLING/PAYMENT_FAILED notification", async () => {
-    const org = await prisma.organization.create({ data: { name: "Payment Failed Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Payment Failed Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const invoiceId = randomUUID();
 
     const n = await createPaymentFailedNotification(prisma, {
@@ -1290,14 +1454,23 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(dup.id, n.id);
 
     const count = await prisma.notification.count({
-      where: { organizationId: org.id, eventKey: `billing:payment_failed:${invoiceId}` },
+      where: {
+        organizationId: org.id,
+        eventKey: `billing:payment_failed:${invoiceId}`,
+      },
     });
     assert.equal(count, 1);
   });
 
   test("createSubscriptionEventNotification: creates idempotent subscription update and cancellation notifications", async () => {
-    const org = await prisma.organization.create({ data: { name: "Sub Event Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Sub Event Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const subscriptionId = randomUUID();
 
     // Updated event
@@ -1312,7 +1485,10 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(updated.type, "SUBSCRIPTION_UPDATED");
     assert.equal(updated.category, "BILLING");
     assert.equal(updated.title, "Subscription updated");
-    assert.equal(updated.eventKey, `billing:subscription:${subscriptionId}:updated:evt_subscription_updated`);
+    assert.equal(
+      updated.eventKey,
+      `billing:subscription:${subscriptionId}:updated:evt_subscription_updated`,
+    );
     assert.equal((updated.data as any).planName, "Enterprise Tier");
 
     const laterUpdated = await createSubscriptionEventNotification(prisma, {
@@ -1337,13 +1513,22 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(canceled.type, "SUBSCRIPTION_CANCELED");
     assert.equal(canceled.category, "BILLING");
     assert.equal(canceled.title, "Subscription canceled");
-    assert.equal(canceled.eventKey, `billing:subscription:${subscriptionId}:canceled:evt_subscription_canceled`);
+    assert.equal(
+      canceled.eventKey,
+      `billing:subscription:${subscriptionId}:canceled:evt_subscription_canceled`,
+    );
     assert.equal((canceled.data as any).cancelAtPeriodEnd, true);
   });
 
   test("createContentReadyNotification: creates idempotent CONTENT/CONTENT_READY notification", async () => {
-    const org = await prisma.organization.create({ data: { name: "Content Ready Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Content Ready Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
     const contentId = randomUUID();
     const contentRevision = 3;
     const campaignId = randomUUID();
@@ -1361,7 +1546,10 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     assert.equal(n.category, "CONTENT");
     assert.equal(n.title, "Content ready");
     assert.equal(n.link, `/workspaces/${org.id}/content/${contentId}`);
-    assert.equal(n.eventKey, `content:${contentId}:revision:${contentRevision}:ready`);
+    assert.equal(
+      n.eventKey,
+      `content:${contentId}:revision:${contentRevision}:ready`,
+    );
     assert.equal((n.data as any).contentTitle, "Spring Launch Promo");
     assert.equal((n.data as any).contentRevision, contentRevision);
     assert.equal((n.data as any).campaignId, campaignId);
@@ -1377,11 +1565,27 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.summary: returns totalUnread and byCategory counts with tenant isolation and role scoping", async () => {
-    const orgA = await prisma.organization.create({ data: { name: "Summary Org A" } });
-    const orgB = await prisma.organization.create({ data: { name: "Summary Org B" } });
-    const ownerA = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "OWNER" });
-    const member1A = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "MEMBER" });
-    const member2A = fakeReq({ userId: randomUUID(), organizationId: orgA.id, role: "MEMBER" });
+    const orgA = await prisma.organization.create({
+      data: { name: "Summary Org A" },
+    });
+    const orgB = await prisma.organization.create({
+      data: { name: "Summary Org B" },
+    });
+    const ownerA = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgA.id,
+      role: "OWNER",
+    });
+    const member1A = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgA.id,
+      role: "MEMBER",
+    });
+    const member2A = fakeReq({
+      userId: randomUUID(),
+      organizationId: orgA.id,
+      role: "MEMBER",
+    });
 
     // Org A notifications:
     // 1. RENDER unread (workspace-wide: userId null)
@@ -1458,8 +1662,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
     });
   });
   test("controller.preferences: get and update notification preferences with audit trail", async () => {
-    const org = await prisma.organization.create({ data: { name: "Preferences Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Preferences Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     const initial = await controller.getPreferences(user);
     assert.equal(initial.organizationId, org.id);
@@ -1490,8 +1700,14 @@ describe("Notifications - Controller & Application Service Contracts", () => {
   });
 
   test("controller.list and summary omit muted categories unless explicitly included", async () => {
-    const org = await prisma.organization.create({ data: { name: "Muting Filter Org" } });
-    const user = fakeReq({ userId: randomUUID(), organizationId: org.id, role: "OWNER" });
+    const org = await prisma.organization.create({
+      data: { name: "Muting Filter Org" },
+    });
+    const user = fakeReq({
+      userId: randomUUID(),
+      organizationId: org.id,
+      role: "OWNER",
+    });
 
     await createRenderNotification(prisma, {
       organizationId: org.id,

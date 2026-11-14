@@ -42,7 +42,19 @@
     "status": "pending_own_final_commit_ci",
     "allThreeJobsAndRequiredStepsPassed": false,
     "priorHRunNotSubstitute": true,
-    "artifactByteInspection": "pending exact final run; authenticated artifact downloads may remain unavailable"
+    "artifactByteInspection": "pending exact final run; authenticated artifact downloads may remain unavailable",
+    "failedAttempt": {
+      "commit": "b45bf63c5623abd541107da84980b21dbd157828",
+      "runId": 43586157964,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43586157964",
+      "passedJobs": [
+        "Native populated upgrade and migration recovery",
+        "Disposable Compose and native restore"
+      ],
+      "failedJob": "Native application verification",
+      "failedStep": "Verify native application flows",
+      "reason": "The browser regression fixture used /assets while notification event links use /media; the resolver correctly rejected the unsupported path and the assertion timed out."
+    }
   },
   "limits": [
     "This increment activates in-app navigation only; it adds no email/SMS/mobile push, durable replay, cross-process fan-out or realtime delivery SLO.",

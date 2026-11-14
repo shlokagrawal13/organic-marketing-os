@@ -92,12 +92,16 @@ test("notification center loads tenant updates and toggles unread state", async 
   await expect(trigger).toHaveAttribute("aria-label", "Notifications");
 
   await page.getByRole("button", { name: "Notification preferences" }).click();
-  await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "Render updates" }),
+  ).toBeChecked();
   await page.getByRole("checkbox", { name: "Render updates" }).uncheck();
   await page.getByRole("button", { name: "Close notifications" }).click();
   await trigger.click();
   await page.getByRole("button", { name: "Notification preferences" }).click();
-  await expect(page.getByRole("checkbox", { name: "Render updates" })).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "Render updates" }),
+  ).toBeChecked();
 });
 
 test("notification center reconnects the optional live stream after a transient failure", async ({
@@ -159,9 +163,9 @@ test("notification deep links open the current workspace view", async ({
       organizationId: org.id,
       type: "CONTENT_READY",
       category: "CONTENT",
-      title: "Open the asset library",
+      title: "Open the media library",
       body: "This notification should navigate inside the active workspace.",
-      link: `/workspaces/${org.id}/assets`,
+      link: `/workspaces/${org.id}/media`,
       eventKey: `content:${randomUUID()}:READY`,
     },
   });
@@ -178,6 +182,8 @@ test("notification deep links open the current workspace view", async ({
 
   await page.goto("/");
   await page.getByRole("button", { name: /Notifications/ }).click();
-  await page.getByRole("button", { name: /Open the asset library/ }).click();
-  await expect(page.getByRole("heading", { name: "Asset library" })).toBeVisible();
+  await page.getByRole("button", { name: /Open the media library/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Asset library" }),
+  ).toBeVisible();
 });
