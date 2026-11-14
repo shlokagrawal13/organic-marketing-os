@@ -50,6 +50,7 @@ import { useRevisionPersistence } from "./use-revision-persistence";
 import BrandSaveStatus from "./brand-save-status";
 import WorkspaceSettings from "./workspace-settings";
 import NotificationsPanel from "./notifications-panel";
+import { resolveNotificationLink } from "./notification-links";
 type Any = Record<string, any>;
 const initialProfile = {
   name: "",
@@ -174,6 +175,8 @@ export default function Workspace({
   const [policyDirty, setPolicyDirty] = useState(false);
   const [researchDirty, setResearchDirty] = useState(false);
   const [searchTarget, setSearchTarget] = useState<SearchResult | null>(null);
+  const [notificationContentId, setNotificationContentId] = useState<string | null>(null);
+  const [notificationRenderId, setNotificationRenderId] = useState<string | null>(null);
   const [orgId, setOrgId] = useState(session.memberships[0].organizationId),
     [view, setView] = useState("dashboard"),
     [navOpen, setNavOpen] = useState(false),
@@ -395,6 +398,8 @@ export default function Workspace({
     setResearchDirty(false);
     setSettingsDirty(false);
     setSearchTarget(null);
+    setNotificationContentId(null);
+    setNotificationRenderId(null);
     setNavVersion((v) => v + 1);
     setView(next);
     setNavOpen(false);
@@ -406,6 +411,53 @@ export default function Workspace({
     setDark(next);
     document.documentElement.dataset.theme = next ? "dark" : "light";
     localStorage.setItem("organic-theme", next ? "dark" : "light");
+  }
+  function openNotification(notification: {
+    link?: string | null;
+    data?: Record<string, unknown> | null;
+  }) {
+    const target = resolveNotificationLink(base, notification.link);
+    if (!target) {
+      setNotice("This notification is no longer available in this workspace.");
+      return;
+    }
+    if (target.kind === "content") {
+      go("content");
+      setNotificationContentId(target.id);
+      return;
+    }
+    if (target.kind === "render") {
+      go("video");
+      setNotificationRenderId(target.id);
+      return;
+    }
+    if (target.kind === "publications") {
+      go("calendar");
+      return;
+    }
+    if (target.kind === "media") {
+      go("assets");
+      return;
+    }
+    if (target.kind === "billing") {
+      if (admin) go("credits");
+      else {
+        go("dashboard");
+        setNotice("Billing details are available to workspace administrators.");
+      }
+      return;
+    }
+    const contentId =
+      typeof notification.data?.contentId === "string"
+        ? notification.data.contentId
+        : null;
+    if (contentId) {
+      go("content");
+      setNotificationContentId(contentId);
+    } else {
+      go("calendar");
+      setNotice("Open the publication calendar to review this request.");
+    }
   }
   async function action(fn: () => Promise<any>, success: string) {
     setBusy(true);
@@ -649,7 +701,11 @@ export default function Workspace({
           </div>
           <div className="topbar-right">
             <span className="timezone">{org.timezone}</span>
-            <NotificationsPanel base={base} disabled={navigationBusy} />
+            <NotificationsPanel
+              base={base}
+              disabled={navigationBusy}
+              onOpenNotification={openNotification}
+            />
             <button
               className="icon-button"
               onClick={theme}
@@ -725,7 +781,7 @@ export default function Workspace({
                   initialContentId={
                     searchTarget?.kind === "content"
                       ? searchTarget.id
-                      : undefined
+                      : notificationContentId || undefined
                   }
                   initialCampaignId={
                     searchTarget?.kind === "campaign"
@@ -744,6 +800,7 @@ export default function Workspace({
                   initialAssetId={
                     searchTarget?.kind === "asset" ? searchTarget.id : undefined
                   }
+                  initialRenderId={notificationRenderId || undefined}
                 />
               )}
               {view === "research" && (

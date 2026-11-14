@@ -142,3 +142,42 @@ test("notification center reconnects the optional live stream after a transient 
     { timeout: 15000 },
   );
 });
+
+test("notification deep links open the current workspace view", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({
+    data: { name: "Notification deep link workspace" },
+  });
+  organizations.push(org.id);
+  const user = await actor(org.id, "OWNER");
+  users.push(user.id);
+  await db.notification.create({
+    data: {
+      organizationId: org.id,
+      type: "CONTENT_READY",
+      category: "CONTENT",
+      title: "Open the asset library",
+      body: "This notification should navigate inside the active workspace.",
+      link: `/workspaces/${org.id}/assets`,
+      eventKey: `content:${randomUUID()}:READY`,
+    },
+  });
+  await page.context().addCookies([
+    {
+      name: "mos_session",
+      value: user.headers.cookie.split("=")[1],
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  ]);
+
+  await page.goto("/");
+  await page.getByRole("button", { name: /Notifications/ }).click();
+  await page.getByRole("button", { name: /Open the asset library/ }).click();
+  await expect(page.getByRole("heading", { name: "Asset library" })).toBeVisible();
+});

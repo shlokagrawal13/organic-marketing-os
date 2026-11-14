@@ -1,3 +1,13 @@
+<!-- NOTIFY01I_CURRENT_START -->
+## Current: NOTIFY-01I tenant-safe notification deep links - 2026-11-14
+
+NOTIFY-01I activates the existing tenant-bound notification link field in the workspace UI. Clicking an unread notification acknowledges it, closes the popover and opens the matching content, render, media, publication/calendar or billing view. Policy-review notifications use their existing data.contentId when available. Absolute, cross-workspace, malformed and unknown paths fail closed; render targets are re-read through the tenant-scoped API before selection.
+
+This is a bounded in-app navigation increment: no schema, migration, provider call, external delivery, durable replay, cross-process fan-out or realtime delivery-SLO claim is added. Existing notification creation, category muting, read/unread actions, SSE reconnect and polling fallback remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification tests, formatting and diff checks pass. The owned UI verifier remains fail-closed before fixture startup because Redis 127.0.0.1:6379 is occupied; no existing service was contacted.
+
+The source needs its own exact published three-job CI and paired portable package/receipt; the prior H run is not a substitute. See NOTIFY-01I evidence (docs/qa/notify01i-evidence.json) and notification deep links (docs/NOTIFICATION_DEEP_LINKS.md). Preserve real services, credentials, volumes, Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- NOTIFY01I_CURRENT_END -->
+
 <!-- NOTIFY01H_CURRENT_START -->
 ## Current: NOTIFY-01H bounded live-stream reconnect - 2026-11-13
 

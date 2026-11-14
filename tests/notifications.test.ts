@@ -25,6 +25,7 @@ import {
   NOTIFICATION_STREAM_RETRY_DELAYS_MS,
   notificationStreamRetryDelay,
 } from "../apps/web/app/notifications-stream";
+import { resolveNotificationLink } from "../apps/web/app/notification-links";
 
 describe("Notifications - Unit & Idempotent Event Contracts", () => {
   let db: PGlite;
@@ -62,6 +63,28 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
     );
     assert.equal(notificationStreamRetryDelay(Number.NaN), 1000);
     assert.equal(notificationStreamRetryDelay(-2), 1000);
+  });
+
+  test("notification deep links stay tenant-bound and resolve to supported views", () => {
+    const base = "/workspaces/org-a";
+    assert.deepEqual(
+      resolveNotificationLink(base, "/workspaces/org-a/content/content-a"),
+      { kind: "content", id: "content-a" },
+    );
+    assert.deepEqual(
+      resolveNotificationLink(base, "/workspaces/org-a/renders/render-a"),
+      { kind: "render", id: "render-a" },
+    );
+    assert.deepEqual(
+      resolveNotificationLink(base, "/workspaces/org-a/billing"),
+      { kind: "billing" },
+    );
+    assert.equal(
+      resolveNotificationLink(base, "/workspaces/org-b/content/content-a"),
+      null,
+    );
+    assert.equal(resolveNotificationLink(base, "https://evil.example/path"), null);
+    assert.equal(resolveNotificationLink(base, "/workspaces/org-a/unknown"), null);
   });
 
   test("creates durable, tenant-bound notification on successful render terminal event", async () => {

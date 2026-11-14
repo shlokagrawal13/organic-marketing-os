@@ -50,12 +50,14 @@ export default function MediaWorkspace({
   view,
   onNavigate,
   initialAssetId,
+  initialRenderId,
 }: {
   base: string;
   role: string;
   view: string;
   onNavigate: (v: string) => void;
   initialAssetId?: string;
+  initialRenderId?: string;
 }) {
   if (view === "assets") return <AssetLibrary base={base} role={role} initialAssetId={initialAssetId} />;
   return (
@@ -71,7 +73,11 @@ export default function MediaWorkspace({
           Open content library
         </button>
       </div>
-      <RenderPanel base={base} role={role} />
+      <RenderPanel
+        base={base}
+        role={role}
+        initialRenderId={initialRenderId}
+      />
     </>
   );
 }
@@ -521,11 +527,13 @@ export function RenderPanel({
   role,
   content,
   dirty = false,
+  initialRenderId,
 }: {
   base: string;
   role: string;
   content?: Any;
   dirty?: boolean;
+  initialRenderId?: string;
 }) {
   const [items, setItems] = useState<Any[]>([]),
     [videos, setVideos] = useState<Any[]>([]),
@@ -537,7 +545,8 @@ export function RenderPanel({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
-    [reviewed, setReviewed] = useState(false);
+    [reviewed, setReviewed] = useState(false),
+    [targetRenderId, setTargetRenderId] = useState(initialRenderId || "");
   const [options, setOptions] = useState({
     preset: undefined as RenderPresetId | undefined,
     aspect: "9:16",
@@ -558,6 +567,12 @@ export function RenderPanel({
       ),
     );
   }, [base, contentId]);
+  useEffect(() => {
+    if (!initialRenderId || content) return;
+    api(`${base}/renders/${initialRenderId}`)
+      .then((job) => setSelected(job.contentId))
+      .catch((e) => setError((e as Error).message));
+  }, [base, content, initialRenderId]);
   useEffect(() => {
     let mounted = true;
     setLoading(true);
@@ -586,6 +601,11 @@ export function RenderPanel({
     setActiveId("");
     setReviewed(false);
   }, [loadJobs, content?.revision, content?.status]);
+  useEffect(() => {
+    if (!targetRenderId || !items.some((job) => job.id === targetRenderId)) return;
+    setActiveId(targetRenderId);
+    setTargetRenderId("");
+  }, [items, targetRenderId]);
   useEffect(() => {
     if (!items.some((j) => ["QUEUED", "RUNNING"].includes(j.status))) return;
     const timer = setInterval(

@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A, NOTIFY-01B, NOTIFY-01C, NOTIFY-01D, NOTIFY-01E, NOTIFY-01F & NOTIFY-01G)
+# In-App Notifications (NOTIFY-01A through NOTIFY-01I)
 
 > NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
 
@@ -15,6 +15,7 @@ NOTIFY-01 introduces a durable, tenant-bound in-app notification engine driven b
 - **Notification Preferences & Category Muting (NOTIFY-01E)**: Per-user notification category muting and preferences management (`GET|PUT|PATCH /workspaces/:organizationId/notifications/preferences`) automatically filters muted categories from inbox feeds and unread badge summaries unless explicitly requested (`includeMuted=true` or an explicit `category` query parameter).
 - **Notification Preference Controls (NOTIFY-01F)**: The workspace notification center exposes an accessible preferences panel backed by the NOTIFY-01E endpoints. Users can inspect and select muted categories, save explicitly, and immediately see the feed and unread badge refresh with the saved filter. Back, Cancel and close discard unsaved choices; the browser regression prevents stale local preferences from reappearing after reopening.
 - **Bounded Notification Live Updates (NOTIFY-01G)**: The notification center may open a tenant- and role-guarded SSE stream. The stream emits only a change cursor plus total/unread counts, checks the existing notification scope every two seconds, closes after 60 seconds and lets the browser refetch the existing guarded list. A 60-second polling fallback remains in place.
+- **Tenant-safe notification deep links (NOTIFY-01I)**: Clicking an unread notification acknowledges it, closes the popover and resolves only a same-workspace relative link into the existing content, render, media, publication/calendar or billing view. Content and render identifiers are preserved; render jobs are re-read through the tenant-scoped API. Cross-workspace, external, malformed and unknown paths fail closed.
 
 It provides idempotent creation, tenant-isolated and role-authorized list and single retrieval APIs, category filtering (`?category=RENDER|PUBLISH|AI|BILLING|APPROVAL|CONTENT`), bounded pagination, and single/batch read/unread actions.
 
@@ -250,6 +251,12 @@ The notification bell opens a preferences control that:
 
 This is a UI increment over the existing preference API. It does not add external email/push delivery, realtime transport or a new migration.
 
+### NOTIFY-01I Tenant-safe deep links
+
+The notification center treats persisted links as data rather than arbitrary browser destinations. A resolver accepts only paths under the active `/workspaces/:organizationId` base and maps supported records to existing in-app views. The parent workspace clears stale notification targets during normal navigation, while content and render destinations retain the exact identifier selected by the notification.
+
+Policy-review links use the existing notification `data.contentId` when it is present and otherwise open the publication calendar with a clear notice. Billing links open Credits & usage only for `OWNER` and `ADMIN`; other roles return to the dashboard with an access notice. A render destination first fetches the job through the tenant-scoped API, so stale or foreign IDs fail as normal API not-found responses. No external, cross-tenant or unknown link is navigated.
+
 ### 9. Bounded Notification Live Updates (NOTIFY-01G)
 
 `GET /workspaces/:organizationId/notifications/stream`
@@ -271,3 +278,9 @@ This is a UI increment over the existing preference API. It does not add externa
 The browser notification panel keeps its existing EventSource stream optional and bounded. When a connection fails, the failed source is closed and the panel reports **Reconnecting...** while scheduling a retry at 1 second, 2.5 seconds, 5 seconds, 10 seconds, then a capped 30 seconds. The timer is cleared and the source is closed during navigation or unmount. The existing 60-second list polling remains active throughout, so a temporary stream outage cannot stop notification refresh.
 
 This increment does not add durable stream replay, Last-Event-ID, cross-process fan-out, external email/SMS/mobile push, a provider call, a schema/migration or a delivery SLO. It preserves the tenant/role-guarded snapshot contract, cursor/count-only payload, category muting and all existing read/unread and preference behavior. See [the focused evidence](qa/notify01h-evidence.json) and [the implementation design](NOTIFICATION_STREAM_RECONNECT.md).
+
+## NOTIFY-01I tenant-safe notification deep links
+
+The link field already persisted by notification producers is now actionable in the workspace UI. Clicking a notification marks it read when needed, closes the popover and resolves a same-workspace target. Content links open the exact content record, render links open the exact render in Video studio after a tenant-scoped lookup, media links open Asset library, publication links open the calendar and billing links respect the administrator-only Credits view. Policy-review links use their captured content identifier when available.
+
+The resolver rejects absolute, cross-workspace, malformed and unknown paths before any navigation. This increment changes no schema, migration, event producer, provider, external delivery, durable replay, cross-process fan-out or realtime delivery SLO. See [the deep-link design](NOTIFICATION_DEEP_LINKS.md) and [QA evidence](qa/notify01i-evidence.json).

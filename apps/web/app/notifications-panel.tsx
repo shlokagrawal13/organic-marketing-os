@@ -20,6 +20,7 @@ type Notification = {
   title: string;
   body: string;
   link?: string | null;
+  data?: Record<string, unknown> | null;
   readAt?: string | null;
   createdAt: string;
 };
@@ -71,9 +72,11 @@ function relativeTime(value: string) {
 export default function NotificationsPanel({
   base,
   disabled = false,
+  onOpenNotification,
 }: {
   base: string;
   disabled?: boolean;
+  onOpenNotification?: (notification: Notification) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<Notification[]>([]);
@@ -319,6 +322,13 @@ export default function NotificationsPanel({
     }
   }
 
+  async function openNotification(notification: Notification) {
+    if (!notification.readAt) await setRead(notification, true);
+    setOpen(false);
+    setPreferencesOpen(false);
+    onOpenNotification?.(notification);
+  }
+
   return (
     <div className="notification-center">
       <button
@@ -513,8 +523,8 @@ export default function NotificationsPanel({
                     <button
                       className="notification-content"
                       type="button"
-                      onClick={() => unread && void setRead(notification, true)}
-                      aria-label={`${notification.title}${unread ? ", unread" : ""}`}
+                      onClick={() => void openNotification(notification)}
+                      aria-label={`${notification.title}${unread ? ", unread" : ""}${notification.link ? ", open notification" : ""}`}
                     >
                       <span className="notification-category">
                         {notification.category}

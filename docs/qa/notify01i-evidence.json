@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01I",
+  "recordedAtUtc": "2026-11-14T00:00:00.000Z",
+  "status": "local_increment_exact_ci_pending",
+  "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
+  "title": "Tenant-safe notification deep links",
+  "behavior": {
+    "sameWorkspaceResolution": "Persisted notification links resolve only when they are relative, same-workspace paths under the active tenant base.",
+    "supportedTargets": "Content and render records preserve their identifiers; publication, media, billing and policy-review links map to the existing workspace views.",
+    "readThenOpen": "Clicking a notification acknowledges it when unread, closes the popover and then opens the resolved in-app destination.",
+    "renderSelection": "A render link is resolved through the tenant-scoped render API before the video studio selects the target job.",
+    "failClosed": "Absolute, cross-tenant, malformed and unknown links are rejected without arbitrary browser navigation."
+  },
+  "changedPaths": [
+    "apps/web/app/notification-links.ts",
+    "apps/web/app/notifications-panel.tsx",
+    "apps/web/app/media-workspace.tsx",
+    "apps/web/app/workspace.tsx",
+    "tests/notifications.test.ts",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_DEEP_LINKS.md",
+    "docs/qa/notify01i-evidence.json"
+  ],
+  "localVerification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "34/34",
+    "notificationDeepLinkUnit": true,
+    "notificationDeepLinkBrowserRegressionAdded": true,
+    "prettier": true,
+    "diffCheck": true,
+    "uiHarness": "verify-local --ui-only --ui-spec=notifications.spec.ts failed closed before fixture startup because 127.0.0.1:6379 was occupied; no existing service was contacted.",
+    "realEnvironmentUnchanged": true,
+    "userUncommittedChangePreserved": "apps/web/next-env.d.ts",
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "exactCi": {
+    "status": "pending_own_final_commit_ci",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "priorHRunNotSubstitute": true,
+    "artifactByteInspection": "pending exact final run; authenticated artifact downloads may remain unavailable"
+  },
+  "limits": [
+    "This increment activates in-app navigation only; it adds no email/SMS/mobile push, durable replay, cross-process fan-out or realtime delivery SLO.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ],
+  "implementationCommit": "pending_publication",
+  "package": {
+    "status": "pending_exact_ci",
+    "runtimeDataCredentialsExcluded": true
+  }
+}

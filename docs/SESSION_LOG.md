@@ -1,3 +1,9 @@
+<!-- NOTIFY01I_CURRENT_START -->
+## NOTIFY-01I local implementation - 2026-11-14
+
+Started the next bounded notification increment after H. The center now acknowledges and closes before opening a same-workspace destination resolved by `notification-links.ts`; content and render identifiers are preserved, render jobs are re-read through the tenant-scoped API, billing respects the admin-only credits view, and unsafe or cross-tenant paths fail closed. Added focused resolver coverage and an asset-library browser regression. Prisma generation, API/web production builds, 34 notification tests, Prettier and diff checks pass. The owned UI verifier refuses to start while Redis 6379 is occupied. Exact three-job CI and the portable source package remain required for this increment.
+<!-- NOTIFY01I_CURRENT_END -->
+
 <!-- NOTIFY01H_CURRENT_START -->
 ## Current: NOTIFY-01H bounded live-stream reconnect - 2026-11-13
 
