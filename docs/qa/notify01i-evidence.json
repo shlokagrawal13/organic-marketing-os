@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "NOTIFY-01I",
   "recordedAtUtc": "2026-11-14T00:00:00.000Z",
-  "status": "local_increment_exact_ci_pending",
+  "status": "exact_ci_verified_source_package_receipt_paired",
   "baseCommit": "12cd9ff60adf18a303786fb1840e3651cbf1dee6",
   "title": "Tenant-safe notification deep links",
   "behavior": {
@@ -39,10 +39,61 @@
     "credentialsPrinted": false
   },
   "exactCi": {
-    "status": "pending_own_final_commit_ci",
-    "allThreeJobsAndRequiredStepsPassed": false,
-    "priorHRunNotSubstitute": true,
-    "artifactByteInspection": "pending exact final run; authenticated artifact downloads may remain unavailable",
+    "status": "verified_on_final_implementation_commit",
+    "sourceCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
+    "runId": 43588517881,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43588517881",
+    "attempt": 1,
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "jobs": [
+      {
+        "name": "Native populated upgrade and migration recovery",
+        "jobId": 132428070618,
+        "requiredSteps": 11,
+        "conclusion": "success"
+      },
+      {
+        "name": "Disposable Compose and native restore",
+        "jobId": 132428070378,
+        "requiredSteps": 8,
+        "conclusion": "success"
+      },
+      {
+        "name": "Native application verification",
+        "jobId": 132428070567,
+        "requiredSteps": 22,
+        "conclusion": "success"
+      }
+    ],
+    "artifactMetadata": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 14112565411,
+        "displaySize": "14.5 MB",
+        "digest": "sha256:b2627d221178d200a666637fc5c43fca5ff1a877761a0269b8d315e9687f74be"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 14111048156,
+        "displaySize": "16.6 KB",
+        "digest": "sha256:22dd656cba2254447cd930a6acad9cfec6f11ca44025bfb5eb2991991e62418f"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 14111796329,
+        "displaySize": "934 Bytes",
+        "digest": "sha256:8e802d46868cf6ecee2365b0262eb1849e3369c533c57240a4616fc250e5b36f"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 14111796326,
+        "displaySize": "2.95 KB",
+        "digest": "sha256:f0986ac7422c6fb52656bc9a21644089282efcee4cc3f6ad74b57e707629b106"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403",
+    "artifactReportsInspected": false,
+    "firstRunNotSubstitute": true,
     "failedAttempt": {
       "commit": "b45bf63c5623abd541107da84980b21dbd157828",
       "runId": 43586157964,
@@ -62,9 +113,12 @@
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
   ],
-  "implementationCommit": "pending_publication",
+  "implementationCommit": "1c00b201a7be10687a1f39897eb4d74f0155fa15",
   "package": {
-    "status": "pending_exact_ci",
+    "status": "paired_with_exact_ci",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01i-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01i-final-ci-receipt.json",
     "runtimeDataCredentialsExcluded": true
-  }
+  },
+  "implementationTree": "0e295a87b10e127f6c6b844cee47362c37877b10"
 }

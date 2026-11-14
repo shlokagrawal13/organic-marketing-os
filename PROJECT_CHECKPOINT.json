@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01i-local-deep-links-exact-ci-pending-20261114",
-  "savedAtUtc": "2026-11-14T10:30:00.000Z",
-  "currentMilestone": "NOTIFY-01I local implementation is complete: tenant-safe notification deep links, read-before-open behavior and render target selection are covered by local builds/tests. Exact three-job CI and package/receipt remain pending.",
+  "checkpointRevision": "notify01i-exact-ci-verified-package-paired-20261114",
+  "savedAtUtc": "2026-11-14T11:30:00.000Z",
+  "currentMilestone": "NOTIFY-01I is exact-source CI verified: tenant-safe notification deep links, read-before-open behavior and render target selection passed all three jobs on run 43588517881; the portable package and external receipt are paired.",
   "activeTaskId": "NOTIFY-01I",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Publish NOTIFY-01I on the reviewed source, inspect and fix all three exact CI jobs/required steps, then create the paired portable source package and final receipt. Preserve all open live/deployed/full-master limits.",
+  "nextAction": "Closed for this bounded increment; review the next separately scoped NOTIFY-01 increment against integrated main. Preserve all open live/deployed/full-master limits.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -8081,13 +8081,13 @@
     },
     {
       "id": "NOTIFY-01I",
-      "state": "local_ready_exact_ci_pending",
+      "state": "ci_verified_integrated",
       "title": "Tenant-safe notification deep links",
-      "completedIncrement": "Notification clicks acknowledge unread rows, close the popover and resolve only same-workspace content, render, media, publication/calendar or billing targets; unsafe paths fail closed and render targets are re-read through the tenant API.",
-      "currentBlocker": "Own exact three-job CI, artifact review and paired source package/receipt are pending. The prior H run is not a substitute.",
-      "nextAction": "Publish the reviewed source, inspect/fix all three exact CI jobs and required steps, then create the paired portable package and final receipt.",
+      "completedIncrement": "Notification clicks acknowledge unread rows, close the popover and resolve only same-workspace content, render, media, publication/calendar or billing targets; unsafe paths fail closed and render targets are re-read through the tenant API. Exact implementation commit 1c00b201a7be10687a1f39897eb4d74f0155fa15 passed run 43588517881 across all three jobs/every required step; package and external receipt are paired.",
+      "currentBlocker": "None for this bounded increment; broader notification delivery and production gates remain open.",
+      "nextAction": "Closed; proceed to the next separately scoped NOTIFY-01 increment.",
       "currentEvidence": "docs/qa/notify01i-evidence.json",
-      "status": "local_ready_exact_ci_pending"
+      "status": "ci_verified_integrated"
     }
   ],
   "lastChanges": [

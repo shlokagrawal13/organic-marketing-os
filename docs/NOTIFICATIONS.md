@@ -1,5 +1,6 @@
 # In-App Notifications (NOTIFY-01A through NOTIFY-01I)
 
+> NOTIFY-01I exact-source closure: commit `1c00b201a7be10687a1f39897eb4d74f0155fa15` / [run 43588517881](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43588517881) passed all three jobs and every required step. The paired package and external receipt record the source hash and artifact metadata; artifact bytes/reports remain uninspected because authenticated downloads were blocked.
 > NOTIFY-01D exact-source closure: commit `e6fbd33ce79b590bd34462f5306585d39a542214` / [run 43030351133](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43030351133) passed all three jobs and all 41 required steps. The bounded lifecycle increment is closed; see [QA evidence](qa/notify01d-evidence.json) for artifact metadata and the proxy download gap.
 
 ## Overview & Scope
