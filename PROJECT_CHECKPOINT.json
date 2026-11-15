@@ -8140,9 +8140,9 @@
   ],
   "lastChanges": [
     "NOTIFY-01M final reconciliation source c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd passed exact run 43757868315: all three jobs and 41 required steps succeeded; final artifact metadata and external package/receipt are paired, while ZIP/report byte inspection remains blocked by proxy/auth routes.",
-    "NOTIFY-01M continuity commit fd1f025938c197279e9bfc7ec21df39403d9a7f5 passed exact run 43755578622: all three jobs and 41 required steps succeeded; four artifact names, sizes and digests are recorded, while byte/report inspection remains blocked by proxy/auth routes. Final reconciliation/package closure remains pending.",
-    "NOTIFY-01M implementation 00f97432fe1459b54dbe42378c9e21da8f47ce3 passed exact run 43752790194: all three jobs and 41 required steps succeeded; four artifact names, sizes and API digests are recorded, while byte/report inspection remains blocked by proxy/auth routes. Continuity documentation and package closure remain pending.",
-    "Started NOTIFY-01M: category-filtered notification read-all now sends the existing category query; local 34/34 unit and 4/4 browser checks pass, with exact-source CI pending.",
+    "NOTIFY-01M continuity commit fd1f025938c197279e9bfc7ec21df39403d9a7f5 passed exact run 43755578622: all three jobs and 41 required steps succeeded; four artifact names, sizes and digests are recorded, while byte/report inspection remains blocked by proxy/auth routes. Final reconciliation and package closure followed.",
+    "NOTIFY-01M implementation 00f97432fe1459b54dbe42378c9e21da8f47ce3 passed exact run 43752790194: all three jobs and 41 required steps succeeded; four artifact names, sizes and API digests are recorded, while byte/report inspection remains blocked by proxy/auth routes. Continuity and final package closure followed.",
+    "Started NOTIFY-01M: category-filtered notification read-all now sends the existing category query; local 34/34 unit and 4/4 browser checks pass, followed by exact implementation, continuity and final reconciliation CI.",
     "Reviewed notify-01c and data-01c against integrated main and preserved both branch histories.",
     "Added notification center UI, atomic credit-threshold and policy-review approval triggers, and focused regressions.",
     "Hardened retention pruning with an organization row lock and private-output-key preservation; added retention integration assertions.",
@@ -8427,6 +8427,15 @@
         }
       ],
       "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+    },
+    "package": {
+      "status": "paired_external_receipt",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01m-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01m-final-ci-receipt.json",
+      "runtimeDataCredentialsExcluded": true,
+      "hashAndByteReceipt": "Recorded in the external final receipt; source package is regenerated from this closure tree.",
+      "sourceCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
+      "sourceCiRunId": 43757868315
     }
   },
   "activeTask": {
@@ -8520,8 +8529,13 @@
       "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
     "package": {
-      "status": "pending_final_reconciliation_package",
-      "runtimeDataCredentialsExcluded": true
+      "status": "paired_external_receipt",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01m-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01m-final-ci-receipt.json",
+      "runtimeDataCredentialsExcluded": true,
+      "hashAndByteReceipt": "Recorded in the external final receipt; source package is regenerated from this closure tree.",
+      "sourceCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
+      "sourceCiRunId": 43757868315
     },
     "exactRunNumber": 265,
     "exactRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43757868315",
@@ -9297,8 +9311,13 @@
     "publishedCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
     "exactRunId": 43757868315,
     "package": {
-      "status": "pending_final_reconciliation_package",
-      "runtimeDataCredentialsExcluded": true
+      "status": "paired_external_receipt",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01m-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01m-final-ci-receipt.json",
+      "runtimeDataCredentialsExcluded": true,
+      "hashAndByteReceipt": "Recorded in the external final receipt; source package is regenerated from this closure tree.",
+      "sourceCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
+      "sourceCiRunId": 43757868315
     },
     "nextAction": "Review the next separately scoped NOTIFY-01 increment while preserving all existing notification, tenant, role, migration, recovery, credit, accessibility and transport assertions.",
     "exactRunNumber": 265,
