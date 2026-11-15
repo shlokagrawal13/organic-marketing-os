@@ -1,12 +1,21 @@
-<!-- NOTIFY01J_CURRENT_START -->
-## Current: NOTIFY-01J bounded notification feed filtering and pagination - 2026-11-15
+<!-- NOTIFY01L_CURRENT_START -->
+## Current: NOTIFY-01L focus containment and scroll isolation - 2026-11-15
+
+NOTIFY-01L keeps keyboard focus inside the existing tenant-bound notification dialog while it is open. Tab and Shift+Tab wrap between the first and last usable controls, including when focus was moved outside the modal, and the dialog/list contain overscroll so the workspace behind the popover does not scroll. Existing focus-on-open, Escape dismissal and bell focus restoration remain unchanged.
+
+This is a bounded browser interaction increment: no schema, migration, API query, notification producer, provider call, external delivery, durable replay, cross-process fan-out, realtime SLO or recovery fixture changes are added. Existing category filtering, 20-item pagination, unread summary, read/unread actions, preference saves, SSE reconnect, polling fallback and tenant-safe deep links remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass. The owned verifier fails closed before fixture startup because Redis 127.0.0.1:6379 is occupied; no existing service is contacted.
+
+Implementation commit 7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205 contains the focus trap, scroll isolation and browser regression. Exact three-job CI on the final published source, continuity evidence and paired portable package/receipt is pending. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- NOTIFY01L_CURRENT_END -->
+<!-- NOTIFY01J_HISTORY_START -->
+## Historical: NOTIFY-01J bounded notification feed filtering and pagination - 2026-11-15
 
 NOTIFY-01J adds a bounded notification-center feed control over the existing tenant-scoped list API. The panel can filter the visible feed by All, Render, Publishing, AI, Billing, Approval or Content notifications and requests a deterministic 20-item page at a time. A Load more action appends the next page without changing the overall unread badge, which remains sourced from the tenant- and role-scoped summary endpoint.
 
 This is a client/UI increment only: no schema, migration, provider call, external delivery, durable replay, cross-process fan-out or delivery-SLO claim is added. Existing category muting, explicit category overrides, read/unread actions, tenant/role guards, SSE reconnect, polling fallback, generation cancellation and deep-link behavior remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification tests, formatting and diff checks pass. The owned UI verifier remains fail-closed before fixture startup because Redis 127.0.0.1:6379 is occupied; no existing service was contacted. Exact three-job CI on the final published source and its paired package/receipt are pending.
 
 See [notification feed filtering design](docs/NOTIFICATION_FEED_FILTERING.md) and [NOTIFY-01J evidence](docs/qa/notify01j-evidence.json). Preserve real services, credentials, volumes and Antigravity worktrees. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
-<!-- NOTIFY01J_CURRENT_END -->
+<!-- NOTIFY01J_HISTORY_END -->
 
 <!-- NOTIFY01I_CURRENT_START -->
 ## Current: NOTIFY-01I tenant-safe notification deep links - 2026-11-14

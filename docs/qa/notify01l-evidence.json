@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01L",
+  "recordedAtUtc": "2026-11-15T12:00:00Z",
+  "status": "implementation_verified_ci_pending",
+  "baseCommit": "6c69d77815065d7aee8d611fd680d1cb96bad289",
+  "title": "Notification dialog focus containment and scroll isolation",
+  "behavior": {
+    "focusContainment": "Tab and Shift+Tab wrap between the first and last usable controls inside the open tenant-bound notification dialog; focus moved outside the dialog is recovered at the next tab boundary.",
+    "scrollIsolation": "The notification popover and its scrollable feed contain overscroll so keyboard or touch scrolling does not move the workspace behind the dialog.",
+    "preserved": "Focus-on-open, Escape dismissal, bell focus restoration, filtering, pagination, unread summary, read/unread actions, preference saves, SSE reconnect, polling fallback and tenant-safe deep links remain unchanged."
+  },
+  "changedPaths": [
+    "apps/web/app/notifications-panel.tsx",
+    "apps/web/app/globals.css",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_ACCESSIBILITY.md",
+    "docs/qa/notify01l-evidence.json"
+  ],
+  "localVerification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "34/34",
+    "notificationFocusContainmentBrowserRegressionAdded": true,
+    "prettier": true,
+    "diffCheck": true,
+    "uiHarness": "verify-local --ui-only --ui-spec=notifications.spec.ts failed closed before fixture startup because 127.0.0.1:6379 was occupied; no existing service was contacted.",
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "implementationCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
+  "implementationTree": "b1f8e45b931e63cd325ddc2f2f50a88ec965aa0d",
+  "exactCi": {
+    "status": "pending_exact_source_publication",
+    "sourceCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
+    "allThreeJobsAndRequiredStepsPassed": false,
+    "requiredSteps": 41,
+    "artifactByteInspection": "pending_final_run; preserve any proxy/auth 401/403 gap explicitly"
+  },
+  "package": {
+    "status": "pending_final_published_source",
+    "runtimeDataCredentialsExcluded": true
+  },
+  "limits": [
+    "This increment changes only notification dialog keyboard focus and scroll containment plus browser regression coverage.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ]
+}
