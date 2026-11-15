@@ -31,6 +31,14 @@ type NotificationCategory =
 type NotificationCategoryFilter = "ALL" | NotificationCategory;
 
 const NOTIFICATION_PAGE_SIZE = 20;
+const NOTIFICATION_FOCUSABLE_SELECTOR = [
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "a[href]",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
 
 const NOTIFICATION_CATEGORIES = [
   {
@@ -116,6 +124,7 @@ export default function NotificationsPanel({
   const loadingMoreRef = useRef(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLElement | null>(null);
   const dialogId = useId();
   const dialogTitleId = useId();
 
@@ -267,11 +276,37 @@ export default function NotificationsPanel({
     if (!open) return;
     closeButtonRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      event.preventDefault();
-      setPreferencesOpen(false);
-      setOpen(false);
-      window.requestAnimationFrame(() => triggerRef.current?.focus());
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setPreferencesOpen(false);
+        setOpen(false);
+        window.requestAnimationFrame(() => triggerRef.current?.focus());
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const focusable = Array.from(
+        dialog.querySelectorAll<HTMLElement>(NOTIFICATION_FOCUSABLE_SELECTOR),
+      ).filter((element) => !element.hidden && element.getClientRects().length);
+      if (!focusable.length) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+      const active = document.activeElement as HTMLElement | null;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!active || !dialog.contains(active)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -442,11 +477,13 @@ export default function NotificationsPanel({
       {open && (
         <section
           id={dialogId}
+          ref={dialogRef}
           className="notification-popover"
           role="dialog"
           aria-label="Notifications"
           aria-labelledby={dialogTitleId}
           aria-modal="true"
+          tabIndex={-1}
         >
           <div className="notification-popover-head">
             <div>

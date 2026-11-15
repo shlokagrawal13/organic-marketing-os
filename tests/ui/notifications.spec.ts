@@ -86,6 +86,19 @@ test("notification center loads tenant updates and toggles unread state", async 
     page.getByText("The campaign video is ready for review."),
   ).toBeVisible();
 
+  const dialog = page.getByRole("dialog");
+  const focusable = dialog.locator(
+    'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+  );
+  const firstFocusable = focusable.first();
+  const lastFocusable = focusable.last();
+  await lastFocusable.focus();
+  await page.keyboard.press("Tab");
+  await expect(firstFocusable).toBeFocused();
+  await firstFocusable.focus();
+  await page.keyboard.press("Shift+Tab");
+  await expect(lastFocusable).toBeFocused();
+
   const categoryFilter = page.getByLabel("Show", { exact: true });
   await categoryFilter.selectOption("RENDER");
   await expect(

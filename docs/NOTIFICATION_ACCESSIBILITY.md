@@ -1,5 +1,28 @@
 # Notification center keyboard accessibility
 
+## NOTIFY-01L focus containment and scroll isolation
+
+The notification dialog now contains keyboard focus while it is open. `Tab`
+from the last usable control returns to the first, and `Shift+Tab` from the
+first returns to the last. If focus is moved outside the modal while it is
+open, the next tab action returns it to the appropriate boundary. The dialog
+and its scrollable feed also contain overscroll so keyboard and touch scrolling
+does not move the workspace behind the popover.
+
+This is a bounded browser interaction increment. It changes no notification
+schema, migration, API query, event producer, provider call, external delivery,
+realtime transport, durable replay, tenant/role rule or recovery fixture.
+Existing focus-on-open, Escape dismissal, focus restoration, filtering,
+pagination, unread summary, read/unread actions, preference saves, SSE
+reconnect and tenant-safe deep links remain unchanged.
+
+The browser regression checks both focus boundaries after the existing live
+feed has loaded. The normal owned verifier must still fail closed before
+fixture startup when its Redis safety guard finds `127.0.0.1:6379` occupied;
+that existing service is never contacted.
+
+## NOTIFY-01K focus on open and dismissal
+
 NOTIFY-01K keeps the existing tenant-scoped notification center usable without a
 mouse. Opening the bell moves focus to the dialog close control, the dialog is
 identified by its visible heading and `aria-modal`, and the trigger exposes the
