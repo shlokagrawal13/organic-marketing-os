@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01M",
-  "recordedAtUtc": "2026-11-15T19:48:35Z",
-  "status": "implementation_exact_source_ci_verified_continuity_pending",
+  "recordedAtUtc": "2026-11-15T20:22:53Z",
+  "status": "continuity_ci_verified_reconciliation_pending",
   "baseCommit": "b5e7d4381b657468cec61747f1533609e38d6743",
   "title": "Filtered notification read-all acknowledgement",
   "behavior": {
@@ -86,13 +86,66 @@
     "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
   "package": {
-    "status": "pending_continuity_commit_and_final_exact_ci",
-    "runtimeDataCredentialsExcluded": true
+    "status": "pending_final_reconciliation_package",
+    "runtimeDataCredentialsExcluded": true,
+    "nextSourceCommit": "to_be_created_from_verified_continuity_state",
+    "hashAndByteReceipt": "Recorded in the external final receipt after the reconciliation source package is regenerated."
   },
   "limits": [
     "This increment changes only category-scoped in-app acknowledgement wiring and browser regression coverage.",
     "No schema or migration changed.",
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
-  ]
+  ],
+  "continuityCi": {
+    "status": "success",
+    "sourceCommit": "fd1f025938c197279e9bfc7ec21df39403d9a7f5",
+    "runId": 43755578622,
+    "runNumber": 264,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43755578622",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {
+        "jobId": 132938824677,
+        "requiredSteps": 11,
+        "status": "success"
+      },
+      "composeRestore": {
+        "jobId": 132938824952,
+        "requiredSteps": 8,
+        "status": "success"
+      },
+      "nativeApplication": {
+        "jobId": 132938824987,
+        "requiredSteps": 22,
+        "status": "success"
+      }
+    },
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "size": "14.5 MB",
+        "digest": "sha256:a9f5befaea2de8d0fe5069e6606832f1426207a3f10beab6f557d0f9318c6a08"
+      },
+      {
+        "name": "compose-evidence",
+        "size": "16.6 KB",
+        "digest": "sha256:bbe9155996ab43d83fc7c4605080be08195c673433fe0e957a96a68fa3522dd5"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "size": "934 Bytes",
+        "digest": "sha256:d14ad6d7352c7d53e6d51c503fcee33d8ff53677c60cb1af16e4d41030b3eac0"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "size": "2.95 KB",
+        "digest": "sha256:3dc57955cc51ebfbd6b73c3dba486e2ae1ae29bc06363494d739c6079a42e5f0"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
+  "finalReconciliationCommit": null,
+  "finalReconciliationRunId": null
 }
