@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01L",
-  "recordedAtUtc": "2026-11-15T12:13:00Z",
+  "recordedAtUtc": "2026-11-15T12:38:48Z",
   "status": "ci_verified_integrated",
   "baseCommit": "6c69d77815065d7aee8d611fd680d1cb96bad289",
   "title": "Notification dialog focus containment and scroll isolation",
@@ -35,25 +35,26 @@
   "implementationTree": "b1f8e45b931e63cd325ddc2f2f50a88ec965aa0d",
   "exactCi": {
     "status": "success",
-    "sourceCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
-    "runId": 43711098911,
-    "runNumber": 258,
-    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911",
+    "sourceCommit": "3284732eb94ee65407755f9a41c09313bfe8fac3",
+    "runId": 43712992722,
+    "runNumber": 259,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43712992722",
+    "duration": "19m 41s",
     "allThreeJobsAndRequiredStepsPassed": true,
     "requiredSteps": 41,
     "jobBreakdown": {
       "nativeUpgrade": {
-        "jobId": 132802602348,
+        "jobId": 132808431934,
         "requiredSteps": 11,
         "status": "success"
       },
       "composeRestore": {
-        "jobId": 132802602359,
+        "jobId": 132808432150,
         "requiredSteps": 8,
         "status": "success"
       },
       "nativeApplication": {
-        "jobId": 132802602160,
+        "jobId": 132808432137,
         "requiredSteps": 22,
         "status": "success"
       }
@@ -61,44 +62,55 @@
     "artifacts": [
       {
         "name": "browser-evidence",
-        "artifactId": 14160603010,
+        "artifactId": 14162480097,
         "size": "14.5 MB",
-        "digest": "sha256:390310b779d1a734dfbee3fa649005615179e95b31ef318e5e517d29f145d1fd"
+        "digest": "sha256:2984463ab113772ae9e3fb3f3099ad767bf35002582807a7d2ccd6e84862b4e5"
       },
       {
         "name": "compose-evidence",
-        "artifactId": 14160637248,
-        "size": "16.5 KB",
-        "digest": "sha256:fdfc175a57b19bfe5a45577de707745d354173a69ed6753f9ea29b67cc2cdf62"
+        "artifactId": 14160679994,
+        "size": "16.6 KB",
+        "digest": "sha256:6c6aec2edd3ac06d106aa948a2f41741da8335b04aa4c63c555aef58accd2082"
       },
       {
         "name": "native-upgrade-evidence",
-        "artifactId": 14160293620,
-        "size": "935 Bytes",
-        "digest": "sha256:96b8a628463b522e5420ace3febddc1a3f88e615990ab778561a04eee62587cf"
+        "artifactId": 14161187128,
+        "size": "934 Bytes",
+        "digest": "sha256:9d0f6eaf50d17161496dfaf1e2cd6abc2f3a192bff3a41052ba15a6ee1794f7b"
       },
       {
         "name": "postgres-pitr-evidence",
-        "artifactId": 14159984770,
+        "artifactId": 14160857974,
         "size": "2.95 KB",
-        "digest": "sha256:6f31bfa5979634acb4ed680c99b281b08ccc400ff5a43635bd9a678be9cf8bfd"
+        "digest": "sha256:6f2989dd609c465fc7ee3b36dff36204888f71d62d43649e0d6308c450ad5002"
       }
     ],
     "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
   "package": {
-    "status": "pending_final_reconciliation_source",
+    "status": "paired_external_receipt",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01l-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01l-final-ci-receipt.json",
     "runtimeDataCredentialsExcluded": true,
-    "plannedPath": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01l-final.zip",
-    "plannedExternalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01l-final-ci-receipt.json",
-    "continuitySource": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
-    "continuityRunId": 43711098911,
-    "note": "Regenerate after this reconciliation commit; final external receipt records the next exact CI run."
+    "hashAndByteReceipt": "Recorded in the external final receipt; source package is regenerated from this closure tree.",
+    "sourceCommit": "3284732eb94ee65407755f9a41c09313bfe8fac3",
+    "sourceCiRunId": 43712992722
   },
   "limits": [
     "This increment changes only notification dialog keyboard focus and scroll containment plus browser regression coverage.",
     "No schema or migration changed.",
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
-  ]
+  ],
+  "continuityCi": {
+    "status": "success",
+    "sourceCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+    "runId": 43711098911,
+    "runNumber": 258,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41
+  },
+  "finalReconciliationCommit": "3284732eb94ee65407755f9a41c09313bfe8fac3",
+  "finalReconciliationRunId": 43712992722
 }
