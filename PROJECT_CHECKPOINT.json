@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01l-ci-verified-integrated-package-paired-20261115",
-  "savedAtUtc": "2026-11-15T12:38:48.771Z",
-  "currentMilestone": "NOTIFY-01L is complete: final reconciliation source 3284732 passed run 43712992722 across all three jobs and 41 required steps; the portable source package and external receipt are paired outside the repository.",
+  "checkpointRevision": "notify01l-local-ui-portability-verified-20261115",
+  "savedAtUtc": "2026-11-15T13:15:00Z",
+  "currentMilestone": "NOTIFY-01L is complete: final reconciliation source 3284732 passed run 43712992722 across all three jobs and 41 required steps; the portable source package and external receipt are paired outside the repository. A focused Windows notification UI verifier also passed 3/3 on owned Redis 6380 with existing Chrome while the other project's Redis 6379 remained untouched.",
   "activeTaskId": "NOTIFY-01L",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -133,7 +133,8 @@
     "tests/ui/notifications.spec.ts",
     "docs/NOTIFICATION_ACCESSIBILITY.md",
     "docs/qa/notify01k-evidence.json",
-    "docs/qa/notify01l-evidence.json"
+    "docs/qa/notify01l-evidence.json",
+    "scripts/verify-local.mjs"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -8231,7 +8232,8 @@
       "commit": "3284732eb94ee65407755f9a41c09313bfe8fac3",
       "runId": 43712992722,
       "summary": "Final reconciliation source passed all three exact CI jobs and 41 required steps; artifact metadata is recorded, artifact bytes/reports remain blocked by proxy/auth routes, and the portable source package plus external receipt are paired."
-    }
+    },
+    "NOTIFY-01L local verifier portability follow-up: default 6379 safety guard still fails closed; focused notification UI passed 3/3 with owned Redis 6380, existing Chrome, and media fixtures skipped only for the notification UI spec. Existing Redis service, user data, credentials and Antigravity worktrees were untouched."
   ],
   "nextAgentProtocol": [
     "Verify manifest or inspect changes before overwriting anything.",
@@ -8279,7 +8281,7 @@
     "evidence": [
       "docs/qa/notify01l-evidence.json"
     ],
-    "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; no existing service was contacted.",
+    "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; the default verify-local UI command stopped before fixture startup at occupied Redis 127.0.0.1:6379, while the focused notification UI command passed 3/3 on owned Redis 6380 with existing Chrome and left the existing service untouched.",
     "exactCi": {
       "status": "success",
       "sourceCommit": "3284732eb94ee65407755f9a41c09313bfe8fac3",
@@ -8357,13 +8359,14 @@
     "focusedTestsFailed": 0,
     "apiBuild": true,
     "webBuild": true,
-    "httpHarness": "blocked_fail_closed_occupied_6379",
+    "httpHarness": "default_blocked_fail_closed_occupied_6379; focused_notifications_ui_passed_3_of_3_on_owned_6380_with_existing_chrome",
     "changedPaths": [
       "apps/web/app/notifications-panel.tsx",
       "apps/web/app/globals.css",
       "tests/ui/notifications.spec.ts",
       "docs/NOTIFICATION_ACCESSIBILITY.md",
-      "docs/qa/notify01l-evidence.json"
+      "docs/qa/notify01l-evidence.json",
+      "scripts/verify-local.mjs"
     ],
     "exactRunConclusion": "success",
     "exactCi": {
@@ -9103,7 +9106,7 @@
       "notificationFocusContainmentBrowserRegressionAdded": true,
       "prettier": true,
       "diffCheck": true,
-      "httpBrowserHarness": "blocked_fail_closed_occupied_6379",
+      "httpBrowserHarness": "default_blocked_fail_closed_occupied_6379; focused_notifications_ui_passed_3_of_3_on_owned_6380_with_existing_chrome",
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "antigravityWorktreesUntouched": true,

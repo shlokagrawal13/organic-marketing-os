@@ -26,6 +26,15 @@
     "prettier": true,
     "diffCheck": true,
     "uiHarness": "verify-local --ui-only --ui-spec=notifications.spec.ts failed closed before fixture startup because 127.0.0.1:6379 was occupied; no existing service was contacted.",
+    "focusedBrowserRegression": {
+      "command": "CHROMIUM_EXECUTABLE_PATH=Chrome node scripts/verify-local.mjs --ui-only --ui-spec=notifications.spec.ts --skip-media-fixtures --redis-port=6380",
+      "passed": "3/3",
+      "coverage": "tenant feed/pagination/read state, SSE reconnect and tenant-safe deep link",
+      "mediaFixturesSkipped": "The focused notification UI suite creates its own database records and does not use generated media files; the Windows ffmpeg/fontconfig prerequisite is therefore outside this focused run.",
+      "existingRedis": "127.0.0.1:6379 was left running and was never contacted; the owned Redis fixture used 6380 and was cleaned up.",
+      "browser": "Existing Windows Google Chrome executable via CHROMIUM_EXECUTABLE_PATH"
+    },
+    "verificationTooling": "scripts/verify-local.mjs now accepts --redis-port=<1024-65535> and preserves CHROMIUM_EXECUTABLE_PATH when supplied; defaults and CI behavior remain unchanged.",
     "realEnvironmentUnchanged": true,
     "antigravityWorktreesUntouched": true,
     "liveProvidersUsed": false,

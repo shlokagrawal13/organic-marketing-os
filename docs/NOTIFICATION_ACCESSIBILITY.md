@@ -17,9 +17,21 @@ pagination, unread summary, read/unread actions, preference saves, SSE
 reconnect and tenant-safe deep links remain unchanged.
 
 The browser regression checks both focus boundaries after the existing live
-feed has loaded. The normal owned verifier must still fail closed before
-fixture startup when its Redis safety guard finds `127.0.0.1:6379` occupied;
-that existing service is never contacted.
+feed has loaded. The normal owned verifier still fails closed before fixture
+startup when its Redis safety guard finds `127.0.0.1:6379` occupied; that
+existing service is never contacted. On constrained workstations, the same
+focused notification UI suite can use an explicitly owned alternate Redis
+port and an existing Chrome executable:
+
+```powershell
+$env:CHROMIUM_EXECUTABLE_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+node scripts/verify-local.mjs --ui-only --ui-spec=notifications.spec.ts --skip-media-fixtures --redis-port=6380
+```
+
+`--redis-port` is bounded to 1024-65535 and defaults to 6379. The focused
+notification suite does not use generated media files, so `--skip-media-fixtures`
+only bypasses the unrelated Windows ffmpeg/fontconfig prerequisite for this
+exact UI spec; normal full verification retains media fixture coverage.
 
 ## NOTIFY-01K focus on open and dismissal
 

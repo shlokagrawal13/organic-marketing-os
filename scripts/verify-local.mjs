@@ -136,6 +136,10 @@ function run(cmd, args) {
 }
 const native = process.argv.includes("--native");
 const uiOnly = process.argv.includes("--ui-only");
+const redisPortArgument = process.argv
+  .find((arg) => arg.startsWith("--redis-port="))
+  ?.slice("--redis-port=".length);
+const redisPort = redisPortArgument ? Number(redisPortArgument) : 6379;
 const uiSpec = process.argv
   .find((arg) => arg.startsWith("--ui-spec="))
   ?.slice(10);
@@ -147,21 +151,24 @@ if (uiSpec && !/^[a-z-]+\.spec\.ts$/.test(uiSpec))
   throw new Error("Select a test filename such as generated-media.spec.ts.");
 if (httpSpec && !/^[a-z-]+\.test\.ts$/.test(httpSpec))
   throw new Error("Select an HTTP test filename such as publications.test.ts.");
-if (
-  skipMediaFixtures &&
-  (!["data-export.test.ts", "notifications.test.ts"].includes(httpSpec) ||
-    !process.argv.includes("--skip-ui") ||
-    !process.argv.includes("--skip-recovery"))
-)
+if (!Number.isInteger(redisPort) || redisPort < 1024 || redisPort > 65535)
+  throw new Error("Select a Redis port between 1024 and 65535.");
+const notificationUiMediaSkip = uiOnly && uiSpec === "notifications.spec.ts";
+const notificationHttpMediaSkip =
+  ["data-export.test.ts", "notifications.test.ts"].includes(httpSpec) &&
+  process.argv.includes("--skip-ui") &&
+  process.argv.includes("--skip-recovery");
+if (skipMediaFixtures && !notificationHttpMediaSkip && !notificationUiMediaSkip)
   throw new Error(
-    "Skipping media fixtures is limited to data-export/notifications HTTP specs with UI and recovery skipped.",
+    "Skipping media fixtures is limited to data-export/notifications HTTP specs with UI and recovery skipped, or the focused notifications UI spec.",
   );
 process.env.MOS_TEST_DATABASE = native ? "native" : "pglite";
 if (native && process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
   throw new Error(
     "Native tests require isolated DATABASE_URL/REDIS_URL services and MOS_ALLOW_NATIVE_TESTS=isolated-test-services.",
   );
-// This harness uses fixed loopback ports. Never let a test attach to an
+// This harness uses fixed loopback ports (with an explicit Redis override for
+// constrained workstations). Never let a test attach to an
 // existing Redis, API, web, mail or object-storage service after a bind fails.
 for (const port of [
   1025,
@@ -170,7 +177,7 @@ for (const port of [
   4569,
   4998,
   4999,
-  ...(!native ? [5433, 6379] : []),
+  ...(!native ? [5433, redisPort] : []),
 ]) {
   for (const host of ["127.0.0.1", "::1"]) {
     const probe = createServer();
@@ -498,7 +505,7 @@ try {
   if (!native)
     process.env.DATABASE_URL =
       "postgresql://postgres:postgres@127.0.0.1:5433/postgres?schema=public&connection_limit=1&pgbouncer=true";
-  if (!native) process.env.REDIS_URL = "redis://127.0.0.1:6379";
+  if (!native) process.env.REDIS_URL = `redis://127.0.0.1:${redisPort}`;
   await new Promise((r) => smtp.listen(1025, "127.0.0.1", r));
   process.env.SMTP_HOST = "127.0.0.1";
   process.env.SMTP_PORT = "1025";
@@ -520,7 +527,7 @@ try {
         "--bind",
         "127.0.0.1",
         "--port",
-        "6379",
+        String(redisPort),
         "--save",
         "",
         "--appendonly",
@@ -624,16 +631,19 @@ try {
         redis.disconnect();
       }
     }
-    const { readFileSync, writeFileSync, chmodSync } = await import("node:fs");
-    const { brotliDecompressSync } = await import("node:zlib");
-    writeFileSync(
-      ".local/chromium",
-      brotliDecompressSync(
-        readFileSync("node_modules/@sparticuz/chromium/bin/chromium.br"),
-      ),
-    );
-    chmodSync(".local/chromium", 0o755);
-    process.env.CHROMIUM_EXECUTABLE_PATH = process.cwd() + "/.local/chromium";
+    if (!process.env.CHROMIUM_EXECUTABLE_PATH) {
+      const { readFileSync, writeFileSync, chmodSync } =
+        await import("node:fs");
+      const { brotliDecompressSync } = await import("node:zlib");
+      writeFileSync(
+        ".local/chromium",
+        brotliDecompressSync(
+          readFileSync("node_modules/@sparticuz/chromium/bin/chromium.br"),
+        ),
+      );
+      chmodSync(".local/chromium", 0o755);
+      process.env.CHROMIUM_EXECUTABLE_PATH = process.cwd() + "/.local/chromium";
+    }
     await run("node", [
       "node_modules/playwright/cli.js",
       "test",

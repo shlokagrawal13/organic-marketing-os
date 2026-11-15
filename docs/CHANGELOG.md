@@ -1,3 +1,14 @@
+## NOTIFY-01L local verifier portability follow-up - 2026-11-15
+
+The owned local verifier now accepts a bounded `--redis-port=<1024-65535>`
+override and preserves an explicit `CHROMIUM_EXECUTABLE_PATH`. The default
+6379 Redis safety guard, CI native configuration and full media-fixture path
+remain unchanged. On Windows, the focused notification UI suite passed 3/3
+using an owned Redis on 6380, existing Chrome and `--skip-media-fixtures` for
+that exact notification spec; the existing Redis service on 6379 was left
+running and was never contacted. This is local verification tooling only; no
+application runtime, schema, migration, provider or delivery behavior changed.
+
 ## NOTIFY-01L focus containment and scroll isolation - 2026-11-15
 
 The notification dialog now keeps keyboard focus inside its usable controls: Tab wraps from the last control to the first and Shift+Tab wraps back. The popover and scrollable feed contain overscroll so keyboard or touch scrolling does not move the workspace behind the dialog. Added a browser regression after the live feed loads. No schema, migration, API, notification producer, provider, external delivery, realtime or recovery behavior changed. Implementation commit 7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205 passed local Prisma/API/web builds, 34/34 focused notification tests, formatting and diff checks. Continuity commit 1d8008670b93d8386aac9e38f1a6c7460e0479c4 passed [run 43711098911](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911), and final reconciliation commit 3284732 passed [run 43712992722](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43712992722) across all three jobs and 41 required steps; the portable package and external receipt are paired.
