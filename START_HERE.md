@@ -1,12 +1,21 @@
-<!-- NOTIFY01L_CURRENT_START -->
-## Current: NOTIFY-01L focus containment and scroll isolation - 2026-11-15
+<!-- NOTIFY01M_CURRENT_START -->
+## Current: NOTIFY-01M filtered notification acknowledgement - 2026-11-16
+
+NOTIFY-01M connects the existing notification category selector to the existing category-scoped read-all endpoint. **All categories** keeps the workspace-scoped action; a selected category labels the action with its category, sends the category query, and refreshes the selected feed after acknowledgement. The unread badge remains summary-based.
+
+This is a bounded in-app UI increment: no schema, migration, notification producer, provider call, external delivery, durable replay, cross-process fan-out, SSE contract, recovery fixture or role/tenant guard changes are added. Existing muted-category behavior, read/unread actions, pagination, preferences, focus containment, scroll isolation, reconnect, polling fallback and tenant-safe deep links remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and the 4/4 focused notification browser cases pass. The focused Windows verifier used owned Redis 6380 and existing Chrome; other services and real credentials were not contacted.
+
+The implementation is locally verified and awaits its own exact published three-job CI. No prior notification run substitutes for this source. After exact CI, update the continuity receipt, portable package, checkpoint and task board before reviewing the next separately scoped NOTIFY-01 increment. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- NOTIFY01M_CURRENT_END -->
+<!-- NOTIFY01L_HISTORY_START -->
+## Historical: NOTIFY-01L focus containment and scroll isolation - 2026-11-15
 
 NOTIFY-01L keeps keyboard focus inside the existing tenant-bound notification dialog while it is open. Tab and Shift+Tab wrap between the first and last usable controls, including when focus was moved outside the modal, and the dialog/list contain overscroll so the workspace behind the popover does not scroll. Existing focus-on-open, Escape dismissal and bell focus restoration remain unchanged.
 
 This is a bounded browser interaction increment: no schema, migration, API query, notification producer, provider call, external delivery, durable replay, cross-process fan-out, realtime SLO or recovery fixture changes are added. Existing category filtering, 20-item pagination, unread summary, read/unread actions, preference saves, SSE reconnect, polling fallback and tenant-safe deep links remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass. The owned verifier fails closed before fixture startup because Redis 127.0.0.1:6379 is occupied; no existing service is contacted.
 
 Implementation commit 7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205 is included in the published source. Continuity/checkpoint/evidence commit 1d8008670b93d8386aac9e38f1a6c7460e0479c4 passed [run 43711098911](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911), and final reconciliation commit 3284732eb94ee65407755f9a41c09313bfe8fac3 passed [exact run 43712992722](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43712992722) across all three jobs and all 41 required steps (22 application, 8 Compose/restore, 11 populated-upgrade/PITR). Four artifact names, sizes and API digests are recorded; artifact bytes and embedded reports remain uninspected because artifact/log routes returned proxy/auth 401/403. The portable source package and final external receipt are paired outside the repository at the recorded project-files path. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
-<!-- NOTIFY01L_CURRENT_END -->
+<!-- NOTIFY01L_HISTORY_END -->
 <!-- NOTIFY01K_HISTORY_START -->
 ## Historical: NOTIFY-01K keyboard-safe notification center - 2026-11-15
 

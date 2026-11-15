@@ -1,3 +1,9 @@
+## NOTIFY-01M filtered notification acknowledgement - 2026-11-16
+
+The notification center now scopes **Mark all ... as read** to the selected category by sending the existing tenant-bound category query; **All categories** keeps the original workspace action. Added a browser regression proving publishing acknowledgements leave render notifications unread, then verifying both states through the existing toggles. No schema, migration, producer, provider, delivery, realtime, recovery or role/tenant behavior changed. Local Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and 4/4 focused notification browser cases pass. Exact three-job CI and the final portable package/receipt remain pending.
+
+See [filtered acknowledgement design](NOTIFICATION_FILTERED_ACKNOWLEDGEMENT.md) and [QA evidence](qa/notify01m-evidence.json).
+
 ## NOTIFY-01L local verifier CI closure - 2026-11-15
 
 Published verifier-support commit 946d79bdac162b18f2075adbe969b42809843c98 passed [GitHub Actions run 43720943323](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43720943323) in 16m 8s. Native application verification, disposable Compose/native restore and native populated upgrade/migration recovery all passed: 22, 8 and 11 required steps respectively (41 total). Artifact names, sizes and API digests are recorded; artifact bytes/reports remain uninspected because artifact/log routes returned proxy/auth 401/403. The focused Windows notification UI suite passed 3/3 on owned Redis 6380 with existing Chrome; the existing 6379 service was left running. The final portable source package and external receipt are paired outside the repository.

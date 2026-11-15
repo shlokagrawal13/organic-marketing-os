@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01M",
+  "recordedAtUtc": "2026-11-16T00:00:00Z",
+  "status": "implementation_local_verified_ci_pending",
+  "baseCommit": "b5e7d4381b657468cec61747f1533609e38d6743",
+  "title": "Filtered notification read-all acknowledgement",
+  "behavior": {
+    "categoryAction": "All categories keeps the existing workspace-scoped read-all action; a selected category sends the existing category query and labels the action with that category.",
+    "refresh": "The selected feed is refreshed after acknowledgement and the existing summary endpoint remains the source of the unread badge.",
+    "preserved": "Tenant/role guards, muted-category behavior, read/unread toggles, pagination, preferences, SSE reconnect, polling fallback, focus containment, scroll isolation and tenant-safe deep links remain unchanged."
+  },
+  "changedPaths": [
+    "apps/web/app/notifications-panel.tsx",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATIONS.md",
+    "docs/NOTIFICATION_FILTERED_ACKNOWLEDGEMENT.md",
+    "docs/qa/notify01m-evidence.json"
+  ],
+  "localVerification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "34/34",
+    "focusedBrowser": "4/4 notifications.spec.ts using owned Redis 6380 and existing Chrome",
+    "formatting": true,
+    "diffCheck": "pending final documentation reconciliation",
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false
+  },
+  "implementationCommit": null,
+  "exactCi": null,
+  "package": {
+    "status": "pending_final_exact_ci",
+    "runtimeDataCredentialsExcluded": true
+  },
+  "limits": [
+    "This increment changes only category-scoped in-app acknowledgement wiring and browser regression coverage.",
+    "No schema or migration changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ]
+}

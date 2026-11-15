@@ -292,3 +292,20 @@ This increment does not add durable stream replay, Last-Event-ID, cross-process 
 The link field already persisted by notification producers is now actionable in the workspace UI. Clicking a notification marks it read when needed, closes the popover and resolves a same-workspace target. Content links open the exact content record, render links open the exact render in Video studio after a tenant-scoped lookup, media links open Asset library, publication links open the calendar and billing links respect the administrator-only Credits view. Policy-review links use their captured content identifier when available.
 
 The resolver rejects absolute, cross-workspace, malformed and unknown paths before any navigation. This increment changes no schema, migration, event producer, provider, external delivery, durable replay, cross-process fan-out or realtime delivery SLO. See [the deep-link design](NOTIFICATION_DEEP_LINKS.md) and [QA evidence](qa/notify01i-evidence.json).
+
+## NOTIFY-01M filtered notification acknowledgement
+
+The notification center keeps the existing workspace-scoped **Mark all as
+read** action for **All categories**. When a user selects a category, the
+button names that category and sends the existing `category` query to the
+tenant-bound read-all endpoint. The selected feed is refreshed after the
+acknowledgement, while the unread badge remains sourced from the existing
+summary endpoint.
+
+This is a bounded UI wiring increment. It changes no schema, migration,
+notification producer, provider call, external delivery, durable replay,
+cross-process fan-out, SSE contract, recovery fixture or role/tenant guard.
+Muted categories, explicit category reads, read/unread toggles, pagination,
+preferences, focus containment, scroll isolation, reconnect and deep links
+remain unchanged. See [the filtered acknowledgement design](NOTIFICATION_FILTERED_ACKNOWLEDGEMENT.md)
+and [QA evidence](qa/notify01m-evidence.json).

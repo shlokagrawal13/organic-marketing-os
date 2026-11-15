@@ -160,6 +160,98 @@ test("notification center loads tenant updates and toggles unread state", async 
   ).toBeChecked();
 });
 
+test("notification center scopes read-all to the selected category", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({
+    data: { name: "Notification category acknowledgement workspace" },
+  });
+  organizations.push(org.id);
+  const user = await actor(org.id, "OWNER");
+  users.push(user.id);
+  await db.notification.create({
+    data: {
+      organizationId: org.id,
+      type: "RENDER_SUCCEEDED",
+      category: "RENDER",
+      title: "Render remains unread",
+      body: "The render stays unread when publishing updates are acknowledged.",
+      eventKey: `render:${randomUUID()}:SUCCEEDED`,
+    },
+  });
+  await db.notification.create({
+    data: {
+      organizationId: org.id,
+      type: "PUBLISH_SUCCEEDED",
+      category: "PUBLISH",
+      title: "Publishing update",
+      body: "The publishing update is acknowledged by the filtered action.",
+      eventKey: `publish:${randomUUID()}:confirmed`,
+    },
+  });
+  await page.context().addCookies([
+    {
+      name: "mos_session",
+      value: user.headers.cookie.split("=")[1],
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  ]);
+
+  await page.goto("/");
+  const trigger = page.getByRole("button", { name: /Notifications/ });
+  await expect(trigger).toHaveAttribute(
+    "aria-label",
+    "Notifications (2 unread)",
+  );
+  await trigger.click();
+  const categoryFilter = page.getByLabel("Show", { exact: true });
+  await categoryFilter.selectOption("PUBLISH");
+  await expect(
+    page.getByRole("button", {
+      name: "Mark all Publishing updates as read",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", {
+      name: "Mark all Publishing updates as read",
+      exact: true,
+    })
+    .click();
+  const publishingNotification = page
+    .getByRole("article")
+    .filter({ hasText: "Publishing update" });
+  await expect(
+    publishingNotification.getByRole("button", {
+      name: "Mark notification as unread",
+    }),
+  ).toBeVisible();
+  await expect(trigger).toHaveAttribute(
+    "aria-label",
+    "Notifications (1 unread)",
+  );
+
+  await categoryFilter.selectOption("ALL");
+  const renderNotification = page
+    .getByRole("article")
+    .filter({ hasText: "Render remains unread" });
+  await expect(
+    renderNotification.getByRole("button", {
+      name: "Mark notification as read",
+    }),
+  ).toBeVisible();
+  await expect(
+    publishingNotification.getByRole("button", {
+      name: "Mark notification as unread",
+    }),
+  ).toBeVisible();
+});
+
 test("notification center reconnects the optional live stream after a transient failure", async ({
   page,
 }) => {

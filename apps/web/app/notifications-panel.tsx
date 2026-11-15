@@ -430,7 +430,11 @@ export default function NotificationsPanel({
     setBusyId("all");
     setError("");
     try {
-      await api(`${base}/notifications/read-all`, "POST");
+      const query =
+        categoryFilterRef.current === "ALL"
+          ? ""
+          : `?category=${encodeURIComponent(categoryFilterRef.current)}`;
+      await api(`${base}/notifications/read-all${query}`, "POST");
       setLoading(true);
       await load(undefined, { category: categoryFilterRef.current });
     } catch (cause) {
@@ -634,7 +638,14 @@ export default function NotificationsPanel({
                   disabled={busyId !== null}
                   onClick={() => void readAll()}
                 >
-                  <Check size={15} /> Mark all as read
+                  <Check size={15} />
+                  {categoryFilter === "ALL"
+                    ? "Mark all as read"
+                    : `Mark all ${
+                        NOTIFICATION_CATEGORIES.find(
+                          (category) => category.value === categoryFilter,
+                        )?.label ?? "filtered notifications"
+                      } as read`}
                 </button>
               )}
               <div className="notification-filter-row">
