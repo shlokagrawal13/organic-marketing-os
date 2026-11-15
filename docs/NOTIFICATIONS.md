@@ -308,4 +308,4 @@ cross-process fan-out, SSE contract, recovery fixture or role/tenant guard.
 Muted categories, explicit category reads, read/unread toggles, pagination,
 preferences, focus containment, scroll isolation, reconnect and deep links
 remain unchanged. See [the filtered acknowledgement design](NOTIFICATION_FILTERED_ACKNOWLEDGEMENT.md)
-and [QA evidence](qa/notify01m-evidence.json).
+and [QA evidence](qa/notify01m-evidence.json). Implementation commit 00f97432fe1459b54dbe42378c9e21da8f47ce3 passed exact run 43752790194 across all three jobs and 41 required steps; the continuity package and final receipt remain pending.

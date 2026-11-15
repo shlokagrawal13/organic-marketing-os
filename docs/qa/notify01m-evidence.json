@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01M",
-  "recordedAtUtc": "2026-11-16T00:00:00Z",
-  "status": "implementation_local_verified_ci_pending",
+  "recordedAtUtc": "2026-11-15T19:48:35Z",
+  "status": "implementation_exact_source_ci_verified_continuity_pending",
   "baseCommit": "b5e7d4381b657468cec61747f1533609e38d6743",
   "title": "Filtered notification read-all acknowledgement",
   "behavior": {
@@ -24,16 +24,69 @@
     "notificationUnit": "34/34",
     "focusedBrowser": "4/4 notifications.spec.ts using owned Redis 6380 and existing Chrome",
     "formatting": true,
-    "diffCheck": "pending final documentation reconciliation",
+    "diffCheck": true,
     "realEnvironmentUnchanged": true,
     "antigravityWorktreesUntouched": true,
     "liveProvidersUsed": false,
     "credentialsPrinted": false
   },
-  "implementationCommit": null,
-  "exactCi": null,
+  "implementationCommit": "00f97432fe1459b54dbe42378c9e21da8f47ce3",
+  "implementationTree": "87309b3c7f06a1ed9016fc8158b9433f1fcae675",
+  "exactCi": {
+    "status": "success",
+    "sourceCommit": "00f97432fe1459b54dbe42378c9e21da8f47ce3",
+    "runId": 43752790194,
+    "runNumber": 263,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43752790194",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {
+        "jobId": 132930245229,
+        "requiredSteps": 11,
+        "status": "success"
+      },
+      "composeRestore": {
+        "jobId": 132930244965,
+        "requiredSteps": 8,
+        "status": "success"
+      },
+      "nativeApplication": {
+        "jobId": 132930245188,
+        "requiredSteps": 22,
+        "status": "success"
+      }
+    },
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 14176979910,
+        "size": "14.5 MB",
+        "digest": "sha256:6816fbfff84bdd5421e697ec8b92c4775e14cbaf029c6c1c233b45cebd8869c6"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 14177601301,
+        "size": "16.6 KB",
+        "digest": "sha256:80d397356999589e704b3df82458e1baa9ab84641e80b1a11a4666bdcccb5ef"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 14176313621,
+        "size": "933 Bytes",
+        "digest": "sha256:c0045857ab36ad606e0fb00897a3416059e3b3ddecb2dfc865c21e45f07afd8e"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 14175979886,
+        "size": "3.0 KB",
+        "digest": "sha256:0e137dd04e931e1b9cc0574a2403662c7c385f86d7f451efa024ea1d582bc55b"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
   "package": {
-    "status": "pending_final_exact_ci",
+    "status": "pending_continuity_commit_and_final_exact_ci",
     "runtimeDataCredentialsExcluded": true
   },
   "limits": [
