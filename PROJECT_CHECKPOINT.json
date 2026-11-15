@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01l-implementation-verified-ci-pending-20261115",
-  "savedAtUtc": "2026-11-15T11:51:30.786Z",
-  "currentMilestone": "NOTIFY-01L implementation 7b08fe3 is locally verified: notification dialog focus containment and popover/feed scroll isolation are integrated; exact-source CI, continuity evidence and paired package/receipt are pending.",
+  "checkpointRevision": "notify01l-ci-verified-integrated-continuity-20261115",
+  "savedAtUtc": "2026-11-15T12:13:00.388Z",
+  "currentMilestone": "NOTIFY-01L exact-source continuity 1d80086 passed run 43711098911 across all three jobs and 41 required steps; final reconciliation CI and the paired source package/receipt remain the last publication guard.",
   "activeTaskId": "NOTIFY-01L",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Publish NOTIFY-01L on the exact reviewed source, inspect all three CI jobs and required steps, then pair the fresh source package and final receipt while preserving all notification, tenant, role, credit, migration, recovery and accessibility assertions.",
+  "nextAction": "Publish the reconciled NOTIFY-01L checkpoint/package source, inspect its own three-job CI, then pair the external final receipt and source ZIP; after that review the next separately scoped NOTIFY-01 increment.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -7943,8 +7943,8 @@
       "id": "NOTIFY-01",
       "state": "ci_verified_integrated",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01A through NOTIFY-01K are exact-source CI verified. NOTIFY-01L implementation 7b08fe3 adds dialog focus containment and popover/feed scroll isolation; exact-source CI and package/receipt are pending.",
-      "nextAction": "Publish NOTIFY-01L on the exact reviewed source, inspect all three CI jobs and required steps, then pair the fresh source package and final receipt while preserving all notification, tenant, role, credit, migration, recovery and accessibility assertions.",
+      "completedIncrement": "NOTIFY-01A through NOTIFY-01L are exact-source CI verified. NOTIFY-01L adds dialog focus containment and popover/feed scroll isolation; continuity 1d80086/run 43711098911 passed all three jobs and 41 required steps.",
+      "nextAction": "Close NOTIFY-01L package/receipt continuity on its own final reconciliation source, then review the next separately scoped NOTIFY-01 increment.",
       "currentEvidence": "docs/qa/notify01l-evidence.json",
       "status": "ci_verified_integrated",
       "currentBlocker": "None for this bounded increment; broader notification delivery and production gates remain open."
@@ -8116,13 +8116,13 @@
     },
     {
       "id": "NOTIFY-01L",
-      "state": "implementation_verified_ci_pending",
+      "state": "ci_verified_integrated",
       "title": "Notification dialog focus containment and scroll isolation",
-      "completedIncrement": "Tab and Shift+Tab wrap within usable dialog controls; popover/feed overscroll is contained; implementation 7b08fe3 and local builds/34 focused notification tests pass.",
-      "currentBlocker": "Exact three-job CI on the final published source plus paired package/receipt are required; broader notification delivery and production gates remain open.",
-      "nextAction": "Publish and inspect the exact final source, then create the paired package and receipt.",
+      "completedIncrement": "Tab and Shift+Tab wrap within usable dialog controls; popover/feed overscroll is contained; continuity 1d80086 / run 43711098911 passed all three jobs and 41 required steps.",
+      "currentBlocker": "No blocker for this bounded increment; final reconciliation source CI and paired package/receipt are the last publication guard, while broader notification delivery and production gates remain open.",
+      "nextAction": "Finish final reconciliation source CI and pair the external package/receipt, then review the next separately scoped NOTIFY-01 increment.",
       "currentEvidence": "docs/qa/notify01l-evidence.json",
-      "status": "implementation_verified_ci_pending"
+      "status": "ci_verified_integrated"
     }
   ],
   "lastChanges": [
@@ -8217,6 +8217,13 @@
       "commit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
       "runId": null,
       "summary": "Implemented notification dialog Tab/Shift+Tab focus containment and popover/feed overscroll isolation; local builds and 34/34 focused notification tests pass, while the owned UI verifier fails closed on occupied Redis 6379."
+    },
+    {
+      "date": "2026-11-15",
+      "taskId": "NOTIFY-01L",
+      "commit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "runId": 43711098911,
+      "summary": "Continuity/checkpoint/evidence source passed all three exact CI jobs and 41 required steps; artifact metadata is recorded, artifact bytes/reports remain blocked by proxy/auth routes, and final reconciliation package/receipt publication remains."
     }
   ],
   "nextAgentProtocol": [
@@ -8258,34 +8265,86 @@
   "checkpointVerificationEvidence": "docs/qa/notify01l-evidence.json",
   "latestStatus": {
     "taskId": "NOTIFY-01L",
-    "status": "implementation_verified_ci_pending",
-    "commit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
-    "runId": null,
-    "allThreeJobsAndRequiredStepsPassed": false,
+    "status": "ci_verified_integrated",
+    "commit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+    "runId": 43711098911,
+    "allThreeJobsAndRequiredStepsPassed": true,
     "evidence": [
       "docs/qa/notify01l-evidence.json"
     ],
     "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; no existing service was contacted.",
     "exactCi": {
-      "status": "pending_exact_source_publication",
-      "sourceCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "requiredSteps": 41
+      "status": "success",
+      "sourceCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "runId": 43711098911,
+      "runNumber": 258,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "requiredSteps": 41,
+      "jobBreakdown": {
+        "nativeUpgrade": {
+          "jobId": 132802602348,
+          "requiredSteps": 11,
+          "status": "success"
+        },
+        "composeRestore": {
+          "jobId": 132802602359,
+          "requiredSteps": 8,
+          "status": "success"
+        },
+        "nativeApplication": {
+          "jobId": 132802602160,
+          "requiredSteps": 22,
+          "status": "success"
+        }
+      },
+      "artifacts": [
+        {
+          "name": "browser-evidence",
+          "artifactId": 14160603010,
+          "size": "14.5 MB",
+          "digest": "sha256:390310b779d1a734dfbee3fa649005615179e95b31ef318e5e517d29f145d1fd"
+        },
+        {
+          "name": "compose-evidence",
+          "artifactId": 14160637248,
+          "size": "16.5 KB",
+          "digest": "sha256:fdfc175a57b19bfe5a45577de707745d354173a69ed6753f9ea29b67cc2cdf62"
+        },
+        {
+          "name": "native-upgrade-evidence",
+          "artifactId": 14160293620,
+          "size": "935 Bytes",
+          "digest": "sha256:96b8a628463b522e5420ace3febddc1a3f88e615990ab778561a04eee62587cf"
+        },
+        {
+          "name": "postgres-pitr-evidence",
+          "artifactId": 14159984770,
+          "size": "2.95 KB",
+          "digest": "sha256:6f31bfa5979634acb4ed680c99b281b08ccc400ff5a43635bd9a678be9cf8bfd"
+        }
+      ],
+      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
     "sourcePackage": {
-      "status": "pending_final_published_source",
-      "runtimeDataCredentialsExcluded": true
+      "status": "pending_final_reconciliation_source",
+      "runtimeDataCredentialsExcluded": true,
+      "plannedPath": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01l-final.zip",
+      "plannedExternalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01l-final-ci-receipt.json",
+      "continuitySource": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "continuityRunId": 43711098911,
+      "note": "Regenerate after this reconciliation commit; final external receipt records the next exact CI run."
     }
   },
   "activeTask": {
     "id": "NOTIFY-01L",
     "title": "Notification dialog focus containment and scroll isolation",
-    "status": "implementation_verified_ci_pending",
+    "status": "ci_verified_integrated",
     "implementationCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
     "implementationTree": "b1f8e45b931e63cd325ddc2f2f50a88ec965aa0d",
     "baseCommit": "6c69d77815065d7aee8d611fd680d1cb96bad289",
-    "publishedCommit": null,
-    "exactRunId": null,
+    "publishedCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+    "exactRunId": 43711098911,
     "focusedTestsPassed": 34,
     "focusedTestsFailed": 0,
     "apiBuild": true,
@@ -8298,7 +8357,69 @@
       "docs/NOTIFICATION_ACCESSIBILITY.md",
       "docs/qa/notify01l-evidence.json"
     ],
-    "exactRunConclusion": "pending"
+    "exactRunConclusion": "success",
+    "exactCi": {
+      "status": "success",
+      "sourceCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "runId": 43711098911,
+      "runNumber": 258,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "requiredSteps": 41,
+      "jobBreakdown": {
+        "nativeUpgrade": {
+          "jobId": 132802602348,
+          "requiredSteps": 11,
+          "status": "success"
+        },
+        "composeRestore": {
+          "jobId": 132802602359,
+          "requiredSteps": 8,
+          "status": "success"
+        },
+        "nativeApplication": {
+          "jobId": 132802602160,
+          "requiredSteps": 22,
+          "status": "success"
+        }
+      },
+      "artifacts": [
+        {
+          "name": "browser-evidence",
+          "artifactId": 14160603010,
+          "size": "14.5 MB",
+          "digest": "sha256:390310b779d1a734dfbee3fa649005615179e95b31ef318e5e517d29f145d1fd"
+        },
+        {
+          "name": "compose-evidence",
+          "artifactId": 14160637248,
+          "size": "16.5 KB",
+          "digest": "sha256:fdfc175a57b19bfe5a45577de707745d354173a69ed6753f9ea29b67cc2cdf62"
+        },
+        {
+          "name": "native-upgrade-evidence",
+          "artifactId": 14160293620,
+          "size": "935 Bytes",
+          "digest": "sha256:96b8a628463b522e5420ace3febddc1a3f88e615990ab778561a04eee62587cf"
+        },
+        {
+          "name": "postgres-pitr-evidence",
+          "artifactId": 14159984770,
+          "size": "2.95 KB",
+          "digest": "sha256:6f31bfa5979634acb4ed680c99b281b08ccc400ff5a43635bd9a678be9cf8bfd"
+        }
+      ],
+      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+    },
+    "sourcePackage": {
+      "status": "pending_final_reconciliation_source",
+      "runtimeDataCredentialsExcluded": true,
+      "plannedPath": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01l-final.zip",
+      "plannedExternalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01l-final-ci-receipt.json",
+      "continuitySource": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "continuityRunId": 43711098911,
+      "note": "Regenerate after this reconciliation commit; final external receipt records the next exact CI run."
+    }
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8962,7 +9083,7 @@
   },
   "currentVerification": {
     "taskId": "NOTIFY-01L",
-    "status": "implementation_verified_ci_pending",
+    "status": "ci_verified_integrated",
     "baseCommit": "6c69d77815065d7aee8d611fd680d1cb96bad289",
     "local": {
       "prismaGenerate": true,
@@ -8981,15 +9102,69 @@
       "credentialsPrinted": false
     },
     "exactCi": {
-      "status": "pending_exact_source_publication",
-      "sourceCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
-      "allThreeJobsAndRequiredStepsPassed": false,
-      "requiredSteps": 41
+      "status": "success",
+      "sourceCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "runId": 43711098911,
+      "runNumber": 258,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "requiredSteps": 41,
+      "jobBreakdown": {
+        "nativeUpgrade": {
+          "jobId": 132802602348,
+          "requiredSteps": 11,
+          "status": "success"
+        },
+        "composeRestore": {
+          "jobId": 132802602359,
+          "requiredSteps": 8,
+          "status": "success"
+        },
+        "nativeApplication": {
+          "jobId": 132802602160,
+          "requiredSteps": 22,
+          "status": "success"
+        }
+      },
+      "artifacts": [
+        {
+          "name": "browser-evidence",
+          "artifactId": 14160603010,
+          "size": "14.5 MB",
+          "digest": "sha256:390310b779d1a734dfbee3fa649005615179e95b31ef318e5e517d29f145d1fd"
+        },
+        {
+          "name": "compose-evidence",
+          "artifactId": 14160637248,
+          "size": "16.5 KB",
+          "digest": "sha256:fdfc175a57b19bfe5a45577de707745d354173a69ed6753f9ea29b67cc2cdf62"
+        },
+        {
+          "name": "native-upgrade-evidence",
+          "artifactId": 14160293620,
+          "size": "935 Bytes",
+          "digest": "sha256:96b8a628463b522e5420ace3febddc1a3f88e615990ab778561a04eee62587cf"
+        },
+        {
+          "name": "postgres-pitr-evidence",
+          "artifactId": 14159984770,
+          "size": "2.95 KB",
+          "digest": "sha256:6f31bfa5979634acb4ed680c99b281b08ccc400ff5a43635bd9a678be9cf8bfd"
+        }
+      ],
+      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
     "sourcePackage": {
-      "status": "pending_final_published_source",
-      "runtimeDataCredentialsExcluded": true
-    }
+      "status": "pending_final_reconciliation_source",
+      "runtimeDataCredentialsExcluded": true,
+      "plannedPath": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01l-final.zip",
+      "plannedExternalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01l-final-ci-receipt.json",
+      "continuitySource": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+      "continuityRunId": 43711098911,
+      "note": "Regenerate after this reconciliation commit; final external receipt records the next exact CI run."
+    },
+    "publishedCommit": "1d8008670b93d8386aac9e38f1a6c7460e0479c4",
+    "exactRunId": 43711098911
   },
   "social01PolicyReview": {
     "status": "local_verified_not_published",
@@ -24284,239 +24459,37 @@
     }
   },
   "priorNotify01LCheckpoint": {
-    "recordedAtUtc": "2026-11-15T11:05:49Z",
-    "activeTask": {
-      "id": "NOTIFY-01K",
-      "title": "Keyboard-safe notification center focus and dismissal",
-      "status": "ci_verified_integrated",
-      "implementationCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
-      "publishedCommit": "0dfcd0105aef26645f955f4c7e142bc7b4debe13",
-      "baseCommit": "f3769ccc17f9995a8b395f4d0fe69d67683694d6",
-      "exactRunId": 43705123066,
-      "focusedTestsPassed": 34,
-      "focusedTestsFailed": 0,
+    "taskId": "NOTIFY-01L",
+    "status": "implementation_verified_ci_pending",
+    "implementationCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
+    "continuityBeforeVerification": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
+    "baseCommit": "6c69d77815065d7aee8d611fd680d1cb96bad289",
+    "evidence": "docs/qa/notify01l-evidence.json",
+    "local": {
+      "prismaGenerate": true,
       "apiBuild": true,
       "webBuild": true,
-      "httpHarness": "blocked_fail_closed_occupied_6379",
-      "changedPaths": [
-        "apps/web/app/notifications-panel.tsx",
-        "tests/ui/notifications.spec.ts",
-        "docs/NOTIFICATION_ACCESSIBILITY.md",
-        "docs/qa/notify01k-evidence.json"
-      ],
-      "exactRunConclusion": "success",
-      "exactResults": {
-        "status": "success",
-        "sourceCommit": "0dfcd0105aef26645f955f4c7e142bc7b4debe13",
-        "runId": 43705123066,
-        "runNumber": 256,
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43705123066",
-        "allThreeJobsAndRequiredStepsPassed": true,
-        "requiredSteps": 41,
-        "jobBreakdown": {
-          "nativeUpgrade": {
-            "jobId": 132784449141,
-            "requiredSteps": 11,
-            "status": "success"
-          },
-          "composeRestore": {
-            "jobId": 132784448889,
-            "requiredSteps": 8,
-            "status": "success"
-          },
-          "nativeApplication": {
-            "jobId": 132784449092,
-            "requiredSteps": 22,
-            "status": "success"
-          }
-        },
-        "artifacts": [
-          {
-            "name": "browser-evidence",
-            "artifactId": 14158633385,
-            "size": "14.5 MB",
-            "digest": "sha256:91fbc7deb3657ef85b9cd5f7fa440862b867d75a376c48f35285821e4e40c3c9"
-          },
-          {
-            "name": "compose-evidence",
-            "artifactId": 14157954807,
-            "size": "16.5 KB",
-            "digest": "sha256:3da7bd680e2f8426bb86def6c912c053718da94592b46faa87d97fa0a3e906ea"
-          },
-          {
-            "name": "native-upgrade-evidence",
-            "artifactId": 14157763455,
-            "size": "934 Bytes",
-            "digest": "sha256:33d5f7a18e94887587e178d310b19ec959ef6877c68c33fc7e13fbdbaf003ad5"
-          },
-          {
-            "name": "postgres-pitr-evidence",
-            "artifactId": 14158277230,
-            "size": "2.95 KB",
-            "digest": "sha256:1ac077d125dfd6e4f6e8a4d842b3126bc980a0fc1af2670e74f1ba05f9209fb0"
-          }
-        ],
-        "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
-      },
-      "package": {
-        "status": "paired_external_receipt",
-        "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01k-final.zip",
-        "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01k-final-ci-receipt.json",
-        "runtimeDataCredentialsExcluded": true
-      },
-      "nextAction": "Review the next separately scoped NOTIFY-01 increment while preserving all prior notification assertions."
+      "focusedNotificationTests": 34,
+      "focusedTestsFailed": 0,
+      "notificationFocusContainmentBrowserRegressionAdded": true,
+      "prettier": true,
+      "diffCheck": true,
+      "httpBrowserHarness": "blocked_fail_closed_occupied_6379",
+      "fixtureCleanup": true,
+      "realEnvironmentUnchanged": true,
+      "antigravityWorktreesUntouched": true,
+      "liveProvidersUsed": false,
+      "credentialsPrinted": false
     },
-    "latestStatus": {
-      "taskId": "NOTIFY-01K",
-      "status": "ci_verified_integrated",
-      "commit": "0dfcd0105aef26645f955f4c7e142bc7b4debe13",
-      "runId": 43705123066,
-      "allThreeJobsAndRequiredStepsPassed": true,
-      "evidence": [
-        "docs/qa/notify01k-evidence.json"
-      ],
-      "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; no existing service was contacted.",
-      "exactCi": {
-        "status": "success",
-        "sourceCommit": "0dfcd0105aef26645f955f4c7e142bc7b4debe13",
-        "runId": 43705123066,
-        "runNumber": 256,
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43705123066",
-        "allThreeJobsAndRequiredStepsPassed": true,
-        "requiredSteps": 41,
-        "jobBreakdown": {
-          "nativeUpgrade": {
-            "jobId": 132784449141,
-            "requiredSteps": 11,
-            "status": "success"
-          },
-          "composeRestore": {
-            "jobId": 132784448889,
-            "requiredSteps": 8,
-            "status": "success"
-          },
-          "nativeApplication": {
-            "jobId": 132784449092,
-            "requiredSteps": 22,
-            "status": "success"
-          }
-        },
-        "artifacts": [
-          {
-            "name": "browser-evidence",
-            "artifactId": 14158633385,
-            "size": "14.5 MB",
-            "digest": "sha256:91fbc7deb3657ef85b9cd5f7fa440862b867d75a376c48f35285821e4e40c3c9"
-          },
-          {
-            "name": "compose-evidence",
-            "artifactId": 14157954807,
-            "size": "16.5 KB",
-            "digest": "sha256:3da7bd680e2f8426bb86def6c912c053718da94592b46faa87d97fa0a3e906ea"
-          },
-          {
-            "name": "native-upgrade-evidence",
-            "artifactId": 14157763455,
-            "size": "934 Bytes",
-            "digest": "sha256:33d5f7a18e94887587e178d310b19ec959ef6877c68c33fc7e13fbdbaf003ad5"
-          },
-          {
-            "name": "postgres-pitr-evidence",
-            "artifactId": 14158277230,
-            "size": "2.95 KB",
-            "digest": "sha256:1ac077d125dfd6e4f6e8a4d842b3126bc980a0fc1af2670e74f1ba05f9209fb0"
-          }
-        ],
-        "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
-      },
-      "sourcePackage": {
-        "status": "paired_external_receipt",
-        "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01k-final.zip",
-        "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01k-final-ci-receipt.json",
-        "scope": "Portable source/context package only; runtime data, private backups and credentials excluded."
-      }
+    "exactCi": {
+      "status": "pending_exact_source_publication",
+      "sourceCommit": "7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205",
+      "allThreeJobsAndRequiredStepsPassed": false,
+      "requiredSteps": 41
     },
-    "currentVerification": {
-      "taskId": "NOTIFY-01K",
-      "status": "ci_verified_integrated",
-      "baseCommit": "f3769ccc17f9995a8b395f4d0fe69d67683694d6",
-      "local": {
-        "prismaGenerate": true,
-        "apiBuild": true,
-        "webBuild": true,
-        "focusedNotificationTests": 34,
-        "focusedTestsFailed": 0,
-        "notificationAccessibilityBrowserRegressionAdded": true,
-        "prettier": true,
-        "diffCheck": true,
-        "httpBrowserHarness": "blocked_fail_closed_occupied_6379",
-        "fixtureCleanup": true,
-        "realEnvironmentUnchanged": true,
-        "antigravityWorktreesUntouched": true,
-        "liveProvidersUsed": false,
-        "credentialsPrinted": false
-      },
-      "exactCi": {
-        "status": "success",
-        "sourceCommit": "0dfcd0105aef26645f955f4c7e142bc7b4debe13",
-        "runId": 43705123066,
-        "runNumber": 256,
-        "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43705123066",
-        "allThreeJobsAndRequiredStepsPassed": true,
-        "requiredSteps": 41,
-        "jobBreakdown": {
-          "nativeUpgrade": {
-            "jobId": 132784449141,
-            "requiredSteps": 11,
-            "status": "success"
-          },
-          "composeRestore": {
-            "jobId": 132784448889,
-            "requiredSteps": 8,
-            "status": "success"
-          },
-          "nativeApplication": {
-            "jobId": 132784449092,
-            "requiredSteps": 22,
-            "status": "success"
-          }
-        },
-        "artifacts": [
-          {
-            "name": "browser-evidence",
-            "artifactId": 14158633385,
-            "size": "14.5 MB",
-            "digest": "sha256:91fbc7deb3657ef85b9cd5f7fa440862b867d75a376c48f35285821e4e40c3c9"
-          },
-          {
-            "name": "compose-evidence",
-            "artifactId": 14157954807,
-            "size": "16.5 KB",
-            "digest": "sha256:3da7bd680e2f8426bb86def6c912c053718da94592b46faa87d97fa0a3e906ea"
-          },
-          {
-            "name": "native-upgrade-evidence",
-            "artifactId": 14157763455,
-            "size": "934 Bytes",
-            "digest": "sha256:33d5f7a18e94887587e178d310b19ec959ef6877c68c33fc7e13fbdbaf003ad5"
-          },
-          {
-            "name": "postgres-pitr-evidence",
-            "artifactId": 14158277230,
-            "size": "2.95 KB",
-            "digest": "sha256:1ac077d125dfd6e4f6e8a4d842b3126bc980a0fc1af2670e74f1ba05f9209fb0"
-          }
-        ],
-        "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
-      },
-      "publishedCommit": "0dfcd0105aef26645f955f4c7e142bc7b4debe13",
-      "exactRunId": 43705123066,
-      "sourcePackage": {
-        "status": "paired_external_receipt",
-        "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01k-final.zip",
-        "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01k-final-ci-receipt.json"
-      }
-    },
-    "checkpointVerificationEvidence": "docs/qa/notify01k-evidence.json"
+    "sourcePackage": {
+      "status": "pending_final_published_source",
+      "runtimeDataCredentialsExcluded": true
+    }
   }
 }

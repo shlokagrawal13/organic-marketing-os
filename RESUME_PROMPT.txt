@@ -1,4 +1,12 @@
-<!-- NOTIFY01H_CURRENT_START -->
+<!-- NOTIFY01L_CURRENT_START -->
+## Current: NOTIFY-01L focus containment and scroll isolation - 2026-11-15
+
+NOTIFY-01L keeps keyboard focus inside the existing tenant-bound notification dialog while it is open. Tab and Shift+Tab wrap between usable controls, the dialog/feed contain overscroll, and existing focus-on-open, Escape dismissal, filtering, pagination, read/unread, preferences, SSE/polling and tenant-safe deep links remain unchanged.
+
+Implementation commit 7b08fe33c2bd8efd7f7b06f3fc504ca9aac07205 is included in the published source. Continuity/checkpoint/evidence commit 1d8008670b93d8386aac9e38f1a6c7460e0479c4 passed [run 43711098911](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43711098911) across all three jobs and 41 required steps; artifact bytes/reports remain uninspected because proxy/auth routes returned 401/403. Final reconciliation CI and the paired source package/receipt are the remaining publication guard. CI verifies fixtures and does not deploy.
+<!-- NOTIFY01L_CURRENT_END -->
+
+<!-- NOTIFY01H_HISTORY_START -->
 ## Current: NOTIFY-01H bounded live-stream reconnect - 2026-11-13
 
 NOTIFY-01H adds controlled reconnect behavior to the optional tenant/role-guarded notification SSE stream. A transient EventSource failure closes only the failed connection, exposes a clear **Reconnecting...** state, and retries with bounded delays of 1s, 2.5s, 5s, 10s and a capped 30s. The existing 60-second list polling fallback remains active, and navigation/unmount clears pending timers and closes the stream.
@@ -6,7 +14,7 @@ NOTIFY-01H adds controlled reconnect behavior to the optional tenant/role-guarde
 The increment is client-side only: no schema, migration, provider call, external delivery, durable replay, cross-process fan-out or delivery-SLO claim is added. Existing cursor/count-only snapshots, tenant/role checks, category muting, explicit preference saves, read/unread actions and the 60-second server stream bound remain unchanged. API/web production builds, 33 focused notification unit tests, formatting and diff checks pass. The owned Windows UI verifier was run through verify-local and failed closed before fixture startup because 127.0.0.1:6379 is occupied; no existing service was contacted.
 
 Implementation commit 8cbfc4169032a48d9e5c342b2a948787684025b0 passed run 43303938997, and continuity commit b9178ce19bfca66ff0f0a42f56875e34d0a4d8df passed run 43307569387; both exact runs passed all three jobs and every required step. The final run page exposed four artifact sizes/digests; authenticated artifact bytes/reports and job logs remain unavailable from this environment (artifact API returned 401 and logs returned 403), so no byte/report inspection is claimed. The paired source package and external receipt close this bounded increment. Preserve real services, credentials, volumes, Antigravity worktrees and the user's uncommitted apps/web/next-env.d.ts change. See [NOTIFY-01H evidence](docs/qa/notify01h-evidence.json) and [stream reconnect design](docs/NOTIFICATION_STREAM_RECONNECT.md). External delivery, durable/cross-process realtime, remote durability/RPO-RTO, deployed/live-provider and full-master acceptance remain open; CI verifies fixtures and does not deploy.
-<!-- NOTIFY01H_CURRENT_END -->
+<!-- NOTIFY01H_HISTORY_END -->
 
 CURRENT 2026-11-10: Continue from START_HERE.md, docs/ACTIVE_HANDOFF.md and PROJECT_CHECKPOINT.json. NOTIFY-01C/DATA-01C are locally integrated: notification center UI, atomic low-credit and approval-required triggers, locked retention pruning, and private-output preservation. Prisma generation, API/web/combined builds and 37 focused notification/data-governance tests pass. Exact three-job CI, source packaging and final receipt are pending. Windows HTTP/browser/full-suite checks are limited by missing FFmpeg/librsvg/font prerequisites and an occupied Redis listener; the isolated harness fails closed and no user services were touched. Preserve Antigravity's later branches, run exact CI on the new published commit, then package outside the repository. Live/deployed/provider/full-master acceptance remains open.
 
