@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01M",
-  "recordedAtUtc": "2026-11-15T20:22:53Z",
-  "status": "continuity_ci_verified_reconciliation_pending",
+  "recordedAtUtc": "2026-11-15T20:47:07Z",
+  "status": "ci_verified_integrated",
   "baseCommit": "b5e7d4381b657468cec61747f1533609e38d6743",
   "title": "Filtered notification read-all acknowledgement",
   "behavior": {
@@ -86,10 +86,13 @@
     "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
   "package": {
-    "status": "pending_final_reconciliation_package",
+    "status": "paired_external_receipt",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01m-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01m-final-ci-receipt.json",
     "runtimeDataCredentialsExcluded": true,
-    "nextSourceCommit": "to_be_created_from_verified_continuity_state",
-    "hashAndByteReceipt": "Recorded in the external final receipt after the reconciliation source package is regenerated."
+    "hashAndByteReceipt": "Recorded in the external final receipt; source package is regenerated from this closure tree.",
+    "sourceCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
+    "sourceCiRunId": 43757868315
   },
   "limits": [
     "This increment changes only category-scoped in-app acknowledgement wiring and browser regression coverage.",
@@ -124,28 +127,86 @@
     },
     "artifacts": [
       {
-        "name": "browser-evidence",
-        "size": "14.5 MB",
-        "digest": "sha256:a9f5befaea2de8d0fe5069e6606832f1426207a3f10beab6f557d0f9318c6a08"
-      },
-      {
-        "name": "compose-evidence",
-        "size": "16.6 KB",
-        "digest": "sha256:bbe9155996ab43d83fc7c4605080be08195c673433fe0e957a96a68fa3522dd5"
-      },
-      {
-        "name": "native-upgrade-evidence",
-        "size": "934 Bytes",
-        "digest": "sha256:d14ad6d7352c7d53e6d51c503fcee33d8ff53677c60cb1af16e4d41030b3eac0"
-      },
-      {
+        "artifactId": 14178622584,
         "name": "postgres-pitr-evidence",
         "size": "2.95 KB",
         "digest": "sha256:3dc57955cc51ebfbd6b73c3dba486e2ae1ae29bc06363494d739c6079a42e5f0"
+      },
+      {
+        "artifactId": 14178917046,
+        "name": "native-upgrade-evidence",
+        "size": "934 Bytes",
+        "digest": "sha256:07416680c51ee0c77350d571b2e26fbff599bb4f70202416df01abc0d9c08b03"
+      },
+      {
+        "artifactId": 14179133119,
+        "name": "compose-evidence",
+        "size": "16.5 KB",
+        "digest": "sha256:80d7d4e537cdbd06325144570fef12ca4a3545853dbaeec5ce7085f5f99c6dc5"
+      },
+      {
+        "artifactId": 14179329017,
+        "name": "browser-evidence",
+        "size": "14.5 MB",
+        "digest": "sha256:29dcfff588b9ec8bcbf12dccff1898282147b41dc1414c7571142df51c9e0074"
       }
     ],
     "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
-  "finalReconciliationCommit": null,
-  "finalReconciliationRunId": null
+  "finalReconciliationCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
+  "finalReconciliationRunId": 43757868315,
+  "finalReconciliationCi": {
+    "status": "success",
+    "sourceCommit": "c47f18baf2dd9c8c5a9ea1ad9b44f16ac37427cd",
+    "runId": 43757868315,
+    "runNumber": 265,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43757868315",
+    "duration": "17m 29s",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {
+        "jobId": 132945824237,
+        "requiredSteps": 11,
+        "status": "success"
+      },
+      "composeRestore": {
+        "jobId": 132945824096,
+        "requiredSteps": 8,
+        "status": "success"
+      },
+      "nativeApplication": {
+        "jobId": 132945824253,
+        "requiredSteps": 22,
+        "status": "success"
+      }
+    },
+    "artifacts": [
+      {
+        "artifactId": 14179329017,
+        "name": "browser-evidence",
+        "size": "14.5 MB",
+        "digest": "sha256:29dcfff588b9ec8bcbf12dccff1898282147b41dc1414c7571142df51c9e0074"
+      },
+      {
+        "artifactId": 14179133119,
+        "name": "compose-evidence",
+        "size": "16.5 KB",
+        "digest": "sha256:80d7d4e537cdbd06325144570fef12ca4a3545853dbaeec5ce7085f5f99c6dc5"
+      },
+      {
+        "artifactId": 14178917046,
+        "name": "native-upgrade-evidence",
+        "size": "934 Bytes",
+        "digest": "sha256:07416680c51ee0c77350d571b2e26fbff599bb4f70202416df01abc0d9c08b03"
+      },
+      {
+        "artifactId": 14178622584,
+        "name": "postgres-pitr-evidence",
+        "size": "2.95 KB",
+        "digest": "sha256:b33f2ededddfc3bae5c313178fdc3503484214fdf62fcdd519cc3af54928e880"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  }
 }
