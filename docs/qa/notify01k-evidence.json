@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01K",
-  "recordedAtUtc": "2026-11-15T00:00:00Z",
-  "status": "local_ready_exact_ci_pending",
+  "recordedAtUtc": "2026-11-14T22:04:32Z",
+  "status": "implementation_ci_verified_continuity_pending",
   "baseCommit": "f3769ccc17f9995a8b395f4d0fe69d67683694d6",
   "title": "Keyboard-safe notification center focus and dismissal",
   "behavior": {
@@ -38,7 +38,7 @@
     "runId": null,
     "allThreeJobsAndRequiredStepsPassed": false,
     "requiredSteps": 41,
-    "artifactByteInspection": "not_applicable_before_exact_ci"
+    "artifactByteInspection": "not_applicable_before_continuity_ci"
   },
   "limits": [
     "This increment changes only notification dialog accessibility and browser regression coverage.",
@@ -46,12 +46,64 @@
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
   ],
-  "implementationCommit": null,
-  "implementationTree": null,
+  "implementationCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+  "implementationTree": "2e2fd161c5971bef9360457657324e920eb69575",
   "package": {
     "status": "pending",
     "path": null,
     "externalReceipt": null,
     "runtimeDataCredentialsExcluded": true
+  },
+  "implementationCi": {
+    "sourceCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+    "runId": 43643899707,
+    "runNumber": 255,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43643899707",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {
+        "jobId": 132597275873,
+        "requiredSteps": 11,
+        "status": "success"
+      },
+      "composeRestore": {
+        "jobId": 132597276293,
+        "requiredSteps": 8,
+        "status": "success"
+      },
+      "nativeApplication": {
+        "jobId": 132597276373,
+        "requiredSteps": 22,
+        "status": "success"
+      }
+    },
+    "artifacts": [
+      {
+        "name": "browser-evidence",
+        "artifactId": 14134505212,
+        "size": "14.5 MB",
+        "digest": "sha256:3c90f55dc9e4b3e91684e415baafdaca9ae29e1327b3d99ce690725f74059297"
+      },
+      {
+        "name": "compose-evidence",
+        "artifactId": 14133334057,
+        "size": "16.5 KB",
+        "digest": "sha256:446f46586d4eb894f92ae1ff3069c553c1666aff9f6743a04b5b06e4b1dc70d0"
+      },
+      {
+        "name": "native-upgrade-evidence",
+        "artifactId": 14133526149,
+        "size": "934 Bytes",
+        "digest": "sha256:eb7917896c0df0f20dc6ea0fd4ba33d79017afa283fb0cd07931d5d0595adf28"
+      },
+      {
+        "name": "postgres-pitr-evidence",
+        "artifactId": 14133107940,
+        "size": "2.95 KB",
+        "digest": "sha256:960cb5a81e48e22227a3e556b68b8b6aa027816fa2767b6bc7cea0cdc4fe49bc"
+      }
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   }
 }

@@ -1,14 +1,22 @@
-<!-- NOTIFY01J_CURRENT_START -->
-## Current: NOTIFY-01J bounded notification feed filtering and pagination - 2026-11-15
+<!-- NOTIFY01K_CURRENT_START -->
+## Current: NOTIFY-01K keyboard-safe notification center - 2026-11-15
+
+NOTIFY-01K makes the existing notification center keyboard-safe without changing its tenant-bound data contract. Opening the bell moves focus to the dialog close control; the popover exposes an explicit heading relationship, modal semantics and trigger controls; Escape dismisses the view and restores focus to the bell. The close action also restores focus after the existing preference-draft discard path.
+
+This is a bounded browser interaction increment: no schema, migration, API query, notification producer, provider call, external delivery, durable replay, cross-process fan-out, realtime SLO or recovery fixture changes are added. Existing category filtering, 20-item pagination, unread summary, read/unread actions, preference saves, SSE reconnect, polling fallback and tenant-safe deep links remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass. The owned verifier fails closed before fixture startup because Redis 127.0.0.1:6379 is occupied; no existing service is contacted.
+
+Implementation commit 23d4f0913b66795c4ee62e1f8b4492dbf3cb6720 passed [exact run 43643899707](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43643899707) across all three jobs and all 41 required steps (22 application, 8 Compose/restore, 11 populated-upgrade/PITR). Four artifact names, sizes and API digests are recorded; artifact bytes and embedded reports remain uninspected because artifact/log routes returned proxy/auth 401/403. The continuity/source-package reconciliation commit is the next bounded verification step and is not yet accepted. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- NOTIFY01K_CURRENT_END -->
+
+<!-- NOTIFY01J_HISTORY_START -->
+## Historical: NOTIFY-01J bounded notification feed filtering and pagination - 2026-11-15
 
 NOTIFY-01J adds a bounded notification-center feed control over the existing tenant-scoped list API. The panel filters the visible feed by All, Render, Publishing, AI, Billing, Approval or Content notifications and requests a deterministic 20-item page at a time. Load more appends the next page without changing the overall unread badge, which remains sourced from the tenant- and role-scoped summary endpoint.
 
 This is a client/UI increment only: no schema, migration, provider call, external delivery, durable replay, cross-process fan-out or delivery-SLO claim is added. Existing category muting, explicit category overrides, read/unread actions, tenant/role guards, SSE reconnect, polling fallback, generation cancellation and deep-link behavior remain unchanged. Local Prisma generation, API/web production builds, 34/34 focused notification tests, formatting and diff checks pass. The owned verifier remains fail-closed before fixture startup because Redis 127.0.0.1:6379 is occupied; an isolated alternate-port focused verifier passed the 3/3 notification browser cases without contacting the existing service.
 
 Implementation commit 66d8782f5b8c0a6df21384a4a611597bdaf6e2f5 passed [exact run 43636741527](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43636741527). Continuity commit 79323d0d24663466cb7a4277f14aef464ed6c745 passed [exact run 43639145310](https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43639145310) across all three jobs and all 41 required steps (22 application, 8 Compose/restore, 11 populated-upgrade/PITR). Four artifact names, sizes and API digests are recorded; artifact bytes and embedded reports remain uninspected because artifact/log routes returned proxy/auth 401/403. The portable source package and final external receipt are paired outside the repository. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
-<!-- NOTIFY01J_CURRENT_END -->
-
-<!-- NOTIFY01I_CURRENT_START -->
+<!-- NOTIFY01J_HISTORY_END --><!-- NOTIFY01I_CURRENT_START -->
 ## Current: NOTIFY-01I tenant-safe notification deep links - 2026-11-14
 
 NOTIFY-01I activates the existing tenant-bound notification link field in the workspace UI. Clicking an unread notification acknowledges it, closes the popover and opens the matching content, render, media, publication/calendar or billing view. Policy-review notifications use their existing data.contentId when available. Absolute, cross-workspace, malformed and unknown paths fail closed; render targets are re-read through the tenant-scoped API before selection.

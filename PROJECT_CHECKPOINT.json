@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01j-continuity-ci-verified-package-paired-20261115",
-  "savedAtUtc": "2026-11-15T01:30:00Z",
-  "currentMilestone": "NOTIFY-01J exact-source closure is verified: implementation 66d8782/run43636741527 and continuity 79323d0/run43639145310 passed all three jobs and 41 required steps; package and receipt are paired outside the repository.",
-  "activeTaskId": "NOTIFY-01J",
+  "checkpointRevision": "notify01k-implementation-ci-verified-continuity-pending-20261115",
+  "savedAtUtc": "2026-11-14T22:04:32Z",
+  "currentMilestone": "NOTIFY-01K implementation CI is verified on 23d4f09/run43643899707; keyboard-safe dialog focus and Escape dismissal are implemented, and the continuity/source-package docs commit is pending its own exact three-job CI.",
+  "activeTaskId": "NOTIFY-01K",
   "workInProgress": true,
   "policy01bRecovery": {
     "baseCommit": "d1fe69b6b0ac4af3c36f3045e4df8434bd7d7938",
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01",
-  "nextAction": "Review the next separately scoped NOTIFY-01 increment against integrated main; preserve the open production/live-provider, external delivery, durability/RPO-RTO, deployed and full-master gates.",
+  "nextAction": "Publish the reconciled NOTIFY-01K continuity/checkpoint/evidence records and verify that exact docs commit across all three CI jobs before packaging.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -130,7 +130,9 @@
     "tests/integration/data-export.test.ts",
     "tests/integration/notifications.test.ts",
     "tests/notifications.test.ts",
-    "tests/ui/notifications.spec.ts"
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_ACCESSIBILITY.md",
+    "docs/qa/notify01k-evidence.json"
   ],
   "sourceOfTruth": {
     "spec": "docs/MASTER_SPEC.md",
@@ -7938,13 +7940,13 @@
     },
     {
       "id": "NOTIFY-01",
-      "state": "ci_verified_integrated",
+      "state": "implementation_ci_verified_continuity_pending",
       "title": "Notifications, realtime status and telemetry",
-      "completedIncrement": "NOTIFY-01A through NOTIFY-01J are exact-source CI verified. NOTIFY-01J continuity 79323d0 / run 43639145310 passed all three jobs and 41 required steps with tenant-bound category filtering and 20-item feed pagination.",
-      "nextAction": "Review the next separately scoped NOTIFY-01 increment against integrated main; production/live-provider, external delivery, durability/RPO-RTO, deployed and full-master gates remain open.",
-      "currentEvidence": "docs/qa/notify01j-evidence.json",
-      "status": "ci_verified_integrated",
-      "currentBlocker": "None for this bounded increment; broader notification delivery and production gates remain open."
+      "completedIncrement": "NOTIFY-01A through NOTIFY-01J are exact-source CI verified. NOTIFY-01K implementation 23d4f09 / run 43643899707 passed all three jobs and 41 required steps with keyboard-safe dialog focus and Escape dismissal.",
+      "nextAction": "Publish the NOTIFY-01K continuity/checkpoint/evidence records and verify that exact docs commit before packaging.",
+      "currentEvidence": "docs/qa/notify01k-evidence.json",
+      "status": "implementation_ci_verified_continuity_pending",
+      "currentBlocker": "Continuity/source-package verification for this bounded increment is pending."
     },
     {
       "id": "DATA-01",
@@ -8097,9 +8099,19 @@
       "title": "Bounded notification feed filtering and pagination",
       "completedIncrement": "Implementation 66d8782/run43636741527 and continuity 79323d0/run43639145310 passed all three CI jobs and 41 required steps; notification category filters, deterministic 20-item pages and summary-based unread badge are preserved.",
       "currentBlocker": "None for this bounded increment; broader notification delivery and production gates remain open.",
-      "nextAction": "Closed for this bounded increment; review the next separately scoped NOTIFY-01 increment against integrated main.",
+      "nextAction": "Closed for this bounded increment; NOTIFY-01K is the active bounded follow-up.",
       "currentEvidence": "docs/qa/notify01j-evidence.json",
       "status": "ci_verified_integrated"
+    },
+    {
+      "id": "NOTIFY-01K",
+      "state": "implementation_ci_verified_continuity_pending",
+      "title": "Keyboard-safe notification center focus and dismissal",
+      "completedIncrement": "Dialog focus-on-open, explicit modal/heading semantics, Escape dismissal and bell focus restoration are implemented on 23d4f09/run43643899707; continuity/source-package verification is pending.",
+      "currentBlocker": "Continuity/source-package verification for this bounded increment is pending.",
+      "nextAction": "Publish continuity/checkpoint/evidence records, verify exact three-job CI and package the final source.",
+      "currentEvidence": "docs/qa/notify01k-evidence.json",
+      "status": "implementation_ci_verified_continuity_pending"
     }
   ],
   "lastChanges": [
@@ -8226,20 +8238,20 @@
   },
   "checkpointVerificationEvidence": "docs/qa/notify01j-evidence.json",
   "latestStatus": {
-    "taskId": "NOTIFY-01J",
-    "status": "ci_verified_integrated",
-    "commit": "79323d0d24663466cb7a4277f14aef464ed6c745",
-    "runId": 43639145310,
+    "taskId": "NOTIFY-01K",
+    "status": "implementation_ci_verified_continuity_pending",
+    "commit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+    "runId": 43643899707,
     "allThreeJobsAndRequiredStepsPassed": true,
     "evidence": [
-      "docs/qa/notify01j-evidence.json"
+      "docs/qa/notify01k-evidence.json"
     ],
-    "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; isolated alternate-port notification browser verifier passed 3/3; no existing service was contacted.",
+    "local": "Prisma generation, API/web production builds, 34/34 focused notification unit tests, formatting and diff checks pass; verify-local UI stopped before fixture startup at occupied Redis 127.0.0.1:6379; no existing service was contacted.",
     "exactCi": {
-      "status": "success",
-      "sourceCommit": "79323d0d24663466cb7a4277f14aef464ed6c745",
-      "runId": 43639145310,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43639145310",
+      "status": "implementation_success_continuity_pending",
+      "sourceCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+      "runId": 43643899707,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43643899707",
       "allThreeJobsAndRequiredStepsPassed": true,
       "requiredSteps": 41,
       "jobStepCounts": {
@@ -8250,52 +8262,37 @@
       "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
     "sourcePackage": {
-      "status": "paired_external_receipt",
-      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
-      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
-      "scope": "Portable source/context package only; runtime data, private backups and credentials excluded.",
-      "hashAndByteReceipt": "Recorded in the external final receipt; this checkpoint is included in the package."
+      "status": "pending_continuity_ci",
+      "path": null,
+      "receipt": null,
+      "scope": "Portable source/context package only; runtime data, private backups and credentials excluded."
     }
   },
   "activeTask": {
-    "id": "NOTIFY-01J",
-    "title": "Bounded notification feed filtering and pagination",
-    "status": "ci_verified_integrated",
-    "implementationCommit": "66d8782f5b8c0a6df21384a4a611597bdaf6e2f5",
-    "publishedCommit": "79323d0d24663466cb7a4277f14aef464ed6c745",
-    "baseCommit": "7b5ebfb102bc15d6e4c35876f7145848485b667f",
-    "exactRunId": 43639145310,
+    "id": "NOTIFY-01K",
+    "title": "Keyboard-safe notification center focus and dismissal",
+    "status": "implementation_ci_verified_continuity_pending",
+    "implementationCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+    "publishedCommit": null,
+    "baseCommit": "f3769ccc17f9995a8b395f4d0fe69d67683694d6",
+    "exactRunId": 43643899707,
     "focusedTestsPassed": 34,
     "focusedTestsFailed": 0,
     "apiBuild": true,
     "webBuild": true,
     "httpHarness": "blocked_fail_closed_occupied_6379",
     "changedPaths": [
-      "AGENTS.md",
-      "CHECKPOINT_MANIFEST.json",
-      "PROJECT_CHECKPOINT.json",
-      "PROJECT_STATUS.md",
-      "REQUIREMENTS_MATRIX.md",
-      "START_HERE.md",
-      "apps/web/app/globals.css",
       "apps/web/app/notifications-panel.tsx",
-      "docs/ACTIVE_HANDOFF.md",
-      "docs/CHANGELOG.md",
-      "docs/NOTIFICATIONS.md",
-      "docs/NOTIFICATION_FEED_FILTERING.md",
-      "docs/PROJECT_STATUS.md",
-      "docs/REQUIREMENTS_MATRIX.md",
-      "docs/SESSION_LOG.md",
-      "docs/TASK_BOARD.md",
-      "docs/qa/notify01j-evidence.json",
-      "tests/ui/notifications.spec.ts"
+      "tests/ui/notifications.spec.ts",
+      "docs/NOTIFICATION_ACCESSIBILITY.md",
+      "docs/qa/notify01k-evidence.json"
     ],
-    "exactRunConclusion": "success",
+    "exactRunConclusion": "implementation_success_continuity_pending",
     "exactResults": {
-      "status": "success",
-      "sourceCommit": "79323d0d24663466cb7a4277f14aef464ed6c745",
-      "runId": 43639145310,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43639145310",
+      "status": "implementation_success_continuity_pending",
+      "sourceCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+      "runId": 43643899707,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43643899707",
       "allThreeJobsAndRequiredStepsPassed": true,
       "requiredSteps": 41,
       "jobStepCounts": {
@@ -8303,47 +8300,15 @@
         "composeRestore": 8,
         "nativeApplication": 22
       },
-      "artifactMetadata": [
-        {
-          "name": "browser-evidence",
-          "artifactId": 14132011619,
-          "size": "14.5 MB",
-          "digest": "sha256:1518b3d34ba3a4ede0506a8dce08ae524d0c8f11c95c8b0eebee106a555cff1f"
-        },
-        {
-          "name": "compose-evidence",
-          "artifactId": 14130659307,
-          "size": "16.5 KB",
-          "digest": "sha256:dc928f37511a9fb254dc2d41bbdd59775d7e9a1170feaaa418bc0e7afb27806d"
-        },
-        {
-          "name": "native-upgrade-evidence",
-          "artifactId": 14131137344,
-          "size": "930 Bytes",
-          "digest": "sha256:c92a3aa4a959925c9323bb2a073d0ca0bad51b27dcc11a0eb325330707c70e17"
-        },
-        {
-          "name": "postgres-pitr-evidence",
-          "artifactId": 14131127451,
-          "size": "2.95 KB",
-          "digest": "sha256:2ab67c5d8bf6338421c4d9be63690d89ef86ea78b6f45a3c6bd46e3d14774da5"
-        }
-      ],
-      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403",
-      "priorRunsNotSubstitute": [
-        43631043149,
-        43632716544,
-        43634689853
-      ]
+      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
     "package": {
-      "status": "paired_external_receipt",
-      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
-      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
-      "runtimeDataCredentialsExcluded": true,
-      "hashAndByteReceipt": "Recorded in the external final receipt; this checkpoint is included in the package."
+      "status": "pending_continuity_ci",
+      "path": null,
+      "receipt": null,
+      "runtimeDataCredentialsExcluded": true
     },
-    "nextAction": "Closed for this bounded increment; review the next separately scoped NOTIFY-01 increment against integrated main."
+    "nextAction": "Publish continuity/checkpoint/evidence records, run exact CI on that docs commit, then package the final source."
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -9006,20 +8971,19 @@
     "liveGoogleGrantOrPost": false
   },
   "currentVerification": {
-    "taskId": "NOTIFY-01J",
-    "status": "ci_verified_integrated",
-    "baseCommit": "7b5ebfb102bc15d6e4c35876f7145848485b667f",
+    "taskId": "NOTIFY-01K",
+    "status": "implementation_ci_verified_continuity_pending",
+    "baseCommit": "f3769ccc17f9995a8b395f4d0fe69d67683694d6",
     "local": {
       "prismaGenerate": true,
       "apiBuild": true,
       "webBuild": true,
       "focusedNotificationTests": 34,
       "focusedTestsFailed": 0,
-      "notificationFeedBrowserRegressionAdded": true,
+      "notificationAccessibilityBrowserRegressionAdded": true,
       "prettier": true,
       "diffCheck": true,
       "httpBrowserHarness": "blocked_fail_closed_occupied_6379",
-      "isolatedBrowserVerifier": "3/3 notification cases passed on alternate Redis port; existing service untouched",
       "fixtureCleanup": true,
       "realEnvironmentUnchanged": true,
       "antigravityWorktreesUntouched": true,
@@ -9027,10 +8991,10 @@
       "credentialsPrinted": false
     },
     "exactCi": {
-      "status": "success",
-      "sourceCommit": "79323d0d24663466cb7a4277f14aef464ed6c745",
-      "runId": 43639145310,
-      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43639145310",
+      "status": "implementation_success_continuity_pending",
+      "sourceCommit": "23d4f0913b66795c4ee62e1f8b4492dbf3cb6720",
+      "runId": 43643899707,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43643899707",
       "allThreeJobsAndRequiredStepsPassed": true,
       "requiredSteps": 41,
       "jobStepCounts": {
@@ -9040,13 +9004,12 @@
       },
       "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
-    "publishedCommit": "79323d0d24663466cb7a4277f14aef464ed6c745",
-    "exactRunId": 43639145310,
+    "publishedCommit": null,
+    "exactRunId": 43643899707,
     "sourcePackage": {
-      "status": "paired_external_receipt",
-      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01j-final.zip",
-      "receipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01j-final-ci-receipt.json",
-      "hashAndByteReceipt": "Recorded in the external final receipt; this checkpoint is included in the package."
+      "status": "pending_continuity_ci",
+      "path": null,
+      "receipt": null
     }
   },
   "social01PolicyReview": {
