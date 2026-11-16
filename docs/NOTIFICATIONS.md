@@ -1,4 +1,4 @@
-# In-App Notifications (NOTIFY-01A through NOTIFY-01L)
+# In-App Notifications (NOTIFY-01A through NOTIFY-01N)
 
 > NOTIFY-01N is the current bounded increment: category filters expose existing unread counts, filtered read-all hides when the selected feed is clear, and failed unread acknowledgements keep the panel open for retry. Local 34/34 focused notification units and 5/5 browser cases pass; implementation `58ef05d` is pushed and exact three-job CI is pending. See [category acknowledgement design](NOTIFICATION_CATEGORY_ACKNOWLEDGEMENT_VISIBILITY.md) and [QA evidence](qa/notify01n-evidence.json).
 
