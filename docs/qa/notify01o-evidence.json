@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "NOTIFY-01O",
   "recordedAtUtc": "2026-11-16T14:25:00Z",
-  "status": "continuity_ci_verified_final_package_pending",
+  "status": "ci_verified_integrated",
   "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
   "title": "Server-declared notification stream error recovery",
   "behavior": {
@@ -85,14 +85,37 @@
     ],
     "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
+  "finalReconciliationCommit": "071e8ea14f5fabda4f2a166b4aa3f656ff111ebc",
+  "finalReconciliationRunId": 43891569037,
+  "finalReconciliationCi": {
+    "status": "success",
+    "sourceCommit": "071e8ea14f5fabda4f2a166b4aa3f656ff111ebc",
+    "runId": 43891569037,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43891569037",
+    "duration": "18m 48s",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133383860419, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133383860845, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133383861072, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14238746583, "size": "14.5 MB", "digest": "sha256:fc6114de8e8ab654831822ddcafd8100c1fc35e9e7e0967b68779a0de802668e"},
+      {"name": "compose-evidence", "artifactId": 14236479587, "size": "16.6 KB", "digest": "sha256:7946ab1796c3cb69ce784f08c99944d3b2cf5941889891f5fb030b505a120552"},
+      {"name": "native-upgrade-evidence", "artifactId": 14236298958, "size": "939 Bytes", "digest": "sha256:cd91adfaccce7c35b3f6bfc6bff586c872ae9774cbe0f10667d761d98612f218"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14237471252, "size": "2.95 KB", "digest": "sha256:29467dac5931cb16adb4ec32e4491c0a2b8749f284a64b6f2846ccf4a3a1dab8"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
   "package": {
-    "status": "paired_external_receipt_final_ci_pending",
+    "status": "paired_external_receipt",
     "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01o-final.zip",
     "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01o-final-ci-receipt.json",
     "runtimeDataCredentialsExcluded": true,
-    "hashAndByteReceipt": "Recorded in the external final receipt after final reconciliation CI; package is regenerated from the closure tree.",
-    "sourceCommit": null,
-    "sourceCiRunId": null
+    "hashAndByteReceipt": "Recorded in the external final receipt for the regenerated closure-tree package.",
+    "sourceCommit": "071e8ea14f5fabda4f2a166b4aa3f656ff111ebc",
+    "sourceCiRunId": 43891569037
   },
   "supersededCiAttempt": {
     "runId": 43889901466,

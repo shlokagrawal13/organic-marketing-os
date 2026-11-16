@@ -1,9 +1,9 @@
 <!-- NOTIFY01O_CURRENT_START -->
 ## Current: NOTIFY-01O server-declared notification stream error recovery - 2026-11-16
 
-NOTIFY-01O consumes the existing tenant-guarded `notification-error` SSE frame, clamps valid `retryAfterMs` hints to the bounded client window and uses normal attempt backoff for malformed hints. The failed stream is closed before retry and duplicate timers are suppressed; the 60-second list polling fallback remains unchanged. Local API/web builds, 35/35 focused notification units and 6/6 browser cases pass. Implementation `d4681ba`/run `43881394742` and continuity `463585b`/run `43885421548` passed all three jobs and 41 required steps; final package/receipt are pending; no schema, migration, provider, delivery, recovery or authorization behavior changed.
+NOTIFY-01O consumes the existing tenant-guarded `notification-error` SSE frame, clamps valid `retryAfterMs` hints to the bounded client window and uses normal attempt backoff for malformed hints. The failed stream is closed before retry and duplicate timers are suppressed; the 60-second list polling fallback remains unchanged. Local API/web builds, 35/35 focused notification units and 6/6 browser cases pass. Implementation `d4681ba`/run `43881394742`, continuity `463585b`/run `43885421548` and final `071e8ea`/run `43891569037` passed all three jobs and 41 required steps; the final package/receipt are paired outside the repository; no schema, migration, provider, delivery, recovery or authorization behavior changed.
 
-See [NOTIFY-01O design](docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md). Preserve the uncommitted `apps/web/next-env.d.ts`, real services/volumes/credentials and Antigravity worktrees. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+See [NOTIFY-01O design](docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md). Preserve real services/volumes/credentials and Antigravity worktrees. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
 <!-- NOTIFY01O_CURRENT_END -->
 <!-- NOTIFY01N_CURRENT_START -->
 ## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16

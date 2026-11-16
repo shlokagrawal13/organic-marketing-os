@@ -1,7 +1,7 @@
 <!-- NOTIFY01O_CURRENT_START -->
 ## Current: NOTIFY-01O server-declared notification stream error recovery - 2026-11-16
 
-The web client now handles the existing `notification-error` SSE event and bounded retry hint. Numeric hints are rounded and clamped to 1–30 seconds; invalid hints use the existing attempt backoff. The failed stream is closed before retry, duplicate reconnect timers are prevented, and the 60-second polling fallback remains active. Local API/web builds, 35/35 focused notification units and 6/6 browser cases pass. Implementation `d4681ba`/run `43881394742` and continuity `463585b`/run `43885421548` passed all three jobs and 41 required steps; final package/receipt are pending. No schema/migration/provider/delivery/recovery/tenant-role contract changed. See [design](docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md).
+The web client now handles the existing `notification-error` SSE event and bounded retry hint. Numeric hints are rounded and clamped to 1–30 seconds; invalid hints use the existing attempt backoff. The failed stream is closed before retry, duplicate reconnect timers are prevented, and the 60-second polling fallback remains active. Local API/web builds, 35/35 focused notification units and 6/6 browser cases pass. Implementation `d4681ba`/run `43881394742`, continuity `463585b`/run `43885421548` and final `071e8ea`/run `43891569037` passed all three jobs and 41 required steps; the final package/receipt are paired outside the repository. No schema/migration/provider/delivery/recovery/tenant-role contract changed. See [design](docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md).
 <!-- NOTIFY01O_CURRENT_END -->
 <!-- NOTIFY01N_CURRENT_START -->
 ## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
