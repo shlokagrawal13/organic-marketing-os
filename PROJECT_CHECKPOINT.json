@@ -8154,13 +8154,13 @@
     },
     {
       "id": "NOTIFY-01O",
-      "state": "continuity_ci_verified_final_package_pending",
+      "state": "final_package_ci_pending",
       "title": "Server-declared notification stream error recovery",
       "completedIncrement": "The web client consumes the existing notification-error SSE event, clamps numeric retryAfterMs hints to 1-30 seconds, falls back to bounded attempt backoff for malformed hints, closes only the failed stream and prevents duplicate retry timers. Local 35/35 focused units, API/web builds and 6/6 browser cases pass; implementation d4681ba/run 43881394742 and continuity 463585b/run 43885421548 passed all three jobs and 41 required steps.",
       "currentBlocker": "Final reconciliation commit/run and external package receipt are pending.",
       "nextAction": "Regenerate the portable source package from the closure tree, publish final reconciliation docs, then inspect the exact final three-job CI run and close the receipt.",
       "currentEvidence": "docs/qa/notify01o-evidence.json",
-      "status": "continuity_ci_verified_final_package_pending"
+      "status": "final_package_ci_pending"
     }
   ],
   "lastChanges": [
@@ -8523,6 +8523,7 @@
       "docs/TASK_BOARD.md",
       "docs/qa/notify01o-evidence.json",
       "scripts/verify-local.mjs",
+      "scripts/install_test_cjk_fonts.py",
       "tests/notifications.test.ts",
       "tests/ui/notifications.spec.ts"
     ],
@@ -8613,6 +8614,7 @@
       "docs/TASK_BOARD.md",
       "docs/qa/notify01o-evidence.json",
       "scripts/verify-local.mjs",
+      "scripts/install_test_cjk_fonts.py",
       "tests/notifications.test.ts",
       "tests/ui/notifications.spec.ts"
     ],

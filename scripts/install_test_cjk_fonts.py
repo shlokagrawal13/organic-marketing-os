@@ -1,6 +1,6 @@
 """Pinned, verified test fonts only. Runtime fonts are administrator configured."""
 from pathlib import Path
-import argparse,hashlib,json,urllib.request
+import argparse,hashlib,json,time,urllib.request
 p=argparse.ArgumentParser();p.add_argument('--destination',default='.local/test-cjk-fonts');a=p.parse_args()
 metadata=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/cjk-fonts.json').read_text())
 root=Path(a.destination);root.mkdir(parents=True,exist_ok=True)
@@ -9,11 +9,15 @@ for key,info in metadata.items():
  target=root/info['file'];url=base+info['region']+'/'+info['file']
  data=target.read_bytes() if target.exists() else b''
  if len(data)!=info['bytes'] or hashlib.sha256(data).hexdigest()!=info['sha256']:
-  for attempt in range(3):
+  last_error=None
+  for attempt in range(5):
    try:
-    with urllib.request.urlopen(url,timeout=60) as response:data=response.read(16*1024*1024+1)
+    request=urllib.request.Request(url,headers={'User-Agent':'organic-marketing-os-ci/0.9'})
+    with urllib.request.urlopen(request,timeout=60) as response:data=response.read(16*1024*1024+1)
     assert len(data)==info['bytes'] and hashlib.sha256(data).hexdigest()==info['sha256'],'Pinned CJK font hash/length mismatch'
     target.write_bytes(data);break
-   except Exception:
-    if attempt==2:raise
+   except Exception as exc:
+    last_error=exc
+    if attempt==4:raise
+    time.sleep(min(30,2**attempt))
  print(json.dumps({'font':key,**info,'url':url,'verified':True}),flush=True)
