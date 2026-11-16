@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01O",
-  "recordedAtUtc": "2026-11-16T13:51:53Z",
-  "status": "local_verified_ci_pending",
+  "recordedAtUtc": "2026-11-16T14:25:00Z",
+  "status": "implementation_ci_verified_continuity_pending",
   "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
   "title": "Server-declared notification stream error recovery",
   "behavior": {
@@ -38,8 +38,30 @@
     "credentialsPrinted": false,
     "verifierPortNote": "The project Compose stack was stopped without deleting containers or volumes for the owned fixture run, then started again and health-checked. The verifier now accepts a bounded --smtp-port override; CI defaults remain unchanged."
   },
-  "implementationCommit": null,
-  "exactCi": null,
+  "implementationCommit": "d4681ba3be43f907a547935b13aac9a42aee5507",
+  "implementationTree": "4c64d5d1a1b1dafe10e921ffad266a1401f0052d",
+  "exactCi": {
+    "status": "success",
+    "sourceCommit": "d4681ba3be43f907a547935b13aac9a42aee5507",
+    "runId": 43881394742,
+    "runNumber": 272,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43881394742",
+    "duration": "18m 38s",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133347904039, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133347904091, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133347903712, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14233304248, "size": "14.5 MB", "digest": "sha256:3bf2e82e45ddd3d6ad7224ef2ececf33e01ba36b5c46e73221d6a4d45d766a7f"},
+      {"name": "compose-evidence", "artifactId": 14234605031, "size": "16.6 KB", "digest": "sha256:c9457742383ddb2d749a8eef048b899b2b29b6c1a25beda55c635b95b28a0bd0"},
+      {"name": "native-upgrade-evidence", "artifactId": 14232341820, "size": "935 Bytes", "digest": "sha256:2fc2754fc2ad5eb01cb019b7d2c57b3e122ef16c7e112649d563f37e2aa0096c"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14231559772, "size": "2.95 KB", "digest": "sha256:d114fa334854cbf866bddeea29cf1b1fc6cb4d8e8fa93ad4b8a3a4cb195b5d7a"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
   "package": null,
   "limits": [
     "This increment changes only client handling of the existing server-declared SSE error frame and local verifier SMTP-port portability.",

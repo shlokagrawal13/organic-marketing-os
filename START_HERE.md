@@ -1,7 +1,7 @@
 <!-- NOTIFY01O_CURRENT_START -->
 ## Current: NOTIFY-01O server-declared notification stream error recovery - 2026-11-16
 
-The notification center now handles the existing server `notification-error` SSE event, safely applies its retry hint within the 1–30 second bounded window, and prevents duplicate reconnect timers while retaining polling fallback. Local API/web builds, 35/35 focused notification units and 6/6 focused browser cases pass. Own exact three-job CI and package receipt are pending. See [design](docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md).
+The notification center now handles the existing server `notification-error` SSE event, safely applies its retry hint within the 1–30 second bounded window, and prevents duplicate reconnect timers while retaining polling fallback. Local API/web builds, 35/35 focused notification units and 6/6 focused browser cases pass. Implementation commit `d4681ba` passed exact run `43881394742` across all three jobs and 41 required steps; continuity evidence and package receipt are pending. See [design](docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md).
 <!-- NOTIFY01O_CURRENT_END -->
 <!-- NOTIFY01N_CURRENT_START -->
 ## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
