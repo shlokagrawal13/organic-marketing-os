@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "taskId": "NOTIFY-01O",
   "recordedAtUtc": "2026-11-16T14:25:00Z",
-  "status": "implementation_ci_verified_continuity_pending",
+  "status": "continuity_ci_verified_final_package_pending",
   "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
   "title": "Server-declared notification stream error recovery",
   "behavior": {
@@ -62,7 +62,37 @@
     ],
     "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
-  "package": null,
+  "continuityCi": {
+    "status": "success",
+    "sourceCommit": "463585b5268cec10416287dd361de82c9ff1df89",
+    "runId": 43885421548,
+    "runNumber": 273,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43885421548",
+    "duration": "19m 50s",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133362142214, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133362141846, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133362142316, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14236320766, "size": "14.5 MB", "digest": "sha256:06acbff4ec573e591bbcceac8d2de72774d280957337eba2c8f84f6abaa2029b"},
+      {"name": "compose-evidence", "artifactId": 14234659590, "size": "16.5 KB", "digest": "sha256:205f9c3802fdb08a2c447f9b895c3699280a671af1492c7be788bf35a8998005"},
+      {"name": "native-upgrade-evidence", "artifactId": 14233657944, "size": "934 Bytes", "digest": "sha256:b8ecb7bb04f22f776a4a82807873f2d9a18af05affda98ae04cbf02a04ea6978"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14234386379, "size": "2.95 KB", "digest": "sha256:a4fbaedb3daaec310324ac2172de74756120fc5198dee4fb02d52cc9735441a7"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
+  "package": {
+    "status": "paired_external_receipt_final_ci_pending",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01o-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01o-final-ci-receipt.json",
+    "runtimeDataCredentialsExcluded": true,
+    "hashAndByteReceipt": "Recorded in the external final receipt after final reconciliation CI; package is regenerated from the closure tree.",
+    "sourceCommit": null,
+    "sourceCiRunId": null
+  },
   "limits": [
     "This increment changes only client handling of the existing server-declared SSE error frame and local verifier SMTP-port portability.",
     "No schema, migration, provider, external delivery, recovery fixture or tenant/role contract changed.",

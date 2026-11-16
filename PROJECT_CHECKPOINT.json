@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "project": "Organic Marketing OS",
   "applicationVersion": "0.9.2",
-  "checkpointRevision": "notify01o-implementation-ci-20261116",
-  "savedAtUtc": "2026-11-16T14:25:00Z",
-  "currentMilestone": "NOTIFY-01O implementation commit d4681ba passed exact run 43881394742 across all three jobs and 41 required steps. Local 35/35 focused notification units, API/web builds and 6/6 browser cases pass; continuity evidence and final package/receipt remain pending.",
+  "checkpointRevision": "notify01o-final-package-pending-20261116",
+  "savedAtUtc": "2026-11-16T14:48:00Z",
+  "currentMilestone": "NOTIFY-01O implementation d4681ba/run 43881394742 and continuity 463585b/run 43885421548 passed all three jobs and 41 required steps. Local 35/35 focused notification units, API/web builds and 6/6 browser cases pass; final reconciliation CI and external package receipt remain pending.",
   "activeTaskId": "NOTIFY-01O",
   "workInProgress": true,
   "policy01bRecovery": {
@@ -75,7 +75,7 @@
     "publicTree": "71563c7c27216d0ffc3ef32233998821881b157f"
   },
   "nextTaskId": "NOTIFY-01O",
-  "nextAction": "Reconcile implementation CI evidence, publish continuity/package records, inspect the exact continuity and final runs, then pair the final source package/receipt while preserving all existing notification assertions.",
+  "nextAction": "Regenerate the portable source package from the closure tree, publish final reconciliation docs, then inspect the exact final three-job CI run and close the receipt while preserving all existing notification assertions.",
   "userIntent": [
     "Build the full supplied V3 specification while preserving the existing architecture.",
     "Do routine implementation and verification independently; do not assign routine testing to the user.",
@@ -8154,13 +8154,13 @@
     },
     {
       "id": "NOTIFY-01O",
-      "state": "implementation_ci_verified_continuity_pending",
+      "state": "continuity_ci_verified_final_package_pending",
       "title": "Server-declared notification stream error recovery",
-      "completedIncrement": "The web client consumes the existing notification-error SSE event, clamps numeric retryAfterMs hints to 1-30 seconds, falls back to bounded attempt backoff for malformed hints, closes only the failed stream and prevents duplicate retry timers. Local 35/35 focused units, API/web builds and 6/6 browser cases pass; implementation d4681ba passed exact run 43881394742 across all three jobs and 41 required steps.",
-      "currentBlocker": "Continuity evidence, portable source package and final receipt are pending.",
-      "nextAction": "Reconcile implementation CI evidence, publish continuity/package records, inspect the exact continuity and final runs, then pair the final source package/receipt.",
+      "completedIncrement": "The web client consumes the existing notification-error SSE event, clamps numeric retryAfterMs hints to 1-30 seconds, falls back to bounded attempt backoff for malformed hints, closes only the failed stream and prevents duplicate retry timers. Local 35/35 focused units, API/web builds and 6/6 browser cases pass; implementation d4681ba/run 43881394742 and continuity 463585b/run 43885421548 passed all three jobs and 41 required steps.",
+      "currentBlocker": "Final reconciliation commit/run and external package receipt are pending.",
+      "nextAction": "Regenerate the portable source package from the closure tree, publish final reconciliation docs, then inspect the exact final three-job CI run and close the receipt.",
       "currentEvidence": "docs/qa/notify01o-evidence.json",
-      "status": "implementation_ci_verified_continuity_pending"
+      "status": "continuity_ci_verified_final_package_pending"
     }
   ],
   "lastChanges": [
@@ -8492,7 +8492,7 @@
   "activeTask": {
     "id": "NOTIFY-01O",
     "title": "Server-declared notification stream error recovery",
-    "status": "implementation_ci_verified_continuity_pending",
+    "status": "final_package_ci_pending",
     "implementationCommit": "d4681ba3be43f907a547935b13aac9a42aee5507",
     "implementationTree": "4c64d5d1a1b1dafe10e921ffad266a1401f0052d",
     "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
@@ -8543,11 +8543,42 @@
       },
       "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
-    "package": null,
+    "package": {
+      "status": "paired_external_receipt_final_ci_pending",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01o-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01o-final-ci-receipt.json",
+      "runtimeDataCredentialsExcluded": true,
+      "hashAndByteReceipt": "Recorded in the external final receipt after final reconciliation CI; package is regenerated from the closure tree.",
+      "sourceCommit": null,
+      "sourceCiRunId": null
+    },
     "exactRunNumber": 272,
     "exactRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43881394742",
-    "continuityCi": null,
-    "sourcePackage": null
+    "continuityCi": {
+      "status": "success",
+      "sourceCommit": "463585b5268cec10416287dd361de82c9ff1df89",
+      "runId": 43885421548,
+      "runNumber": 273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43885421548",
+      "duration": "19m 50s",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "requiredSteps": 41,
+      "jobBreakdown": {
+        "nativeUpgrade": {"jobId": 133362142214, "requiredSteps": 11, "status": "success"},
+        "composeRestore": {"jobId": 133362141846, "requiredSteps": 8, "status": "success"},
+        "nativeApplication": {"jobId": 133362142316, "requiredSteps": 22, "status": "success"}
+      },
+      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+    },
+    "sourcePackage": {
+      "status": "paired_external_receipt_final_ci_pending",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01o-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01o-final-ci-receipt.json",
+      "runtimeDataCredentialsExcluded": true,
+      "hashAndByteReceipt": "Recorded in the external final receipt after final reconciliation CI; package is regenerated from the closure tree.",
+      "sourceCommit": null,
+      "sourceCiRunId": null
+    }
   },
   "workspaceRecovery": {
     "status": "POLICY01B_exact_source_recovered_and_freshly_verified",
@@ -8561,7 +8592,7 @@
   },
   "pendingPublication": {
     "taskId": "NOTIFY-01O",
-    "status": "implementation_ci_verified_continuity_pending",
+    "status": "final_package_ci_pending",
     "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
     "changedPaths": [
       "AGENTS.md",
@@ -8592,10 +8623,15 @@
       "allThreeJobsAndRequiredStepsPassed": true,
       "requiredSteps": 41
     },
-    "continuityCi": null,
-    "commit": "d4681ba3be43f907a547935b13aac9a42aee5507",
+    "continuityCi": {
+      "runId": 43885421548,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43885421548",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "requiredSteps": 41
+    },
+    "commit": "463585b5268cec10416287dd361de82c9ff1df89",
     "implementationCommit": "d4681ba3be43f907a547935b13aac9a42aee5507",
-    "runId": 43881394742,
+    "runId": 43885421548,
     "receipt": "docs/qa/notify01o-evidence.json",
     "sourceZip": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01o-final.zip",
     "finalCi": null
@@ -9266,7 +9302,7 @@
   },
   "currentVerification": {
     "taskId": "NOTIFY-01O",
-    "status": "implementation_ci_verified_continuity_pending",
+    "status": "final_package_ci_pending",
     "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
     "implementationCommit": "d4681ba3be43f907a547935b13aac9a42aee5507",
     "local": {
@@ -9296,14 +9332,32 @@
       "requiredSteps": 41,
       "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
     },
-    "publishedCommit": "d4681ba3be43f907a547935b13aac9a42aee5507",
-    "exactRunId": 43881394742,
-    "package": null,
-    "nextAction": "Reconcile implementation CI evidence, publish continuity/package records, inspect the exact continuity and final runs, then pair the final source package/receipt.",
-    "exactRunNumber": 272,
-    "exactRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43881394742",
+    "publishedCommit": "463585b5268cec10416287dd361de82c9ff1df89",
+    "exactRunId": 43885421548,
+    "package": {
+      "status": "paired_external_receipt_final_ci_pending",
+      "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01o-final.zip",
+      "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01o-final-ci-receipt.json",
+      "runtimeDataCredentialsExcluded": true,
+      "hashAndByteReceipt": "Recorded in the external final receipt after final reconciliation CI; package is regenerated from the closure tree.",
+      "sourceCommit": null,
+      "sourceCiRunId": null
+    },
+    "nextAction": "Regenerate the portable source package from the closure tree, record its hash and receipt, publish final reconciliation docs, then inspect the exact final three-job CI run.",
+    "exactRunNumber": 273,
+    "exactRunUrl": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43885421548",
     "allThreeJobsAndRequiredStepsPassed": true,
-    "continuityCi": null,
+    "continuityCi": {
+      "status": "success",
+      "sourceCommit": "463585b5268cec10416287dd361de82c9ff1df89",
+      "runId": 43885421548,
+      "runNumber": 273,
+      "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43885421548",
+      "duration": "19m 50s",
+      "allThreeJobsAndRequiredStepsPassed": true,
+      "requiredSteps": 41,
+      "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+    },
     "sourcePackage": null,
     "finalReconciliationCommit": null,
     "finalReconciliationRunId": null
