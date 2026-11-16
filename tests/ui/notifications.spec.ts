@@ -210,6 +210,12 @@ test("notification center scopes read-all to the selected category", async ({
   );
   await trigger.click();
   const categoryFilter = page.getByLabel("Show", { exact: true });
+  await expect(categoryFilter.locator('option[value="RENDER"]')).toHaveText(
+    "Render updates (1 unread)",
+  );
+  await expect(categoryFilter.locator('option[value="PUBLISH"]')).toHaveText(
+    "Publishing updates (1 unread)",
+  );
   await categoryFilter.selectOption("PUBLISH");
   await expect(
     page.getByRole("button", {
@@ -235,8 +241,23 @@ test("notification center scopes read-all to the selected category", async ({
     "aria-label",
     "Notifications (1 unread)",
   );
+  await expect(
+    page.getByRole("button", {
+      name: "Mark all Publishing updates as read",
+      exact: true,
+    }),
+  ).not.toBeVisible();
+  await expect(categoryFilter.locator('option[value="PUBLISH"]')).toHaveText(
+    "Publishing updates",
+  );
+  await expect(categoryFilter.locator('option[value="RENDER"]')).toHaveText(
+    "Render updates (1 unread)",
+  );
 
   await categoryFilter.selectOption("ALL");
+  await expect(
+    page.getByRole("button", { name: "Mark all as read", exact: true }),
+  ).toBeVisible();
   const renderNotification = page
     .getByRole("article")
     .filter({ hasText: "Render remains unread" });
@@ -331,6 +352,79 @@ test("notification deep links open the current workspace view", async ({
   await page.goto("/");
   await page.getByRole("button", { name: /Notifications/ }).click();
   await page.getByRole("button", { name: /Open the media library/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Asset library" }),
+  ).toBeVisible();
+});
+
+test("notification deep links stay open when acknowledgement fails", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({
+    data: { name: "Notification acknowledgement retry workspace" },
+  });
+  organizations.push(org.id);
+  const user = await actor(org.id, "OWNER");
+  users.push(user.id);
+  await db.notification.create({
+    data: {
+      organizationId: org.id,
+      type: "CONTENT_READY",
+      category: "CONTENT",
+      title: "Retry the media library",
+      body: "The notification remains available when acknowledgement fails.",
+      link: `/workspaces/${org.id}/media`,
+      eventKey: `content:${randomUUID()}:RETRY`,
+    },
+  });
+  let failures = 0;
+  await page.route(
+    new RegExp(`/api/workspaces/${org.id}/notifications/[^/]+/read$`),
+    async (route) => {
+      if (failures++ === 0) {
+        await route.fulfill({
+          status: 503,
+          contentType: "application/json",
+          body: JSON.stringify({
+            error: { message: "Temporary read failure" },
+          }),
+        });
+        return;
+      }
+      await route.continue();
+    },
+  );
+  await page.context().addCookies([
+    {
+      name: "mos_session",
+      value: user.headers.cookie.split("=")[1],
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  ]);
+
+  await page.goto("/");
+  await page.getByRole("button", { name: /Notifications/ }).click();
+  const notification = page.getByRole("button", {
+    name: /Retry the media library/,
+  });
+  await notification.click();
+  await expect(page.locator(".notification-error")).toHaveText(
+    "Temporary read failure",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Notifications" }),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/localhost:3000\/$/);
+  await expect(
+    page.getByRole("button", { name: "Mark notification as read" }),
+  ).toBeVisible();
+
+  await notification.click();
   await expect(
     page.getByRole("heading", { name: "Asset library" }),
   ).toBeVisible();

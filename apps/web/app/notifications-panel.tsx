@@ -73,6 +73,15 @@ const NOTIFICATION_CATEGORIES = [
   },
 ] as const;
 
+const EMPTY_UNREAD_BY_CATEGORY: Record<NotificationCategory, number> = {
+  RENDER: 0,
+  PUBLISH: 0,
+  AI: 0,
+  BILLING: 0,
+  APPROVAL: 0,
+  CONTENT: 0,
+};
+
 function relativeTime(value: string) {
   const age = Date.now() - new Date(value).getTime();
   const minutes = Math.max(0, Math.round(age / 60000));
@@ -96,6 +105,10 @@ export default function NotificationsPanel({
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [unreadByCategory, setUnreadByCategory] = useState(
+    EMPTY_UNREAD_BY_CATEGORY,
+  );
+  const [feedUnreadCount, setFeedUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [categoryFilter, setCategoryFilter] =
@@ -164,6 +177,20 @@ export default function NotificationsPanel({
           options.append ? [...current, ...nextItems] : nextItems,
         );
         setUnreadCount(summary.totalUnread || 0);
+        setUnreadByCategory({
+          ...EMPTY_UNREAD_BY_CATEGORY,
+          ...Object.fromEntries(
+            Object.entries(summary.byCategory ?? {}).map(([key, value]) => [
+              key,
+              Number(value) || 0,
+            ]),
+          ),
+        } as Record<NotificationCategory, number>);
+        setFeedUnreadCount(
+          category === "ALL"
+            ? summary.totalUnread || 0
+            : result.unreadCount || 0,
+        );
         setHasMore(skip + nextItems.length < (result.total || 0));
         setError("");
       } catch (cause) {
@@ -197,6 +224,8 @@ export default function NotificationsPanel({
     setLoading(true);
     setItems([]);
     setUnreadCount(0);
+    setUnreadByCategory(EMPTY_UNREAD_BY_CATEGORY);
+    setFeedUnreadCount(0);
     setCategoryFilter("ALL");
     categoryFilterRef.current = "ALL";
     setHasMore(false);
@@ -316,6 +345,7 @@ export default function NotificationsPanel({
     categoryFilterRef.current = next;
     setCategoryFilter(next);
     setItems([]);
+    setFeedUnreadCount(0);
     setHasMore(false);
     setLoading(true);
     void load(undefined, { category: next });
@@ -403,7 +433,10 @@ export default function NotificationsPanel({
     }
   }
 
-  async function setRead(notification: Notification, read: boolean) {
+  async function setRead(
+    notification: Notification,
+    read: boolean,
+  ): Promise<boolean> {
     setBusyId(notification.id);
     setError("");
     try {
@@ -418,9 +451,11 @@ export default function NotificationsPanel({
             : item,
         ),
       );
-      setUnreadCount((count) => Math.max(0, count + (read ? -1 : 1)));
+      await load(undefined, { category: categoryFilterRef.current });
+      return true;
     } catch (cause) {
       setError((cause as Error).message);
+      return false;
     } finally {
       setBusyId(null);
     }
@@ -445,7 +480,7 @@ export default function NotificationsPanel({
   }
 
   async function openNotification(notification: Notification) {
-    if (!notification.readAt) await setRead(notification, true);
+    if (!notification.readAt && !(await setRead(notification, true))) return;
     setOpen(false);
     setPreferencesOpen(false);
     onOpenNotification?.(notification);
@@ -631,7 +666,9 @@ export default function NotificationsPanel({
                   {error}
                 </p>
               )}
-              {unreadCount > 0 && (
+              {(categoryFilter === "ALL"
+                ? unreadCount > 0
+                : feedUnreadCount > 0) && (
                 <button
                   className="text-button notification-read-all"
                   type="button"
@@ -665,6 +702,9 @@ export default function NotificationsPanel({
                   {NOTIFICATION_CATEGORIES.map((category) => (
                     <option key={category.value} value={category.value}>
                       {category.label}
+                      {unreadByCategory[category.value]
+                        ? ` (${unreadByCategory[category.value]} unread)`
+                        : ""}
                     </option>
                   ))}
                 </select>
