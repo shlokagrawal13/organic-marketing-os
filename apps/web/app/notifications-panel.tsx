@@ -11,7 +11,10 @@ import {
   X,
 } from "lucide-react";
 import { api } from "./api-client";
-import { notificationStreamRetryDelay } from "./notifications-stream";
+import {
+  notificationStreamRetryDelay,
+  notificationStreamRetryDelayForHint,
+} from "./notifications-stream";
 
 type Notification = {
   id: string;
@@ -252,6 +255,7 @@ export default function NotificationsPanel({
       streamRef.current = null;
     };
     const connectStream = () => {
+      streamRetryRef.current = null;
       if (disposed || disabled || typeof window.EventSource !== "function") {
         setStreamState("fallback");
         return;
@@ -263,6 +267,7 @@ export default function NotificationsPanel({
       );
       streamRef.current = source;
       source.onopen = () => {
+        streamRetryRef.current = null;
         streamAttemptRef.current = 0;
         setStreamState("live");
       };
@@ -275,18 +280,31 @@ export default function NotificationsPanel({
           setStreamState("fallback");
         }
       });
-      source.onerror = () => {
+      const scheduleReconnect = (retryAfterMs?: unknown) => {
+        if (disposed || streamRef.current !== source) return;
         source.close();
-        if (streamRef.current === source) streamRef.current = null;
-        if (disposed) return;
+        streamRef.current = null;
         const attempt = streamAttemptRef.current++;
         setStreamState("reconnecting");
         clearRetry();
         streamRetryRef.current = window.setTimeout(
           connectStream,
-          notificationStreamRetryDelay(attempt),
+          retryAfterMs === undefined
+            ? notificationStreamRetryDelay(attempt)
+            : notificationStreamRetryDelayForHint(retryAfterMs, attempt),
         );
       };
+      source.addEventListener("notification-error", (event) => {
+        let retryAfterMs: unknown;
+        try {
+          const data = JSON.parse((event as MessageEvent).data);
+          retryAfterMs = data?.retryAfterMs;
+        } catch {
+          retryAfterMs = undefined;
+        }
+        scheduleReconnect(retryAfterMs);
+      });
+      source.onerror = () => scheduleReconnect();
     };
     connectStream();
     return () => {

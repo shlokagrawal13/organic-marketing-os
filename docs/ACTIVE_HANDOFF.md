@@ -1,3 +1,10 @@
+<!-- NOTIFY01O_CURRENT_START -->
+## Current: NOTIFY-01O server-declared notification stream error recovery - 2026-11-16
+
+Implementation handles the existing `notification-error` SSE event, safely clamps server retry hints to 1–30 seconds, falls back to bounded attempt delays for malformed data, closes only the failed stream and prevents duplicate retry timers. Polling, tenant/role scope, category filtering, preferences, acknowledgement actions, focus containment, scroll isolation and deep links are unchanged. Local API/web builds, 35/35 focused notification units, diff checks and 6/6 browser cases pass. The focused verifier used owned Redis 6391 and SMTP 1026 after a non-destructive Compose stop/start; final health is connected.
+
+Own exact three-job CI, continuity/checkpoint/evidence reconciliation, source ZIP and external receipt remain pending. See [design](NOTIFICATION_STREAM_ERROR_RECOVERY.md). Preserve the user `apps/web/next-env.d.ts` change, real services/volumes/credentials and Antigravity worktrees; production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open.
+<!-- NOTIFY01O_CURRENT_END -->
 <!-- NOTIFY01N_CURRENT_START -->
 ## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
 

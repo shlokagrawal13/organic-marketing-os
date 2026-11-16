@@ -316,6 +316,66 @@ test("notification center reconnects the optional live stream after a transient 
   );
 });
 
+test("notification center honors a server-declared stream retry hint", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await resetFixtureRateBudget();
+  const org = await db.organization.create({
+    data: { name: "Notification server retry workspace" },
+  });
+  organizations.push(org.id);
+  const user = await actor(org.id, "OWNER");
+  users.push(user.id);
+  let attempts = 0;
+  const firstAttemptAt = { value: 0 };
+  const secondAttemptAt = { value: 0 };
+  await page.route(
+    /\/api\/workspaces\/[^/]+\/notifications\/stream/,
+    async (route) => {
+      attempts += 1;
+      if (attempts === 1) {
+        firstAttemptAt.value = Date.now();
+        await route.fulfill({
+          status: 200,
+          headers: {
+            "content-type": "text/event-stream",
+            "cache-control": "no-cache",
+          },
+          body: 'event: notification-error\ndata: {"retryAfterMs":1000}\n\n',
+        });
+        return;
+      }
+      secondAttemptAt.value = Date.now();
+      await route.continue();
+    },
+  );
+  await page.context().addCookies([
+    {
+      name: "mos_session",
+      value: user.headers.cookie.split("=")[1],
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  ]);
+
+  await page.goto("/");
+  await page.getByRole("button", { name: /Notifications/ }).click();
+  await expect(page.locator(".notification-stream-status")).toHaveText(
+    "Reconnecting...",
+  );
+  await expect.poll(() => attempts, { timeout: 15000 }).toBeGreaterThan(1);
+  expect(secondAttemptAt.value - firstAttemptAt.value).toBeGreaterThanOrEqual(
+    900,
+  );
+  await expect(page.locator(".notification-stream-status")).toHaveText(
+    "Live updates",
+    { timeout: 15000 },
+  );
+});
+
 test("notification deep links open the current workspace view", async ({
   page,
 }) => {

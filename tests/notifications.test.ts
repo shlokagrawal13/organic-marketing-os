@@ -22,8 +22,11 @@ import { recordPublicationOutcome } from "../dist/apps/api/src/publication-attem
 import { applicationMigrations } from "../scripts/application-pitr-fixture.mjs";
 import { fileURLToPath } from "node:url";
 import {
+  NOTIFICATION_STREAM_MAX_RETRY_DELAY_MS,
+  NOTIFICATION_STREAM_MIN_RETRY_DELAY_MS,
   NOTIFICATION_STREAM_RETRY_DELAYS_MS,
   notificationStreamRetryDelay,
+  notificationStreamRetryDelayForHint,
 } from "../apps/web/app/notifications-stream";
 import { resolveNotificationLink } from "../apps/web/app/notification-links";
 
@@ -63,6 +66,26 @@ describe("Notifications - Unit & Idempotent Event Contracts", () => {
     );
     assert.equal(notificationStreamRetryDelay(Number.NaN), 1000);
     assert.equal(notificationStreamRetryDelay(-2), 1000);
+  });
+
+  test("notification stream retry hints stay within the bounded client window", () => {
+    assert.equal(notificationStreamRetryDelayForHint(2750, 0), 2750);
+    assert.equal(
+      notificationStreamRetryDelayForHint(250, 0),
+      NOTIFICATION_STREAM_MIN_RETRY_DELAY_MS,
+    );
+    assert.equal(
+      notificationStreamRetryDelayForHint(999999, 0),
+      NOTIFICATION_STREAM_MAX_RETRY_DELAY_MS,
+    );
+    assert.equal(
+      notificationStreamRetryDelayForHint("2500", 2),
+      NOTIFICATION_STREAM_RETRY_DELAYS_MS[2],
+    );
+    assert.equal(
+      notificationStreamRetryDelayForHint(Number.NaN, 3),
+      NOTIFICATION_STREAM_RETRY_DELAYS_MS[3],
+    );
   });
 
   test("notification deep links stay tenant-bound and resolve to supported views", () => {

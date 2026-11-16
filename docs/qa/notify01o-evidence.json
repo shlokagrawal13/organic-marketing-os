@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01O",
+  "recordedAtUtc": "2026-11-16T13:51:53Z",
+  "status": "local_verified_ci_pending",
+  "baseCommit": "78d2f6a29135dc08ef45239de869be661270629a",
+  "title": "Server-declared notification stream error recovery",
+  "behavior": {
+    "serverErrorFrame": "The web client consumes the existing notification-error SSE event and closes only the failed EventSource before retrying.",
+    "retryHint": "Numeric retryAfterMs hints are rounded and clamped to the existing 1-30 second safety window; malformed or missing hints use bounded attempt backoff.",
+    "duplicateTimerSafety": "The active stream reference and one retry timer prevent a server error frame followed by onerror from scheduling duplicate reconnects.",
+    "preserved": "The 60-second polling fallback, tenant/role scope, cursor/count snapshots, category filtering, preferences, read actions, focus containment, scroll isolation and tenant-safe deep links remain unchanged."
+  },
+  "changedPaths": [
+    "apps/web/app/notifications-panel.tsx",
+    "apps/web/app/notifications-stream.ts",
+    "scripts/verify-local.mjs",
+    "tests/notifications.test.ts",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_STREAM_ERROR_RECOVERY.md",
+    "docs/qa/notify01o-evidence.json"
+  ],
+  "localVerification": {
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "35/35",
+    "focusedBrowser": "6/6 notifications.spec.ts using owned Redis 6391, owned SMTP 1026 and existing Chrome",
+    "formatting": true,
+    "diffCheck": true,
+    "composeHealthAfterVerification": {
+      "status": "ok",
+      "database": "connected",
+      "redis": "connected"
+    },
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false,
+    "verifierPortNote": "The project Compose stack was stopped without deleting containers or volumes for the owned fixture run, then started again and health-checked. The verifier now accepts a bounded --smtp-port override; CI defaults remain unchanged."
+  },
+  "implementationCommit": null,
+  "exactCi": null,
+  "package": null,
+  "limits": [
+    "This increment changes only client handling of the existing server-declared SSE error frame and local verifier SMTP-port portability.",
+    "No schema, migration, provider, external delivery, recovery fixture or tenant/role contract changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ]
+}

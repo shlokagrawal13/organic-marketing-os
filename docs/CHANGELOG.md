@@ -594,8 +594,6 @@ The approved 25 paths are public on `main` at `45ff3f37f3b79995e7ea7f63135ff1d48
 
 Artifact `11933492847` is 6,194,977 bytes with digest `sha256:4ba67e5320992c8febdd71248602e3482c257dfa3cc0feb7f485c8847b59ead6`; all 124 entries passed CRC, 207 unit receipts are unique, 36/36 readability samples and blank negative control passed. A transient Redis image rate limit retried successfully, and the GitHub action Node deprecation warning was non-blocking. The bounded detector remains human-review support and does not prove truth, source quality or legal/platform compliance. No live provider action, deployed acceptance, native private-media restore or full master acceptance occurred; POLICY-01 remains Partial. This closure record is local pending separate publication approval. See `docs/qa/policy01-claim-native-ci-evidence.json`.
 <!-- POLICY01A_NATIVE_CLOSURE_END -->
-
-
 <!-- SOCIAL01_CAPTURE_NATIVE_CLOSURE_START -->
 ## SOCIAL-01 reconstructed capture runner publication and native CI — 2026-10-14 UTC
 
@@ -1316,3 +1314,8 @@ POLICY-01D binds approval, manual/scheduled dispatch and readiness receipts to t
 - Updated the notification panel to refetch existing guarded list data on stream changes, retain 60-second polling fallback and expose live/connecting/fallback status.
 - Added pure cursor and tenant-bound SSE integration coverage. No schema, migration, provider call, external delivery or delivery-SLO claim changed.
 - Exact implementation commit `a7c6e1c216678c36ba4ce225a4cb606dee321a49` / run `43129027400` passed all three CI jobs/every required step: 431 unit, 78 HTTP, 68 browser, 5 recovery, 26 migrations, 44 readability samples, zero audits and 24 Compose phases. The package and external receipt are paired in the saved handoff; artifact-byte downloads remain proxy403-blocked.
+## NOTIFY-01O server-declared notification stream error recovery - 2026-11-16
+
+The notification center now consumes the existing server `notification-error` SSE event, safely clamps numeric retry hints to 1–30 seconds, falls back to bounded attempt backoff for malformed hints, closes only the failed stream and suppresses duplicate reconnect timers. Existing polling fallback and tenant/role/data/accessibility behavior remain unchanged. Local API/web builds, 35/35 focused notification units, formatting/diff checks and 6/6 focused browser cases pass. Own exact three-job CI, continuity evidence and paired source package/receipt remain pending.
+
+See [stream error recovery design](NOTIFICATION_STREAM_ERROR_RECOVERY.md).

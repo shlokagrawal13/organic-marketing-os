@@ -140,6 +140,10 @@ const redisPortArgument = process.argv
   .find((arg) => arg.startsWith("--redis-port="))
   ?.slice("--redis-port=".length);
 const redisPort = redisPortArgument ? Number(redisPortArgument) : 6379;
+const smtpPortArgument = process.argv
+  .find((arg) => arg.startsWith("--smtp-port="))
+  ?.slice("--smtp-port=".length);
+const smtpPort = smtpPortArgument ? Number(smtpPortArgument) : 1025;
 const uiSpec = process.argv
   .find((arg) => arg.startsWith("--ui-spec="))
   ?.slice(10);
@@ -153,6 +157,8 @@ if (httpSpec && !/^[a-z-]+\.test\.ts$/.test(httpSpec))
   throw new Error("Select an HTTP test filename such as publications.test.ts.");
 if (!Number.isInteger(redisPort) || redisPort < 1024 || redisPort > 65535)
   throw new Error("Select a Redis port between 1024 and 65535.");
+if (!Number.isInteger(smtpPort) || smtpPort < 1024 || smtpPort > 65535)
+  throw new Error("Select an SMTP port between 1024 and 65535.");
 const notificationUiMediaSkip = uiOnly && uiSpec === "notifications.spec.ts";
 const notificationHttpMediaSkip =
   ["data-export.test.ts", "notifications.test.ts"].includes(httpSpec) &&
@@ -171,7 +177,7 @@ if (native && process.env.MOS_ALLOW_NATIVE_TESTS !== "isolated-test-services")
 // constrained workstations). Never let a test attach to an
 // existing Redis, API, web, mail or object-storage service after a bind fails.
 for (const port of [
-  1025,
+  smtpPort,
   3000,
   4000,
   4569,
@@ -506,9 +512,9 @@ try {
     process.env.DATABASE_URL =
       "postgresql://postgres:postgres@127.0.0.1:5433/postgres?schema=public&connection_limit=1&pgbouncer=true";
   if (!native) process.env.REDIS_URL = `redis://127.0.0.1:${redisPort}`;
-  await new Promise((r) => smtp.listen(1025, "127.0.0.1", r));
+  await new Promise((r) => smtp.listen(smtpPort, "127.0.0.1", r));
   process.env.SMTP_HOST = "127.0.0.1";
-  process.env.SMTP_PORT = "1025";
+  process.env.SMTP_PORT = String(smtpPort);
   await new Promise((r) => fixtureServer.listen(4999, "127.0.0.1", r));
   process.env.AI_PRIMARY_URL = "http://127.0.0.1:4999/primary";
   process.env.AI_PRIMARY_KEY = "test-fixture";
