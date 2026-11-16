@@ -1,7 +1,7 @@
 <!-- NOTIFY01N_CURRENT_START -->
 ## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
 
-The notification center now exposes existing category unread counts, gates filtered read-all on the selected feed's unread count, and keeps an unread deep link open when acknowledgement fails so it can be retried. No backend schema or delivery contract changed. Local 34/34 notification units, API/web builds, formatting/diff checks and 5/5 focused browser cases pass. Implementation `58ef05d` is pushed; exact three-job CI and final package/receipt are pending. See [evidence](docs/qa/notify01n-evidence.json) and [design](docs/NOTIFICATION_CATEGORY_ACKNOWLEDGEMENT_VISIBILITY.md).
+The notification center now exposes existing category unread counts, gates filtered read-all on the selected feed's unread count, and keeps an unread deep link open when acknowledgement fails so it can be retried. No backend schema or delivery contract changed. Local 34/34 notification units, API/web builds, formatting/diff checks and 5/5 focused browser cases pass. Implementation `58ef05d`, continuity `3dc3a14`, manifest `1055069` and final handoff `64d40ce` each passed exact three-job CI (runs 43864226369, 43865463216, 43865571801 and 43865708415; 41 required steps each). Final artifact metadata is recorded; artifact bytes/reports remain blocked by proxy/auth routes. See [evidence](docs/qa/notify01n-evidence.json) and [design](docs/NOTIFICATION_CATEGORY_ACKNOWLEDGEMENT_VISIBILITY.md).
 <!-- NOTIFY01N_CURRENT_END -->
 <!-- NOTIFY01M_CURRENT_START -->
 ## Current: NOTIFY-01M filtered notification acknowledgement - 2026-11-16

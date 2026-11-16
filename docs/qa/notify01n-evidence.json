@@ -1,8 +1,9 @@
 {
   "schemaVersion": 1,
   "taskId": "NOTIFY-01N",
-  "recordedAtUtc": "2026-11-16T12:20:00Z",
-  "status": "local_verified_exact_ci_pending",
+  "recordedAtUtc": "2026-11-16T12:42:33Z",
+  "status": "ci_verified_integrated",
+  "baseCommit": "336e568bf67462fce047bc8cb5b46511141e74fd",
   "title": "Category unread state and acknowledgement retry safety",
   "behavior": {
     "categorySummary": "The existing summary.byCategory projection labels category filters with unread counts; the selected feed unreadCount gates category-scoped read-all visibility while All categories keeps the summary total.",
@@ -34,18 +35,107 @@
     "credentialsPrinted": false,
     "verifierPortNote": "The project Compose stack was stopped without deleting containers or volumes for the owned fixture run because its mail/API/web/Redis ports were occupied, then started again and health-checked."
   },
-  "implementationCommit": "58ef05d",
-  "implementationCi": {
-    "status": "pending",
-    "sourceCommit": "58ef05d"
+  "implementationCommit": "58ef05d472f04093ef977d5b3cab3042e478b9f9",
+  "implementationTree": "2afbaa699486c424aab883611e326c5ea5db13c3",
+  "exactCi": {
+    "status": "success",
+    "sourceCommit": "58ef05d472f04093ef977d5b3cab3042e478b9f9",
+    "runId": 43864226369,
+    "runNumber": 268,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43864226369",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133288526331, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133288526804, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133288526762, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14224968252, "size": "14.5 MB", "digest": "sha256:e54619761ebe0900ec0b72c65a39211e9168f417b447d5a5202485c18770cecb"},
+      {"name": "compose-evidence", "artifactId": 14225162187, "size": "16.6 KB", "digest": "sha256:d313f311e58d66009fa28b8aad9c47d1e697c18f4f08632839ac3c4b4093b80a"},
+      {"name": "native-upgrade-evidence", "artifactId": 14223648751, "size": "930 Bytes", "digest": "sha256:a594d49699a397e96de2a35aacfadb84171d7265a0e809c1102ff815f144cfda"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14224607858, "size": "2.95 KB", "digest": "sha256:f46bfe2bf4ca8c64e550185763658f3169ad51790616ddf0a6fd241999a8f72c"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
+  "continuityCi": {
+    "status": "success",
+    "sourceCommit": "3dc3a142a1747ae2025d992bd6bfe31b22f7f61d",
+    "runId": 43865463216,
+    "runNumber": 269,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43865463216",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133292739745, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133292739367, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133292739829, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14225194035, "size": "14.5 MB", "digest": "sha256:971807bd7aabf1b6482016db56c6f3c8cbdd5539a0e17caa1c101361cfbeab72"},
+      {"name": "compose-evidence", "artifactId": 14226601066, "size": "16.5 KB", "digest": "sha256:5039926d3b316f790e915a26136c803cdbf649f31acda33840dece76f8382bbc"},
+      {"name": "native-upgrade-evidence", "artifactId": 14224934291, "size": "933 Bytes", "digest": "sha256:6d0def61a2c34bb9a1d793bd617b3c86e27486e7081432dd65e4ba8918b894e1"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14224614942, "size": "2.95 KB", "digest": "sha256:2bf3022a6201b6b8c325fa0522b8ca1f67319183f5f444b0f464299d4040e1da"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
+  "manifestCi": {
+    "status": "success",
+    "sourceCommit": "105506957b0e0d820d7701f2c00d2fb583287107",
+    "runId": 43865571801,
+    "runNumber": 270,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43865571801",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133293119741, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133293119592, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133293119252, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14226303347, "size": "14.5 MB", "digest": "sha256:a0221a37c69929c1a9edbf9e3e4d45ea3505954bc5c6d9c7c73337d77caf7201"},
+      {"name": "compose-evidence", "artifactId": 14225453380, "size": "16.6 KB", "digest": "sha256:26f8654be72323505cef763d2439c01556ce552ec61442289cca42ff31400a8b"},
+      {"name": "native-upgrade-evidence", "artifactId": 14224589157, "size": "933 Bytes", "digest": "sha256:2a063c4ad08e66a8992cf10392d54a0f7a6a36f0fadfa060dc797a04013e517b"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14226130208, "size": "2.95 KB", "digest": "sha256:a010eaf2211842f4607a7a3986699f024ede958e61a030a9ca7c8ec750255acb"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
+  },
+  "finalReconciliationCommit": "64d40ce18b717814a4a6ddfd86fbb4d4c1a874e8",
+  "finalReconciliationRunId": 43865708415,
+  "finalReconciliationCi": {
+    "status": "success",
+    "sourceCommit": "64d40ce18b717814a4a6ddfd86fbb4d4c1a874e8",
+    "runId": 43865708415,
+    "runNumber": 271,
+    "url": "https://github.com/shlokagrawal13/organic-marketing-os/actions/runs/43865708415",
+    "duration": "17m 21s",
+    "allThreeJobsAndRequiredStepsPassed": true,
+    "requiredSteps": 41,
+    "jobBreakdown": {
+      "nativeUpgrade": {"jobId": 133293582988, "requiredSteps": 11, "status": "success"},
+      "composeRestore": {"jobId": 133293583113, "requiredSteps": 8, "status": "success"},
+      "nativeApplication": {"jobId": 133293582717, "requiredSteps": 22, "status": "success"}
+    },
+    "artifacts": [
+      {"name": "browser-evidence", "artifactId": 14225024456, "size": "14.5 MB", "digest": "sha256:49e0da6a99a95261bce1a6016c98d6ca9e0cb250a026bace942e9e074795c285"},
+      {"name": "compose-evidence", "artifactId": 14226366932, "size": "16.5 KB", "digest": "sha256:eb2bdbc5b60405847c44d19823fa13a16d7aec9b435e4273275dd05b3fd131ed"},
+      {"name": "native-upgrade-evidence", "artifactId": 14224374460, "size": "930 Bytes", "digest": "sha256:a0c4abdf684124cb74045d01f0bf0bc369a323ab12443563b768a044214741ad"},
+      {"name": "postgres-pitr-evidence", "artifactId": 14223889982, "size": "2.95 KB", "digest": "sha256:656eaf4b5c7add72341209db04474f9d4cc179ffb1dbde6a4326411a4a09b8d9"}
+    ],
+    "artifactByteInspection": "blocked_artifact_api_401_and_job_logs_403"
   },
   "package": {
-    "status": "pending_final_reconciliation",
-    "runtimeDataCredentialsExcluded": true
+    "status": "paired_external_receipt",
+    "path": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/organic-marketing-os-notify01n-final.zip",
+    "externalReceipt": "C:/Users/shlok/Desktop/organic-marketing-os-project-files/notify01n-final-ci-receipt.json",
+    "runtimeDataCredentialsExcluded": true,
+    "hashAndByteReceipt": "Recorded in the external final receipt; source package is regenerated from this closure tree.",
+    "sourceCommit": "64d40ce18b717814a4a6ddfd86fbb4d4c1a874e8",
+    "sourceCiRunId": 43865708415
   },
   "limits": [
     "This increment changes only notification-center category unread presentation and acknowledgement retry behavior.",
-    "No schema, migration, producer, provider, delivery, recovery or transport contract changed.",
+    "No schema or migration changed.",
     "CI verifies owned fixtures and does not deploy.",
     "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
   ]
