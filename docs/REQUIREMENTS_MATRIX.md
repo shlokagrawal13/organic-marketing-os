@@ -1,3 +1,8 @@
+<!-- NOTIFY01N_CURRENT_START -->
+## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
+
+The existing notification summary projection now labels category filters with unread counts; selected-feed `unreadCount` controls category-scoped read-all visibility, and failed unread acknowledgements keep the panel open until retry succeeds. Local 34/34 notification units, API/web builds and 5/5 focused browser cases pass. Commit `58ef05d` is pushed; exact three-job CI and final package/receipt are pending. No schema/migration/provider/delivery/recovery/tenant-role contract changed. See [NOTIFY-01N evidence](qa/notify01n-evidence.json) and [design](NOTIFICATION_CATEGORY_ACKNOWLEDGEMENT_VISIBILITY.md).
+<!-- NOTIFY01N_CURRENT_END -->
 <!-- NOTIFY01M_CURRENT_START -->
 ## Current: NOTIFY-01M filtered notification acknowledgement - 2026-11-16
 

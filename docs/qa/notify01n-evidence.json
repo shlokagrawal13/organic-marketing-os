@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "taskId": "NOTIFY-01N",
+  "recordedAtUtc": "2026-11-16T12:20:00Z",
+  "status": "local_verified_exact_ci_pending",
+  "title": "Category unread state and acknowledgement retry safety",
+  "behavior": {
+    "categorySummary": "The existing summary.byCategory projection labels category filters with unread counts; the selected feed unreadCount gates category-scoped read-all visibility while All categories keeps the summary total.",
+    "acknowledgementRetry": "A failed unread-notification acknowledgement leaves the tenant-bound panel open and defers navigation so the user can retry; a successful retry acknowledges and opens the existing safe destination.",
+    "preserved": "Tenant/role guards, muted-category behavior, read/unread actions, pagination, preferences, SSE reconnect, polling fallback, focus containment, scroll isolation and tenant-safe deep links remain unchanged."
+  },
+  "changedPaths": [
+    "apps/web/app/notifications-panel.tsx",
+    "tests/ui/notifications.spec.ts",
+    "docs/NOTIFICATION_CATEGORY_ACKNOWLEDGEMENT_VISIBILITY.md",
+    "docs/qa/notify01n-evidence.json"
+  ],
+  "localVerification": {
+    "prismaGenerate": true,
+    "apiProductionBuild": true,
+    "webProductionBuild": true,
+    "notificationUnit": "34/34",
+    "focusedBrowser": "5/5 notifications.spec.ts using owned Redis 6380 and existing Chrome",
+    "formatting": true,
+    "diffCheck": true,
+    "composeHealthAfterVerification": {
+      "status": "ok",
+      "database": "connected",
+      "redis": "connected"
+    },
+    "realEnvironmentUnchanged": true,
+    "antigravityWorktreesUntouched": true,
+    "liveProvidersUsed": false,
+    "credentialsPrinted": false,
+    "verifierPortNote": "The project Compose stack was stopped without deleting containers or volumes for the owned fixture run because its mail/API/web/Redis ports were occupied, then started again and health-checked."
+  },
+  "implementationCommit": "58ef05d",
+  "implementationCi": {
+    "status": "pending",
+    "sourceCommit": "58ef05d"
+  },
+  "package": {
+    "status": "pending_final_reconciliation",
+    "runtimeDataCredentialsExcluded": true
+  },
+  "limits": [
+    "This increment changes only notification-center category unread presentation and acknowledgement retry behavior.",
+    "No schema, migration, producer, provider, delivery, recovery or transport contract changed.",
+    "CI verifies owned fixtures and does not deploy.",
+    "Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open."
+  ]
+}

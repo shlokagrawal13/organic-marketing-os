@@ -1,3 +1,10 @@
+<!-- NOTIFY01N_CURRENT_START -->
+## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
+
+Implementation commit `58ef05d` adds category unread labels and correct filtered read-all visibility from the existing selected-feed count. An unread notification remains open and retryable when its acknowledgement fails; successful retry preserves the existing tenant-safe navigation. Local 34/34 notification units, API/web builds, formatting/diff checks and 5/5 focused browser cases pass. Exact three-job CI, continuity records and a fresh package/receipt are pending.
+
+The focused Windows verifier used owned Redis 6380 and existing Chrome. The project Compose stack was stopped without deleting containers/volumes for the fixture run, then restarted; `/api/health` reports database and Redis connected. Preserve `apps/web/next-env.d.ts`, real services, credentials, volumes and Antigravity worktrees.
+<!-- NOTIFY01N_CURRENT_END -->
 <!-- NOTIFY01M_CURRENT_START -->
 ## Current: NOTIFY-01M filtered notification acknowledgement - 2026-11-16
 

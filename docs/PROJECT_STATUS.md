@@ -1,3 +1,10 @@
+<!-- NOTIFY01N_CURRENT_START -->
+## Current: NOTIFY-01N category unread state and acknowledgement retry safety - 2026-11-16
+
+NOTIFY-01N surfaces the existing tenant-scoped unread summary by category in the notification selector and uses the selected list's unread count for filtered acknowledgement visibility. It also preserves the open notification panel and unread state when a read acknowledgement fails, allowing a retry before deep-link navigation. No schema, migration, producer, provider, delivery, realtime, recovery or authorization behavior changed. Local Prisma generation, API/web production builds, 34/34 focused notification units, formatting/diff checks and 5/5 focused browser cases pass. Implementation commit `58ef05d` is pushed; exact-source CI, continuity documentation, package and receipt remain pending.
+
+See [NOTIFY-01N evidence](docs/qa/notify01n-evidence.json) and [design](docs/NOTIFICATION_CATEGORY_ACKNOWLEDGEMENT_VISIBILITY.md). Preserve the uncommitted `apps/web/next-env.d.ts`, real services/volumes/credentials and Antigravity worktrees. Production/live-provider, external delivery, remote durability/RPO-RTO, deployed and full-master acceptance remain open; CI verifies fixtures and does not deploy.
+<!-- NOTIFY01N_CURRENT_END -->
 <!-- NOTIFY01M_CURRENT_START -->
 ## Current: NOTIFY-01M filtered notification acknowledgement - 2026-11-16
 
